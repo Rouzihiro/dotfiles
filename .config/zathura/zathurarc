@@ -1,0 +1,20 @@
+set sandbox none
+set statusbar-h-padding 0
+set statusbar-v-padding 0
+set page-padding 1
+set selection-clipboard clipboard
+map u scroll half-up
+map d scroll half-down
+map D toggle_page_mode
+map r reload
+map R rotate
+map K zoom in
+map J zoom out
+map i recolor
+map p print
+map g goto top
+
+set recolor true
+set recolor-darkcolor "#EBDBB2"
+set default-bg rgba(0,0,0,0.8)
+set adjust-open width

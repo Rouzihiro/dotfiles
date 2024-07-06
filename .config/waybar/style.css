@@ -1,0 +1,67 @@
+window#waybar {
+    font-family: "JetBrains Mono NerdFont";
+    background-color: rgba(0,0,0,0);
+    font-size: 0.8rem;
+    border-radius: 0.5rem;
+}
+
+.modules-left, .modules-center {
+    opacity: 1;
+    background: linear-gradient(45deg, rgb(214, 39, 200), rgb(5, 83, 252));
+    border-radius: 0.5rem;
+    padding: 2px;
+}
+
+.modules-right {
+    opacity: 1;
+    background-color: rgba(0,0,0,0.5);
+    border-radius: 0.5rem;
+    padding: 2px 2px 2px 10px
+}
+
+/* label.module {
+    margin-left: -1px;
+} */
+
+#workspaces {
+    background-color: rgba(0,0,0,0.5);
+    border-radius: 0.5rem;
+    padding: 0 2px;
+}
+
+#workspaces button {
+    font-size: 0.6rem;
+    padding: 0 0.3rem 0 0;
+}
+
+#window {
+    background-color: rgba(0,0,0,0.5);
+    border-radius: 0.5rem;
+    padding: 2px 5px;
+}
+
+#clock {
+    font-weight: bolder;
+    border-radius: 0.5rem;
+    padding: 0 3px 0 0;
+}
+
+#battery {
+    color: lightgreen;
+}
+
+#memory {
+    color: lightpink;
+}
+
+#disk {
+    color: lightskyblue;
+}
+
+#cpu {
+    color: lightgoldenrodyellow;
+}
+
+#temperature {
+    color: lightslategray;
+}

@@ -1,0 +1,2 @@
+sudo bash -c 'echo -e "username=rey\npassword=yourpassword" > /etc/samba/creds'
+sudo chmod 600 /etc/samba/creds

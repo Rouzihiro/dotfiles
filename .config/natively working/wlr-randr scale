@@ -1,0 +1,2 @@
+#set the scale to 1
+wlr-randr --output WL-1 --scale 1

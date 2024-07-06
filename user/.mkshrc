@@ -1,0 +1,30 @@
+# Set the location of the history file
+export HISTFILE=~/.mksh_history
+
+# Number of commands to remember in the history file
+export HISTSIZE=1000
+
+# Number of lines to store in the history file
+export HISTFILESIZE=2000
+
+# alias
+alias symbols='gucharmap'
+alias scale='wlr-randr --output WL-1 --scale 1'
+#
+alias test='nix-shell -p'
+#
+alias rebuild='sudo nixos-rebuild switch'
+alias update='sudo nix-channel --update'
+alias upgrade='sudo nixos-rebuild switch --upgrade'
+#
+alias get-unstable='sudo nix-channel --add https://nixos.org/channels/nixos-unstable nixos-unstable'
+alias get-list='nix-channel --list'
+#
+alias clean='mksh /home/rey/dotfiles/scripts/cleanup-nixos.sh'
+alias generation='sudo nix-env -p /nix/var/nix/profiles/system --list-generations'
+alias erase='sudo nix-env -p /nix/var/nix/profiles/system --delete-generations'
+#
+alias psg='ps aux | grep'
+#
+alias weatherHH="curl -4 http://wttr.in/Hamburg"
+alias weather="curl -4 http://wttr.in/"
