@@ -152,23 +152,21 @@ input "type:touchpad" {
     middle_emulation enabled
 }
 
-#input "1:1:AT_Translated_Set_2_keyboard" {
-#    xkb_layout "de"
-#}
-
 input * {
     xkb_layout "de"
 }
 
-
-# Waybar
-exec waybar &
+# Autostart necessary processes (like notifications daemons, status bars, etc.)
+exec blueman-manager
+exec waybar
+exec polkit-gnome-authentication-agent-1
+#exec $terminal
+#exec nm-applet
 
 # Startup
 #assign [app_id="terminal1"] workspace number 2
 #assign [app_id="qutebrowser"] workspace number 3
 #assign [app_id="codium-url-handler"] workspace number 4
-
 #exec foot --class "terminal1" &
 #exec qutebrowser &
 #exec codium --ozone-platform-hint=auto &

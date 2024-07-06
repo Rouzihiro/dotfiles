@@ -28,3 +28,5 @@ alias psg='ps aux | grep'
 #
 alias weatherHH="curl -4 http://wttr.in/Hamburg"
 alias weather="curl -4 http://wttr.in/"
+#
+alias rey-git='mksh /home/rey/dotfiles/scripts/rey-git.sh'
