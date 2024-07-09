@@ -1,0 +1,15 @@
+wal -i ~/user/wallpapers/A.jpg
+
+Sway config:
+set $wal_colors ~/.cache/wal/colors-sway
+include $wal_colors
+
+For waybar:
+ln -sf ~/.cache/wal/colors-waybar.css ~/dotfiles/.config/waybar/style.css
+
+THEME for thunar etc
+wal -i ~/user/wallpapers/A.jpg --theme
+
+Gtk settings ini
+[Settings]
+gtk-theme-name = "wal"

@@ -1,0 +1,203 @@
+* {
+    border: none;
+    border-radius: 0px;
+    font-family: UbuntuSansMono Nerd Font;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+window#waybar {
+    background-color: rgba(35, 35, 35, 1);
+    border-bottom: 0px solid rgba(191, 199, 202, 0.5);
+    color: #969696;
+    transition-property: background-color;
+    transition-duration: .5s;
+    border-radius: 0px;
+}
+
+window#waybar.hidden {
+    opacity: 0;
+}
+
+window#waybar.empty #window {
+    background: none;
+}
+
+#workspaces button {
+    padding: 2px 10px;
+    margin-right: 5px;
+    background-color: transparent;
+    color: #969696;
+    box-shadow: inset 0px -0px transparent;
+    border-radius: 0px;
+}
+
+#workspaces button:hover {
+    padding: 2px 10px;
+    margin-right: 5px;
+    background: rgba(80, 80, 80, 0.7);
+    color: #ffffff;
+    box-shadow: inset 0px -0px #ffffff;
+    outline-style: none;
+    text-shadow: none;
+}
+
+#workspaces button.focused {
+    padding: 2px 10px;
+    margin-right: 5px;
+    background-color: #404040;
+    color: #fffff0;
+    box-shadow: inset 0px -0px #000000;
+    outline-style: none;
+    text-shadow: none;
+}
+
+#workspaces button.urgent {
+    padding: 2px 10px;
+    margin-right: 5px;
+    background-color: #ff8f88;
+    color: #ffffff;
+    outline-style: none;
+    text-shadow: none;
+}
+
+#battery,
+#cpu,
+#memory,
+#temperature,
+#backlight,
+#network,
+#pulseaudio,
+#custom-media,
+#tray,
+#mode,
+#custom-date,
+#custom-usbdrive,
+#custom-maildir,
+#custom-power,
+#custom-emacsd,
+#custom-tabletmode,
+#scratchpad,
+#window,
+#mpd,
+#idle_inhibitor,
+#idle_inhibitor.activated,
+#taskbar button,
+#taskbar button.active {
+    padding: 0px 7px;
+    margin: 4px 5px;
+    color: #ffffff;
+    background-color: #404040;
+    border-radius: 5px;
+}
+
+#mode {
+    background-color: #ff5f5f;
+    color: #ffffff;
+}
+
+#scratchpad {
+    background-color: #404040;
+    border-radius: 0px;
+    margin: 0px 5px;
+}
+
+#scratchpad.empty {
+    background-color: transparent;
+    border-radius: 0px;
+    color: #969696;
+}
+
+#window {
+    border-radius: 0px;
+    background-color: #bfc7ca;
+    font-family: Ubuntu;
+    font-size: 16px;
+    font-weight: normal;
+    margin: 0px 5px;
+}
+
+.modules-left > widget:first-child > #workspaces {
+    margin-left: 0;
+}
+
+.modules-right > widget:last-child > #workspaces {
+    margin-right: 0;
+}
+
+#battery.charging {
+    background-color: #707070;
+}
+
+@keyframes blink {
+    to {
+        background-color: #ffffff;
+        color: #eee8d5;
+    }
+}
+
+#battery.critical:not(.charging) {
+    background-color: #ff5f5f;
+    color: #ffffff;
+    animation-name: blink;
+    animation-duration: 0.5s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+
+label:focus {
+    background-color: #969696;
+}
+
+#network.disconnected {
+    color: #ffffff;
+    background-color: #ff5f5f;
+}
+
+#pulseaudio {
+}
+
+#pulseaudio.muted {
+    color: #969696;
+}
+
+#temperature {
+}
+
+#temperature.critical {
+    color: #ffffff;
+    background-color: #ff5f5f;
+}
+
+#idle_inhibitor {
+    color: #969696;
+}
+
+#idle_inhibitor.activated {
+    box-shadow: inset 0px 0px #ecF0F1;
+}
+
+#mpd.stopped {
+    color: #969696;
+}
+
+#custom-maildir {
+    color: #969696;
+}
+
+
+#custom-maildir.newmail {
+    color: #1177aa;
+}
+
+#taskbar button.active {
+    background-color: #404040;
+}
+
+#taskbar,
+#taskbar button,
+#taskbar button maximized,
+#custom-date {
+    background-color: #232323;
+}

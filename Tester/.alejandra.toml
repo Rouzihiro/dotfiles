@@ -1,0 +1,12 @@
+# .alejandra.toml
+
+# This section configures the formatter settings
+[formatter]
+# Number of spaces for indentation
+indentation = 2
+
+# Maximum line length for formatted code
+max_line_length = 80
+
+# Additional options can be added here
+# For example, you could have specific rules for certain constructs

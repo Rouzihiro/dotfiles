@@ -1,6 +1,31 @@
 # Logo key. Use Mod1 for Alt.
 set $mod Mod4
 
+# ----------------------------------------------------
+
+#pywal integration
+set $wal_colors ~/.cache/wal/colors-sway
+include $wal_colors
+
+# Window border
+default_border pixel 1
+
+# gaps between windows
+smart_gaps on
+gaps inner 8
+
+
+# ----------------------------------------------------
+
+# bar {
+#     status_command i3status
+#     tray_padding 4
+#     position top
+#     separator_symbol "|"
+# }
+
+# ----------------------------------------------------
+
 # Home row direction keys, like vim
 set $left h
 set $down j
@@ -16,7 +41,6 @@ set $menu rofi -no-lazy-grab -show drun
 # Runners
 bindsym $mod+f exec $fileManager
 bindsym $mod+b exec $browser
-#bindsym $mod+Tab floating toggle
 bindsym $mod+space exec $menu
 
 # Example command with complex exec (adjust according to your setup)
@@ -39,14 +63,13 @@ client.background       #ffffff
 default_border pixel 1
 
 # Wallpaper
-output * bg /home/rey/user/wallpapers/A.png fill
+output * bg /home/rey/user/wallpapers/A.jpg fill
 
 # Key bindings
     # Start a terminal
     bindsym $mod+Return exec $terminal
 
     # Kill focused window
-    bindsym $mod+Shift+q kill
     bindsym $mod+q kill
 
     # Drag floating windows by holding down $mod and left mouse button.
@@ -59,11 +82,13 @@ output * bg /home/rey/user/wallpapers/A.png fill
     # Reload the configuration file
     bindsym $mod+Shift+c reload
 
-    # Screenshots
+    # swaylock
+    bindsym $mod+alt+l exec swaylock
+
+   # Screenshots
    bindsym $mod+s exec grim  -g "$(slurp)" ~/Pictures/screenshots/screenshot-$(date +'%H:%M:%S.png')
 
-
-# Moving around:
+    # Moving around:
     # Move your focus around
     bindsym $mod+$left focus left
     bindsym $mod+$down focus down
@@ -86,7 +111,7 @@ output * bg /home/rey/user/wallpapers/A.png fill
     bindsym $mod+Shift+Up move up
     bindsym $mod+Shift+Right move right
 
-# Workspaces:    
+    # Workspaces:    
     # Switch to workspace
     bindsym $mod+1 workspace number 1
     bindsym $mod+2 workspace number 2
@@ -126,9 +151,10 @@ bindsym $mod+g exec wl-copy ""
 
     # Toggle the current focus between tiling and floating mode
     bindsym $mod+Shift+space floating toggle
+    bindsym $mod+Tab floating toggle
 
-# Resizing containers:
-mode "resize" {
+    # Resizing containers:
+    mode "resize" {
     bindsym $left resize shrink width 10px
     bindsym $down resize grow height 10px
     bindsym $up resize shrink height 10px
@@ -160,19 +186,14 @@ input * {
 exec blueman-manager
 exec waybar
 exec polkit-gnome-authentication-agent-1
-#exec $terminal
-#exec nm-applet
 
-# Startup
-#assign [app_id="terminal1"] workspace number 2
-#assign [app_id="qutebrowser"] workspace number 3
-#assign [app_id="codium-url-handler"] workspace number 4
-#exec foot --class "terminal1" &
-#exec qutebrowser &
-#exec codium --ozone-platform-hint=auto &
+#exec nm-applet
 
 #Window rules
 #for_window [app_id="com.github.finefindus.eyedropper"] floating enable
+
+# SwayNotificationCenter
+exec_always --no-startup-id swaync
 
 # Fixes
 exec dbus-sway-environment

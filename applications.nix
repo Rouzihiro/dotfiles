@@ -1,5 +1,10 @@
 { config, pkgs, ... }:
 {
+  imports =
+    [ # Include the results of the hardware scan.
+       ./pywal.nix
+
+    ];
 
  #Allow unfree packages
  nixpkgs.config.allowUnfree = true;
@@ -12,8 +17,13 @@
   # $ nix search wget
   environment.systemPackages = with pkgs; [
 
+qutebrowser
+librewolf
+vivaldi
+falkon
 #alacritty                   # Terminal emulator
 #alsa-utils                  # Advanced Linux Sound Architecture (ALSA) utilities
+#alejandra
 #appimage-run                # Run AppImages
 #appimagekit                 # AppImage tool
 #audacious                   # Audio player
@@ -64,6 +74,7 @@ git                          # Version control
 #glxinfo                     # OpenGL info tool
 #gnumake                     # Build automation tool
 #grim                        # Screenshot utility
+#i3status
 imv                          # Image viewer
 imagemagick                  # Image manipulation
 #korganizer                  # Calendar
@@ -74,6 +85,7 @@ libreoffice-qt               # Office suite (QT)
 #libsecret                   # keyring / password store
 lxtask                       # Lightweight task manager
 #llvm                        # Compiler infrastructure
+media-downloader
 mksh                         # MirBSD Korn Shell
 mpv                          # Media player
 neofetch                     # System information
@@ -91,6 +103,7 @@ osmo                         # Calendar - best so far
 #pciutils                    # PCI device utilities
 pdfarranger                  # PDF editor
 #podman                      # Container engine
+#polybar
 #plymouth                    # Boot splash screen
 #powershell                  # Command-line shell
 #protonup-ng                 # ProtonUp tool
@@ -122,6 +135,7 @@ vlc                          # Media player
 #wget                        # Download utility
 #xclip                       # Clipboard tool
 #xorg.xinit                  # X Window System initializer
+yt-dlp
 #ytmdesktop                  # YouTube Music desktop
 yazi                         # Best Program EVER
 zathura                      # Lightweight PDF viewer

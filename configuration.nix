@@ -54,7 +54,7 @@
   # Enable the X11 windowing system and related settings.
   services.xserver = {
     enable = true;
-    layout = "de";
+    xkb.layout = "de";
     xkb.variant = "";
   };
 

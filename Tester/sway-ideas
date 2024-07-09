@@ -1,0 +1,27 @@
+# Set the cursor theme
+exec_always --no-startup-id swaymsg seat seat0 cursor theme Notwaita-White 24
+
+# Import environment variables
+exec_always --no-startup-id systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
+exec_always --no-startup-id dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
+
+# Launch the NetworkManager applet
+exec_always --no-startup-id nm-applet
+
+# Start the power alert daemon
+exec_always --no-startup-id poweralertd
+
+# Inhibit idle actions using PipeWire
+exec_always --no-startup-id wayland-pipewire-idle-inhibit
+
+# Start the Mako notification daemon
+exec_always --no-startup-id mako
+
+# Start the Polkit GNOME Authentication Agent
+exec_always --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
+
+# Uncomment and modify the following lines as needed
+# exec_always --no-startup-id sh ~/.config/sway/scripts/nvidia.sh
+# exec_always --no-startup-id rog-control-center
+# exec_always --no-startup-id ~/.config/sway/scripts/gamemode
+# exec_always --no-startup-id wal -R

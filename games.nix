@@ -53,8 +53,8 @@
   programs.gamemode.enable = true;   # Enable GameMode for better performance
 
   # Additional tweaks
-  hardware.opengl.driSupport32Bit = true;  # Enable 32-bit support for OpenGL
-  hardware.opengl.enable = true;  # Enable OpenGL support for games
+  hardware.graphics.enable32Bit = true;  # Enable 32-bit support for OpenGL
+  hardware.graphics.enable = true;  # Enable OpenGL support for games
 
   # Enable MangoHud for overlay with game performance metrics
   # services.mangohud = {

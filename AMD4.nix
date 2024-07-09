@@ -6,8 +6,8 @@
   services.xserver.enable = true;
   services.xserver.videoDrivers = [ "amdgpu" ];
 
-  hardware.opengl.driSupport32Bit = true;
-
+ # hardware.opengl.driSupport32Bit = true;
+  hardware.graphics.enable32Bit = true;
 
   # Vulkan development tools and headers
   environment.systemPackages = with pkgs; [

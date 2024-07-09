@@ -30,3 +30,33 @@ alias weatherHH="curl -4 http://wttr.in/Hamburg"
 alias weather="curl -4 http://wttr.in/"
 #
 alias rey-git='mksh /home/rey/dotfiles/scripts/rey-git.sh'
+#
+alias rey-script-permission='mksh /home/rey/dotfiles/scripts/script-folder-permission.sh'
+#
+alias rey-youtube-downloader='mksh /home/rey/dotfiles/scripts/youtube-downloader.sh'
+#
+alias cls='clear'
+alias md='mkdir'
+#
+alias ls='ls --group-directories-first --color=always'
+alias lsa='ls --group-directories-first --color=always --all'
+alias ll='ls --group-directories-first --color=always -hl'
+alias lla='ls --group-directories-first --color=always -hl --all'
+
+alias tree='tree --dirsfirst'
+
+# zsh completion
+#autoload -Uz compinit && compinit
+
+# menu for completion
+#zstyle ':completion:*' menu select
+
+# disable case sensitive
+#zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
+
+# enable colors
+#zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
+
+# plugins
+#source ~/.plugins/zdharma-continuum/fast-syntax-highlighting/fast-syntax-highlighting>
+#source ~/.plugins/zsh-users/zsh-autosuggestions/zsh-autosuggestions.zsh
