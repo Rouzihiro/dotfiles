@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{  ... }:
 
 {
   programs.fastfetch = {
@@ -6,7 +6,7 @@
     settings = {
       "$schema" = "https://github.com/fastfetch-cli/fastfetch/raw/dev/doc/json_schema.json";
       logo = {
-        source = "$(find \"$HOME/Pictures/lockscreen/\" -name \"*.png\" | sort -R | head -1)";
+        source = "$(find \"$HOME/Pictures/avatars/\" -name \"*.png\" | sort -R | head -1)";
         height = 18;
       };
       display = {
