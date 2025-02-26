@@ -17,6 +17,7 @@ in
       "x-scheme-handler/https" = "${browser-light}.desktop";
       "application/pdf" = "${pdfViewer}.desktop";
       "video/mp4" = "${videoPlayer}.desktop";
+      "video/mpeg" = "${videoPlayer}.desktop";
       "video/webm" = "${videoPlayer}.desktop";
       "video/avi" = "${videoPlayer}.desktop";
       "video/mkv" = "${videoPlayer}.desktop";
