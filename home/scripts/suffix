@@ -1,0 +1,63 @@
+#!/bin/sh
+
+files_to_rename=(*.*)
+
+if [[ ${#files_to_rename[@]} -gt 0 ]]; then
+  echo "The following files will be renamed:"
+  printf "%s\n" "${files_to_rename[@]}"
+
+  echo "Choose a suffix to add:"
+  echo "e) (ENG)"
+  echo "j) (JPN)"
+  echo "g) (GER)"
+  echo "d) (ENG, JPN)"
+  echo "o) Other (custom suffix)"
+  echo -n "Select option (e/j/g/d/o): "
+  read choice
+
+  case "$choice" in
+  e)
+    suffix="(ENG)"
+    ;;
+  j)
+    suffix="(JPN)"
+    ;;
+  g)
+    suffix="(GER)"
+    ;;
+  d)
+    suffix="(ENG, JPN)"
+    ;;
+  o)
+    echo -n "Enter the custom suffix: "
+    read suffix
+    ;;
+  *)
+    echo "Invalid choice, no suffix added."
+    suffix=""
+    ;;
+  esac
+
+  if [[ -n "$suffix" ]]; then
+    echo "Proceed with renaming? (y/n): "
+    read proceed_choice
+    if [[ "$proceed_choice" =~ ^[Yy]$ ]]; then
+      for file in "${files_to_rename[@]}"; do
+        extension="${file##*.}"
+        base_name="${file%.*}"
+        new_name="${base_name} ${suffix}.${extension}"
+
+        if [[ "$file" != "$new_name" ]]; then
+          mv "$file" "$new_name"
+          echo "Renamed '$file' to '$new_name'"
+        fi
+      done
+    else
+      echo "Renaming cancelled."
+    fi
+  else
+    echo "No suffix added, renaming cancelled."
+  fi
+else
+  echo "No files to rename."
+fi

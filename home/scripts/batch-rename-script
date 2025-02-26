@@ -1,0 +1,220 @@
+#!/bin/sh
+
+# Enable extended globbing
+setopt extended_glob
+
+# Function to check if we have write permission
+check_permissions() {
+    local dir="."
+    if [[ ! -w "$dir" ]]; then
+        echo "Error: No write permission in current directory"
+        return 1
+    fi
+    return 0
+}
+
+# Function to get only files (no directories)
+get_files() {
+    for f in *; do
+        if [[ -f "$f" ]]; then
+            echo "$f"
+        fi
+    done
+}
+
+# Function to remove first N characters
+remove_first() {
+    local n="$1"
+    
+    if ! check_permissions; then
+        return 1
+    fi
+    
+    echo "Previewing changes for removing first $n characters (preserving extensions):"
+    get_files | while read file; do
+        # Split into basename and extension
+        local ext="${file##*.}"
+        local basename="${file%.*}"
+        # Only modify basename
+        local new_basename="${basename:$n}"
+        local new_name="$new_basename.$ext"
+        echo "$file → $new_name"
+    done
+    
+    echo "Proceed with rename? (y/n): "
+    read answer
+    if [[ $answer == "y" || $answer == "Y" ]]; then
+        get_files | while read file; do
+            local ext="${file##*.}"
+            local basename="${file%.*}"
+            local new_basename="${basename:$n}"
+            local new_name="$new_basename.$ext"
+            if mv "$file" "$new_name" 2>/dev/null; then
+                echo "Renamed: $file → $new_name"
+            else
+                echo "Error: Failed to rename $file (Permission denied)"
+            fi
+        done
+    fi
+}
+
+# Function to remove last N characters
+remove_last() {
+    local n="$1"
+    
+    if ! check_permissions; then
+        return 1
+    fi
+    
+    echo "Previewing changes for removing last $n characters (preserving extensions):"
+    get_files | while read file; do
+        local ext="${file##*.}"
+        local basename="${file%.*}"
+        local len=$((${#basename} - $n))
+        local new_basename="${basename:0:$len}"
+        local new_name="$new_basename.$ext"
+        echo "$file → $new_name"
+    done
+    
+    echo "Proceed with rename? (y/n): "
+    read answer
+    if [[ $answer == "y" || $answer == "Y" ]]; then
+        get_files | while read file; do
+            local ext="${file##*.}"
+            local basename="${file%.*}"
+            local len=$((${#basename} - $n))
+            local new_basename="${basename:0:$len}"
+            local new_name="$new_basename.$ext"
+            if mv "$file" "$new_name" 2>/dev/null; then
+                echo "Renamed: $file → $new_name"
+            else
+                echo "Error: Failed to rename $file (Permission denied)"
+            fi
+        done
+    fi
+}
+
+# Function to remove a pattern
+remove_pattern() {
+    local pattern="$1"
+    
+    if ! check_permissions; then
+        return 1
+    fi
+    
+    echo "Previewing changes for removing pattern '$pattern' (preserving extensions):"
+    get_files | while read file; do
+        local ext="${file##*.}"
+        local basename="${file%.*}"
+        local new_basename="${basename//$pattern/}"
+        local new_name="$new_basename.$ext"
+        echo "$file → $new_name"
+    done
+    
+    echo "Proceed with rename? (y/n): "
+    read answer
+    if [[ $answer == "y" || $answer == "Y" ]]; then
+        get_files | while read file; do
+            local ext="${file##*.}"
+            local basename="${file%.*}"
+            local new_basename="${basename//$pattern/}"
+            local new_name="$new_basename.$ext"
+            if mv "$file" "$new_name" 2>/dev/null; then
+                echo "Renamed: $file → $new_name"
+            else
+                echo "Error: Failed to rename $file (Permission denied)"
+            fi
+        done
+    fi
+}
+
+# Function to replace a pattern
+replace_pattern() {
+    local old_pattern="$1"
+    local new_pattern="$2"
+    
+    if ! check_permissions; then
+        return 1
+    fi
+    
+    echo "Previewing changes for replacing '$old_pattern' with '$new_pattern' (preserving extensions):"
+    get_files | while read file; do
+        local ext="${file##*.}"
+        local basename="${file%.*}"
+        local new_basename="${basename//$old_pattern/$new_pattern}"
+        local new_name="$new_basename.$ext"
+        echo "$file → $new_name"
+    done
+    
+    echo "Proceed with rename? (y/n): "
+    read answer
+    if [[ $answer == "y" || $answer == "Y" ]]; then
+        get_files | while read file; do
+            local ext="${file##*.}"
+            local basename="${file%.*}"
+            local new_basename="${basename//$old_pattern/$new_pattern}"
+            local new_name="$new_basename.$ext"
+            if mv "$file" "$new_name" 2>/dev/null; then
+                echo "Renamed: $file → $new_name"
+            else
+                echo "Error: Failed to rename $file (Permission denied)"
+            fi
+        done
+    fi
+}
+
+# Interactive menu
+show_menu() {
+    echo "Working in current directory: $(pwd)"
+    echo "Files found: $(get_files | tr '\n' ' ')"
+    echo "\n"
+    
+    while true; do
+        echo "Batch Rename Utility (preserving extensions)"
+        echo "1. Remove first N characters"
+        echo "2. Remove last N characters"
+        echo "3. Remove pattern"
+        echo "4. Replace pattern"
+        echo "5. Exit"
+        echo "Choose an option (1-5): "
+        read choice
+        
+        case $choice in
+            1)
+                echo "Enter number of characters to remove from start: "
+                read n
+                remove_first "$n"
+                ;;
+            2)
+                echo "Enter number of characters to remove from end: "
+                read n
+                remove_last "$n"
+                ;;
+            3)
+                echo "Enter pattern to remove: "
+                read pattern
+                remove_pattern "$pattern"
+                ;;
+            4)
+                echo "Enter pattern to find: "
+                read old_pattern
+                echo "Enter pattern to replace with: "
+                read new_pattern
+                replace_pattern "$old_pattern" "$new_pattern"
+                ;;
+            5)
+                echo "Goodbye!"
+                exit 0
+                ;;
+            *)
+                echo "Invalid option. Please try again."
+                ;;
+        esac
+        
+        echo "\nFiles in current directory: $(get_files | tr '\n' ' ')"
+        echo "\n"
+    done
+}
+
+# Start the interactive menu
+show_menu

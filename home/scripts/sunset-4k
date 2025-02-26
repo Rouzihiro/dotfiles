@@ -1,0 +1,9 @@
+#!/bin/sh
+
+# Kill any existing instances of hyprsunset
+killall hyprsunset
+
+# Set sunset value to 4000 and run hyprsunset
+hyprsunset -t 4000 &
+disown
+

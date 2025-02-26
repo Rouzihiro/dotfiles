@@ -1,0 +1,7 @@
+#!/bin/sh
+
+# Get the clipboard history and display it using wofi
+wl-paste -l | grep -v '^$' | while read -r line; do
+  wl-paste -t "$line"
+done | wofi --dmenu --prompt="Clipboard history:" | wl-copy
+

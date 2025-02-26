@@ -1,0 +1,8 @@
+#!/bin/sh
+# Switch to workspace 5
+i3-msg workspace 5
+# Wait a bit for the workspace switch to take effect
+sleep 1
+# Create a playlist with all mp4 files in the folder and pass them to VLC
+find ~/Videos/fireplace/ -type f -name "*.mp4" | xargs vlc --fullscreen --loop &
+

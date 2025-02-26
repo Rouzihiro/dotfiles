@@ -1,0 +1,25 @@
+#!/bin/sh
+
+BATTERY_DIR="/sys/class/power_supply/BAT0"
+CAPACITY=$(cat "$BATTERY_DIR/capacity")
+STATUS=$(cat "$BATTERY_DIR/status")
+
+# Battery icon selection based on charge level
+if [ "$STATUS" = "Charging" ]; then
+    ICON="󰂄"
+elif [ "$CAPACITY" -le 10 ]; then
+    ICON="󰁺"
+elif [ "$CAPACITY" -le 20 ]; then
+    ICON="󰁻"
+elif [ "$CAPACITY" -le 40 ]; then
+    ICON="󰁽"
+elif [ "$CAPACITY" -le 60 ]; then
+    ICON="󰁿"
+elif [ "$CAPACITY" -le 80 ]; then
+    ICON="󰂁"
+else
+    ICON="󰂂"
+fi
+
+echo "$ICON $CAPACITY% ($STATUS)"
+

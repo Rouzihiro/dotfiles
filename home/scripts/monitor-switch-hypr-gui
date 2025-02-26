@@ -1,0 +1,59 @@
+#!/bin/sh
+
+# Variables
+LAPTOP_MONITOR="eDP-1"
+EXTERNAL_MONITOR="HDMI-A-1"
+RESOLUTION="1920x1080@60"
+
+# Function to configure a monitor
+set_monitor_config() {
+    local monitor="$1"
+    hyprctl keyword monitor "$monitor, $RESOLUTION, 0x0, 1"
+}
+
+# Function to disable a monitor
+disable_monitor() {
+    local monitor="$1"
+    hyprctl keyword monitor "$monitor, disable"
+}
+
+# Function to handle laptop-only mode
+laptop_mode() {
+    disable_monitor "$EXTERNAL_MONITOR"
+    set_monitor_config "$LAPTOP_MONITOR"
+    notify-send "Monitor Switch" "Switched to laptop screen only."
+}
+
+# Function to handle external-only mode
+external_mode() {
+    disable_monitor "$LAPTOP_MONITOR"
+    set_monitor_config "$EXTERNAL_MONITOR"
+    notify-send "Monitor Switch" "Switched to external screen only."
+}
+
+# Function to handle dual monitor mode
+dual_mode() {
+    set_monitor_config "$LAPTOP_MONITOR"
+    set_monitor_config "$EXTERNAL_MONITOR"
+    notify-send "Monitor Switch" "Switched to dual monitor mode."
+}
+
+# Use Wofi to get user choice
+choice=$(echo -e "Laptop screen only\nExternal screen only\nDual monitors" | wofi --dmenu --prompt "Select monitor setup")
+
+case "$choice" in
+    "Laptop screen only")
+        laptop_mode
+        ;;
+    "External screen only")
+        external_mode
+        ;;
+    "Dual monitors")
+        dual_mode
+        ;;
+    *)
+        notify-send "Monitor Switch" "No valid option selected. Exiting."
+        exit 1
+        ;;
+esac
+

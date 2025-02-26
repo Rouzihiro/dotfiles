@@ -1,0 +1,20 @@
+#!/bin/sh
+
+shopt -s extglob  # Enable extended globbing
+
+# Loop through all video files
+for file in *.{avi,mp4,mkv,flv,webm}; do
+    if [[ -e "$file" ]]; then
+        echo "Checking for Corruption in: $file"
+        output_file="errors_$(basename "$file" .${file##*.}).txt"
+        ffmpeg -v error -i "$file" -f null - 2> "$output_file"
+        if [[ -s "$output_file" ]]; then
+            echo "Corruption found in $file. Check $output_file."
+        else
+            echo "No corruption found in $file."
+            rm "$output_file"
+        fi
+        echo "-------------------------"
+    fi
+done
+

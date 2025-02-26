@@ -1,0 +1,33 @@
+#!/bin/sh
+
+# Function to show disk space for a specific directory
+show_space() {
+  echo "Disk space for the current directory:"
+  df -h .
+}
+
+# Function to show disk space for all mounted drives
+show_all_spaces() {
+  echo "Disk space for all mounted drives:"
+  df -h
+}
+
+# Prompt the user for what they want to check
+echo "What would you like to see?"
+echo "1) Disk space for the local drive (current directory)"
+echo "2) Disk space for all mounted drives"
+read -r choice
+
+# Act based on user input
+case $choice in
+  1)
+    show_space
+    ;;
+  2)
+    show_all_spaces
+    ;;
+  *)
+    echo "Invalid choice. Please enter 1 or 2."
+    ;;
+esac
+

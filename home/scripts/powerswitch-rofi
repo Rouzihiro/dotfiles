@@ -1,0 +1,18 @@
+#!/bin/sh
+
+# Define actions
+suspend="systemctl suspend && hyprlock -i ~/Pictures/lock.png"
+logout="killall Hyprland"
+
+# Display the power menu using Rofi
+chosen=$(printf "Log Out\nSuspend\nRestart\nPower OFF" | rofi -dmenu -p "Power Menu:")
+
+# Perform the selected action
+case "$chosen" in
+    "Log Out") $logout ;;
+    "Suspend") eval $suspend ;;
+    "Restart") systemctl reboot ;;
+    "Power OFF") systemctl poweroff ;;
+    *) exit 1 ;;
+esac
+

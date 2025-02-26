@@ -1,0 +1,11 @@
+# Ignore apps folder and all subfolders
+apps/
+home-manager/secrets/
+# Other common files to ignore
+*.log
+*.bak
+node_modules/
+.DS_Store
+*result*
+
+

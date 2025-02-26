@@ -1,0 +1,52 @@
+#!/bin/zsh
+
+files_to_rename=()
+
+for file in *.*; do
+  if [[ "$file" =~ [sS]([0-9]{1,2})[eE]([0-9]{2}) ]]; then
+    season=$(printf "%02d" ${match[1]})
+    episode=$(printf "%02d" ${match[2]})
+    extension="${file##*.}"
+    new_name="S${season}E${episode}.${extension}"
+  elif [[ "$file" =~ ([0-9]{1,2})x([0-9]{2}) ]]; then
+    season=$(printf "%02d" ${match[1]})
+    episode=$(printf "%02d" ${match[2]})
+    extension="${file##*.}"
+    new_name="S${season}E${episode}.${extension}"
+  fi
+
+  if [[ -n "$new_name" && "$file" != "$new_name" ]]; then
+    files_to_rename+=("$file -> $new_name")
+  fi
+done
+
+if [[ ${#files_to_rename[@]} -gt 0 ]]; then
+  echo "The following files will be renamed:"
+  printf "%s\n" "${files_to_rename[@]}"
+  echo "Proceed with renaming? (y/n): "
+  read choice
+  if [[ "$choice" =~ ^[Yy]$ ]]; then
+    for file in *.*; do
+      if [[ "$file" =~ [sS]([0-9]{1,2})[eE]([0-9]{2}) ]]; then
+        season=$(printf "%02d" ${match[1]})
+        episode=$(printf "%02d" ${match[2]})
+        extension="${file##*.}"
+        new_name="S${season}E${episode}.${extension}"
+      elif [[ "$file" =~ ([0-9]{1,2})x([0-9]{2}) ]]; then
+        season=$(printf "%02d" ${match[1]})
+        episode=$(printf "%02d" ${match[2]})
+        extension="${file##*.}"
+        new_name="S${season}E${episode}.${extension}"
+      fi
+
+      if [[ -n "$new_name" && "$file" != "$new_name" ]]; then
+        mv "$file" "$new_name"
+        echo "Renamed '$file' to '$new_name'"
+      fi
+    done
+  else
+    echo "Renaming cancelled."
+  fi
+else
+  echo "No files to rename."
+fi

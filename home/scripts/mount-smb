@@ -1,0 +1,19 @@
+#!/bin/sh
+
+# Ensure the mount point exists
+mkdir -p ~/mount/fritz/
+
+# Check if already mounted
+if ! mount | grep -q "$HOME/mount/fritz/"; then
+  # Mount the SMB share if not already mounted
+  sudo mount -t cifs //192.168.178.1/FRITZ.NAS ~/mount/fritz -o credentials=~/secrets/fritz_creds,uid=1000,gid=990,file_mode=0777,dir_mode=0777
+else
+  echo "Share already mounted."
+fi
+
+# manual procedere in case script doesnt work:
+# sudo mount -t cifs //192.168.178.1/FRITZ.NAS /mnt/FRITZ_NAS -o credentials=/etc/samba/creds,uid=1000,gid=990,file_mode=0777,dir_mode=0777
+
+# Consider adding vers=3.0: If you're having compatibility issues or if SMB version 2 is problematic, adding vers=3.0 can sometimes help with newer SMB servers:
+
+#sudo mount -t cifs //192.168.178.1/FRITZ.NAS /mnt/FRITZ_NAS -o credentials=/etc/samba/creds,uid=1000,gid=990,file_mode=0777,dir_mode=0777,vers=3.0

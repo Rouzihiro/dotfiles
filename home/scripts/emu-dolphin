@@ -1,0 +1,7 @@
+#!/bin/sh
+
+# Launch Dolphin Emulator in X11 mode using Gamescope
+gamescope -W 1920 -H 1080 -f -- bash -c "QT_QPA_PLATFORM=xcb dolphin-emu"
+
+# gamescope -f -- steam
+

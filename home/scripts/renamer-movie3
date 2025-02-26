@@ -1,0 +1,83 @@
+#!/bin/sh
+
+# Function to rename files by removing a specific pattern
+remove_pattern() {
+    echo "Enter the pattern to remove:"
+    read pattern
+    for file in *; do
+        if [ -f "$file" ]; then
+            # Check if the pattern exists in the filename
+            new_name=$(echo "$file" | sed "s/$pattern//g")
+            if [ "$file" != "$new_name" ]; then
+                mv -- "$file" "$new_name"
+            fi
+        fi
+    done
+}
+
+# Function to remove the first X digits
+remove_start_digits() {
+    echo "Enter the number of digits to remove from the start:"
+    read digits
+    for file in *; do
+        if [ -f "$file" ]; then
+            # Remove the first X digits
+            new_name=$(echo "$file" | sed "s/^[0-9]\{$digits\}//")
+            if [ "$file" != "$new_name" ]; then
+                mv -- "$file" "$new_name"
+            fi
+        fi
+    done
+}
+
+# Function to remove the last X digits
+remove_end_digits() {
+    echo "Enter the number of digits to remove from the end:"
+    read digits
+    for file in *; do
+        if [ -f "$file" ]; then
+            # Remove the last X digits
+            new_name=$(echo "$file" | sed "s/[0-9]\{$digits\}$//")
+            if [ "$file" != "$new_name" ]; then
+                mv -- "$file" "$new_name"
+            fi
+        fi
+    done
+}
+
+# Function to remove special characters
+remove_special_chars() {
+    echo "Removing special characters..."
+    for file in *; do
+        if [ -f "$file" ]; then
+            # Remove special characters
+            new_name=$(echo "$file" | sed 's/[^a-zA-Z0-9._-]//g')
+            if [ "$file" != "$new_name" ]; then
+                mv -- "$file" "$new_name"
+            fi
+        fi
+    done
+}
+
+# Main menu loop
+while true; do
+    echo "Choose an option:"
+    echo "1) Remove Pattern"
+    echo "2) Remove X Start Digits"
+    echo "3) Remove X End Digits"
+    echo "4) Remove Special Characters"
+    echo "5) Remove Pattern (Again)"
+    echo "6) Exit"
+    read choice
+
+    case $choice in
+        1) remove_pattern ;;
+        2) remove_start_digits ;;
+        3) remove_end_digits ;;
+        4) remove_special_chars ;;
+        5) remove_pattern ;;
+        6) exit ;;
+        *) echo "Invalid option, please try again." ;;
+    esac
+done
+

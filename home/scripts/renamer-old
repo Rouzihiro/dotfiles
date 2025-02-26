@@ -1,0 +1,87 @@
+#!/bin/sh
+
+# Prompt for folder using a larger Wofi window
+FOLDER=$(wofi --dmenu --prompt "Select folder" --width 1000 --height 800 --allow-markup <<< "$(ls -d */)")
+[ -z "$FOLDER" ] && echo "No folder selected. Exiting." && exit 1
+
+# Ensure the folder exists
+if [ ! -d "$FOLDER" ]; then
+    echo "Folder does not exist. Exiting."
+    exit 1
+fi
+
+# List actions in Wofi with a larger window
+while :; do
+    ACTION=$(wofi --dmenu --prompt "Select renaming action" --width 1000 --height 800 --allow-markup <<< "1) Remove Digits from Start
+2) Remove Digits from End
+3) Remove Pattern
+4) Remove Symbols
+5) Done")
+    [ -z "$ACTION" ] && echo "No action selected. Exiting." && exit 1
+
+    case "$ACTION" in
+        "1) Remove Digits from Start")
+            DIGITS_START=$(wofi --dmenu --prompt "Enter number of digits to remove from start" --width 1000 --height 800)
+            [ -z "$DIGITS_START" ] && echo "No input. Skipping action." && continue
+            ACTIONS="$ACTIONS|DigitsStart:$DIGITS_START"
+            ;;
+        "2) Remove Digits from End")
+            DIGITS_END=$(wofi --dmenu --prompt "Enter number of digits to remove from end" --width 1000 --height 800)
+            [ -z "$DIGITS_END" ] && echo "No input. Skipping action." && continue
+            ACTIONS="$ACTIONS|DigitsEnd:$DIGITS_END"
+            ;;
+        "3) Remove Pattern")
+            PATTERN=$(wofi --dmenu --prompt "Enter pattern to remove" --width 1000 --height 800)
+            [ -z "$PATTERN" ] && echo "No input. Skipping action." && continue
+            ACTIONS="$ACTIONS|Pattern:$PATTERN"
+            ;;
+        "4) Remove Symbols")
+            SYMBOLS=$(wofi --dmenu --prompt "Enter symbols to remove" --width 1000 --height 800)
+            [ -z "$SYMBOLS" ] && echo "No input. Skipping action." && continue
+            ACTIONS="$ACTIONS|Symbols:$SYMBOLS"
+            ;;
+        "5) Done")
+            break
+            ;;
+    esac
+done
+
+[ -z "$ACTIONS" ] && echo "No renaming actions defined. Exiting." && exit 1
+
+# Process files and generate preview
+PREVIEW=""
+for FILE in "$FOLDER"/*; do
+    BASENAME=$(basename "$FILE")
+    NEW_NAME="$BASENAME"
+
+    for ACTION in $(echo "$ACTIONS" | tr '|' '\n'); do
+        case "$ACTION" in
+            DigitsStart:*)
+                DIGITS_START=$(echo "$ACTION" | cut -d: -f2)
+                NEW_NAME=$(echo "$NEW_NAME" | sed "s/^.\{$DIGITS_START\}//")
+                ;;
+            DigitsEnd:*)
+                DIGITS_END=$(echo "$ACTION" | cut -d: -f2)
+                NEW_NAME=$(echo "$NEW_NAME" | sed "s/.\{$DIGITS_END\}$//")
+                ;;
+            Pattern:*)
+                PATTERN=$(echo "$ACTION" | cut -d: -f2-)
+                NEW_NAME=$(echo "$NEW_NAME" | sed "s/$PATTERN//g")
+                ;;
+            Symbols:*)
+                SYMBOLS=$(echo "$ACTION" | cut -d: -f2)
+                NEW_NAME=$(echo "$NEW_NAME" | tr -d "$SYMBOLS")
+                ;;
+        esac
+    done
+
+    PREVIEW="$PREVIEW$BASENAME -> $NEW_NAME\n"
+    mv "$FILE" "$FOLDER/$NEW_NAME"
+done
+
+# Show preview and confirm
+echo -e "$PREVIEW" | wofi --dmenu --prompt "Preview changes (press Enter to apply)" --width 1000 --height 800 --allow-markup
+[ $? -ne 0 ] && echo "Renaming cancelled." && exit 1
+
+echo "Renaming completed. Files renamed in $FOLDER."
+

@@ -1,0 +1,55 @@
+#!/usr/bin/env fish
+
+# Universal extract script with better error handling and automatic overwrite
+function show_help
+  echo "Usage: extract <archive> [<archive2> ...]"
+  echo "Supported formats: .tar.gz, .tgz, .tar.bz2, .tbz2, .tar.xz, .txz, .zip, .gz, .bz2, .xz, .rar, .7z, .ecm"
+end
+
+if test (count $argv) -eq 0
+  show_help
+  exit 1
+end
+
+for file in $argv
+  echo "Extracting: $file"
+
+  set WORKING_DIR (dirname $file)
+  cd $WORKING_DIR || begin
+    echo "Error: Could not change directory to $WORKING_DIR" >&2
+    exit 1
+  end
+
+  switch $file
+    case '*.tar.gz' '*.tgz'
+      tar -xzvf $file
+    case '*.tar.bz2' '*.tbz2'
+      tar -xjvf $file
+    case '*.tar.xz' '*.txz'
+      tar -xJvf $file
+    case '*.zip'
+      unzip -o $file # -o for overwrite
+    case '*.gz'
+      gunzip -kv $file
+    case '*.bz2'
+      bunzip2 -kv $file
+    case '*.xz'
+      unxz -kv $file
+    case '*.rar'
+      unrar x -o+ $file # -o+ for overwrite
+    case '*.7z'
+      7z -y x $file # -y for yes to all (including overwrite)
+    case '*.ecm'
+      ecm2bin $file (string replace -r '\..*' '' $file).bin
+    case '*'
+      echo "Unsupported file type: $file" >&2
+      exit 2
+  end
+
+  cd - || begin
+    echo "Error: Could not return to original directory" >&2
+    exit 1
+  end
+  echo "Successfully extracted: $file"
+end
+

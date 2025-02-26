@@ -1,0 +1,36 @@
+#!/bin/sh
+
+# Loop through all movie files in the directory
+for file in *.*; do
+  # Extract the file extension
+  extension="${file##*.}"
+  
+  # Remove the extension to get the base name
+  base_name="${file%.*}"
+  
+  # Offer to replace underscores and dots (not the extension dot) with spaces
+  read -p "Do you want to replace underscores (_) and dots (.) (excluding the extension dot) with spaces in '$base_name'? (y/n): " replace_answer
+  if [[ "$replace_answer" =~ ^[Yy]$ ]]; then
+    # Replace underscores and dots (not the extension dot) with spaces
+    new_name=$(echo "$base_name" | sed -E 's/[_.]+/ /g')
+  else
+    new_name="$base_name"
+  fi
+  
+  # Ask for an additional pattern to replace
+  read -p "Enter any extra pattern to replace (or press Enter to skip): " extra_pattern
+  if [[ -n "$extra_pattern" ]]; then
+    # Ask for the replacement for the extra pattern
+    read -p "Enter the replacement for '$extra_pattern': " extra_replacement
+    # Replace the extra pattern with the provided replacement
+    new_name=$(echo "$new_name" | sed "s/$extra_pattern/$extra_replacement/g")
+  fi
+  
+  # Add the extension back to the new name
+  new_name="$new_name.$extension"
+  
+  # Rename the file
+  mv "$file" "$new_name"
+  echo "Renamed '$file' to '$new_name'"
+done
+

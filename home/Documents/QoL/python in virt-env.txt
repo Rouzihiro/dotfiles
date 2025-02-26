@@ -1,0 +1,30 @@
+nix-shell -p python3 python3Packages.pip
+
+Create virtual environment:
+python3 -m venv venv
+
+Activate the virtual environment:
+source venv/bin/activate
+
+Install packages and work:
+pip install -r requirements.txt
+python p_pl_dl_main.py
+
+Deactivate the virtual environment:
+deactivate
+
+Exit Nix shell (this just closes the session):
+exit
+
+The venv directory will still be there in your project folder.
+When You Reopen the Nix Shell:
+
+You can navigate back to your project directory and re-enter the Nix shell:
+
+nix-shell -p python3 python3Packages.pip
+
+Reactivate the virtual environment:
+
+source venv/bin/activate
+
+Everything you installed in the virtual environment will be available again.

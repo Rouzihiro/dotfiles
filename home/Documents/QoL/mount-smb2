@@ -1,0 +1,2 @@
+sudo mount -t cifs //192.168.178.1/FRITZ.NAS /mnt/FRITZ_NAS -o credentials=/etc/samba/creds,uid=1000,gid=990,file_mode=0777,dir_mode=0777
+

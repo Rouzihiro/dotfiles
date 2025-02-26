@@ -1,0 +1,20 @@
+nstall ntfs-3g with sudo apt-get install ntfs-3g. Then run the ntfsfix command on your NTFS partition.
+
+ntfsfix v2.0.0 (libntfs 10:0:0)
+
+Usage: ntfsfix [options] device
+
+Attempt to fix an NTFS partition.
+
+-h, --help             Display this help
+-V, --version          Display version information
+For example: ntfsfix /dev/hda6
+
+Developers' email address: linux-ntfs-dev@lists.sf.net Linux NTFS homepage: http://www.linux-ntfs.org
+
+Note: Whenever you're dealing with partition, make sure that you have a complete backup just to be on the safe side.
+
+sudo apt-get install testdisk
+Then run it:
+
+sudo testdisk

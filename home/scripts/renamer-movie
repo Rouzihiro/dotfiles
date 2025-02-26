@@ -1,0 +1,37 @@
+#!/bin/sh
+
+# Prepare a list of rename operations
+to_rename=()
+
+for file in *.mkv; do
+  # Replace underscores with spaces and extract the new name up to the year
+  new_name=$(echo "$file" | sed -E 's/_/ /g' | sed -E 's/^(.*\([12][0-9]{3}\)).*/\1.mkv/')
+  
+  if [[ "$file" != "$new_name" ]]; then
+    to_rename+=("$file -> $new_name")
+  fi
+done
+
+# Display the planned renames
+if [[ ${#to_rename[@]} -gt 0 ]]; then
+  echo "The following files will be renamed:"
+  printf "%s\n" "${to_rename[@]}"
+  
+  # Ask for confirmation
+  read -q "reply?Proceed with these renames? [y/n]: "
+  echo  # Move to the next line after user input
+  
+  if [[ "$reply" == [yY] ]]; then
+    for rename in "${to_rename[@]}"; do
+      old_file=$(echo "$rename" | cut -d' ' -f1)
+      new_file=$(echo "$rename" | cut -d' ' -f3-)
+      mv -- "$old_file" "$new_file"
+    done
+    echo "Renaming completed."
+  else
+    echo "Renaming aborted."
+  fi
+else
+  echo "No files need renaming."
+fi
+

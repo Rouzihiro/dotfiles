@@ -1,0 +1,45 @@
+#!/usr/bin/env zsh
+
+# Ensure the script runs in Zsh
+if [ -z "$ZSH_VERSION" ]; then
+  echo "This script must be run in Zsh. Please use Zsh to execute it."
+  exit 1
+fi
+
+# Prompt the user to choose a model
+echo "Which model do you want to use?"
+echo "1) deepseek-coder"
+echo "2) mistral"
+echo -n "Press 1 or 2: "
+
+# Read a single keypress (no RETURN needed)
+read -k 1 choice
+echo ""  # Move to a new line after the keypress
+
+# Validate the user's choice
+case $choice in
+  1)
+    model="deepseek-coder"
+    ;;
+  2)
+    model="mistral"
+    ;;
+  *)
+    echo "Invalid choice. Exiting."
+    exit 1
+    ;;
+esac
+
+# Prompt the user for their query with proper text editing
+echo "Enter your query (press Enter when done):"
+if command -v vared >/dev/null 2>&1; then
+  # Use vared for advanced line editing if available
+  vared -c -p "> " query
+else
+  # Fallback to basic read if vared is not available
+  read -r -p "> " query
+fi
+
+# Run the chosen model with the query
+echo "Running $model with your query..."
+ollama run $model "$query"

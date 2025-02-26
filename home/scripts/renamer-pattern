@@ -1,0 +1,43 @@
+#!/bin/sh
+
+# Create an array to hold the original and new names for all files
+declare -a file_pairs
+
+# Loop through all movie files in the directory
+for file in *.*; do
+  # Check if the filename contains a year in parentheses from 1900 to 2050
+  if [[ "$file" =~ \([12][0-9]{3}\) ]]; then
+    # Extract the part of the filename before the year and keep the extension
+    extension="${file##*.}"
+    new_name=$(echo "$file" | sed -E 's/(.*\([12][0-9]{3}\)).*/\1/')
+    # Remove underscores and replace with spaces
+    new_name=$(echo "$new_name" | tr '_' ' ')
+    # Add the file extension back to the new name
+    new_name="$new_name.$extension"
+    # Add the pair (original, new name) to the array
+    file_pairs+=("$file -> $new_name")
+  fi
+done
+
+# Show the user the proposed changes
+echo "The following changes will be made:"
+for pair in "${file_pairs[@]}"; do
+  echo "$pair"
+done
+
+# Ask for confirmation
+read -p "Do you want to proceed with these changes? (y/n): " confirmation
+
+# If user confirms, rename the files
+if [[ "$confirmation" =~ ^[Yy]$ ]]; then
+  for pair in "${file_pairs[@]}"; do
+    # Extract the original and new names
+    original=$(echo "$pair" | cut -d ' ' -f 1)
+    new=$(echo "$pair" | cut -d ' ' -f 3-)
+    # Rename the file
+    mv "$original" "$new"
+  done
+  echo "Files renamed successfully."
+else
+  echo "No changes were made."
+fi
