@@ -1,4 +1,4 @@
-{ inputs, pkgs, ... }:
+{ inputs, pkgs, lib, ... }:
 let
   variables = import ../../hosts/modules/variables.nix;
 in
@@ -11,8 +11,6 @@ in
   # wayland.windowManager.hyprland.settings.general."col.active_border" =
   #  lib.mkForce "rgb(${config.stylix.basel16Scheme.base0E})";
   
-
-
   stylix = {
     enable = true;
     autoEnable = true;
@@ -26,11 +24,13 @@ in
       hyprland.enable = false;
     };
 
-  #base16Scheme = "${pkgs.base16-schemes}/share/themes/nord.yaml";
-  
-  base16Scheme = builtins.readFile (builtins.path {
-      path = ../themes/io/io.yaml;
-    });
+   base16Scheme = "${pkgs.base16-schemes}/share/themes/nord.yaml";
+
+    #  for custom themes;
+    #  base16Scheme = builtins.path {
+    #  path = ../themes/gruvbox-dark-medium/gruvbox-dark-medium.yaml;
+    #  name = "Gruvbox dark, medium";
+    # };
     
     iconTheme = {
       enable = true;

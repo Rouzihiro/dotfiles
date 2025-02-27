@@ -39,81 +39,44 @@ rec {
  
   themes = {
 
-nord = {
-      base00 = "2E3440";
-      base01 = "3B4252";
-      base02 = "434C5E";
-      base03 = "4C566A";
-      base04 = "D8DEE9";
-      base05 = "E5E9F0";
-      base06 = "ECEFF4";
-      base07 = "8FBCBB";
-      base08 = "88C0D0";
-      base09 = "81A1C1";
-      base0A = "5E81AC";
-      base0B = "BF616A";
-      base0C = "D08770";
-      base0D = "EBCB8B";
-      base0E = "A3BE8C";
-      base0F = "B48EAD";
-    };
-
-  nord-light = {
-  base00 = "#e5e9f0";
-  base01 = "#c2d0e7";
-  base02 = "#b8c5db";
-  base03 = "#aebacf";
-  base04 = "#60728c";
-  base05 = "#2e3440";
-  base06 = "#3b4252";
-  base07 = "#29838d";
-  base08 = "#99324b";
-  base09 = "#ac4426";
-  base0A = "#9a7500";
-  base0B = "#4f894c";
-  base0C = "#398eac";
-  base0D = "#3b6ea8";
-  base0E = "#97365b";
-  base0F = "#5272af";
+  nord = {
+  base00 = "2E3440";  # Background
+  base01 = "3B4252";  # Lighter Background
+  base02 = "434C5E";  # Selection Background
+  base03 = "4C566A";  # Comments, Invisibles
+  base04 = "D8DEE9";  # Dark Foreground
+  base05 = "E5E9F0";  # Default Foreground
+  base06 = "ECEFF4";  # Light Foreground
+  base07 = "8FBCBB";  # Light Background
+  base08 = "88C0D0";  # Variables, XML Tags
+  base09 = "81A1C1";  # Integers, Boolean, Constants
+  base0A = "5E81AC";  # Classes, Markup Bold
+  base0B = "BF616A";  # Strings, Inherited Class
+  base0C = "D08770";  # Support, Regular Expressions
+  base0D = "EBCB8B";  # Functions, Methods, Headings
+  base0E = "A3BE8C";  # Keywords, Storage, Selector
+  base0F = "B48EAD";  # Deprecated, Opening/Closing Embedded Language Tags
 };
 
-    rose-pine = {
-      base00 = "191724";
-      base01 = "1f1d2e";
-      base02 = "26233a";
-      base03 = "6e6a86";
-      base04 = "908caa";
-      base05 = "e0def4";
-      base06 = "e0def4";
-      base07 = "524f67";
-      base08 = "eb6f92";
-      base09 = "f6c177";
-      base0A = "ebbcba";
-      base0B = "31748f";
-      base0C = "9ccfd8";
-      base0D = "c4a7e7";
-      base0E = "f6c177";
-      base0F = "524f67";
-    };
+rose-pine = {
+  base00 = "191724";  # Background
+  base01 = "1f1d2e";  # Lighter Background
+  base02 = "26233a";  # Selection Background
+  base03 = "6e6a86";  # Comments, Invisibles
+  base04 = "908caa";  # Dark Foreground
+  base05 = "e0def4";  # Default Foreground
+  base06 = "e0def4";  # Light Foreground
+  base07 = "524f67";  # Light Background
+  base08 = "eb6f92";  # Variables, XML Tags
+  base09 = "f6c177";  # Integers, Boolean, Constants
+  base0A = "ebbcba";  # Classes, Markup Bold
+  base0B = "31748f";  # Strings, Inherited Class
+  base0C = "9ccfd8";  # Support, Regular Expressions
+  base0D = "c4a7e7";  # Functions, Methods, Headings
+  base0E = "c4a7e7";  # Keywords, Storage, Selector
+  base0F = "eb6f92";  # Deprecated, Opening/Closing Embedded Language Tags
+};
 
-    io = {
-      base00 = "1a181a";
-      base01 = "262326";
-      base02 = "302c30";
-      base03 = "373238";
-      base04 = "463f47";
-      base05 = "bfaab7";
-      base06 = "dbd7da";
-      base07 = "faf7f9";
-      base08 = "de5b44";
-      base09 = "e39755";
-      base0A = "a84a73";
-      base0B = "c965bf";
-      base0C = "9c5fce";
-      base0D = "0e85b9";
-      base0E = "6ac38f";
-      base0F = "a3ab5a";
-    };
   };
 
 }
