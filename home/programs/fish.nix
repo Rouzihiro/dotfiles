@@ -36,6 +36,7 @@ let
     g = "git";
     gaa = "git add . -v";
     gc = "git commit -m";
+    gs ="git status";
     gps = "git push -v";
     gpf = "git push -v --force";
 
