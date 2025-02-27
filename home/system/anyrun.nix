@@ -3,7 +3,6 @@ let
   variables = import ../../hosts/modules/variables.nix; 
   theme = variables.currentTheme;    
 in
-
 {
   imports = [ inputs.anyrun.homeManagerModules.anyrun ];
 
@@ -27,9 +26,9 @@ in
       ''
         window { background: transparent; }
         #entry {
-        border: 2px solid ${theme.primary};
-        background: ${theme.background};
-        border-radius: 0px;
+          border: 2px solid #${theme.base0D}; 
+          background: #${theme.base00};
+          border-radius: 0px;
         }
       '';
   };

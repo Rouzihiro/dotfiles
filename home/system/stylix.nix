@@ -1,5 +1,7 @@
-{ inputs, config, lib, pkgs, ... }:
-
+{ inputs, pkgs, ... }:
+let
+  variables = import ../../hosts/modules/variables.nix;
+in
 {
   imports = [ inputs.stylix.homeManagerModules.stylix ];
 
@@ -23,7 +25,12 @@
       waybar.enable = false;
       hyprland.enable = false;
     };
-    base16Scheme = "${pkgs.base16-schemes}/share/themes/nord.yaml";
+
+  #base16Scheme = "${pkgs.base16-schemes}/share/themes/nord.yaml";
+  
+  base16Scheme = builtins.readFile (builtins.path {
+      path = ../themes/io/io.yaml;
+    });
     
     iconTheme = {
       enable = true;

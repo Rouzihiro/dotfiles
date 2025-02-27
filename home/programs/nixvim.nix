@@ -18,7 +18,7 @@ imports =
     vimdiffAlias = true;
     colorscheme = theme; 
     colorschemes.${theme} = {
-      enable = true;
+     enable = true;
     #  settings = {
     #    borders = true;
     #    italic = false;
@@ -33,9 +33,6 @@ imports =
     };
 
     globals.mapleader = " ";
-
-    #colorschemes.${theme} = {
-    #  enable = true;
     clipboard.register = "unnamedplus";
 
     plugins = {

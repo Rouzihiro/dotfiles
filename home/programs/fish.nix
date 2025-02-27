@@ -36,11 +36,11 @@ let
     g = "git";
     gaa = "git add . -v";
     gc = "git commit -m";
-    gps = "push -v";
-    gpf = "push -v --force";
+    gps = "git push -v";
+    gpf = "git push -v --force";
 
-    gf = "fetch --all --tags --prune";
-    gpl = "pull --rebase";
+    gf = "git fetch --all --tags --prune";
+    gpl = "git pull --rebase";
 
     gl = "git log --graph --oneline --decorate --all";  # Graphical log
     gls = "git log --stat";  # Log with stats

@@ -31,17 +31,49 @@ in
       key_exit = "Escape";
       style = ''
         * {
-          background: ${theme.background};
-          color: ${theme.foreground};
+          background: #${theme.base00}; 
+          color: #${theme.base05}; 
+        
+       
         }
+
         #entry {
           padding: 5px;
+          border: 1px solid #${theme.base02}; 
         }
+
         #entry:selected {
-          background: ${theme.primary};
+          background: #${theme.base0D}; 
+          color: #${theme.base07}; 
+        }
+
+        #input {
+          background: #${theme.base01}; 
+          color: #${theme.base05}; 
+          border: 1px solid #${theme.base02};
+          padding: 5px;
+        }
+
+        #scroll {
+          background: #${theme.base01};
+          border: 1px solid #${theme.base02};
+        }
+
+        #scroll trough {
+          background: #${theme.base02}; 
+        }
+
+        #scroll slider {
+          background: #${theme.base0D}; 
+        }
+
+        #category {
+          background: #${theme.base01}; 
+          color: #${theme.base0A}; 
+          padding: 5px;
+          border-bottom: 1px solid #${theme.base02}; 
         }
       '';
     };
-
-     };
+  };
 }
