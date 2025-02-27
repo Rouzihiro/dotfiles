@@ -23,19 +23,11 @@ in
       ];
 
       aliases = {
-        check = "checkout";
-
-        a = "add .";
-        s = "status";
-        c = "commit -m";
-        p = "push";
-
-        add = "remote add";
-        remove = "remote remove";
+      
       };
 
       extraConfig = {
-        color.ui = "1";
+        #color.ui = "1";
         init.defaultBranch = "main";
         push.autoSetupRemote = true;
       };
