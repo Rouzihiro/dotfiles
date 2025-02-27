@@ -28,10 +28,45 @@ let
 
     # Editors
     v = "nvim";
+    vi = "nvim";
+    vim = "nvim";
     sv = "sudo nvim";
 
     # Git
     g = "git";
+    gaa = "git add . -v";
+    gc = "git commit -m";
+    
+    gpl = "pull --rebase";
+
+    gl = "git log --graph --oneline --decorate --all";  # Graphical log
+    gls = "git log --stat";  # Log with stats
+    gd = "git diff";
+    gds = "git diff --stat"; 
+
+    gco = "git checkout";
+    gcb = "git checkout -b";  # Create and switch to a new branch
+    gsw = "git switch";
+    gm= "git merge";
+    go = "git remote -v | grep github.com | grep fetch | head -1 | awk '{print $2}' | sed 's|git@github.com:|https://github.com/|' | xargs xdg-open";
+
+    # Branching
+    gb = "git branch";
+    gba = "git branch -a";  # List all branches (local and remote)
+    gbd = "git branch -d";  # Delete branch
+    gbD = "git branch -D";  # Force delete branch
+
+    # Rebasing
+    grb = "git rebase";
+    grba = "git rebase --abort";
+    grbc = "git rebase --continue";
+    grbi = "git rebase -i";  # Interactive rebase
+
+    # Resetting
+    gr = "git reset";
+    grh = "git reset --hard";  # Hard reset
+    grs = "git restore --staged";  # Unstage changes
+    
     lg = "cd ~/dotfiles && lazygit";
     ssh1 = "ssh-agent -c | source";
     ssh2 = "ssh-add ~/.ssh/HP-Nixo";
@@ -42,7 +77,7 @@ let
     fz = "fzf --preview 'fzf-preview {}' --bind 'enter:execute(xdg-open {})'";
     openports = "netstat -nape --inet";
     myip = "curl https://ipinfo.io/ip && echo";
-    fetch = "clear && fastfetch";
+    ff = "clear && fastfetch";
     startup = "clear && systemctl list-unit-files --type=service | grep enabled";
 
     # NixOS
