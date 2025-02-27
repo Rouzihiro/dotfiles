@@ -36,7 +36,10 @@ let
     g = "git";
     gaa = "git add . -v";
     gc = "git commit -m";
-    
+    gps = "push -v";
+    gpf = "push -v --force";
+
+    gf = "fetch --all --tags --prune";
     gpl = "pull --rebase";
 
     gl = "git log --graph --oneline --decorate --all";  # Graphical log
@@ -47,7 +50,7 @@ let
     gco = "git checkout";
     gcb = "git checkout -b";  # Create and switch to a new branch
     gsw = "git switch";
-    gm= "git merge";
+    gm = "git merge";
     go = "git remote -v | grep github.com | grep fetch | head -1 | awk '{print $2}' | sed 's|git@github.com:|https://github.com/|' | xargs xdg-open";
 
     # Branching
