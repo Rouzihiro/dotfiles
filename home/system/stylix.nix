@@ -31,15 +31,23 @@ in
     #  path = ../themes/gruvbox-dark-medium/gruvbox-dark-medium.yaml;
     #  name = "Gruvbox dark, medium";
     # };
-    
+
     iconTheme = {
       enable = true;
-      dark = "Infinity";
-      light = "Infinity";
+      dark = "Nordzy";
+      light = "Nordzy";
+      package = pkgs.nordzy-icon-theme;
     };
 
+
+   # iconTheme = {
+   #   enable = true;
+   #   dark = "Infinity";
+   #   light = "Infinity";
+   # };
+
     cursor = {
-      size = 28;
+      size = 32;
       name = "catppuccin-cursors";
       package = pkgs.catppuccin-cursors.mochaMauve;
     };
