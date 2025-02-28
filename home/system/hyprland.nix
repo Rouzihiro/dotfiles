@@ -40,7 +40,7 @@
       "$browser-light" = "qutebrowser";
       "$launcher" = "anyrun";
       #"$launcher" = "wofi -S drun -I";
-      "$file-manager" = "nautilus";
+      "$file-manager" = "thunar";
       "$Tfile-manager" = "$terminal -e yazi";
       "$audio-manager" = "com.saivert.pwvucontrol";
       "$password-manager" = "org.keepassxc.KeePassXC";
@@ -86,8 +86,7 @@
         #"exec-once = nm-applet --indicator"
         "systemctl --user start lxqt-policykit-agent"
         "monitor=,preferred,auto,1"
-        "swww img ~/Pictures/wallpapers/Earth.jpg"
-        #"swww init && sleep 0.5 && swww img ~/Pictures/wallpapers/Earth.jpg --transition-type grow"
+        "swww init && sleep 0.5 && swww img ~/Pictures/wallpapers/Dune3.png"
 
       ];
 
@@ -170,6 +169,7 @@
 
         "SUPER, RETURN   , exec , $terminal"
         "SUPER_SHIFT, RETURN   , exec , $launcher"
+        "ALT, SPACE, exec , $launcher"
         "SUPER_SHIFT, B        , exec , $browser"
         "SUPER, B        , exec , $browser-light"
         "SUPER, Backspace, exec , footclient -e btop"

@@ -3,6 +3,7 @@
 {
 
   home.packages = with pkgs; [
+    bitwarden-cli
     xfce.thunar
     jq
     swww
