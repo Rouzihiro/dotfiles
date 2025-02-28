@@ -190,7 +190,6 @@
        "SUPER_SHIFT, W, exec, wallpaper"
        "SUPER, W, exec, wallpaper-random"
        "SUPER, V, exec, video-tool"
-       "SUPER, P, exec, bitwarden"
        "SUPER_SHIFT, BACKSPACE, exec, power-menu"
 
         # Switch workspaces with mainMod + [0-9]
