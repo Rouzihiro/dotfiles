@@ -1,3 +1,5 @@
+{pkgs, ... }:
+
 let
   inherit (import ../../hosts/modules/variables.nix) gitUsername gitEmail;
 in
@@ -31,9 +33,27 @@ in
       };
 
       extraConfig = {
-        #color.ui = "1";
-        init.defaultBranch = "main";
+          core = {
+          #abbrev = "8";
+          #editor = "nvim";
+          whitespace = "fix,trailing-space,cr-at-eol,-space-before-tab,indent-with-non-tab";
+        };
+        color.ui = "auto";
+        init.defaultBranch = "current";
         push.autoSetupRemote = true;
+
+        commit = {
+        #gpgSign = true;
+        verbose = true;
+        template = "${pkgs.writeText "git-commit-template" ''
+
+          #Fix: Resolve
+
+          # - Fixed 
+          # - Added error handling for invalid input.
+          # -----------------
+        ''}";
+      };
       };
     };
   };
