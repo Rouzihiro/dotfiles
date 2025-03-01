@@ -9,17 +9,33 @@ let
   '';
 in
   {
+ ssh-start = mkFishScript "ssh-start" ''
+    # Check if keychain is installed
+    if not command -v keychain >/dev/null
+        echo "Error: Please install keychain first"
+        echo "For Debian/Ubuntu: sudo apt install keychain"
+        echo "For Fedora: sudo dnf install keychain"
+        echo "For macOS: brew install keychain"
+        exit 1
+    end
 
-    ssh-start = mkFishScript "ssh-start" ''
-    # Kill any existing ssh-agent processes
-    pkill ssh-agent || true
+    # Configure keychain (modify as needed)
+    set -l keychain_args --agents ssh --quiet
+
+    # Load or start ssh-agent and add key
+    keychain $keychain_args ~/.ssh/HP-Nixo
+    source ~/.keychain/(hostname)-fish
+'';
+   # ssh-start = mkFishScript "ssh-start" ''
+   # # Kill any existing ssh-agent processes
+   # pkill ssh-agent || true
 
     # Start a new ssh-agent and source its output
-    ssh-agent -c | source
+    #ssh-agent -c | source
 
     # Add the SSH key
-    ssh-add ~/.ssh/HP-Nixo
-  '';
+    #ssh-add ~/.ssh/HP-Nixo
+  #'';
 
   qrimg = mkFishScript "qrimg" ''
     qrencode -t png -r /dev/stdin -o /dev/stdout | convert - -interpolate Nearest -filter point -resize 1000% png:/dev/stdout

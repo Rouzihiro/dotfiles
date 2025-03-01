@@ -72,8 +72,9 @@ let
     grs = "git restore --staged";  # Unstage changes
     
     lg = "cd ~/dotfiles && lazygit";
-    ssh1 = "ssh-agent -c | source";
-    ssh2 = "ssh-add ~/.ssh/HP-Nixo";
+    sshz = "ssh-start";
+    #ssh1 = "ssh-agent -c | source";
+    #ssh2 = "ssh-add ~/.ssh/HP-Nixo";
 
     # System utilities
     ko = "pkill";
