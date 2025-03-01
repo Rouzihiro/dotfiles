@@ -19,7 +19,7 @@ rec {
 
   # Program Options
   browser = "brave"; 
-  browser-light = "qutebrowser";
+  browser-light = "org.qutebrowser.qutebrowser";
   terminal = "foot";
   launcher = "anyrun";
   #launcher = "wofi --menu";
