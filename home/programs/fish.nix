@@ -116,18 +116,6 @@ in
   programs.fish = {
     enable = true;
     shellAliases = myAliases;
-    interactiveShellInit = ''
-    # Start keychain and add the SSH key
-    if command -v keychain > /dev/null
-        if not set -q SSH_AUTH_SOCK
-            echo "Initializing keychain..."
-            eval (keychain --eval --agents ssh ~/.ssh/HP-Nixo --quiet)
-            echo "Keychain initialization complete."
-        end
-    else
-        echo "keychain is not installed. Please install it to manage SSH keys."
-    end
-'';
 
     shellInit = ''
       # Set GPG TTY

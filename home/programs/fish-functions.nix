@@ -8,7 +8,19 @@ let
     end
   '';
 in
-{
+  {
+
+    ssh-start = mkFishScript "ssh-start" ''
+    # Kill any existing ssh-agent processes
+    pkill ssh-agent || true
+
+    # Start a new ssh-agent and source its output
+    ssh-agent -c | source
+
+    # Add the SSH key
+    ssh-add ~/.ssh/HP-Nixo
+  '';
+
   qrimg = mkFishScript "qrimg" ''
     qrencode -t png -r /dev/stdin -o /dev/stdout | convert - -interpolate Nearest -filter point -resize 1000% png:/dev/stdout
   '';
@@ -188,7 +200,6 @@ in
     sudo umount ~/mount/iso
   '';
 
-  # Add the removed Fish prompt functions
   fish_prompt = mkFishScript "fish_prompt" ''
     # Save status first
     set -l last_status $status

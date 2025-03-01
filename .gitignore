@@ -1,7 +1,8 @@
 # Ignore apps folder and all subfolders
 apps/
-home-manager/secrets/
+home/secrets/
 # Other common files to ignore
+*.zip
 *.log
 *.bak
 node_modules/
