@@ -21,8 +21,9 @@ rec {
   browser = "brave"; 
   browser-light = "qutebrowser";
   terminal = "foot";
-  launcher = "wofi --menu";
-  file-manager = "nautilus";
+  launcher = "anyrun";
+  #launcher = "wofi --menu";
+  file-manager = "thunar";
   Tfile-manager = "foot -e yazi";
   imageViewer = "imv";
   videoPlayer = "mpv";

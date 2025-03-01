@@ -18,6 +18,7 @@ in
         ".idea/"
         "*.swp"
         "*.elc"
+        ".zip"
         "auto-save-list"
         ".direnv/"
         "node_modules"
