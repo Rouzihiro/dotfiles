@@ -93,7 +93,7 @@ Your contributions and support mean the world! 🙌
 | [Foot](https://codeberg.org/dnkl/foot) | Terminal Emulator | ![C][c] |
 | [Yazi](https://github.com/sxyazi/yazi) | Terminal File Manager | ![Rust][rs] |
 | [LF](https://github.com/gokcehan/lf) | Terminal File Manager | ![Go][go] |
-| [Nautilus](https://github.com/GNOME/nautilus) | File Manager | ![C][c] |
+| [Thunar](https://docs.xfce.org/xfce/thunar/start) | File Manager | ![C][c] |
 | [Neovim](https://neovim.io/) | Text Editor | ![C][c] |
 | [Btop](https://github.com/aristocratos/btop) | System Monitor | ![C++][cpp] |
 | [Brave Browser](https://brave.com) | Web Browser | ![JavaScript][js] |
