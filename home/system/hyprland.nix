@@ -1,11 +1,9 @@
-{ pkgs, ... }:
-{
+{pkgs, ...}: {
   # ------------------------------------------------
   # Needed Packages
   # ------------------------------------------------
 
   home.packages = with pkgs; [
-
     hyprshot
     wev
     wlr-randr
@@ -29,7 +27,6 @@
     # ------------------------------------------------
 
     settings = {
-
       "$mod" = "SUPER";
       "$Alt_L" = "ALT";
       "$shiftMod" = "SUPER_SHIFT";
@@ -64,14 +61,13 @@
         "ELECTRON_OZONE_PLATFORM_HINT        , auto      "
 
         "GTK_WAYLAND_DISABLE_WINDOWDECORATION, 1         "
-    
+
         "NIXOS_XDG_OPEN_USE_PORTAL , 1"
         "NIXPKGS_ALLOW_UNFREE, 1"
         "GDK_BACKEND, wayland, x11"
         "CLUTTER_BACKEND, wayland"
         "QT_QPA_PLATFORM=wayland;xcb"
         "SDL_VIDEODRIVER, x11"
-
       ];
 
       # ------------------------------------------------
@@ -87,17 +83,16 @@
         "systemctl --user start lxqt-policykit-agent"
         "monitor=,preferred,auto,1"
         "swww init && sleep 0.5 && swww img ~/Pictures/wallpapers/Dune3.png"
-
       ];
 
       # ------------------------------------------------
       # Monitors
       # ------------------------------------------------
 
-     # monitor = [
-     # "eDP-1, 1920x1080, 0x0, 1"
-     # "HDMI-1-A, 1920x1080, 1920x0, 1"
-    # ];
+      # monitor = [
+      # "eDP-1, 1920x1080, 0x0, 1"
+      # "HDMI-1-A, 1920x1080, 1920x0, 1"
+      # ];
       # ------------------------------------------------
       # Window Rules
       # ------------------------------------------------
@@ -122,9 +117,7 @@
         "float,^(steam)$"
         "stayfocused, title:^()$,class:^(steam)$"
         "minsize 1 1, title:^()$,class:^(steam)$"
-
       ];
-
 
       windowrulev2 = [
         "workspace 1,       class:($browser)"
@@ -133,24 +126,21 @@
         "workspace 4,       class:(vesktop)"
         "workspace 5,       class:(FreeTube)"
         "workspace special, class:(spotify)"
-       
       ];
-
 
       # ------------------------------------------------
       # Workspace Rules
       # ------------------------------------------------
 
       workspace = [
-     
       ];
-      
+
       # ------------------------------------------------
       # Keybidings
       # ------------------------------------------------
 
       bind = [
-	# Window 
+        # Window
         "SUPER, H, movefocus, l"
         "SUPER, L, movefocus, r"
         "SUPER, K, movefocus, u"
@@ -164,7 +154,7 @@
         # System
         "SUPER, Q, killactive"
         #"ALT, Q, killactive"
-	"SUPER, F, fullscreen"
+        "SUPER, F, fullscreen"
         "SUPER, T, togglefloating"
 
         "SUPER, RETURN   , exec , $terminal"
@@ -178,19 +168,19 @@
 
         # Screenshot
         "SUPER                 , S , exec , hyprshot -m region --clipboard-only"
-        " , PRINT, exec, hyprshot -m region -o ~/Pictures/screenshots" 
+        " , PRINT, exec, hyprshot -m region -o ~/Pictures/screenshots"
         "SUPER, PRINT, exec, hyprshot -m window -o ~/Pictures/screenshots"
         "SUPER_SHIFT, PRINT, exec, hyprshot -m output -o ~/Pictures/screenshots"
-  
-       # Nix-packages
-       "SUPER_SHIFT, X, exec, extract-helper"
-       "SUPER_SHIFT, M, exec, monitor-multi"
-       "SUPER, O, exec, ocr"
-       "SUPER, X, exec, script-launcher" 
-       "SUPER_SHIFT, W, exec, wallpaper"
-       "SUPER, W, exec, wallpaper-random"
-       "SUPER, V, exec, video-tool"
-       "SUPER_SHIFT, BACKSPACE, exec, power-menu"
+
+        # Nix-packages
+        "SUPER_SHIFT, X, exec, extract-helper"
+        "SUPER_SHIFT, M, exec, monitor-multi"
+        "SUPER, O, exec, ocr"
+        "SUPER, X, exec, script-launcher"
+        "SUPER_SHIFT, W, exec, wallpaper"
+        "SUPER, W, exec, wallpaper-random"
+        "SUPER, V, exec, video-tool"
+        "SUPER_SHIFT, BACKSPACE, exec, power-menu"
 
         # Switch workspaces with mainMod + [0-9]
         "SUPER, 2, workspace, 2"
@@ -217,9 +207,8 @@
         "SUPER_SHIFT, SPACE, movetoworkspace, special"
         "SUPER, SPACE, togglespecialworkspace"
 
-         "ALT, Tab, cyclenext"
-         "ALT, Tab, bringactivetotop"
-
+        "ALT, Tab, cyclenext"
+        "ALT, Tab, bringactivetotop"
       ];
 
       bindm = [
@@ -233,11 +222,10 @@
       ];
 
       bindle = [
-
-  ",XF86AudioRaiseVolume, exec, (wpctl get-volume @DEFAULT_AUDIO_SINK@ | awk -F': ' '{print int($2 * 100)}' && sleep 1) | wob"
-  ",XF86AudioLowerVolume, exec, (wpctl get-volume @DEFAULT_AUDIO_SINK@ | awk -F': ' '{print int($2 * 100)}' && sleep 1) | wob"
-  ",XF86MonBrightnessUp, exec, (brightnessctl g | awk -v max=$(brightnessctl m) '{print int(($1 / max) * 100)}' && sleep 1) | wob"
-  ",XF86MonBrightnessDown, exec, (brightnessctl g | awk -v max=$(brightnessctl m) '{print int(($1 / max) * 100)}' && sleep 1) | wob"
+        ",XF86AudioRaiseVolume, exec, (wpctl get-volume @DEFAULT_AUDIO_SINK@ | awk -F': ' '{print int($2 * 100)}' && sleep 1) | wob"
+        ",XF86AudioLowerVolume, exec, (wpctl get-volume @DEFAULT_AUDIO_SINK@ | awk -F': ' '{print int($2 * 100)}' && sleep 1) | wob"
+        ",XF86MonBrightnessUp, exec, (brightnessctl g | awk -v max=$(brightnessctl m) '{print int(($1 / max) * 100)}' && sleep 1) | wob"
+        ",XF86MonBrightnessDown, exec, (brightnessctl g | awk -v max=$(brightnessctl m) '{print int(($1 / max) * 100)}' && sleep 1) | wob"
 
         ", XF86AudioRaiseVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 2%+ -l 1"
         ", XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 2%-"
@@ -255,26 +243,25 @@
       # Sections
       # ------------------------------------------------
 
-      debug = { watchdog_timeout = 0; };
+      debug = {watchdog_timeout = 0;};
 
-      xwayland = { enabled = true; };
-     # opengl = { force_introspection = 1; };
+      xwayland = {enabled = true;};
+      # opengl = { force_introspection = 1; };
 
-      animations = { enabled = false; };
-    #  decoration = { shadow = { enabled = false; }; blur = { enabled = false; }; };
+      animations = {enabled = false;};
+      #  decoration = { shadow = { enabled = false; }; blur = { enabled = false; }; };
 
-
-    # Opacity settings for all windows
-    decoration = {
-    rounding = 10;
-    active_opacity = 0.8;        # Opacity for active windows
-    inactive_opacity = 0.6;    # Opacity for inactive windows
-    blur = {
-      enabled = true;            # Enable blur for transparent windows
-      size = 8;                 # Blur strength
-      passes = 2;               # Blur passes
-    };
-    };
+      # Opacity settings for all windows
+      decoration = {
+        rounding = 10;
+        active_opacity = 0.8; # Opacity for active windows
+        inactive_opacity = 0.6; # Opacity for inactive windows
+        blur = {
+          enabled = true; # Enable blur for transparent windows
+          size = 8; # Blur strength
+          passes = 2; # Blur passes
+        };
+      };
 
       general = {
         gaps_in = 5;
@@ -285,7 +272,7 @@
         layout = "master";
       };
 
-      dwindle = { pseudotile = true; };
+      dwindle = {pseudotile = true;};
 
       misc = {
         focus_on_activate = true;
@@ -347,7 +334,6 @@
     enable = true;
 
     settings = {
-
       general = {
         grace = 60;
         no_fade_in = true;

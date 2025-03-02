@@ -1,9 +1,6 @@
-{ ... }:
-let
+{...}: let
   inherit (import ../../hosts/modules/variables.nix) shell Editor;
-in
-
-{
+in {
   programs.kitty = {
     enable = true;
     settings = {

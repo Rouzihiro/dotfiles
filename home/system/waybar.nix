@@ -1,94 +1,94 @@
-{ config, pkgs, ... }:
-
-{
+{...}: {
   programs.waybar = {
     enable = true;
-    settings = [{
-      height = 30;
-      margin-top = 5;
-      margin-left = 10;
-      margin-right = 10;
-      modules-left = [ "hyprland/window" ];
-      modules-center = [ "hyprland/workspaces" ];
-      modules-right = [ 
-        "pulseaudio" 
-        "network" 
-        "temperature" 
-        "memory" 
-        "battery" 
-        "clock" 
-      ];
+    settings = [
+      {
+        height = 30;
+        margin-top = 5;
+        margin-left = 10;
+        margin-right = 10;
+        modules-left = ["hyprland/window"];
+        modules-center = ["hyprland/workspaces"];
+        modules-right = [
+          "pulseaudio"
+          "network"
+          "temperature"
+          "memory"
+          "battery"
+          "clock"
+        ];
 
-      "hyprland/window" = {
-        format = "{}";
-        "max-length" = 35;
-        rewrite = { "" = "Harsh"; };
-        "separate-outputs" = true;
-      };
-
-      "hyprland/workspaces" = {
-        format = "{icon}";
-        "on-click" = "activate";
-        "format-icons" = { "active" = " "; };
-        "sort-by-number" = true;
-      };
-
-      clock = {
-        "tooltip-format" = "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>";
-        "format-alt" = "{:%Y-%m-%d}";
-      };
-
-      memory = {
-        format = "  {used:.1f}GB / {total:.1f}GB";
-      };
-
-      temperature = {
-        "critical-threshold" = 80;
-        format = "{icon} {temperatureC}°C";
-        "format-icons" = [ "" "" "" ];
-      };
-
-      battery = {
-        states = {
-          warning = 30;
-          critical = 15;
+        "hyprland/window" = {
+          format = "{}";
+          "max-length" = 35;
+          rewrite = {"" = "Harsh";};
+          "separate-outputs" = true;
         };
-        format = "{icon}  {capacity}%";
-        "format-full" = "{icon}  {capacity}%";
-        "format-charging" = "  {capacity}%";
-        "format-plugged" = "  {capacity}%";
-        "format-alt" = "{time} {icon}";
-        "format-icons" = [ "" "" "" "" "" ];
-      };
 
-      network = {
-        "format-wifi" = "  {signalStrength}%";
-        "format-ethernet" = "{cidr} 🌐";
-        "tooltip-format" = "🌍 {ifname} via {gwaddr}";
-        "format-linked" = "🚫 {ifname} (No IP)";
-        "format-disconnected" = "⚠ ";
-        "format-alt" = "{ifname}: {ipaddr}/{cidr}";
-      };
-
-      pulseaudio = {
-        format = "{icon}  {volume}%";
-        "format-bluetooth" = "{volume}% {icon} {format_source}";
-        "format-bluetooth-muted" = " {icon} {format_source}";
-        "format-muted" = "";
-        "format-icons" = {
-          headphone = "";
-          "hands-free" = "🎙";
-          headset = "🎧";
-          phone = "";
-          portable = "";
-          car = "";
-          default = [ "" "" "" ];
+        "hyprland/workspaces" = {
+          format = "{icon}";
+          "on-click" = "activate";
+          "format-icons" = {"active" = " ";};
+          "sort-by-number" = true;
         };
-        "on-click" = "pavucontrol";
-      };
-    }];
 
- style = ''
+        clock = {
+          "tooltip-format" = "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>";
+          "format-alt" = "{:%Y-%m-%d}";
+        };
+
+        memory = {
+          format = "  {used:.1f}GB / {total:.1f}GB";
+        };
+
+        temperature = {
+          "critical-threshold" = 80;
+          format = "{icon} {temperatureC}°C";
+          "format-icons" = ["" "" ""];
+        };
+
+        battery = {
+          states = {
+            warning = 30;
+            critical = 15;
+          };
+          format = "{icon}  {capacity}%";
+          "format-full" = "{icon}  {capacity}%";
+          "format-charging" = "  {capacity}%";
+          "format-plugged" = "  {capacity}%";
+          "format-alt" = "{time} {icon}";
+          "format-icons" = ["" "" "" "" ""];
+        };
+
+        network = {
+          "format-wifi" = "  {signalStrength}%";
+          "format-ethernet" = "{cidr} 🌐";
+          "tooltip-format" = "🌍 {ifname} via {gwaddr}";
+          "format-linked" = "🚫 {ifname} (No IP)";
+          "format-disconnected" = "⚠ ";
+          "format-alt" = "{ifname}: {ipaddr}/{cidr}";
+        };
+
+        pulseaudio = {
+          format = "{icon}  {volume}%";
+          "format-bluetooth" = "{volume}% {icon} {format_source}";
+          "format-bluetooth-muted" = " {icon} {format_source}";
+          "format-muted" = "";
+          "format-icons" = {
+            headphone = "";
+            "hands-free" = "🎙";
+            headset = "🎧";
+            phone = "";
+            portable = "";
+            car = "";
+            default = ["" "" ""];
+          };
+          "on-click" = "pavucontrol";
+        };
+      }
+    ];
+
+    style = ''
       /* Nord color scheme */
       @define-color nord0 #2E3440;
       @define-color nord1 #3B4252;
@@ -235,14 +235,3 @@
     '';
   };
 }
-
-
-
-
-
-
-
-
-
-
-

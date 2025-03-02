@@ -1,14 +1,17 @@
-{ stdenv, fetchFromGitHub, lib }:
-
+{
+  stdenv,
+  fetchFromGitHub,
+  lib,
+}:
 stdenv.mkDerivation rec {
   pname = "infinity-glass-icons";
-  version = "1.0"; 
+  version = "1.0";
 
   src = fetchFromGitHub {
-    owner = "Rouzihiro"; 
+    owner = "Rouzihiro";
     repo = "infinity-glass-icons";
-    rev = "main"; 
-    sha256 = "sha256-svPqV+L4u7cXDJ72XrKIz0AOHJzxFQmELYsSIoiOVeA";  
+    rev = "main";
+    sha256 = "sha256-svPqV+L4u7cXDJ72XrKIz0AOHJzxFQmELYsSIoiOVeA";
   };
 
   dontCheckForBrokenSymlinks = true;
@@ -24,4 +27,3 @@ stdenv.mkDerivation rec {
     platforms = platforms.all;
   };
 }
-

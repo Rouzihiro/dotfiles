@@ -1,5 +1,4 @@
-{ pkgs }:
-
+{pkgs}:
 pkgs.writeShellScriptBin "extract-helper" ''
   # Set the extraction directory to ~/Downloads/extracted
   E_DIR="$HOME/Downloads/extracted"
@@ -12,32 +11,32 @@ pkgs.writeShellScriptBin "extract-helper" ''
   if [[ -n "$S_FILE" ]]; then
     # Extract the selected file into the extraction directory
     case "$S_FILE" in
-      *.tar.gz|*.tgz) 
-        tar -xzvf "$S_FILE" -C "$E_DIR" 
+      *.tar.gz|*.tgz)
+        tar -xzvf "$S_FILE" -C "$E_DIR"
         ;;
-      *.tar.bz2|*.tbz2) 
+      *.tar.bz2|*.tbz2)
         tar -xjvf "$S_FILE" -C "$E_DIR"
         ;;
-      *.tar.xz|*.txz) 
+      *.tar.xz|*.txz)
         tar -xJvf "$S_FILE" -C "$E_DIR"
         ;;
-      *.zip) 
+      *.zip)
         unzip "$S_FILE" -d "$E_DIR"
         ;;
-      *.gz) 
+      *.gz)
         gunzip -c "$S_FILE" > "$E_DIR/$(basename "$S_FILE" .gz)"
         ;;
-      *.bz2) 
+      *.bz2)
         bunzip2 -c "$S_FILE" > "$E_DIR/$(basename "$S_FILE" .bz2)"
         ;;
-      *.xz) 
+      *.xz)
         unxz -c "$S_FILE" > "$E_DIR/$(basename "$S_FILE" .xz)"
         ;;
-      *.rar) 
+      *.rar)
         unrar x "$S_FILE" "$E_DIR" ;; # Requires `unrar`
-      *.7z)  
+      *.7z)
         7z x "$S_FILE" -o"$E_DIR" ;;     # Requires `p7zip`
-      *.ecm) 
+      *.ecm)
         ecm2bin "$S_FILE" && mv "$(dirname "$S_FILE")/$(basename "$S_FILE" .ecm)" "$E_DIR" ;; # Requires `ecmtools`
       *)
         notify-send "Error" "Unsupported file type: $S_FILE" -i "dialog-error" -u critical

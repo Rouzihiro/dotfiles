@@ -1,5 +1,4 @@
-{ pkgs }:
-
+{pkgs}:
 pkgs.writeShellScriptBin "browse-video" ''
   file_to_play=$(find ~/Videos ~/Downloads -type f \( -iname "*.avi" -o -iname "*.mp4" -o -iname "*.mkv" -o -iname "*.flv" -o -iname "*.webm" \) -print0 | \
       xargs -0 -I{} basename "{}" | \

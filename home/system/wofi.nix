@@ -1,8 +1,7 @@
 let
-  variables = import ../../hosts/modules/variables.nix; 
-  theme = variables.currentTheme;    
-in
-{
+  variables = import ../../hosts/modules/variables.nix;
+  theme = variables.currentTheme;
+in {
   programs.wofi = {
     enable = true;
     settings = {
@@ -31,25 +30,25 @@ in
       key_exit = "Escape";
       style = ''
         * {
-          background: #${theme.base00}; 
-          color: #${theme.base05}; 
-        
-       
+          background: #${theme.base00};
+          color: #${theme.base05};
+
+
         }
 
         #entry {
           padding: 5px;
-          border: 1px solid #${theme.base02}; 
+          border: 1px solid #${theme.base02};
         }
 
         #entry:selected {
-          background: #${theme.base0D}; 
-          color: #${theme.base07}; 
+          background: #${theme.base0D};
+          color: #${theme.base07};
         }
 
         #input {
-          background: #${theme.base01}; 
-          color: #${theme.base05}; 
+          background: #${theme.base01};
+          color: #${theme.base05};
           border: 1px solid #${theme.base02};
           padding: 5px;
         }
@@ -60,18 +59,18 @@ in
         }
 
         #scroll trough {
-          background: #${theme.base02}; 
+          background: #${theme.base02};
         }
 
         #scroll slider {
-          background: #${theme.base0D}; 
+          background: #${theme.base0D};
         }
 
         #category {
-          background: #${theme.base01}; 
-          color: #${theme.base0A}; 
+          background: #${theme.base01};
+          color: #${theme.base0A};
           padding: 5px;
-          border-bottom: 1px solid #${theme.base02}; 
+          border-bottom: 1px solid #${theme.base02};
         }
       '';
     };

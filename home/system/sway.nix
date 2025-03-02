@@ -1,17 +1,16 @@
-{ pkgs, lib, ... }:
-
-let 
-  i3blocksConf = pkgs.callPackage ./i3blocks.nix { };
-in
-
 {
+  pkgs,
+  lib,
+  ...
+}: let
+  i3blocksConf = pkgs.callPackage ./i3blocks.nix {};
+in {
   # ================================================================================================
   # Environment config
   # ================================================================================================
 
   home = {
     packages = with pkgs; [
-
       swaybg
       swaylock
       swayidle
@@ -30,15 +29,14 @@ in
 
       #xdg-desktop-portal-gtk
       #xdg-desktop-portal-wlr
-
     ];
 
     sessionVariables = {
       XDG_SESSION_TYPE = "wayland";
       XDG_CURRENT_DESKTOP = "sway";
       XDG_SESSION_DESKTOP = "sway";
-      NIXOS_XDG_OPEN_USE_PORTAL = "1"; 
-      
+      NIXOS_XDG_OPEN_USE_PORTAL = "1";
+
       DISABLE_QT5_COMPAT = 1;
       QT_QPA_PLATFORM = "wayland;xcb";
       QT_AUTO_SCREEN_SCALE_FACTOR = 1;
@@ -48,21 +46,20 @@ in
       NIXOS_OZONE_WL = 1;
       MOZ_ENABLE_WAYLAND = 1;
       ELECTRON_OZONE_PLATFORM_HINT = "auto"; #alternatively "1"
-      
+
       GDK_BACKEND = "wayland,x11";
       GTK_USE_PORTAL = 1; # AI deactived this, why ?
       GTK_WAYLAND_DISABLE_WINDOWDECORATION = 1;
 
       # Multimedia/Game compatibility
       CLUTTER_BACKEND = "wayland";
-      SDL_VIDEODRIVER = "x11";  # Fallback to XWayland
-      WLR_NO_HARDWARE_CURSORS = "1";  # If cursor issues occur
-
+      SDL_VIDEODRIVER = "x11"; # Fallback to XWayland
+      WLR_NO_HARDWARE_CURSORS = "1"; # If cursor issues occur
     };
   };
 
   # ================================================================================================
-  # Sway 
+  # Sway
   # ================================================================================================
 
   wayland.windowManager.sway = {
@@ -71,7 +68,7 @@ in
 
     systemd = {
       enable = false;
-    # variables = [ ]
+      # variables = [ ]
     };
 
     wrapperFeatures = {
@@ -83,8 +80,8 @@ in
     # Configuration
     # ------------------------------------------------
 
-      # for_window [class=".*"] opacity $opacity
-      # for_window [app_id=".*"] opacity $opacity
+    # for_window [class=".*"] opacity $opacity
+    # for_window [app_id=".*"] opacity $opacity
 
     extraConfig = ''
       set $terminal   footclient
@@ -95,9 +92,9 @@ in
       set $Tfile-manager  $terminal -e yazi
       set $audio-manager  com.saivert.pwvucontrol
       set $password-manager  org.keepassxc.KeePassXC
-      set $bluetooth-manager  io.github.kaii_lb.Overskride 
-   
-      '';
+      set $bluetooth-manager  io.github.kaii_lb.Overskride
+
+    '';
 
     config = {
       #focus.newWindow = "focus";
@@ -109,15 +106,15 @@ in
       # ------------------------------------------------
 
       startup = [
-        { command = "foot --server"; }
-        { command = "autotiling-rs"; }
-        { command = "wl-gammactl -c 1.000 -b 0.950 -g 0.825"; }
-        { command = "swaybg -i ~/home/Pictures/wallpapers/Earth.jpg"; }
-        { command = "lxqt-policykit-agent"; }
-        { command = "fnott -s"; }
-        { command = "dbus-update-activation-environment --systemd XDG_CURRENT_DESKTOP QT_QPA_PLATFORM";}
+        {command = "foot --server";}
+        {command = "autotiling-rs";}
+        {command = "wl-gammactl -c 1.000 -b 0.950 -g 0.825";}
+        {command = "swaybg -i ~/home/Pictures/wallpapers/Earth.jpg";}
+        {command = "lxqt-policykit-agent";}
+        {command = "fnott -s";}
+        {command = "dbus-update-activation-environment --systemd XDG_CURRENT_DESKTOP QT_QPA_PLATFORM";}
 
-     {
+        {
           command = ''
             swayidle -w \
             before-sleep  "swaylock -fF" \
@@ -127,14 +124,11 @@ in
         }
       ];
 
-
-
       # ------------------------------------------------
       # Monitors
       # ------------------------------------------------
 
       output = {
-
         eDP-1 = {
           scale = "1.0";
           scale_filter = "nearest";
@@ -158,8 +152,8 @@ in
           adaptive_sync = "off";
           max_render_time = "off";
 
-         subpixel = "rgb";
-         color_profile = "srgb";
+          subpixel = "rgb";
+          color_profile = "srgb";
         };
       };
 
@@ -168,9 +162,8 @@ in
       # ------------------------------------------------
 
       input = {
-
         "type:keyboard" = {
-          xkb_layout = "de";          
+          xkb_layout = "de";
         };
 
         "type:touchpad" = {
@@ -192,11 +185,13 @@ in
       window = {
         border = 2;
         titlebar = false;
-       
-        commands = [{
-          command = "inhibit_idle fullscreen";
-          criteria = { app_id = "^org.pwmt.zathura$"; };
-        }];
+
+        commands = [
+          {
+            command = "inhibit_idle fullscreen";
+            criteria = {app_id = "^org.pwmt.zathura$";};
+          }
+        ];
       };
 
       floating = {
@@ -204,9 +199,9 @@ in
         titlebar = false;
         modifier = "mod4";
         criteria = [
-          { app_id = "^yazi$"; }
-          { app_id = "^com.saivert.pwvucontrol$"; }
-          { app_id = "^io.github.kaii_lb.Overskride$"; }
+          {app_id = "^yazi$";}
+          {app_id = "^com.saivert.pwvucontrol$";}
+          {app_id = "^io.github.kaii_lb.Overskride$";}
         ];
       };
 
@@ -214,14 +209,14 @@ in
       # Window Rules
       # ------------------------------------------------
       defaultWorkspace = "workspace number 1";
-      
+
       assigns = {
-        "1" = [{ app_id = "^librewolf$"; }];
-        "2" = [{ app_id = "^org.pwmt.zathura$"; }];
-        "3" = [{ app_id = "^codium$"; }];
+        "1" = [{app_id = "^librewolf$";}];
+        "2" = [{app_id = "^org.pwmt.zathura$";}];
+        "3" = [{app_id = "^codium$";}];
         #"4" = [{ app_id = "^wasistlos$"; }];
-        "4" = [{ app_id = "^com.rtosta.zapzap$"; }];
-        "5" = [{ app_id = "^FreeTube$"; }];
+        "4" = [{app_id = "^com.rtosta.zapzap$";}];
+        "5" = [{app_id = "^FreeTube$";}];
       };
 
       # ------------------------------------------------
@@ -229,7 +224,6 @@ in
       # ------------------------------------------------
 
       workspaceOutputAssign = [
-
       ];
 
       # ------------------------------------------------
@@ -237,92 +231,100 @@ in
       # ------------------------------------------------
 
       keybindings = let
-  ws = map toString (lib.range 1 9);
-  workspaceBindings = lib.concatMap (i: [
-    { name = "mod4+${i}"; value = "workspace number ${i}"; }
-    { name = "mod4+Shift+${i}"; value = "move container to workspace number ${i}"; }
-  ]) ws;
-  in lib.listToAttrs workspaceBindings // {
+        ws = map toString (lib.range 1 9);
+        workspaceBindings =
+          lib.concatMap (i: [
+            {
+              name = "mod4+${i}";
+              value = "workspace number ${i}";
+            }
+            {
+              name = "mod4+Shift+${i}";
+              value = "move container to workspace number ${i}";
+            }
+          ])
+          ws;
+      in
+        lib.listToAttrs workspaceBindings
+        // {
+          "mod4+space" = "scratchpad show";
+          "mod4+Shift+space" = "move container to scratchpad";
+          "mod1+space" = "[con_mark=scratch] scratchpad show";
+          "mod1+Shift+Space" = "mark scratch; move to scratchpad";
 
-        "mod4+space" = "scratchpad show";
-        "mod4+Shift+space" = "move container to scratchpad";
-        "mod1+space" = "[con_mark=scratch] scratchpad show";
-        "mod1+Shift+Space" = "mark scratch; move to scratchpad";
+          "mod4+Shift+Return" = "exec $launcher";
+          "mod4+Return" = "exec $terminal";
+          "mod4+E" = "exec $Tfile-manager";
+          "mod4+Shift+B" = "exec $browser-light";
+          "mod4+Backspace" = "exec $terminal -e btop";
 
-        "mod4+Shift+Return" = "exec $launcher";
-        "mod4+Return" = "exec $terminal";
-        "mod4+E" = "exec $Tfile-manager";
-        "mod4+Shift+B" = "exec $browser-light";
-        "mod4+Backspace" = "exec $terminal -e btop";
+          # Personal Scripts
+          "Mod4+Shift+m" = "exec monitor-multi";
+          "Mod4+Shift+j" = "exec jdownloader";
+          "Mod4+Shift+Backspace" = "exec powerswitch-wofi";
+          "Mod4+Shift+v" = "exec videotool-wofi";
+          "Mod4+v" = "exec browse-video";
+          "Mod4+Shift+x" = "exec $terminal -e zsh -c ~/dotfiles/home/scripts/executer";
+          "Mod4+x" = "exec browse-scripts";
+          "Mod4+o" = "exec ocr";
+          "Mod4+Shift+o" = "exec ocr-prompt";
+          "Mod4+i" = "exec ocr-translate";
+          "Mod4+Shift+w" = "exec wallpaper";
+          "Mod4+w" = "exec wallpaper-random";
+          #"Mod4+b" = "exec browse-web";
+          "Mod4+k" = "exec keybinds-shell";
+          "Mod4+Shift+k" = "exec keybinds-sway";
 
-        # Personal Scripts
-        "Mod4+Shift+m" = "exec monitor-multi";
-        "Mod4+Shift+j" = "exec jdownloader";
-        "Mod4+Shift+Backspace" = "exec powerswitch-wofi";
-        "Mod4+Shift+v" = "exec videotool-wofi";
-        "Mod4+v" = "exec browse-video";
-        "Mod4+Shift+x" = "exec $terminal -e zsh -c ~/dotfiles/home/scripts/executer";
-        "Mod4+x" = "exec browse-scripts";
-        "Mod4+o" = "exec ocr";
-        "Mod4+Shift+o" = "exec ocr-prompt";
-        "Mod4+i" = "exec ocr-translate";
-        "Mod4+Shift+w" = "exec wallpaper";
-        "Mod4+w" = "exec wallpaper-random";
-        #"Mod4+b" = "exec browse-web";
-        "Mod4+k" = "exec keybinds-shell";
-        "Mod4+Shift+k" = "exec keybinds-sway";
-        
-        # Screenshot
-        "mod4+s" = "exec grimshot --notify copy anything && notify-send 'copied to clipboard'";
-        "Print" = "exec grimshot --notify save anything ~/Pictures/screenshots/$(date +%Y-%m-%d_%H-%M-%S).png && notify-send 'selection saved'";
-        "mod4+Print" = "exec grimshot --notify save screen ~/Pictures/screenshots/$(date +%Y-%m-%d_%H-%M-%S).png && notify-send 'full screenshot'";
+          # Screenshot
+          "mod4+s" = "exec grimshot --notify copy anything && notify-send 'copied to clipboard'";
+          "Print" = "exec grimshot --notify save anything ~/Pictures/screenshots/$(date +%Y-%m-%d_%H-%M-%S).png && notify-send 'selection saved'";
+          "mod4+Print" = "exec grimshot --notify save screen ~/Pictures/screenshots/$(date +%Y-%m-%d_%H-%M-%S).png && notify-send 'full screenshot'";
 
-        # Multimedia
-        "XF86MonBrightnessUp" = "exec brightnessctl -q s 5%+";
-        "XF86MonBrightnessDown" = "exec brightnessctl -q s 5%-";
-        
-        "XF86AudioMute" = "exec wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle";
-        "XF86AudioLowerVolume" = "exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 2%-";
-        "XF86AudioRaiseVolume" = "exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 2%+ -l 1";
+          # Multimedia
+          "XF86MonBrightnessUp" = "exec brightnessctl -q s 5%+";
+          "XF86MonBrightnessDown" = "exec brightnessctl -q s 5%-";
 
-        # System
-        "mod4+q" = "kill";
-        "mod1+q" = "kill";
-        "mod4+t" = "floating toggle";
-        "mod4+f" = "fullscreen toggle";
-        "mod4+Shift+r" = "exec swaymsg reload";
-        "mod4+Shift+e" = "exec swaymsg exit";
+          "XF86AudioMute" = "exec wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle";
+          "XF86AudioLowerVolume" = "exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 2%-";
+          "XF86AudioRaiseVolume" = "exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 2%+ -l 1";
 
-        #"mod4+Shift+Control+r" = "exec systemctl reboot";
-        #"mod4+Shift+Control+s" = "exec systemctl suspend";
-        #"mod4+Shift+Control+p" = "exec systemctl poweroff";
+          # System
+          "mod4+q" = "kill";
+          "mod1+q" = "kill";
+          "mod4+t" = "floating toggle";
+          "mod4+f" = "fullscreen toggle";
+          "mod4+Shift+r" = "exec swaymsg reload";
+          "mod4+Shift+e" = "exec swaymsg exit";
 
-        # Move window
-        "mod4+Tab" = "move right"; 
-        "mod1+Tab" = "move left"; 
+          #"mod4+Shift+Control+r" = "exec systemctl reboot";
+          #"mod4+Shift+Control+s" = "exec systemctl suspend";
+          #"mod4+Shift+Control+p" = "exec systemctl poweroff";
 
-        # Window
-        "mod4+left" = "focus left";
-        "mod4+right" = "focus right";
-        "mod4+up" = "focus up";
-        "mod4+down" = "focus down";
+          # Move window
+          "mod4+Tab" = "move right";
+          "mod1+Tab" = "move left";
 
-        #"mod4+Shift+h" = "move left";
-        #"mod4+Shift+l" = "move right";
-        #"mod4+Shift+k" = "move up";
-        #"mod4+Shift+j" = "move down";
+          # Window
+          "mod4+left" = "focus left";
+          "mod4+right" = "focus right";
+          "mod4+up" = "focus up";
+          "mod4+down" = "focus down";
 
-        "mod4+Control+h" = "resize shrink width 10 px ";
-        "mod4+Control+l" = "resize grow width 10 px ";
-        "mod4+Control+k" = "resize shrink height 10 px ";
-        "mod4+Control+j" = "resize grow height 10 px ";
+          #"mod4+Shift+h" = "move left";
+          #"mod4+Shift+l" = "move right";
+          #"mod4+Shift+k" = "move up";
+          #"mod4+Shift+j" = "move down";
 
-      };
+          "mod4+Control+h" = "resize shrink width 10 px ";
+          "mod4+Control+l" = "resize grow width 10 px ";
+          "mod4+Control+k" = "resize shrink height 10 px ";
+          "mod4+Control+j" = "resize grow height 10 px ";
+        };
 
       # ------------------------------------------------
       # Style
       # ------------------------------------------------
- gaps = {
+      gaps = {
         # inner = 10;
         # outer = 0;
         # right = 0;
@@ -361,46 +363,46 @@ in
         };
       };
 
-  bars = [{
+      bars = [
+        {
+          position = "top";
+          trayPadding = 0;
+          statusCommand = "${pkgs.i3blocks}/bin/i3blocks -c ${i3blocksConf}";
 
-        position = "top";
-        trayPadding = 0;
-        statusCommand = "${pkgs.i3blocks}/bin/i3blocks -c ${i3blocksConf}";
+          extraConfig = ''            output *
+                   separator_symbol ""
+          '';
 
-        extraConfig = '' output *
-        separator_symbol ""
-         '';
-
-        fonts = {
-          names = [ "DroidSansM Nerd Font" ];
-          style = "Regular";
-          size = 12.0;
-        };
-
-        colors = {
-          separator = "#1e1e2e";
-          background = "#1e1e2e";
-
-          focusedWorkspace = {
-            text = "#1e1e2e";
-            border = "#fab387";
-            background = "#fab387";
+          fonts = {
+            names = ["DroidSansM Nerd Font"];
+            style = "Regular";
+            size = 12.0;
           };
 
-          activeWorkspace = {
-            text = "#1e1e2e";
-            border = "#eba0ac";
-            background = "#eba0ac";
-          };
+          colors = {
+            separator = "#1e1e2e";
+            background = "#1e1e2e";
 
-          urgentWorkspace = {
-            text = "#1e1e2e";
-            border = "#74c7ec";
-            background = "#74c7ec";
+            focusedWorkspace = {
+              text = "#1e1e2e";
+              border = "#fab387";
+              background = "#fab387";
+            };
+
+            activeWorkspace = {
+              text = "#1e1e2e";
+              border = "#eba0ac";
+              background = "#eba0ac";
+            };
+
+            urgentWorkspace = {
+              text = "#1e1e2e";
+              border = "#74c7ec";
+              background = "#74c7ec";
+            };
           };
-        };
-      }];
+        }
+      ];
     };
   };
 }
-

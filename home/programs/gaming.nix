@@ -1,6 +1,5 @@
-{ pkgs, ... }:
-{
+{pkgs, ...}: {
   home.packages = with pkgs; [
-dolphin-emu
+    dolphin-emu
   ];
 }

@@ -1,5 +1,4 @@
-{ pkgs }:
-
+{pkgs}:
 pkgs.writeShellScriptBin "browse-web" ''
     declare -A URLS
 
@@ -63,4 +62,3 @@ pkgs.writeShellScriptBin "browse-web" ''
 
     exit 0
 ''
-

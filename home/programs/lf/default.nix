@@ -22,7 +22,7 @@
         ''${{
           foot sh -c "cd \"$PWD\" && $SHELL"
         }}
-        '';
+      '';
       cd-downloads = "cd ~/Downloads";
       cd-videos = "cd ~/Videos";
       cd-pix = "cd ~/Pictures";
@@ -38,7 +38,7 @@
       c = "clear";
       d = "delete";
       x = "cut";
-      y = "copy"; 
+      y = "copy";
       p = "paste";
       r = "rename";
       e = "extract";
@@ -57,7 +57,7 @@
       icons = true;
       ignorecase = true;
     };
- extraConfig = let
+    extraConfig = let
       previewer = pkgs.writeShellScriptBin "pv.sh" ''
         case "$(${pkgs.file}/bin/file -Lb --mime-type -- "$1")" in
           image/*)

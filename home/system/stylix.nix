@@ -1,16 +1,18 @@
-{ inputs, pkgs, lib, ... }:
-let
-  variables = import ../../hosts/modules/variables.nix;
-in
 {
-  imports = [ inputs.stylix.homeManagerModules.stylix ];
+  inputs,
+  pkgs,
+  ...
+}: let
+  variables = import ../../hosts/modules/variables.nix;
+in {
+  imports = [inputs.stylix.homeManagerModules.stylix];
 
-# nix build nixpkgs#base16-schemes
-# nix build nixpkgs#bibata-cursors
+  # nix build nixpkgs#base16-schemes
+  # nix build nixpkgs#bibata-cursors
 
   # wayland.windowManager.hyprland.settings.general."col.active_border" =
   #  lib.mkForce "rgb(${config.stylix.basel16Scheme.base0E})";
-  
+
   stylix = {
     enable = true;
     autoEnable = true;
@@ -24,7 +26,7 @@ in
       hyprland.enable = false;
     };
 
-   base16Scheme = "${pkgs.base16-schemes}/share/themes/nord.yaml";
+    base16Scheme = "${pkgs.base16-schemes}/share/themes/nord.yaml";
 
     #  for custom themes;
     #  base16Scheme = builtins.path {
@@ -39,12 +41,11 @@ in
       package = pkgs.nordzy-icon-theme;
     };
 
-
-   # iconTheme = {
-   #   enable = true;
-   #   dark = "Infinity";
-   #   light = "Infinity";
-   # };
+    # iconTheme = {
+    #   enable = true;
+    #   dark = "Infinity";
+    #   light = "Infinity";
+    # };
 
     cursor = {
       size = 32;
@@ -52,7 +53,7 @@ in
       package = pkgs.catppuccin-cursors.mochaMauve;
     };
 
-     fonts = {
+    fonts = {
       emoji = {
         package = pkgs.noto-fonts-emoji;
         name = "noto-fonts-color-emoji";
@@ -80,12 +81,11 @@ in
         popups = 10;
       };
     };
-     # opacity = {
-     #   applications = 1.0;
-     #   terminal = 1.0;
-     #   desktop = 1.0;
-     #   popups = 1.0;
-     # }; 
-   };
-
+    # opacity = {
+    #   applications = 1.0;
+    #   terminal = 1.0;
+    #   desktop = 1.0;
+    #   popups = 1.0;
+    # };
+  };
 }

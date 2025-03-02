@@ -1,11 +1,9 @@
-{ pkgs, ... }:
-{
-  home.packages = [ pkgs.fyi ];
+{pkgs, ...}: {
+  home.packages = [pkgs.fyi];
 
   services.fnott = {
     enable = true;
     settings = {
-
       main = {
         border-size = 4;
         min-width = 100;

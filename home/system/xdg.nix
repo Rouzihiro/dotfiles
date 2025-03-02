@@ -1,9 +1,10 @@
-{ config, pkgs, ... }:
-let
-
-  inherit (import ../../hosts/modules/variables.nix) xdg WM;
-in
 {
+  config,
+  pkgs,
+  ...
+}: let
+  inherit (import ../../hosts/modules/variables.nix) xdg WM;
+in {
   xdg.portal = {
     enable = true;
     extraPortals = with pkgs; [
@@ -12,7 +13,7 @@ in
     ];
     config = {
       common = {
-        default = [ WM "gtk" ];
+        default = [WM "gtk"];
       };
     };
   };

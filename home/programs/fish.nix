@@ -1,10 +1,11 @@
-{ pkgs, lib, ... }:
-
-let
+{
+  pkgs,
+  lib,
+  ...
+}: let
   inherit (import ../../hosts/modules/variables.nix) host;
 
   myAliases = {
-
     # File and directory management
     ls = "eza --icons --grid --all --color=always";
     la = "eza --icons -l -T -L=1";
@@ -45,34 +46,34 @@ let
     gpl = "git pull";
     gpr = "git pull --rebase";
 
-    gl = "git log --graph --oneline --decorate --all";  # Graphical log
-    gls = "git log --stat";  # Log with stats
+    gl = "git log --graph --oneline --decorate --all"; # Graphical log
+    gls = "git log --stat"; # Log with stats
     gd = "git diff";
-    gds = "git diff --stat"; 
+    gds = "git diff --stat";
 
     gco = "git checkout";
-    gcb = "git checkout -b";  # Create and switch to a new branch
+    gcb = "git checkout -b"; # Create and switch to a new branch
     gsw = "git switch";
     gm = "git merge";
     go = "git remote -v | grep github.com | grep fetch | head -1 | awk '{print $2}' | sed 's|git@github.com:|https://github.com/|' | xargs xdg-open";
 
     # Branching
     gb = "git branch";
-    gba = "git branch -a";  # List all branches (local and remote)
-    gbd = "git branch -d";  # Delete branch
-    gbD = "git branch -D";  # Force delete branch
+    gba = "git branch -a"; # List all branches (local and remote)
+    gbd = "git branch -d"; # Delete branch
+    gbD = "git branch -D"; # Force delete branch
 
     # Rebasing
     grb = "git rebase";
     grba = "git rebase --abort";
     grbc = "git rebase --continue";
-    grbi = "git rebase -i";  # Interactive rebase
+    grbi = "git rebase -i"; # Interactive rebase
 
     # Resetting
     gr = "git reset";
-    grh = "git reset --hard";  # Hard reset
-    grs = "git restore --staged";  # Unstage changes
-    
+    grh = "git reset --hard"; # Hard reset
+    grs = "git restore --staged"; # Unstage changes
+
     lg = "cd ~/dotfiles && lazygit";
     sshz = "ssh-start";
 
@@ -111,9 +112,8 @@ let
   };
 
   # Import Fish functions
-  fishFunctions = import ./fish-functions.nix { inherit pkgs; };
-in
-{
+  fishFunctions = import ./fish-functions.nix {inherit pkgs;};
+in {
   programs.fish = {
     enable = true;
     shellAliases = myAliases;

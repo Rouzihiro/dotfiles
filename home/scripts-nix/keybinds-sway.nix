@@ -1,5 +1,4 @@
-{ pkgs, ... }:
-
+{pkgs, ...}:
 pkgs.writeShellScriptBin "keybinds-sway" ''
   yad --width=800 --height=650 \
   --center \
@@ -55,5 +54,4 @@ pkgs.writeShellScriptBin "keybinds-sway" ''
   "Mod4+Control+l" "Resize Grow Width" \
   "Mod4+Control+k" "Resize Shrink Height" \
   "Mod4+Control+j" "Resize Grow Height"  \
-  ''
-
+''

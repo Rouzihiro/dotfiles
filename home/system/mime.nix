@@ -1,9 +1,6 @@
-{ ... }:
-let
-
+{...}: let
   inherit (import ../../hosts/modules/variables.nix) browser-light imageViewer videoPlayer Editor pdfViewer;
-in
-  {
+in {
   xdg.mimeApps = {
     enable = true;
     defaultApplications = {
@@ -34,4 +31,3 @@ in
     };
   };
 }
-

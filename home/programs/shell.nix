@@ -9,15 +9,11 @@
 
     eza = {
       enable = true;
-      extraOptions =
-        [
-          "--group-directories-first"
-          "--header"
-          "--icons"
-        ];
+      extraOptions = [
+        "--group-directories-first"
+        "--header"
+        "--icons"
+      ];
     };
-};
+  };
 }
-
-
-

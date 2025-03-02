@@ -1,5 +1,4 @@
-{ pkgs }:
-
+{pkgs}:
 pkgs.writeShellScriptBin "power-save" ''
 
   ${pkgs.libnotify}/bin/notify-send "Battery Saver" "Battery saver activated"

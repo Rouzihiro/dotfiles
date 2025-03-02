@@ -1,28 +1,27 @@
-{ pkgs, inputs, ... }:
-
-let
-  variables = import ../../hosts/modules/variables.nix; 
-  theme = variables.theme;
-in
-
 {
-
-imports =
-  [ inputs.nixvim.homeManagerModules.nixvim 
-./nixvim-keymaps.nix
-];
+  pkgs,
+  inputs,
+  ...
+}: let
+  variables = import ../../hosts/modules/variables.nix;
+  theme = variables.theme;
+in {
+  imports = [
+    inputs.nixvim.homeManagerModules.nixvim
+    ./nixvim-keymaps.nix
+  ];
 
   programs.nixvim = {
     enable = true;
     defaultEditor = true;
     vimdiffAlias = true;
-    colorscheme = theme; 
+    colorscheme = theme;
     colorschemes.${theme} = {
-     enable = true;
-    #  settings = {
-    #    borders = true;
-    #    italic = false;
-    # };
+      enable = true;
+      #  settings = {
+      #    borders = true;
+      #    italic = false;
+      # };
     };
 
     opts = {
@@ -39,7 +38,7 @@ imports =
       transparent.enable = true;
       # Uncomment this line to make plugin work
       # plugins.transparent.settings = { };
-   
+
       # Alternative solution:
       # extraConfigLua = ''
       #    require('transparent').setup({})
@@ -54,19 +53,19 @@ imports =
         enable = true;
         autoReloadOnWrite = true;
         openOnSetup = true;
-        extraOptions = { view = { side = "right"; }; };
+        extraOptions = {view = {side = "right";};};
       };
 
       smear-cursor.enable = true;
       smear-cursor.settings = {
-      highlight_group = "IncSearch";
-      delay = 30;
-      cursor_color = "#ff8800";
-      stiffness = 0.3;
-      trailing_stiffness = 0.15;
-      trailing_exponent = 15;
-      gamma = 2.5;
-    };
+        highlight_group = "IncSearch";
+        delay = 30;
+        cursor_color = "#ff8800";
+        stiffness = 0.3;
+        trailing_stiffness = 0.15;
+        trailing_exponent = 15;
+        gamma = 2.5;
+      };
 
       vimtex = {
         enable = true;
@@ -75,7 +74,7 @@ imports =
           latexmk = true;
         };
       };
-      
+
       treesitter = {
         enable = true;
         settings = {
@@ -88,20 +87,19 @@ imports =
               "^data/"
               "%.ipynb"
             ];
-            layout_config = { prompt_position = "top"; };
+            layout_config = {prompt_position = "top";};
             mappings = {
               i = {
                 "<A-j>" = {
                   __raw = "require('telescope.actions').move_selection_next";
                 };
                 "<A-k>" = {
-                  __raw =
-                    "require('telescope.actions').move_selection_previous";
+                  __raw = "require('telescope.actions').move_selection_previous";
                 };
               };
             };
             selection_caret = "> ";
-            set_env = { COLORTERM = "truecolor"; };
+            set_env = {COLORTERM = "truecolor";};
             sorting_strategy = "ascending";
           };
         };
@@ -125,14 +123,13 @@ imports =
             '';
           };
           snippet = {
-            expand =
-              "function(args) require('luasnip').lsp_expand(args.body) end";
+            expand = "function(args) require('luasnip').lsp_expand(args.body) end";
           };
           sources = [
-            { name = "nvim_lsp"; }
-            { name = "luasnip"; }
-            { name = "path"; }
-            { name = "buffer"; }
+            {name = "nvim_lsp";}
+            {name = "luasnip";}
+            {name = "path";}
+            {name = "buffer";}
           ];
         };
       };
@@ -147,9 +144,9 @@ imports =
       notify = {
         enable = true;
         settings = {
-        render = "minimal";
-        stages = "static";
-       };
+          render = "minimal";
+          stages = "static";
+        };
       };
 
       #bufferline = {
@@ -173,10 +170,10 @@ imports =
             enable = true;
             settings = {
               formatting = {
-                command = [ "alejandra" ];
-};
-};
-};
+                command = ["alejandra"];
+              };
+            };
+          };
           #html.enable = true;
           #java_language_server.enable = true;
           #jsonls.enable = true;

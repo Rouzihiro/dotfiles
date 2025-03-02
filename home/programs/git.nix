@@ -1,9 +1,6 @@
-{pkgs, ... }:
-
-let
+{pkgs, ...}: let
   inherit (import ../../hosts/modules/variables.nix) gitUsername gitEmail;
-in
-  {
+in {
   programs = {
     lazygit.enable = true;
     git = {
@@ -25,11 +22,10 @@ in
       ];
 
       aliases = {
-      
       };
 
       extraConfig = {
-          core = {
+        core = {
           #abbrev = "8";
           #editor = "nvim";
           whitespace = "fix,trailing-space,cr-at-eol,-space-before-tab,indent-with-non-tab";
@@ -39,16 +35,16 @@ in
         push.autoSetupRemote = true;
 
         commit = {
-        verbose = true;
-        template = "${pkgs.writeText "git-commit-template" ''
+          verbose = true;
+          template = "${pkgs.writeText "git-commit-template" ''
 
-          #Fix: Resolve
+            #Fix: Resolve
 
-          # - Fixed 
-          # - Added error handling for invalid input.
-          # -----------------
-        ''}";
-      };
+            # - Fixed
+            # - Added error handling for invalid input.
+            # -----------------
+          ''}";
+        };
       };
     };
   };

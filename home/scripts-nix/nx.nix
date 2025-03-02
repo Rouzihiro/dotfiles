@@ -1,5 +1,4 @@
-{ pkgs }:
-
+{pkgs}:
 pkgs.writeShellScriptBin "nx" ''
   #!/bin/sh
 
@@ -92,16 +91,16 @@ pkgs.writeShellScriptBin "nx" ''
   nx_doctor() {
       echo "-> Function nx_doctor called"
       echo "-> Running system maintenance tasks..."
-      
+
       echo "-> Updating system..."
       nx_up || { echo "Error: nx_up failed."; exit 1; }
-      
+
       echo "-> Running garbage collection..."
       nx_gc || { echo "Error: nx_gc failed."; exit 1; }
-      
+
       echo "-> Cleaning old generations..."
       nx_clean || { echo "Error: nx_clean failed."; exit 1; }
-      
+
       echo "-> System maintenance completed successfully."
   }
 

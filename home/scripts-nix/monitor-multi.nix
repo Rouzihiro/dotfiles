@@ -1,5 +1,4 @@
-{ pkgs }:
-
+{pkgs}:
 pkgs.writeShellScriptBin "monitor-multi" ''
 
   # Detect window manager/compositor
@@ -106,4 +105,3 @@ pkgs.writeShellScriptBin "monitor-multi" ''
       *) echo "Invalid option"; exit 1 ;;
   esac
 ''
-

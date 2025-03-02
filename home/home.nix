@@ -1,7 +1,11 @@
-{ hostname, inputs, pkgs, lib, ... }:
-
-let
-  loadModule = file: { condition ? true }: {
+{
+  hostname,
+  inputs,
+  pkgs,
+  lib,
+  ...
+}: let
+  loadModule = file: {condition ? true}: {
     inherit file condition;
   };
 
@@ -37,37 +41,34 @@ let
 
   # DE-Modules: Select hosts for each DE individually
   deModules = [
-    (loadModule ./system/i3.nix { condition = lib.elem hostname [ "Server" ]; })
-    (loadModule ./system/qtile.nix { condition = lib.elem hostname [ "MBPro" ]; })
-    (loadModule ./system/conky.nix { condition = lib.elem hostname [ "MBPro" ]; })
-    (loadModule ./system/sway.nix { condition = lib.elem hostname [ "MBPro" ]; })
-    (loadModule ./system/hyprland.nix { condition = lib.elem hostname [ "HP" ]; })
-    (loadModule ./system/fnott.nix {condition = lib.elem hostname [ "XX" ]; })
-    (loadModule ./system/anyrun.nix { condition = lib.elem hostname [ "HP" "MBPro" ]; })
-    (loadModule ./programs/kitty.nix {condition = lib.elem hostname [ "XX" ]; })
-
+    (loadModule ./system/i3.nix {condition = lib.elem hostname ["Server"];})
+    (loadModule ./system/qtile.nix {condition = lib.elem hostname ["MBPro"];})
+    (loadModule ./system/conky.nix {condition = lib.elem hostname ["MBPro"];})
+    (loadModule ./system/sway.nix {condition = lib.elem hostname ["MBPro"];})
+    (loadModule ./system/hyprland.nix {condition = lib.elem hostname ["HP"];})
+    (loadModule ./system/fnott.nix {condition = lib.elem hostname ["XX"];})
+    (loadModule ./system/anyrun.nix {condition = lib.elem hostname ["HP" "MBPro"];})
+    (loadModule ./programs/kitty.nix {condition = lib.elem hostname ["XX"];})
   ];
 
   barModules = [
-    (loadModule ./system/waybar.nix { condition = lib.elem hostname [ "HP" ]; })
+    (loadModule ./system/waybar.nix {condition = lib.elem hostname ["HP"];})
   ];
 
   # Miscellaneous Modules (Games, Extra Apps, Custom Picks)
   miscModules = [
-    (loadModule ./programs/gaming.nix { condition = lib.elem hostname [ "HP" ]; })
-    (loadModule ./programs/spicetify.nix { condition = lib.elem hostname [ "XX" ]; })
-    (loadModule ./programs/starship.nix { condition = lib.elem hostname [ "XX" ]; })
-    (loadModule ./programs/zsh.nix { condition = lib.elem hostname [ "XX" ]; })
-    (loadModule ./programs/freetube.nix { condition = lib.elem hostname [ "XX" ]; })
-    (loadModule ./programs/firefox.nix { condition = lib.elem hostname [ "XX" ]; })
+    (loadModule ./programs/gaming.nix {condition = lib.elem hostname ["HP"];})
+    (loadModule ./programs/spicetify.nix {condition = lib.elem hostname ["XX"];})
+    (loadModule ./programs/starship.nix {condition = lib.elem hostname ["XX"];})
+    (loadModule ./programs/zsh.nix {condition = lib.elem hostname ["XX"];})
+    (loadModule ./programs/freetube.nix {condition = lib.elem hostname ["XX"];})
+    (loadModule ./programs/firefox.nix {condition = lib.elem hostname ["XX"];})
   ];
 
   # Filter modules based on their condition
   allModules = systemModules ++ programModules ++ deModules ++ miscModules ++ barModules;
   enabledModules = map (x: x.file) (lib.filter (x: x.condition) allModules);
-
-in
-{
+in {
   imports = enabledModules;
 
   home.packages = with pkgs; [
@@ -75,7 +76,7 @@ in
     inputs.infinity-glass.packages."${pkgs.system}".default
   ];
 
- home.file = {
+  home.file = {
     "Pictures/wallpapers" = {
       source = "${inputs.assets.packages.x86_64-linux.assets}/wallpapers";
       recursive = true;

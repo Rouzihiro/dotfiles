@@ -1,11 +1,13 @@
 {
   programs.yazi.settings = {
     keymap = {
-      manager.prepend_keymap = [{
-        on = [ "Return" ];
-        run = "plugin --sync smart-enter";
-        desc = "Enter the child directory, or open the file";
-      }];
+      manager.prepend_keymap = [
+        {
+          on = ["Return"];
+          run = "plugin --sync smart-enter";
+          desc = "Enter the child directory, or open the file";
+        }
+      ];
 
       opener = {
         archive = [
@@ -17,10 +19,12 @@
           }
         ];
 
-        text = [{
-          run = ''$EDITOR "$@"'';
-          orphan = true;
-        }];
+        text = [
+          {
+            run = ''$EDITOR "$@"'';
+            orphan = true;
+          }
+        ];
         image = [
           {
             run = ''imv "$@"'';
@@ -33,11 +37,13 @@
             display_name = "Show EXIF";
           }
         ];
-        pdf = [{
-          run = ''zathura "$@"'';
-          orphan = true;
-          display_name = "Open";
-        }];
+        pdf = [
+          {
+            run = ''zathura "$@"'';
+            orphan = true;
+            display_name = "Open";
+          }
+        ];
         video = [
           {
             run = ''mpv "$@"'';
