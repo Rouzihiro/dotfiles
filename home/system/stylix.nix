@@ -41,16 +41,10 @@ in {
       package = pkgs.nordzy-icon-theme;
     };
 
-    # iconTheme = {
-    #   enable = true;
-    #   dark = "Infinity";
-    #   light = "Infinity";
-    # };
-
     cursor = {
-      size = 32;
-      name = "catppuccin-cursors";
-      package = pkgs.catppuccin-cursors.mochaMauve;
+      package = pkgs.bibata-cursors;
+      name = "Bibata-Modern-Ice";
+      size = 20;
     };
 
     fonts = {
