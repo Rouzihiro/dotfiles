@@ -1,15 +1,33 @@
-{ pkgs }:
-
-let
+{pkgs}: let
   # Helper function to create a Fish script
-  mkFishScript = name: script: pkgs.writeText "fish-function-${name}" ''
-    function ${name}
-      ${script}
+  mkFishScript = name: script:
+    pkgs.writeText "fish-function-${name}" ''
+      function ${name}
+        ${script}
+      end
+    '';
+in {
+  gitsync = mkFishScript "gitsync" ''
+    # Stash any unstaged changes
+    git stash push --include-untracked --message "Local changes stashed by gitsync"
+
+    # Pull latest changes with rebase
+    git pull --rebase origin main
+
+    # Check if rebase resulted in conflicts
+    if git rebase --show-current-patch >/dev/null 2>&1
+        echo "Conflict detected! Resolve conflicts and then run 'git rebase --continue' (grbc)."
+        echo "To abort the rebase, run 'git rebase --abort'."
+        return 1
     end
+
+    # Reapply stashed changes
+    git stash pop
+
+    echo "Sync complete!"
   '';
-in
-  {
- ssh-start = mkFishScript "ssh-start" ''
+
+  ssh-start = mkFishScript "ssh-start" ''
     # Check if keychain is installed
     if not command -v keychain >/dev/null
         echo "Error: Please install keychain first"
@@ -25,17 +43,7 @@ in
     # Load or start ssh-agent and add key
     keychain $keychain_args ~/.ssh/HP-Nixo
     source ~/.keychain/(hostname)-fish
-'';
-   # ssh-start = mkFishScript "ssh-start" ''
-   # # Kill any existing ssh-agent processes
-   # pkill ssh-agent || true
-
-    # Start a new ssh-agent and source its output
-    #ssh-agent -c | source
-
-    # Add the SSH key
-    #ssh-add ~/.ssh/HP-Nixo
-  #'';
+  '';
 
   qrimg = mkFishScript "qrimg" ''
     qrencode -t png -r /dev/stdin -o /dev/stdout | convert - -interpolate Nearest -filter point -resize 1000% png:/dev/stdout

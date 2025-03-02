@@ -70,9 +70,9 @@
     grbi = "git rebase -i"; # Interactive rebase
 
     # Resetting
-    gr = "git reset";
-    grh = "git reset --hard"; # Hard reset
-    grs = "git restore --staged"; # Unstage changes
+    grs = "git reset";
+    grsh = "git reset --hard"; # Hard reset
+    grst = "git restore --staged"; # Unstage changes
 
     lg = "cd ~/dotfiles && lazygit";
     sshz = "ssh-start";
