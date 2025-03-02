@@ -16,7 +16,7 @@ in {
   stylix = {
     enable = true;
     autoEnable = true;
-    #polarity = "dark";
+    polarity = "dark";
 
     targets = {
       nixvim.enable = false;
@@ -26,8 +26,8 @@ in {
       hyprland.enable = false;
     };
 
-    base16Scheme = "${pkgs.base16-schemes}/share/themes/nord.yaml";
-
+    # base16Scheme = "${pkgs.base16-schemes}/share/themes/nord.yaml";
+    base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-macchiato.yaml";
     #  for custom themes;
     #  base16Scheme = builtins.path {
     #  path = ../themes/gruvbox-dark-medium/gruvbox-dark-medium.yaml;
