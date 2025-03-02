@@ -54,15 +54,26 @@ in {
     clipboard.register = "unnamedplus";
 
     plugins = {
-      transparent.enable = true;
-      # Uncomment this line to make plugin work
-      # plugins.transparent.settings = { };
-
-      # Alternative solution:
-      # extraConfigLua = ''
-      #    require('transparent').setup({})
-      # '';
-      markdown-preview.enable = true;
+      aerial = {
+        enable = true;
+        settings = {
+          attach_mode = "global";
+          backends = ["treesitter" "lsp" "markdown" "man"];
+          disable_max_lines = 5000;
+          highlight_on_hover = true;
+          ignore = {
+            filetypes = ["gomod"];
+          };
+        };
+      };
+      render-markdown = {
+        enable = true;
+        settings = {
+          style = "dark";
+          width = 80;
+        };
+      };
+      illuminate.enable = true;
       web-devicons.enable = true;
       lualine.enable = true;
       which-key.enable = true;
@@ -74,16 +85,19 @@ in {
         openOnSetup = true;
         extraOptions = {view = {side = "right";};};
       };
-
-      smear-cursor.enable = true;
-      smear-cursor.settings = {
-        highlight_group = "IncSearch";
-        delay = 30;
-        cursor_color = "#ff8800";
-        stiffness = 0.3;
-        trailing_stiffness = 0.15;
-        trailing_exponent = 15;
-        gamma = 2.5;
+      vim-be-good.enable = true;
+      bullets = {
+        enable = true;
+        settings = {
+          enable_in_empty_buffers = 0;
+          enabled_file_types = [
+            "markdown"
+            "text"
+            "gitcommit"
+            "scratch"
+          ];
+          nested_checkboxes = 0;
+        };
       };
 
       vimtex = {
@@ -123,8 +137,6 @@ in {
           };
         };
       };
-
-      lazygit.enable = true;
 
       cmp = {
         enable = true;
@@ -213,13 +225,7 @@ in {
         };
       };
 
-      #comment.enable = true;
-
-      #alpha = {
-      #  enable = true;
-      #  theme = "dashboard";
-      #};
-
+      comment.enable = true;
       indent-blankline.enable = true;
       telescope.enable = true;
     };

@@ -99,7 +99,6 @@
             ;;
         esac
       '';
-
       cleaner = pkgs.writeShellScriptBin "clean.sh" ''
         if [[ "$TERM" == "xterm-kitty" ]]; then
           ${pkgs.kitty}/bin/kitty +kitten icat --clear --stdin no --silent --transfer-mode file < /dev/null > /dev/tty
