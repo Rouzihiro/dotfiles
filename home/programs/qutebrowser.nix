@@ -5,7 +5,7 @@
     enable = true;
 
     quickmarks = {
-      sheet = "https://raw.githubusercontent.com/qutebrowser/qutebrowser/main/doc/img/cheatsheet-big.png";
+      calendar = "https://calendar.google.com";
       chatgpt = "https://chat.openai.com";
       deep-seek = "https://chat.deepseek.com";
       drive = "https://drive.google.com/drive/my-drive";
@@ -16,7 +16,9 @@
       hacker_news = "https://news.ycombinator.com";
       home-manager = "https://nix-community.github.io/home-manager/options.xhtml";
       nixpkgs = "https://search.nixos.org/packages";
+      boberg = "https://portal.bgk-hamburg.de/cgi-bin/login";
       reddit = "https://www.reddit.com";
+      sheet = "https://raw.githubusercontent.com/qutebrowser/qutebrowser/main/doc/img/cheatsheet-big.png";
       translate = "https://translate.google.com";
       twitch = "https://www.twitch.tv";
       youtube = "https://www.youtube.com";

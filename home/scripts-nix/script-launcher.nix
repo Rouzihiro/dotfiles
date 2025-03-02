@@ -4,14 +4,17 @@ pkgs.writeShellScriptBin "script-launcher" ''
 
   # Predefined list of scripts
   static_scripts="
+  android
   bandwidth
+  bitwarden
   browse-video
   browse-web
-  calendar
+  extracto
   extract-helper
   keybinds-shell
   keybinds-sway
   monitor-multi
+  nx
   ocr
   ocr-prompt
   ocr-translate
