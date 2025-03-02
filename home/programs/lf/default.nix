@@ -68,7 +68,7 @@
               x=$4
               y=$5
 
-         if [[ "$(${pkgs.file}/bin/file -Lb --mime-type "$file")" =~ ^image ]]; then
+              if [[ "$(${pkgs.file}/bin/file -Lb --mime-type "$file")" =~ ^image ]]; then
                 ${pkgs.kitty}/bin/kitty +kitten icat --silent --stdin no --transfer-mode file \
                   --place "''${w}x''${h}@''${x}x''${y}" "$file" < /dev/null > /dev/tty
                 exit 1
@@ -79,6 +79,20 @@
               ${pkgs.chafa}/bin/chafa -f sixel -s "$2x$3" --animate off --polite on "$1"
               exit 1
             fi
+            ;;
+          video/*)
+            # Generate a thumbnail for video files using ffmpeg
+            thumbnail="/tmp/lf-video-thumbnail.png"
+            ${pkgs.ffmpeg}/bin/ffmpeg -y -i "$1" -vf "thumbnail" -frames:v 1 "$thumbnail" >/dev/null 2>&1
+
+            if [[ "$TERM" == "xterm-kitty" ]]; then
+              ${pkgs.kitty}/bin/kitty +kitten icat --silent --stdin no --transfer-mode file \
+                --place "''${2}x''${3}@''${4}x''${5}" "$thumbnail" < /dev/null > /dev/tty
+            else
+              ${pkgs.chafa}/bin/chafa -f sixel -s "$2x$3" --animate off --polite on "$thumbnail"
+            fi
+            rm "$thumbnail"
+            exit 1
             ;;
           text/*)
             ${pkgs.bat}/bin/bat -pp --color always --wrap character -- "$1"
