@@ -1,39 +1,46 @@
-{ pkgs, ... }:
-
-{
-
+{pkgs, ...}: {
   home.packages = with pkgs; [
     bitwarden-cli
+    alejandra
     xfce.thunar
     jq
     swww
     keychain
     teams-for-linux
-    wob 
-    glow miller
+    wob
+    glow
+    miller
     libreoffice
-    ecmtools unrar unzip #p7zip 
+    ecmtools
+    unrar
+    unzip #p7zip
     #gvfs # moutining Network drive
     # cifs-utils
-    vdhcoapp #Companion application for the Video DownloadHelper browser add-on. 
+    vdhcoapp #Companion application for the Video DownloadHelper browser add-on.
     mpvpaper
     yad
     gnome-font-viewer
     wget
-    # uget  # ariang plowshare 
-    # dex 
-    # i3blocks 
+    # uget  # ariang plowshare
+    # dex
+    # i3blocks
     # pdfarranger # PDF editor
 
     # User Utilities & Tools
-    openjdk17 
+    openjdk17
     openssl
     bc
-    tesseract grim slurp translate-shell # needed for Screenshot - OCR script 
-    joplin-desktop joplin
-    xcp duf
-    tree fd 
-   
+    tesseract
+    grim
+    slurp
+    translate-shell # needed for Screenshot - OCR script
+    joplin-desktop
+    joplin
+    xcp
+    duf
+    tree
+    fd
+
     #fzf # Fuzzy finder
     #jq # JSON parser
     #zoxide # Directory jumper
@@ -47,7 +54,7 @@
     #gcc                      # GNU Compiler Collection for C, C++, and other languages
     #live-server              # Development server with live reloading
     #nixfmt-rfc-style         # Formatter for Nix files adhering to RFC standards
-    ripgrep                   # Fast command-line search tool for finding text in files
+    ripgrep # Fast command-line search tool for finding text in files
 
     ####################
     # Media Tools
@@ -63,7 +70,7 @@
     #stash                    # http://localhost:9999/
     #playerctl                # CLI media player controller
     #zathura                  # Lightweight PDF viewer
-    ffmpeg-full               # Multimedia utilities
+    ffmpeg-full # Multimedia utilities
     #imagemagick              # Image manipulation tool
     #imv                      # Lightweight image viewer
     #pinta                    # Image editor
@@ -78,7 +85,7 @@
     # vesktop                  # Discord client
     # discordo
     # telegram-desktop         # Messaging app
-    thunderbird               # Email client
+    thunderbird # Email client
     # zoom-us                  # Video conferencing
     # skypeforlinux            # Skype client
     # whatsapp-for-linux
@@ -96,8 +103,8 @@
     # Wayland Specific
     # rofi-wayland
     # dunst                    # Notification daemon
-    wl-clipboard             # Clipboard manager
- 
+    wl-clipboard # Clipboard manager
+
     # Miscellaneous
     # cmatrix                  # Matrix effect in terminal
     # lolcat                   # Colorize terminal output

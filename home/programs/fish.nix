@@ -37,12 +37,13 @@ let
     gaa = "git add . -v";
     gc = "git commit -m";
     gct = "git commit";
-    gs ="git status";
+    gs = "git status";
     gps = "git push -v";
     gpf = "git push -v --force";
 
     gf = "git fetch --all --tags --prune";
-    gpl = "git pull --rebase";
+    gpl = "git pull";
+    gpr = "git pull --rebase";
 
     gl = "git log --graph --oneline --decorate --all";  # Graphical log
     gls = "git log --stat";  # Log with stats
@@ -74,8 +75,6 @@ let
     
     lg = "cd ~/dotfiles && lazygit";
     sshz = "ssh-start";
-    #ssh1 = "ssh-agent -c | source";
-    #ssh2 = "ssh-add ~/.ssh/HP-Nixo";
 
     # System utilities
     ko = "pkill";

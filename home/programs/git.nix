@@ -10,10 +10,6 @@ in
       enable = true;
       userName = "${gitUsername}";
       userEmail = "${gitEmail}";
-      #signing = {
-      #key = "$(cat ~/.ssh/HP.Nixo.pub)";
-      #signByDefault = true;
-    #};
       ignores = [
         ".cache/"
         ".DS_Store"
@@ -43,7 +39,6 @@ in
         push.autoSetupRemote = true;
 
         commit = {
-        #gpgSign = true;
         verbose = true;
         template = "${pkgs.writeText "git-commit-template" ''
 

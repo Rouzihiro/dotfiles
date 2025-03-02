@@ -169,7 +169,14 @@ imports =
           };
           # pylyzer.enable = true;
           # pyright.enable = true;
-          nixd.enable = true;
+          nixd = {
+            enable = true;
+            settings = {
+              formatting = {
+                command = [ "alejandra" ];
+};
+};
+};
           #html.enable = true;
           #java_language_server.enable = true;
           #jsonls.enable = true;

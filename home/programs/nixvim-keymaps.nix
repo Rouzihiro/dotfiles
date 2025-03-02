@@ -14,6 +14,7 @@
       { mode = "n"; key = "<C-x>"; action = "ZQ"; }
       { mode = "n"; key = "D"; action = "\"_D"; }
       { mode = "n"; key = "<leader>rw"; action = ":%s/<C-r><C-w>//g<Left><Left>"; options.desc = "Replace word under cursor"; }
+      { mode = "n"; key = "<leader>al"; action = ":lua vim.lsp.buf.format()<CR>"; options.desc = "Format file with LSP"; }
       
       {
       mode = [ "n" "v" ];

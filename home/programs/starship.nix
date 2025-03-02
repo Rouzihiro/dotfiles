@@ -3,7 +3,6 @@
     enable = true;
     enableFishIntegration = true;
     settings = {
-      # Default settings
       add_newline = true;
       continuation_prompt = "[▸▹ ](dimmed white)";
 
