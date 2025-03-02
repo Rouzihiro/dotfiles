@@ -1,4 +1,6 @@
-{...}: {
+{...}: let
+  inherit (import ../../hosts/modules/variables.nix) currentTheme;
+in {
   programs.waybar = {
     enable = true;
     settings = [
@@ -89,23 +91,23 @@
     ];
 
     style = ''
-      /* Nord color scheme */
-      @define-color nord0 #2E3440;
-      @define-color nord1 #3B4252;
-      @define-color nord2 #434C5E;
-      @define-color nord3 #4C566A;
-      @define-color nord4 #D8DEE9;
-      @define-color nord5 #E5E9F0;
-      @define-color nord6 #ECEFF4;
-      @define-color nord7 #8FBCBB;
-      @define-color nord8 #88C0D0;
-      @define-color nord9 #81A1C1;
-      @define-color nord10 #5E81AC;
-      @define-color nord11 #BF616A;
-      @define-color nord12 #D08770;
-      @define-color nord13 #EBCB8B;
-      @define-color nord14 #A3BE8C;
-      @define-color nord15 #B48EAD;
+      /* Dynamic color scheme */
+      @define-color base00 ${currentTheme.base00};
+      @define-color base01 ${currentTheme.base01};
+      @define-color base02 ${currentTheme.base02};
+      @define-color base03 ${currentTheme.base03};
+      @define-color base04 ${currentTheme.base04};
+      @define-color base05 ${currentTheme.base05};
+      @define-color base06 ${currentTheme.base06};
+      @define-color base07 ${currentTheme.base07};
+      @define-color base08 ${currentTheme.base08};
+      @define-color base09 ${currentTheme.base09};
+      @define-color base0A ${currentTheme.base0A};
+      @define-color base0B ${currentTheme.base0B};
+      @define-color base0C ${currentTheme.base0C};
+      @define-color base0D ${currentTheme.base0D};
+      @define-color base0E ${currentTheme.base0E};
+      @define-color base0F ${currentTheme.base0F};
 
       * {
         font-family: "JetBrainsMono Nerd Font", Roboto, Helvetica, Arial, sans-serif;
@@ -127,30 +129,30 @@
 
       button:hover {
         background: inherit;
-        box-shadow: inset 0 -3px @nord4;
+        box-shadow: inset 0 -3px @base04;
       }
 
       #pulseaudio:hover {
-        background-color: @nord2;
+        background-color: @base02;
       }
 
       #workspaces button {
         padding: 0 5px;
         background-color: transparent;
-        color: @nord4;
+        color: @base04;
       }
 
       #workspaces button:hover {
-        background: @nord1;
+        background: @base01;
       }
 
       #workspaces button.focused {
-        background-color: @nord10;
-        box-shadow: inset 0 -3px @nord6;
+        background-color: @base0D;
+        box-shadow: inset 0 -3px @base06;
       }
 
       #workspaces button.urgent {
-        background-color: @nord11;
+        background-color: @base08;
       }
 
       #clock,
@@ -161,38 +163,43 @@
       #network,
       #pulseaudio {
         padding: 0 10px;
-        color: @nord4;
+        color: @base04;
       }
 
       #pulseaudio {
-        color: @nord8;
+        color: @base0D;
       }
 
       #network {
-        color: @nord14;
+        color: @base0B;
       }
 
       #temperature {
-        color: @nord7;
+        color: @base0C;
+      }
+
+      #memory {
+        padding: 0 10px;
+        color: @base0A;
       }
 
       #battery {
-        color: @nord9;
+        color: @base09;
       }
 
       #clock {
-        color: @nord12;
+        color: @base0E;
       }
 
       #window {
-        color: @nord6;
+        color: @base06;
       }
 
       .modules-right,
       .modules-left,
       .modules-center {
-        background-color: @nord0;
-        border: 1px solid @nord1;
+        background-color: @base00;
+        border: 1px solid @base01;
         border-radius: 15px;
       }
 
@@ -210,18 +217,18 @@
 
       #battery.charging,
       #battery.plugged {
-        color: @nord14;
+        color: @base0B;
       }
 
       @keyframes blink {
         to {
-          color: @nord0;
+          color: @base00;
         }
       }
 
       #battery.critical:not(.charging) {
-        background-color: @nord11;
-        color: @nord6;
+        background-color: @base08;
+        color: @base06;
         animation-name: blink;
         animation-duration: 0.5s;
         animation-timing-function: steps(12);
@@ -230,7 +237,7 @@
       }
 
       #pulseaudio.muted {
-        color: @nord3;
+        color: @base03;
       }
     '';
   };
