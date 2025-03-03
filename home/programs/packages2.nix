@@ -1,5 +1,6 @@
 {pkgs, ...}: {
   home.packages = with pkgs; [
+    hyprpolkitagent
     bitwarden-cli
     alejandra
     xfce.thunar

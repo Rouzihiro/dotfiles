@@ -80,6 +80,7 @@
     # System utilities
     ko = "pkill";
     h = "history | fzf";
+    jour = "journalctl -xe";
     fz = "fzf --preview 'fzf-preview {}' --bind 'enter:execute(xdg-open {})'";
     openports = "netstat -nape --inet";
     myip = "curl https://ipinfo.io/ip && echo";

@@ -18,30 +18,20 @@
       TimeoutStopSec = 10;
     };
   };
-
   security = {
     polkit.enable = true;
-    #sudo.wheelNeedsPassword = false;
+    pam.services.hyprlock = {};
   };
-
+  
   xdg.portal = {
     enable = true;
-    extraPortals = with pkgs; [xdg-desktop-portal-gtk];
-  };
-
-  # Enable dconf for home-manager
-  programs.dconf.enable = true;
-
-  #test later systemd.user.targets.hyprland-session.Unit.Wants = [ "xdg-desktop-autostart.target" ];
-  wayland.windowManager.hyprland = {
-    enable = true;
-    xwayland.enable = true;
-    plugins = [
-      # inputs.hyprland-plugins.packages.${pkgs.system}.hyprwinwrap
+    extraPortals = [
+      pkgs.xdg-desktop-portal
+      pkgs.xdg-desktop-portal-gtk
+      pkgs.xdg-desktop-portal-hyprland
     ];
-    systemd = {
-      enable = true;
-      variables = ["--all"];
-    };
+    config.common.default = "*";
   };
-}
+
+  programs.dconf.enable = true;
+  }

@@ -1,7 +1,6 @@
 rec {
-
   # Select Theme
-  currentTheme = themes.catppuccin; 
+  currentTheme = themes.catppuccin;
   theme = "catppuccin";
 
   gitUsername = "Rouzihiro";
@@ -18,7 +17,7 @@ rec {
   BT-status = false;
 
   # Program Options
-  browser = "brave"; 
+  browser = "brave";
   browser-light = "org.qutebrowser.qutebrowser";
   terminal = "foot";
   launcher = "anyrun";
@@ -37,68 +36,62 @@ rec {
   consoleKeyMap = "de";
   clock24h = true;
 
- 
   themes = {
-
-  nord = {
-  base00 = "2E3440";  # Background
-  base01 = "3B4252";  # Lighter Background
-  base02 = "434C5E";  # Selection Background
-  base03 = "4C566A";  # Comments, Invisibles
-  base04 = "D8DEE9";  # Dark Foreground
-  base05 = "E5E9F0";  # Default Foreground
-  base06 = "ECEFF4";  # Light Foreground
-  base07 = "8FBCBB";  # Light Background
-  base08 = "88C0D0";  # Variables, XML Tags
-  base09 = "81A1C1";  # Integers, Boolean, Constants
-  base0A = "5E81AC";  # Classes, Markup Bold
-  base0B = "BF616A";  # Strings, Inherited Class
-  base0C = "D08770";  # Support, Regular Expressions
-  base0D = "EBCB8B";  # Functions, Methods, Headings
-  base0E = "A3BE8C";  # Keywords, Storage, Selector
-  base0F = "B48EAD";  # Deprecated, Opening/Closing Embedded Language Tags
-};
-
-catppuccin = {
-      base00 = "#24273a";  # base
-      base01 = "#1e2030";  # mantle
-      base02 = "#363a4f";  # surface0
-      base03 = "#494d64";  # surface1
-      base04 = "#5b6078";  # surface2
-      base05 = "#cad3f5";  # text
-      base06 = "#f4dbd6";  # rosewater
-      base07 = "#b7bdf8";  # lavender
-      base08 = "#ed8796";  # red
-      base09 = "#f5a97f";  # peach
-      base0A = "#eed49f";  # yellow
-      base0B = "#a6da95";  # green
-      base0C = "#8bd5ca";  # teal
-      base0D = "#8aadf4";  # blue
-      base0E = "#c6a0f6";  # mauve
-      base0F = "#f0c6c6";  # flamingo
+    nord = {
+      base00 = "2E3440"; # Background
+      base01 = "3B4252"; # Lighter Background
+      base02 = "434C5E"; # Selection Background
+      base03 = "4C566A"; # Comments, Invisibles
+      base04 = "D8DEE9"; # Dark Foreground
+      base05 = "E5E9F0"; # Default Foreground
+      base06 = "ECEFF4"; # Light Foreground
+      base07 = "8FBCBB"; # Light Background
+      base08 = "88C0D0"; # Variables, XML Tags
+      base09 = "81A1C1"; # Integers, Boolean, Constants
+      base0A = "5E81AC"; # Classes, Markup Bold
+      base0B = "BF616A"; # Strings, Inherited Class
+      base0C = "D08770"; # Support, Regular Expressions
+      base0D = "EBCB8B"; # Functions, Methods, Headings
+      base0E = "A3BE8C"; # Keywords, Storage, Selector
+      base0F = "B48EAD"; # Deprecated, Opening/Closing Embedded Language Tags
     };
 
+    catppuccin = {
+      base00 = "#24273a"; # base
+      base01 = "#1e2030"; # mantle
+      base02 = "#363a4f"; # surface0
+      base03 = "#494d64"; # surface1
+      base04 = "#5b6078"; # surface2
+      base05 = "#cad3f5"; # text
+      base06 = "#f4dbd6"; # rosewater
+      base07 = "#b7bdf8"; # lavender
+      base08 = "#ed8796"; # red
+      base09 = "#f5a97f"; # peach
+      base0A = "#eed49f"; # yellow
+      base0B = "#a6da95"; # green
+      base0C = "#8bd5ca"; # teal
+      base0D = "#8aadf4"; # blue
+      base0E = "#c6a0f6"; # mauve
+      base0F = "#f0c6c6"; # flamingo
+    };
 
-
-rose-pine = {
-  base00 = "191724";  # Background
-  base01 = "1f1d2e";  # Lighter Background
-  base02 = "26233a";  # Selection Background
-  base03 = "6e6a86";  # Comments, Invisibles
-  base04 = "908caa";  # Dark Foreground
-  base05 = "e0def4";  # Default Foreground
-  base06 = "e0def4";  # Light Foreground
-  base07 = "524f67";  # Light Background
-  base08 = "eb6f92";  # Variables, XML Tags
-  base09 = "f6c177";  # Integers, Boolean, Constants
-  base0A = "ebbcba";  # Classes, Markup Bold
-  base0B = "31748f";  # Strings, Inherited Class
-  base0C = "9ccfd8";  # Support, Regular Expressions
-  base0D = "c4a7e7";  # Functions, Methods, Headings
-  base0E = "c4a7e7";  # Keywords, Storage, Selector
-  base0F = "eb6f92";  # Deprecated, Opening/Closing Embedded Language Tags
-};
-
+    rose-pine = {
+      base00 = "191724"; # Background
+      base01 = "1f1d2e"; # Lighter Background
+      base02 = "26233a"; # Selection Background
+      base03 = "6e6a86"; # Comments, Invisibles
+      base04 = "908caa"; # Dark Foreground
+      base05 = "e0def4"; # Default Foreground
+      base06 = "e0def4"; # Light Foreground
+      base07 = "524f67"; # Light Background
+      base08 = "eb6f92"; # Variables, XML Tags
+      base09 = "f6c177"; # Integers, Boolean, Constants
+      base0A = "ebbcba"; # Classes, Markup Bold
+      base0B = "31748f"; # Strings, Inherited Class
+      base0C = "9ccfd8"; # Support, Regular Expressions
+      base0D = "c4a7e7"; # Functions, Methods, Headings
+      base0E = "c4a7e7"; # Keywords, Storage, Selector
+      base0F = "eb6f92"; # Deprecated, Opening/Closing Embedded Language Tags
+    };
   };
-
 }

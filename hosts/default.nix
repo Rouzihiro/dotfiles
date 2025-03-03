@@ -28,9 +28,9 @@ let
     # HP-specific
     (loadModule ./HP.nix { condition = lib.elem hostname [ "HP" ]; })
     #(loadModule ./modules/polkit.nix { condition = lib.elem hostname [ "HP" ]; })
-    (loadModule ./modules/hyprland.nix { condition = lib.elem hostname [ "HP" ]; })
+    (loadModule ./modules/hyprland-uwsm.nix { condition = lib.elem hostname [ "HP" ]; })
     (loadModule ./modules/android.nix { condition = lib.elem hostname [ "HP" ]; })
-    (loadModule ./modules/greetd-hypr.nix { condition = lib.elem hostname [ "HP" ]; })
+    #(loadModule ./modules/greetd-hypr.nix { condition = lib.elem hostname [ "HP" ]; })
     (loadModule ./modules/tlp-HP.nix { condition = lib.elem hostname [ "HP" ]; })
     (loadModule ./modules/intel.nix { condition = lib.elem hostname [ "HP" ]; })
     (loadModule ./modules/shell-hyprland.nix { condition = lib.elem hostname [ "HP" ]; })

@@ -21,6 +21,7 @@ in {
       "video/x-matroska" = "${videoPlayer}.desktop";
       "video/quicktime" = "${videoPlayer}.desktop";
       "text/plain" = "nvim.desktop";
+      "text/markdown" = "nvim.desktop";
       "text/x-shellscript" = "${Editor}.desktop";
       "application/x-sh" = "nvim.desktop";
       "application/xml" = "${Editor}.desktop";

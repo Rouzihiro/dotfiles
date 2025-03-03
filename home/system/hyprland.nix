@@ -2,7 +2,6 @@
   # ------------------------------------------------
   # Needed Packages
   # ------------------------------------------------
-
   home.packages = with pkgs; [
     hyprshot
     wev
@@ -19,8 +18,14 @@
 
   wayland.windowManager.hyprland = {
     enable = true;
-    systemd.enable = true;
     xwayland.enable = true;
+    plugins = [
+      # inputs.hyprland-plugins.packages.${pkgs.system}.hyprwinwrap
+    ];
+    systemd = {
+      enable = true;
+      variables = ["--all"];
+    };
 
     # ------------------------------------------------
     # Configuration
@@ -48,26 +53,29 @@
       # ------------------------------------------------
 
       env = [
-        "XDG_SESSION_TYPE                    ,  wayland  "
-        "XDG_CURRENT_DESKTOP                 ,  Hyprland "
-        "XDG_SESSION_DESKTOP                 ,  Hyprland "
+        "XDG_CURRENT_DESKTOP,Hyprland"
+        "XDG_SESSION_DESKTOP,Hyprland"
+        "XDG_SESSION_TYPE,wayland"
+        "GDK_BACKEND,wayland,x11,*"
+        "NIXOS_OZONE_WL,1"
+        "ELECTRON_OZONE_PLATFORM_HINT,auto"
+        "MOZ_ENABLE_WAYLAND,1"
+        "OZONE_PLATFORM,wayland"
+        "EGL_PLATFORM,wayland"
+        "CLUTTER_BACKEND,wayland"
+        "SDL_VIDEODRIVER,wayland"
+        "QT_QPA_PLATFORM,wayland;xcb"
+        "QT_WAYLAND_DISABLE_WINDOWDECORATION,1"
+        "QT_QPA_PLATFORMTHEME,qt6ct"
+        "QT_AUTO_SCREEN_SCALE_FACTOR,1"
+        "WLR_RENDERER_ALLOW_SOFTWARE,1"
+        "NIXPKGS_ALLOW_UNFREE,1"
 
-        "DISABLE_QT5_COMPAT                  , 1         "
-        "QT_AUTO_SCREEN_SCALE_FACTOR         , 1         "
-        "QT_WAYLAND_DISABLE_WINDOWDECORATION , 1         "
-
-        "MOZ_ENABLE_WAYLAND                  , 1         "
-        "NIXOS_OZONE_WL                      , 1         "
-        "ELECTRON_OZONE_PLATFORM_HINT        , auto      "
-
-        "GTK_WAYLAND_DISABLE_WINDOWDECORATION, 1         "
-
-        "NIXOS_XDG_OPEN_USE_PORTAL , 1"
-        "NIXPKGS_ALLOW_UNFREE, 1"
-        "GDK_BACKEND, wayland, x11"
-        "CLUTTER_BACKEND, wayland"
-        "QT_QPA_PLATFORM=wayland;xcb"
-        "SDL_VIDEODRIVER, x11"
+        #"DISABLE_QT5_COMPAT                  , 1         "
+        #"GTK_WAYLAND_DISABLE_WINDOWDECORATION, 1         "
+        #"NIXOS_XDG_OPEN_USE_PORTAL , 1"
+        #"GDK_BACKEND, wayland, x11"
+        #"SDL_VIDEODRIVER, x11"
       ];
 
       # ------------------------------------------------
@@ -75,14 +83,18 @@
       # ------------------------------------------------
 
       exec-once = [
-        "foot --server"
+        #"polkit-agent-helper-1"
+        "systemctl --user start xdg-desktop-portal.service"
         "dbus-update-activation-environment --systemd --all"
         "systemctl --user import-environment QT_QPA_PLATFORMTHEME WAYLAND_DISPLAY XDG_CURRENT_DESKTOP"
-        "waybar"
+        "systemctl --user enable --now hyprpolkitagent.service"
+        "rm '$XDG_CACHE_HOME/cliphist/db'" # Clear clipboard
+        "foot --server"
         #"exec-once = nm-applet --indicator"
-        "systemctl --user start lxqt-policykit-agent"
+        # "systemctl --user import-environment QT_QPA_PLATFORMTHEME"
         "monitor=,preferred,auto,1"
         "swww init && sleep 0.5 && swww img ~/Pictures/wallpapers/Dune3.png"
+        "sleep 1 && waybar"
       ];
 
       # ------------------------------------------------
