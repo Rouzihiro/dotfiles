@@ -10,7 +10,7 @@
   };
 
   systemModules = [
-    (loadModule ./system/xdg.nix {})
+    #(loadModule ./system/xdg.nix {})
     (loadModule ./system/mime.nix {})
     (loadModule ./system/dunst.nix {})
     (loadModule ./system/stylix.nix {})
@@ -45,7 +45,7 @@
     (loadModule ./system/qtile.nix {condition = lib.elem hostname ["MBPro"];})
     (loadModule ./system/conky.nix {condition = lib.elem hostname ["MBPro"];})
     (loadModule ./system/sway.nix {condition = lib.elem hostname ["MBPro"];})
-    (loadModule ./system/hyprland.nix {condition = lib.elem hostname ["HP"];})
+    (loadModule ./system/hyprland {condition = lib.elem hostname ["HP"];})
     (loadModule ./system/fnott.nix {condition = lib.elem hostname ["XX"];})
     (loadModule ./system/anyrun.nix {condition = lib.elem hostname ["HP" "MBPro"];})
     (loadModule ./programs/kitty.nix {condition = lib.elem hostname ["XX"];})
