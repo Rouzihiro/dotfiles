@@ -35,27 +35,27 @@ in {
       is_vim="ps -o state= -o comm= -t '#{pane_tty}' \
           | grep -iqE '^[^TXZ ]+ +(\\S+\\/)?g?(view|n?vim?x?|mprocs)(diff)?$'"
 
-      bind -n 'M-j' if-shell "$is_vim" 'send-keys M-j' 'select-pane -L'
-      bind -n 'M-k' if-shell "$is_vim" 'send-keys M-k' 'select-pane -D'
-      bind -n 'M-i' if-shell "$is_vim" 'send-keys M-i' 'select-pane -U'
+      bind -n 'M-h' if-shell "$is_vim" 'send-keys M-h' 'select-pane -L'
+      bind -n 'M-j' if-shell "$is_vim" 'send-keys M-j' 'select-pane -D'
+      bind -n 'M-k' if-shell "$is_vim" 'send-keys M-k' 'select-pane -U'
       bind -n 'M-l' if-shell "$is_vim" 'send-keys M-l' 'select-pane -R'
 
-      bind -T copy-mode 'M-j' select-pane -L
-      bind -T copy-mode 'M-k' select-pane -D
-      bind -T copy-mode 'M-i' select-pane -U
+      bind -T copy-mode 'M-h' select-pane -L
+      bind -T copy-mode 'M-j' select-pane -D
+      bind -T copy-mode 'M-k' select-pane -U
       bind -T copy-mode 'M-l' select-pane -R
 
       # in practice these binds really are Meta + key, these are just
       # some additional scuffed bindings that are needed because of
       # macos command key/ctrl key clown fiesta hackery
-      bind j if-shell "$is_vim" 'send-keys M-j' 'select-pane -L'
-      bind k if-shell "$is_vim" 'send-keys M-k' 'select-pane -D'
-      bind i if-shell "$is_vim" 'send-keys M-i' 'select-pane -U'
+      bind h if-shell "$is_vim" 'send-keys M-h' 'select-pane -L'
+      bind j if-shell "$is_vim" 'send-keys M-j' 'select-pane -D'
+      bind k if-shell "$is_vim" 'send-keys M-k' 'select-pane -U'
       bind l if-shell "$is_vim" 'send-keys M-l' 'select-pane -R'
 
-      bind -T copy-mode j select-pane -L
-      bind -T copy-mode k select-pane -D
-      bind -T copy-mode i select-pane -U
+      bind -T copy-mode h select-pane -L
+      bind -T copy-mode j select-pane -D
+      bind -T copy-mode k select-pane -U
       bind -T copy-mode l select-pane -R
 
       # resize panes

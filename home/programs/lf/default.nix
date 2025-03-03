@@ -32,6 +32,7 @@
       extract = ''$extracto "$f"'';
     };
     keybindings = {
+     "<enter>" = "$nvim $f";
       v = "editor-open";
       a = "mkdir";
       t = "touch";
@@ -42,7 +43,6 @@
       p = "paste";
       r = "rename";
       e = "extract";
-      "<enter>" = "open";
       "." = "set hidden!";
       o = "open-terminal";
       gd = "cd-downloads";
