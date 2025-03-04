@@ -6,6 +6,8 @@
       rounded_corners = false;
       proc_sorting = "memory";
       shown_boxes = "proc cpu ";
+      # theme = "catppuccin-mocha";
+      vim_keys = true;
     };
   };
 }

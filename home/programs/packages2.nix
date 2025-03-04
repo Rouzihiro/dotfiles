@@ -24,7 +24,6 @@
     wget
     # uget  # ariang plowshare
     # dex
-    # i3blocks
     # pdfarranger # PDF editor
 
     # User Utilities & Tools

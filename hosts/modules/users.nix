@@ -20,6 +20,7 @@
 
     users.${username} = {
       imports = [../../home/home.nix];
+      fonts.fontconfig.enable = true;
       programs.home-manager.enable = true;
       #xdg.enable = true;
       home = {

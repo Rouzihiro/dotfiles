@@ -102,6 +102,7 @@
     editsway = "nvim ~/dotfiles/home/system/sway.nix";
     editqtile = "nvim ~/dotfiles/home/system/qtile/src/config.py";
     nd = "nvim ~/dotfiles/";
+    dots = "cd ~/dotfiles && ls";
 
     # Miscellaneous
     xx = "exit";

@@ -9,7 +9,6 @@ in {
   # Environment config
   # ================================================================================================
 
-
   home = {
     packages = with pkgs; [
       #swaybg
@@ -95,11 +94,12 @@ in {
       set $opacity 0.85
       for_window [app_id="foot"] opacity $opacity
 
-      set $terminal   footclient
-      set $browser   brave
-      set $browser-light qutebrowser
-      set $launcher     wofi --menu
-      set $file-manager  nautilus
+      set $terminal       footclient
+      set $browser        brave
+      set $browser-light  qutebrowser
+      set $launcher       anyrun
+      #set $launcher      wofi --menu
+      set $file-manager   thunar
       set $Tfile-manager  $terminal -e yazi
       set $audio-manager  com.saivert.pwvucontrol
       set $password-manager  org.keepassxc.KeePassXC
@@ -230,9 +230,9 @@ in {
       defaultWorkspace = "workspace number 1";
 
       assigns = {
-        "1" = [{app_id = "^librewolf$";}];
-        "2" = [{app_id = "^org.pwmt.zathura$";}];
-        "3" = [{app_id = "^codium$";}];
+        "1" = [{app_id = "^qutebrowser$";}];
+        #"2" = [{app_id = "^org.pwmt.zathura$";}];
+        #"3" = [{app_id = "^codium$";}];
         #"4" = [{ app_id = "^wasistlos$"; }];
         "4" = [{app_id = "^com.rtosta.zapzap$";}];
         "5" = [{app_id = "^FreeTube$";}];
@@ -280,9 +280,9 @@ in {
 
           # Personal Scripts
           "Mod4+Shift+m" = "exec monitor-multi";
-          "Mod4+Shift+j" = "exec jdownloader";
+          #"Mod4+Shift+j" = "exec jdownloader";
           "Mod4+Shift+Backspace" = "exec powerswitch-wofi";
-          "Mod4+Shift+v" = "exec videotool-wofi";
+          "Mod4+Shift+v" = "exec videotool";
           "Mod4+v" = "exec browse-video";
           "Mod4+x" = "exec $terminal -e zsh -c ~/dotfiles/home/scripts/executer";
           "Mod4+SHIFT+x" = "exec browse-scripts";
@@ -310,7 +310,6 @@ in {
 
           # System
           "mod4+q" = "kill";
-          "mod1+q" = "kill";
           "mod4+t" = "floating toggle";
           "mod4+f" = "fullscreen toggle";
           "mod4+Shift+r" = "exec swaymsg reload";
@@ -345,15 +344,15 @@ in {
       # Style
       # ------------------------------------------------
       gaps = {
-        # inner = 10;
-        # outer = 0;
+        inner = 5;
+        outer = 2;
         # right = 0;
         # left = 0;
         # top = 0;
         # bottom = 0;
         # vertical = 0;
         # horizontal = 0;
-        # # smartGaps = true;
+        smartGaps = true;
         smartBorders = "on";
       };
 
