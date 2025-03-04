@@ -15,6 +15,14 @@ A huge shoutout to my amazing buddies:
 
 Your contributions and support mean the world! 🙌
 
+## Sway
+![Sway Home Screenshot](./assets/sway-home.png)
+
+![Sway File Manager Screenshot](./assets/sway-file.png)
+![Sway File Manager Screenshot](./assets/sway-file2.png)
+
+![Sway Development Screenshot](./assets/sway-dev.png)
+![Sway Development Screenshot](./assets/sway-dev2.png)
 
 ## Hyprland
 ![Hyprland Home Screenshot](./assets/hyprland-home.png)
@@ -32,14 +40,6 @@ Your contributions and support mean the world! 🙌
 ![Qtile File Manager Screensht](./assets/qtile-file.png)
 
 ![Qtile Development Screenshot](./assets/qtile-dev.png)
-
-
-## Sway
-![Sway Home Screenshot](./assets/sway-home.png)
-
-![Sway File Manager Screensht](./assets/sway-file.png)
-
-![Sway Development Screenshot](./assets/sway-dev.png)
 
 # Core System
 - **Shell:** `fish`
