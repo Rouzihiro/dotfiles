@@ -9,9 +9,10 @@ in {
   # Environment config
   # ================================================================================================
 
+
   home = {
     packages = with pkgs; [
-      swaybg
+      #swaybg
       swaylock
       swayidle
       libnotify
@@ -27,34 +28,41 @@ in {
       playerctl
       brightnessctl
 
-      #xdg-desktop-portal-gtk
-      #xdg-desktop-portal-wlr
+      xdg-desktop-portal-gtk
+      xdg-desktop-portal-wlr
     ];
 
     sessionVariables = {
       XDG_SESSION_TYPE = "wayland";
       XDG_CURRENT_DESKTOP = "sway";
       XDG_SESSION_DESKTOP = "sway";
-      NIXOS_XDG_OPEN_USE_PORTAL = "1";
 
       DISABLE_QT5_COMPAT = 1;
-      QT_QPA_PLATFORM = "wayland;xcb";
+      QT_QPA_PLATFORM = "wayland";
       QT_AUTO_SCREEN_SCALE_FACTOR = 1;
       QT_WAYLAND_DISABLE_WINDOWDECORATION = 1;
-      #QT_QPA_PLATFORMTHEME = "qt5ct";  # If using custom themes
 
       NIXOS_OZONE_WL = 1;
       MOZ_ENABLE_WAYLAND = 1;
-      ELECTRON_OZONE_PLATFORM_HINT = "auto"; #alternatively "1"
+      ELECTRON_OZONE_PLATFORM_HINT = 1;
 
-      GDK_BACKEND = "wayland,x11";
-      GTK_USE_PORTAL = 1; # AI deactived this, why ?
       GTK_WAYLAND_DISABLE_WINDOWDECORATION = 1;
 
+      #NIXOS_XDG_OPEN_USE_PORTAL = "1";
+      #QT_QPA_PLATFORMTHEME = "qt5ct";  # If using custom themes
+      #ELECTRON_OZONE_PLATFORM_HINT = "auto"; #alternatively "1"
+
+      #GDK_BACKEND = "wayland,x11";
+      #GTK_USE_PORTAL = 1; # AI deactived this, why ?
+      #GTK_WAYLAND_DISABLE_WINDOWDECORATION = 1;
+
       # Multimedia/Game compatibility
-      CLUTTER_BACKEND = "wayland";
-      SDL_VIDEODRIVER = "x11"; # Fallback to XWayland
-      WLR_NO_HARDWARE_CURSORS = "1"; # If cursor issues occur
+      #CLUTTER_BACKEND = "wayland";
+      #SDL_VIDEODRIVER = "x11"; # Fallback to XWayland
+      #WLR_NO_HARDWARE_CURSORS = "1"; # If cursor issues occur
+
+      #SDL_VIDEODRIVER=wayland
+      #JAVA_AWT_WM_NONREPARENTING=1
     };
   };
 
@@ -64,7 +72,7 @@ in {
 
   wayland.windowManager.sway = {
     enable = true;
-    xwayland = true;
+    xwayland = false;
 
     systemd = {
       enable = false;
@@ -72,8 +80,8 @@ in {
     };
 
     wrapperFeatures = {
-      # gtk = true;
-      # base = false;
+      gtk = true;
+      base = true;
     };
 
     # ------------------------------------------------
@@ -108,11 +116,19 @@ in {
       startup = [
         {command = "foot --server";}
         {command = "autotiling-rs";}
-        {command = "wl-gammactl -c 1.000 -b 0.950 -g 0.825";}
-        {command = "swaybg -i ~/home/Pictures/wallpapers/Earth.jpg";}
-        {command = "lxqt-policykit-agent";}
-        {command = "fnott -s";}
-        {command = "dbus-update-activation-environment --systemd XDG_CURRENT_DESKTOP QT_QPA_PLATFORM";}
+        #{command = "wl-gammactl -c 1.000 -b 0.950 -g 0.825";}
+        #{command = "dunst";}
+        {
+          command = "systemctl --user import-environment DISPLAY WAYLAND_DISPLAY SWAYSOCK XDG_CURRENT_DESKTOP";
+        }
+        {
+          command = "dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK XDG_CURRENT_DESKTOP";
+        }
+        {command = "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1";}
+        # Until https://github.com/signalapp/Signal-Desktop/issues/6368 is fixed
+        {command = "${pkgs.signal-desktop}/bin/signal-desktop";}
+
+        {command = "swww init && sleep 0.5 && swww img ~/Pictures/wallpapers/Dune3.png";}
 
         {
           command = ''
@@ -255,7 +271,8 @@ in {
           "mod4+Shift+Return" = "exec $launcher";
           "mod4+Return" = "exec $terminal";
           "mod4+E" = "exec $Tfile-manager";
-          "mod4+Shift+B" = "exec $browser-light";
+          "mod4+B" = "exec $browser-light";
+          "mod4+Shift+B" = "exec $browser";
           "mod4+Backspace" = "exec $terminal -e btop";
 
           # Personal Scripts
@@ -264,8 +281,8 @@ in {
           "Mod4+Shift+Backspace" = "exec powerswitch-wofi";
           "Mod4+Shift+v" = "exec videotool-wofi";
           "Mod4+v" = "exec browse-video";
-          "Mod4+Shift+x" = "exec $terminal -e zsh -c ~/dotfiles/home/scripts/executer";
-          "Mod4+x" = "exec browse-scripts";
+          "Mod4+x" = "exec $terminal -e zsh -c ~/dotfiles/home/scripts/executer";
+          "Mod4+SHIFT+x" = "exec browse-scripts";
           "Mod4+o" = "exec ocr";
           "Mod4+Shift+o" = "exec ocr-prompt";
           "Mod4+i" = "exec ocr-translate";

@@ -10,7 +10,6 @@ let
   commonModules = [
     (loadModule ./modules/boot.nix {})
     (loadModule ./modules/configuration.nix {})
-    #(loadModule ./modules/xdg.nix {})
     (loadModule ./modules/nix.nix {})
     (loadModule ./modules/bluetooth.nix {})
     (loadModule ./modules/time.nix {})
@@ -27,13 +26,13 @@ let
   hostSpecificModules = [
     # HP-specific
     (loadModule ./HP.nix { condition = lib.elem hostname [ "HP" ]; })
-    #(loadModule ./modules/polkit.nix { condition = lib.elem hostname [ "HP" ]; })
-    (loadModule ./modules/hyprland-uwsm.nix { condition = lib.elem hostname [ "HP" ]; })
+    (loadModule ./modules/polkit.nix { condition = lib.elem hostname [ "HP" ]; })
+    #(loadModule ./modules/hyprland-uwsm.nix { condition = lib.elem hostname [ "HP" ]; })
     (loadModule ./modules/android.nix { condition = lib.elem hostname [ "HP" ]; })
-    #(loadModule ./modules/greetd-hypr.nix { condition = lib.elem hostname [ "HP" ]; })
-    (loadModule ./modules/tlp-HP.nix { condition = lib.elem hostname [ "HP" ]; })
+    (loadModule ./modules/greetd.nix { condition = lib.elem hostname [ "HP" ]; })
+    (loadModule ./modules/tlp.nix { condition = lib.elem hostname [ "HP" ]; })
     (loadModule ./modules/intel.nix { condition = lib.elem hostname [ "HP" ]; })
-    (loadModule ./modules/shell-hyprland.nix { condition = lib.elem hostname [ "HP" ]; })
+    (loadModule ./modules/shell-sway.nix { condition = lib.elem hostname [ "HP" ]; })
     (loadModule ./modules/gaming.nix { condition = lib.elem hostname [ "HP" ]; })
 
     # MBPro-specific

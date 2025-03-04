@@ -44,15 +44,15 @@
     (loadModule ./system/i3.nix {condition = lib.elem hostname ["Server"];})
     (loadModule ./system/qtile.nix {condition = lib.elem hostname ["MBPro"];})
     (loadModule ./system/conky.nix {condition = lib.elem hostname ["MBPro"];})
-    (loadModule ./system/sway.nix {condition = lib.elem hostname ["MBPro"];})
-    (loadModule ./system/hyprland-uwsm.nix {condition = lib.elem hostname ["HP"];})
+    (loadModule ./system/sway.nix {condition = lib.elem hostname ["HP" "MBPro"];})
+    (loadModule ./system/hyprland-uwsm.nix {condition = lib.elem hostname ["XX"];})
     (loadModule ./system/fnott.nix {condition = lib.elem hostname ["XX"];})
     (loadModule ./system/anyrun.nix {condition = lib.elem hostname ["HP" "MBPro"];})
     (loadModule ./programs/kitty.nix {condition = lib.elem hostname ["XX"];})
   ];
 
   barModules = [
-    (loadModule ./system/waybar.nix {condition = lib.elem hostname ["HP"];})
+    (loadModule ./system/waybar.nix {condition = lib.elem hostname ["XX"];})
   ];
 
   # Miscellaneous Modules (Games, Extra Apps, Custom Picks)

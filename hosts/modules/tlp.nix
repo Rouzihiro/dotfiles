@@ -1,35 +1,9 @@
 { hostname, ... }:
 {
-
   services.tlp = {
     enable = true;
 
     settings = {
-
-      TLP_DEFAULT_MODE =
-        if hostname == "MBPro"
-        then "BAT"
-        else "AC";
-
-      TLP_PERSISTENT_DEFAULT =
-        if hostname == "MBPro"
-        then 0
-        else 1;
-
-      NATACPI_ENABLE =
-        if hostname == "MBPro"
-        then 0
-        else 1;
-
-      TPACPI_ENABLE =
-        if hostname == "MBPro"
-        then 0
-        else 1;
-
-      TPSMAPI_ENABLE =
-        if hostname == "MBPro"
-        then 0
-        else 1;
 
       CPU_BOOST_ON_AC = 1;
       CPU_BOOST_ON_BAT = 0;

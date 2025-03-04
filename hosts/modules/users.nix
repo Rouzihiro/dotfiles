@@ -21,7 +21,7 @@
     users.${username} = {
       imports = [../../home/home.nix];
       programs.home-manager.enable = true;
-      xdg.enable = true;
+      #xdg.enable = true;
       home = {
         stateVersion = "25.05";
         username = "${username}";

@@ -13,7 +13,7 @@ rec {
   host = "HP";
   shell = "fish";
   xdg = "xdg-desktop-portal-hyprland";
-  WM = "hyprland";
+  WM = "sway";
   BT-status = false;
 
   # Program Options
