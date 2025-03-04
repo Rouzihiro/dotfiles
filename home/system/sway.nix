@@ -92,6 +92,9 @@ in {
     # for_window [app_id=".*"] opacity $opacity
 
     extraConfig = ''
+      set $opacity 0.85
+      for_window [app_id="foot"] opacity $opacity
+
       set $terminal   footclient
       set $browser   brave
       set $browser-light qutebrowser

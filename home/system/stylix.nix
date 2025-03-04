@@ -10,9 +10,6 @@ in {
   # nix build nixpkgs#base16-schemes
   # nix build nixpkgs#bibata-cursors
 
-  # wayland.windowManager.hyprland.settings.general."col.active_border" =
-  #  lib.mkForce "rgb(${config.stylix.basel16Scheme.base0E})";
-
   stylix = {
     enable = true;
     autoEnable = true;
@@ -75,11 +72,11 @@ in {
         popups = 10;
       };
     };
-    # opacity = {
-    #   applications = 1.0;
-    #   terminal = 1.0;
-    #   desktop = 1.0;
-    #   popups = 1.0;
-    # };
+     # opacity = {
+     #   applications = 1.0;
+     #   terminal = 0.8;
+     #   desktop = 1.0;
+     #   popups = 0.8;
+     # };
   };
 }

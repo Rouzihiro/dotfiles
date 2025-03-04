@@ -48,6 +48,10 @@ in {
       relativenumber = true;
       smartindent = true;
       shiftwidth = 4;
+      swapfile = false;
+      ignorecase = true;
+      smartcase = true;
+      incsearch = true;
     };
 
     globals.mapleader = " ";
@@ -73,6 +77,7 @@ in {
           width = 80;
         };
       };
+      visual-multi.enable = true;
       illuminate.enable = true;
       web-devicons.enable = true;
       lualine.enable = true;
