@@ -9,7 +9,7 @@
     keychain
     teams-for-linux
     wob
-    glow
+    #glow
     miller
     libreoffice
     ecmtools
@@ -54,7 +54,7 @@
     #gcc                      # GNU Compiler Collection for C, C++, and other languages
     #live-server              # Development server with live reloading
     #nixfmt-rfc-style         # Formatter for Nix files adhering to RFC standards
-    ripgrep # Fast command-line search tool for finding text in files
+    ripgrep                   # Fast command-line search tool for finding text in files
 
     ####################
     # Media Tools
@@ -70,7 +70,7 @@
     #stash                    # http://localhost:9999/
     #playerctl                # CLI media player controller
     #zathura                  # Lightweight PDF viewer
-    ffmpeg-full # Multimedia utilities
+    ffmpeg-full               # Multimedia utilities
     #imagemagick              # Image manipulation tool
     #imv                      # Lightweight image viewer
     #pinta                    # Image editor
@@ -83,7 +83,7 @@
 
     # Communication
     # vesktop                  # Discord client
-    # discordo
+    # discordo                 # Discord cli
     # telegram-desktop         # Messaging app
     thunderbird # Email client
     # zoom-us                  # Video conferencing
@@ -94,7 +94,7 @@
     # localsend                # Local file sharing
 
     # Network and Internet Tools
-    # aria2                      # Download manager
+    aria2                      # Download manager
     # qbittorrent              # Torrent client
     # cloudflare-warp          # VPN
     # tailscale                # Mesh VPN

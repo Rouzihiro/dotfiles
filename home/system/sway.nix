@@ -61,7 +61,7 @@ in {
       #WLR_NO_HARDWARE_CURSORS = "1"; # If cursor issues occur
 
       #SDL_VIDEODRIVER=wayland
-      #JAVA_AWT_WM_NONREPARENTING=1
+      JAVA_AWT_WM_NONREPARENTING=1;
     };
   };
 
@@ -71,7 +71,7 @@ in {
 
   wayland.windowManager.sway = {
     enable = true;
-    xwayland = false;
+    xwayland = true;
 
     systemd = {
       enable = false;
@@ -281,19 +281,19 @@ in {
           # Personal Scripts
           "Mod4+Shift+m" = "exec monitor-multi";
           #"Mod4+Shift+j" = "exec jdownloader";
-          "Mod4+Shift+Backspace" = "exec powerswitch-wofi";
+          "Mod4+Shift+Backspace" = "exec power-menu-sway";
           "Mod4+Shift+v" = "exec video-tool";
           "Mod4+v" = "exec browse-video";
           "Mod4+x" = "exec $terminal -e fish -c ~/dotfiles/home/scripts/executer";
-          "Mod4+SHIFT+x" = "exec browse-scripts";
+          "Mod4+SHIFT+x" = "exec script-launcher";
           "Mod4+o" = "exec ocr";
           "Mod4+Shift+o" = "exec ocr-prompt";
           "Mod4+i" = "exec ocr-translate";
           "Mod4+Shift+w" = "exec wallpaper";
           "Mod4+w" = "exec wallpaper-random";
           "Mod4+Shift+b" = "exec browse-web";
-          "Mod4+k" = "exec keybinds-shell";
-          "Mod4+Shift+k" = "exec keybinds-sway";
+          "Mod4+k" = "exec keybinds-list-fish";
+          "Mod4+Shift+k" = "exec keybinds-list-sway";
 
           # Screenshot
           "mod4+s" = "exec grimshot --notify copy anything && notify-send 'copied to clipboard'";

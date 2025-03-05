@@ -12,13 +12,13 @@ pkgs.writeShellScriptBin "script-launcher" ''
   extracto
   extract-helper
   keybinds-shell
-  keybinds-sway
+  keybinds-list-sway
   monitor-multi
   nx
   ocr
   ocr-prompt
   ocr-translate
-  powersave
+  power-save
   time-zones
   weather
   wallpaper"
