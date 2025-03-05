@@ -17,7 +17,7 @@ in {
       libnotify
 
       autotiling-rs
-      wl-color-picker
+      #wl-color-picker
       sway-contrib.grimshot
 
       wdisplays
@@ -233,8 +233,8 @@ in {
         "1" = [{app_id = "^qutebrowser$";}];
         #"2" = [{app_id = "^org.pwmt.zathura$";}];
         #"3" = [{app_id = "^codium$";}];
-        #"4" = [{ app_id = "^wasistlos$"; }];
-        "4" = [{app_id = "^com.rtosta.zapzap$";}];
+        "4" = [{ app_id = "^wasistlos$"; }];
+        #"4" = [{app_id = "^com.rtosta.zapzap$";}];
         "5" = [{app_id = "^FreeTube$";}];
       };
 
@@ -275,23 +275,23 @@ in {
           "mod4+Return" = "exec $terminal";
           "mod4+E" = "exec $Tfile-manager";
           "mod4+B" = "exec $browser-light";
-          "mod4+Shift+B" = "exec $browser";
+          #"mod4+Shift+B" = "exec $browser";
           "mod4+Backspace" = "exec $terminal -e btop";
 
           # Personal Scripts
           "Mod4+Shift+m" = "exec monitor-multi";
           #"Mod4+Shift+j" = "exec jdownloader";
           "Mod4+Shift+Backspace" = "exec powerswitch-wofi";
-          "Mod4+Shift+v" = "exec videotool";
+          "Mod4+Shift+v" = "exec video-tool";
           "Mod4+v" = "exec browse-video";
-          "Mod4+x" = "exec $terminal -e zsh -c ~/dotfiles/home/scripts/executer";
+          "Mod4+x" = "exec $terminal -e fish -c ~/dotfiles/home/scripts/executer";
           "Mod4+SHIFT+x" = "exec browse-scripts";
           "Mod4+o" = "exec ocr";
           "Mod4+Shift+o" = "exec ocr-prompt";
           "Mod4+i" = "exec ocr-translate";
           "Mod4+Shift+w" = "exec wallpaper";
           "Mod4+w" = "exec wallpaper-random";
-          #"Mod4+b" = "exec browse-web";
+          "Mod4+Shift+b" = "exec browse-web";
           "Mod4+k" = "exec keybinds-shell";
           "Mod4+Shift+k" = "exec keybinds-sway";
 
@@ -395,7 +395,7 @@ in {
           fonts = {
             names = ["DroidSansM Nerd Font"];
             style = "Regular";
-            size = 12.0;
+            size = 10.0;
           };
 
           colors = {

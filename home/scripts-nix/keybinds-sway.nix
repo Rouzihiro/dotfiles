@@ -10,21 +10,17 @@ pkgs.writeShellScriptBin "keybinds-sway" ''
   --column=Description: \
   --timeout=90 \
   --timeout-indicator=right \
-  "Mod1+1" "Librewolf" \
-  "Mod1+2" "Yazi" \
-  "Mod1+3" "Nautilus" \
-  "Mod4+SPACE" "Wofi" \
+  "Mod4+SPACE" "Scratchpad" \
   "Mod4+Return" "Foot" \
-  "Mod4+Shift+B" "Brave Browser" \
+  "Mod4+B" "Qutebrowser" \
   "Mod4+Shift+m" "Monitor Switch" \
   "Mod4+Shift+Backspace" \
-  "Mod4+Shift+v" "Video Tool Wofi" \
+  "Mod4+Shift+v" "Video Tool" \
   "Mod4+v" "Browse Videos" \
   "Mod4+Shift+x" "Executer" \
   "Mod4+x" "Browse Scripts" \
   "Mod4+Shift+w" "Wallpaper" \
   "Mod4+w" "Random Wallpaper" \
-  "Mod4+b" "Browse Web" \
   "Mod4+k" "Keybinds Shell" \
   "Mod4+Shift+k" "Keybinds Sway" \
   "Mod4+o" "Screenshot OCR" \
@@ -39,7 +35,6 @@ pkgs.writeShellScriptBin "keybinds-sway" ''
   "XF86AudioLowerVolume" "Lower Volume" \
   "XF86AudioRaiseVolume" "Raise Volume" \
   "Mod4+q" "Kill Window" "kill" \
-  "Mod1+q" "Kill Window" "kill" \
   "Mod4+t" "Floating Toggle" \
   "Mod4+f" "Fullscreen Toggle" \
   "Mod4+Shift+r" "Sway Restart" \

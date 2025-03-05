@@ -22,6 +22,23 @@
       translate = "https://translate.google.com";
       twitch = "https://www.twitch.tv";
       youtube = "https://www.youtube.com";
+      rapid-movies = "https://rmz.cr";
+      noodle = "https://noodlemagazine.com";
+      firgirl = "https://fitgirl-repacks.site";
+      dodi = "https://dodi-repacks.site";
+      mma1 = "https://realfight.org/category/mma-boxing";
+      ovd = "https://www.savethevideo.com";
+      Anime-watch = "https://hianime.to";
+      Anime-dl = "https://wotaku.wiki/websites#download";
+      Anime-links = "https://fmhy.net/videopiracyguide#anime-downloading";
+      Anime-check = "https://github.com/fmhy/FMHY/wiki/Stream-Site-Grading";
+      movies-fz = "https://fzmovies.net/movieslist.php?catID=2&by=latest";
+      games-igg = "https://igg-games.com";
+      games-x = "https://lewdgames.to/all-games";
+      markdown-online = "https://dillinger.io";
+      overleaf = "https://www.overleaf.com";
+      maps = "https://www.google.de/maps";
+
     };
 
     extraConfig = ''
