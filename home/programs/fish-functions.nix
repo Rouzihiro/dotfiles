@@ -153,7 +153,7 @@ in {
     end
   '';
 
-  searchz = mkFishScript "searchz" ''
+  s = mkFishScript "s" ''
     if contains -- --help $argv
       echo "Usage: searchz <search term>"
       echo "Searches for text in files recursively."
