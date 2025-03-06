@@ -11,13 +11,10 @@ in {
 
   home = {
     packages = with pkgs; [
-      #swaybg
       swaylock
       swayidle
       libnotify
-
       autotiling-rs
-      #wl-color-picker
       sway-contrib.grimshot
 
       wdisplays
@@ -26,41 +23,9 @@ in {
 
       playerctl
       brightnessctl
-
-      xdg-desktop-portal-gtk
-      xdg-desktop-portal-wlr
     ];
 
     sessionVariables = {
-      XDG_SESSION_TYPE = "wayland";
-      XDG_CURRENT_DESKTOP = "sway";
-      XDG_SESSION_DESKTOP = "sway";
-
-      DISABLE_QT5_COMPAT = 1;
-      QT_QPA_PLATFORM = "wayland";
-      QT_AUTO_SCREEN_SCALE_FACTOR = 1;
-      QT_WAYLAND_DISABLE_WINDOWDECORATION = 1;
-
-      NIXOS_OZONE_WL = 1;
-      MOZ_ENABLE_WAYLAND = 1;
-      ELECTRON_OZONE_PLATFORM_HINT = "auto"; #alternatively "x11" or "wayland" 
-
-      GTK_WAYLAND_DISABLE_WINDOWDECORATION = 1;
-
-      #NIXOS_XDG_OPEN_USE_PORTAL = "1";
-      #QT_QPA_PLATFORMTHEME = "qt5ct";  # If using custom themes
-      #ELECTRON_OZONE_PLATFORM_HINT = "auto"; 
-      #GDK_BACKEND = "wayland,x11";
-      #GTK_USE_PORTAL = 1; # AI deactived this, why ?
-      #GTK_WAYLAND_DISABLE_WINDOWDECORATION = 1;
-
-      # Multimedia/Game compatibility
-      #CLUTTER_BACKEND = "wayland";
-      #SDL_VIDEODRIVER = "x11"; # Fallback to XWayland
-      #WLR_NO_HARDWARE_CURSORS = "1"; # If cursor issues occur
-
-      #SDL_VIDEODRIVER=wayland
-      #JAVA_AWT_WM_NONREPARENTING=1;
     };
   };
 
@@ -70,17 +35,6 @@ in {
 
   wayland.windowManager.sway = {
     enable = true;
-    xwayland = true;
-
-    systemd = {
-      enable = false;
-      # variables = [ ]
-    };
-
-    wrapperFeatures = {
-      gtk = true;
-      base = true;
-    };
 
     # ------------------------------------------------
     # Configuration
@@ -92,6 +46,12 @@ in {
     extraConfig = ''
       set $opacity 0.85
       for_window [app_id="foot"] opacity $opacity
+
+      # Set scratchpad size
+      for_window [app_id="scratchpad"] {
+      floating_minimum_size 1200 800
+      floating_maximum_size 1200 800
+      }
 
       set $terminal       footclient
       set $browser        brave
@@ -118,20 +78,7 @@ in {
       startup = [
         {command = "foot --server";}
         {command = "autotiling-rs";}
-        #{command = "wl-gammactl -c 1.000 -b 0.950 -g 0.825";}
-        #{command = "dunst";}
-        {
-          command = "systemctl --user import-environment DISPLAY WAYLAND_DISPLAY SWAYSOCK XDG_CURRENT_DESKTOP";
-        }
-        {
-          command = "dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK XDG_CURRENT_DESKTOP";
-        }
-        {command = "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1";}
-        # Until https://github.com/signalapp/Signal-Desktop/issues/6368 is fixed
-        {command = "${pkgs.signal-desktop}/bin/signal-desktop";}
-
         {command = "swww init && sleep 0.5 && swww img ~/Pictures/wallpapers/Dune3.png";}
-
         {
           command = ''
             swayidle -w \
@@ -141,39 +88,6 @@ in {
             timeout 1800 "systemctl poweroff" '';
         }
       ];
-
-      # ------------------------------------------------
-      # Monitors
-      # ------------------------------------------------
-
-      output = {
-        eDP-1 = {
-          scale = "1.0";
-          scale_filter = "nearest";
-          resolution = "1920x1080";
-
-          adaptive_sync = "on";
-          max_render_time = "off";
-
-          subpixel = "rgb";
-          render_bit_depth = "10";
-          color_profile = "srgb";
-          # color_profile = "icc MNE007ZA3_2_cal_01.icm";
-        };
-
-        HDMI-A-1 = {
-          #scale = "auto";
-          scale_filter = "nearest";
-          position = "-1920,0";
-          #resolution = "preferred";
-
-          adaptive_sync = "off";
-          max_render_time = "off";
-
-          subpixel = "rgb";
-          color_profile = "srgb";
-        };
-      };
 
       # ------------------------------------------------
       # Inputs

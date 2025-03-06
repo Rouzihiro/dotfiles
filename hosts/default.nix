@@ -27,19 +27,18 @@ let
     # HP-specific
     (loadModule ./HP.nix { condition = lib.elem hostname [ "HP" ]; })
     (loadModule ./modules/polkit.nix { condition = lib.elem hostname [ "HP" ]; })
+    (loadModule ./modules/sway.nix { condition = lib.elem hostname [ "HP" "MBPro"]; })
+    #(loadModule ./modules/qtile.nix { condition = lib.elem hostname [ "HP" ]; })
     #(loadModule ./modules/hyprland-uwsm.nix { condition = lib.elem hostname [ "HP" ]; })
     (loadModule ./modules/android.nix { condition = lib.elem hostname [ "HP" ]; })
-    (loadModule ./modules/greetd.nix { condition = lib.elem hostname [ "HP" ]; })
+    (loadModule ./modules/greetd.nix { condition = lib.elem hostname [ "HP" "MBPro" ]; })
     (loadModule ./modules/tlp.nix { condition = lib.elem hostname [ "HP" ]; })
-    (loadModule ./modules/intel.nix { condition = lib.elem hostname [ "HP" ]; })
-    (loadModule ./modules/shell-sway.nix { condition = lib.elem hostname [ "HP" ]; })
+    (loadModule ./modules/intel.nix { condition = lib.elem hostname [ "HP" "MBPro" ]; })
+    (loadModule ./modules/shell-sway.nix { condition = lib.elem hostname [ "HP" "MBPro" ]; })
     (loadModule ./modules/gaming.nix { condition = lib.elem hostname [ "HP" ]; })
 
     # MBPro-specific
     (loadModule ./MBPro.nix { condition = lib.elem hostname [ "MBPro" ]; })
-    (loadModule ./modules/tlp-MBPro.nix { condition = lib.elem hostname [ "MBPro" ]; })
-    (loadModule ./modules/greetd-multi.nix { condition = lib.elem hostname [ "MBPro" ]; })
-    (loadModule ./modules/shell-sway.nix { condition = lib.elem hostname [ "MBPro" ]; })
     
     # Server-specific
     (loadModule ./server.nix { condition = lib.elem hostname [ "server" ]; })
@@ -48,7 +47,6 @@ let
     (loadModule ./modules/fstrim.nix { condition = lib.elem hostname [ "server" ]; })
 
     # Modules for multiple hosts
-    (loadModule ./modules/qtile.nix { condition = lib.elem hostname [ "XX" ]; })
     (loadModule ./modules/vm.nix { condition = lib.elem hostname [ "XX" ]; })
     (loadModule ./modules/adb.nix { condition = lib.elem hostname [ "XX" ]; })
     (loadModule ./modules/fstrim.nix { condition = lib.elem hostname [ "XX" ]; })
