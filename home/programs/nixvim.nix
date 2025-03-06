@@ -15,33 +15,33 @@ in {
     enable = true;
     defaultEditor = true;
     vimdiffAlias = true;
-    colorschemes.${theme} = {
+     colorschemes.${theme} = {
       autoLoad = true;
       enable = true;
-      settings = {
-        flavour = "mocha";
-        default_integrations = true;
-        integrations = {
-          cmp = true;
-          gitsigns = true;
-          mini = {
-            enabled = true;
-          };
-          treesitter = true;
-        };
-        styles = {
-          booleans = [
-            "bold"
-            "italic"
-          ];
-          conitionals = [
-            "bold"
-          ];
-        };
-        term_colors = true;
-        transparent_background = true;
-      };
-    };
+       settings = {
+         flavour = "mocha";
+         default_integrations = true;
+         integrations = {
+           cmp = true;
+           gitsigns = true;
+           mini = {
+             enabled = true;
+           };
+           treesitter = true;
+         };
+         styles = {
+           booleans = [
+             "bold"
+             "italic"
+           ];
+           conitionals = [
+             "bold"
+           ];
+         };
+         term_colors = true;
+         transparent_background = true;
+       };
+     };
     colorscheme = theme;
     opts = {
       number = true;

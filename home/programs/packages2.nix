@@ -1,32 +1,13 @@
 {pkgs, ...}: {
   home.packages = with pkgs; [
-    hyprpolkitagent
+    ####################
+    # User Utilities & Tools
+    ####################
     bitwarden-cli
-    alejandra
-    xfce.thunar
-    jq
-    swww
     keychain
-    teams-for-linux
-    wob
-    #glow
-    miller
-    libreoffice
-    ecmtools
-    unrar
-    unzip #p7zip
-    #gvfs # moutining Network drive
-    # cifs-utils
-    vdhcoapp #Companion application for the Video DownloadHelper browser add-on.
-    mpvpaper
+    wget
     yad
     gnome-font-viewer
-    wget
-    # uget  # ariang plowshare
-    # dex
-    # pdfarranger # PDF editor
-
-    # User Utilities & Tools
     openjdk17
     openssl
     bc
@@ -40,6 +21,12 @@
     duf
     tree
     fd
+    ripgrep # Fast command-line search tool for finding text in files
+    miller
+    jq
+    unrar
+    unzip #p7zip
+    ecmtools
 
     #fzf # Fuzzy finder
     #jq # JSON parser
@@ -48,18 +35,27 @@
     #eza # Modern replacement for `ls` with better formatting and icons
 
     ####################
-    # Programming & Development
+    # File Management
     ####################
-    nodejs
-    #gcc                      # GNU Compiler Collection for C, C++, and other languages
-    #live-server              # Development server with live reloading
-    #nixfmt-rfc-style         # Formatter for Nix files adhering to RFC standards
-    ripgrep                   # Fast command-line search tool for finding text in files
+    motrix
+    xfce.thunar
+    aria2 # Download manager
+    vdhcoapp #Companion application for the Video DownloadHelper browser add-on.
+
+    #gvfs # moutining Network drive
+    # cifs-utils
+    # uget  # ariang plowshare
+    # dex
+    # pdfarranger # PDF editor
 
     ####################
     # Media Tools
     ####################
-    #yt-dlp                   # Download videos from YouTube and other platforms
+    swww
+    mpvpaper
+    ffmpeg-full # Multimedia utilities
+    yt-dlp # Download videos from YouTube and other platforms
+
     #waypipe                  # Wayland remote display tool for forwarding applications
     #ani-cli                  # CLI tool to stream or download anime
     #brightnessctl            # CLI tool to adjust screen brightness
@@ -70,22 +66,22 @@
     #stash                    # http://localhost:9999/
     #playerctl                # CLI media player controller
     #zathura                  # Lightweight PDF viewer
-    ffmpeg-full               # Multimedia utilities
     #imagemagick              # Image manipulation tool
     #imv                      # Lightweight image viewer
     #pinta                    # Image editor
     #vlc                      # Media player
     #mpv
 
-    # Browsers
-    # vivaldi                  # Chromium-based browser
-    # falkon                   # Lightweight Qt-based web browser (didnt handle open-AI)
-
+    ####################
     # Communication
+    ####################
+    nchat
+    teams-for-linux
+    thunderbird # Email client
+
     # vesktop                  # Discord client
     # discordo                 # Discord cli
     # telegram-desktop         # Messaging app
-    thunderbird # Email client
     # zoom-us                  # Video conferencing
     # skypeforlinux            # Skype client
     # whatsapp-for-linux
@@ -93,33 +89,62 @@
     # anydesk                  # Remote desktop client
     # localsend                # Local file sharing
 
-    # Network and Internet Tools
-    aria2                      # Download manager
-    # qbittorrent              # Torrent client
-    # cloudflare-warp          # VPN
-    # tailscale                # Mesh VPN
-    # onedrive                 # Cloud storage
+    ####################
+    # Programming & Development
+    ####################
+    nodejs
+    alejandra
 
+    #gcc                      # GNU Compiler Collection for C, C++, and other languages
+    #live-server              # Development server with live reloading
+    #nixfmt-rfc-style         # Formatter for Nix files adhering to RFC standards
+
+    ####################
     # Wayland Specific
-    # rofi-wayland
-    # dunst                    # Notification daemon
+    ####################
+    wob
     wl-clipboard # Clipboard manager
 
+    # rofi-wayland
+    # dunst                    # Notification daemon
+
+    ####################
     # Miscellaneous
+    ####################
+    libreoffice
+
     # cmatrix                  # Matrix effect in terminal
     # lolcat                   # Colorize terminal output
     # onefetch                 # Git repository overview
     # cowsay                   # Fun ASCII art generator
 
+    ####################
     # Education
+    ####################
     # calligra
     # onlyoffice-desktopeditors # only X11
     # ciscoPacketTracer8       # Networking simulator
     # wireshark                # Network analysis tool
     # ventoy                   # Bootable USB creator
 
+    ####################
     # Music and Streaming
+    ####################
     # youtube-music            # YouTube Music client
     # spotify                  # Music streaming client
+
+    ####################
+    # Network and Internet Tools
+    ####################
+    # qbittorrent              # Torrent client
+    # cloudflare-warp          # VPN
+    # tailscale                # Mesh VPN
+    # onedrive                 # Cloud storage
+
+    ####################
+    # Browsers
+    ####################
+    # vivaldi                  # Chromium-based browser
+    # falkon                   # Lightweight Qt-based web browser (didnt handle open-AI)
   ];
 }

@@ -3,16 +3,31 @@ rec {
   currentTheme = themes.catppuccin;
   theme = "catppuccin";
 
+  console.colors = with currentTheme; [
+    base00
+    base01
+    base02
+    base03
+    base04
+    base05
+    base06
+    base07
+    base08
+    base09
+    base0A
+    base0B
+    base0C
+    base0D
+    base0E
+    base0F
+  ];
+
   gitUsername = "Rouzihiro";
   gitEmail = "ryossj@gmail.com";
-
-  # Hyprland Settings
-  extraMonitorSettings = "";
 
   # System Settings
   host = "HP";
   shell = "fish";
-  xdg = "xdg-desktop-portal-hyprland";
   WM = "sway";
   BT-status = false;
 
@@ -21,7 +36,7 @@ rec {
   browser-light = "org.qutebrowser.qutebrowser";
   terminal = "foot";
   launcher = "anyrun";
-  #launcher = "wofi --menu";
+  launcher2 = "wofi --menu";
   file-manager = "thunar";
   Tfile-manager = "foot -e yazi";
   imageViewer = "imv";
@@ -38,47 +53,48 @@ rec {
 
   themes = {
     nord = {
-      base00 = "2E3440"; # Background
-      base01 = "3B4252"; # Lighter Background
-      base02 = "434C5E"; # Selection Background
-      base03 = "4C566A"; # Comments, Invisibles
-      base04 = "D8DEE9"; # Dark Foreground
-      base05 = "E5E9F0"; # Default Foreground
-      base06 = "ECEFF4"; # Light Foreground
-      base07 = "8FBCBB"; # Light Background
-      base08 = "88C0D0"; # Variables, XML Tags
-      base09 = "81A1C1"; # Integers, Boolean, Constants
-      base0A = "5E81AC"; # Classes, Markup Bold
-      base0B = "BF616A"; # Strings, Inherited Class
-      base0C = "D08770"; # Support, Regular Expressions
-      base0D = "EBCB8B"; # Functions, Methods, Headings
-      base0E = "A3BE8C"; # Keywords, Storage, Selector
-      base0F = "B48EAD"; # Deprecated, Opening/Closing Embedded Language Tags
+      base00 = "2E3440";
+      base01 = "3B4252";
+      base02 = "434C5E";
+      base03 = "4C566A";
+      base04 = "D8DEE9";
+      base05 = "E5E9F0";
+      base06 = "ECEFF4";
+      base07 = "8FBCBB";
+      base08 = "88C0D0";
+      base09 = "81A1C1";
+      base0A = "5E81AC";
+      base0B = "BF616A";
+      base0C = "D08770";
+      base0D = "EBCB8B";
+      base0E = "A3BE8C";
+      base0F = "B48EAD";
     };
 
-    catppuccin = {
-      base00 = "#24273a"; # base
-      base01 = "#1e2030"; # mantle
-      base02 = "#363a4f"; # surface0
-      base03 = "#494d64"; # surface1
-      base04 = "#5b6078"; # surface2
-      base05 = "#cad3f5"; # text
-      base06 = "#f4dbd6"; # rosewater
-      base07 = "#b7bdf8"; # lavender
-      base08 = "#ed8796"; # red
-      base09 = "#f5a97f"; # peach
-      base0A = "#eed49f"; # yellow
-      base0B = "#a6da95"; # green
-      base0C = "#8bd5ca"; # teal
-      base0D = "#8aadf4"; # blue
-      base0E = "#c6a0f6"; # mauve
-      base0F = "#f0c6c6"; # flamingo
+    catppuccin.macchiato = {
+      #macchiato
+      base00 = "#24273a";
+      base01 = "#1e2030";
+      base02 = "#363a4f";
+      base03 = "#494d64";
+      base04 = "#5b6078";
+      base05 = "#cad3f5";
+      base06 = "#f4dbd6";
+      base07 = "#b7bdf8";
+      base08 = "#ed8796";
+      base09 = "#f5a97f";
+      base0A = "#eed49f";
+      base0B = "#a6da95";
+      base0C = "#8bd5ca";
+      base0D = "#8aadf4";
+      base0E = "#c6a0f6";
+      base0F = "#f0c6c6";
     };
 
     rose-pine = {
       base00 = "191724"; # Background
       base01 = "1f1d2e"; # Lighter Background
-      base02 = "26233a"; # Selection Background
+      base02 = "26233a";
       base03 = "6e6a86"; # Comments, Invisibles
       base04 = "908caa"; # Dark Foreground
       base05 = "e0def4"; # Default Foreground
@@ -92,6 +108,65 @@ rec {
       base0D = "c4a7e7"; # Functions, Methods, Headings
       base0E = "c4a7e7"; # Keywords, Storage, Selector
       base0F = "eb6f92"; # Deprecated, Opening/Closing Embedded Language Tags
+    };
+
+    dracula = {
+      base00 = "282a36";
+      base01 = "343746";
+      base02 = "424450";
+      base03 = "6272a4";
+      base04 = "f8f8f2";
+      base05 = "f8f8f2";
+      base06 = "f8f8f2";
+      base07 = "6272a4";
+      base08 = "ff5555";
+      base09 = "ff79c6";
+      base0A = "f1fa8c";
+      base0B = "50fa7b";
+      base0C = "8be9fd";
+      base0D = "bd93f9";
+      base0E = "ffb86c";
+      base0F = "ff5555";
+    };
+
+    catppuccin.frappe = {
+      #frappe
+      base00 = "303446";
+      base01 = "292c3c";
+      base02 = "414559";
+      base03 = "51576d";
+      base04 = "626880";
+      base05 = "c6d0f5";
+      base06 = "f2d5cf";
+      base07 = "babbf1";
+      base08 = "e78284";
+      base09 = "ef9f76";
+      base0A = "e5c890";
+      base0B = "a6d189";
+      base0C = "81c8be";
+      base0D = "8caaee";
+      base0E = "ca9ee6";
+      base0F = "eebebe";
+    };
+
+    catppuccin = {
+      # mocha
+      base00 = "1e1e2e";
+      base01 = "181825";
+      base02 = "313244";
+      base03 = "45475a";
+      base04 = "585b70";
+      base05 = "cdd6f4";
+      base06 = "f5e0dc";
+      base07 = "b4befe";
+      base08 = "f38ba8";
+      base09 = "fab387";
+      base0A = "f9e2af";
+      base0B = "a6e3a1";
+      base0C = "94e2d5";
+      base0D = "89b4fa";
+      base0E = "cba6f7";
+      base0F = "f2cdcd";
     };
   };
 }
