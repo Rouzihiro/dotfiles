@@ -13,9 +13,11 @@ in {
   stylix = {
     enable = true;
     autoEnable = true;
-    polarity = "dark";
+    #polarity = "dark";
 
     targets = {
+      #foot.enable = false;
+      #footclient.enable = false;
       nixvim.enable = false;
       neovim.enable = false;
       sway.enable = false;

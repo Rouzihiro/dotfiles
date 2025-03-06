@@ -47,17 +47,11 @@ in {
       set $opacity 0.85
       for_window [app_id="foot"] opacity $opacity
 
-      # Set scratchpad size
-      for_window [app_id="scratchpad"] {
-      floating_minimum_size 1200 800
-      floating_maximum_size 1200 800
-      }
-
       set $terminal       footclient
       set $browser        brave
       set $browser-light  qutebrowser
       set $launcher       anyrun
-      #set $launcher      wofi --menu
+      set $launcher2      wofi --menu
       set $file-manager   thunar
       set $Tfile-manager  $terminal -e yazi
       set $audio-manager  com.saivert.pwvucontrol
@@ -83,8 +77,8 @@ in {
           command = ''
             swayidle -w \
             before-sleep  "swaylock -fF" \
-            timeout 60 "brightnessctl -s set 0" resume "brightnessctl -r" \
-            timeout 600 "systemctl suspend" \
+            timeout 90 "brightnessctl -s set 0" resume "brightnessctl -r" \
+            timeout 900 "systemctl suspend" \
             timeout 1800 "systemctl poweroff" '';
         }
       ];
@@ -180,11 +174,13 @@ in {
         lib.listToAttrs workspaceBindings
         // {
           "mod4+space" = "scratchpad show";
-          "mod4+Shift+space" = "move container to scratchpad";
           "mod1+space" = "[con_mark=scratch] scratchpad show";
-          "mod1+Shift+Space" = "mark scratch; move to scratchpad";
-
-          "mod4+Shift+Return" = "exec $launcher";
+          #"mod1+Shift+Space" = "mark scratch; move to scratchpad";
+          "mod1+Shift+Space" = "mark scratch; floating enable, resize set width 1800 height 1000, move scratchpad";
+          "mod4+Shift+Space" = "floating enable, resize set width 1800 height 1000, move scratchpad";
+           
+          "mod4+Shift+Return" = "exec $launcher2";
+          "mod1+Return" = "exec $launcher";
           "mod4+Return" = "exec $terminal";
           "mod4+E" = "exec $Tfile-manager";
           "mod4+B" = "exec $browser-light";
@@ -197,8 +193,8 @@ in {
           "Mod4+Shift+Backspace" = "exec power-menu-sway";
           "Mod4+Shift+v" = "exec video-tool";
           "Mod4+v" = "exec browse-video";
-          "Mod4+x" = "exec $terminal -e fish -c ~/dotfiles/home/scripts/executer";
-          "Mod4+SHIFT+x" = "exec script-launcher";
+          "Mod4+Shift+x" = "exec $terminal -e fish -c ~/dotfiles/home/scripts/executer";
+          "Mod4+x" = "exec script-launcher";
           "Mod4+o" = "exec ocr";
           "Mod4+Shift+o" = "exec ocr-prompt";
           "Mod4+i" = "exec ocr-translate";
