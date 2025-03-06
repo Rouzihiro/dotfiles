@@ -65,6 +65,12 @@ in {
     end
   '';
 
+  yturl = mkFishScript "yturl" ''
+    set -l url (yt-dlp --get-url $argv)
+    echo $url
+    echo $url | wl-copy
+  '';
+
   bwu = mkFishScript "bwu" ''
     set -x BW_SESSION (bw unlock --raw)
     bw sync

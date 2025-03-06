@@ -109,12 +109,9 @@
     c = "clear";
     o = "xdg-open";
     t = "tmux";
-    yto = "yt-dlp --external-downloader aria2c";
-    yt1 = "yt-dlp --external-downloader aria2c --external-downloader-args '-d $HOME/Downloads/ -x10 -s10 -k1M' -o '%(id)s.%(ext)s'";
-    yt2 = "yt-dlp --external-downloader aria2c --external-downloader-args '-d $HOME/Downloads/ -x10 -s10 -k1M' -o 'video_%(id)s.%(ext)s'";
-    yt3 = "yt-dlp --external-downloader aria2c --external-downloader-args '-d $HOME/Downloads/ -x10 -s10 -k1M' -o '%(title).50s.%(ext)s'";
-
-    yturl = "yt-dlp --get-url";
+    yt1 = "yt-dlp --external-downloader aria2c --external-downloader-args 'aria2c:-x10 -s10 -k1M'";
+    yt2 = "yt-dlp --external-downloader aria2c --external-downloader-args 'aria2c:-x10 -s10 -k1M' -o 'video_%(id)s.%(ext)s'";
+    yt3 = "yt-dlp --external-downloader aria2c --external-downloader-args 'aria2c:-x10 -s10 -k1M' -o '%(title).50s.%(ext)s'";
     ytx = "yt-x";
     fsource = "source ~/.config/fish/config.fish; echo 'Fish config reloaded!'";
   };
