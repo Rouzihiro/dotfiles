@@ -115,7 +115,7 @@ Your contributions and support mean the world! 🙌
 
 ### Installation
 ```fish
-nix-shell -p git; git clone https://github.com/Rouzihiro/HP-Nix.git;
+nix-shell -p git; git clone https://github.com/Rouzihiro/dotfiles.git;
 ```
 
 ```fish
@@ -198,11 +198,11 @@ Searches for text in files recursively.
 
 ### Usage
 ```fish
-searchz <search term>
+s <search term>
 ```
 ### Examples
 ```fish
-searchz "search term"  # Searches for text in files
+s "search term"  # Searches for text in files
 ```
 
 ---
