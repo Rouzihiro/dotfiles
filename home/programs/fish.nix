@@ -111,9 +111,15 @@
     t = "tmux";
     yt1 = "yt-dlp --external-downloader aria2c --external-downloader-args 'aria2c:-x10 -s10 -k1M'";
     yt2 = "yt-dlp --external-downloader aria2c --external-downloader-args 'aria2c:-x10 -s10 -k1M' -o 'video_%(id)s.%(ext)s'";
-    yt3 = "yt-dlp --external-downloader aria2c --external-downloader-args 'aria2c:-x10 -s10 -k1M' -o '%(title).50s.%(ext)s'";
+    ytbest = "yt-dlp -f 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best'";
     ytx = "yt-x";
+    wget1 = "wget --mirror --convert-links --adjust-extension --page-requisites --no-parent";
+    wget2 = "wget --tries=5 --retry-connrefused --waitretry=30";
+    curldl = "curl -L -C - -O";
+    aria = "aria2c";
+
     fsource = "source ~/.config/fish/config.fish; echo 'Fish config reloaded!'";
+
   };
 
   # Import Fish functions

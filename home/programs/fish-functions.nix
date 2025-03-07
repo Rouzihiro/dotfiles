@@ -71,6 +71,28 @@ in {
     echo $url | wl-copy
   '';
 
+     DL = mkFishScript "DL" ''
+        function DL
+          read -P "Enter URL: " url
+          echo "Download with (c)url/(w)get/(a)ria/(y)t-dlp/(u)yturl: "
+          read -l tool
+          switch $tool
+            case c
+              curldl $url
+            case w
+              wget1 $url
+            case a
+              yt1 $url
+            case y
+              ytbest $url
+            case u
+              yturl $url
+            case '*'
+              echo "Invalid option. Use (c)url, (w)get, (a)ria, (y)t-dlp, or (u)yturl."
+          end
+        end
+      '';
+
   bwu = mkFishScript "bwu" ''
     set -x BW_SESSION (bw unlock --raw)
     bw sync
