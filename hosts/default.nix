@@ -10,6 +10,7 @@ let
   commonModules = [
     (loadModule ./modules/boot.nix {})
     (loadModule ./modules/configuration.nix {})
+    (loadModule ./modules/shell.nix {})
     (loadModule ./modules/nix.nix {})
     (loadModule ./modules/bluetooth.nix {})
     (loadModule ./modules/time.nix {})
@@ -17,6 +18,7 @@ let
     (loadModule ./modules/zram.nix {})
     (loadModule ./modules/network.nix {})
     (loadModule ./modules/nh.nix {})
+    (loadModule ./modules/ssh.nix {})
     (loadModule ./modules/pipewire.nix {})
     (loadModule ./modules/gsettings.nix {})
     (loadModule ./modules/fonts.nix {})
@@ -26,15 +28,13 @@ let
   hostSpecificModules = [
     # HP-specific
     (loadModule ./HP.nix { condition = lib.elem hostname [ "HP" ]; })
-    (loadModule ./modules/polkit.nix { condition = lib.elem hostname [ "HP" ]; })
+    (loadModule ./modules/polkit.nix { condition = lib.elem hostname [ "HP" "MBPro" ]; })
     (loadModule ./modules/sway.nix { condition = lib.elem hostname [ "HP" "MBPro"]; })
-    #(loadModule ./modules/qtile.nix { condition = lib.elem hostname [ "HP" ]; })
     #(loadModule ./modules/hyprland-uwsm.nix { condition = lib.elem hostname [ "HP" ]; })
     (loadModule ./modules/android.nix { condition = lib.elem hostname [ "HP" ]; })
     (loadModule ./modules/greetd.nix { condition = lib.elem hostname [ "HP" "MBPro" ]; })
-    (loadModule ./modules/tlp.nix { condition = lib.elem hostname [ "HP" ]; })
+    (loadModule ./modules/tlp.nix { condition = lib.elem hostname [ "HP" "MBPro" ]; })
     (loadModule ./modules/intel.nix { condition = lib.elem hostname [ "HP" "MBPro" ]; })
-    (loadModule ./modules/shell-sway.nix { condition = lib.elem hostname [ "HP" "MBPro" ]; })
     (loadModule ./modules/gaming.nix { condition = lib.elem hostname [ "HP" ]; })
 
     # MBPro-specific
@@ -42,8 +42,6 @@ let
     
     # Server-specific
     (loadModule ./server.nix { condition = lib.elem hostname [ "server" ]; })
-    (loadModule ./modules/nh.nix { condition = lib.elem hostname [ "server" ]; })
-    (loadModule ./modules/ssh.nix { condition = lib.elem hostname [ "server" ]; })
     (loadModule ./modules/fstrim.nix { condition = lib.elem hostname [ "server" ]; })
 
     # Modules for multiple hosts

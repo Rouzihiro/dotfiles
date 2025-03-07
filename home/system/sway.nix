@@ -5,10 +5,6 @@
 }: let
   i3blocksConf = pkgs.callPackage ./i3blocks.nix {};
 in {
-  # ================================================================================================
-  # Environment config
-  # ================================================================================================
-
   imports = [
     ./sway-lock.nix
   ];
@@ -33,10 +29,6 @@ in {
     };
   };
 
-  # ================================================================================================
-  # Sway
-  # ================================================================================================
-
   wayland.windowManager.sway = {
     enable = true;
 
@@ -52,6 +44,7 @@ in {
       for_window [app_id="foot"] opacity $opacity
 
       set $terminal       footclient
+      set $editor $terminal -e nvim
       set $browser        brave
       set $browser-light  qutebrowser
       set $launcher       anyrun
@@ -65,7 +58,7 @@ in {
     '';
 
     config = {
-      #focus.newWindow = "focus";
+      focus.newWindow = "focus";
       #floating.modifier = "mod4";
       #defaultWorkspace = "workspace number 1";
 
