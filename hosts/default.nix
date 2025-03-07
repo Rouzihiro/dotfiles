@@ -18,7 +18,6 @@ let
     (loadModule ./modules/zram.nix {})
     (loadModule ./modules/network.nix {})
     (loadModule ./modules/nh.nix {})
-    (loadModule ./modules/ssh.nix {})
     (loadModule ./modules/pipewire.nix {})
     (loadModule ./modules/gsettings.nix {})
     (loadModule ./modules/fonts.nix {})
@@ -43,6 +42,7 @@ let
     # Server-specific
     (loadModule ./server.nix { condition = lib.elem hostname [ "server" ]; })
     (loadModule ./modules/fstrim.nix { condition = lib.elem hostname [ "server" ]; })
+    (loadModule ./modules/ssh.nix { condition = lib.elem hostname [ "server" ]; })
 
     # Modules for multiple hosts
     (loadModule ./modules/vm.nix { condition = lib.elem hostname [ "XX" ]; })
