@@ -5,31 +5,19 @@
     ####################
     bitwarden-cli
     keychain
-    wget
-    yad
+    ffmpeg-full yt-dlp wget aria2 yad bc tesseract translate-shell slurp xcp duf tree fd ripgrep
+
     gnome-font-viewer
     openjdk17
     openssl
-    bc
-    tesseract
     grim
-    slurp
-    translate-shell # needed for Screenshot - OCR script
     joplin-desktop
     joplin
-    xcp
-    duf
-    tree
-    fd
-    ripgrep # Fast command-line search tool for finding text in files
     miller
     jq
-    unrar
-    unzip #p7zip
-    ecmtools
+    unrar unzip ecmtools
 
     #fzf # Fuzzy finder
-    #jq # JSON parser
     #zoxide # Directory jumper
     #cliphist # Clipboard manager
     #eza # Modern replacement for `ls` with better formatting and icons
@@ -39,7 +27,6 @@
     ####################
     motrix
     xfce.thunar
-    aria2 # Download manager
     vdhcoapp #Companion application for the Video DownloadHelper browser add-on.
 
     #gvfs # moutining Network drive
@@ -51,11 +38,8 @@
     ####################
     # Media Tools
     ####################
-    swww
+    swww grimblast
     mpvpaper
-    ffmpeg-full # Multimedia utilities
-    yt-dlp # Download videos from YouTube and other platforms
-
     #waypipe                  # Wayland remote display tool for forwarding applications
     #ani-cli                  # CLI tool to stream or download anime
     #brightnessctl            # CLI tool to adjust screen brightness
@@ -111,8 +95,6 @@
     ####################
     # Miscellaneous
     ####################
-    libreoffice
-
     # cmatrix                  # Matrix effect in terminal
     # lolcat                   # Colorize terminal output
     # onefetch                 # Git repository overview
@@ -121,6 +103,7 @@
     ####################
     # Education
     ####################
+    libreoffice
     # calligra
     # onlyoffice-desktopeditors # only X11
     # ciscoPacketTracer8       # Networking simulator
