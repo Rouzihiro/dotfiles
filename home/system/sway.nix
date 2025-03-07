@@ -9,6 +9,10 @@ in {
   # Environment config
   # ================================================================================================
 
+  imports = [
+    ./sway-lock.nix
+  ];
+
   home = {
     packages = with pkgs; [
       swaylock
@@ -178,7 +182,7 @@ in {
           #"mod1+Shift+Space" = "mark scratch; move to scratchpad";
           "mod1+Shift+Space" = "mark scratch; floating enable, resize set width 1800 height 1000, move scratchpad";
           "mod4+Shift+Space" = "floating enable, resize set width 1800 height 1000, move scratchpad";
-           
+
           "mod4+Shift+Return" = "exec $launcher2";
           "mod1+Return" = "exec $launcher";
           "mod4+Return" = "exec $terminal";

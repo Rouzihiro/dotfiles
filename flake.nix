@@ -8,10 +8,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-#   spicetify-nix = {
-  #     url = "github:Gerg-L/spicetify-nix";
-  #     inputs.nixpkgs.follows = "nixpkgs";
-  #   };
+    #   spicetify-nix = {
+    #     url = "github:Gerg-L/spicetify-nix";
+    #     inputs.nixpkgs.follows = "nixpkgs";
+    #   };
 
     infinity-glass = {
       url = "github:Rouzihiro/infinity-glass-icons";
@@ -27,7 +27,7 @@
       url = "github:danth/stylix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    
+
     nixvim = {
       url = "github:nix-community/nixvim";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -36,32 +36,29 @@
     yt-x.url = "github:Benexl/yt-x";
 
     fzf-preview = {
-     url = "github:niksingh710/fzf-preview";
-     inputs.nixpkgs.follows = "nixpkgs";
-   };
-
-     anyrun = {
-      url = "github:anyrun-org/anyrun";
+      url = "github:niksingh710/fzf-preview";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    anyrun = {
+      url = "github:anyrun-org/anyrun";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { nixpkgs, ... } @inputs: {
-
+  outputs = {nixpkgs, ...} @ inputs: {
     nixosConfigurations = {
-
       HP = nixpkgs.lib.nixosSystem {
-        modules = [ ./hosts ];
+        modules = [./hosts];
         specialArgs = {
           inherit inputs;
           username = "rey";
           hostname = "HP";
         };
       };
-      
+
       MBPro = nixpkgs.lib.nixosSystem {
-        modules = [ ./hosts ];
+        modules = [./hosts];
         specialArgs = {
           inherit inputs;
           username = "rey";
@@ -70,14 +67,13 @@
       };
 
       server = nixpkgs.lib.nixosSystem {
-        modules = [ ./hosts ];
+        modules = [./hosts];
         specialArgs = {
           inherit inputs;
           username = "rey";
           hostname = "server";
         };
       };
-
     };
   };
 }
