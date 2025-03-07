@@ -26,7 +26,6 @@
     (loadModule ./programs/tmux.nix {})
     (loadModule ./programs/nixvim.nix {})
     (loadModule ./programs/yazi.nix {})
-    (loadModule ./programs/yazi-keymaps.nix {})
     (loadModule ./programs/lf {})
     (loadModule ./programs/fzf-preview.nix {})
     (loadModule ./programs/git.nix {})
@@ -42,8 +41,6 @@
   # DE-Modules: Select hosts for each DE individually
   deModules = [
     (loadModule ./system/i3.nix {condition = lib.elem hostname ["Server"];})
-    (loadModule ./system/qtile.nix {condition = lib.elem hostname ["MBPro"];})
-    (loadModule ./system/conky.nix {condition = lib.elem hostname ["MBPro"];})
     (loadModule ./system/sway.nix {condition = lib.elem hostname ["HP" "MBPro"];})
     (loadModule ./system/hyprland-uwsm.nix {condition = lib.elem hostname ["XX"];})
     (loadModule ./system/fnott.nix {condition = lib.elem hostname ["XX"];})

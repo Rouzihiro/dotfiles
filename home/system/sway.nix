@@ -179,7 +179,6 @@ in {
         // {
           "mod4+space" = "scratchpad show";
           "mod1+space" = "[con_mark=scratch] scratchpad show";
-          #"mod1+Shift+Space" = "mark scratch; move to scratchpad";
           "mod1+Shift+Space" = "mark scratch; floating enable, resize set width 1800 height 1000, move scratchpad";
           "mod4+Shift+Space" = "floating enable, resize set width 1800 height 1000, move scratchpad";
 
@@ -188,12 +187,10 @@ in {
           "mod4+Return" = "exec $terminal";
           "mod4+E" = "exec $Tfile-manager";
           "mod4+B" = "exec $browser-light";
-          #"mod4+Shift+B" = "exec $browser";
           "mod4+Backspace" = "exec $terminal -e btop";
 
           # Personal Scripts
           "Mod4+Shift+m" = "exec monitor-multi";
-          #"Mod4+Shift+j" = "exec jdownloader";
           "Mod4+Shift+Backspace" = "exec power-menu-sway";
           "Mod4+Shift+v" = "exec video-tool";
           "Mod4+v" = "exec browse-video";
