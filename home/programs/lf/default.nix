@@ -23,6 +23,18 @@
           foot sh -c "cd \"$PWD\" && $SHELL"
         }}
       '';
+
+      copy-path = ''
+        ''${{
+          if [ -n "$f" ]; then
+            echo -n "$PWD/$f" | ${pkgs.wl-clipboard}/bin/wl-copy
+          else
+            echo -n "$PWD" | ${pkgs.wl-clipboard}/bin/wl-copy
+          fi
+          lf -remote "send $id echo 'Absolute path copied to clipboard: $PWD/$f'"
+        }}
+      '';
+
       cd-downloads = "cd ~/Downloads";
       cd-videos = "cd ~/Videos";
       cd-pix = "cd ~/Pictures";
@@ -54,6 +66,7 @@
       gp = "cd-programs";
       gv = "cd-videos";
       gx = "cd-pix";
+      zz = "copy-path";
     };
     settings = {
       preview = true;
