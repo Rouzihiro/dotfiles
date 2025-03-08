@@ -1,0 +1,12 @@
+#!/bin/sh
+
+# Create the target directory if it doesn't exist
+mkdir -p ~/mount
+
+# Remove the old symlink if it exists
+rm -f ~/mount/fritz.nas
+
+# Create a new symlink
+ln -s /run/user/$(id -u)/gvfs/smb-share:server=192.168.178.1,share=fritz.nas ~/mount/fritz.nas
+
+echo "Symlink created at ~/mount/fritz.nas"

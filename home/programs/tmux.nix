@@ -1,4 +1,4 @@
-{pkgs, ...}: let
+{ pkgs, ... }: let
   inherit (import ../../hosts/modules/variables.nix) shell currentTheme;
 in {
   programs.tmux = {
@@ -15,7 +15,7 @@ in {
       set -sa terminal-overrides ",xterm*:Tc"
       set -g renumber-windows on
 
-      # reload with prefix-r
+      # Reload with prefix-r
       bind r source-file ~/.config/tmux/tmux.conf \; display "Config reloaded."
 
       # Make new windows/splits keep CWD
@@ -29,42 +29,19 @@ in {
       bind S choose-window "join-pane -v -s "%%""
       bind V choose-window "join-pane -h -s "%%""
 
-      # seamless vim/tmux pane navigation
-      # https://github.com/christoomey/vim-tmux-navigator
-      set-option -g focus-events on
-      is_vim="ps -o state= -o comm= -t '#{pane_tty}' \
-          | grep -iqE '^[^TXZ ]+ +(\\S+\\/)?g?(view|n?vim?x?|mprocs)(diff)?$'"
+      # pane vim-navigation
+      bind -n M-h select-pane -L
+      bind -n M-j select-pane -D
+      bind -n M-k select-pane -U
+      bind -n M-l select-pane -R
 
-      bind -n 'M-h' if-shell "$is_vim" 'send-keys M-h' 'select-pane -L'
-      bind -n 'M-j' if-shell "$is_vim" 'send-keys M-j' 'select-pane -D'
-      bind -n 'M-k' if-shell "$is_vim" 'send-keys M-k' 'select-pane -U'
-      bind -n 'M-l' if-shell "$is_vim" 'send-keys M-l' 'select-pane -R'
-
-      bind -T copy-mode 'M-h' select-pane -L
-      bind -T copy-mode 'M-j' select-pane -D
-      bind -T copy-mode 'M-k' select-pane -U
-      bind -T copy-mode 'M-l' select-pane -R
-
-      # in practice these binds really are Meta + key, these are just
-      # some additional scuffed bindings that are needed because of
-      # macos command key/ctrl key clown fiesta hackery
-      bind h if-shell "$is_vim" 'send-keys M-h' 'select-pane -L'
-      bind j if-shell "$is_vim" 'send-keys M-j' 'select-pane -D'
-      bind k if-shell "$is_vim" 'send-keys M-k' 'select-pane -U'
-      bind l if-shell "$is_vim" 'send-keys M-l' 'select-pane -R'
-
-      bind -T copy-mode h select-pane -L
-      bind -T copy-mode j select-pane -D
-      bind -T copy-mode k select-pane -U
-      bind -T copy-mode l select-pane -R
-
-      # resize panes
+      # Resize panes
       bind -n M-Left resize-pane -L
       bind -n M-Down resize-pane -D
       bind -n M-Up resize-pane -U
       bind -n M-Right resize-pane -R
 
-      # switch windows with alt+number
+      # Switch windows with alt+number
       bind -n M-1 select-window -t 1
       bind -n M-2 select-window -t 2
       bind -n M-3 select-window -t 3
@@ -75,7 +52,7 @@ in {
       bind -n M-8 select-window -t 8
       bind -n M-9 select-window -t 9
 
-      # switch sessions with prefix+number
+      # Switch sessions with prefix+number
       bind 1 attach-session -t 1
       bind 2 attach-session -t 2
       bind 3 attach-session -t 3
@@ -86,15 +63,15 @@ in {
       bind 8 attach-session -t 8
       bind 9 attach-session -t 9
 
-      # Use peasant non-standard vim keys for copy mode
-      bind -T copy-mode k send -X cursor-down
+      # Use peasant standard vim keys for copy mode
+      bind -T copy-mode j send -X cursor-down
       bind -T copy-mode l send -X cursor-right
-      bind -T copy-mode j send -X cursor-left
-      bind -T copy-mode i send -X cursor-up
-      bind -T copy-mode K send -X -N 12 scroll-down
+      bind -T copy-mode h send -X cursor-left
+      bind -T copy-mode k send -X cursor-up
+      bind -T copy-mode J send -X -N 12 scroll-down
       bind -T copy-mode L send -X end-of-line
-      bind -T copy-mode J send -X start-of-line
-      bind -T copy-mode I send -X -N 12 scroll-up
+      bind -T copy-mode H send -X start-of-line
+      bind -T copy-mode K send -X -N 12 scroll-up
 
       # Don't exit copy mode after selecting something with the mouse
       unbind -T copy-mode MouseDragEnd1Pane
@@ -125,37 +102,37 @@ in {
 
       set-option -g status "on"
 
-      # default statusbar color
+      # Default statusbar color
       set-option -g status-style bg=$c_bg,fg=$c_text
       set-option -g status-position top
 
-      # default window title colors
+      # Default window title colors
       set-window-option -g window-status-style bg=$c_gray,fg=$c_bg
 
-      # default window with an activity alert
+      # Default window with an activity alert
       set-window-option -g window-status-activity-style bg=terminal,fg=$c_gray2
 
-      # active window title colors
+      # Active window title colors
       set-window-option -g window-status-current-style bg=$c_primary,fg=$c_bg
 
-      # pane border
+      # Pane border
       set-option -g pane-active-border-style fg=$c_teal
       set-option -g pane-border-style fg=$c_gray
 
-      # message infos
+      # Message infos
       set-option -g message-style bg=terminal,fg=terminal
 
-      # writing commands inactive
+      # Writing commands inactive
       set-option -g message-command-style bg=terminal,fg=terminal
 
-      # pane number display
+      # Pane number display
       set-option -g display-panes-active-colour $c_teal
       set-option -g display-panes-colour terminal
 
-      # clock
+      # Clock
       set-window-option -g clock-mode-colour $c_blue
 
-      # bell
+      # Bell
       set-window-option -g window-status-bell-style bg=$c_red,fg=$c_bg
 
       ## Theme settings mixed

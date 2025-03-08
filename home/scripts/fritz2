@@ -1,0 +1,29 @@
+#!/bin/sh
+
+# Variables
+MOUNT_NAME="fritz.nas"
+MOUNT_SERVER="192.168.178.1"
+MOUNT_SHARE="fritz.nas"
+MOUNT_PATH="/run/user/$(id -u)/gvfs/smb-share:server=$MOUNT_SERVER,share=$MOUNT_SHARE"
+SYMLINK_PATH="$HOME/mount/$MOUNT_NAME"
+
+# Create the mount directory if it doesn't exist
+mkdir -p ~/mount
+
+# Mount the SMB share using gio (GVfs)
+gio mount "smb://$MOUNT_SERVER/$MOUNT_SHARE"
+
+# Check if the mount was successful
+if [ -d "$MOUNT_PATH" ]; then
+  echo "SMB share mounted successfully at $MOUNT_PATH"
+
+  # Remove the old symlink if it exists
+  rm -f "$SYMLINK_PATH"
+
+  # Create a new symlink
+  ln -s "$MOUNT_PATH" "$SYMLINK_PATH"
+  echo "Symlink created at $SYMLINK_PATH"
+else
+  echo "Failed to mount SMB share. Check your credentials or network connection."
+  exit 1
+fi
