@@ -39,7 +39,7 @@ in {
     # for_window [app_id=".*"] opacity $opacity
 
     extraConfig = ''
-      set $opacity 0.85
+      set $opacity 0.9
       for_window [app_id="foot"] opacity $opacity
 
       set $terminal       footclient
@@ -259,31 +259,31 @@ in {
         smartBorders = "on";
       };
 
-      colors = {
-        focused = {
-          background = "#CAD4F5";
-          border = "#CAD4F5";
-          childBorder = "#CAD4F5";
-          indicator = "#CAD4F5";
-          text = "#CAD4F5";
-        };
-
-        unfocused = {
-          background = "#1E1E2E";
-          border = "#1E1E2E";
-          childBorder = "#1E1E2E";
-          indicator = "#1E1E2E";
-          text = "#1E1E2E";
-        };
-
-        focusedInactive = {
-          background = "#1E1E2E";
-          border = "#1E1E2E";
-          childBorder = "#1E1E2E";
-          indicator = "#1E1E2E";
-          text = "#1E1E2E";
-        };
-      };
+      # colors = {
+      #   focused = {
+      #     background = "#CAD4F5";
+      #     border = "#CAD4F5";
+      #     childBorder = "#CAD4F5";
+      #     indicator = "#CAD4F5";
+      #     text = "#CAD4F5";
+      #   };
+      #
+      #   unfocused = {
+      #     background = "#1E1E2E";
+      #     border = "#1E1E2E";
+      #     childBorder = "#1E1E2E";
+      #     indicator = "#1E1E2E";
+      #     text = "#1E1E2E";
+      #   };
+      #
+      #   focusedInactive = {
+      #     background = "#1E1E2E";
+      #     border = "#1E1E2E";
+      #     childBorder = "#1E1E2E";
+      #     indicator = "#1E1E2E";
+      #     text = "#1E1E2E";
+      #   };
+      # };
 
       bars = [
         {

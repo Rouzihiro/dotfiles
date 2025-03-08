@@ -18,7 +18,7 @@ in {
     targets = {
       nixvim.enable = false;
       neovim.enable = false;
-      sway.enable = false;
+      #sway.enable = false;
       waybar.enable = false;
       hyprland.enable = false;
     };
