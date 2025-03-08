@@ -119,7 +119,6 @@
     aria = "aria2c";
 
     fsource = "source ~/.config/fish/config.fish; echo 'Fish config reloaded!'";
-
   };
 
   # Import Fish functions
@@ -130,45 +129,62 @@ in {
     shellAliases = myAliases;
 
     shellInit = ''
-      # Set GPG TTY
-      set -gx GPG_TTY (tty)
+          # Set GPG TTY
+          set -gx GPG_TTY (tty)
 
-      # Add custom scripts to PATH
-      fish_add_path "$HOME/dotfiles/home/scripts"
+          # Add custom scripts to PATH
+          fish_add_path "$HOME/dotfiles/home/scripts"
 
-      # Source Fish functions
-      ${lib.concatStringsSep "\n" (lib.mapAttrsToList (name: path: "source ${path}") fishFunctions)}
+          # Source Fish functions
+          ${lib.concatStringsSep "\n" (lib.mapAttrsToList (name: path: "source ${path}") fishFunctions)}
 
-      # Environment configuration
-      set -g fish_greeting
-      set -g theme_display_virtualenv yes
-      set -g fish_prompt_pwd_dir_length 3
-      set -g TRANSIENT_PROMPT 1  # Enable transient prompt by default
+          # Environment configuration
+          set -g fish_greeting
+          set -g theme_display_virtualenv yes
+          set -g fish_prompt_pwd_dir_length 3
+          set -g TRANSIENT_PROMPT 1  # Enable transient prompt by default
 
-      # History configuration (reduced to 10,000 entries)
-      set -g fish_history permanent
-      set -g history_size 10000
-      set -g history_save 10000
-      set -g history_merge on
+      ### Color Configuration ###
+      # Completion colors (Catppuccin Mocha variants)
+      # set -g fish_pager_color_completion FAB387     # Orange
+        set -g fish_pager_color_completion F9E2AF     # Yellow
+      # set -g fish_pager_color_completion 89B4FA     # Blue
+      # set -g fish_pager_color_completion 94E2D5     # Cyan (Teal)
+      # set -g fish_pager_color_completion F5C2E7     # Pink
+      # set -g fish_pager_color_completion A6E3A1     # Green
+      # set -g fish_pager_color_completion FAB387       # Current choice (orange)
 
-      # Enhanced VCS configuration
-      set -g __fish_git_prompt_show_informative_status 1
-      set -g __fish_git_prompt_showupstream auto
-      set -g __fish_git_prompt_char_stateseparator " "
-      set -g __fish_git_prompt_char_cleanstate '✔'
-      set -g __fish_git_prompt_char_conflictedstate '✖'
-      set -g __fish_git_prompt_char_dirtystate '✚'
-      set -g __fish_git_prompt_char_stagedstate '●'
-      set -g __fish_git_prompt_char_untrackedfiles '…'
-      set -g __fish_git_prompt_char_upstream_ahead '↑'
-      set -g __fish_git_prompt_char_upstream_behind '↓'
+      # Optional related colors
+       set -g fish_pager_color_description F9E2AF   
+       set -g fish_pager_color_prefix 89B4FA         # Blue prefix
+       set -g fish_color_autosuggestion F9E2AF
+      # set -g fish_color_command A6E3A1              # Green commands
 
-      # Transient prompt hooks
-      function __prompt_erase --on-event fish_preexec
-        if test "$TRANSIENT_PROMPT" = "1"
-          set -g TRANSIENT 1
-        end
-      end
+
+          # History configuration (reduced to 10,000 entries)
+          set -g fish_history permanent
+          set -g history_size 10000
+          set -g history_save 10000
+          set -g history_merge on
+
+          # Enhanced VCS configuration
+          set -g __fish_git_prompt_show_informative_status 1
+          set -g __fish_git_prompt_showupstream auto
+          set -g __fish_git_prompt_char_stateseparator " "
+          set -g __fish_git_prompt_char_cleanstate '✔'
+          set -g __fish_git_prompt_char_conflictedstate '✖'
+          set -g __fish_git_prompt_char_dirtystate '✚'
+          set -g __fish_git_prompt_char_stagedstate '●'
+          set -g __fish_git_prompt_char_untrackedfiles '…'
+          set -g __fish_git_prompt_char_upstream_ahead '↑'
+          set -g __fish_git_prompt_char_upstream_behind '↓'
+
+          # Transient prompt hooks
+          function __prompt_erase --on-event fish_preexec
+            if test "$TRANSIENT_PROMPT" = "1"
+              set -g TRANSIENT 1
+            end
+          end
     '';
   };
 }
