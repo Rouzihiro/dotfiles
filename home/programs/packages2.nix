@@ -3,8 +3,9 @@
     ####################
     # User Utilities & Tools
     ####################
-    bitwarden-cli
+    bitwarden-cli 
     keychain
+    swappy
     ffmpeg-full yt-dlp wget aria2 yad bc tesseract translate-shell slurp xcp duf tree fd ripgrep
 
     gnome-font-viewer
