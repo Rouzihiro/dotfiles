@@ -15,7 +15,6 @@ in {
       swayidle
       libnotify
       autotiling-rs
-      #sway-contrib.grimshot
 
       wdisplays
       wlr-randr
@@ -199,12 +198,10 @@ in {
           "Mod4+Shift+k" = "exec keybinds-list-sway";
 
           # Screenshot
-          "mod4+s" = "exec screenshot sc"; #grimshot --notify copy anything && notify-send 'copied to clipboard'";
-          "mod4+Shift+s" = "exec screenshot pc"; #grimshot --notify copy anything && notify-send 'copied to clipboard'";
+          "mod4+s" = "exec screenshot sc";
+          "mod4+Shift+s" = "exec screenshot pc";
           "Print" = "exec screenshot s";
-          # grimshot --notify save anything ~/Pictures/screenshots/$(date +%Y-%m-%d_%H-%M-%S).png && notify-send 'selection saved'";
           "mod4+Print" = "exec screenshot p"; 
-          # grimshot --notify save screen ~/Pictures/screenshots/$(date +%Y-%m-%d_%H-%M-%S).png && notify-send 'full screenshot'";
 
           # Multimedia
           "XF86MonBrightnessUp" = "exec brightnessctl -q s 5%+";
