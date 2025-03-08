@@ -27,7 +27,9 @@
       cd-videos = "cd ~/Videos";
       cd-pix = "cd ~/Pictures";
       cd-dotfiles = "cd ~/dotfiles";
+      cd-scripts = "cd ~/dotfiles/home/scripts";
       cd-programs = "cd ~/dotfiles/home/programs";
+      cd-nas = "cd ~/mount/fritz.nas/USB3";
       file-open = ''&$OPENER "$f"'';
       extract = ''$extracto "$f"'';
     };
@@ -46,6 +48,8 @@
       "." = "set hidden!";
       o = "open-terminal";
       gd = "cd-downloads";
+      gn = "cd-nas";
+      gs = "cd-scripts";
       gf = "cd-dotfiles";
       gp = "cd-programs";
       gv = "cd-videos";
