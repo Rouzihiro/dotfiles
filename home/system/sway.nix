@@ -2,7 +2,10 @@
   lib,
   pkgs,
   ...
-}: {
+}: let
+  i3blocksConf = pkgs.callPackage ./i3blocks.nix {};
+in {
+  #imports = [ ];
   home.packages = with pkgs; [
     swayidle
     swaylock
@@ -26,14 +29,14 @@
     extraConfig = ''
       set $opacity 0.9
       for_window [app_id="foot"] opacity $opacity
-      
+
       set $term footclient
       set $launcher anyrun
       set $launcher2 wofi --menu
       set $browser qutebrowser
       set $browser2  brave
       set $fileManager thunar
-      set $Tfile-manager  $term -e yazi
+      set $TfileManager $term -e yazi
       set $editor $term -e nvim
     '';
     config = {
@@ -111,35 +114,29 @@
           "e" = "exec $TfileManager";
 
           "space" = "scratchpad show";
-          "Shift+Space" = "floating enable, resize set width 1800 height 1000, move scratchpad";
+          "Shift+space" = "floating enable, resize set width 1800 height 1000, move scratchpad";
           "Backspace" = "exec $term -e btop";
 
           # Personal Scripts
           "Shift+m" = "exec monitor-multi";
           "Shift+Backspace" = "exec power-menu-sway";
           "Shift+v" = "exec video-tool";
-          #"v" = "exec browse-video";
-          "Shift+x" = "exec $terminal -e fish -c ~/dotfiles/home/scripts/executer";
+          "v" = "exec browse-video";
+          "Shift+x" = "exec $term -e fish -c ~/dotfiles/home/scripts/executer";
           "x" = "exec script-launcher";
           "o" = "exec ocr";
           "Shift+t" = "exec ocr-prompt";
           "t" = "exec ocr-translate";
-          "Shift+p" = "exec wallpaper";
-          "p" = "exec wallpaper-random";
+          "Shift+w" = "exec wallpaper";
+          "w" = "exec wallpaper-random";
           "Shift+b" = "exec browse-web";
           "z" = "exec keybinds-list-fish";
           "Shift+z" = "exec keybinds-list-sway";
 
-          # Splits
-          "w" = "splith";
-          "v" = "splitv";
-
           # Layout stuff
           "f" = "fullscreen";
           "Shift+f" = "floating toggle";
-          "Shift+a" = "focus mode_toggle";
           "a" = "focus parent";
-          "Shift+Return" = "layout toggle split";
 
           # Navigation keybinds
           "h" = "focus left";
@@ -209,7 +206,41 @@
       bars = [
         {
           position = "top";
-          statusCommand = "while date +'%Y-%m-%d %X'; do sleep 1; done";
+          trayPadding = 0;
+          statusCommand = "${pkgs.i3blocks}/bin/i3blocks -c ${i3blocksConf}";
+
+          extraConfig = ''            output *
+                   separator_symbol ""
+          '';
+
+          fonts = {
+            names = ["DroidSansM Nerd Font"];
+            style = "Regular";
+            size = 10.0;
+          };
+
+          colors = {
+            separator = "#1e1e2e";
+            background = "#1e1e2e";
+
+            focusedWorkspace = {
+              text = "#1e1e2e";
+              border = "#fab387";
+              background = "#fab387";
+            };
+
+            activeWorkspace = {
+              text = "#1e1e2e";
+              border = "#eba0ac";
+              background = "#eba0ac";
+            };
+
+            urgentWorkspace = {
+              text = "#1e1e2e";
+              border = "#74c7ec";
+              background = "#74c7ec";
+            };
+          };
         }
       ];
     };

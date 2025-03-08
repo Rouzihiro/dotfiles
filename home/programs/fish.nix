@@ -147,7 +147,7 @@ in {
       ### Color Configuration ###
       # Completion colors (Catppuccin Mocha variants)
       # set -g fish_pager_color_completion FAB387     # Orange
-        set -g fish_pager_color_completion F9E2AF     # Yellow
+        set -g fish_pager_color_completion EBCB8B    # Yellow
       # set -g fish_pager_color_completion 89B4FA     # Blue
       # set -g fish_pager_color_completion 94E2D5     # Cyan (Teal)
       # set -g fish_pager_color_completion F5C2E7     # Pink
@@ -155,9 +155,9 @@ in {
       # set -g fish_pager_color_completion FAB387       # Current choice (orange)
 
       # Optional related colors
-       set -g fish_pager_color_description F9E2AF   
-       set -g fish_pager_color_prefix 89B4FA         # Blue prefix
-       set -g fish_color_autosuggestion F9E2AF
+       set -g fish_pager_color_description EBCB8B
+       set -g fish_pager_color_prefix EBCB8B
+       set -g fish_color_autosuggestion EBCB8B
       # set -g fish_color_command A6E3A1              # Green commands
 
 
