@@ -22,7 +22,7 @@ pkgs.writeScriptBin "rey-doc" ''
       tmux split-window -h -t "$SESSION_NAME":2
       tmux resize-pane -R 40
       tmux send-keys -t "$SESSION_NAME":2.1 "cd $DOCS_DIRECTORY/tasks; clear; ls" C-m
-      tmux send-keys -t "$SESSION_NAME":2.2 "nvim $DOCS_DIRECTORY/tasks/tasks.MD" C-m
+      tmux send-keys -t "$SESSION_NAME":2.2 "cd $DOCS_DIRECTORY/tasks; nvim README.md" C-m
 
       # Final attach
       tmux select-window -t "$SESSION_NAME":1
