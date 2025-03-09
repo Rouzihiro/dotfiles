@@ -2,26 +2,32 @@
 pkgs.writeScriptBin "rey-doc" ''
   SESSION_NAME="docs"
 
-  tmux has-session -t $SESSION_NAME || {
+  # Check if the session already exists
+  if ! tmux has-session -t "$SESSION_NAME" 2>/dev/null; then
       export DOCS_DIRECTORY="$HOME/dotfiles/home/docs"
+      mkdir -p "$DOCS_DIRECTORY/tasks"
 
-      # Create session and first window
-      tmux new-session -d -s $SESSION_NAME -c "$DOCS_DIRECTORY" -n "Main"
-      
-      # Main window: LF (top 80%) and terminal (bottom 20%)
-      tmux send-keys -t $SESSION_NAME:0.0 'lf' C-m
-      tmux split-window -v -t $SESSION_NAME:0.0
-      tmux resize-pane -t $SESSION_NAME:0.0 -U 20
-      tmux send-keys -t $SESSION_NAME:0.1 "cd $DOCS_DIRECTORY" C-m
+      # Create base session
+      tmux new-session -d -s "$SESSION_NAME" -c "$DOCS_DIRECTORY"
 
-      # Tasks window with 70/30 split
-      tmux new-window -t $SESSION_NAME:1 -c "$DOCS_DIRECTORY/tasks" -n "Tasks"
-      tmux split-window -h -l 70% -t $SESSION_NAME:1.0
-      tmux send-keys -t $SESSION_NAME:1.0 'lf' C-m       # Left pane (70%)
-      tmux send-keys -t $SESSION_NAME:1.1 'nvim tasks.MD' C-m  # Right pane (30%)
+      # Window 1: LF (top 70%) and terminal (bottom 30%)
+      tmux rename-window -t "$SESSION_NAME":1 'Main'
+      tmux send-keys -t "$SESSION_NAME":1 "lf" C-m
+      tmux split-window -v -t "$SESSION_NAME":1
+      tmux resize-pane -D 15
+      tmux send-keys -t "$SESSION_NAME":1.2 "cd ~/dotfiles; clear; ls" C-m
 
-      # Final setup
-      tmux select-window -t $SESSION_NAME:0
-      tmux attach-session -t $SESSION_NAME
-  } || tmux attach-session -t $SESSION_NAME
+      # Window 2: Tasks (70% terminal left, 30% Neovim right)
+      tmux new-window -t "$SESSION_NAME":2 -c "$DOCS_DIRECTORY/tasks" -n "Tasks"
+      tmux split-window -h -t "$SESSION_NAME":2
+      tmux resize-pane -R 40
+      tmux send-keys -t "$SESSION_NAME":2.1 "cd $DOCS_DIRECTORY/tasks; clear; ls" C-m
+      tmux send-keys -t "$SESSION_NAME":2.2 "nvim $DOCS_DIRECTORY/tasks/tasks.MD" C-m
+
+      # Final attach
+      tmux select-window -t "$SESSION_NAME":1
+  fi
+
+  # Attach to the session
+  tmux attach -t "$SESSION_NAME"
 ''
