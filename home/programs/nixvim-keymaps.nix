@@ -35,35 +35,47 @@
       {
         mode = "n";
         key = "<leader>rr";
-        action = ":reg";
+        action = ":reg<CR>";
         options.desc = "show reg";
       }
       {
-        mode = "n";
+        mode = [ "n" "v" ];
         key = "<leader>yy";
         action = ''"ay'';
         options.desc = "yank into reg: a";
       }
       {
-        mode = "n";
+        mode = [ "n" "v" ];
         key = "<leader>yb";
         action = ''"by'';
         options.desc = "yank into reg: b";
       }
       {
-        mode = "n";
+        mode = [ "n" "v" ];
         key = "<leader>pp";
         action = ''"ap'';
         options.desc = "paste from reg: a";
       }
       {
-        mode = "n";
+        mode = [ "n" "v" ];
         key = "<leader>pb";
         action = ''"bp'';
         options.desc = "paste from reg: b";
       }
       {
-        mode = "n";
+        mode = [ "n" "v" ];
+        key = "<leader>yx";
+        action = ''"Ay'';
+        options.desc = "Append to register a";
+      }
+      {
+        mode = [ "n" "v" ];
+        key = "<leader>yb";
+        action = ''"By'';
+        options.desc = "Append to register b";
+      }
+      {
+        mode = [ "n" "v" ];
         key = "<leader>rw";
         action = ":%s/<C-r><C-w>//g<Left><Left>";
         options.desc = "Replace word under cursor";
@@ -77,7 +89,7 @@
 
       {
         mode = ["n" "v"];
-        key = "<leader>y";
+        key = "<leader>yc";
         action = "\"+y";
         options.desc = "Yank to clipboard";
       }
