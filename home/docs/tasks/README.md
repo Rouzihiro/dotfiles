@@ -12,14 +12,17 @@
 - [⏳] **Amt - Termin** (feedback pending)  
 - [ ] **Tax**  
 - [ ] **Car**  
-- [⏳] **Ensurance** (feedback pending)  
+- [⏳] **Ensurance** (feedback pending)
+- [📅] **🔧 Heating Repair** (date pending)  
+- [ ] **🏠 Basement Renovation**
 
 ---
 
 ## 🏢 Work
 - [ ] **Albertinen / online-access**  
 - [ ] **BG-Termin** (late March)  
-- [ ] **Überstunden**  
+- [ ] **Überstunden**
+- [ ] **📝 Feedback Dekanat**
 
 ---
 

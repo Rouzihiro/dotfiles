@@ -20,6 +20,7 @@
         mode = "n";
         key = "<C-s>";
         action = "ZZ";
+        options.desc = "save & exit";
       }
       {
         mode = "n";
@@ -33,6 +34,36 @@
       }
       {
         mode = "n";
+        key = "<leader>rr";
+        action = ":reg";
+        options.desc = "show reg";
+      }
+      {
+        mode = "n";
+        key = "<leader>yy";
+        action = ''"ay'';
+        options.desc = "yank into reg: a";
+      }
+      {
+        mode = "n";
+        key = "<leader>yb";
+        action = ''"by'';
+        options.desc = "yank into reg: b";
+      }
+      {
+        mode = "n";
+        key = "<leader>pp";
+        action = ''"ap'';
+        options.desc = "paste from reg: a";
+      }
+      {
+        mode = "n";
+        key = "<leader>pb";
+        action = ''"bp'';
+        options.desc = "paste from reg: b";
+      }
+      {
+        mode = "n";
         key = "<leader>rw";
         action = ":%s/<C-r><C-w>//g<Left><Left>";
         options.desc = "Replace word under cursor";
@@ -41,7 +72,7 @@
         mode = "n";
         key = "<leader>al";
         action = ":lua vim.lsp.buf.format()<CR>";
-        options.desc = "Format file with LSP";
+        options.desc = "alejandra";
       }
 
       {
@@ -52,7 +83,7 @@
       }
       {
         mode = ["n" "v"];
-        key = "<leader>p";
+        key = "<leader>pc";
         action = "\"+p";
         options.desc = "Paste from clipboard";
       }
