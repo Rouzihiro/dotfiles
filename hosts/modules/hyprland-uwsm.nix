@@ -22,15 +22,6 @@
     config.common.default = "*";
   };
 
-  # xdg.portal = {
-  #   enable = true;
-  #   configPackages = [pkgs.xdg-desktop-portal-hyprland];
-  #   extraPortals = [
-  #     pkgs.xdg-desktop-portal-gtk
-  #     pkgs.xdg-desktop-portal-hyprland
-  #   ];
-  # };
-  #
   services.greetd = {
     enable = true;
     settings = {

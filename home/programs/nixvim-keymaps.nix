@@ -13,6 +13,12 @@
       }
       {
         mode = "n";
+        key = "<leader>s";
+        action = ":w<CR>";
+        options.desc = "Save file";
+      }
+      {
+        mode = "n";
         key = "{";
         action = "{zz";
       }
@@ -26,11 +32,13 @@
         mode = "n";
         key = "<C-x>";
         action = "ZQ";
+        options.desc = "exit without saving";
       }
       {
         mode = "n";
         key = "D";
         action = "\"_D";
+        options.desc = "delete line from here";
       }
       {
         mode = "n";
@@ -39,43 +47,43 @@
         options.desc = "show reg";
       }
       {
-        mode = [ "n" "v" ];
+        mode = ["n" "v"];
         key = "<leader>yy";
         action = ''"ay'';
         options.desc = "yank into reg: a";
       }
       {
-        mode = [ "n" "v" ];
+        mode = ["n" "v"];
         key = "<leader>yb";
         action = ''"by'';
         options.desc = "yank into reg: b";
       }
       {
-        mode = [ "n" "v" ];
+        mode = ["n" "v"];
         key = "<leader>pp";
         action = ''"ap'';
         options.desc = "paste from reg: a";
       }
       {
-        mode = [ "n" "v" ];
+        mode = ["n" "v"];
         key = "<leader>pb";
         action = ''"bp'';
         options.desc = "paste from reg: b";
       }
       {
-        mode = [ "n" "v" ];
+        mode = ["n" "v"];
         key = "<leader>yx";
         action = ''"Ay'';
         options.desc = "Append to register a";
       }
       {
-        mode = [ "n" "v" ];
+        mode = ["n" "v"];
         key = "<leader>yb";
         action = ''"By'';
         options.desc = "Append to register b";
       }
       {
-        mode = [ "n" "v" ];
+        mode = ["n" "v"];
         key = "<leader>rw";
         action = ":%s/<C-r><C-w>//g<Left><Left>";
         options.desc = "Replace word under cursor";
