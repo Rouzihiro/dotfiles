@@ -9,10 +9,10 @@
 ---
 
 ## 🧑‍💻 Personal
-- [ ] **Amt - Termin** (feedback expected)  
+- [⏳] **Amt - Termin** (feedback pending)  
 - [ ] **Tax**  
 - [ ] **Car**  
-- [ ] **Ensurance**  
+- [⏳] **Ensurance** (feedback pending)  
 
 ---
 
