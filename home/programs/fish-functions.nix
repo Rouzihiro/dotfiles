@@ -107,21 +107,7 @@ in {
     rg --files-with-matches "$argv[1]" | tee /dev/stderr | xargs sed -Ei "$argv[2]"
   '';
 
-  cc = mkFishScript "cc" ''
-    if contains -- --help $argv
-      echo "Usage: cc [directory]"
-      echo "Changes to the specified directory (or home if none) and lists contents."
-      return 0
-    end
-
-    if test -n "$argv[1]"
-      builtin cd "$argv[1]" && ls
-    else
-      builtin cd ~ && ls
-    end
-  '';
-
-  cpz = mkFishScript "cpz" ''
+    cpz = mkFishScript "cpz" ''
     if contains -- --help $argv
       echo "Usage: cpz <source> <destination>"
       echo "Copies a file with a progress bar."

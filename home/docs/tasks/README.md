@@ -19,7 +19,7 @@
 ---
 
 ## 🏢 Work
-- [ ] **Albertinen / online-access**  
+- [X] **Albertinen / online-access**  
 - [ ] **BG-Termin** (late March)  
 - [ ] **Überstunden**
 - [ ] **📝 Feedback Dekanat**

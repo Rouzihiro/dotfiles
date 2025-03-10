@@ -142,22 +142,6 @@ guide to my enhanced Fish shell functions included in the `fish-alias.nix` confi
 
 ---
 
-## `cc` - Change Directory and List Contents
-
-Changes to the specified directory (or home if none) and lists its contents.
-
-### Usage
-```fish
-cc [directory]
-```
-### Examples
-```fish
-cc /path/to/dir  # Changes to directory and lists contents
-cc               # Changes to home directory and lists contents
-```
-
----
-
 ## `cpz` - Copy with Progress Bar
 
 Copies a file with a progress bar.
