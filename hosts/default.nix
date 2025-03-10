@@ -9,6 +9,7 @@ let
   # Common modules for all hostnames
   commonModules = [
     (loadModule ./modules/boot.nix {})
+    (loadModule ./modules/ly.nix {})
     (loadModule ./modules/configuration.nix {})
     (loadModule ./modules/shell.nix {})
     (loadModule ./modules/nix.nix {})
@@ -31,8 +32,6 @@ let
     (loadModule ./modules/sway.nix { condition = lib.elem hostname [ "HP" "MBPro"]; })
     #(loadModule ./modules/hyprland-uwsm.nix { condition = lib.elem hostname [ "HP" ]; })
     (loadModule ./modules/android.nix { condition = lib.elem hostname [ "HP" ]; })
-    #(loadModule ./modules/greetd.nix { condition = lib.elem hostname [ "HP" "MBPro" ]; })
-    (loadModule ./modules/ly.nix { condition = lib.elem hostname [ "HP" "MBPro" ]; })
     (loadModule ./modules/tlp.nix { condition = lib.elem hostname [ "HP" "MBPro" ]; })
     (loadModule ./modules/intel.nix { condition = lib.elem hostname [ "HP" "MBPro" ]; })
     (loadModule ./modules/gaming.nix { condition = lib.elem hostname [ "HP" ]; })
