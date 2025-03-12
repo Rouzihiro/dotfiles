@@ -5,7 +5,7 @@
     gcc
     ccache
     # MEDIA
-    mpv
+    #mpv
     imv
     pwvucontrol
 

@@ -36,6 +36,7 @@
     (loadModule ./programs/fastfetch.nix {})
     (loadModule ./programs/qutebrowser.nix {})
     (loadModule ./programs/brave.nix {})
+    (loadModule ./programs/mpv.nix {})
   ];
 
   # DE-Modules: Select hosts for each DE individually

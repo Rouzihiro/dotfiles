@@ -16,6 +16,7 @@ in {
     wlr-randr
     wl-gammactl
 
+    pavucontrol
     playerctl
     brightnessctl
   ];

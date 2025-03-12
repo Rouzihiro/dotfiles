@@ -3,6 +3,7 @@
     ####################
     # User Utilities & Tools
     ####################
+    bluez
     bitwarden-cli 
     keychain
     swappy

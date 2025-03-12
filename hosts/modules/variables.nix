@@ -29,7 +29,7 @@ rec {
   host = "HP";
   shell = "fish";
   WM = "sway";
-  BT-status = false;
+  BT-status = true;
 
   # Program Options
   browser = "brave";

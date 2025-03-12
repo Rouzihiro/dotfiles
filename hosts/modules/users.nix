@@ -9,7 +9,7 @@
   users.users.${username} = {
     isNormalUser = true;
     description = "${username}";
-    extraGroups = ["networkmanager" "wheel" "input" "render" "video"];
+    extraGroups = ["networkmanager" "wheel" "input" "render" "video" "audio" "bluetooth"];
   };
 
   home-manager = {
