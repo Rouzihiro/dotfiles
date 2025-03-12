@@ -1,7 +1,7 @@
 rec {
   # Select Theme
-  currentTheme = themes.catppuccin;
-  theme = "catppuccin";
+  currentTheme = themes.moonfly;
+  theme = "moonfly";
 
   console.colors = with currentTheme; [
     base00
@@ -167,6 +167,32 @@ rec {
       base0D = "#89b4fa";
       base0E = "#cba6f7";
       base0F = "#f2cdcd";
+    };
+    moonfly = {
+      # Moonfly Theme
+      base00 = "#080808"; # Background
+      base01 = "#323437"; # Black (normal)
+      base02 = "#ff5454"; # Red (normal)
+      base03 = "#8cc85f"; # Green (normal)
+      base04 = "#e3c78a"; # Yellow (normal)
+      base05 = "#80a0ff"; # Blue (normal)
+      base06 = "#cf87e8"; # Purple (normal)
+      base07 = "#79dac8"; # Cyan (normal)
+      base08 = "#c6c6c6"; # White (normal)
+      base09 = "#949494"; # Black (bright)
+      base0A = "#ff5189"; # Red (bright)
+      base0B = "#36c692"; # Green (bright)
+      base0C = "#c6c684"; # Yellow (bright)
+      base0D = "#74b2ff"; # Blue (bright)
+      base0E = "#ae81ff"; # Purple (bright)
+      base0F = "#85dc85"; # Cyan (bright)
+      base10 = "#e4e4e4"; # White (bright)
+      base11 = "#bdbdbd"; # Foreground
+      base12 = "#eeeeee"; # Bold
+      base13 = "#9e9e9e"; # Cursor
+      base14 = "#080808"; # Cursor Text
+      base15 = "#b2ceee"; # Selection
+      base16 = "#080808"; # Selection Text
     };
   };
 }
