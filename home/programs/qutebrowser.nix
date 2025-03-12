@@ -38,7 +38,6 @@
       markdown-online = "https://dillinger.io";
       overleaf = "https://www.overleaf.com";
       maps = "https://www.google.de/maps";
-
     };
 
     extraConfig = ''
@@ -55,7 +54,7 @@
         default_page = "https://start.duckduckgo.com";
         start_pages = ["https://start.duckduckgo.com"];
       };
-
+      scrolling.smooth = true;
       tabs = {
         show = "multiple";
       };
@@ -69,6 +68,13 @@
           clipboard = "access";
         };
       };
+      # qt.args = [
+      #   "enable-accelerated-video-decode"
+      #   "enable-native-gpu-memory-buffers"
+      #   "enable-gpu-rasterization"
+      #   "use-egl=desktop"
+      #   "ignore-gpu-blocklist"
+      # ];
       colors = {
         webpage.preferred_color_scheme = "dark";
       };
