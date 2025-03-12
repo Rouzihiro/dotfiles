@@ -1,7 +1,7 @@
 rec {
   # Select Theme
-  currentTheme = themes.moonfly;
-  theme = "moonfly";
+  currentTheme = themes.catppuccin;
+  theme = "catppuccin";
 
   console.colors = with currentTheme; [
     base00
@@ -170,29 +170,34 @@ rec {
     };
     moonfly = {
       # Moonfly Theme
-      base00 = "#080808"; # Background
-      base01 = "#323437"; # Black (normal)
-      base02 = "#ff5454"; # Red (normal)
-      base03 = "#8cc85f"; # Green (normal)
-      base04 = "#e3c78a"; # Yellow (normal)
-      base05 = "#80a0ff"; # Blue (normal)
-      base06 = "#cf87e8"; # Purple (normal)
-      base07 = "#79dac8"; # Cyan (normal)
-      base08 = "#c6c6c6"; # White (normal)
-      base09 = "#949494"; # Black (bright)
-      base0A = "#ff5189"; # Red (bright)
-      base0B = "#36c692"; # Green (bright)
-      base0C = "#c6c684"; # Yellow (bright)
-      base0D = "#74b2ff"; # Blue (bright)
-      base0E = "#ae81ff"; # Purple (bright)
-      base0F = "#85dc85"; # Cyan (bright)
-      base10 = "#e4e4e4"; # White (bright)
-      base11 = "#bdbdbd"; # Foreground
-      base12 = "#eeeeee"; # Bold
-      base13 = "#9e9e9e"; # Cursor
-      base14 = "#080808"; # Cursor Text
-      base15 = "#b2ceee"; # Selection
-      base16 = "#080808"; # Selection Text
+      base00 = "#323437"; # color0
+      base01 = "#ff5454"; # color1
+      base02 = "#8cc85f"; # color2
+      base03 = "#e3c78a"; # color3
+      base04 = "#80a0ff"; # color4
+      base05 = "#cf87e8"; # color5
+      base06 = "#79dac8"; # color6
+      base07 = "#c6c6c6"; # color7
+      base08 = "#949494"; # color8
+      base09 = "#ff5189"; # color9
+      base0A = "#36c692"; # color10
+      base0B = "#c6c684"; # color11
+      base0C = "#74b2ff"; # color12
+      base0D = "#ae81ff"; # color13
+      base0E = "#85dc85"; # color14
+      base0F = "#e4e4e4"; #color15
+      selection_background = "#b2ceee";
+      selection_foreground = "#080808";
+      active_tab_foreground = "#080808";
+      active_tab_background = "#80a0ff";
+      inactive_tab_foreground = "#b2b2b2";
+      inactive_tab_backgroud = "#323437";
+      active_border_color = "#80a0ff";
+      inactive_borer_color = "#323437";
+      background = "#080808";
+      foregroud = "#bdbdbd";
+      cursor = "9e9e9e";
+      url_color = "#79dac8";
     };
   };
 }

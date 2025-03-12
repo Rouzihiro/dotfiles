@@ -129,62 +129,81 @@ in {
     shellAliases = myAliases;
 
     shellInit = ''
-          # Set GPG TTY
-          set -gx GPG_TTY (tty)
+                # Set GPG TTY
+                set -gx GPG_TTY (tty)
 
-          # Add custom scripts to PATH
-          fish_add_path "$HOME/dotfiles/home/scripts"
+                # Add custom scripts to PATH
+                fish_add_path "$HOME/dotfiles/home/scripts"
 
-          # Source Fish functions
-          ${lib.concatStringsSep "\n" (lib.mapAttrsToList (name: path: "source ${path}") fishFunctions)}
+                # Source Fish functions
+                ${lib.concatStringsSep "\n" (lib.mapAttrsToList (name: path: "source ${path}") fishFunctions)}
 
-          # Environment configuration
-          set -g fish_greeting
-          set -g theme_display_virtualenv yes
-          set -g fish_prompt_pwd_dir_length 3
-          set -g TRANSIENT_PROMPT 1  # Enable transient prompt by default
+                # Environment configuration
+                set -g fish_greeting
+                set -g theme_display_virtualenv yes
+                set -g fish_prompt_pwd_dir_length 3
+                set -g TRANSIENT_PROMPT 1  # Enable transient prompt by default
 
-      ### Color Configuration ###
-      # Completion colors (Catppuccin Mocha variants)
-      # set -g fish_pager_color_completion FAB387     # Orange
-        set -g fish_pager_color_completion EBCB8B    # Yellow
-      # set -g fish_pager_color_completion 89B4FA     # Blue
-      # set -g fish_pager_color_completion 94E2D5     # Cyan (Teal)
-      # set -g fish_pager_color_completion F5C2E7     # Pink
-      # set -g fish_pager_color_completion A6E3A1     # Green
-      # set -g fish_pager_color_completion FAB387       # Current choice (orange)
+      # Syntax highlighting colors.
+      set -g fish_color_autosuggestion 626262
+      set -g fish_color_cancel 626262
+      set -g fish_color_command 7cb3ff
+      set -g fish_color_comment 949494 --italics
+      set -g fish_color_cwd 87d787
+      set -g fish_color_cwd_root ff5189
+      set -g fish_color_end 949494
+      set -g fish_color_error ff5454
+      set -g fish_color_escape 949494
+      set -g fish_color_history_current c6c6c6 --background=323437
+      set -g fish_color_host e4e4e4
+      set -g fish_color_host_remote e4e4e4
+      set -g fish_color_keyword cf87e8
+      set -g fish_color_match c6c6c6 --background=323437
+      set -g fish_color_normal bdbdbd
+      set -g fish_color_operator e65e72
+      set -g fish_color_option bdbdbd
+      set -g fish_color_param 61d5ae
+      set -g fish_color_quote c6c684
+      set -g fish_color_redirection 8cc85f
+      set -g fish_color_search_match --background=323437
+      set -g fish_color_selection --background=323437
+      set -g fish_color_status ff5454
+      set -g fish_color_user 36c692
+      set -g fish_color_valid_path
 
-      # Optional related colors
-       set -g fish_pager_color_description EBCB8B
-       set -g fish_pager_color_prefix EBCB8B
-       set -g fish_color_autosuggestion EBCB8B
-      # set -g fish_color_command A6E3A1              # Green commands
+      # Completion pager colors.
+      set -g fish_pager_color_completion c6c6c6
+      set -g fish_pager_color_description 949494
+      set -g fish_pager_color_prefix 74b2ff
+      set -g fish_pager_color_progress 949494
+      set -g fish_pager_color_selected_background --background=323437
+      set -g fish_pager_color_selected_completion e4e4e4
+      set -g fish_pager_color_selected_description e4e4e4
 
+                # History configuration (reduced to 10,000 entries)
+                set -g fish_history permanent
+                set -g history_size 10000
+                set -g history_save 10000
+                set -g history_merge on
 
-          # History configuration (reduced to 10,000 entries)
-          set -g fish_history permanent
-          set -g history_size 10000
-          set -g history_save 10000
-          set -g history_merge on
+                # Enhanced VCS configuration
+                set -g __fish_git_prompt_show_informative_status 1
+                set -g __fish_git_prompt_showupstream auto
+                set -g __fish_git_prompt_char_stateseparator " "
+                set -g __fish_git_prompt_char_cleanstate '✔'
+                set -g __fish_git_prompt_char_conflictedstate '✖'
+                set -g __fish_git_prompt_char_dirtystate '✚'
+                set -g __fish_git_prompt_char_stagedstate '●'
+                set -g __fish_git_prompt_char_untrackedfiles '…'
+                set -g __fish_git_prompt_char_upstream_ahead '↑'
+                set -g __fish_git_prompt_char_upstream_behind '↓'
 
-          # Enhanced VCS configuration
-          set -g __fish_git_prompt_show_informative_status 1
-          set -g __fish_git_prompt_showupstream auto
-          set -g __fish_git_prompt_char_stateseparator " "
-          set -g __fish_git_prompt_char_cleanstate '✔'
-          set -g __fish_git_prompt_char_conflictedstate '✖'
-          set -g __fish_git_prompt_char_dirtystate '✚'
-          set -g __fish_git_prompt_char_stagedstate '●'
-          set -g __fish_git_prompt_char_untrackedfiles '…'
-          set -g __fish_git_prompt_char_upstream_ahead '↑'
-          set -g __fish_git_prompt_char_upstream_behind '↓'
-
-          # Transient prompt hooks
-          function __prompt_erase --on-event fish_preexec
-            if test "$TRANSIENT_PROMPT" = "1"
-              set -g TRANSIENT 1
-            end
-          end
+                # Transient prompt hooks
+                function __prompt_erase --on-event fish_preexec
+                  if test "$TRANSIENT_PROMPT" = "1"
+                    set -g TRANSIENT 1
+                  end
+                end
     '';
   };
 }

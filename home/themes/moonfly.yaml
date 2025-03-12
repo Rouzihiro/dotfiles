@@ -1,0 +1,21 @@
+system: "base16"
+name: "Moonfly"
+author: "rey"
+variant: "dark"
+palette:
+  base00: "#323437"  # color0
+  base01: "#ff5454"  # color1
+  base02: "#8cc85f"  # color2
+  base03: "#e3c78a"  # color3
+  base04: "#80a0ff"  # color4
+  base05: "#cf87e8"  # color5
+  base06: "#79dac8"  # color6
+  base07: "#c6c6c6"  # color7
+  base08: "#949494"  # color8
+  base09: "#ff5189"  # color9
+  base0A: "#36c692"  # color10
+  base0B: "#c6c684"  # color11
+  base0C: "#74b2ff"  # color12
+  base0D: "#ae81ff"  # color13
+  base0E: "#85dc85"  # color14
+  base0F: "#e4e4e4"  # color15

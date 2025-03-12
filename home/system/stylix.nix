@@ -25,12 +25,12 @@ in {
 
     # base16Scheme = "${pkgs.base16-schemes}/share/themes/nord.yaml";
     # base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-macchiato.yaml";
-    base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-frappe.yaml";
+    base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-mocha.yaml";
 
     #  for custom themes;
     #  base16Scheme = builtins.path {
-    #  path = ../themes/gruvbox-dark-medium/gruvbox-dark-medium.yaml;
-    #  name = "Gruvbox dark, medium";
+    #  path = ../themes/moonfly.yaml;
+    #  name = "moonfly";
     # };
 
     iconTheme = {
@@ -74,11 +74,11 @@ in {
         popups = 10;
       };
     };
-     # opacity = {
-     #   applications = 1.0;
-     #   terminal = 0.8;
-     #   desktop = 1.0;
-     #   popups = 0.8;
-     # };
+    # opacity = {
+    #   applications = 1.0;
+    #   terminal = 0.8;
+    #   desktop = 1.0;
+    #   popups = 0.8;
+    # };
   };
 }
