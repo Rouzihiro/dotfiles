@@ -35,6 +35,9 @@ in {
       bind -n M-k select-pane -U
       bind -n M-l select-pane -R
 
+      # Toggle pane zoom/fullscreen with Alt+f
+      bind -n M-f resize-pane -Z
+
       # Resize panes
       bind -n M-Left resize-pane -L
       bind -n M-Down resize-pane -D
