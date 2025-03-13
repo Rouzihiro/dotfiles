@@ -50,10 +50,12 @@ in {
         {
           command = ''
             swayidle -w \
-            before-sleep  "swaylock -fF" \
-            timeout 90 "brightnessctl -s set 0" resume "brightnessctl -r" \
-            timeout 900 "systemctl suspend" \
-            timeout 1800 "systemctl poweroff" '';
+              before-sleep "swaylock -fF" \
+              timeout 90 'if ! pgrep -x "motrix"; then brightnessctl -s set 0; fi' \
+                resume 'brightnessctl -r' \
+              timeout 900 'if ! pgrep -x "motrix"; then systemctl suspend; fi' \
+              timeout 1800 'if ! pgrep -x "motrix"; then systemctl poweroff; fi'
+          '';
         }
       ];
       input = {
