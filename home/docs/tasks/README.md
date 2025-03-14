@@ -5,7 +5,7 @@
 ## 💻 IT
 - [ ] **Optimization bar**  
 - [ ] **Optimization color**  
-- [ ] ** tmux: fulscreen feature
+- [X] ** tmux: fulscreen feature
 - [ ] **Find out if there is a on-screen keyboard when using touch-feature** 
 
 ---

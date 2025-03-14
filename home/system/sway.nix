@@ -14,7 +14,8 @@ in {
 
     wdisplays
     wlr-randr
-    wl-gammactl
+    wlsunset
+    #wl-gammactl
 
     pavucontrol
     playerctl
