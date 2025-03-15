@@ -1,21 +1,12 @@
 {pkgs}:
-pkgs.writeShellScriptBin "bandwidth-info" ''
+pkgs.writeShellScriptBin "bandwidth" ''
+  #!/bin/sh
+
   INTERFACE="wlp108s0"
 
   # Check if the interface exists
   if [ ! -d /sys/class/net/$INTERFACE ]; then
-    yad --width=800 --height=650 \
-        --center \
-        --fixed \
-        --title="Bandwidth Info" \
-        --no-buttons \
-        --list \
-        --column=Metric: \
-        --column=Speed: \
-        --timeout=9000 \
-        --timeout-indicator=right \
-        "Download" "↓0K" \
-        "Upload" "↑0K"
+    echo "↓0MB ↑0MB"
     exit 0
   fi
 
@@ -23,28 +14,17 @@ pkgs.writeShellScriptBin "bandwidth-info" ''
   RX_BYTES=$(cat /sys/class/net/$INTERFACE/statistics/rx_bytes)
   TX_BYTES=$(cat /sys/class/net/$INTERFACE/statistics/tx_bytes)
 
-  # Wait for 1 second to calculate the difference
+  # Wait for 1 second
   sleep 1
 
   # Get the new RX and TX bytes
   RX_BYTES_NEW=$(cat /sys/class/net/$INTERFACE/statistics/rx_bytes)
   TX_BYTES_NEW=$(cat /sys/class/net/$INTERFACE/statistics/tx_bytes)
 
-  # Calculate the download and upload speeds in KB/s
-  DOWNLOAD_SPEED=$((($RX_BYTES_NEW - $RX_BYTES) / 1024))
-  UPLOAD_SPEED=$((($TX_BYTES_NEW - $TX_BYTES) / 1024))
+  # Calculate speeds in MB/s
+  DOWNLOAD_SPEED=$(echo "scale=2; ($RX_BYTES_NEW - $RX_BYTES) / 1024 / 1024" | ${pkgs.bc}/bin/bc)
+  UPLOAD_SPEED=$(echo "scale=2; ($TX_BYTES_NEW - $TX_BYTES) / 1024 / 1024" | ${pkgs.bc}/bin/bc)
 
-  # Output the result in a format that yad can use
-  yad --width=800 --height=650 \
-      --center \
-      --fixed \
-      --title="Bandwidth Info" \
-      --no-buttons \
-      --list \
-      --column=Metric: \
-      --column=Speed: \
-      --timeout=90 \
-      --timeout-indicator=right \
-      "Download" "↓''${DOWNLOAD_SPEED}K" \
-      "Upload" "↑''${UPLOAD_SPEED}K"
+  # Output formatted result
+  echo "↓$DOWNLOAD_SPEED MB ↑$UPLOAD_SPEED MB"
 ''

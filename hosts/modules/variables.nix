@@ -4,22 +4,22 @@ rec {
   theme = "catppuccin";
 
   console.colors = with currentTheme; [
-    base00
-    base01
-    base02
-    base03
-    base04
-    base05
-    base06
-    base07
-    base08
-    base09
-    base0A
-    base0B
-    base0C
-    base0D
-    base0E
-    base0F
+    base00 # Background
+    base01 # Lighter Background
+    base02 # Selection Background
+    base03 # Comments, Invisibles
+    base04 # Dark Foreground
+    base05 # Default Foreground
+    base06 # Light Foreground
+    base07 # Light Background
+    base08 # Variables, XML Tags
+    base09 # Integers, Boolean, Constants
+    base0A # Classes, Markup Bold
+    base0B # Strings, Inherited Class
+    base0C # Support, Regular Expressions
+    base0D # Functions, Methods, Headings
+    base0E # Keywords, Storage, Selector
+    base0F # Deprecated, Opening/Closing Embedded Language Tags
   ];
 
   gitUsername = "Rouzihiro";
@@ -73,23 +73,23 @@ rec {
 
     catppuccin.macchiato = {
       #macchiato
-      base00 = "#24273a";
-      base01 = "#1e2030";
-      base02 = "#363a4f";
-      base03 = "#494d64";
-      base04 = "#5b6078";
-      base05 = "#cad3f5";
-      base06 = "#f4dbd6";
-      base07 = "#b7bdf8";
-      base08 = "#ed8796";
-      base09 = "#f5a97f";
-      base0A = "#eed49f";
-      base0B = "#a6da95";
-      base0C = "#8bd5ca";
-      base0D = "#8aadf4";
-      base0E = "#c6a0f6";
-      base0F = "#f0c6c6";
-    };
+      base00 = "#24273a";  # Background
+      base01 = "#1e2030";  # Background-alt
+      base02 = "#363a4f";  # Selection Background
+      base03 = "#494d64";  # Comments, Invisibles
+      base04 = "#5b6078";  # Dark Foreground
+      base05 = "#cad3f5";  # Foreground
+      base06 = "#f4dbd6";  # Foreground-alt
+      base07 = "#b7bdf8";  # Light Background
+      base08 = "#ed8796";  # Error
+      base09 = "#f5a97f";  # Warning
+      base0A = "#eed49f";  # Accent
+      base0B = "#a6da95";  # Success
+      base0C = "#8bd5ca";  # Secondary
+      base0D = "#8aadf4";  # Primary
+      base0E = "#c6a0f6";  # Secondary-alt
+      base0F = "#f0c6c6";  # Deprecated
+         };
 
     rose-pine = {
       base00 = "191724"; # Background

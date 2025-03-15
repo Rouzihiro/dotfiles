@@ -1,4 +1,4 @@
-{pkgs, input}:
+{pkgs, input ? ""}:
 pkgs.writeShellScriptBin "redlight" ''
 #!/bin/sh
 
