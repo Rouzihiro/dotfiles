@@ -1,2 +1,0 @@
-#!/bin/sh
-java -jar ~/apps/JDownloader/JDownloader.jar & disown

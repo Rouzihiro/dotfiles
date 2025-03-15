@@ -1,3 +1,5 @@
+{pkgs, input}:
+pkgs.writeShellScriptBin "redlight" ''
 #!/bin/sh
 
 # Check if redshift is installed
@@ -26,4 +28,4 @@ fi
 # Apply the color temperature
 redshift -O "$input"
 echo "Screen color temperature set to ${input}K."
-
+''

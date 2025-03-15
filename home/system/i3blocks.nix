@@ -48,7 +48,7 @@ in
       label=   
 
       [bandwidth]
-      command=/home/rey/dotfiles/home/scripts/bandwidth
+      command=bandwidth-info
       interval=1
       color=#a3be8c
       separator=true
