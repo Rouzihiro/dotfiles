@@ -2,6 +2,7 @@
   home.packages = with pkgs; [
     swayrbar
     jq # Required for workspace module
+    lm_sensors # For CPU temperature monitoring
   ];
 
   wayland.windowManager.sway.config.bars = let
@@ -14,7 +15,7 @@
 
       [bar]
       height = 24
-      font = "DroidSansM Nerd Font 10"
+      font = "DroidSansM Nerd Font 12"
       separator = " "
 
       [[modules]]
@@ -29,7 +30,8 @@
 
       [[modules]]
       type = "sys_info"
-      format = " {cpu_usage}%  {mem_usage}%"
+      format = " {cpu_usage}%  {cpu_temp}°C  {mem_used}G"
+      tooltip = "CPU: {cpu_usage}%\nTemp: {cpu_temp}°C\nMem: {mem_used}G/{mem_total}G"
       interval = 2
       [modules.actions]
       left-click = "foot -e btop"
@@ -43,24 +45,16 @@
       scroll-down = "wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%-"
 
       [[modules]]
-      type = "battery"
-      format = "{icon} {percentage}%"
-      interval = 10
-      icons = ["", "", "", "", ""]
-      thresholds = [10, 25, 50, 75]
-
-      [[modules]]
       type = "clock"
       format = " %H:%M  %a %d/%m"
       interval = 30
 
       [[modules]]
-      type = "custom"
-      command = "checkupdates | wc -l"
-      interval = 3600
-      format = " {output}"
-      [modules.actions]
-      left-click = "foot -e sudo nixos-rebuild switch"
+      type = "battery"
+      format = "{icon} {percentage}%"
+      interval = 10
+      icons = ["", "", "", "", ""]
+      thresholds = [10, 25, 50, 75]
     '';
   in [
     {
@@ -91,7 +85,7 @@
       };
       fonts = {
         names = ["DroidSansM Nerd Font"];
-        size = 10.0;
+        size = 12.0;
       };
     }
   ];

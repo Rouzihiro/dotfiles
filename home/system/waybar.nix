@@ -9,8 +9,8 @@ in {
         margin-top = 5;
         margin-left = 10;
         margin-right = 10;
-        modules-left = ["hyprland/window"];
-        modules-center = ["hyprland/workspaces"];
+        modules-left = ["sway/window"];
+        modules-center = ["sway/workspaces"];
         modules-right = [
           "pulseaudio"
           "network"
@@ -20,14 +20,14 @@ in {
           "clock"
         ];
 
-        "hyprland/window" = {
+        "sway/window" = {
           format = "{}";
           "max-length" = 35;
           rewrite = {"" = "Harsh";};
           "separate-outputs" = true;
         };
 
-        "hyprland/workspaces" = {
+        "sway/workspaces" = {
           format = "{icon}";
           "on-click" = "activate";
           "format-icons" = {"active" = " ";};
