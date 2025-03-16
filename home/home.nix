@@ -16,7 +16,7 @@
     (loadModule ./system/stylix.nix {})
     (loadModule ./system/wlsunset.nix {})
     (loadModule ./system/wofi.nix {})
-    (loadModule ./system/rofi.nix {})
+    (loadModule ./system/rofi {})
     (loadModule ./scripts-nix {})
   ];
 

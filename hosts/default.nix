@@ -19,9 +19,11 @@ let
     (loadModule ./modules/zram.nix {})
     (loadModule ./modules/network.nix {})
     (loadModule ./modules/nh.nix {})
-    (loadModule ./modules/sound.nix {})
+    #(loadModule ./modules/deactivate.nix {})
+    #(loadModule ./modules/sound.nix {})
+    (loadModule ./modules/pipewire.nix {})
     (loadModule ./modules/gsettings.nix {})
-    (loadModule ./modules/fonts.nix {})
+    #(loadModule ./modules/fonts.nix {})
   ];
 
   # Host-specific modules with conditions

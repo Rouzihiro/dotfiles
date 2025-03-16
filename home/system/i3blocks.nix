@@ -48,7 +48,7 @@ in
       label=   
 
       [bandwidth]
-      command=bandwidth-info
+      command=bandwidth
       interval=1
       color=#a3be8c
       separator=true

@@ -1,8 +1,7 @@
-{hostname, ...}: {
+{ pkgs, hostname, ...}: {
   # ---------------------------------------------------------
   # Documentation
   # ---------------------------------------------------------
-
   documentation = {
     enable = false;
     doc.enable = false;
