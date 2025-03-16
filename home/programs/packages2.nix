@@ -3,6 +3,8 @@
     ####################
     # User Utilities & Tools
     ####################
+    ntfs3g
+    ventoy-full-qt
     bluez
     bitwarden-cli 
     keychain

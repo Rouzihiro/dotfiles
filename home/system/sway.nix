@@ -33,8 +33,8 @@ in {
       for_window [app_id="foot"] opacity $opacity
 
       set $term footclient
-      set $launcher anyrun
-      set $launcher2 wofi --menu
+      set $launcher2 anyrun
+      set $launcher rofi -show drun
       set $browser qutebrowser
       set $browser2  brave
       set $fileManager thunar
