@@ -12,11 +12,11 @@
     channel.enable = false;
     # registry.nixpkgs.flake = nixpkgs;
 
-    optimise = {
-      automatic = true;
-      dates = ["daily"];
-    };
-
+    # optimise = {
+    #   automatic = true;
+    #   dates = ["daily"];
+    # };
+    #
     settings = {
       show-trace = true;
       auto-optimise-store = true;

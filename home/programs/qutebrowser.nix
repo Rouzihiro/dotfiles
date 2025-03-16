@@ -38,6 +38,9 @@
       markdown-online = "https://dillinger.io";
       overleaf = "https://www.overleaf.com";
       maps = "https://www.google.de/maps";
+      torrent = "https://1337x.to/home";
+      pirate = "https://thepiratebay.org";
+
     };
 
     extraConfig = ''
