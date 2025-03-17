@@ -1,82 +1,78 @@
 {pkgs, ...}:
 pkgs.writeShellScriptBin "usb" ''
+  #!/bin/sh
 
-#!/bin/sh
+  # Function to list all partitions
+  list_partitions() {
+    echo "Available partitions:"
+    lsblk -o NAME,SIZE,FSTYPE,MOUNTPOINT -l | grep -E 'sd[a-z][0-9]|nvme[0-9]n[0-9]p[0-9]' | awk '{print NR") "$0}'
+  }
 
-# Function to list all partitions
-list_partitions() {
-  echo "Available partitions:"
-  lsblk -o NAME,SIZE,FSTYPE,MOUNTPOINT -l | grep -E 'sd[a-z][0-9]|nvme[0-9]n[0-9]p[0-9]' | awk '{print NR") "$0}'
-}
-
-# Function to select a partition
-select_partition() {
-  list_partitions
-  printf "Enter the number of the partition you want to work on (e.g., 1, 2, etc.): "
-  read -r partition_num
-  selected_partition=$(lsblk -o NAME -l | grep -E 'sd[a-z][0-9]|nvme[0-9]n[0-9]p[0-9]' | sed -n "${partition_num}p")
-  if [ -z "$selected_partition" ]; then
-    echo "Invalid selection. Exiting."
-    exit 1
-  fi
-  echo "Selected partition: /dev/$selected_partition"
-}
-
-# Function to handle mount/unmount/remove for partitions
-partition_action() {
-  select_partition
-  printf "Choose action: (m)ount, (u)nmount, (r)emove: "
-  read -r action
-  case "$action" in
-    m|M)
-      mount_point="/home/$(whoami)/mount/usb"
-      echo "Creating mount point at $mount_point..."
-      mkdir -p "$mount_point"
-
-      # Get the filesystem type of the selected partition
-      fs_type=$(lsblk -o FSTYPE -n "/dev/$selected_partition")
-
-      echo "Mounting /dev/$selected_partition to $mount_point..."
-      if [ "$fs_type" = "ntfs" ]; then
-        # Use ntfs-3g for NTFS drives
-        if sudo ntfs-3g "/dev/$selected_partition" "$mount_point" -o uid=$(id -u),gid=$(id -g); then
-          echo "NTFS partition mounted successfully at $mount_point."
-        else
-          echo "Failed to mount the NTFS partition."
-        fi
-      else
-        # Use mount for other filesystems
-        if sudo mount "/dev/$selected_partition" "$mount_point" -o uid=$(id -u),gid=$(id -g); then
-          echo "Partition mounted successfully at $mount_point."
-        else
-          echo "Failed to mount the partition."
-        fi
-      fi
-      ;;
-    u|U)
-      echo "Unmounting /dev/$selected_partition..."
-      if sudo umount "/dev/$selected_partition"; then
-        echo "Partition unmounted successfully."
-      else
-        echo "Failed to unmount the partition."
-      fi
-      ;;
-    r|R)
-      echo "Removing /dev/$selected_partition..."
-      if sudo udisksctl power-off -b "/dev/$selected_partition"; then
-        echo "Partition removed successfully."
-      else
-        echo "Failed to remove the partition."
-      fi
-      ;;
-    *)
-      echo "Invalid action. Exiting."
+  # Function to select a partition
+  select_partition() {
+    list_partitions
+    printf "Enter the number of the partition you want to work on (e.g., 1, 2, etc.): "
+    read -r partition_num
+    selected_partition=$(lsblk -o NAME -l | grep -E 'sd[a-z][0-9]|nvme[0-9]n[0-9]p[0-9]' | sed -n "''${partition_num}p")
+    if [ -z "$selected_partition" ]; then
+      echo "Invalid selection. Exiting."
       exit 1
-      ;;
-  esac
-}
+    fi
+    echo "Selected partition: /dev/$selected_partition"
+  }
 
-# Main script
-partition_action
+  # Function to handle mount/unmount/remove for partitions
+  partition_action() {
+    select_partition
+    printf "Choose action: (m)ount, (u)nmount, (r)emove: "
+    read -r action
+    case "$action" in
+      m|M)
+        mount_point="$HOME/mount/usb"
+        echo "Creating mount point at $mount_point..."
+        mkdir -p "$mount_point"
 
+        # Get the filesystem type
+        fs_type=$(lsblk -o FSTYPE -n "/dev/$selected_partition")
+
+        echo "Mounting /dev/$selected_partition to $mount_point..."
+        if [ "$fs_type" = "ntfs" ]; then
+          if sudo ntfs-3g "/dev/$selected_partition" "$mount_point" -o "uid=$(id -u),gid=$(id -g)"; then
+            echo "NTFS partition mounted successfully at $mount_point."
+          else
+            echo "Failed to mount NTFS partition."
+          fi
+        else
+          if sudo mount "/dev/$selected_partition" "$mount_point" -o "uid=$(id -u),gid=$(id -g)"; then
+            echo "Partition mounted successfully at $mount_point."
+          else
+            echo "Failed to mount partition."
+          fi
+        fi
+        ;;
+      u|U)
+        echo "Unmounting /dev/$selected_partition..."
+        if sudo umount "/dev/$selected_partition"; then
+          echo "Partition unmounted successfully."
+        else
+          echo "Failed to unmount partition."
+        fi
+        ;;
+      r|R)
+        echo "Removing /dev/$selected_partition..."
+        if sudo udisksctl power-off -b "/dev/$selected_partition"; then
+          echo "Partition removed successfully."
+        else
+          echo "Failed to remove partition."
+        fi
+        ;;
+      *)
+        echo "Invalid action. Exiting."
+        exit 1
+        ;;
+    esac
+  }
+
+  # Main script
+  partition_action
 ''
