@@ -70,9 +70,9 @@
 in {
   imports = enabledModules;
 
-  home.packages = with pkgs; [
+  home.packages = [
     inputs.yt-x.packages.${pkgs.system}.default
-    inputs.infinity-glass.packages."${pkgs.system}".default
+    inputs.infinity-glass.packages.${pkgs.system}.default
   ];
 
   home.file = {

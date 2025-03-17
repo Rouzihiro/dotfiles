@@ -8,6 +8,7 @@
       noto-fonts-emoji
       liberation_ttf
       nerd-fonts.fira-code
+      nerd-fonts.droid-sans-mono
       fira-code-symbols
       mplus-outline-fonts.githubRelease
       dina-font
@@ -16,6 +17,7 @@
       nerd-fonts.jetbrains-mono
       monaspace
       cascadia-code
+      dejavu_fonts
 
       (pkgs.runCommand "FoundationOne" {
         buildInputs = [ pkgs.coreutils ]; 

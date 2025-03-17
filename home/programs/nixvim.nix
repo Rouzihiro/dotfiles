@@ -197,7 +197,7 @@ in {
             enable = true;
             settings.plugins.pylint = {
               enabled = true;
-              executable = "${pkgs.pylint}/bin/pylint";
+              #executable = "${pkgs.pylint}/bin/pylint";
             };
           };
           # pylyzer.enable = true;

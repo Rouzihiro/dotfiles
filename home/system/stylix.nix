@@ -3,7 +3,7 @@
   pkgs,
   ...
 }: let
-  variables = import ../../hosts/modules/variables.nix;
+  variables = import ./variables.nix;
 in {
   imports = [inputs.stylix.homeManagerModules.stylix];
 
@@ -26,7 +26,7 @@ in {
 
     # base16Scheme = "${pkgs.base16-schemes}/share/themes/nord.yaml";
     # base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-macchiato.yaml";
-    base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-mocha.yaml";
+     base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-mocha.yaml";
 
     #  for custom themes;
     #  base16Scheme = builtins.path {
@@ -53,10 +53,10 @@ in {
         name = "noto-fonts-color-emoji";
       };
 
-      monospace = {
-        package = pkgs.nerd-fonts.droid-sans-mono;
-        name = "DroidSansM Nerd Font";
-      };
+       monospace = {
+         package = pkgs.nerd-fonts.droid-sans-mono;
+         name = "DroidSansM Nerd Font";
+       };
 
       sansSerif = {
         package = pkgs.dejavu_fonts;
