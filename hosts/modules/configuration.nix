@@ -34,7 +34,7 @@
     gvfs.enable = false;
     #tumbler.enable = true; # Thumbnail support for images
     #dbus.enable = true;
-    udisks2.enable = true;
+    #udisks2.enable = true;
   };
 
   programs.dconf.enable = true;
