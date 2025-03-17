@@ -6,17 +6,17 @@ show_space() {
   df -h .
 }
 
-# Function to show disk space for all mounted drives
+# Function to show disk space for all mounted drives, excluding small and temporary filesystems
 show_all_spaces() {
-  echo "Disk space for all mounted drives:"
-  df -h
+  echo "Disk space for all mounted drives (excluding small and temporary filesystems):"
+  df -h --output=source,size,used,avail,pcent,target | awk 'NR==1 || ($2 ~ /[0-9]+G/ && $2 !~ /[0-9]+M/)'
 }
 
 # Prompt the user for what they want to check
 echo "What would you like to see?"
 echo "1) Disk space for the local drive (current directory)"
-echo "2) Disk space for all mounted drives"
-read -r choice
+echo "2) Disk space for all mounted drives (excluding small and temporary filesystems)"
+read -r -n 1 choice
 
 # Act based on user input
 case $choice in
@@ -30,4 +30,3 @@ case $choice in
     echo "Invalid choice. Please enter 1 or 2."
     ;;
 esac
-

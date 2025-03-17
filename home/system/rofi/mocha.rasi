@@ -13,10 +13,10 @@ configuration {
 * {
     background:    							 #1E1E2ECC;
     background-alt:							 #313244CC;
-    foreground:    							 #CDD6F4FF;
-    selected:      							 #FAB387FF;
-    active:        							 #CBA6F7FF;
-    urgent:        							 #A6E3A1FF;
+    foreground:    							 #CDD6F4CC;
+    selected:      							 #FAB387CC;
+    active:        							 #CBA6F7CC;
+    urgent:        							 #A6E3A1CC;
 
 		font: "JetBrains Mono Nerd Font Medium 11";
     border-colour:               var(selected);

@@ -1,4 +1,4 @@
-{ pkgs, hostname, ...}: {
+{ pkgs, ...}: {
   # ---------------------------------------------------------
   # Documentation
   # ---------------------------------------------------------
@@ -18,7 +18,6 @@
   system = {stateVersion = "25.05";};
   security.pam.services.swaylock = {};
 
-  # Enable sudo and set up no-password configuration for 'rey'
   security.sudo.enable = true;
   security.sudo.extraConfig = ''
     rey ALL=(ALL) NOPASSWD: ALL
@@ -31,14 +30,15 @@
   services = {
     chrony.enable = true;
     timesyncd.enable = false;
+    xserver.enable = false;
+    gvfs.enable = false;
+    #tumbler.enable = true; # Thumbnail support for images
+    #dbus.enable = true;
+    udisks2.enable = true;
   };
 
-  services.xserver = {
-    xkb = {
-      layout = "de";
-      variant = "";
-    };
-  };
+  programs.dconf.enable = true;
+
   console.keyMap = "de";
 
   systemd = {
@@ -50,6 +50,11 @@
       DefaultLimitNOFILE_HARD=2097152
     '';
   };
+
+  environment.systemPackages = with pkgs; [
+    udiskie
+  ];
+
 
   environment.variables = {
     FREETYPE_PROPERTIES = "cff:no-stem-darkening=0 autofitter:no-stem-darkening=0";

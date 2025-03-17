@@ -47,6 +47,7 @@ in {
       startup = [
         {command = "foot --server";}
         {command = "autotiling-rs";}
+        {command = "udiskie";}
         {command = "swww init && sleep 0.5 && swww img ~/Pictures/wallpapers/Dune3.png";}
         {
           command = ''

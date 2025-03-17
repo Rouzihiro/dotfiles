@@ -1,0 +1,55 @@
+#!/bin/sh
+
+# Function to list all drives
+list_drives() {
+  echo "Available drives:"
+  lsblk -o NAME,SIZE,MODEL,MOUNTPOINT -d | grep -E '^sd|^nvme' | awk '{print NR") "$0}'
+}
+
+# Function to select a drive
+select_drive() {
+  list_drives
+  printf "Enter the number of the drive you want to work on (e.g., 1, 2, etc.): "
+  read -r drive_num
+  selected_drive=$(lsblk -o NAME -d | grep -E '^sd|^nvme' | sed -n "${drive_num}p")
+  if [ -z "$selected_drive" ]; then
+    echo "Invalid selection. Exiting."
+    exit 1
+  fi
+  echo "Selected drive: /dev/$selected_drive"
+}
+
+# Function to handle mount/unmount/remove
+drive_action() {
+  select_drive
+  printf "Choose action: (m)ount, (u)nmount, (r)emove: "
+  read -r action
+  case "$action" in
+    m|M)
+      mount_point="/home/$(whoami)/usb"
+      echo "Creating mount point at $mount_point..."
+      mkdir -p "$mount_point"
+      echo "Mounting /dev/$selected_drive to $mount_point..."
+      if udisksctl mount -b "/dev/$selected_drive" --options "noatime,uid=$(id -u),gid=$(id -g)" --no-user-interaction; then
+        echo "Drive mounted successfully at $mount_point."
+      else
+        echo "Failed to mount the drive."
+      fi
+      ;;
+    u|U)
+      echo "Unmounting /dev/$selected_drive..."
+      udisksctl unmount -b "/dev/$selected_drive"
+      ;;
+    r|R)
+      echo "Removing /dev/$selected_drive..."
+      udisksctl power-off -b "/dev/$selected_drive"
+      ;;
+    *)
+      echo "Invalid action. Exiting."
+      exit 1
+      ;;
+  esac
+}
+
+# Main script
+drive_action

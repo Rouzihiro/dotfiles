@@ -1,7 +1,6 @@
 { hostname, lib, ... }:
 
 let
-  # Helper function for conditional module loading
   loadModule = file: { condition ? true }: {
     inherit file condition;
   };
@@ -19,10 +18,8 @@ let
     (loadModule ./modules/zram.nix {})
     (loadModule ./modules/network.nix {})
     (loadModule ./modules/nh.nix {})
-    #(loadModule ./modules/deactivate.nix {})
     #(loadModule ./modules/sound.nix {})
     (loadModule ./modules/pipewire.nix {})
-    (loadModule ./modules/gsettings.nix {})
     #(loadModule ./modules/fonts.nix {})
   ];
 
