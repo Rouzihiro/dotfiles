@@ -34,7 +34,6 @@
     gvfs.enable = false;
     #tumbler.enable = true; # Thumbnail support for images
     #dbus.enable = true;
-    #udisks2.enable = true;
   };
 
   programs.dconf.enable = true;
@@ -50,11 +49,6 @@
       DefaultLimitNOFILE_HARD=2097152
     '';
   };
-
-  environment.systemPackages = with pkgs; [
-    udiskie
-  ];
-
 
   environment.variables = {
     FREETYPE_PROPERTIES = "cff:no-stem-darkening=0 autofitter:no-stem-darkening=0";

@@ -1,18 +1,11 @@
 {
   inputs = {
-    #nixpkgs.url = "nixpkgs/nixos-unstable";
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    #chaotic.url = "github:chaotic-cx/nyx/nyxpkgs-unstable";
 
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    #   spicetify-nix = {
-    #     url = "github:Gerg-L/spicetify-nix";
-    #     inputs.nixpkgs.follows = "nixpkgs";
-    #   };
 
     infinity-glass = {
       url = "github:Rouzihiro/infinity-glass-icons";

@@ -3,17 +3,17 @@
     ####################
     # User Utilities & Tools
     ####################
-    ntfs3g
+    udisks2 ntfs3g
     ventoy-full-qt
     bluez
     bitwarden-cli 
-    keychain
+    pass keychain
     swappy
     ffmpeg-full yt-dlp wget aria2 yad bc tesseract translate-shell slurp xcp duf tree fd ripgrep
 
     gnome-font-viewer
     openjdk17
-    openssl
+    #openssl
     grim
     joplin-desktop
     joplin
@@ -58,7 +58,6 @@
     #imv                      # Lightweight image viewer
     #pinta                    # Image editor
     #vlc                      # Media player
-    #mpv
 
     ####################
     # Communication
