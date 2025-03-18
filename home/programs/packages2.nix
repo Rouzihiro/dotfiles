@@ -7,13 +7,12 @@
     ventoy-full-qt
     bluez
     bitwarden-cli 
-    pass keychain
+    keychain
     swappy
     ffmpeg-full yt-dlp wget aria2 yad bc tesseract translate-shell slurp xcp duf tree fd ripgrep
 
     gnome-font-viewer
     openjdk17
-    #openssl
     grim
     joplin-desktop
     joplin
