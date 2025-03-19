@@ -18,7 +18,6 @@ let
     (loadModule ./modules/zram.nix {})
     (loadModule ./modules/network.nix {})
     (loadModule ./modules/nh.nix {})
-    (loadModule ./modules/samba.nix {})
     #(loadModule ./modules/sound.nix {})
     (loadModule ./modules/pipewire.nix {})
     #(loadModule ./modules/fonts.nix {})
@@ -28,6 +27,7 @@ let
   hostSpecificModules = [
     # HP-specific
     (loadModule ./HP.nix { condition = lib.elem hostname [ "HP" ]; })
+    #(loadModule ./modules/samba.nix { condition = lib.elem hostname [ "HP" ]; })
     (loadModule ./modules/polkit.nix { condition = lib.elem hostname [ "HP" "MBPro" ]; })
     (loadModule ./modules/sway.nix { condition = lib.elem hostname [ "HP" "MBPro"]; })
     #(loadModule ./modules/hyprland-uwsm.nix { condition = lib.elem hostname [ "HP" ]; })
@@ -35,6 +35,7 @@ let
     (loadModule ./modules/tlp.nix { condition = lib.elem hostname [ "HP" "MBPro" ]; })
     (loadModule ./modules/intel.nix { condition = lib.elem hostname [ "HP" "MBPro" ]; })
     (loadModule ./modules/gaming.nix { condition = lib.elem hostname [ "HP" ]; })
+    (loadModule ./modules/gaming { condition = lib.elem hostname [ "HP" ]; })
 
     # MBPro-specific
     (loadModule ./MBPro.nix { condition = lib.elem hostname [ "MBPro" ]; })
