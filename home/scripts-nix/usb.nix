@@ -60,7 +60,7 @@ pkgs.writeShellScriptBin "usb" ''
         ;;
       r|R)
         echo "Removing /dev/$selected_partition..."
-        if udisksctl power-off -b "/dev/$selected_partition"; then
+        if sudo eject "/dev/$selected_partition"; then
           echo "Partition removed successfully."
         else
           echo "Failed to remove partition."
