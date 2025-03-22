@@ -33,10 +33,6 @@ rec {
   WM = "sway"; # Window Manager
   BT-status = true; # Bluetooth status (enabled/disabled)
 
-  timezone = "Europe/Berlin"; # select timezone
-  locale = "en_US.UTF-8"; # select locale
-  #locale = "de_DE.UTF-8"; # select locale
-
   # Program Options
   browser = "brave"; # Default web browser
   browser-light = "org.qutebrowser.qutebrowser"; # Lightweight browser

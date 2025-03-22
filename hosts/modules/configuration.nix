@@ -1,6 +1,4 @@
-{...}: let
-  inherit (import ./variables.nix) timezone locale;
-in {
+{...}: {
   # ---------------------------------------------------------
   # Documentation
   # ---------------------------------------------------------
@@ -24,12 +22,6 @@ in {
   security.sudo.extraConfig = ''
     rey ALL=(ALL) NOPASSWD: ALL
   '';
-
-  # Set your time zone.
-  time.timeZone = "${timezone}";
-
-  # Select internationalisation properties.
-  i18n.defaultLocale = "${locale}";
 
   # ---------------------------------------------------------
   # Systemd
