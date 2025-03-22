@@ -15,33 +15,33 @@ in {
     enable = true;
     defaultEditor = true;
     vimdiffAlias = true;
-      colorschemes.${theme} = {
-       autoLoad = true;
-       enable = true;
-        settings = {
-          flavour = "mocha";
-          default_integrations = true;
-          integrations = {
-            cmp = true;
-            gitsigns = true;
-            mini = {
-              enabled = true;
-            };
-            treesitter = true;
+    colorschemes.${theme} = {
+      autoLoad = true;
+      enable = true;
+      settings = {
+        flavour = "mocha";
+        default_integrations = true;
+        integrations = {
+          cmp = true;
+          gitsigns = true;
+          mini = {
+            enabled = true;
           };
-          styles = {
-            booleans = [
-              "bold"
-              "italic"
-            ];
-            conitionals = [
-              "bold"
-            ];
-          };
-          term_colors = true;
-          transparent_background = true;
+          treesitter = true;
         };
+        styles = {
+          booleans = [
+            "bold"
+            "italic"
+          ];
+          conitionals = [
+            "bold"
+          ];
+        };
+        term_colors = true;
+        transparent_background = true;
       };
+    };
     colorscheme = theme;
     opts = {
       number = true;
@@ -185,23 +185,14 @@ in {
         };
       };
 
-      #bufferline = {
-      #  enable = true;
-      #  settings.options.alwaysShowBufferline = true;
-      #};
+      bufferline = {
+        enable = true;
+        settings.options.alwaysShowBufferline = true;
+      };
 
       lsp = {
         enable = true;
         servers = {
-          pylsp = {
-            enable = true;
-            settings.plugins.pylint = {
-              enabled = true;
-              #executable = "${pkgs.pylint}/bin/pylint";
-            };
-          };
-          # pylyzer.enable = true;
-          # pyright.enable = true;
           nixd = {
             enable = true;
             settings = {
