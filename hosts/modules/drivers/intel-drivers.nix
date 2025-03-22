@@ -12,10 +12,6 @@ in {
   };
 
   config = mkIf cfg.enable {
-    nixpkgs.config.packageOverrides = pkgs: {
-      vaapiIntel = pkgs.vaapiIntel.override {enableHybridCodec = true;};
-    };
-
     # OpenGL
     hardware.graphics = {
       extraPackages = with pkgs; [
