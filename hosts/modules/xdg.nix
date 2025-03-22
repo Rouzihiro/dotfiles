@@ -1,7 +1,7 @@
 { pkgs, ... }:
 let
 
-  inherit (import ../../hosts/modules/variables.nix) xdg;
+  inherit (import ./variables.nix) xdg;
 in
 {
   environment.systemPackages = with pkgs; [

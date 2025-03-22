@@ -1,7 +1,7 @@
 { pkgs, username, ... }:
 let
 
-  inherit (import ../../hosts/modules/variables.nix) shell;
+  inherit (import ./variables.nix) shell;
 in
 {
   users.users.${username} = {

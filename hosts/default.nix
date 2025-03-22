@@ -13,7 +13,6 @@ let
     (loadModule ./modules/shell.nix {})
     (loadModule ./modules/nix.nix {})
     (loadModule ./modules/bluetooth.nix {})
-    (loadModule ./modules/time.nix {})
     (loadModule ./modules/users.nix {})
     (loadModule ./modules/zram.nix {})
     (loadModule ./modules/network.nix {})

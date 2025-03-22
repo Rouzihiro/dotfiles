@@ -1,6 +1,6 @@
 let
 
-  inherit (import ../../hosts/modules/variables.nix) BT-status;
+  inherit (import ./variables.nix) BT-status;
 in
 {
   services.blueman.enable = BT-status;
