@@ -45,7 +45,6 @@
     (loadModule ./system/i3.nix {condition = lib.elem hostname ["Server"];})
     (loadModule ./system/sway.nix {condition = lib.elem hostname ["HP" "MBPro"];})
     (loadModule ./system/hyprland-uwsm.nix {condition = lib.elem hostname ["XX"];})
-    (loadModule ./system/fnott.nix {condition = lib.elem hostname ["XX"];})
     (loadModule ./system/anyrun.nix {condition = lib.elem hostname ["HP" "MBPro"];})
     (loadModule ./programs/kitty.nix {condition = lib.elem hostname ["XX"];})
   ];
