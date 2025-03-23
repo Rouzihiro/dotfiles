@@ -1,0 +1,17 @@
+#!/bin/sh
+
+# Set permissions for the private key
+chmod 600 ~/.ssh/HP-Nixo
+
+# Set permissions for the public key
+chmod 644 ~/.ssh/HP-Nixo.pub
+
+# Set permissions for the known_hosts file
+chmod 644 ~/.ssh/known_hosts
+
+# Set permissions for the environment file
+chmod 644 ~/.ssh/environment
+
+# Verify the permissions
+echo "Permissions set. Verifying:"
+ls -l ~/.ssh/HP-Nixo ~/.ssh/HP-Nixo.pub ~/.ssh/known_hosts ~/.ssh/environment

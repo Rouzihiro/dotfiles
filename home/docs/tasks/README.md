@@ -4,7 +4,7 @@
 
 ## 💻 IT
 - [ ] **Optimization bar**  
-- [ ] **Optimization color**  
+- [X] **Optimization color**  
 - [X] ** tmux: fulscreen feature
 - [ ] **Find out if there is a on-screen keyboard when using touch-feature** 
 
@@ -14,7 +14,7 @@
 - [⏳] **Amt - Termin** (feedback pending)  
 - [ ] **Tax**  
 - [ ] **Car**  
-- [⏳] **Ensurance** (feedback pending)
+- [⏳] **Health ensurance** (feedback pending)
 - [📅] **🔧 Heating Repair** (date pending)  
 - [ ] **🏠 Basement Renovation**
 
