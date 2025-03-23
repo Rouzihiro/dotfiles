@@ -122,7 +122,7 @@
       cd-dotfiles = "cd ~/dotfiles";
       cd-scripts = "cd ~/dotfiles/home/scripts";
       cd-programs = "cd ~/dotfiles/home/programs";
-      cd-nas = "cd ~/mount/fritz.nas/USB3";
+      cd-usb = "cd ~/mount/usb";
       file-open = ''&$OPENER "$f"'';
       extract = ''$extracto "$f"'';
     };
@@ -141,7 +141,7 @@
       "." = "set hidden!";
       o = "open-terminal";
       gd = "cd-downloads";
-      gn = "cd-nas";
+      gu = "cd-usb";
       gs = "cd-scripts";
       gf = "cd-dotfiles";
       gp = "cd-programs";
