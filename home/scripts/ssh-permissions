@@ -15,3 +15,25 @@ chmod 644 ~/.ssh/environment
 # Verify the permissions
 echo "Permissions set. Verifying:"
 ls -l ~/.ssh/HP-Nixo ~/.ssh/HP-Nixo.pub ~/.ssh/known_hosts ~/.ssh/environment
+
+
+# Ensure You're Using SSH for Git Operations
+# Your repository is currently using HTTPS for the remote URL. You need to switch it to SSH.
+#
+# Check the current remote URL:
+#
+# git remote -v
+# This will show something like:
+#
+# origin  https://github.com/Rouzihiro/dotfiles.git (fetch)
+# origin  https://github.com/Rouzihiro/dotfiles.git (push)
+# Change the remote URL to use SSH:
+#
+# git remote set-url origin git@github.com:Rouzihiro/dotfiles.git
+# Verify the change:
+#
+# git remote -v
+# It should now show:
+#
+# origin  git@github.com:Rouzihiro/dotfiles.git (fetch)
+# origin  git@github.com:Rouzihiro/dotfiles.git (push)
