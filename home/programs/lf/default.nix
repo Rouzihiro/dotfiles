@@ -125,7 +125,6 @@
       cd-nas = "cd ~/mount/fritz.nas/USB3";
       file-open = ''&$OPENER "$f"'';
       extract = ''$extracto "$f"'';
-      lazygit = "&${pkgs.lazygit}/bin/lazygit -p $PWD";
     };
     keybindings = {
       "<enter>" = "$nvim $f";
@@ -151,7 +150,6 @@
       zz = "copy-path";
       br = "bulk-rename";
       zt = "tar-create";
-      zg = "lazygit";
     };
     settings = {
       preview = true;
