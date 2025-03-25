@@ -3,7 +3,6 @@
     #./gaming.nix
     #./vulkan.nix
     #./wine.nix
-    #./retroarch.nix
 
     #./emulators.nix
     #./games.nix

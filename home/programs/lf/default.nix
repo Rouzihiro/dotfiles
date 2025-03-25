@@ -108,7 +108,7 @@
         }}
       '';
 
-      tar-create = ''
+      compress-tar = ''
         ''${{
           printf "Archive name (without extension): "
           read NAME
@@ -149,7 +149,7 @@
       gx = "cd-pix";
       zz = "copy-path";
       br = "bulk-rename";
-      zt = "tar-create";
+      zt = "compress-tar";
     };
     settings = {
       preview = true;

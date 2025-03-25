@@ -29,7 +29,7 @@
 ---
 
 ## 📅 Meetings
-- [ ] **QSFFx: Assessments prüfen und anpassen**  
+- [X] **QSFFx: Assessments prüfen und anpassen**  
   - 📅 **Date:** Tuesday, 25.03.2025  
   - ⏰ **Time:** 9:00 - 10:00  
 
