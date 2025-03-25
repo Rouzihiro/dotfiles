@@ -7,14 +7,14 @@
 - [X] **Optimization color**  
 - [X] ** tmux: fulscreen feature
 - [ ] **Find out if there is a on-screen keyboard when using touch-feature** 
-
+- [] ** wine: 32 Bit
 ---
 
 ## 🧑‍💻 Personal
 - [⏳] **Amt - Termin** (feedback pending)  
 - [ ] **Tax**  
 - [ ] **Car**  
-- [⏳] **Health ensurance** (feedback pending)
+- [X] **Health ensurance** 
 - [📅] **🔧 Heating Repair** (date pending)  
 - [ ] **🏠 Basement Renovation**
 
