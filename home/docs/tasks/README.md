@@ -7,7 +7,7 @@
 - [X] **Optimization color**  
 - [X] ** tmux: fulscreen feature
 - [ ] **Find out if there is a on-screen keyboard when using touch-feature** 
-- [] ** wine: 32 Bit
+- [X] ** wine: 32 Bit (solved by manual config)
 ---
 
 ## 🧑‍💻 Personal
@@ -22,7 +22,7 @@
 
 ## 🏢 Work
 - [X] **Albertinen / online-access**  
-- [ ] **BG-Termin** (late March)  
+- [X] **BG-Termin** (late March)  
 - [⏳] **UKE - overtime** - email sent 17.3. (feedback pending)
 - [ ] **📝 Feedback Dekanat**
 
