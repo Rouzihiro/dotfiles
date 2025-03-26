@@ -55,7 +55,6 @@
 
   # Miscellaneous Modules (Games, Extra Apps, Custom Picks)
   miscModules = [
-    (loadModule ./programs/gaming.nix {condition = lib.elem hostname ["HP"];})
     (loadModule ./programs/spicetify.nix {condition = lib.elem hostname ["XX"];})
     (loadModule ./programs/starship.nix {condition = lib.elem hostname ["XX"];})
     (loadModule ./programs/zsh.nix {condition = lib.elem hostname ["XX"];})

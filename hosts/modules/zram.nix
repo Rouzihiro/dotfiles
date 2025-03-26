@@ -1,13 +1,10 @@
-{ ... }:
-
 {
-
- #= Enable Trim Needed for SSD's
+# Enable Trim Needed for SSD's
  services.fstrim.enable = true;
 # services.fstrim.interval = "weekly";
  services.fstrim.interval = "daily";
  
- #= Swap
+ # Swap
   zramSwap = {
       enable = true;
       priority = 100;

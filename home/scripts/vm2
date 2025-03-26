@@ -1,0 +1,31 @@
+#!/bin/sh
+
+# Paths - customize these!
+WIN_ISO="$HOME/Downloads/tiny-xp.iso"       # Windows XP ISO
+DISK_IMG="$HOME/Downloads/tinyxp.qcow2"     # Virtual disk
+GAME_ISO="$HOME/Downloads/games/Lula/lula.iso"         # Game ISO (optional)
+SIZE="10G"                                  # Disk size
+
+# Create disk image if it doesn't exist
+if [ ! -f "$DISK_IMG" ]; then
+    qemu-img create -f qcow2 "$DISK_IMG" "$SIZE" || exit 1
+fi
+
+# Base QEMU command (exactly as yours worked)
+BASE_CMD="qemu-system-x86_64 \
+    -enable-kvm \
+    -m 1G \
+    -smp 2 \
+    -cdrom \"$WIN_ISO\" \
+    -boot d \
+    -hda \"$DISK_IMG\" \
+    -vga std \
+    -net nic,model=e1000 \
+    -net user"
+
+# Add game ISO only if it exists
+if [ -f "$GAME_ISO" ]; then
+    exec sh -c "$BASE_CMD -drive file=\"$GAME_ISO\",media=cdrom,index=1"
+else
+    exec sh -c "$BASE_CMD"
+fi

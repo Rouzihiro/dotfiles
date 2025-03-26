@@ -1,12 +1,11 @@
 {...}: {
   imports = [
-    #./gaming.nix
-    #./vulkan.nix
-    #./wine.nix
-
+    ./vulkan.nix
+    ./gstreamer.nix
+    ./wine.nix
     #./emulators.nix
-    #./games.nix
-    #./experimental.nix
+    ./steam.nix
+    ./lutris.nix
     #./manoghud.nix
     #./SteamTinkerLaunch.nix
   ];

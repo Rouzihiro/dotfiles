@@ -1,8 +1,6 @@
-{ pkgs, ... }:
-{
-  
+{pkgs, ...}: {
   environment.systemPackages = with pkgs; [
-  wine
-];
-
+    wineWowPackages.stable #https://nixos.wiki/wiki/Wine
+    winetricks
+  ];
 }

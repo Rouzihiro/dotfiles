@@ -32,7 +32,6 @@ let
     #(loadModule ./modules/hyprland-uwsm.nix { condition = lib.elem hostname [ "HP" ]; })
     (loadModule ./modules/android.nix { condition = lib.elem hostname [ "HP" ]; })
     (loadModule ./modules/tlp.nix { condition = lib.elem hostname [ "HP" "MBPro" ]; })
-    (loadModule ./modules/gaming.nix { condition = lib.elem hostname [ "HP" ]; })
     (loadModule ./modules/gaming { condition = lib.elem hostname [ "HP" ]; })
     #(loadModule ./modules/samba.nix { condition = lib.elem hostname [ "HP" ]; })
     (loadModule ./modules/nas.nix { condition = lib.elem hostname [ "HP" ]; })
@@ -46,7 +45,7 @@ let
     (loadModule ./modules/ssh.nix { condition = lib.elem hostname [ "server" ]; })
 
     # Modules for multiple hosts
-    (loadModule ./modules/vm.nix { condition = lib.elem hostname [ "XX" ]; })
+    (loadModule ./modules/vm.nix { condition = lib.elem hostname [ "HP" ]; })
     (loadModule ./modules/adb.nix { condition = lib.elem hostname [ "XX" ]; })
     (loadModule ./modules/fstrim.nix { condition = lib.elem hostname [ "XX" ]; })
   ];

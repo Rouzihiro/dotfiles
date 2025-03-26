@@ -108,14 +108,6 @@
         }}
       '';
 
-      compress-tar = ''
-        ''${{
-          printf "Archive name (without extension): "
-          read NAME
-          tar -czvf "$NAME.tar.gz" $fx
-        }}
-      '';
-
       cd-downloads = "cd ~/Downloads";
       cd-videos = "cd ~/Videos";
       cd-pix = "cd ~/Pictures";
@@ -149,7 +141,6 @@
       gx = "cd-pix";
       zz = "copy-path";
       br = "bulk-rename";
-      zt = "compress-tar";
     };
     settings = {
       preview = true;
