@@ -11,8 +11,9 @@
 ---
 
 ## 🧑‍💻 Personal
-- [⏳] **Amt - Termin** (feedback pending)  
-- [ ] **Tax**  
+- [] **Registry Office HH - date** (missing certificats)
+- [] **Registry Office H - date** (certificate requested 27.03.25)
+- [ ] **Tax** , DATEV requested 
 - [ ] **Car**  
 - [X] **Health ensurance** 
 - [📅] **🔧 Heating Repair** (date pending)  
@@ -23,7 +24,7 @@
 ## 🏢 Work
 - [X] **Albertinen / online-access**  
 - [X] **BG-Termin** (late March)  
-- [⏳] **UKE - overtime** - email sent 17.3. (feedback pending)
+- [X] **UKE - overtime** - email sent 17.3.
 - [ ] **📝 Feedback Dekanat**
 
 ---
@@ -32,11 +33,6 @@
 - [X] **QSFFx: Assessments prüfen und anpassen**  
   - 📅 **Date:** Tuesday, 25.03.2025  
   - ⏰ **Time:** 9:00 - 10:00  
-
-- [ ] **Amt: (S16) - PM
-  - 📅 **Date:** Thursday, 27.03.2025  
-  - ⏰ **Time:** 11:30 - 12:30  
-
 
 ---
 

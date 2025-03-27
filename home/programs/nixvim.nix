@@ -82,7 +82,11 @@ in {
       web-devicons.enable = true;
       lualine.enable = true;
       which-key.enable = true;
-      cmp-path.enable = true;
+      blink-cmp.enable = true;
+      cmp-path = {
+        enable = true;
+        autoLoad = true;
+      };
       conform-nvim.enable = true;
       nvim-tree = {
         enable = true;
