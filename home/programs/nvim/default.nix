@@ -24,16 +24,15 @@
       nvim-cmp
       nvim-lspconfig
       nvim-notify
-      # nvim-tree-lua
       nvim-web-devicons
       render-markdown-nvim
       vim-visual-multi
       telescope-nvim
       markdown-preview-nvim
       lf-vim
-      # yazi-nvim
       vimtex
       which-key-nvim
+      mini-nvim
 
       (nvim-treesitter.withPlugins (p:
         with p; [
@@ -51,19 +50,26 @@
           tree-sitter-python
           tree-sitter-todotxt
           tree-sitter-yaml
+          tree-sitter-query
+          tree-sitter-regex
         ]))
     ];
 
     extraPackages = with pkgs; [
       ccls
       clang-tools
-      gopls
+      go
       lua-language-server
       nixd
       pyright
       typescript-language-server
       vscode-langservers-extracted
       texlive.combined.scheme-full
+      python3Packages.black
+      python3Packages.isort
+      nodePackages.prettier
+      rustfmt
+      stylua
     ];
   };
 }

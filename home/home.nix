@@ -25,7 +25,6 @@
     (loadModule ./programs/shell.nix {})
     (loadModule ./programs/foot.nix {})
     (loadModule ./programs/tmux.nix {})
-    #(loadModule ./programs/nixvim.nix {})
     (loadModule ./programs/nvim {})
     (loadModule ./programs/yazi.nix {})
     (loadModule ./programs/lf {})
