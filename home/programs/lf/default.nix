@@ -140,6 +140,7 @@
       gv = "cd-videos";
       gx = "cd-pix";
       zz = "copy-path";
+      zs = "calcdirsize";
       br = "bulk-rename";
     };
     settings = {
@@ -212,4 +213,24 @@
       set cleaner ${cleaner}/bin/clean.sh
     '';
   };
+
+  programs.fish.interactiveShellInit = ''
+    function lf-cd
+      set tempfile (mktemp -t tmp.XXXXXX)
+      lf -last-dir-path="$tempfile" $argv
+
+      if test -f "$tempfile"
+        set newdir (cat "$tempfile")
+        if test "$newdir" != (pwd)
+          zoxide add "$newdir"
+          cd "$newdir"
+        end
+        rm -f "$tempfile"
+      end
+      commandline -f repaint
+    end
+
+    bind \cr 'lf-cd; commandline -f repaint'
+    bind \er 'lf-cd (pwd); commandline -f repaint'
+  '';
 }

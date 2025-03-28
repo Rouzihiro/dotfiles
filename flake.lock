@@ -470,6 +470,22 @@
         "type": "github"
       }
     },
+    "ranger-devicons": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1736375293,
+        "narHash": "sha256-ck53eG+mGIQ706sUnEHbJ6vY1/LYnRcpq94JXzwnGTQ=",
+        "owner": "alexanderjeurissen",
+        "repo": "ranger_devicons",
+        "rev": "f227f212e14996fbb366f945ec3ecaf5dc5f44b0",
+        "type": "github"
+      },
+      "original": {
+        "owner": "alexanderjeurissen",
+        "repo": "ranger_devicons",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
         "anyrun": "anyrun",
@@ -478,6 +494,7 @@
         "home-manager": "home-manager",
         "infinity-glass": "infinity-glass",
         "nixpkgs": "nixpkgs",
+        "ranger-devicons": "ranger-devicons",
         "stylix": "stylix",
         "yt-x": "yt-x"
       }

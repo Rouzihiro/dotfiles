@@ -1,7 +1,9 @@
-{ hostname, lib, ... }:
-
-let
-  loadModule = file: { condition ? true }: {
+{
+  hostname,
+  lib,
+  ...
+}: let
+  loadModule = file: {condition ? true}: {
     inherit file condition;
   };
 
@@ -26,41 +28,40 @@ let
   # Host-specific modules with conditions
   hostSpecificModules = [
     # HP-specific
-    (loadModule ./HP.nix { condition = lib.elem hostname [ "HP" ]; })
-    (loadModule ./modules/polkit.nix { condition = lib.elem hostname [ "HP" "MBPro" ]; })
-    (loadModule ./modules/sway.nix { condition = lib.elem hostname [ "HP" "MBPro"]; })
+    (loadModule ./HP.nix {condition = lib.elem hostname ["HP"];})
+    (loadModule ./modules/polkit.nix {condition = lib.elem hostname ["HP" "MBPro"];})
+    (loadModule ./modules/sway.nix {condition = lib.elem hostname ["HP" "MBPro"];})
     #(loadModule ./modules/hyprland-uwsm.nix { condition = lib.elem hostname [ "HP" ]; })
-    (loadModule ./modules/android.nix { condition = lib.elem hostname [ "HP" ]; })
-    (loadModule ./modules/tlp.nix { condition = lib.elem hostname [ "HP" "MBPro" ]; })
-    (loadModule ./modules/gaming { condition = lib.elem hostname [ "HP" ]; })
+    (loadModule ./modules/android.nix {condition = lib.elem hostname ["HP"];})
+    (loadModule ./modules/tlp.nix {condition = lib.elem hostname ["HP" "MBPro"];})
+    (loadModule ./modules/gaming {condition = lib.elem hostname ["HP"];})
     #(loadModule ./modules/samba.nix { condition = lib.elem hostname [ "HP" ]; })
-    (loadModule ./modules/nas.nix { condition = lib.elem hostname [ "HP" ]; })
+    (loadModule ./modules/nas.nix {condition = lib.elem hostname ["HP"];})
 
     # MBPro-specific
-    (loadModule ./MBPro.nix { condition = lib.elem hostname [ "MBPro" ]; })
-    
+    (loadModule ./MBPro.nix {condition = lib.elem hostname ["MBPro"];})
+
     # Server-specific
-    (loadModule ./server.nix { condition = lib.elem hostname [ "server" ]; })
-    (loadModule ./modules/fstrim.nix { condition = lib.elem hostname [ "server" ]; })
-    (loadModule ./modules/ssh.nix { condition = lib.elem hostname [ "server" ]; })
+    (loadModule ./server.nix {condition = lib.elem hostname ["server"];})
+    (loadModule ./modules/fstrim.nix {condition = lib.elem hostname ["server"];})
+    (loadModule ./modules/ssh.nix {condition = lib.elem hostname ["server"];})
 
     # Modules for multiple hosts
-    (loadModule ./modules/vm.nix { condition = lib.elem hostname [ "HP" ]; })
-    (loadModule ./modules/adb.nix { condition = lib.elem hostname [ "XX" ]; })
-    (loadModule ./modules/fstrim.nix { condition = lib.elem hostname [ "XX" ]; })
+    # (loadModule ./modules/vm.nix { condition = lib.elem hostname [ "HP" ]; })
+    (loadModule ./modules/adb.nix {condition = lib.elem hostname ["XX"];})
+    (loadModule ./modules/fstrim.nix {condition = lib.elem hostname ["XX"];})
   ];
 
   # Combine all modules and filter by condition
   allModules = commonModules ++ hostSpecificModules;
   enabledModules = map (m: m.file) (lib.filter (m: m.condition) allModules);
-
 in {
   imports = enabledModules;
 
   # Add assertion to prevent invalid hostnames
   assertions = [
     {
-      assertion = lib.elem hostname [ "HP" "MBPro" "server" "XX" ];
+      assertion = lib.elem hostname ["HP" "MBPro" "server" "XX"];
       message = "Invalid hostname '${hostname}'. Valid options: HP, MBPro, server, XX";
     }
   ];

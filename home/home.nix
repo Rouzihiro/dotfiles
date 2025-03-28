@@ -28,6 +28,7 @@
     (loadModule ./programs/nvim {})
     (loadModule ./programs/yazi.nix {})
     (loadModule ./programs/lf {})
+    #(loadModule ./programs/ranger.nix {})
     (loadModule ./programs/fzf-preview.nix {})
     (loadModule ./programs/git.nix {})
     (loadModule ./programs/packages.nix {})

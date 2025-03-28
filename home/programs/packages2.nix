@@ -3,13 +3,28 @@
     ####################
     # User Utilities & Tools
     ####################
-    udisks2 ntfs3g
+    #ueberzugpp
+    udisks2
+    ntfs3g
     ventoy-full-qt
     bluez
-    bitwarden-cli 
+    bitwarden-cli
     keychain
     swappy
-    ffmpeg-full yt-dlp wget aria2 yad bc tesseract translate-shell slurp xcp duf tree fd ripgrep
+    ffmpeg-full
+    yt-dlp
+    wget
+    aria2
+    yad
+    bc
+    tesseract
+    translate-shell
+    slurp
+    xcp
+    duf
+    tree
+    fd
+    ripgrep
 
     gnome-font-viewer
     openjdk17
@@ -18,7 +33,9 @@
     joplin
     miller
     jq
-    unrar unzip ecmtools
+    unrar
+    unzip
+    ecmtools
 
     #fzf # Fuzzy finder
     #zoxide # Directory jumper
@@ -41,7 +58,8 @@
     ####################
     # Media Tools
     ####################
-    swww grimblast
+    swww
+    grimblast
     mpvpaper
     #waypipe                  # Wayland remote display tool for forwarding applications
     #ani-cli                  # CLI tool to stream or download anime

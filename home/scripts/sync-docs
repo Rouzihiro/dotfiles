@@ -1,2 +1,2 @@
 #!/bin/sh
-rsync -av --delete ~/Documents/ ~/mount/usb/Documents/ && echo "Sync complete!"
+rsync -av --delete ~/Documents/ ~/mount/usb/Documents/ ; echo "Sync complete!"
