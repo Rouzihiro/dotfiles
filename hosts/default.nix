@@ -32,7 +32,7 @@
     (loadModule ./modules/polkit.nix {condition = lib.elem hostname ["HP" "MBPro"];})
     (loadModule ./modules/sway.nix {condition = lib.elem hostname ["HP" "MBPro"];})
     #(loadModule ./modules/hyprland-uwsm.nix { condition = lib.elem hostname [ "HP" ]; })
-    (loadModule ./modules/android.nix {condition = lib.elem hostname ["HP"];})
+    #(loadModule ./modules/android.nix {condition = lib.elem hostname ["HP"];})
     (loadModule ./modules/tlp.nix {condition = lib.elem hostname ["HP" "MBPro"];})
     (loadModule ./modules/gaming {condition = lib.elem hostname ["HP"];})
     #(loadModule ./modules/samba.nix { condition = lib.elem hostname [ "HP" ]; })

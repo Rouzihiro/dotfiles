@@ -1,5 +1,4 @@
-{ lib, ... }:
-{
+{lib, ...}: {
   boot = {
     tmp.cleanOnBoot = true;
     supportedFilesystems.zfs = lib.mkForce false;
@@ -10,9 +9,8 @@
 
       systemd-boot = {
         enable = true;
-        configurationLimit = 10;
+        configurationLimit = 3;
       };
     };
   };
 }
-      
