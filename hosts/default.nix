@@ -37,6 +37,7 @@
     (loadModule ./modules/gaming {condition = lib.elem hostname ["HP"];})
     #(loadModule ./modules/samba.nix { condition = lib.elem hostname [ "HP" ]; })
     (loadModule ./modules/nas.nix {condition = lib.elem hostname ["HP"];})
+    #(loadModule ./modules/iphone.nix {condition = lib.elem hostname ["HP"];})
 
     # MBPro-specific
     (loadModule ./MBPro.nix {condition = lib.elem hostname ["MBPro"];})

@@ -3,6 +3,7 @@
 in {
   programs.tmux = {
     enable = true;
+    clock24 = true;
     shell = "${pkgs.${shell}}/bin/${shell}";
     terminal = "tmux-256color";
     prefix = "C-a";
@@ -10,6 +11,11 @@ in {
     baseIndex = 1;
     escapeTime = 0;
     historyLimit = 10000;
+    plugins = with pkgs.tmuxPlugins; [
+      #sensible
+      #yank
+      battery
+    ];
 
     extraConfig = ''
          set -sa terminal-overrides ",xterm*:Tc"

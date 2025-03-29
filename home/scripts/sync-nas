@@ -1,0 +1,2 @@
+#!/bin/sh
+rsync -av --delete ~/Documents/ ~/mount/nas/USB3/.1/Documents/ ; echo "Sync complete!"
