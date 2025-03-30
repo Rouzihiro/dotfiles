@@ -19,7 +19,8 @@
     extraSpecialArgs = {inherit inputs username hostname;};
 
     users.${username} = {
-      imports = [../../home/home.nix];
+      imports = [(../../home + "/home-${hostname}.nix")];
+      #imports = [../../home/home.nix];
       fonts.fontconfig.enable = true;
       programs.home-manager.enable = true;
       #xdg.enable = true;

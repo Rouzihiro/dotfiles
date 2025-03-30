@@ -35,34 +35,36 @@
     };
   };
 
-  outputs = {nixpkgs, ...} @ inputs: {
-    nixosConfigurations = {
-      HP = nixpkgs.lib.nixosSystem {
-        modules = [./hosts];
-        specialArgs = {
-          inherit inputs;
-          username = "rey";
-          hostname = "HP";
-        };
-      };
+  outputs = {
+    self,
+    nixpkgs,
+    ...
+  } @ inputs: let
+    system = "x86_64-linux";
+    username = "rey";
+    hosts = [
+      {hostname = "HP";}
+      {hostname = "MBPro";}
+      # Add more hosts as needed
+    ];
 
-      MBPro = nixpkgs.lib.nixosSystem {
-        modules = [./hosts];
+    makeSystem = {hostname}:
+      nixpkgs.lib.nixosSystem {
+        inherit system;
         specialArgs = {
-          inherit inputs;
-          username = "rey";
-          hostname = "MBPro";
+          inherit inputs username hostname;
         };
+        modules = [
+          ./hosts/${hostname}
+        ];
       };
-
-      server = nixpkgs.lib.nixosSystem {
-        modules = [./hosts];
-        specialArgs = {
-          inherit inputs;
-          username = "rey";
-          hostname = "server";
-        };
-      };
-    };
+  in {
+    nixosConfigurations =
+      builtins.listToAttrs
+      (map (host: {
+          name = host.hostname;
+          value = makeSystem host;
+        })
+        hosts);
   };
 }
