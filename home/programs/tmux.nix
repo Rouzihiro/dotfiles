@@ -14,14 +14,9 @@ in {
     plugins = with pkgs.tmuxPlugins; [
       #sensible
       #yank
-      {
-        plugin = dracula;
-        extraConfig = ''
-          set -g @dracula-show-battery true
-          set -g @dracula-show-powerline true
-        '';
-      }
+      battery
     ];
+
     extraConfig = ''
          set -sa terminal-overrides ",xterm*:Tc"
          set -g renumber-windows on
@@ -97,6 +92,73 @@ in {
          bind -T copy-mode V     send -X select-line
          bind -T copy-mode r     send -X rectangle-toggle
          bind -T copy-mode y     send -X copy-pipe-and-cancel "xclip -in -selection clipboard"
+
+         ########################################################
+         # Powerline style statusbar with dynamic colors
+         ########################################################
+
+         %hidden c_red=${currentTheme.base08}
+         %hidden c_green=${currentTheme.base0B}
+         %hidden c_yellow=${currentTheme.base0A}
+         %hidden c_orange=${currentTheme.base09}
+         %hidden c_blue=${currentTheme.base0D}
+         %hidden c_purple=${currentTheme.base0E}
+         %hidden c_teal=${currentTheme.base0C}
+         %hidden c_gray=${currentTheme.base05}
+         %hidden c_gray2=${currentTheme.base04}
+         %hidden c_fg=${currentTheme.base05}
+         %hidden c_bg=${currentTheme.base00}
+         %hidden c_text=${currentTheme.base06}
+         %hidden c_primary=${currentTheme.base0D}
+
+         set-option -g status "on"
+
+         # Default statusbar color
+         set-option -g status-style bg=$c_bg,fg=$c_text
+         set-option -g status-position top
+
+         # Default window title colors
+         set-window-option -g window-status-style bg=$c_gray,fg=$c_bg
+
+         # Default window with an activity alert
+         set-window-option -g window-status-activity-style bg=terminal,fg=$c_gray2
+
+         # Active window title colors
+         set-window-option -g window-status-current-style bg=$c_primary,fg=$c_bg
+
+         # Pane border
+         set-option -g pane-active-border-style fg=$c_teal
+         set-option -g pane-border-style fg=$c_gray
+
+         # Message infos
+         set-option -g message-style bg=terminal,fg=terminal
+
+         # Writing commands inactive
+         set-option -g message-command-style bg=terminal,fg=terminal
+
+         # Pane number display
+         set-option -g display-panes-active-colour $c_teal
+         set-option -g display-panes-colour terminal
+
+         # Clock
+         set-window-option -g clock-mode-colour $c_blue
+
+         # Bell
+         set-window-option -g window-status-bell-style bg=$c_red,fg=$c_bg
+
+         ## Theme settings mixed
+         set-option -g status-justify "left"
+         set-option -g status-left-style none
+         set-option -g status-left-length "80"
+         set-option -g status-right-style none
+         set-option -g status-right-length "80"
+         set-window-option -g window-status-separator ""
+
+         set-option -g status-left "#[fg=$c_bg, bg=$c_primary] #S #[fg=$c_primary, bg=$c_bg]"
+         set-option -g status-right "#[fg=$c_gray2, bg=$c_bg]#[fg=$c_gray,bg=$c_gray2] %b %-d  %-I:%M #[fg=$c_blue, bg=$c_gray2]#[fg=$c_bg, bg=$c_blue, bold] #h "
+
+         set-window-option -g window-status-current-format "#[fg=$c_bg, bg=$c_primary]#[fg=$c_bg, bg=$c_primary] #I #[fg=$c_bg, bg=$c_primary, bold] #W #[fg=$c_primary, bg=$c_bg]"
+         set-window-option -g window-status-format "#[fg=$c_bg,bg=$c_gray2,noitalics]#[fg=$c_gray,bg=$c_gray2] #I #[fg=$c_gray, bg=$c_gray2] #W #[fg=$c_gray2, bg=$c_bg, noitalics]"
     '';
   };
 }

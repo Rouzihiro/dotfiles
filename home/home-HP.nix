@@ -31,7 +31,7 @@
     ./programs/brave.nix
     ./programs/mpv.nix
     ./system/sway.nix
-    #./system/hyprland-uwsm.nix {condition = lib.elem hostname ["XX"];})
+    #./system/hyprland-uwsm.nix
     ./system/anyrun.nix
     #./programs/kitty.nix
     #./system/waybar.nix

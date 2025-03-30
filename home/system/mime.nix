@@ -4,6 +4,7 @@ in {
   xdg.mimeApps = {
     enable = true;
     defaultApplications = {
+      "inode/directory" = "lf";
       # Image MIME types
       "image/png" = "${imageViewer}.desktop";
       "image/jpg" = "${imageViewer}.desktop";
@@ -37,7 +38,7 @@ in {
       "video/mkv" = "${videoPlayer}.desktop";
       "video/x-matroska" = "${videoPlayer}.desktop";
       "video/quicktime" = "${videoPlayer}.desktop";
-      "video/mp2t" = "${videoPlayer}.desktop"; 
+      "video/mp2t" = "${videoPlayer}.desktop";
 
       # Text and code MIME types
       "text/plain" = "${Editor}.desktop";
