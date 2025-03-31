@@ -4,42 +4,44 @@
   ...
 }: {
   imports = [
-    # ./system/xdg.nix
-    ./system/mime.nix
+    #./system/anyrun.nix
     ./system/dunst.nix
-    ./system/stylix.nix
-    ./system/wlsunset.nix
-    ./system/wofi.nix
+    #./system/hyprland-uwsm.nix
+    ./system/mime.nix
     ./system/rofi
-    ./scripts-nix
+    ./system/stylix.nix
+    ./system/sway.nix
+    #./system/waybar.nix
+    ./system/wofi.nix
+    ./system/wlsunset.nix
+    # ./system/xdg.nix
+
+    ./programs/btop.nix
+    ./programs/brave.nix
+    ./programs/fastfetch.nix
+    #./programs/firefox.nix
     ./programs/fish.nix
-    ./programs/shell.nix
     ./programs/foot.nix
-    ./programs/tmux.nix
-    ./programs/nvim
-    ./programs/yazi.nix
-    ./programs/lf
-    # ./programs/ranger.nix
+    #./programs/freetube.nix
     ./programs/fzf-preview.nix
     ./programs/git.nix
+    #./programs/kitty.nix
+    ./programs/lf
+    ./programs/mpv.nix
+    ./programs/nvim
     ./programs/packages.nix
     ./programs/packages2.nix
-    ./programs/zathura.nix
-    ./programs/btop.nix
-    ./programs/fastfetch.nix
     ./programs/qutebrowser.nix
-    ./programs/brave.nix
-    ./programs/mpv.nix
-    ./system/sway.nix
-    #./system/hyprland-uwsm.nix
-    ./system/anyrun.nix
-    #./programs/kitty.nix
-    #./system/waybar.nix
+    #./programs/ranger.nix
+    ./programs/shell.nix
     #./programs/spicetify.nix
     #./programs/starship.nix
+    ./programs/tmux.nix
+    #./programs/yazi.nix
+    ./programs/zathura.nix
     #./programs/zsh.nix
-    #./programs/freetube.nix
-    #./programs/firefox.nix
+
+    ./scripts-nix
   ];
 
   home.packages = [
