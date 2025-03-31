@@ -2,6 +2,7 @@
   imports = [
     ./hardware-configuration.nix
     ./intel-drivers.nix
+    ../gaming
     ../modules/boot.nix
     ../modules/ly.nix
     ../modules/configuration.nix
@@ -20,9 +21,8 @@
     # ../modules/hyprland-uwsm.nix
     # ../modules/android.nix
     ../modules/tlp.nix
-    ../modules/gaming
     # ../modules/samba.nix
-    #../modules/nas.nix
+    ../modules/nas.nix
     # ../modules/iphone.nix
     #../modules/fstrim.nix
     #../modules/ssh.nix
