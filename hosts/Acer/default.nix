@@ -1,7 +1,7 @@
 {
   imports = [
     ./hardware-configuration.nix
-    ./intel-drivers.nix
+    ./nvidia-prime-drivers.nix
     ../modules/boot.nix
     ../modules/ly.nix
     ../modules/configuration.nix

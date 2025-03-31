@@ -31,7 +31,7 @@ rec {
   host = "HP"; # Hostname of the system
   shell = "fish"; # Default shell
   WM = "sway"; # Window Manager
-  BT-status = true; # Bluetooth status (enabled/disabled)
+  BT-status = false; # Bluetooth status (enabled/disabled)
 
   # Program Options
   browser = "brave"; # Default web browser
@@ -53,6 +53,8 @@ rec {
   keyboardLayout = "de"; # Keyboard layout (German)
   consoleKeyMap = "de"; # Console keymap (German)
   clock24h = true; # Use 24-hour clock format
+  timezone = "Europe/Berlin";
+  locale = "en_US.UTF8";
 
   # Theme Definitions
   themes = {
@@ -132,7 +134,8 @@ rec {
       base0F = "eebebe"; # Deprecated
     };
 
-    catppuccin = { #mocha
+    catppuccin = {
+      #mocha
       base00 = "#1e1e2e"; # Background
       base01 = "#181825"; # Lighter Background
       base02 = "#313244"; # Selection Background
@@ -150,5 +153,5 @@ rec {
       base0E = "#cba6f7"; # Active, Keywords, Storage, Selector
       base0F = "#f2cdcd"; # Deprecated
     };
-     };
+  };
 }

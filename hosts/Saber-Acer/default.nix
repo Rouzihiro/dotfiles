@@ -1,8 +1,8 @@
 {
   imports = [
     ./hardware-configuration.nix
+    ./nvidia-prime-drivers.nix
     ../modules/boot.nix
-    ../modules/drivers
     ../modules/ly.nix
     ../modules/configuration.nix
     ../modules/shell.nix
@@ -22,7 +22,6 @@
     ../modules/tlp.nix
     ../modules/gaming
     # ../modules/samba.nix
-    ../modules/nas.nix
     # ../modules/iphone.nix
     #../modules/fstrim.nix
     #../modules/ssh.nix

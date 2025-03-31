@@ -14,7 +14,7 @@ in {
     plugins = with pkgs.tmuxPlugins; [
       #sensible
       #yank
-      battery
+      #battery
     ];
 
     extraConfig = ''
