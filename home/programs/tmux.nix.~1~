@@ -11,6 +11,12 @@ in {
     baseIndex = 1;
     escapeTime = 0;
     historyLimit = 10000;
+    plugins = with pkgs.tmuxPlugins; [
+      #sensible
+      #yank
+      #battery
+    ];
+
     extraConfig = ''
           set -sa terminal-overrides ",xterm*:Tc"
           set -g renumber-windows on
@@ -116,7 +122,7 @@ in {
       set -g status-left ""  # No session name
 
       # Status right with session name and current working directory
-      set -g status-right "#[fg=colour5,bg=default]#[fg=colour0,bg=colour5] #[fg=colour14,bg=colour0]#[fg=colour15,bg=colour0] #(echo \"#{pane_current_path}\" | awk -F/ '{ if (NF<=2) print \$NF; else print \$(NF-1)\"/\"\$NF; }') #[fg=colour0,bg=default] #[fg=colour14,bg=default]#[fg=colour0,bg=colour14] #[fg=colour14,bg=colour0]#[fg=colour15,bg=colour0] #S#[fg=colour0,bg=default] #[fg=colour14,bg=default]#[fg=colour0,bg=colour14]󰁹 #[fg=colour15,bg=colour0] #(battery-status)#[fg=colour0,bg=default]"
+      set -g status-right "#[fg=colour5,bg=default]#[fg=colour0,bg=colour5] #[fg=colour14,bg=colour0]#[fg=colour15,bg=colour0] #(echo \"#{pane_current_path}\" | awk -F/ '{ if (NF<=2) print \$NF; else print \$(NF-1)\"/\"\$NF; }') #[fg=colour0,bg=default] #[fg=colour14,bg=default]#[fg=colour0,bg=colour14] #[fg=colour14,bg=colour0]#[fg=colour15,bg=colour0] #S#[fg=colour0,bg=default] #[fg=colour14,bg=default]#[fg=colour0,bg=colour14]󰁹 #[fg=colour15,bg=colour0] #(battery-script)#[fg=colour0,bg=default]"
 
       # Window Status Formatting
       set -g window-status-format "#[fg=colour15,bg=default] #W #[fg=colour15,bg=colour8] #I#[fg=colour8,bg=default]"

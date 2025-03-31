@@ -1,12 +1,20 @@
 #!/bin/sh
 
-BATTERY_DIR="/sys/class/power_supply/BAT0"
+BATTERY_PATH="/sys/class/power_supply"
+BATTERY_DEVICE=$(ls "$BATTERY_PATH" | grep -i '^BAT' | head -n 1)
+
+if [ -z "$BATTERY_DEVICE" ]; then
+    echo "󰂑 Battery not found!"
+    exit 1
+fi
+
+BATTERY_DIR="$BATTERY_PATH/$BATTERY_DEVICE"
 CAPACITY=$(cat "$BATTERY_DIR/capacity")
 STATUS=$(cat "$BATTERY_DIR/status")
 
 # Battery icon selection based on charge level
 if [ "$STATUS" = "Charging" ]; then
-    ICON="󰂄"
+    ICON=""
 elif [ "$CAPACITY" -le 10 ]; then
     ICON="󰁺"
 elif [ "$CAPACITY" -le 20 ]; then
@@ -22,4 +30,3 @@ else
 fi
 
 echo "$ICON $CAPACITY% ($STATUS)"
-
