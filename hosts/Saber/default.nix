@@ -9,7 +9,7 @@
     ../modules/nix.nix
     ../modules/bluetooth.nix
     ../modules/users.nix
-    ../modules/zram.nix
+    #../modules/zram.nix
     ../modules/network.nix
     ../modules/nh.nix
     ../modules/time.nix
@@ -20,7 +20,7 @@
     # ../modules/hyprland-uwsm.nix
     # ../modules/android.nix
     ../modules/tlp.nix
-    ../modules/gaming
+    #../modules/gaming
     # ../modules/samba.nix
     # ../modules/iphone.nix
     #../modules/fstrim.nix
