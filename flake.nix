@@ -44,6 +44,7 @@
     username = "rey";
     hosts = [
       {hostname = "HP";}
+ 			{hostname = "Saber";}
       {hostname = "MBPro";}
       # Add more hosts as needed
     ];
