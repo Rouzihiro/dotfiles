@@ -38,7 +38,11 @@
 
   programs.dconf.enable = true;
 
-  console.keyMap = "de";
+  console = {
+    font = "Lat2-Terminus16";
+    keyMap = "de";
+    useXkbConfig = true; # use xkb.options in tty.
+  };
 
   systemd = {
     tpm2.enable = false;

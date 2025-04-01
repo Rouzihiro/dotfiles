@@ -51,11 +51,10 @@ pkgs.writeShellScriptBin "nx" ''
       }
 
       # Additional cleanup steps
+			sudo nh clean all
+
       echo "-> Deleting unused generations..."
       sudo nix-collect-garbage -d
-
-      echo "-> Cleaning up unused dependencies..."
-      sudo nix-collect-garbage
 
       echo "-> Optimizing the Nix store..."
       sudo nix-store --optimise
