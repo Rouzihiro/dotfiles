@@ -11,14 +11,8 @@ from qtile_extras.widget.decorations import PowerLineDecoration
 from libqtile.backend.wayland.inputs import InputConfig
 from libqtile.config import Key, KeyChord
 from theme import colors
-from mode import Mode
-
-#from mode import Mode
 from os.path import expanduser
-#, exists, normpath, getctime
 from yaml import safe_load
-#from shutil import which
-#from json import dump, load
 
 sys.path.append(expanduser('~/.config/qtile/'))
 
@@ -29,18 +23,6 @@ keybindings_file = expanduser(keybindings_file)
 if qtile.core.name == "wayland":
     os.environ["XDG_SESSION_DESKTOP"] = "qtile:wlroots"
     os.environ["XDG_CURRENT_DESKTOP"] = "qtile:wlroots"
-
-# # Variables
-# host = socket.gethostname()
-# mod = "mod4"
-# terminal = "footclient" if qtile.core.name == "wayland" else "alacritty"
-# browser = "qutebrowser"
-# launcher = "rofi -show drun"
-# fileManager = "thunar"
-# editor = "nvim"
-# ntCenter = "swaync-client -t -sw"
-# mode = Mode()
-#
 
 # Startup
 @hook.subscribe.startup_once
@@ -55,13 +37,15 @@ def autostart():
         #"conky -c ~/.config/conky/conky-qtile.conf",
         "focus-mode",
     ]
+    for cmd in commands:
+        subprocess.run(cmd, shell=True)
 
 screenshots_path = expanduser(screenshots_path)
 layouts_saved_file = expanduser(layouts_saved_file)
 keybindings_file = expanduser(keybindings_file)
 wallpapers_path = expanduser(wallpapers_path)
 
-#autostarts = list(map(expanduser, autostarts))
+autostarts = list(map(expanduser, autostarts))
 
 if not exists(path := layouts_saved_file):
     with open(path, 'w') as file:
@@ -73,44 +57,43 @@ if not exists(screenshots_path):
 if not exists(wallpapers_path):
     makedirs(wallpapers_path)
 
+
 def guess(apps):
     for app in apps:
-        if which(app): break
+        if which(app): 
+            return app
+    return apps[-1]
 
-    return app
+terminal = guess([
+    'footclient',
+    'alacritty',
+    'kgx',
+    'kconsole',
+    'xterm',
+    'urxvt',
+    'kitty',
+    'st'
+])
 
-if not terminal:
-    terminal = guess([
-        'foot'
-        'alacritty',
-        'kgx',
-        'kconsole',
-        'xterm',
-        'urxvt',
-        'kitty',
-        'st'
-    ])
+browser = guess([
+    'qutebrowser',
+    'zen-browser',
+    'librewolf',
+    'vivaldi',
+    'waterfox',
+    'brave',
+    'firefox',
+    'chromium',
+    'chrome'
+])
 
-if not browser:
-    browser = guess([
-        'qutebrowser'
-        'zen-browser',
-        'librewolf',
-        'vivaldi',
-        'waterfox',
-        'brave',
-        'firefox',
-        'chromium',
-        'chrome'
-    ])
+file_manager = guess([
+    'thunar',
+    'pcmanfm',
+    'nautilus',
+    'dolphin'
+])
 
-if not file_manager:
-    file_manager = guess([
-        'thunar',
-        'pcmanfm',
-        'nautilus',
-        'dolphin'
-    ])    
 
 
 #  _____                          
