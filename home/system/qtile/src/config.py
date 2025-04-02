@@ -1,6 +1,7 @@
 import os
 import subprocess
 import socket
+import sys
 from libqtile import hook, qtile
 from libqtile import bar, layout, qtile, widget
 from libqtile.config import Click, Drag, Group, ScratchPad, DropDown, Key, Match, Screen
@@ -12,23 +13,34 @@ from libqtile.config import Key, KeyChord
 from theme import colors
 from mode import Mode
 
+#from mode import Mode
+from os.path import expanduser
+#, exists, normpath, getctime
+from yaml import safe_load
+#from shutil import which
+#from json import dump, load
+
+sys.path.append(expanduser('~/.config/qtile/'))
+
+from variables import *
+keybindings_file = expanduser(keybindings_file)
 
 # Set backend
 if qtile.core.name == "wayland":
     os.environ["XDG_SESSION_DESKTOP"] = "qtile:wlroots"
     os.environ["XDG_CURRENT_DESKTOP"] = "qtile:wlroots"
 
-# Variables
-host = socket.gethostname()
-mod = "mod4"
-terminal = "footclient" if qtile.core.name == "wayland" else "alacritty"
-browser = "qutebrowser"
-launcher = "rofi -show drun"
-fileManager = "thunar"
-editor = "nvim"
-ntCenter = "swaync-client -t -sw"
-mode = Mode()
-
+# # Variables
+# host = socket.gethostname()
+# mod = "mod4"
+# terminal = "footclient" if qtile.core.name == "wayland" else "alacritty"
+# browser = "qutebrowser"
+# launcher = "rofi -show drun"
+# fileManager = "thunar"
+# editor = "nvim"
+# ntCenter = "swaync-client -t -sw"
+# mode = Mode()
+#
 
 # Startup
 @hook.subscribe.startup_once
@@ -37,217 +49,102 @@ def autostart():
         "dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP",
         "systemctl --user restart pipewire",
         "foot --server",
-        "swaync",
+        #"swaync",
         #"udiskie",
         #"flameshot",
         #"conky -c ~/.config/conky/conky-qtile.conf",
         "focus-mode",
     ]
-    if host == "laptop":
-        commands.remove(browser)
-        commands.remove("discord")
-    for cmd in commands:
-        subprocess.Popen(
-            cmd, shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL
-        )
+
+screenshots_path = expanduser(screenshots_path)
+layouts_saved_file = expanduser(layouts_saved_file)
+keybindings_file = expanduser(keybindings_file)
+wallpapers_path = expanduser(wallpapers_path)
+
+#autostarts = list(map(expanduser, autostarts))
+
+if not exists(path := layouts_saved_file):
+    with open(path, 'w') as file:
+        file.write('{}')
+
+if not exists(screenshots_path):
+    makedirs(screenshots_path)
+
+if not exists(wallpapers_path):
+    makedirs(wallpapers_path)
+
+def guess(apps):
+    for app in apps:
+        if which(app): break
+
+    return app
+
+if not terminal:
+    terminal = guess([
+        'foot'
+        'alacritty',
+        'kgx',
+        'kconsole',
+        'xterm',
+        'urxvt',
+        'kitty',
+        'st'
+    ])
+
+if not browser:
+    browser = guess([
+        'qutebrowser'
+        'zen-browser',
+        'librewolf',
+        'vivaldi',
+        'waterfox',
+        'brave',
+        'firefox',
+        'chromium',
+        'chrome'
+    ])
+
+if not file_manager:
+    file_manager = guess([
+        'thunar',
+        'pcmanfm',
+        'nautilus',
+        'dolphin'
+    ])    
 
 
-FULLSCREEN_RULES = [
-    Match(wm_class="flameshot"),
-]
+#  _____                          
+# |   __| ___  ___  _ _  ___  ___ 
+# |  |  ||  _|| . || | || . ||_ -|
+# |_____||_|  |___||___||  _||___|
+#                       |_|       
+
+groups_names = list(map(str, range(1, groups_count + 1)))
+groups = [Group(name) for name in groups_names]
 
 
-@hook.subscribe.client_managed
-def force_fullscreen(client):
-    if any(client.match(rule) for rule in FULLSCREEN_RULES):
-        client.fullscreen = True
+#  _____  _              _              _        
+# |   __|| |_  ___  ___ | |_  ___  _ _ | |_  ___ 
+# |__   ||   || . ||  _||  _||  _|| | ||  _||_ -|
+# |_____||_|_||___||_|  |_|  |___||___||_|  |___|
 
+with open(keybindings_file, 'rb') as file:
+    keybindings = safe_load(file)
+
+dmod = keybindings['dmod']
 
 keys = [
-    # A list of available commands that can be bound to keys can be found
-    # at https://docs.qtile.org/en/latest/manual/config/lazy.html
-    # Switch between windows
-    Key([mod], "h", lazy.layout.left(), desc="Move focus to left"),
-    Key([mod], "l", lazy.layout.right(), desc="Move focus to right"),
-    Key([mod], "j", lazy.layout.down(), desc="Move focus down"),
-    Key([mod], "k", lazy.layout.up(), desc="Move focus up"),
-    Key([mod], "space", lazy.layout.next(), desc="Move window focus to other window"),
-    # Move windows between left/right columns or move up/down in current stack.
-    # Moving out of range in Columns layout will create new column.
-    Key(
-        [mod, "shift"], "h", lazy.layout.shuffle_left(), desc="Move window to the left"
-    ),
-    Key(
-        [mod, "shift"],
-        "l",
-        lazy.layout.shuffle_right(),
-        desc="Move window to the right",
-    ),
-    Key([mod, "shift"], "j", lazy.layout.shuffle_down(), desc="Move window down"),
-    Key([mod, "shift"], "k", lazy.layout.shuffle_up(), desc="Move window up"),
-    # Grow windows. If current window is on the edge of screen and direction
-    # will be to screen edge - window would shrink.
-    Key([mod, "control"], "j", lazy.layout.shrink(), desc="Shrink window"),
-    Key([mod, "control"], "k", lazy.layout.grow(), desc="Grow window"),
-    Key([mod], "n", lazy.layout.normalize(), desc="Reset all window sizes"),
-    Key(
-        [mod],
-        "o",
-        lazy.function(mode.toggle),
-        desc="Toggle DND",
-    ),
-    # Toggle between split and unsplit sides of stack.
-    # Split = all windows displayed
-    # Unsplit = 1 window displayed, like Max layout, but still with
-    # multiple stack panes
-    Key(
-        [mod, "shift"],
-        "Return",
-        lazy.layout.toggle_split(),
-        desc="Toggle between split and unsplit sides of stack",
-    ),
-    Key([mod], "Return", lazy.spawn(terminal), desc="Launch terminal"),
-    # Toggle between different layouts as defined below
-    Key([mod], "z", lazy.next_layout(), desc="Toggle between layouts"),
-    Key([mod], "q", lazy.window.kill(), desc="Kill focused window"),
-    Key(
-        [mod],
-        "f",
-        lazy.window.toggle_fullscreen(),
-        desc="Toggle fullscreen on the focused window",
-    ),
-    Key(
-        [mod, "Shift"],
-        "space",
-        lazy.window.toggle_floating(),
-        desc="Toggle floating on the focused window",
-    ),
-    Key([mod, "control"], "r", lazy.reload_config(), desc="Reload the config"),
-    Key([mod, "control"], "q", lazy.shutdown(), desc="Shutdown Qtile"),
-    Key([mod], "d", lazy.spawn(launcher), desc="Exec app launcher"),
-    Key([mod], "e", lazy.spawn(fileManager), desc="Exec File manager"),
-    Key([mod], "b", lazy.spawn(browser), desc="Exec browser"),
-    Key([mod], "c", lazy.spawn(editor), desc="Exec editor"),
-    Key([mod], "Tab", lazy.spawn(ntCenter), desc="Exec notification center"),
-    Key([mod, "Shift"], "s", lazy.spawn("flameshot gui -c")),
-    Key(
-        [mod], "p", lazy.spawn("wl-color-picker"), desc="Exec color picker application"
-    ),
-    Key(["Shift"], "Tab", lazy.widget["keyboardlayout"].next_keyboard()),
-    Key(
-        [],
-        "XF86AudioRaiseVolume",
-        lazy.spawn("wpctl set-volume -l 1.4 @DEFAULT_AUDIO_SINK@ 5%+"),
-    ),
-    Key(
-        [],
-        "XF86AudioLowerVolume",
-        lazy.spawn("wpctl set-volume -l 1.4 @DEFAULT_AUDIO_SINK@ 5%-"),
-    ),
-    Key([], "XF86AudioMute", lazy.spawn("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle")),
-    Key([], "XF86MonBrightnessDown", lazy.spawn("brightnessctl set 5%-")),
-    Key([], "XF86MonBrightnessUp", lazy.spawn("brightnessctl set +5%")),
-    Key(
-        [],
-        "XF86AudioPlay",
-        lazy.spawn("playerctl --player=com.github.th_ch.youtube_music,%any play-pause"),
-    ),
-    Key(
-        [],
-        "XF86AudioPrev",
-        lazy.spawn("playerctl --player=com.github.th_ch.youtube_music,%any previous"),
-    ),
-    Key(
-        [],
-        "XF86AudioNext",
-        lazy.spawn("playerctl --player=com.github.th_ch.youtube_music,%any next"),
-    ),
-    KeyChord(
-        [mod],
-        "i",
-        [Key([mod], "i", lazy.ungrab_all_chords())],
-        mode=True,
-        name="Vm Mode",
-    ),
+    *[Key([dmod], num_keys[index], lazy.group[group.name].toscreen()) for index, group in enumerate(groups)],
+    *[Key([dmod, "shift"], num_keys[index], lazy.window.togroup(group.name, switch_group=True)) for index, group in enumerate(groups)],
 ]
 
-# Add key bindings to switch VTs in Wayland.
-# We can't check qtile.core.name in default config as it is loaded before qtile is started
-# We therefore defer the check until the key binding is run by using .when(func=...)
-for vt in range(1, 8):
-    keys.append(
-        Key(
-            ["control", "mod1"],
-            f"f{vt}",
-            lazy.core.change_vt(vt).when(func=lambda: qtile.core.name == "wayland"),
-            desc=f"Switch to VT{vt}",
-        )
-    )
+for keybind in keybindings['Keys']:
+    keys.append(Key(keybind['mods'], keybind['key'], eval(keybind['command'])))
 
+for keychord in keybindings['Keychords']:
+    submappings = [Key(k['mods'], k['key'], eval(k['command'])) for k in keychord['submappings']]
 
-# groups = [Group(i) for i in "123456789"]
-groups = [
-    ScratchPad(
-        "scratchpad",
-        [
-            DropDown(
-                "Music",
-                "youtube-music --ozone-platform=x11",
-                opacity=1,
-                height=0.5,
-                on_focus_lost_hide=False,
-            ),
-            DropDown(
-                "Term",
-                "foot" if terminal == "footclient" else terminal,
-                opacity=1,
-                height=0.5,
-                on_focus_lost_hide=False,
-            ),
-        ],
-    ),
-    *[Group(f"{i}", label="") for i in range(1, 10)],
-    Group(
-        "2",
-        matches=[
-            Match(wm_class="Navigator"),
-            Match(wm_class="vivaldi-stable"),
-            Match(wm_class="librewolf"),
-            Match(wm_class="brave-browser"),
-        ],
-    ),
-    Group("4", matches=[Match(wm_class="obsidian")]),
-    Group("9", matches=[Match(wm_class="discord")]),
-    Group("0", label="", matches=[Match(wm_class="steam")]),
-]
-
-for i in groups:
-    if not isinstance(i, ScratchPad):
-        keys.extend(
-            [
-                # mod1 + group number = switch to group
-                Key(
-                    [mod],
-                    i.name,
-                    lazy.group[i.name].toscreen(),
-                    desc="Switch to group {}".format(i.name),
-                ),
-                # mod1 + shift + group number = switch to & move focused window to group
-                Key(
-                    [mod, "shift"],
-                    i.name,
-                    lazy.window.togroup(i.name, switch_group=True),
-                    desc="Switch to & move focused window to group {}".format(i.name),
-                ),
-                Key([mod], "s", lazy.group["scratchpad"].dropdown_toggle("Music")),
-                Key([mod], "a", lazy.group["scratchpad"].dropdown_toggle("Term")),
-                # Or, use below if you prefer not to switch to that group.
-                # # mod1 + shift + group number = move focused window to group
-                # Key([mod, "shift"], i.name, lazy.window.togroup(i.name),
-                #     desc="move focused window to group {}".format(i.name)),
-            ]
-        )
-
+    keys.append(KeyChord(keychord['mods'], keychord['key'], submappings))
 
 layouts = [
     # layout.Columns(**layout_theme),
