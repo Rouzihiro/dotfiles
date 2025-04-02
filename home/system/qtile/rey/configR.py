@@ -37,10 +37,11 @@ def autostart():
         "dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP",
         "systemctl --user restart pipewire",
         "foot --server",
-        "swaync",
+        #"swaync",
         #"udiskie",
-        #"flameshot",
+        "grimblast",
         #"conky -c ~/.config/conky/conky-qtile.conf",
+        browser,
         "focus-mode",
     ]
     if host == "laptop":
@@ -51,17 +52,10 @@ def autostart():
             cmd, shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL
         )
 
-
-FULLSCREEN_RULES = [
-    Match(wm_class="flameshot"),
-]
-
-
 @hook.subscribe.client_managed
 def force_fullscreen(client):
     if any(client.match(rule) for rule in FULLSCREEN_RULES):
         client.fullscreen = True
-
 
 keys = [
     # A list of available commands that can be bound to keys can be found
@@ -130,9 +124,6 @@ keys = [
     Key([mod], "c", lazy.spawn(editor), desc="Exec editor"),
     Key([mod], "Tab", lazy.spawn(ntCenter), desc="Exec notification center"),
     Key([mod, "Shift"], "s", lazy.spawn("flameshot gui -c")),
-    Key(
-        [mod], "p", lazy.spawn("wl-color-picker"), desc="Exec color picker application"
-    ),
     Key(["Shift"], "Tab", lazy.widget["keyboardlayout"].next_keyboard()),
     Key(
         [],

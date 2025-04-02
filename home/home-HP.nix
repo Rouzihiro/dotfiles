@@ -6,7 +6,7 @@
   imports = [
     #./system/anyrun.nix
     ./system/dunst.nix
-    ./system/hyprland-uwsm.nix
+    #./system/hyprland-uwsm.nix
     ./system/mime.nix
     ./system/rofi
 		./system/qtile
