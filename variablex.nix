@@ -1,0 +1,1 @@
+/home/rey/dotfiles/nixos/modules/variables.nix

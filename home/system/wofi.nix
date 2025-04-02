@@ -1,5 +1,5 @@
 let
-  variables = import ../../hosts/modules/variables.nix;
+  variables = import ../../nixos/modules/variables.nix;
   theme = variables.currentTheme;
 in {
   programs.wofi = {

@@ -3,7 +3,7 @@
   lib,
   ...
 }: let
-  inherit (import ../../hosts/modules/variables.nix) host;
+  inherit (import ../../nixos/modules/variables.nix) host;
 
   myAliases = {
     # File and directory management

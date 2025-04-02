@@ -1,5 +1,5 @@
 {...}: let
-  inherit (import ../../hosts/modules/variables.nix) browser-light imageViewer videoPlayer Editor pdfViewer;
+  inherit (import ../../nixos/modules/variables.nix) browser-light imageViewer videoPlayer Editor pdfViewer;
 in {
   xdg.mimeApps = {
     enable = true;

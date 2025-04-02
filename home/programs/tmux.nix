@@ -1,5 +1,5 @@
 {pkgs, ...}: let
-  inherit (import ../../hosts/modules/variables.nix) shell currentTheme;
+  inherit (import ../../nixos/modules/variables.nix) shell currentTheme;
 in {
   programs.tmux = {
     enable = true;

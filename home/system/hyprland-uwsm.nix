@@ -3,14 +3,14 @@
   # Needed Packages
   # ------------------------------------------------
   
-   # home.sessionVariables = {
-   #   EDITOR = "nvim";
-   #   QT_QPA_PLATFORM = "wayland";
-   #   QT_QPA_PLATFORMTHEME = "qt5ct";
-   #   QT_STYLE_OVERRIDE = "kvantum";
-   #   TERMINAL = "foot";
-   #   TERM = "foot";
-   # };
+    home.sessionVariables = {
+      EDITOR = "nvim";
+      #QT_QPA_PLATFORM = "wayland";
+      QT_QPA_PLATFORMTHEME = "qt5ct";
+      QT_STYLE_OVERRIDE = "kvantum";
+      TERMINAL = "foot";
+      TERM = "foot";
+    };
   
   home.packages = with pkgs; [
     hyprshot
@@ -49,8 +49,7 @@
       "$terminal" = "foot";
       "$browser" = "brave";
       "$browser-light" = "qutebrowser";
-      "$launcher" = "anyrun";
-      #"$launcher" = "wofi -S drun -I";
+      "$launcher" = "wofi -S drun -I";
       "$file-manager" = "thunar";
       "$Tfile-manager" = "$terminal -e yazi";
       "$audio-manager" = "com.saivert.pwvucontrol";
@@ -70,7 +69,7 @@
         #"uwsm app -- wl-paste --watch cliphist store"
         #"uwsm app -- nm-applet --indicator &"
         #"uwsm app -- blueman-applet"
-        #"uwsm app -- udiskie &"
+        "uwsm app -- udiskie &"
         "monitor=,preferred,auto,1"
         "swww init && sleep 0.5 && swww img ~/Pictures/wallpapers/Dune3.png"
       ];
@@ -88,33 +87,12 @@
       # ------------------------------------------------
 
       windowrule = [
-        "float       , ^($password-manager)$"
-        "size 50% 40%, ^($password-manager)$"
-
-        "float       , ^($bluetooth-manager)$"
-        "size 50% 60%, ^($bluetooth-manager)$"
-
-        "float       , ^($audio-manager)$"
-        "size 50% 30%, ^($audio-manager)$"
-
-        "noblur      , class:^(steam)"
-        "forcergbx   , class:^(steam)"
-
-        "opacity 0.85, class:^(foot|kitty|nautilus)$"
-
-        "noborder,^(wofi)$"
-        "center,^(wofi)$"
-        "float,^(steam)$"
-        "stayfocused, title:^()$,class:^(steam)$"
-        "minsize 1 1, title:^()$,class:^(steam)$"
+       "opacity 0.85, class:^(foot|kitty|nautilus)$"
       ];
 
       windowrulev2 = [
         "workspace 1,       class:($browser)"
-        "workspace 2,       class:(org.pwmt.zathura)"
-        "workspace 3,       class:(codium)"
-        "workspace 4,       class:(vesktop)"
-        "workspace 5,       class:(FreeTube)"
+        "workspace 4,       class:(org.pwmt.zathura)"
         "workspace special, class:(spotify)"
       ];
 
@@ -143,7 +121,6 @@
 
         # System
         "SUPER, Q, killactive"
-        #"ALT, Q, killactive"
         "SUPER, F, fullscreen"
         "SUPER, T, togglefloating"
 
@@ -170,7 +147,7 @@
         "SUPER_SHIFT, W, exec, wallpaper"
         "SUPER, W, exec, wallpaper-random"
         "SUPER, V, exec, video-tool"
-        "SUPER_SHIFT, BACKSPACE, exec, power-menu"
+        "SUPER_SHIFT, BACKSPACE, exec, power-menu-hypr"
 
         # Switch workspaces with mainMod + [0-9]
         "SUPER, 2, workspace, 2"

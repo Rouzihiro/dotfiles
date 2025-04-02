@@ -1,5 +1,5 @@
 {...}: let
-  inherit (import ../../hosts/modules/variables.nix) currentTheme;
+  inherit (import ../../nixos/modules/variables.nix) currentTheme;
 in {
   programs.waybar = {
     enable = true;
@@ -9,8 +9,8 @@ in {
         margin-top = 5;
         margin-left = 10;
         margin-right = 10;
-        modules-left = ["sway/window"];
-        modules-center = ["sway/workspaces"];
+        modules-left = ["hyprland/window"];
+        modules-center = ["hyprland/workspaces"];
         modules-right = [
           "pulseaudio"
           "network"
@@ -20,7 +20,7 @@ in {
           "clock"
         ];
 
-        "sway/window" = {
+        "hyprland/window" = {
           format = "{}";
           "max-length" = 35;
           rewrite = {"" = "Harsh";};

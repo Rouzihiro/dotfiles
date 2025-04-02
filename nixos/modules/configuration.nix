@@ -1,4 +1,4 @@
-{...}: {
+{ lib, ...}: {
   # ---------------------------------------------------------
   # Documentation
   # ---------------------------------------------------------
@@ -30,7 +30,7 @@
   services = {
     chrony.enable = true;
     timesyncd.enable = false;
-    xserver.enable = false;
+    #xserver.enable = false;
     gvfs.enable = false;
     #tumbler.enable = true; # Thumbnail support for images
     #dbus.enable = true;
@@ -40,7 +40,7 @@
 
   console = {
     font = "Lat2-Terminus16";
-    keyMap = "de";
+		keyMap = lib.mkForce "de";
     useXkbConfig = true; # use xkb.options in tty.
   };
 

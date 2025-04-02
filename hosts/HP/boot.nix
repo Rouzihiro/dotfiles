@@ -1,4 +1,7 @@
-{lib, ...}: {
+{lib, pkgs, ...}: {
+
+	#boot.efi.partitions = "/dev/sda1";
+
   boot = {
     tmp.cleanOnBoot = true;
     supportedFilesystems.zfs = lib.mkForce false;

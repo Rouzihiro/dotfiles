@@ -1,5 +1,5 @@
 {pkgs, ...}: let
-  inherit (import ../../hosts/modules/variables.nix) gitUsername gitEmail;
+  inherit (import ../../nixos/modules/variables.nix) gitUsername gitEmail;
 in {
   programs = {
     lazygit.enable = true;

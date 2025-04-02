@@ -3,7 +3,7 @@
     ####################
     # User Utilities & Tools
     ####################
-    #ueberzugpp
+		tigervnc
     udisks2
     ntfs3g
     ventoy-full-qt

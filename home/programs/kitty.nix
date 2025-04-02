@@ -1,5 +1,5 @@
 {...}: let
-  inherit (import ../../hosts/modules/variables.nix) shell Editor;
+  inherit (import ../../nixos/modules/variables.nix) shell Editor;
 in {
   programs.kitty = {
     enable = true;
