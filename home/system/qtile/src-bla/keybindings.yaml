@@ -77,26 +77,25 @@ Keys:
     command: lazy.window.kill()
 
   - mods: [*mod]
-    key: m
+    key: f
     command: lazy.window.toggle_fullscreen()
 
   - mods: [*mod]
-    key: f
+    key: m
     command: lazy.window.toggle_floating()
-
 
   # Media
   - mods: []
     key: XF86AudioRaiseVolume
-    command: lazy.spawn('pactl set-sink-volume @DEFAULT_SINK@ +5%')
+    command: lazy.spawn('wpctl set-volume -l 1.4 @DEFAULT_AUDIO_SINK@ 5%+')
 
   - mods: []
     key: XF86AudioLowerVolume
-    command: lazy.spawn('pactl set-sink-volume @DEFAULT_SINK@ -5%')
+    command: lazy.spawn('wpctl set-volume -l 1.4 @DEFAULT_AUDIO_SINK@ 5%-')
 
   - mods: []
     key: XF86AudioMute
-    command: lazy.spawn('pactl set-sink-mute @DEFAULT_SINK@ toggle')
+    command: lazy.spawn('wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle')
 
   - mods: []
     key: XF86AudioPlay
@@ -144,32 +143,32 @@ Keys:
 
 
   # Screenshot
-  - mods: [*mod]
-    key: s
-    command: screenshot()
+  # - mods: [*mod]
+  #   key: s
+  #   command: screenshot()
+  #
+  # - mods: [*mod, shift]
+  #   key: s
+  #   command: screenshot(select=True)
+  #
+  # - mods: [*mod, control]
+  #   key: s
+  #   command: screenshot(sopen=True)
+  #
+  # - mods: [*mod, shift, control]
+  #   key: s
+  #   command: screenshot(sopen=True, select=True)
+  #
 
-  - mods: [*mod, shift]
-    key: s
-    command: screenshot(select=True)
-
-  - mods: [*mod, control]
-    key: s
-    command: screenshot(sopen=True)
-
-  - mods: [*mod, shift, control]
-    key: s
-    command: screenshot(sopen=True, select=True)
-
-
-  # Wallpapers
-  - mods: [*mod]
-    key: w
-    command: Wallpaper.next()
-
-  - mods: [*mod, shift]
-    key: w
-    command: Wallpaper.previous()
-
+  # # Wallpapers
+  # - mods: [*mod]
+  #   key: w
+  #   command: Wallpaper.next()
+  #
+  # - mods: [*mod, shift]
+  #   key: w
+  #   command: Wallpaper.previous()
+  #
 
   # Layouts
   - mods: [*mod]
@@ -199,15 +198,15 @@ Keychords:
     submappings:
       - mods: [*mod]
         key: k
-        command: lazy.spawn('pactl set-sink-volume @DEFAULT_SINK@ +5%')
+        command: lazy.spawn('wpctl set-volume -l 1.4 @DEFAULT_AUDIO_SINK@ 5%+')
 
       - mods: [*mod]
         key: j
-        command: lazy.spawn('pactl set-sink-volume @DEFAULT_SINK@ -5%')
+        command: lazy.spawn('wpctl set-volume -l 1.4 @DEFAULT_AUDIO_SINK@ 5%-')
 
       - mods: [*mod]
         key: i
-        command: lazy.spawn('pactl set-sink-mute @DEFAULT_SINK@ toggle')
+        command: lazy.spawn('wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle')
 
       - mods: [*mod]
         key: o
