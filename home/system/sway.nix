@@ -117,6 +117,8 @@ in {
           # Executables
           "Ctrl+q" = "exec swaymsg exit";
           "Return" = "exec $term";
+					"Shift+c" = "exec swaymsg -t get_tree | jq '.. | select(.type?) | select(.focused==true) | .app_id'";
+
           "s" = "exec screenshot sc";
           "Shift+s" = "exec screenshot pc";
           "Print" = "exec screenshot p";

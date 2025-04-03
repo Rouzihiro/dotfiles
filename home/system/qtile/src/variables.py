@@ -2,9 +2,9 @@
 # from themes import catppuccin_mocha as theme
 
 # General
-terminal = None # guess if None
-browser = None # guess if None
-file_manager = None # guess if None
+terminal = "foot" # guess if None
+browser = "qutebrowser" # guess if None
+file_manager = "thunar" # guess if None
 launcher = "rofi -show drun"
 powermenu = "rofi -show menu -modi 'menu:~/.local/share/rofi/scripts/rofi-power-menu --choices=shutdown/reboot/suspend/logout' -config ~/.config/rofi/power.rasi"
 screenshots_path = "~/Pictures/screenshots/" # creates if doesn't exists
