@@ -18,6 +18,7 @@ from os.path import expanduser, exists, normpath, getctime
 from yaml import safe_load
 from shutil import which
 from json import dump, load
+from inputs import wl_input_rules
 
 sys.path.append(expanduser('~/.config/qtile/'))
 
@@ -54,21 +55,9 @@ wallpapers_path = expanduser(wallpapers_path)
 
 #autostarts = list(map(expanduser, autostarts))
 
-
-#  _____                          
-# |   __| ___  ___  _ _  ___  ___ 
-# |  |  ||  _|| . || | || . ||_ -|
-# |_____||_|  |___||___||  _||___|
-#                       |_|       
-
 groups_names = list(map(str, range(1, groups_count + 1)))
 groups = [Group(name) for name in groups_names]
 
-
-#  _____  _              _              _        
-# |   __|| |_  ___  ___ | |_  ___  _ _ | |_  ___ 
-# |__   ||   || . ||  _||  _||  _|| | ||  _||_ -|
-# |_____||_|_||___||_|  |_|  |___||___||_|  |___|
 
 with open(keybindings_file, 'rb') as file:
     keybindings = safe_load(file)
