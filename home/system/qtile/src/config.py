@@ -294,13 +294,6 @@ reconfigure_screens = True
 # focus, should we respect this or not?
 auto_minimize = True
 
-# When using the Wayland backend, this can be used to configure input devices.
-wl_input_rules = {
-    "type:pointer": InputConfig(
-        accel_profile="flat",
-    ),
-}
-
 wl_xcursor_theme = "Nordzy-cursors"
 wl_xcursor_size = 24
 

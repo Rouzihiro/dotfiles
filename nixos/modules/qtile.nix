@@ -2,13 +2,14 @@
 	{
 	services.xserver = {
     enable = true;
-    # Enable Qtile
     windowManager.qtile = {
       enable = true;
       extraPackages = python3Packages: with python3Packages; [qtile-extras];
   };
 	};
   environment.sessionVariables = {
+		LIBINPUT_DEFAULT_TAP = "1";
+    LIBINPUT_DEFAULT_NATURAL_SCROLL = "1";
     #WLR_NO_HARDWARE_CURSORS = "1";
     #NIXOS_OZONE_WL = 1;
     #MOZ_ENABLE_WAYLAND = 1;
