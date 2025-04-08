@@ -1,7 +1,6 @@
 import os
 import subprocess
 import socket
-import sys
 from libqtile import hook, qtile
 from libqtile import bar, layout, widget
 from libqtile.config import Click, Drag, Group, ScratchPad, DropDown, Key, Match, Screen
@@ -202,6 +201,9 @@ screens = [
                 widget.Spacer(),
                 widget.Memory(
                     format="󰍛 {MemUsed:.0f}{mm}",
+                     mouse_callbacks={
+                        "Button1": lambda: qtile.cmd_spawn(f"{terminal} -e btop")
+                    },
                     decorations=[
                         RectDecoration(
                             colour=colors["background"],
@@ -214,6 +216,9 @@ screens = [
                 widget.Sep(**sep_config),
                 widget.CPU(
                     format="󰘚 {load_percent}%",
+                     mouse_callbacks={
+                        "Button1": lambda: qtile.cmd_spawn(f"{terminal} -e btop")
+                    },
                     decorations=[
                         RectDecoration(
                             colour=colors["background"],
@@ -232,6 +237,9 @@ screens = [
                     full_char="󰁹",
                     show_short_text=False,
                     not_charging_char="󰁹",
+                     mouse_callbacks={
+                        "Button1": lambda: qtile.cmd_spawn("power-safe")
+                    },
                     decorations=[
                         RectDecoration(
                             colour=colors["background"],
@@ -273,9 +281,7 @@ screens = [
                     interface=get_wireless_interface(),
                     foreground=colors["background"],
                     mouse_callbacks={
-                        "Button1": lambda: qtile.cmd_spawn(
-                            "networkmanager_dmenu -theme ~/.config/rofi/networkmenu.rasi"
-                        )
+                        "Button1": lambda: qtile.cmd_spawn(f"{terminal} -e nmtui")
                     },
                     decorations=[
                         RectDecoration(
@@ -290,9 +296,7 @@ screens = [
                     text="󰐥",
                     foreground=colors["background"],
                     mouse_callbacks={
-                        "Button1": lambda: qtile.cmd_spawn(
-                            os.path.expanduser("~/.local/bin/powermenu")
-                        )
+                        "Button1": lambda: qtile.cmd_spawn("power-menu-qtile")
                     },
                     decorations=[
                         RectDecoration(

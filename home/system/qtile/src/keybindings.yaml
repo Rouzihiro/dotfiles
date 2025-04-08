@@ -129,7 +129,7 @@ Keys:
 
   - mods: [*mod]
     key: Delete
-    command: lazy.spawn(powermenu)
+    command: lazy.spawn('foot -e btop')
 
 
   # Qtile

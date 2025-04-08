@@ -1,0 +1,12 @@
+#!/bin/sh
+
+chosen=$(echo -e "Lock\nSuspend\nReboot\nPoweroff\nLogout" | rofi -dmenu -i -p "Power")
+
+case "$chosen" in
+  Lock) loginctl lock-session ;;
+  Suspend) systemctl suspend ;;
+  Reboot) systemctl reboot ;;
+  Poweroff) systemctl poweroff ;;
+  Logout) qtile cmd-obj -o cmd -f shutdown ;;
+esac
+
