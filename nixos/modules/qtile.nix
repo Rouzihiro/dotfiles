@@ -1,15 +1,18 @@
-	{ pkgs, ... }:
-	{
-	services.xserver = {
+{pkgs, ...}: {
+  services.xserver = {
     enable = true;
+    xkb = {
+      layout = "de";
+      options = "caps:escape";
+    };
     windowManager.qtile = {
       enable = true;
       extraPackages = python3Packages: with python3Packages; [qtile-extras];
+    };
   };
-	};
   environment.sessionVariables = {
-		LIBINPUT_DEFAULT_TAP = "1";
-    LIBINPUT_DEFAULT_NATURAL_SCROLL = "1";
+    XKB_DEFAULT_LAYOUT = "de";
+    XKB_DEFAULT_OPTIONS = "caps:escape";
     #WLR_NO_HARDWARE_CURSORS = "1";
     #NIXOS_OZONE_WL = 1;
     #MOZ_ENABLE_WAYLAND = 1;
@@ -30,4 +33,4 @@
     config.common.default = "*";
   };
   programs.dconf.enable = true;
-	}
+}

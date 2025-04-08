@@ -37,7 +37,7 @@ Keys:
     command: lazy.layout.grow_up()
 
   - mods: [*mod]
-    key: o
+    key: g
     command: lazy.layout.grow()
 
   - mods: [*mod]
@@ -141,24 +141,31 @@ Keys:
     key: q
     command: lazy.shutdown()
 
-
   # Screenshot
-  # - mods: [*mod]
-  #   key: s
-  #   command: screenshot()
-  #
-  # - mods: [*mod, shift]
-  #   key: s
-  #   command: screenshot(select=True)
-  #
-  # - mods: [*mod, control]
-  #   key: s
-  #   command: screenshot(sopen=True)
-  #
-  # - mods: [*mod, shift, control]
-  #   key: s
-  #   command: screenshot(sopen=True, select=True)
-  #
+  - mods: [*mod]
+    key: s
+    command: lazy.spawn('screenshot sc')
+
+  - mods: [*mod, shift]
+    key: s
+    command: lazy.spawn('screenshot pc')
+
+  - mods: []
+    key: Print
+    command: lazy.spawn('screenshot p')
+
+      # OCR Functions
+  - mods: [*mod]
+    key: o
+    command: lazy.spawn('ocr')
+
+  - mods: [*mod, shift]
+    key: t
+    command: lazy.spawn('ocr-prompt')
+
+  - mods: [*mod]
+    key: t
+    command: lazy.spawn('ocr-translate')
 
   # # Wallpapers
   # - mods: [*mod]
@@ -189,8 +196,6 @@ Keys:
     key: h
     command: lazy.screen.prev_group()
 
-  # For lazy reasons, group switching keybindings with num keys are in config.py
-  
 
 Keychords:
   - mods: [*mod]

@@ -19,6 +19,7 @@ from yaml import safe_load
 from shutil import which
 from json import dump, load
 from inputs import wl_input_rules
+wl_input_rules = wl_input_rules
 
 sys.path.append(expanduser('~/.config/qtile/'))
 
@@ -198,14 +199,7 @@ widget_list = [
         foreground=colors["base09"],
         **powerline("forward_slash"),
     ),
-    widget.Battery(
-        foreground=colors["base09"],
-        charge_char=" 󰂄",
-        discharge_char=" 󰁿",
-        empty_char=" 󰂎",
-        format="{char} {percent:2.0%} {hour:d}:{min:02d} ",
-        **powerline("forward_slash"),
-    ),
+
     widget.TextBox(
         text="  ",
         foreground=colors["base09"],
@@ -228,6 +222,14 @@ widget_list = [
         option="caps:escape",
         **powerline("back_slash"),
     ),
+        widget.Battery(
+        foreground=colors["base09"],
+        charge_char=" 󰂄",
+        discharge_char=" 󰁿",
+        empty_char=" 󰂎",
+        format="{char} {percent:2.0%}",
+        **powerline("forward_slash"),
+    ),
     widget.TextBox(
         text="  ",
         fontsize=16,
@@ -240,9 +242,6 @@ widget_list = [
         foreground=colors["base15"],
     ),
 ]
-
-if host != "laptop":
-    del widget_list[14]
 
 screens = [
     Screen(

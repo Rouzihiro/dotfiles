@@ -16,7 +16,8 @@ wl_input_rules = {
     # Keyboard configuration
     "type:keyboard": InputConfig(
         xkb_layout="de",
-        xkb_options="caps:escape,compose:rctrl",
+        xkb_variant="",
+        xkb_options="caps:escape",
         numlock=True,
         repeat_rate=30,
         repeat_delay=250
