@@ -54,7 +54,7 @@ rec {
   consoleKeyMap = "de"; # Console keymap (German)
   clock24h = true; # Use 24-hour clock format
   timezone = "Europe/Berlin";
-  locale = "en_US.UTF8";
+  locale = "en_US.UTF-8";
 
   # Theme Definitions
   themes = {

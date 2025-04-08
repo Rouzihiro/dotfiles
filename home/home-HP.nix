@@ -9,7 +9,8 @@
     #./system/hyprland-uwsm.nix
     ./system/mime.nix
     ./system/rofi
-		./system/qtile
+		#./system/qtile
+		./system/i3.nix
     ./system/stylix.nix
     ./system/sway.nix
     ./system/waybar.nix
@@ -18,6 +19,7 @@
     # ./system/xdg.nix
 		#./programs/x11.nix
 
+		./programs/alacritty.nix
     ./programs/btop.nix
     ./programs/brave.nix
     ./programs/fastfetch.nix

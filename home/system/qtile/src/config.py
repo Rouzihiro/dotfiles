@@ -1,5 +1,6 @@
 import os
 import subprocess
+import sys
 import socket
 from libqtile import hook, qtile
 from libqtile import bar, layout, widget
@@ -53,8 +54,29 @@ layouts_saved_file = expanduser(layouts_saved_file)
 keybindings_file = expanduser(keybindings_file)
 wallpapers_path = expanduser(wallpapers_path)
 
-groups_names = list(map(str, range(1, groups_count + 1)))
-groups = [Group(name) for name in groups_names]
+groups = [
+    Group(i[0], label=i[1])
+    for i in [("1", "󰈹"), ("2", ""), ("3", ""), ("4", "󰉋"), ("5", "󰭹"), ("6", "󰣇")]
+]
+
+for i in groups:
+    keys.extend(
+        [
+            Key(
+                [mod],
+                i.name,
+                lazy.group[i.name].toscreen(),
+                desc=f"Switch to group {i.name}",
+            ),
+            Key(
+                [mod, "shift"],
+                i.name,
+                lazy.window.togroup(i.name, switch_group=True),
+                desc=f"Switch to & move focused window to group {i.name}",
+            ),
+        ]
+    )
+
 
 
 with open(keybindings_file, 'rb') as file:
@@ -103,9 +125,6 @@ widget_defaults = {
        "fontsize": 12,
        "padding": 20,
    }
-  
-# extension_defaults = widget_defaults.copy()
-
 
 def get_backlight_device():
     """
@@ -252,7 +271,7 @@ screens = [
                 widget.Sep(**sep_config),
                 widget.Backlight(
                     fmt="󰃚 {}",
-                    backlight_name=get_backlight_device(),
+                    backlight_name=get_backlight_device() or "intel_backlight",
                     decorations=[
                         RectDecoration(
                             colour=colors["background"],

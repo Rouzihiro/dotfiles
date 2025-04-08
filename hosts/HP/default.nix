@@ -19,7 +19,8 @@
     ../../nixos/modules/polkit.nix
     ../../nixos/modules/sway.nix
     #../../nixos/modules/hyprland-uwsm.nix
-		../../nixos/modules/qtile.nix
+		#../../nixos/modules/qtile.nix
+		../../nixos/modules/i3.nix
     # ../../nixos/modules/android.nix
     ../../nixos/modules/tlp.nix
     # ../../nixos/modules/samba.nix
