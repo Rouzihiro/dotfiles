@@ -3,15 +3,15 @@ import subprocess
 import socket
 import sys
 from libqtile import hook, qtile
-from libqtile import bar, layout, qtile, widget
+from libqtile import bar, layout, widget
 from libqtile.config import Click, Drag, Group, ScratchPad, DropDown, Key, Match, Screen
 from libqtile.lazy import lazy
 from qtile_extras import widget
+from qtile_extras.widget.decorations import RectDecoration
 from qtile_extras.widget.decorations import PowerLineDecoration
 from libqtile.backend.wayland.inputs import InputConfig
 from libqtile.config import Key, KeyChord
-from theme import colors
-from mode import Mode
+from colors import colors
 
 from mode import Mode
 from os.path import expanduser, exists, normpath, getctime
@@ -25,6 +25,8 @@ sys.path.append(expanduser('~/.config/qtile/'))
 
 from variables import *
 keybindings_file = expanduser(keybindings_file)
+
+widget_radius = 18
 
 # Set backend
 if qtile.core.name == "wayland":
@@ -42,9 +44,7 @@ def autostart():
         "dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP",
         "systemctl --user restart pipewire",
         "foot --server",
-        #"swaync",
         #"udiskie",
-        #"flameshot",
         #"conky -c ~/.config/conky/conky-qtile.conf",
         "focus-mode",
     ]
@@ -53,8 +53,6 @@ screenshots_path = expanduser(screenshots_path)
 layouts_saved_file = expanduser(layouts_saved_file)
 keybindings_file = expanduser(keybindings_file)
 wallpapers_path = expanduser(wallpapers_path)
-
-#autostarts = list(map(expanduser, autostarts))
 
 groups_names = list(map(str, range(1, groups_count + 1)))
 groups = [Group(name) for name in groups_names]
@@ -96,160 +94,223 @@ layouts = [
 
 widget_defaults = {
     "font": "JetBrains Mono Nerd Font Medium",
-    "fontsize": 14,
+    "fontsize": 12,
     "padding": 3,
 }
 extension_defaults = widget_defaults.copy()
 
-
-def powerline(arg):
-    return {
-        "decorations": [
-            PowerLineDecoration(
-                path=f"{arg}",
-                stroke_weight=4,
-                stroke_colour=colors["base00"],
-                use_widget_background=True,  # Ensures background color is applied
-            )
-        ]
-    }
+widget_defaults = {
+       "font": "CaskaydiaCove NF Bold",
+       "fontsize": 12,
+       "padding": 20,
+   }
+  
+# extension_defaults = widget_defaults.copy()
 
 
-def search():
-    qtile.cmd_spawn("rofi -show drun")
+def get_backlight_device():
+    """
+    Detects and returns the first available backlight device.
+
+    Returns:
+        str: The name of the first available backlight device.
+        None: If no backlight device is found.
+    """
+    backlight_dir = "/sys/class/backlight"
+    if os.path.isdir(backlight_dir):
+        devices = os.listdir(backlight_dir)
+        if len(devices) > 0:
+            return devices[0]
+    return None
 
 
-widget_list = [
-    widget.Image(
-        filename="~/.config/qtile/assets/nord-logo.png",
-        background=colors["base00"],
-        margin_y=2,
-        margin_x=12,
-        mouse_callbacks={
-            "Button1": lambda: qtile.cmd_spawn("xdg-open https://nordtheme.com")
-        },
-        **powerline("forward_slash"),
-    ),
-    widget.GroupBox(
-        highlight_method="text",
-        borderwidth=3,
-        rounded=True,
-        active=colors["base15"],
-        highlight_color=colors["base01"],
-        inactive=colors["base03"],
-        this_current_screen_border=colors["base09"],
-        this_screen_border=colors["base01"],
-        urgent_border=colors["base11"],
-        disable_drag=True,
-        **powerline("back_slash"),
-    ),
-    widget.Spacer(length=2),
-    widget.CurrentLayoutIcon(
-        custom_icon_paths=["~/.config/qtile/assets/layout"],
-        padding=4,
-        scale=0.7,
-    ),
-    widget.CurrentLayout(
-        foreground=colors["base09"],
-        padding=4,
-    ),
-    widget.Spacer(
-        length=2,
-        **powerline("back_slash"),
-    ),
-    widget.TextBox(
-        text="  ",
-        background=colors["base00"],
-        foreground=colors["base15"],
-        mouse_callbacks={"Button1": search},
-    ),
-    widget.TextBox(
-        fmt="Search",
-        background=colors["base00"],
-        foreground=colors["base15"],
-        mouse_callbacks={"Button1": search},
-        **powerline("rounded_left"),
-    ),
-    widget.WindowName(
-        foreground=colors["base09"],
-        format=" {class} ",
-        empty_group_string="Desktop",
-    ),
-    widget.Spacer(**powerline("rounded_right")),
-    widget.StatusNotifier(
-        background=colors["base00"],
-        padding=5,
-        icon_size=16,
-        menu_background=colors["base00"],
-        menu_foreground_highlighted=colors["base00"],
-        highlight_colour=colors["base10"],
-    ),
-    widget.Spacer(
-        length=2,
-        background=colors["base00"],
-        **powerline("forward_slash"),
-    ),
-    widget.TextBox(
-        text=" 󰍛",
-        fontsize=20,
-        foreground=colors["base09"],
-    ),
-    widget.Memory(
-        format="{NotAvailable: .0f}{mm} ",
-        foreground=colors["base09"],
-        **powerline("forward_slash"),
-    ),
+def get_wireless_interface():
+    """
+    Dynamically detect the wireless network interface.
 
-    widget.TextBox(
-        text="  ",
-        foreground=colors["base09"],
-    ),
-    widget.PulseVolume(
-        fmt="{} ",
-        foreground=colors["base09"],
-        **powerline("forward_slash"),
-    ),
-    widget.TextBox(
-        text="  ",
-        fontsize=20,
-        foreground=colors["base09"],
-    ),
-    widget.KeyboardLayout(
-        fmt="{} ",
-        foreground=colors["base09"],
-        configured_keyboards=["de"],
-        display_map={"de": "DE"},
-        option="caps:escape",
-        **powerline("back_slash"),
-    ),
-        widget.Battery(
-        foreground=colors["base09"],
-        charge_char=" 󰂄",
-        discharge_char=" 󰁿",
-        empty_char=" 󰂎",
-        format="{char} {percent:2.0%}",
-        **powerline("forward_slash"),
-    ),
-    widget.TextBox(
-        text="  ",
-        fontsize=16,
-        background=colors["base00"],
-        foreground=colors["base15"],
-    ),
-    widget.Clock(
-        format="%I:%M %p ",
-        background=colors["base00"],
-        foreground=colors["base15"],
-    ),
-]
+    Returns:
+        str: Name of the wireless network interface.
+    """
+    result = subprocess.run(["ip", "link"], capture_output=True, text=True, check=True)
+    for line in result.stdout.split("\n"):
+        if "wlan" in line or "wlp" in line:
+            return line.split(":")[1].strip()
+    return "wlan0"
+
+
+sep_config = {
+    "size_percent": 0,
+    "padding": 8,
+}
 
 screens = [
     Screen(
-        wallpaper="~/Pictures/wallpapers/Dune3.png",
-        wallpaper_mode="fill",
-        top=bar.Bar(widget_list, 24, background=colors["base01"]),
+        top=bar.Bar(
+            [
+                widget.TextBox(
+                    text="󰀻",
+                    foreground=colors["background"],
+                    mouse_callbacks={
+                        "Button1": lambda: qtile.cmd_spawn(
+                            "rofi -show drun -p"
+                        )
+                    },
+                    decorations=[
+                        RectDecoration(
+                            colour=colors["color4"],
+                            radius=widget_radius,
+                            filled=True,
+                        )
+                    ],
+                ),
+                widget.Sep(**sep_config),
+                widget.TextBox(
+                    text="󰖯",
+                    foreground=colors["background"],
+                    mouse_callbacks={
+                        "Button1": lambda: qtile.cmd_spawn(
+                            "rofi -show window -p"
+                        )
+                    },
+                    decorations=[
+                        RectDecoration(
+                            colour=colors["color6"],
+                            radius=widget_radius,
+                            filled=True,
+                        )
+                    ],
+                ),
+                widget.Sep(**sep_config),
+                widget.GroupBox(
+                    borderwidth=0,
+                    block_highlight_text_color=colors["color3"],
+                    active=colors["foreground"],
+                    inactive=colors["color8"],
+                    disable_drag=True,
+                    radius=True,
+                    padding_x=0,
+                    margin_x=28,
+                    decorations=[
+                        RectDecoration(
+                            colour=colors["background"],
+                            radius=widget_radius,
+                            filled=True,
+                        )
+                    ],
+                ),
+                widget.Prompt(foreground=colors["color8"]),
+                widget.Spacer(),
+                widget.Memory(
+                    format="󰍛 {MemUsed:.0f}{mm}",
+                    decorations=[
+                        RectDecoration(
+                            colour=colors["background"],
+                            radius=widget_radius,
+                            filled=True,
+                        )
+                    ],
+                    foreground=colors["color5"],
+                ),
+                widget.Sep(**sep_config),
+                widget.CPU(
+                    format="󰘚 {load_percent}%",
+                    decorations=[
+                        RectDecoration(
+                            colour=colors["background"],
+                            radius=widget_radius,
+                            filled=True,
+                        )
+                    ],
+                    foreground=colors["color6"],
+                ),
+                widget.Sep(**sep_config),
+                widget.Battery(
+                    format="{char} {percent:2.0%}",
+                    charge_char="󰂄",
+                    discharge_char="󰁹",
+                    empty_char="󰂃",
+                    full_char="󰁹",
+                    show_short_text=False,
+                    not_charging_char="󰁹",
+                    decorations=[
+                        RectDecoration(
+                            colour=colors["background"],
+                            radius=widget_radius,
+                            filled=True,
+                        )
+                    ],
+                    foreground=colors["color2"],
+                ),
+                widget.Sep(**sep_config),
+                widget.Backlight(
+                    fmt="󰃚 {}",
+                    backlight_name=get_backlight_device(),
+                    decorations=[
+                        RectDecoration(
+                            colour=colors["background"],
+                            radius=widget_radius,
+                            filled=True,
+                        )
+                    ],
+                    foreground=colors["color3"],
+                ),
+                widget.Sep(**sep_config),
+                widget.Clock(
+                    format="󰥔 %I:%M",
+                    decorations=[
+                        RectDecoration(
+                            colour=colors["background"],
+                            radius=widget_radius,
+                            filled=True,
+                        )
+                    ],
+                    foreground=colors["color4"],
+                ),
+                widget.Sep(**sep_config),
+                widget.Wlan(
+                    fmt="  {}",
+                    format="{essid}",
+                    interface=get_wireless_interface(),
+                    foreground=colors["background"],
+                    mouse_callbacks={
+                        "Button1": lambda: qtile.cmd_spawn(
+                            "networkmanager_dmenu -theme ~/.config/rofi/networkmenu.rasi"
+                        )
+                    },
+                    decorations=[
+                        RectDecoration(
+                            colour=colors["color2"],
+                            radius=widget_radius,
+                            filled=True,
+                        )
+                    ],
+                ),
+                widget.Sep(**sep_config),
+                widget.TextBox(
+                    text="󰐥",
+                    foreground=colors["background"],
+                    mouse_callbacks={
+                        "Button1": lambda: qtile.cmd_spawn(
+                            os.path.expanduser("~/.local/bin/powermenu")
+                        )
+                    },
+                    decorations=[
+                        RectDecoration(
+                            colour=colors["color1"],
+                            radius=widget_radius,
+                            filled=True,
+                        )
+                    ],
+                ),
+            ],
+            42,
+            background="#00000000",
+            border_color="#00000000",
+            border_width=[8, 8, 0, 8],
+        ),
     ),
 ]
+
 
 # Drag floating layouts.
 mouse = [
