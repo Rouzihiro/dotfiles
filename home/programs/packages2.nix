@@ -3,6 +3,8 @@
     ####################
     # User Utilities & Tools
     ####################
+		python3Packages.psutil
+		bleachbit
 		tigervnc
     udisks2
     ntfs3g
@@ -128,7 +130,6 @@
     # onlyoffice-desktopeditors # only X11
     # ciscoPacketTracer8       # Networking simulator
     # wireshark                # Network analysis tool
-    # ventoy                   # Bootable USB creator
 
     ####################
     # Music and Streaming

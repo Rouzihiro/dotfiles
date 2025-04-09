@@ -18,6 +18,7 @@
     # ../../nixos/modules/fonts.nix
     ../../nixos/modules/polkit.nix
     ../../nixos/modules/sway.nix
+		#../../nixos/modules/i3.nix
     ../../nixos/modules/hyprland-uwsm.nix
     # ../../nixos/modules/android.nix
     ../../nixos/modules/tlp.nix

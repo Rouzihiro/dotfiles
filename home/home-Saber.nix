@@ -7,6 +7,7 @@
     #./system/anyrun.nix
     ./system/dunst.nix
     #./system/hyprland-uwsm.nix
+		#./system/i3.nix
     ./system/mime.nix
     ./system/rofi
     ./system/stylix.nix
@@ -16,6 +17,7 @@
     ./system/wlsunset.nix
     # ./system/xdg.nix
 
+		#./programs/alacritty.nix
     ./programs/btop.nix
     ./programs/brave.nix
     ./programs/fastfetch.nix
