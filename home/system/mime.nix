@@ -39,8 +39,27 @@ in {
       "video/x-matroska" = "${videoPlayer}.desktop";
       "video/quicktime" = "${videoPlayer}.desktop";
       "video/mp2t" = "${videoPlayer}.desktop";
+      "video/ogg" = "${videoPlayer}.desktop";
+      "video/x-msvideo" = "${videoPlayer}.desktop";
+      "video/x-flv" = "${videoPlayer}.desktop";
+      "application/x-flash-video" = "${videoPlayer}.desktop";
+      "video/MP2T" = "${videoPlayer}.desktop";
+      "image/x-tga" = "${videoPlayer}.desktop";
+
+      # Audio
+      "audio/mpeg" = "${videoPlayer}.desktop";
+      "audio/x-flac" = "${videoPlayer}.desktop";
+      "audio/mp4" = "${videoPlayer}.desktop";
+      "application/ogg" = "${videoPlayer}.desktop";
+      "audio/x-mod" = "${videoPlayer}.desktop";
 
       # Text and code MIME types
+      "inode/x-empty" = "${Editor}.desktop";
+      "text/x-tex" = "${Editor}.desktop";
+      "text/x-ruby" = "${Editor}.desktop";
+      "text/x-readme" = "${Editor}.desktop";
+      "application/x-ruby" = "${Editor}.desktop";
+      "text/rhtml" = "${Editor}.desktop";
       "text/plain" = "${Editor}.desktop";
       "text/markdown" = "${Editor}.desktop";
       "text/x-shellscript" = "${Editor}.desktop";

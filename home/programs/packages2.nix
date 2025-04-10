@@ -3,9 +3,7 @@
     ####################
     # User Utilities & Tools
     ####################
-		python3Packages.psutil
-		bleachbit
-		tigervnc
+    tigervnc
     udisks2
     ntfs3g
     ventoy-full-qt

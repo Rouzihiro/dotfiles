@@ -91,6 +91,7 @@
     update = "clear && cd ~/dotfiles && nix flake update";
     rebuild = "clear && nh os switch";
     rebuild2 = "clear && sudo nixos-rebuild switch --flake ~/dotfiles#${host}";
+		rebuild3 = "clear && sudo nixos-rebuild switch --flake ~/dotfiles#${host} --show-trace";
     ns = "nix-shell --command fish -p";
 
     # Dotfiles management
@@ -100,6 +101,7 @@
     editfish = "cd ~/dotfiles/home/programs && nvim fish.nix";
     edithypr = "nvim ~/dotfiles/home/system/hyprland.nix";
     editsway = "nvim ~/dotfiles/home/system/sway.nix";
+		editi3 = "nvim ~/dotfiles/home/system/i3.nix";
     editqtile = "nvim ~/dotfiles/home/system/qtile/src/config.py";
     nd = "nvim ~/dotfiles/";
     dots = "cd ~/dotfiles && ls";
