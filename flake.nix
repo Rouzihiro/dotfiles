@@ -1,6 +1,7 @@
 {
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+		determinate.url = "https://flakehub.com/f/DeterminateSystems/determinate/*";
 
     home-manager = {
       url = "github:nix-community/home-manager";
@@ -28,11 +29,6 @@
       url = "github:niksingh710/fzf-preview";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    #   anyrun = {
-    #     url = "github:anyrun-org/anyrun";
-    #     inputs.nixpkgs.follows = "nixpkgs";
-    #   };
   };
 
   outputs = {

@@ -119,6 +119,7 @@
     wget2 = "wget --tries=5 --retry-connrefused --waitretry=30";
     curldl = "curl -L -C - -O";
     aria = "aria2c";
+		ufda = "echo 'use flake' | tee .envrc && direnv allow";
 
     fsource = "source ~/.config/fish/config.fish; echo 'Fish config reloaded!'";
   };
@@ -128,6 +129,10 @@
 in {
   programs.fish = {
     enable = true;
+		interactiveShellInit = ''
+      set fish_greeting # Disable greeting
+      direnv hook fish | source
+    '';
     shellAliases = myAliases;
 
     shellInit = ''
