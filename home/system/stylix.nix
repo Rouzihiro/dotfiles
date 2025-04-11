@@ -7,6 +7,14 @@
 in {
   imports = [inputs.stylix.homeManagerModules.stylix];
 
+  home.pointerCursor = {
+    gtk.enable = true;
+    #x11.enable = true;
+    name = "Catppuccin-Macchiato-Dark-Cursors";
+    package = pkgs.catppuccin-cursors.macchiatoDark;
+    size = 24;
+  };
+
   # nix build nixpkgs#base16-schemes
   # nix build nixpkgs#bibata-cursors
 
@@ -41,12 +49,12 @@ in {
       package = pkgs.nordzy-icon-theme;
     };
 
-    cursor = {
-      package = pkgs.bibata-cursors;
-      name = "Bibata-Modern-Ice";
-      size = 20;
-    };
-
+    # cursor = {
+    #   package = pkgs.bibata-cursors;
+    #   name = "Bibata-Modern-Ice";
+    #   size = 20;
+    # };
+    #
     fonts = {
       emoji = {
         package = pkgs.noto-fonts-emoji;
