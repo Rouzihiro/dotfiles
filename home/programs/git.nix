@@ -19,6 +19,16 @@ in {
         "node_modules"
         "result"
         "result-*"
+        "compile_commands.json"
+        "*.gc??"
+        "vgcore.*"
+        "venv"
+        "*~"
+        ".direnv"
+        ".envrc"
+        ".idea"
+        ".vscode"
+        ".vs"
       ];
 
       aliases = {
@@ -29,6 +39,9 @@ in {
           #abbrev = "8";
           #editor = "nvim";
           whitespace = "fix,trailing-space,cr-at-eol,-space-before-tab,indent-with-non-tab";
+        };
+        "ssh://git@github.com/" = {
+          insteadOf = "https://github.com/";
         };
         color.ui = "auto";
         init.defaultBranch = "current";
