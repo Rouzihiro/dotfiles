@@ -128,7 +128,6 @@
   fishFunctions = import ./fish-functions.nix {inherit pkgs;};
 in {
   programs.fish = {
-    enable = true;
 		interactiveShellInit = ''
       set fish_greeting # Disable greeting
       direnv hook fish | source

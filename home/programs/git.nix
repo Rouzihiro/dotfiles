@@ -31,17 +31,12 @@ in {
         ".vs"
       ];
 
-      aliases = {
-      };
-
       extraConfig = {
         core = {
-          #abbrev = "8";
-          #editor = "nvim";
           whitespace = "fix,trailing-space,cr-at-eol,-space-before-tab,indent-with-non-tab";
         };
-        "ssh://git@github.com/" = {
-          insteadOf = "https://github.com/";
+        url = {
+          "ssh://git@github.com/".insteadOf = "https://github.com/";
         };
         color.ui = "auto";
         init.defaultBranch = "current";
@@ -49,14 +44,13 @@ in {
 
         commit = {
           verbose = true;
-          template = "${pkgs.writeText "git-commit-template" ''
-
-            #Fix: Resolve
+          template = builtins.toString (pkgs.writeText "git-commit-template" ''
+            # Fix: Resolve
 
             # - Fixed
             # - Added error handling for invalid input.
             # -----------------
-          ''}";
+          '');
         };
       };
     };

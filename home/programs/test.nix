@@ -1,7 +1,5 @@
-{ pkgs, ... }:
-{
-
-	programs.ladybird.enable = true;
+{pkgs, ...}: {
+  programs.ladybird.enable = true;
 
   catppuccin = {
     enable = true;
@@ -17,9 +15,8 @@
     size = 24;
   };
 
- home = {
+  home = {
     packages = with pkgs; [
-      # dev
       nix-output-monitor
       #gnumake
       dconf
