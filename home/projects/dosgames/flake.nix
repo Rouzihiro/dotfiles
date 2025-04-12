@@ -8,10 +8,11 @@
     gamesDir = "$HOME/Games/dosgames";
     
     dosrunScript = pkgs.writeShellScriptBin "dosrun" ''
+      # Ensure we have a valid games directory
       GAME_DIR="${gamesDir}"
       GAME_NAME="$1"
-      EXECUTABLE="''${2:-START.EXE}"
-      REAL_GAME_DIR=$(realpath "$GAME_DIR")
+      EXECUTABLE="${2:-START.EXE}"
+      REAL_GAME_DIR=$(realpath "$GAME_DIR" || readlink -f "$GAME_DIR")
       SAVE_DIR="$REAL_GAME_DIR/$GAME_NAME/saves"
 
       # Validation checks
@@ -46,7 +47,7 @@
       # Prepare save directory
       mkdir -p "$SAVE_DIR"
 
-      # Launch game
+      # Launch game with dosbox
       echo "🕹️ Launching $GAME_NAME/$EXECUTABLE..."
       echo "💾 Save location: $SAVE_DIR"
       cd "$REAL_GAME_DIR/$GAME_NAME"
@@ -89,3 +90,4 @@
     };
   };
 }
+
