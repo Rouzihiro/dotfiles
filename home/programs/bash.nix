@@ -1,5 +1,26 @@
-{ config, pkgs, lib, ... }: let
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}: let
   inherit (import ../../nixos/modules/variables.nix) host;
+
+  # Read bash functions from source directory
+  bashFunctions = builtins.readFile ./../scripts/bash_functions;
+
+  # Modified bash functions with NixOS paths
+  nixBashFunctions = pkgs.writeText "bash-functions" ''
+    # Load Nix environment first
+    [ -f "$HOME/.nix-profile/etc/profile.d/nix.sh" ] && \
+      source "$HOME/.nix-profile/etc/profile.d/nix.sh"
+
+    ${bashFunctions}
+
+    # Export all functions after definition
+    export -f $(grep -E '^[a-zA-Z0-9_]+\(\)' ${pkgs.writeText "temp" bashFunctions} |
+                cut -d'(' -f1 | tr '\n' ' ')
+  '';
 
   myAliases = {
     # File and directory management
@@ -107,47 +128,58 @@
     ufda = "echo 'use flake' | tee .envrc && direnv allow";
   };
 in {
+	home.file.".bash_functions".text = bashFunctions;
+  #home.file.".bash_functions".source = bashFunctions;
+
   programs.bash = {
     shellAliases = myAliases;
 
     initExtra = ''
-      bind 'set colored-stats On'
-      bind 'set colored-completion-prefix On'
-      bind 'set show-all-if-ambiguous on'
-      bind 'set completion-ignore-case on'
-      bind 'set echo-control-characters off'
-      bind '"\e[A": history-search-backward'
-      bind '"\e[B": history-search-forward'
-      bind '"\e[1;5D": backward-word'
-      bind '"\e[1;5C": forward-word'
-      bind '"\C-f": "cd ~/.config/\n"'
-      bind '"\C-b": "cd ..\n"'
-      bind '"\C-h": "cd\n"'
-      bind '"\C-w": "webserver\n"'
-      bind '"\es": "\C-asudo \C-e"'
+      # Source our Nixified functions
+            source ${nixBashFunctions}
 
-      # Environment variables
-      export GPG_TTY=$(tty)
-      export PATH="$PATH:$HOME/dotfiles/home/scripts"
+            # Key bindings
+            bind 'set colored-stats On'
+            bind 'set colored-completion-prefix On'
+            bind 'set show-all-if-ambiguous on'
+            bind 'set completion-ignore-case on'
+            bind 'set echo-control-characters off'
+            bind '"\e[A": history-search-backward'
+            bind '"\e[B": history-search-forward'
+            bind '"\e[1;5D": backward-word'
+            bind '"\e[1;5C": forward-word'
+            bind '"\C-f": "cd ~/.config/\n"'
+            bind '"\C-b": "cd ..\n"'
+            bind '"\C-h": "cd\n"'
+            bind '"\C-w": "webserver\n"'
+            bind '"\es": "\C-asudo \C-e"'
 
-      # Enhanced history
-      export HISTSIZE=10000
-      export HISTFILESIZE=10000
-      shopt -s histappend
-      shopt -s cmdhist
+            # History configuration
+            HISTSIZE=10000
+            HISTFILESIZE=10000
+            shopt -s histappend
+            shopt -s cmdhist
 
-      # Direnv hook
-      eval "$(direnv hook bash)"
+            # Direnv integration
+            eval "$(${pkgs.direnv}/bin/direnv hook bash)"
 
-      # Zoxide (replaces Fish's 'z' for directory jumping)
-      eval "$(zoxide init bash)"
+            # Zoxide initialization
+            eval "$(${pkgs.zoxide}/bin/zoxide init bash)"
 
-      # FZF key bindings
-      source ${pkgs.fzf}/share/fzf/key-bindings.bash
-         '';
+            # FZF integration
+            source ${pkgs.fzf}/share/fzf/key-bindings.bash
+    '';
   };
-
-  home.packages = with pkgs; [
-    eza bat xcp rsync duf zoxide fzf 
-  ];
+  #  home.sessionPath = [
+  #   "$HOME/dotfiles/home/scripts"
+  # ];
+  # home.packages = with pkgs; [
+  #   eza
+  #   bat
+  #   xcp
+  #   rsync
+  #   duf
+  #   zoxide
+  #   fzf
+  # ];
 }
