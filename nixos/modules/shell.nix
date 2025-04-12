@@ -8,7 +8,7 @@ in
     shell = pkgs.${shell};
   };
 
-  programs.${shell} = {
-    enable = true;
-  };
+  #programs.${shell} = {
+  #  enable = true;
+  #};
 }

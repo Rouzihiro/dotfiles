@@ -29,7 +29,7 @@ rec {
 
   # System Settings
   host = "HP"; # Hostname of the system
-  shell = "fish"; # Default shell
+  shell = "bash"; # Default shell
   WM = "sway"; # Window Manager
   BT-status = false; # Bluetooth status (enabled/disabled)
 

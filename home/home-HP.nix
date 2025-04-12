@@ -41,7 +41,7 @@
     #./programs/ranger.nix
     ./programs/shell.nix
     #./programs/spicetify.nix
-    #./programs/starship.nix
+    ./programs/starship.nix
     ./programs/tmux.nix
     #./programs/yazi.nix
     ./programs/zathura.nix

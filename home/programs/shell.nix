@@ -1,7 +1,7 @@
 {
   programs = {
-		fish.enable = true;
-    zsh.enable = false;
+		#fish.enable = true;
+    #zsh.enable = false;
     bash.enable = true;
 
     bat.enable = true;
