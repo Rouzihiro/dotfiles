@@ -13,7 +13,7 @@
 		./system/i3.nix
     ./system/stylix.nix
     ./system/sway.nix
-    ./system/waybar.nix
+    #./system/waybar.nix
     ./system/wofi.nix
     ./system/wlsunset.nix
     # ./system/xdg.nix
@@ -26,7 +26,7 @@
 		./programs/direnv.nix
     ./programs/fastfetch.nix
     #./programs/firefox.nix
-    ./programs/fish.nix
+    #./programs/fish.nix
     ./programs/foot.nix
     #./programs/freetube.nix
     ./programs/fzf-preview.nix
@@ -52,7 +52,7 @@
 
   home.packages = [
     inputs.yt-x.packages.${pkgs.system}.default
-    inputs.infinity-glass.packages.${pkgs.system}.default
+    #inputs.infinity-glass.packages.${pkgs.system}.default
   ];
 
   home.file = {

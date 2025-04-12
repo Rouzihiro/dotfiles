@@ -1,7 +1,5 @@
 {
-  config,
   pkgs,
-  lib,
   ...
 }: let
   inherit (import ../../nixos/modules/variables.nix) host;
@@ -133,7 +131,8 @@ in {
 
   programs.bash = {
     shellAliases = myAliases;
-
+		enableCompletion = true;
+    enableVteIntegration = true;
     initExtra = ''
       # Source our Nixified functions
             source ${nixBashFunctions}

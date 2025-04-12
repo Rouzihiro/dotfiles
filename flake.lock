@@ -474,26 +474,6 @@
         "type": "github"
       }
     },
-    "infinity-glass": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1740490517,
-        "narHash": "sha256-XVQTzoxeBOabJhxHmT9+qO/oyIFV/uFdhzHexNXw6y4=",
-        "owner": "Rouzihiro",
-        "repo": "infinity-glass-icons",
-        "rev": "23b574315dd359511ae9a9710fdc86b63f9132ce",
-        "type": "github"
-      },
-      "original": {
-        "owner": "Rouzihiro",
-        "repo": "infinity-glass-icons",
-        "type": "github"
-      }
-    },
     "nix": {
       "inputs": {
         "flake-compat": "flake-compat",
@@ -651,7 +631,6 @@
         "determinate": "determinate",
         "fzf-preview": "fzf-preview",
         "home-manager": "home-manager",
-        "infinity-glass": "infinity-glass",
         "nixpkgs": "nixpkgs_3",
         "stylix": "stylix",
         "yt-x": "yt-x"

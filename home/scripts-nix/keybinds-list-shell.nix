@@ -1,5 +1,5 @@
 { pkgs }:
-pkgs.writeShellScriptBin "keybinds-list-fish" ''
+pkgs.writeShellScriptBin "keybinds-list-shell" ''
   #!/bin/sh
 
   # Extract aliases from fish.nix

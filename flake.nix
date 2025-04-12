@@ -1,18 +1,23 @@
 {
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-		determinate.url = "https://flakehub.com/f/DeterminateSystems/determinate/*";
+    determinate.url = "https://flakehub.com/f/DeterminateSystems/determinate/*";
 
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    infinity-glass = {
-      url = "github:Rouzihiro/infinity-glass-icons";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
+    # catppuccin = {
+    #   url = "github:catppuccin/nix";
+    #   inputs.nixpkgs.follows = "nixpkgs";
+    # };
+    #
+    # infinity-glass = {
+    #   url = "github:Rouzihiro/infinity-glass-icons";
+    #   inputs.nixpkgs.follows = "nixpkgs";
+    # };
+    #
     assets = {
       url = "github:Rouzihiro/assets";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -40,7 +45,7 @@
     username = "rey";
     hosts = [
       {hostname = "HP";}
- 			{hostname = "Saber";}
+      {hostname = "Saber";}
       {hostname = "MBPro";}
       # Add more hosts as needed
     ];

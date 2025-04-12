@@ -136,7 +136,7 @@ in {
           "Shift+Backspace" = "exec power-menu-sway";
           "Shift+v" = "exec video-tool";
           "v" = "exec browse-video";
-          "Shift+x" = "exec $term -e fish -c ~/dotfiles/home/scripts/executer";
+          "Shift+x" = "exec $term -e ~/dotfiles/home/scripts/executer";
           "x" = "exec script-launcher";
           "o" = "exec ocr";
           "Shift+t" = "exec ocr-prompt";
@@ -144,7 +144,7 @@ in {
           "Shift+w" = "exec wallpaper";
           "w" = "exec wallpaper-random";
           "Shift+b" = "exec browse-web";
-          "z" = "exec keybinds-list-fish";
+          "z" = "exec keybinds-list-shell";
           "Shift+z" = "exec keybinds-list-sway";
 
           # Layout stuff

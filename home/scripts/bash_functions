@@ -79,8 +79,103 @@ qrimg() {
 compress() { tar c -I "xz -T 0 -7" -f "${1}.tar.xz" "$1"; }
 archive()  { tar c -I "xz -T 0 -0" -f "${1}.tar.xz" "$1"; }
 
+
+ta() {
+    if [[ -z "$1" ]]; then
+        tmux attach
+    else
+        tmux attach -t "$1"
+    fi
+}
+
+yturl() {
+    nix_require yt-dlp || return 1
+    local url
+    url=$(yt-dlp --get-url "$@")
+    echo "$url"
+    echo "$url" | wl-copy
+}
+
+
+DL() {
+    read -rp "Enter URL: " url
+    echo "Download with (c)url / (w)get / (a)ria / (y)t-dlp / (u)yturl: "
+    read -r tool
+    case "$tool" in
+        c) curldl "$url" ;;
+        w) wget1 "$url" ;;
+        a) yt1 "$url" ;;
+        y) ytbest "$url" ;;
+        u) yturl "$url" ;;
+        *) echo "Invalid option. Use (c)url, (w)get, (a)ria, (y)t-dlp, or (u)yturl." ;;
+    esac
+}
+
+bwu() {
+    export BW_SESSION=$(bw unlock --raw)
+    bw sync
+}
+
+findreplace() {
+    if [[ "$1" == "--help" || -z "$1" || -z "$2" ]]; then
+        echo "Usage: findreplace <trigger> <sed expression>"
+        return 1
+    fi
+    rg --files-with-matches "$1" | tee /dev/stderr | xargs sed -Ei "$2"
+}
+
+cpz() {
+    if [[ "$1" == "--help" || $# -ne 2 ]]; then
+        echo "Usage: cpz <source> <destination>"
+        echo "Copies a file with a progress bar."
+        return
+    fi
+    rsync --progress "$1" "$2"
+}
+
+s() {
+    if [[ "$1" == "--help" || -z "$1" ]]; then
+        echo "Usage: s <search term>"
+        return 1
+    fi
+    grep --color=auto -rin "$1" .
+}
+
+catz() {
+    if [[ "$1" == "--help" || -z "$1" ]]; then
+        echo "Usage: catz <file>"
+        echo "Copies file content to clipboard."
+        return 1
+    fi
+    wl-copy < "$1"
+}
+
+fontz() {
+    if [[ "$1" == "--help" || -z "$1" ]]; then
+        echo "Usage: fontz <font name>"
+        return 1
+    fi
+    fc-list | grep --color=auto -i "$1"
+}
+
+iso() {
+    if [[ "$1" == "--help" || -z "$1" ]]; then
+        echo "Usage: iso <iso file>"
+        return 1
+    fi
+    sudo mkdir -p ~/mount/iso
+    sudo mount -o loop "$1" ~/mount/iso
+}
+
+uniso() {
+    echo "Unmounting ~/mount/iso"
+    sudo umount ~/mount/iso
+}
+
+
 # --------------------------------------------------
 # Export All Functions
 # --------------------------------------------------
 
-export -f gitsync gitz ssh-start qrimg compress archive
+export -f gitsync gitz ssh-start qrimg compress archive ta yturl DL bwu findreplace cpz s catz fontz iso uniso
+
