@@ -11,9 +11,9 @@ pkgs.writeShellScriptBin "keybinds-list-shell" ''
 
   # If aliases exist, show them in wofi
   if [ -n "$aliases" ]; then
-    echo "$aliases" | wofi --dmenu --prompt "Fish Aliases:" --width 800 --height 400
+    echo "$aliases" | wofi --dmenu --prompt "Bash Aliases:" --width 800 --height 400
   else
-    notify-send "No aliases found in fish.nix"
+    notify-send "No aliases found in bash.nix"
   fi
 ''
 

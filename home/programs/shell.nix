@@ -27,7 +27,6 @@
 
     bat.enable = true;
     fzf.enable = true;
-
     eza = {
       enable = true;
       extraOptions = [

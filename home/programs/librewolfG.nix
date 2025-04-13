@@ -1,4 +1,7 @@
-{user, ...}: {
+{
+  username,
+  ...
+}: {
   programs.librewolf = {
     enable = true;
     policies = {
@@ -37,8 +40,8 @@
           install_url = "https://addons.mozilla.org/en-US/firefox/downloads/latest/material-icons-for-github/latest.xpi";
           installation_mode = "force_installed";
         };
-        "@testpilot-containers" = {
-          install_url = "https://addons.mozilla.org/en-US/firefox/downloads/latest/multi-account-containers/latest.xpi";
+        "simple-tab-groups@drive4ik" = {
+          install_url = "https://addons.mozilla.org/en-US/firefox/downloads/latest/simple-tab-groups/latest.xpi";
           installation_mode = "force_installed";
         };
       };
@@ -78,7 +81,7 @@
       "webgl.disabled" = false;
       "privacy.resistFingerprinting" = false;
     };
-    profiles.${user} = {
+    profiles.${username} = {
       isDefault = true;
       userChrome = ''
         window,

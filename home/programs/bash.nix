@@ -28,6 +28,7 @@
     crp = "rsync -ah --progress";
     df = "duf -hide special";
     mem = "free -h";
+		folders = "du -h --max-depth=1";
 
     # Navigation
     ".." = "cd ..";
@@ -150,8 +151,14 @@ in {
           # History configuration
           HISTSIZE=10000
           HISTFILESIZE=10000
+					HISTCONTROL=erasedups:ignoredups:ignorespace
+					HISTTIMEFORMAT="%F %T"
+					PROMPT_COMMAND='history -a'
           shopt -s histappend
           shopt -s cmdhist
+					shopt -s checkwinsize
+
+					[[ $- == *i* ]] && stty -ixon
 
           # Direnv integration
           eval "$(${pkgs.direnv}/bin/direnv hook bash)"

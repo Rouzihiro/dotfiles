@@ -32,6 +32,7 @@
     ./programs/git.nix
     #./programs/kitty.nix
     ./programs/lf
+		./programs/librewolfG.nix
     ./programs/mpv.nix
     ./programs/nvim
     ./programs/packages.nix

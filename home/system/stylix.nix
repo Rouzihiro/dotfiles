@@ -22,6 +22,8 @@ in {
       #sway.enable = false;
       waybar.enable = false;
       hyprland.enable = false;
+			librewolf.enable = false;
+			#librewolf.profileNames = [ "default" ];
     };
 
     # base16Scheme = "${pkgs.base16-schemes}/share/themes/nord.yaml";
