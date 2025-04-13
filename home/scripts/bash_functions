@@ -172,10 +172,27 @@ uniso() {
     sudo umount ~/mount/iso
 }
 
+lf_cd() {
+  local tempfile
+  tempfile=$(mktemp -t tmp.XXXXXX)
+  lf -last-dir-path="$tempfile" "$@"
+
+  if [[ -f "$tempfile" ]]; then
+    local newdir
+    newdir=$(cat "$tempfile")
+    if [[ "$newdir" != "$(pwd)" ]]; then
+      zoxide add "$newdir"
+      cd "$newdir" || return
+    fi
+    rm -f "$tempfile"
+  fi
+}
+
+# Bind Ctrl+L to lf_cd
+bind -x '"\C-l": lf_cd'
 
 # --------------------------------------------------
 # Export All Functions
 # --------------------------------------------------
 
-export -f gitsync gitz ssh-start qrimg compress archive ta yturl DL bwu findreplace cpz s catz fontz iso uniso
-
+export -f gitsync gitz ssh-start qrimg compress archive ta yturl DL bwu findreplace cpz s catz fontz iso uniso lf_cd
