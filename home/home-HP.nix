@@ -23,7 +23,6 @@
 		./programs/bash.nix
     ./programs/btop.nix
     ./programs/brave.nix
-		./programs/direnv.nix
     ./programs/fastfetch.nix
     #./programs/firefox.nix
     #./programs/fish.nix

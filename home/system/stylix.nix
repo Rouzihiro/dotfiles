@@ -34,19 +34,19 @@ in {
     #  name = "moonfly";
     # };
 
-    # iconTheme = {
-    #   enable = true;
-    #   dark = "Nordzy";
-    #   light = "Nordzy";
-    #   package = pkgs.nordzy-icon-theme;
-    # };
+     iconTheme = {
+       enable = true;
+       dark = "Nordzy";
+       light = "Nordzy";
+       package = pkgs.nordzy-icon-theme;
+     };
 
-    # cursor = {
-    #   package = pkgs.bibata-cursors;
-    #   name = "Bibata-Modern-Ice";
-    #   size = 20;
-    # };
-    #
+     cursor = {
+       package = pkgs.bibata-cursors;
+       name = "Bibata-Modern-Ice";
+       size = 20;
+     };
+    
     fonts = {
       emoji = {
         package = pkgs.noto-fonts-emoji;

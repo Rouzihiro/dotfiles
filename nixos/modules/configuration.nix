@@ -1,4 +1,4 @@
-{ lib, ...}: {
+{lib, ...}: {
   # ---------------------------------------------------------
   # Documentation
   # ---------------------------------------------------------
@@ -16,31 +16,35 @@
   # ---------------------------------------------------------
 
   system = {stateVersion = "25.05";};
-  security.pam.services.swaylock = {};
-
-  security.sudo.enable = true;
-  security.sudo.extraConfig = ''
+  
+	security = {
+		pam.services.swaylock = {};
+		sudo.enable = true;
+  	sudo.extraConfig = ''
     rey ALL=(ALL) NOPASSWD: ALL
-  '';
+  	'';
+	};
 
   # ---------------------------------------------------------
   # Systemd
   # ---------------------------------------------------------
 
   services = {
-    chrony.enable = true;
-    timesyncd.enable = false;
+    #chrony.enable = true;
+    #timesyncd.enable = false;
     #xserver.enable = false;
     gvfs.enable = false;
     #tumbler.enable = true; # Thumbnail support for images
     #dbus.enable = true;
   };
 
-  programs.dconf.enable = true;
+  programs = {
+    dconf.enable = true;
+  };
 
   console = {
     font = "Lat2-Terminus16";
-		keyMap = lib.mkForce "de";
+    keyMap = lib.mkForce "de";
     useXkbConfig = true; # use xkb.options in tty.
   };
 

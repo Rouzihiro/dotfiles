@@ -3,6 +3,7 @@
     ####################
     # User Utilities & Tools
     ####################
+    nix-output-monitor
     tigervnc
     udisks2
     ntfs3g
