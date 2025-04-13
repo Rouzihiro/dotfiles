@@ -2,8 +2,8 @@
 pkgs.writeShellScriptBin "keybinds-list-shell" ''
   #!/bin/sh
 
-  # Extract aliases from fish.nix
-  aliases=$(grep '^[[:space:]]*[a-zA-Z0-9_-]\+ =' ~/dotfiles/home/programs/fish.nix |
+  # Extract aliases from bash.nix
+  aliases=$(grep '^[[:space:]]*[a-zA-Z0-9_-]\+ =' ~/dotfiles/home/programs/bash.nix |
     sed -E 's/^[[:space:]]*([a-zA-Z0-9_-]+) = "(.*)";/\1 = \2/')
 
   # Escape ampersands in the aliases to avoid markup parsing errors in wofi

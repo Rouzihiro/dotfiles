@@ -1,11 +1,17 @@
 {
   manual.manpages.enable = false;
   programs = {
-    #fish.enable = true;
-    #zsh.enable = false;
     bash.enable = true;
+    fish.enable = false;
+    zsh.enable = false;
 
-    #dircolors.enable = true;
+    atuin = {
+      enable = true;
+      settings = {
+        auto_sync = false;
+        keymap_mode = "vim-insert";
+      };
+    };
 
     direnv = {
       enable = true;

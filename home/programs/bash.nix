@@ -163,12 +163,4 @@ in {
           source ${pkgs.fzf}/share/fzf/key-bindings.bash
     '';
   };
-
-  programs.atuin = {
-    enable = true;
-    settings = {
-      auto_sync = false;
-      keymap_mode = "vim-insert";
-    };
-  };
 }
