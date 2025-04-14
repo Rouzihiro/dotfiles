@@ -12,6 +12,11 @@
       "file_mode=0770"
       "dir_mode=0770"
       "nofail"
+			"noauto"
+      "x-systemd.automount"
+      "x-systemd.requires=network-online.target"
+      "x-systemd.after=network-online.target"
+			#"x-systemd.idle-timeout=30"
     ];
   };
 }
