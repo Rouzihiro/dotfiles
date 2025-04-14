@@ -156,14 +156,14 @@ in {
 
           # Navigation keybinds
           "h" = "focus left";
-          "l" = "focus right";
-          "k" = "focus up";
           "j" = "focus down";
+          "k" = "focus up";
+          "l" = "focus right";
 
           "Shift+h" = "move left";
-          "Shift+l" = "move down";
+          "Shift+j" = "move down";
           "Shift+k" = "move up";
-          "Shift+j" = "move right";
+          "Shift+l" = "move right";
 
           # Resizing keybinds
           "Ctrl+h" = "resize shrink width 50px";

@@ -10,7 +10,7 @@
     ./system/mime.nix
     ./system/rofi
 		#./system/qtile
-		./system/i3.nix
+		#./system/i3.nix
     ./system/stylix.nix
     ./system/sway.nix
     #./system/waybar.nix
@@ -19,7 +19,7 @@
     # ./system/xdg.nix
 		#./programs/x11.nix
 
-		./programs/alacritty.nix
+		#./programs/alacritty.nix
 		./programs/bash.nix
     ./programs/btop.nix
     ./programs/brave.nix
@@ -32,7 +32,7 @@
     ./programs/git.nix
     #./programs/kitty.nix
     ./programs/lf
-		./programs/librewolfG.nix
+		./programs/librewolf.nix
     ./programs/mpv.nix
     ./programs/nvim
     ./programs/packages.nix
