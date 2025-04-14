@@ -127,6 +127,11 @@
         "browser.contentblocking.category" = "strict";
         "browser.bookmarks.restore_default_bookmarks" = false;
 
+				# Rey-specific changes for testing
+				"browser.display.use_document_fonts" = 0;
+				"font.name.monospace.x-western" = "JetBrains Mono Nerd Font Medium";
+				"browser.display.document_color_use" = 0;
+
         "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
         "browser.startup.homepage" = "chrome://browser/content/blanktab.html";
 

@@ -93,6 +93,8 @@
     rebuild2 = "clear && sudo nixos-rebuild switch --flake ~/dotfiles#${host}";
     rebuild3 = "clear && sudo nixos-rebuild switch --flake ~/dotfiles#${host} --show-trace";
     ns = "nix-shell --command bash -p";
+		list-gen = "sudo nix-env --list-generations --profile /nix/var/nix/profiles/system/";
+		find-store-path = ''function { nix-shell -p $1 --command "nix eval -f "<nixpkgs>" --raw $1" }'';
 
     # Dotfiles management
     edithome = "cd ~/dotfiles/home/ && nvim home.nix programs/packages2.nix";

@@ -1,6 +1,7 @@
 {
   lib,
   pkgs,
+  inputs,
   ...
 }: let
   i3blocksConf = pkgs.callPackage ./i3blocks.nix {};
@@ -29,17 +30,18 @@ in {
     #xwayland = true;
     #systemd.enable = false;
     extraConfig = ''
-      set $opacity 0.9
-      for_window [app_id="foot"] opacity $opacity
+       set $opacity 0.9
+       for_window [app_id="foot"] opacity $opacity
+      for_window [title="^JDownloader.*"] opacity 0.8
 
-      set $term footclient
-      set $launcher2 anyrun
-      set $launcher rofi -show drun
-      set $browser qutebrowser
-      set $browser2  brave
-      set $fileManager thunar
-      set $TfileManager $term -e yazi
-      set $editor $term -e nvim
+       set $term footclient
+       set $launcher2 anyrun
+       set $launcher rofi -show drun
+       set $browser qutebrowser
+       set $browser2  brave
+       set $fileManager thunar
+       set $TfileManager $term -e yazi
+       set $editor $term -e nvim
     '';
     config = {
       defaultWorkspace = "workspace number 1";
@@ -117,7 +119,7 @@ in {
           # Executables
           "Ctrl+q" = "exec swaymsg exit";
           "Return" = "exec $term";
-					"Shift+c" = "exec swaymsg -t get_tree | jq '.. | select(.type?) | select(.focused==true) | .app_id'";
+          "Shift+c" = "exec swaymsg -t get_tree | jq '.. | select(.type?) | select(.focused==true) | .app_id'";
 
           "s" = "exec screenshot sc";
           "Shift+s" = "exec screenshot pc";
