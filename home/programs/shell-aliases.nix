@@ -1,6 +1,4 @@
 {
-  inputs,
-  username,
   hostname,
   ...
 }: {

@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, hostname, ... }:
 let
   bashFunctions = builtins.readFile ./functions.sh;
 
@@ -12,7 +12,7 @@ let
                 cut -d'(' -f1 | tr '\n' ' ')
   '';
 
-  aliases = import ./aliases.nix;
+	aliases = import ../shell-aliases.nix { inherit hostname; };
   keybindings = builtins.readFile ./keybindings.sh;
   history = builtins.readFile ./history.sh;
 
