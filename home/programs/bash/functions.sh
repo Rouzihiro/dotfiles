@@ -196,3 +196,4 @@ bind -x '"\C-l": lf_cd'
 # --------------------------------------------------
 
 export -f gitsync gitz ssh-start qrimg compress archive ta yturl DL bwu findreplace cpz s catz fontz iso uniso lf_cd
+

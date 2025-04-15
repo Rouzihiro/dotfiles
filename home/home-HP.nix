@@ -20,7 +20,7 @@
 		#./programs/x11.nix
 
 		#./programs/alacritty.nix
-		./programs/bash.nix
+		./programs/bash
     ./programs/btop.nix
     ./programs/brave.nix
     ./programs/fastfetch.nix
