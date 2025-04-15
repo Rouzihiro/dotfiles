@@ -1,4 +1,9 @@
 {
+  inputs,
+  username,
+  hostname,
+  ...
+}: {
   # File and directory management
   ls = "eza --icons --grid --all --color=always";
   la = "eza --icons -l -T -L=1";
@@ -73,26 +78,28 @@
   # NixOS
   update = "clear && cd ~/dotfiles && nix flake update";
   rebuild = "clear && nh os switch";
-  rebuild2 = "clear && sudo nixos-rebuild switch --flake ~/dotfiles#HP";
-	#rebuild2 = "clear && sudo nixos-rebuild switch --flake ~/dotfiles#${host}";
-  #rebuild3 = "clear && sudo nixos-rebuild switch --flake ~/dotfiles#${host} --show-trace";
+  rebuild2 = "clear && sudo nixos-rebuild switch --flake ~/dotfiles#${hostname}";
+  rebuild3 = "clear && sudo nixos-rebuild switch --flake ~/dotfiles#${hostname} --show-trace";
   ns = "nix-shell --command bash -p";
   list-gen = "sudo nix-env --list-generations --profile /nix/var/nix/profiles/system/";
   find-store-path = ''function { nix-shell -p $1 --command "nix eval -f "<nixpkgs>" --raw $1" }'';
 
   # Dotfiles management
-  edithome = "cd ~/dotfiles/home/ && nvim home.nix programs/packages2.nix";
-  editsys = "cd ~/dotfiles/ && nvim hosts/modules/configuration.nix flake.nix";
-  editzsh = "cd ~/dotfiles/home/programs && nvim zsh.nix";
-  editfish = "cd ~/dotfiles/home/programs && nvim fish.nix";
-  edithypr = "nvim ~/dotfiles/home/system/hyprland.nix";
-  editsway = "nvim ~/dotfiles/home/system/sway.nix";
-  editi3 = "nvim ~/dotfiles/home/system/i3.nix";
-  editqtile = "nvim ~/dotfiles/home/system/qtile/src/config.py";
+  home-cfg = "cd ~/dotfiles/home/ && nvim home.nix programs/packages2.nix";
+  sys-cfg = "cd ~/dotfiles/ && nvim hosts/modules/configuration.nix flake.nix";
+  bash-cfg = "nvim ~/dotfiles/home/programs/bash";
+  zsh-cfg = "nvim ~/dotfiles/home/programs/zsh.nix";
+  fish-cfg = "nvim ~/dotfiles/home/programs/fish.nix";
+  hypr-cfg = "nvim ~/dotfiles/home/system/hyprland.nix";
+  sway-cfg = "nvim ~/dotfiles/home/system/sway.nix";
+  i3-cfg = "nvim ~/dotfiles/home/system/i3.nix";
+  qtile-cfg = "nvim ~/dotfiles/home/system/qtile/src/config.py";
   nd = "nvim ~/dotfiles/";
   dots = "cd ~/dotfiles && ls";
 
   # Miscellaneous
+  xargs = "xargs ";
+  sudo = "sudo ";
   xx = "exit";
   c = "clear";
   o = "xdg-open";
