@@ -35,7 +35,8 @@ rec {
 
   # Program Options
   browser = "brave"; # Default web browser
-  browser-light = "org.qutebrowser.qutebrowser"; # Lightweight browser
+  #browser-light = "org.qutebrowser.qutebrowser"; # Lightweight browser
+  browser-light = "librewolf"; # Lightweight browser
   terminal = "foot"; # Default terminal emulator
   launcher = "anyrun"; # Application launcher
   launcher2 = "wofi --menu"; # Alternative application launcher

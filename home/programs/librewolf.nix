@@ -6,7 +6,7 @@
     enable = true;
     policies = {
       ExtensionSettings = {
-        "*".installation_mode = "blocked";
+        "*".installation_mode = "allowed";
         # To add additional extensions, find it on addons.mozilla.org, find
         # the short ID in the url (like https://addons.mozilla.org/en-US/firefox/addon/!SHORT_ID!/)
         # Then, download the XPI by filling it in to the install_url template, unzip it,

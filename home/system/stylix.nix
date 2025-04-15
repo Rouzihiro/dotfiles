@@ -43,11 +43,11 @@ in {
        package = pkgs.nordzy-icon-theme;
      };
 
-     cursor = {
-       package = pkgs.bibata-cursors;
-       name = "Bibata-Modern-Ice";
-       size = 20;
-     };
+     # cursor = {
+     #   package = pkgs.bibata-cursors;
+     #   name = "Bibata-Modern-Ice";
+     #   size = 20;
+     # };
     
     fonts = {
       emoji = {

@@ -48,6 +48,7 @@
     #./programs/zsh.nix
 
     ./scripts-nix
+		./themes
   ];
 
   home.packages = [

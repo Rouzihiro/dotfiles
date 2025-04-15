@@ -78,7 +78,7 @@
   rebuild = "clear && nh os switch";
   rebuild2 = "clear && sudo nixos-rebuild switch --flake ~/dotfiles#${hostname}";
   rebuild3 = "clear && sudo nixos-rebuild switch --flake ~/dotfiles#${hostname} --show-trace";
-  ns = "nix-shell --command bash -p";
+	ns = "nix-shell --run '$(ps -p $$ -o comm=)' -p";
   list-gen = "sudo nix-env --list-generations --profile /nix/var/nix/profiles/system/";
   find-store-path = ''function { nix-shell -p $1 --command "nix eval -f "<nixpkgs>" --raw $1" }'';
 
@@ -96,6 +96,7 @@
   dots = "cd ~/dotfiles && ls";
 
   # Miscellaneous
+	sbash = "source ~/.bashrc";
   xargs = "xargs ";
   sudo = "sudo ";
   xx = "exit";
