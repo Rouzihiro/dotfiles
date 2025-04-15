@@ -1,26 +1,31 @@
 {pkgs, ...}: {
   xdg.configFile."lf/icons".source = ./icons;
+
   programs.lf = {
     enable = true;
+
     commands = {
-      editor-open = ''$$EDITOR $f'';
+      editor-open = ''$$EDITOR "$f"'';
+
       mkdir = ''
         ''${{
           printf "Directory Name: "
           read DIR
-          mkdir $DIR
+          mkdir -p "$DIR"
         }}
       '';
+
       touch = ''
         ''${{
           printf "File Name: "
           read FILE
-          touch $FILE
+          touch "$FILE"
         }}
       '';
+
       open-terminal = ''
         ''${{
-          foot sh -c "cd \"$PWD\" && $SHELL"
+          foot sh -c "cd \"$PWD\" && exec $SHELL"
         }}
       '';
 
@@ -37,50 +42,26 @@
 
       bulk-rename = ''
         ''${{
-          # Generate a list of files with line numbers
           tmpfile=$(mktemp)
           ls --group-directories-first | ${pkgs.gawk}/bin/awk '{print NR, $0}' > "$tmpfile"
-
-          # Open the file in Neovim
           $EDITOR "$tmpfile"
 
-          # Debug: Print the contents of the temporary file
-          echo "Contents of temporary file after editing:"
-          cat "$tmpfile"
-
-          # Read original filenames into an array
           original_files=()
           while IFS= read -r -d $'\n' file; do
             original_files+=("$file")
           done < <(ls --group-directories-first)
 
-          # Debug: Print the original files array
-          echo "Original files:"
-          printf '%s\n' "''${original_files[@]}"
-
-          # Generate rename commands
           changes=()
           while read -r line; do
             num=$(${pkgs.gawk}/bin/awk '{print $1}' <<< "$line")
             new_name=$(${pkgs.coreutils}/bin/cut -d' ' -f2- <<< "$line")
-            old_name="''${original_files[$((num-1))]}"  # Adjust for 0-based index
+            old_name="''${original_files[$((num-1))]}"
 
-            # Debug: Print the old and new names
-            echo "Processing line: $line"
-            echo "  Old name: $old_name"
-            echo "  New name: $new_name"
-
-            # Validate before adding to changes
             if [[ -n "$old_name" && -n "$new_name" && "$old_name" != "$new_name" ]]; then
               changes+=("mv -vn -- \"$old_name\" \"$new_name\"")
             fi
           done < "$tmpfile"
 
-          # Debug: Print the changes array
-          echo "Changes to be made:"
-          printf '%s\n' "''${changes[@]}"
-
-          # Show changes and confirm
           if [[ ''${#changes[@]} -eq 0 ]]; then
             lf -remote "send $id echo 'No changes to rename.'"
           else
@@ -89,11 +70,10 @@
               lf -remote "send $id echo '  $cmd'"
             done
 
-            # Read confirmation from the terminal directly
             lf -remote "send $id echo -n 'Proceed? [y/N] '"
             read ans </dev/tty
 
-            if [[ "$ans" == "y" || "$ans" == "Y" ]]; then
+            if [[ "$ans" =~ ^[yY]$ ]]; then
               for cmd in "''${changes[@]}"; do
                 eval "$cmd"
               done
@@ -103,7 +83,6 @@
             fi
           fi
 
-          # Clean up
           rm "$tmpfile"
         }}
       '';
@@ -114,10 +93,13 @@
       cd-dotfiles = "cd ~/dotfiles";
       cd-scripts = "cd ~/dotfiles/home/scripts";
       cd-programs = "cd ~/dotfiles/home/programs";
+			cd-config = "cd ~/.config/";
       cd-usb = "cd ~/mount/usb";
+
       file-open = ''&$OPENER "$f"'';
       extract = ''$extracto "$f"'';
     };
+
     keybindings = {
       "<enter>" = "$nvim $f";
       v = "editor-open";
@@ -139,66 +121,58 @@
       gp = "cd-programs";
       gv = "cd-videos";
       gx = "cd-pix";
-      zz = "copy-path";
+			gc = "cd-config";
+			zz = "shell"; 
+      zy = "copy-path";
       zs = "calcdirsize";
       br = "bulk-rename";
     };
+
     settings = {
       preview = true;
       drawbox = true;
       icons = true;
       ignorecase = true;
     };
+
     extraConfig = let
       previewer = pkgs.writeShellScriptBin "pv.sh" ''
-          case "$(${pkgs.file}/bin/file -Lb --mime-type -- "$1")" in
+        case "$(${pkgs.file}/bin/file -Lb --mime-type -- "$1")" in
           application/pdf)
-        ${pkgs.poppler_utils}/bin/pdftoppm -png -singlefile "$1" "/tmp/lf-pdf-preview" && \
-        ${pkgs.chafa}/bin/chafa -f sixel -s "$2x$3" "/tmp/lf-pdf-preview.png"
-        exit 1
-          ;;
-              application/zip|application/gzip|application/x-tar)
-        ${pkgs.atool}/bin/atool -l "$1"
-        ;;
-            image/*)
-              if [[ "$TERM" == "xterm-kitty" ]]; then
-                file=$1
-                w=$2
-                h=$3
-                x=$4
-                y=$5
-
-                if [[ "$(${pkgs.file}/bin/file -Lb --mime-type "$file")" =~ ^image ]]; then
-                  ${pkgs.kitty}/bin/kitty +kitten icat --silent --stdin no --transfer-mode file \
-                    --place "''${w}x''${h}@''${x}x''${y}" "$file" < /dev/null > /dev/tty
-                  exit 1
-                fi
-
-                ${pkgs.pistol}/bin/pistol "$file"
-              else
-                ${pkgs.chafa}/bin/chafa -f sixel -s "$2x$3" --animate off --polite on "$1"
-                exit 1
-              fi
-              ;;
-            video/*)
-              # Generate a thumbnail for video files using ffmpeg
-              thumbnail="/tmp/lf-video-thumbnail.png"
-              ${pkgs.ffmpeg}/bin/ffmpeg -y -i "$1" -vf "thumbnail" -frames:v 1 "$thumbnail" >/dev/null 2>&1
-
-              if [[ "$TERM" == "xterm-kitty" ]]; then
-                ${pkgs.kitty}/bin/kitty +kitten icat --silent --stdin no --transfer-mode file \
-                  --place "''${2}x''${3}@''${4}x''${5}" "$thumbnail" < /dev/null > /dev/tty
-              else
-                ${pkgs.chafa}/bin/chafa -f sixel -s "$2x$3" --animate off --polite on "$thumbnail"
-              fi
-              rm "$thumbnail"
-              exit 1
-              ;;
-            text/*)
-              ${pkgs.bat}/bin/bat -pp --color always --wrap character -- "$1"
-              ;;
-          esac
+            ${pkgs.poppler_utils}/bin/pdftoppm -png -singlefile "$1" "/tmp/lf-pdf-preview"
+            ${pkgs.chafa}/bin/chafa -f sixel -s "$2x$3" "/tmp/lf-pdf-preview.png"
+            exit 1
+            ;;
+          application/zip|application/gzip|application/x-tar)
+            ${pkgs.atool}/bin/atool -l "$1"
+            ;;
+          image/*)
+            if [[ "$TERM" == "xterm-kitty" ]]; then
+              ${pkgs.kitty}/bin/kitty +kitten icat --silent --stdin no --transfer-mode file \
+                --place "''${2}x''${3}@''${4}x''${5}" "$1" < /dev/null > /dev/tty
+            else
+              ${pkgs.chafa}/bin/chafa -f sixel -s "$2x$3" --animate off --polite on "$1"
+            fi
+            exit 1
+            ;;
+          video/*)
+            thumbnail="/tmp/lf-video-thumbnail.png"
+            ${pkgs.ffmpeg}/bin/ffmpeg -y -i "$1" -vf "thumbnail" -frames:v 1 "$thumbnail" >/dev/null 2>&1
+            if [[ "$TERM" == "xterm-kitty" ]]; then
+              ${pkgs.kitty}/bin/kitty +kitten icat --silent --stdin no --transfer-mode file \
+                --place "''${2}x''${3}@''${4}x''${5}" "$thumbnail" < /dev/null > /dev/tty
+            else
+              ${pkgs.chafa}/bin/chafa -f sixel -s "$2x$3" --animate off --polite on "$thumbnail"
+            fi
+            rm "$thumbnail"
+            exit 1
+            ;;
+          text/*)
+            ${pkgs.bat}/bin/bat -pp --color always --wrap character -- "$1"
+            ;;
+        esac
       '';
+
       cleaner = pkgs.writeShellScriptBin "clean.sh" ''
         if [[ "$TERM" == "xterm-kitty" ]]; then
           ${pkgs.kitty}/bin/kitty +kitten icat --clear --stdin no --silent --transfer-mode file < /dev/null > /dev/tty
@@ -213,24 +187,4 @@
       set cleaner ${cleaner}/bin/clean.sh
     '';
   };
-
-  programs.fish.interactiveShellInit = ''
-    function lf-cd
-      set tempfile (mktemp -t tmp.XXXXXX)
-      lf -last-dir-path="$tempfile" $argv
-
-      if test -f "$tempfile"
-        set newdir (cat "$tempfile")
-        if test "$newdir" != (pwd)
-          zoxide add "$newdir"
-          cd "$newdir"
-        end
-        rm -f "$tempfile"
-      end
-      commandline -f repaint
-    end
-
-    bind \cr 'lf-cd; commandline -f repaint'
-    bind \er 'lf-cd (pwd); commandline -f repaint'
-  '';
 }

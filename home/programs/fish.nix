@@ -1,142 +1,41 @@
 {
   pkgs,
   lib,
+  hostname,
   ...
 }: let
-  inherit (import ../../nixos/modules/variables.nix) host;
-
-  myAliases = {
-    # File and directory management
-    ls = "eza --icons --grid --all --color=always";
-    la = "eza --icons -l -T -L=1";
-    tree2 = "eza -R";
-    cat = "bat";
-    md = "mkdir -pv";
-    rm = "rm -Ivr";
-    mv = "mv -iv";
-    cp = "xcp -vr";
-    crp = "rsync -ah --progress";
-    df = "duf -hide special";
-    mem = "free -h";
-
-    # Navigation
-    cd = "z";
-    ".." = "cd ..";
-    "..." = "cd ../..";
-    ".3" = "cd ../../..";
-    ".4" = "cd ../../../..";
-    ".5" = "cd ../../../../..";
-
-    # Editors
-    v = "nvim";
-    vi = "nvim";
-    vim = "nvim";
-    sv = "sudo nvim";
-
-    # Git
-    g = "git";
-    gaa = "git add . -v";
-    gc = "git commit -m";
-    gct = "git commit";
-    gs = "git status";
-    gps = "git push -v";
-    gpf = "git push -v --force";
-
-    gf = "git fetch --all --tags --prune";
-    gpl = "git pull";
-    gpr = "git pull --rebase";
-
-    gl = "git log --graph --oneline --decorate --all"; # Graphical log
-    gls = "git log --stat"; # Log with stats
-    gd = "git diff";
-    gds = "git diff --stat";
-
-    gco = "git checkout";
-    gcb = "git checkout -b"; # Create and switch to a new branch
-    gsw = "git switch";
-    gm = "git merge";
-    go = "git remote -v | grep github.com | grep fetch | head -1 | awk '{print $2}' | sed 's|git@github.com:|https://github.com/|' | xargs xdg-open";
-
-    # Branching
-    gb = "git branch";
-    gba = "git branch -a"; # List all branches (local and remote)
-    gbd = "git branch -d"; # Delete branch
-    gbD = "git branch -D"; # Force delete branch
-
-    # Rebasing
-    grb = "git rebase";
-    grba = "git rebase --abort";
-    grbc = "git rebase --continue";
-    grbi = "git rebase -i"; # Interactive rebase
-
-    # Resetting
-    grs = "git reset";
-    grsh = "git reset --hard"; # Hard reset
-    grst = "git restore --staged"; # Unstage changes
-
-    lg = "cd ~/dotfiles && lazygit";
-    sshz = "ssh-start";
-
-    # System utilities
-    ko = "pkill";
-    h = "history | fzf";
-    jour = "journalctl -xe";
-    fz = "fzf --preview 'fzf-preview {}' --bind 'enter:execute(xdg-open {})'";
-    openports = "netstat -nape --inet";
-    myip = "curl https://ipinfo.io/ip && echo";
-    ff = "clear && fastfetch";
-    startup = "clear && systemctl list-unit-files --type=service | grep enabled";
-
-    # NixOS
-    update = "clear && cd ~/dotfiles && nix flake update";
-    rebuild = "clear && nh os switch";
-    rebuild2 = "clear && sudo nixos-rebuild switch --flake ~/dotfiles#${host}";
-    rebuild3 = "clear && sudo nixos-rebuild switch --flake ~/dotfiles#${host} --show-trace";
-    ns = "nix-shell --command fish -p";
-
-    # Dotfiles management
-    edithome = "cd ~/dotfiles/home/ && nvim home.nix programs/packages2.nix";
-    editsys = "cd ~/dotfiles/ && nvim hosts/modules/configuration.nix flake.nix";
-    editzsh = "cd ~/dotfiles/home/programs && nvim zsh.nix";
-    editfish = "cd ~/dotfiles/home/programs && nvim fish.nix";
-    edithypr = "nvim ~/dotfiles/home/system/hyprland.nix";
-    editsway = "nvim ~/dotfiles/home/system/sway.nix";
-    editi3 = "nvim ~/dotfiles/home/system/i3.nix";
-    editqtile = "nvim ~/dotfiles/home/system/qtile/src/config.py";
-    nd = "nvim ~/dotfiles/";
-    dots = "cd ~/dotfiles && ls";
-
-    # Miscellaneous
-    xx = "exit";
-    c = "clear";
-    o = "xdg-open";
-    t = "tmux";
-    yt1 = "yt-dlp --external-downloader aria2c --external-downloader-args 'aria2c:-x10 -s10 -k1M'";
-    yt2 = "yt-dlp --external-downloader aria2c --external-downloader-args 'aria2c:-x10 -s10 -k1M' -o 'video_%(id)s.%(ext)s'";
-    ytbest = "yt-dlp -f 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best'";
-    ytx = "yt-x";
-    wget1 = "wget --mirror --convert-links --adjust-extension --page-requisites --no-parent";
-    wget2 = "wget --tries=5 --retry-connrefused --waitretry=30";
-    curldl = "curl -L -C - -O";
-    aria = "aria2c";
-    ufda = "echo 'use flake' | tee .envrc && direnv allow";
-
-    fsource = "source ~/.config/fish/config.fish; echo 'Fish config reloaded!'";
-  };
-
-  # Import Fish functions
+  aliases = import ./shell-aliases.nix {inherit hostname;};
   fishFunctions = import ./fish-functions.nix {inherit pkgs;};
 in {
   programs.fish = {
     interactiveShellInit = ''
-      set fish_greeting # Disable greeting
-      direnv hook fish | source
-      set -g fish_autosuggestion_enabled 1
-      set -g fish_autosuggestion_color 555
-      set -g fish_complete_dirs_first 1
-      set -g fish_completion_pager_min_rows 10
+        set fish_greeting # Disable greeting
+        direnv hook fish | source
+        set -g fish_autosuggestion_enabled 1
+        set -g fish_autosuggestion_color 555
+        set -g fish_complete_dirs_first 1
+        set -g fish_completion_pager_min_rows 10
+
+      function lf-cd
+        set tempfile (mktemp -t tmp.XXXXXX)
+        lf -last-dir-path="$tempfile" $argv
+
+        if test -f "$tempfile"
+          set newdir (cat "$tempfile")
+          if test "$newdir" != (pwd)
+            zoxide add "$newdir"
+            cd "$newdir"
+          end
+          rm -f "$tempfile"
+        end
+        commandline -f repaint
+      end
+
+      bind \cr 'lf-cd; commandline -f repaint'
+      bind \er 'lf-cd (pwd); commandline -f repaint'
     '';
-    shellAliases = myAliases;
+
+    shellAliases = aliases;
 
     shellInit = ''
                 # Set GPG TTY

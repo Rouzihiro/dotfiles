@@ -1,5 +1,8 @@
-{ pkgs, hostname, ... }:
-let
+{
+  pkgs,
+  hostname,
+  ...
+}: let
   bashFunctions = builtins.readFile ./functions.sh;
 
   nixBashFunctions = pkgs.writeText "bash-functions" ''
@@ -12,19 +15,30 @@ let
                 cut -d'(' -f1 | tr '\n' ' ')
   '';
 
-	aliases = import ../shell-aliases.nix { inherit hostname; };
+  aliases = import ../shell-aliases.nix {inherit hostname;};
   keybindings = builtins.readFile ./keybindings.sh;
   history = builtins.readFile ./history.sh;
 
   extra = ''
-    # Direnv
-    eval "$(${pkgs.direnv}/bin/direnv hook bash)"
+       # Direnv
+       eval "$(${pkgs.direnv}/bin/direnv hook bash)"
 
-    # Zoxide
-    eval "$(${pkgs.zoxide}/bin/zoxide init bash)"
+       # Zoxide
+       eval "$(${pkgs.zoxide}/bin/zoxide init bash)"
 
-    # FZF
-    source ${pkgs.fzf}/share/fzf/key-bindings.bash
+       # FZF
+       source ${pkgs.fzf}/share/fzf/key-bindings.bash
+
+       # Atuin without up arrow override
+      eval "$(${pkgs.atuin}/bin/atuin init bash --disable-up-arrow)"
+
+       # TheFuck
+       eval "$(${pkgs.thefuck}/bin/thefuck --alias)"
+
+       # Carapace completions
+       source <(${pkgs.carapace}/bin/carapace _carapace bash)
+    	 # Enable FFmpeg completions
+			 source <(carapace gen ffmpeg)
   '';
 in {
   home.file.".bash_functions".text = bashFunctions;
@@ -48,4 +62,3 @@ in {
     '';
   };
 }
-

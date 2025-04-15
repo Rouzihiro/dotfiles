@@ -104,15 +104,17 @@ vim.keymap.set("n", "<esc>", "<cmd>noh<CR>")
 -- LSP & COMPLETION
 -- ======================
 local lspcfg = require("lspconfig")
+local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
--- Nix LSP with Alejandra formatter
 lspcfg.nixd.setup({
-	settings = {
-		nixd = {
-			formatting = { command = { "alejandra" } },
-		},
-	},
+  capabilities = capabilities,
+  settings = {
+    nixd = {
+      formatting = { command = { "alejandra" } },
+    },
+  },
 })
+
 
 -- Setup completion
 local cmp = require("cmp")
