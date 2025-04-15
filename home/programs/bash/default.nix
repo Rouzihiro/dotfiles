@@ -15,7 +15,17 @@ let
   aliases = import ./aliases.nix;
   keybindings = builtins.readFile ./keybindings.sh;
   history = builtins.readFile ./history.sh;
-  extra = builtins.readFile ./extra.sh;
+
+  extra = ''
+    # Direnv
+    eval "$(${pkgs.direnv}/bin/direnv hook bash)"
+
+    # Zoxide
+    eval "$(${pkgs.zoxide}/bin/zoxide init bash)"
+
+    # FZF
+    source ${pkgs.fzf}/share/fzf/key-bindings.bash
+  '';
 in {
   home.file.".bash_functions".text = bashFunctions;
 

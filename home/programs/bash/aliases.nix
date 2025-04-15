@@ -1,6 +1,4 @@
-{ config, ... }: let
-  host = config.networking.hostName;
-in {
+{
   # File and directory management
   ls = "eza --icons --grid --all --color=always";
   la = "eza --icons -l -T -L=1";
@@ -75,8 +73,9 @@ in {
   # NixOS
   update = "clear && cd ~/dotfiles && nix flake update";
   rebuild = "clear && nh os switch";
-  rebuild2 = "clear && sudo nixos-rebuild switch --flake ~/dotfiles#${host}";
-  rebuild3 = "clear && sudo nixos-rebuild switch --flake ~/dotfiles#${host} --show-trace";
+  rebuild2 = "clear && sudo nixos-rebuild switch --flake ~/dotfiles#HP";
+	#rebuild2 = "clear && sudo nixos-rebuild switch --flake ~/dotfiles#${host}";
+  #rebuild3 = "clear && sudo nixos-rebuild switch --flake ~/dotfiles#${host} --show-trace";
   ns = "nix-shell --command bash -p";
   list-gen = "sudo nix-env --list-generations --profile /nix/var/nix/profiles/system/";
   find-store-path = ''function { nix-shell -p $1 --command "nix eval -f "<nixpkgs>" --raw $1" }'';

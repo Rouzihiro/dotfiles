@@ -14,17 +14,10 @@ bind '"\e[1;5D": backward-word'          # Ctrl + Left Arrow
 bind '"\e[1;5C": forward-word'           # Ctrl + Right Arrow
 
 # Quick directory jumps
-bind '"\C-f": "cd ~/.config/\n"'         # Ctrl + F → cd into ~/.config
+bind '"\C-,": "cd ~/.config/\n"'         # Ctrl + , → cd into ~/.config
 bind '"\C-b": "cd ..\n"'                 # Ctrl + B → cd ..
-bind '"\C-h": "cd\n"'                    # Ctrl + H → cd (home)
-bind '"\C-d": "cd ~/Downloads && ls\n"'  # Ctrl + D → cd Downloads + ls
-bind '"\C-m": "cd ~/Videos && ls\n"'     # Ctrl + M → cd Videos + ls
-bind '"\C-r": "cd ~/dotfiles && ls\n"'   # Ctrl + R → cd dotfiles + ls
-
-
-# Jump to common folders and list
-bind '"\C-d": "cd ~/Downloads && ls\n"'  # Ctrl + D → cd Downloads + ls
-bind '"\C-m": "cd ~/Videos && ls\n"'     # Ctrl + M → cd Videos + ls
+bind '"\C-f": "cd\n"'                    # Ctrl + F → cd (home)
+bind '"\C-h":"zi\n"'										 # Ctrl + H → zi
 
 # Quick command execution
 bind '"\C-w": "webserver\n"'             # Ctrl + W → run `webserver` function
