@@ -1,0 +1,29 @@
+"============================================================================="
+"                     Catppuccin Mocha Color Scheme                           "
+"============================================================================="
+set termguicolors " Enable true colors if your terminal supports it
+
+highlight clear
+" Base colors
+let base = '#1e1e2e'
+let text = '#cdd6f4'
+let subtext = '#bac2de'
+let overlay = '#6c7086'
+let surface = '#313244'
+
+" Syntax Groups
+highlight TopLine      gui=none   guifg=#cdd6f4 guibg=#313244
+highlight TopLineSel   gui=bold   guifg=#a6e3a1 guibg=#313244
+highlight Directory    gui=bold   guifg=#89b4fa
+highlight Executable   gui=bold   guifg=#a6e3a1
+highlight Link         gui=bold   guifg=#89dceb
+highlight BrokenLink   gui=bold   guifg=#f38ba8
+highlight CurrLine     gui=bold   guibg=#585b70
+highlight Selected     gui=none   guifg=#f9e2af guibg=#45475a
+highlight StatusLine   gui=none   guifg=#a6e3a1 guibg=#313244
+
+" Filetype Highlights (keep your existing patterns, update colors)
+highlight {README*,LICENSE} guifg=#f9e2af
+highlight {*.md,*.markdown} guifg=#89b4fa
+highlight {*.py,*.js}       guifg=#f9e2af
+highlight {*.zip,*.tar.gz}  guifg=#fab387

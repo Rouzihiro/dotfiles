@@ -1,0 +1,115 @@
+"============================================================================="
+"                  Catppuccin Mocha (LS_COLORS) ColorScheme                  "
+"============================================================================="
+
+highlight clear
+" Base colors (Hex for GUI, terminal codes for cterm)
+let base = '#1e1e2e'   " ctermbg=NONE
+let text = '#cdd6f4'   " ctermfg=White
+let subtext = '#a6adc8' " ctermfg=Grey
+let green = '#a6e3a1'   " ctermfg=Green
+let blue = '#89b4fa'    " ctermfg=Blue
+let red = '#f38ba8'     " ctermfg=Red
+let yellow = '#f9e2af'  " ctermfg=Yellow
+
+highlight TopLine       cterm=none   gui=none   ctermfg=White  guifg=#cdd6f4 ctermbg=NONE guibg=NONE
+highlight TopLineSel    cterm=bold   gui=bold   ctermfg=Green  guifg=#a6e3a1 ctermbg=NONE guibg=NONE
+
+highlight Win           cterm=none   gui=none   ctermfg=NONE   guifg=NONE    ctermbg=NONE guibg=NONE
+highlight Directory     cterm=bold   gui=bold   ctermfg=Blue   guifg=#89b4fa ctermbg=NONE guibg=NONE
+highlight Link          cterm=bold   gui=bold   ctermfg=Cyan   guifg=#89dceb ctermbg=NONE guibg=NONE
+highlight BrokenLink    cterm=bold   gui=bold   ctermfg=Red    guifg=#f38ba8 ctermbg=Black guibg=#1e1e2e
+
+highlight Executable    cterm=bold   gui=bold   ctermfg=Green  guifg=#a6e3a1 ctermbg=NONE guibg=NONE
+highlight Device        cterm=bold   gui=bold   ctermfg=Yellow guifg=#f9e2af ctermbg=NONE guibg=NONE
+highlight Fifo          cterm=bold   gui=bold   ctermfg=Cyan   guifg=#89dceb ctermbg=NONE guibg=NONE
+highlight Socket        cterm=bold   gui=bold   ctermfg=Magenta guifg=#cba6f7 ctermbg=NONE guibg=NONE
+
+highlight CurrLine      cterm=bold,inverse gui=bold,reverse ctermfg=NONE guifg=NONE ctermbg=NONE guibg=#585b70
+highlight OtherLine     cterm=reverse      gui=reverse      ctermfg=Black guifg=#181825 ctermbg=white guibg=#cdd6f4
+highlight Selected      cterm=none         gui=none         ctermfg=Yellow guifg=#f9e2af ctermbg=008 guibg=#45475a
+
+highlight SuggestBox    cterm=bold   gui=bold   ctermfg=NONE guifg=NONE ctermbg=NONE guibg=NONE
+highlight Border        cterm=none   gui=none   ctermfg=NONE guifg=NONE ctermbg=NONE guibg=NONE
+highlight JobLine       cterm=bold   gui=bold   ctermfg=Grey78 guifg=#7f849c ctermbg=008 guibg=#45475a
+highlight StatusLine    cterm=none   gui=none   ctermfg=Green guifg=#a6e3a1 ctermbg=NONE guibg=NONE
+highlight ErrorMsg      cterm=bold   gui=bold   ctermfg=Red guifg=#f38ba8 ctermbg=NONE guibg=NONE
+highlight WildMenu      cterm=bold   gui=bold   ctermfg=LightCyan guifg=#89dceb ctermbg=008 guibg=#45475a
+highlight CmdLine       cterm=none   gui=none   ctermfg=NONE guifg=NONE ctermbg=NONE guibg=NONE
+highlight TabLine       cterm=none   gui=none   ctermfg=NONE guifg=#7f849c ctermbg=238 guibg=#313244
+
+
+"=========================== [GROUP HIGHLIGHTING] ==========================="
+
+" DEV DOCUMENTATION (Peach)
+highlight {CONTRIBUTORS,CONTRIBUTORS.md,CONTRIBUTORS.txt,INSTALL,INSTALL.md,
+          \INSTALL.txt,README,README.md,README*}
+          \ cterm=inverse gui=inverse ctermfg=223 guifg=#f9e2af ctermbg=NONE guibg=NONE
+
+" DEV LICENCE (Subtext1)
+highlight {COPYING,COPYRIGHT,LICEN[CS]E,LICENSE-APACHE,LICENSE-MIT}
+          \ cterm=none gui=none ctermfg=247 guifg=#bac2de ctermbg=NONE guibg=NONE
+
+" DEV CONFIGURATION (Sapphire)
+highlight {CMakeLists.txt,CODEOWNERS,Doxyfile,MANIFEST.in,
+          \Makefile,SConscript,*SConstruct,clang-format,cmake,
+          \.cmake.in,.dox,.fdignore,.flake8,.gemspec,.gitattributes,
+          \.gitconfig,.gitignore,.gitmodules,.hgrc,.ignore,.kdevelop,
+          \.make,.pro,.rgignore,configure,configure.ac,hgrc,
+          \requirements.txt,setup.py}
+          \ cterm=none gui=none ctermfg=116 guifg=#74c7ec ctermbg=NONE guibg=NONE
+
+" DEV SOURCE FILES (Green)
+highlight {*.as,*.asa,*.awk,*.bash,*.bsh,*.c,*.c++,*.cabal,*.cc,*.cgi,*.clj,
+          \*.cp,*.cpp,*.cr,*.cs,*.css,*.csx,*.cxx,*.d,*.dart,*.def,*.di,*.diff,
+          \*.dot,*.dpr,*.el,*.elc,*.elm,*.epp,*.erl,*.ex,*.exs,*.fish,*.fs,
+          \*.fsi,*.fsx,*.gitlab-ci.yml,*.go,*.gradle,*.groovy,*.gv,*.gvy,*.h,
+          \*.h++,*.hh,*.hpp,*.hs,*.htc,*.hxx,*.inc,*.inl,*.ipp,*.ipynb,*.java,
+          \*.jl,*.js,*.kt,*.kts,*.less,*.lisp,*.ll,*.ltx,*.lua,*.m,*.matlab,
+          \*.mir,*.ml,*.mli,*.mn,*.nb,*.p,*.pas,*.patch,*.php,*.pl,*.pm,*.pod,
+          \*.pp,*.ps1,*.psd1,*.psm1,*.purs,*.py,*.r,*.rb,*.rs,*.sass,*.sbt,
+          \*.scala,*.scss,*.sh,*.sql,*.swift,*.t,*.tcl,*.td,*.tex,*.travis.yml,
+          \*.ts,*.tsx,*.vb,*.vim,*.zsh}
+          \ cterm=none gui=none ctermfg=150 guifg=#a6e3a1 ctermbg=NONE guibg=NONE
+
+" DEV SECONDARY FILES (Overlay2)
+highlight {CMakeCache.txt,*.CFUserTextEncoding,*.DS_Store,*.aux,
+          \*.bak,*.bbl,*.bc,*.bcf,*.blg,*.cache,*.class,*.dyn_hi,*.dyn_o,
+          \*.fdb_latexmk,*.fls,*.git,*.hi,*.idx,*.ilg,*.ind,*.la,*.lo,
+          \*.localized,*.lock,*.log,*.o,*.orig,*.out,*.pid,*.pyc,*.pyd,*.pyo,
+          \*.rlib,*.scons_opt,*.sconsign.dblite,*.sty,*.swp,*.synctex.gz,*.tmp,
+          \*.toc,*package-lock.json}
+          \ cterm=none gui=none ctermfg=60 guifg=#6c7086 ctermbg=NONE guibg=NONE
+
+" DEV TODO FILES (Red)
+highlight {TODO,TODO.md,TODO.txt}
+          \ cterm=bold gui=bold ctermfg=Red guifg=#f38ba8 ctermbg=NONE guibg=NONE
+
+" EXECUTABLES (Red)
+highlight {*.a,*.bat,*.com,*.dll,*.exe,*.ko}
+          \ cterm=bold gui=bold ctermfg=210 guifg=#f38ba8 ctermbg=NONE guibg=NONE
+
+" DOCUMENTS (Pink)
+highlight {*.doc,*.docx,*.epub,*.ics,*.kex,*.odp,*.ods,*.odt,*.pdf,*.pps,*.ppt,
+          \*.pptx,*.ps,*.rtf,*.sxi,*.sxw,*.xlr,*.xls,*.xlsx}
+          \ cterm=none gui=none ctermfg=210 guifg=#f5c2e7 ctermbg=NONE guibg=NONE
+
+" TEXT FILES (Subtext0)
+highlight {*.bib,*.bst,*.cfg,*.conf,*.config,*.csv,*.desktop,*.htm,*.html,
+          \*.ini,*.json,*.markdown,*.md,*.mdown,*.nix,*.org,*.rst,*.shtml,
+          \*.tml,*.toml,*.txt,*.ui,*.xhtml,*.xml,*.xmp,*.yaml,*.yml,*passwd}
+          \ cterm=none gui=none ctermfg=223 guifg=#a6adc8 ctermbg=NONE guibg=NONE
+
+" MULTIMEDIA FILES (Mauve)
+highlight {*.ape,*.avi,*.bmp,*.eps,*.flac,*.flv,*.fnt,*.fon,*.gif,*.h264,*.ico,
+          \*.jpeg,*.jpg,*.m3u,*.m4a,*.m4v,*.mid,*.mkv,*.mov,*.mp3,*.mp4,*.mpeg,
+          \*.mpg,*.ogg,*.opus,*.otf,*.pbm,*.pgm,*.png,*.ppm,*.psd,*.rm,*.svg,
+          \*.swf,*.tif,*.tiff,*.ttf,*.vob,*.wav,*.webm,*.webp,*.wma,*.wmv,
+          \*.woff,*.wv,*.xcf}
+          \ cterm=none gui=none ctermfg=224 guifg=#cba6f7 ctermbg=NONE guibg=NONE
+
+" ARCHIVES (Sky)
+highlight {*.7z,*.apk,*.arj,*.bag,*.bin,*.bz,*.bz2,*.deb,*.dmg,*.gz,*.img,
+          \*.iso,*.jar,*.pkg,*.rar,*.rpm,*.tar,*.tbz,*.tbz2,*.tgz,*.toast,
+          \*.vcd,*.xbps,*.xz,*.z,*.zip,*.zst}
+          \ cterm=underline gui=underline ctermfg=116 guifg=#89dceb ctermbg=NONE guibg=NONE
