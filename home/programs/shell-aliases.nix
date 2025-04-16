@@ -25,8 +25,7 @@
   ".4" = "cd ../../../..";
   ".5" = "cd ../../../../..";
 
-	mc = ". /nix/store/p9ywg4jmimvf23cgh5rx3ghn4jbi230g-mc-4.8.33/libexec/mc/mc-wrapper.sh";
-
+	tm = "vifm";
 
   # Editors
   v = "nvim";
