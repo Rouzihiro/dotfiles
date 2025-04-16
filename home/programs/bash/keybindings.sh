@@ -24,4 +24,3 @@ bind '"\C-h":"zi\n"'										 # Ctrl + H → zi
 
 # Insert sudo at start of current line
 bind '"\es": "\C-asudo \C-e"'            # Alt + S → sudo (beginning of line)
-

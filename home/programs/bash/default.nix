@@ -39,6 +39,7 @@
        source <(${pkgs.carapace}/bin/carapace _carapace bash)
     	 # Enable FFmpeg completions
 			 source <(carapace gen ffmpeg)
+
   '';
 in {
   home.file.".bash_functions".text = bashFunctions;
@@ -59,6 +60,7 @@ in {
 
       # Extra config
       ${extra}
+
     '';
   };
 }

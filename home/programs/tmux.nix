@@ -20,14 +20,14 @@ in {
 
           # Make new windows/splits keep CWD
           bind -n M-n new-window -c "#{pane_current_path}"
-          bind -n M-SPACE split-window -c "#{pane_current_path}"
+          bind -n M-s split-window -c "#{pane_current_path}"
           bind -n M-v split-window -h -c "#{pane_current_path}"
           bind g display-popup -B -d "#{pane_current_path}" -xC -yC -w100% -h100% -E 'lazygit'
 
           bind -n M-q kill-pane
 
-          bind -n M-SPACE choose-window "join-pane -v -s "%%""
-          bind -n M-V choose-window "join-pane -h -s "%%""
+          bind -n M-w choose-window "join-pane -v -s "%%""
+          bind -n M-Space choose-window "join-pane -h -s "%%""
 
           # pane vim-navigation
           bind -n M-h select-pane -L

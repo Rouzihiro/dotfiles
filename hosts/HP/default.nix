@@ -27,7 +27,7 @@
     ../../nixos/modules/nas.nix
     # ../../nixos/modules/iphone.nix
     #../../nixos/modules/fstrim.nix
-    ../../nixos/modules/ssh.nix
+    #../../nixos/modules/ssh.nix
     #../../nixos/modules/vm.nix
     #../../nixos/modules/adb.nix
     #../../nixos/modules/fstrim.nix

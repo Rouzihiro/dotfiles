@@ -3,24 +3,26 @@
   pkgs,
   ...
 }: {
+  tools.vifm.enable = true;
+
   imports = [
     #./system/anyrun.nix
     ./system/dunst.nix
     #./system/hyprland-uwsm.nix
     ./system/mime.nix
     ./system/rofi
-		#./system/qtile
-		#./system/i3.nix
+    #./system/qtile
+    #./system/i3.nix
     ./system/stylix.nix
     ./system/sway.nix
     #./system/waybar.nix
     ./system/wofi.nix
     ./system/wlsunset.nix
     # ./system/xdg.nix
-		#./programs/x11.nix
+    #./programs/x11.nix
 
-		#./programs/alacritty.nix
-		./programs/bash
+    #./programs/alacritty.nix
+    ./programs/bash
     ./programs/btop.nix
     ./programs/brave.nix
     ./programs/fastfetch.nix
@@ -32,23 +34,24 @@
     ./programs/git.nix
     #./programs/kitty.nix
     ./programs/lf
-		./programs/librewolf.nix
+    ./programs/librewolf.nix
     ./programs/mpv.nix
     ./programs/nvim
     ./programs/packages.nix
     ./programs/packages2.nix
-    ./programs/qutebrowser.nix
+    #./programs/qutebrowser.nix
     #./programs/ranger.nix
     ./programs/shell.nix
     #./programs/spicetify.nix
     ./programs/starship.nix
     ./programs/tmux.nix
+    ./programs/vifm
     #./programs/yazi.nix
     ./programs/zathura.nix
     #./programs/zsh.nix
 
     ./scripts-nix
-		./themes
+    ./themes
   ];
 
   home.packages = [

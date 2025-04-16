@@ -93,7 +93,7 @@
       cd-dotfiles = "cd ~/dotfiles";
       cd-scripts = "cd ~/dotfiles/home/scripts";
       cd-programs = "cd ~/dotfiles/home/programs";
-			cd-config = "cd ~/.config/";
+      cd-config = "cd ~/.config/";
       cd-usb = "cd ~/mount/usb";
 
       file-open = ''&$OPENER "$f"'';
@@ -121,8 +121,8 @@
       gp = "cd-programs";
       gv = "cd-videos";
       gx = "cd-pix";
-			gc = "cd-config";
-			zz = "shell"; 
+      gc = "cd-config";
+      zz = "shell";
       zy = "copy-path";
       zs = "calcdirsize";
       br = "bulk-rename";

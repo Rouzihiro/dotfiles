@@ -3,6 +3,11 @@
     ####################
     # User Utilities & Tools
     ####################
+		sxiv
+		ueberzugpp
+		highlight
+		chafa viu
+		trash-cli
     nix-output-monitor
     tigervnc
     udisks2

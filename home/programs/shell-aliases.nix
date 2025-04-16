@@ -1,14 +1,11 @@
-{
-  hostname,
-  ...
-}: {
+{hostname, ...}: {
   # File and directory management
   ls = "eza --icons --grid --all --color=always";
   la = "eza --icons -l -T -L=1";
   tree2 = "eza -R";
   cat = "bat";
   md = "mkdir -pv";
-  rm = "rm -Ivr";
+  #rm = "rm -Ivr";
   mv = "mv -iv";
   cp = "xcp -vr";
   crp = "rsync -ah --progress";
@@ -16,12 +13,20 @@
   mem = "free -h";
   folders = "du -h --max-depth=1";
 
+  rm = "trash-put";                    # safer delete
+  trash-list2 = "trash-list | fzf | xargs -r trash-info"; # fuzzy pick for info
+  trash-restore = "trash-restore";  
+  trash-empty = "trash-empty";        
+
   # Navigation
   ".." = "cd ..";
   "..." = "cd ../..";
   ".3" = "cd ../../..";
   ".4" = "cd ../../../..";
   ".5" = "cd ../../../../..";
+
+	mc = ". /nix/store/p9ywg4jmimvf23cgh5rx3ghn4jbi230g-mc-4.8.33/libexec/mc/mc-wrapper.sh";
+
 
   # Editors
   v = "nvim";
@@ -78,7 +83,7 @@
   rebuild = "clear && nh os switch";
   rebuild2 = "clear && sudo nixos-rebuild switch --flake ~/dotfiles#${hostname}";
   rebuild3 = "clear && sudo nixos-rebuild switch --flake ~/dotfiles#${hostname} --show-trace";
-	ns = "nix-shell --run '$(ps -p $$ -o comm=)' -p";
+  ns = "nix-shell --run '$(ps -p $$ -o comm=)' -p";
   list-gen = "sudo nix-env --list-generations --profile /nix/var/nix/profiles/system/";
   find-store-path = ''function { nix-shell -p $1 --command "nix eval -f "<nixpkgs>" --raw $1" }'';
 
@@ -96,7 +101,7 @@
   dots = "cd ~/dotfiles && ls";
 
   # Miscellaneous
-	sbash = "source ~/.bashrc";
+  sbash = "source ~/.bashrc";
   xargs = "xargs ";
   sudo = "sudo ";
   xx = "exit";

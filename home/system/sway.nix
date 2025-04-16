@@ -1,7 +1,6 @@
 {
   lib,
   pkgs,
-  inputs,
   ...
 }: let
   i3blocksConf = pkgs.callPackage ./i3blocks.nix {};
@@ -35,10 +34,8 @@ in {
       for_window [title="^JDownloader.*"] opacity 0.8
 
        set $term footclient
-       set $launcher2 anyrun
        set $launcher rofi -show drun
-       set $browser qutebrowser
-       set $browser2  brave
+       set $browser librewolf
        set $fileManager thunar
        set $TfileManager $term -e yazi
        set $editor $term -e nvim

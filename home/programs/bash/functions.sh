@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-# NixOS Bash Functions Library
 
 # Only load once
 [[ -n $__BASH_FUNCTIONS_LOADED ]] && return
@@ -191,9 +190,10 @@ lf_cd() {
 # Bind Ctrl+L to lf_cd
 bind -x '"\C-l": lf_cd'
 
+
 # --------------------------------------------------
 # Export All Functions
 # --------------------------------------------------
 
-export -f gitsync gitz ssh-start qrimg compress archive ta yturl DL bwu findreplace cpz s catz fontz iso uniso lf_cd
+export -f gitsync gitz ssh-start qrimg compress archive ta yturl DL bwu findreplace cpz s catz fontz iso uniso lf_cd 
 
