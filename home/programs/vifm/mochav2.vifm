@@ -1,115 +1,83 @@
 "============================================================================="
-"                  Catppuccin Mocha (LS_COLORS) ColorScheme                  "
+"                  Catppuccin Mocha for Vifm (Tmux Sync)                    "
 "============================================================================="
 
 highlight clear
-" Base colors (Hex for GUI, terminal codes for cterm)
-let base = '#1e1e2e'   " ctermbg=NONE
-let text = '#cdd6f4'   " ctermfg=White
-let subtext = '#a6adc8' " ctermfg=Grey
-let green = '#a6e3a1'   " ctermfg=Green
-let blue = '#89b4fa'    " ctermfg=Blue
-let red = '#f38ba8'     " ctermfg=Red
-let yellow = '#f9e2af'  " ctermfg=Yellow
 
-highlight TopLine       cterm=none   gui=none   ctermfg=White  guifg=#cdd6f4 ctermbg=NONE guibg=NONE
-highlight TopLineSel    cterm=bold   gui=bold   ctermfg=Green  guifg=#a6e3a1 ctermbg=NONE guibg=NONE
+" --------------------------
+" Base Colors (Matches tmux variables)
+" --------------------------
+" c_bg       = ${currentTheme.base00} = #1e1e2e
+" c_fg       = ${currentTheme.base05} = #cdd6f4
+" c_primary  = ${currentTheme.base0D} = #89b4fa
+" c_teal     = ${currentTheme.base0C} = #89dceb
+" c_green    = ${currentTheme.base0B} = #a6e3a1
+" c_yellow   = ${currentTheme.base0A} = #f9e2af
+" c_orange   = ${currentTheme.base09} = #fab387
+" c_red      = ${currentTheme.base08} = #f38ba8
+" c_purple   = ${currentTheme.base0E} = #cba6f7
 
-highlight Win           cterm=none   gui=none   ctermfg=NONE   guifg=NONE    ctermbg=NONE guibg=NONE
-highlight Directory     cterm=bold   gui=bold   ctermfg=Blue   guifg=#89b4fa ctermbg=NONE guibg=NONE
-highlight Link          cterm=bold   gui=bold   ctermfg=Cyan   guifg=#89dceb ctermbg=NONE guibg=NONE
-highlight BrokenLink    cterm=bold   gui=bold   ctermfg=Red    guifg=#f38ba8 ctermbg=Black guibg=#1e1e2e
+" --------------------------
+" UI Elements (Matches tmux statusbar)
+" --------------------------
+highlight Win           gui=none   guifg=#cdd6f4 guibg=#1e1e2e cterm=none ctermfg=255 ctermbg=234
+highlight TopLine       gui=none   guifg=#cdd6f4 guibg=#313244 cterm=none ctermfg=255 ctermbg=236
+highlight TopLineSel    gui=bold   guifg=#a6e3a1 guibg=#313244 cterm=bold ctermfg=150 ctermbg=236
+highlight StatusLine    gui=none   guifg=#89b4fa guibg=#313244 cterm=none ctermfg=111 ctermbg=236  " Matches tmux primary color
+highlight Border        gui=none   guifg=#6c7086 guibg=NONE    cterm=none ctermfg=242 ctermbg=NONE
+highlight CmdLine       gui=none   guifg=#cdd6f4 guibg=NONE    cterm=none ctermfg=255 ctermbg=NONE
 
-highlight Executable    cterm=bold   gui=bold   ctermfg=Green  guifg=#a6e3a1 ctermbg=NONE guibg=NONE
-highlight Device        cterm=bold   gui=bold   ctermfg=Yellow guifg=#f9e2af ctermbg=NONE guibg=NONE
-highlight Fifo          cterm=bold   gui=bold   ctermfg=Cyan   guifg=#89dceb ctermbg=NONE guibg=NONE
-highlight Socket        cterm=bold   gui=bold   ctermfg=Magenta guifg=#cba6f7 ctermbg=NONE guibg=NONE
+" --------------------------
+" File Display (Consistent with tmux)
+" --------------------------
+highlight Directory     gui=bold   guifg=#89b4fa              cterm=bold ctermfg=111  " Primary
+highlight Link          gui=bold   guifg=#89dceb              cterm=bold ctermfg=117  " Teal
+highlight Executable    gui=bold   guifg=#a6e3a1              cterm=bold ctermfg=150  " Green
+highlight ErrorMsg      gui=bold   guifg=#f38ba8              cterm=bold ctermfg=204  " Red
 
-highlight CurrLine      cterm=bold,inverse gui=bold,reverse ctermfg=NONE guifg=NONE ctermbg=NONE guibg=#585b70
-highlight OtherLine     cterm=reverse      gui=reverse      ctermfg=Black guifg=#181825 ctermbg=white guibg=#cdd6f4
-highlight Selected      cterm=none         gui=none         ctermfg=Yellow guifg=#f9e2af ctermbg=008 guibg=#45475a
+" --------------------------
+" Selection & Active Elements (Matches tmux active pane)
+" --------------------------
+highlight CurrLine      gui=bold,inverse guifg=NONE guibg=NONE cterm=bold,inverse
+highlight Selected      gui=none   guifg=#f9e2af guibg=#45475a cterm=none ctermfg=223 ctermbg=239  " Yellow
+highlight TabLineSel    gui=bold   guifg=#89b4fa guibg=#45475a cterm=bold ctermfg=111 ctermbg=239  " Primary
 
-highlight SuggestBox    cterm=bold   gui=bold   ctermfg=NONE guifg=NONE ctermbg=NONE guibg=NONE
-highlight Border        cterm=none   gui=none   ctermfg=NONE guifg=NONE ctermbg=NONE guibg=NONE
-highlight JobLine       cterm=bold   gui=bold   ctermfg=Grey78 guifg=#7f849c ctermbg=008 guibg=#45475a
-highlight StatusLine    cterm=none   gui=none   ctermfg=Green guifg=#a6e3a1 ctermbg=NONE guibg=NONE
-highlight ErrorMsg      cterm=bold   gui=bold   ctermfg=Red guifg=#f38ba8 ctermbg=NONE guibg=NONE
-highlight WildMenu      cterm=bold   gui=bold   ctermfg=LightCyan guifg=#89dceb ctermbg=008 guibg=#45475a
-highlight CmdLine       cterm=none   gui=none   ctermfg=NONE guifg=NONE ctermbg=NONE guibg=NONE
-highlight TabLine       cterm=none   gui=none   ctermfg=NONE guifg=#7f849c ctermbg=238 guibg=#313244
+" --------------------------
+" File Type Groups (Organized by tmux color scheme)
+" --------------------------
+" Teal (base0C)
+highlight {*.zip,*.tar,*.gz} gui=underline guifg=#89dceb cterm=underline ctermfg=117
 
+" Green (base0B)
+highlight {*.py,*.rs,*.go} gui=none guifg=#a6e3a1 cterm=none ctermfg=150
 
-"=========================== [GROUP HIGHLIGHTING] ==========================="
+" Yellow (base0A)
+highlight {README*,LICENSE*} gui=none guifg=#f9e2af cterm=none ctermfg=223
 
-" DEV DOCUMENTATION (Peach)
-highlight {CONTRIBUTORS,CONTRIBUTORS.md,CONTRIBUTORS.txt,INSTALL,INSTALL.md,
-          \INSTALL.txt,README,README.md,README*}
-          \ cterm=inverse gui=inverse ctermfg=223 guifg=#f9e2af ctermbg=NONE guibg=NONE
+" Orange (base09)
+highlight {*.mp3,*.mp4} gui=none guifg=#fab387 cterm=none ctermfg=216
 
-" DEV LICENCE (Subtext1)
-highlight {COPYING,COPYRIGHT,LICEN[CS]E,LICENSE-APACHE,LICENSE-MIT}
-          \ cterm=none gui=none ctermfg=247 guifg=#bac2de ctermbg=NONE guibg=NONE
+" Red (base08)
+highlight {*.tmp,*.swp} gui=none guifg=#f38ba8 cterm=none ctermfg=204
 
-" DEV CONFIGURATION (Sapphire)
-highlight {CMakeLists.txt,CODEOWNERS,Doxyfile,MANIFEST.in,
-          \Makefile,SConscript,*SConstruct,clang-format,cmake,
-          \.cmake.in,.dox,.fdignore,.flake8,.gemspec,.gitattributes,
-          \.gitconfig,.gitignore,.gitmodules,.hgrc,.ignore,.kdevelop,
-          \.make,.pro,.rgignore,configure,configure.ac,hgrc,
-          \requirements.txt,setup.py}
-          \ cterm=none gui=none ctermfg=116 guifg=#74c7ec ctermbg=NONE guibg=NONE
+" Purple (base0E)
+highlight {*.pdf,*.epub} gui=none guifg=#cba6f7 cterm=none ctermfg=183
 
-" DEV SOURCE FILES (Green)
-highlight {*.as,*.asa,*.awk,*.bash,*.bsh,*.c,*.c++,*.cabal,*.cc,*.cgi,*.clj,
-          \*.cp,*.cpp,*.cr,*.cs,*.css,*.csx,*.cxx,*.d,*.dart,*.def,*.di,*.diff,
-          \*.dot,*.dpr,*.el,*.elc,*.elm,*.epp,*.erl,*.ex,*.exs,*.fish,*.fs,
-          \*.fsi,*.fsx,*.gitlab-ci.yml,*.go,*.gradle,*.groovy,*.gv,*.gvy,*.h,
-          \*.h++,*.hh,*.hpp,*.hs,*.htc,*.hxx,*.inc,*.inl,*.ipp,*.ipynb,*.java,
-          \*.jl,*.js,*.kt,*.kts,*.less,*.lisp,*.ll,*.ltx,*.lua,*.m,*.matlab,
-          \*.mir,*.ml,*.mli,*.mn,*.nb,*.p,*.pas,*.patch,*.php,*.pl,*.pm,*.pod,
-          \*.pp,*.ps1,*.psd1,*.psm1,*.purs,*.py,*.r,*.rb,*.rs,*.sass,*.sbt,
-          \*.scala,*.scss,*.sh,*.sql,*.swift,*.t,*.tcl,*.td,*.tex,*.travis.yml,
-          \*.ts,*.tsx,*.vb,*.vim,*.zsh}
-          \ cterm=none gui=none ctermfg=150 guifg=#a6e3a1 ctermbg=NONE guibg=NONE
+" --------------------------
+" UI Configuration (Tmux-like)
+" --------------------------
+set statusline=" #[fg=#89b4fa]%t%=[%{&fileencoding}] %y %3p%% "  " Matches tmux right status
+set tablabel="%5*%[%1*%C%] %3*%[%1*%C%]%N:"  " Powerline-style like tmux
+set tabsuffix="%4*%[%2*%C%]%4*"
 
-" DEV SECONDARY FILES (Overlay2)
-highlight {CMakeCache.txt,*.CFUserTextEncoding,*.DS_Store,*.aux,
-          \*.bak,*.bbl,*.bc,*.bcf,*.blg,*.cache,*.class,*.dyn_hi,*.dyn_o,
-          \*.fdb_latexmk,*.fls,*.git,*.hi,*.idx,*.ilg,*.ind,*.la,*.lo,
-          \*.localized,*.lock,*.log,*.o,*.orig,*.out,*.pid,*.pyc,*.pyd,*.pyo,
-          \*.rlib,*.scons_opt,*.sconsign.dblite,*.sty,*.swp,*.synctex.gz,*.tmp,
-          \*.toc,*package-lock.json}
-          \ cterm=none gui=none ctermfg=60 guifg=#6c7086 ctermbg=NONE guibg=NONE
+" User colors matching tmux variables
+highlight User1 gui=bold guifg=#a6e3a1 guibg=#313244 cterm=bold ctermfg=150 ctermbg=236  " Green
+highlight User2 gui=none guifg=#89b4fa guibg=#313244 cterm=none ctermfg=111 ctermbg=236  " Primary
+highlight User3 gui=none guifg=#6c7086 guibg=#1e1e2e cterm=none ctermfg=242 ctermbg=234  " Gray
+highlight User4 gui=bold guifg=#1e1e2e guibg=#6c7086 cterm=bold ctermfg=234 ctermbg=242  " Inverted
+highlight User5 gui=bold guifg=#6c7086 guibg=#1e1e2e cterm=bold ctermfg=242 ctermbg=234  " Gray bg
 
-" DEV TODO FILES (Red)
-highlight {TODO,TODO.md,TODO.txt}
-          \ cterm=bold gui=bold ctermfg=Red guifg=#f38ba8 ctermbg=NONE guibg=NONE
-
-" EXECUTABLES (Red)
-highlight {*.a,*.bat,*.com,*.dll,*.exe,*.ko}
-          \ cterm=bold gui=bold ctermfg=210 guifg=#f38ba8 ctermbg=NONE guibg=NONE
-
-" DOCUMENTS (Pink)
-highlight {*.doc,*.docx,*.epub,*.ics,*.kex,*.odp,*.ods,*.odt,*.pdf,*.pps,*.ppt,
-          \*.pptx,*.ps,*.rtf,*.sxi,*.sxw,*.xlr,*.xls,*.xlsx}
-          \ cterm=none gui=none ctermfg=210 guifg=#f5c2e7 ctermbg=NONE guibg=NONE
-
-" TEXT FILES (Subtext0)
-highlight {*.bib,*.bst,*.cfg,*.conf,*.config,*.csv,*.desktop,*.htm,*.html,
-          \*.ini,*.json,*.markdown,*.md,*.mdown,*.nix,*.org,*.rst,*.shtml,
-          \*.tml,*.toml,*.txt,*.ui,*.xhtml,*.xml,*.xmp,*.yaml,*.yml,*passwd}
-          \ cterm=none gui=none ctermfg=223 guifg=#a6adc8 ctermbg=NONE guibg=NONE
-
-" MULTIMEDIA FILES (Mauve)
-highlight {*.ape,*.avi,*.bmp,*.eps,*.flac,*.flv,*.fnt,*.fon,*.gif,*.h264,*.ico,
-          \*.jpeg,*.jpg,*.m3u,*.m4a,*.m4v,*.mid,*.mkv,*.mov,*.mp3,*.mp4,*.mpeg,
-          \*.mpg,*.ogg,*.opus,*.otf,*.pbm,*.pgm,*.png,*.ppm,*.psd,*.rm,*.svg,
-          \*.swf,*.tif,*.tiff,*.ttf,*.vob,*.wav,*.webm,*.webp,*.wma,*.wmv,
-          \*.woff,*.wv,*.xcf}
-          \ cterm=none gui=none ctermfg=224 guifg=#cba6f7 ctermbg=NONE guibg=NONE
-
-" ARCHIVES (Sky)
-highlight {*.7z,*.apk,*.arj,*.bag,*.bin,*.bz,*.bz2,*.deb,*.dmg,*.gz,*.img,
-          \*.iso,*.jar,*.pkg,*.rar,*.rpm,*.tar,*.tbz,*.tbz2,*.tgz,*.toast,
-          \*.vcd,*.xbps,*.xz,*.z,*.zip,*.zst}
-          \ cterm=underline gui=underline ctermfg=116 guifg=#89dceb ctermbg=NONE guibg=NONE
+" --------------------------
+" Pane Border Sync (Matches tmux)
+" --------------------------
+highlight OtherLine     gui=reverse guifg=#585b70 guibg=NONE cterm=reverse ctermfg=240 ctermbg=NONE  " Matches tmux pane-border-style

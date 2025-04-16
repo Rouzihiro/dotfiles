@@ -12,7 +12,7 @@ pkgs.writeScriptBin "rey-doc" ''
 
       # Window 1: LF (top 70%) and terminal (bottom 30%)
       tmux rename-window -t "$SESSION_NAME":1 'Main'
-      tmux send-keys -t "$SESSION_NAME":1 "lf" C-m
+      tmux send-keys -t "$SESSION_NAME":1 "vifm" C-m
       tmux split-window -v -t "$SESSION_NAME":1
       tmux resize-pane -D 15
       tmux send-keys -t "$SESSION_NAME":1.2 "cd ~/dotfiles; clear; ls" C-m
