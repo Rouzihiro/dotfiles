@@ -41,7 +41,7 @@ anoremap <c-i> <CR>
 
 " FILE MANAGEMENT
 nnoremap o :file<CR>
-nnoremap <c-t> :touch<SPACE>
+nnoremap T :touch<SPACE>
 nnoremap M :mkdir<SPACE>
 
 " TAB MANAGEMENT
