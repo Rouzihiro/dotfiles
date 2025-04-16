@@ -117,7 +117,7 @@ nnoremap tv :!sh -c 'mkdir -p /tmp/videothumbs && rm -f /tmp/videothumbs/* && fo
 set title
 
 " COLORSCHEMES
-colorscheme hunter
+colorscheme mocha
 
 " SET LINE NUMBERS
 set number
