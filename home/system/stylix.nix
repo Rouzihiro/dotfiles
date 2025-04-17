@@ -22,13 +22,12 @@ in {
       #sway.enable = false;
       waybar.enable = false;
       hyprland.enable = false;
-			librewolf.enable = false;
-			#librewolf.profileNames = [ "default" ];
+      librewolf.enable = false;
     };
 
     # base16Scheme = "${pkgs.base16-schemes}/share/themes/nord.yaml";
     # base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-macchiato.yaml";
-     base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-mocha.yaml";
+    base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-mocha.yaml";
 
     #  for custom themes;
     #  base16Scheme = builtins.path {
@@ -36,29 +35,35 @@ in {
     #  name = "moonfly";
     # };
 
-     iconTheme = {
-       enable = true;
-       dark = "Nordzy";
-       light = "Nordzy";
-       package = pkgs.nordzy-icon-theme;
-     };
+    iconTheme = {
+      enable = true;
+      dark = "Nordzy";
+      light = "Nordzy";
+      package = pkgs.nordzy-icon-theme;
+    };
 
-     # cursor = {
-     #   package = pkgs.bibata-cursors;
-     #   name = "Bibata-Modern-Ice";
-     #   size = 20;
-     # };
-    
+    cursor = {
+      package = pkgs.rose-pine-cursor;
+      name = "rose-pine-cursor";
+      size = 24;
+    };
+
+    # cursor = {
+    #   package = pkgs.bibata-cursors;
+    #   name = "Bibata-Modern-Ice";
+    #   size = 20;
+    # };
+
     fonts = {
       emoji = {
         package = pkgs.noto-fonts-emoji;
         name = "noto-fonts-color-emoji";
       };
 
-       monospace = {
-         package = pkgs.nerd-fonts.droid-sans-mono;
-         name = "DroidSansM Nerd Font";
-       };
+      monospace = {
+        package = pkgs.nerd-fonts.droid-sans-mono;
+        name = "DroidSansM Nerd Font";
+      };
 
       sansSerif = {
         package = pkgs.dejavu_fonts;
@@ -71,17 +76,25 @@ in {
       };
 
       sizes = {
-        applications = 12;
-        terminal = 12;
-        desktop = 10;
-        popups = 10;
+        applications = 14;
+        terminal = 14;
+        desktop = 15;
+        popups = 15;
       };
+
+      #   sizes = {
+      #     applications = 12;
+      #     terminal = 12;
+      #     desktop = 10;
+      #     popups = 10;
+      #   };
+      #
+      # opacity = {
+      #   applications = 1.0;
+      #   terminal = 0.8;
+      #   desktop = 1.0;
+      #   popups = 0.8;
+      # };
     };
-    # opacity = {
-    #   applications = 1.0;
-    #   terminal = 0.8;
-    #   desktop = 1.0;
-    #   popups = 0.8;
-    # };
   };
 }

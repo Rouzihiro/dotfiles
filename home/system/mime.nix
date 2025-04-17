@@ -4,7 +4,6 @@ in {
   xdg.mimeApps = {
     enable = true;
     defaultApplications = {
-      "inode/directory" = "lf";
       # Image MIME types
       "image/png" = "${imageViewer}.desktop";
       "image/jpg" = "${imageViewer}.desktop";
