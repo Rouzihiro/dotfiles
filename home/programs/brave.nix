@@ -1,5 +1,13 @@
-{
-  programs.brave = {
+{ config, lib, ... }:
+let
+  inherit (lib) mkEnableOption mkIf;
+  name = "brave";
+  cfg = config.browser.${name};
+in {
+  options.browser.${name}.enable = mkEnableOption "Enable ${name}";
+
+  config = mkIf cfg.enable {
+    programs.${name} = {
     enable = true;
     extensions = let
       id = {
@@ -14,4 +22,5 @@
     in
       builtins.attrValues (builtins.mapAttrs (n: v: {id = v;}) id);
   };
+};
 }

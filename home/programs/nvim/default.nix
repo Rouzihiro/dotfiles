@@ -1,42 +1,56 @@
-{pkgs, ...}: {
-  programs.neovim = {
-    enable = true;
-    defaultEditor = true;
-    viAlias = true;
-    vimAlias = true;
-    vimdiffAlias = true;
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}: let
+  inherit (lib) mkEnableOption mkIf;
+  name = "neovim";
+  category = "editor";
+  cfg = config.${category}.${name};
+in {
+  options.${category}.${name}.enable = mkEnableOption "Enable ${name}";
 
-    extraLuaConfig = builtins.readFile ./init.lua;
+  config = mkIf cfg.enable {
+    programs.${name} = {
+      enable = true;
+      defaultEditor = true;
+      viAlias = true;
+      vimAlias = true;
+      vimdiffAlias = true;
 
-    plugins = with pkgs.vimPlugins; [
-      catppuccin-nvim
-      cmp-nvim-lsp
-      cmp-path
-      lualine-nvim
-      nvim-cmp
-      nvim-lspconfig
-      nvim-notify
-      nvim-web-devicons
-      render-markdown-nvim
-      telescope-nvim
-      lf-vim
-      vimtex
-      which-key-nvim
-      (pkgs.vimPlugins.nvim-treesitter.withPlugins (p: [
-        p.tree-sitter-nix
-        p.tree-sitter-markdown
-        p.tree-sitter-latex
-        p.tree-sitter-bash
-      ]))
-    ];
+      extraLuaConfig = builtins.readFile ./init.lua;
 
-    extraPackages = with pkgs; [
-      nixd
-      alejandra
-      texlive.combined.scheme-full
-      nodePackages.prettier
-      stylua
-      tree-sitter
-    ];
+      plugins = with pkgs.vimPlugins; [
+        catppuccin-nvim
+        cmp-nvim-lsp
+        cmp-path
+        lualine-nvim
+        nvim-cmp
+        nvim-lspconfig
+        nvim-notify
+        nvim-web-devicons
+        render-markdown-nvim
+        telescope-nvim
+        lf-vim
+        vimtex
+        which-key-nvim
+        (pkgs.vimPlugins.nvim-treesitter.withPlugins (p: [
+          p.tree-sitter-nix
+          p.tree-sitter-markdown
+          p.tree-sitter-latex
+          p.tree-sitter-bash
+        ]))
+      ];
+
+      extraPackages = with pkgs; [
+        nixd
+        alejandra
+        texlive.combined.scheme-full
+        nodePackages.prettier
+        stylua
+        tree-sitter
+      ];
+    };
   };
 }

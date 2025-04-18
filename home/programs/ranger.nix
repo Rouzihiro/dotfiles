@@ -1,6 +1,15 @@
-{
-  programs.ranger = {
-    enable = true;
+{ config, lib, ... }:
+let
+  inherit (lib) mkEnableOption mkIf;
+  name = "ranger";
+  category = "fileManager";
+  cfg = config.${category}.${name};
+in {
+  options.${category}.${name}.enable = mkEnableOption "Enable ${name}";
+
+  config = mkIf cfg.enable {
+    programs.${name} = {
+      enable = true;
     mappings = {
       e = "edit";
       ec = "compress";
@@ -76,4 +85,5 @@
     bind \cr 'ranger-cd; commandline -f repaint'
     bind \er 'ranger-cd (pwd); commandline -f repaint'
   '';
+};
 }

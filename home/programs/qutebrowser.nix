@@ -1,9 +1,15 @@
-{pkgs, ...}: {
-  home.packages = with pkgs; [qutebrowser];
+{ config, lib, pkgs, ... }:
+let
+  inherit (lib) mkEnableOption mkIf;
+  name = "qutebrowser";
+  cfg = config.browser.${name};
+in {
+  options.browser.${name}.enable = mkEnableOption "Enable ${name}";
 
-  programs.qutebrowser = {
+  config = mkIf cfg.enable {
+    home.packages = [ pkgs.${name} ];
+    programs.${name} = {
     enable = true;
-
     quickmarks = {
       calendar = "https://calendar.google.com";
       chatgpt = "https://chat.openai.com";
@@ -83,4 +89,5 @@
       };
     };
   };
+};
 }

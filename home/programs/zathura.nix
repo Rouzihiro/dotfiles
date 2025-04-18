@@ -1,5 +1,14 @@
-{
-  programs.zathura = {
+{ config, lib,  ... }:
+let
+  inherit (lib) mkEnableOption mkIf;
+  name = "zathura";
+  category = "docViewer";
+  cfg = config.${category}.${name};
+in {
+  options.${category}.${name}.enable = mkEnableOption "Enable ${name}";
+
+  config = mkIf cfg.enable {
+    programs.${name} = {
     enable = true;
 
     options = {
@@ -15,4 +24,5 @@
       map f navigate next
     '';
   };
+};
 }

@@ -5,10 +5,10 @@
   ...
 }: {
   options = {
-    tools.vifm.enable = lib.mkEnableOption "Enable vifm";
+    fileManager.vifm.enable = lib.mkEnableOption "Enable vifm";
   };
 
-  config = lib.mkIf config.tools.vifm.enable {
+  config = lib.mkIf config.fileManager.vifm.enable {
     programs.vifm = {
       enable = true;
     };

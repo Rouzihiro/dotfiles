@@ -1,14 +1,24 @@
-{pkgs, ...}: {
-  home.packages = [pkgs.gimp];
-  xdg.configFile."GIMP/2.10/themerc".text = ''
-    style "gimp-spin-scale-style"
-    {
-      GimpSpinScale::compact = 1
-    }
+{ config, lib, pkgs, ... }:
+let
+  inherit (lib) mkEnableOption mkIf;
+  name = "gimp";
+  category = "graphics";
+  cfg = config.${category}.${name};
+in {
+  options.${category}.${name}.enable = mkEnableOption "Enable ${name}";
 
-    class "GimpSpinScale" style "gimp-spin-scale-style"
+  config = mkIf cfg.enable {
+    home.packages = [ pkgs.${name} ];
+    
+    xdg.configFile."GIMP/2.10/themerc".text = ''
+      style "gimp-spin-scale-style" {
+        GimpSpinScale::compact = 1
+      }
+      class "GimpSpinScale" style "gimp-spin-scale-style"
 
-    include "/nix/store/czr51zdw8qkz17a7c1snkiyj00w416ha-gimp-2.10.38/share/gimp/2.0/themes/System/gtkrc"
-    include "/nix/store/czr51zdw8qkz17a7c1snkiyj00w416ha-gimp-2.10.38/etc/gimp/2.0/gtkrc"
-  '';
+      # Dynamic paths using the GIMP package
+      include "${pkgs.${name}}/share/gimp/2.0/themes/System/gtkrc"
+      include "${pkgs.${name}}/etc/gimp/2.0/gtkrc"
+    '';
+  };
 }

@@ -1,5 +1,14 @@
-{
-  programs.freetube = {
+{ config, lib, ... }:
+let
+  inherit (lib) mkEnableOption mkIf;
+  name = "freetube";
+  category = "media";
+  cfg = config.${category}.${name};
+in {
+  options.${category}.${name}.enable = mkEnableOption "Enable ${name}";
+
+  config = mkIf cfg.enable {
+    programs.${name} = {
     enable = true;
 
     settings = {
@@ -23,4 +32,5 @@
       barColor = false;
     };
   };
+};
 }

@@ -1,5 +1,13 @@
-{ lib, ... }:
 {
+  config,
+  lib,
+  ...
+}: {
+  options = {
+    terminal.foot.enable = lib.mkEnableOption "Enable foot";
+  };
+
+  config = lib.mkIf config.terminal.foot.enable {
   programs.foot = {
     enable = true;
     server.enable = true;
@@ -16,4 +24,5 @@
       tweak = { font-monospace-warn = "no"; };
       };
   };
+};
 }
