@@ -32,7 +32,7 @@ in {
        set $opacity 0.9
        for_window [app_id="foot"] opacity $opacity
        for_window [title="^JDownloader.*"] opacity 0.8
-			 for_window [app_id="runner_floating"] floating enable, resize set width 1800 height 1000, move scratchpad
+			 for_window [app_id="runner_floating"] floating enable, move position center, move scratchpad
 
        set $term footclient
        set $launcher rofi -show drun
