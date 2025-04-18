@@ -22,7 +22,8 @@ in {
             bind -n M-n new-window -c "#{pane_current_path}"
             bind -n M-s split-window -c "#{pane_current_path}"
             bind -n M-v split-window -h -c "#{pane_current_path}"
-            bind g display-popup -B -d "#{pane_current_path}" -xC -yC -w100% -h100% -E 'lazygit'
+            bind g display-popup -B -d "#{pane_current_path}" -xC -yC -w100% -h100% -E "bash -c 'source ~/.keychain/$(hostname)-sh && lazygit'"
+						#bind g display-popup -B -d "#{pane_current_path}" -xC -yC -w100% -h100% -E 'lazygit'
 
             # Kill pane quickly
             bind -n M-q kill-pane
