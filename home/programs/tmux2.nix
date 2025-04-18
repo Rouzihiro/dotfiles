@@ -1,0 +1,120 @@
+{pkgs, ...}: let
+  inherit (import ../../nixos/modules/variables.nix) shell;
+in {
+  programs.tmux = {
+    enable = true;
+    clock24 = true;
+    shell = "${pkgs.${shell}}/bin/${shell}";
+    terminal = "tmux-256color";
+    prefix = "C-a";
+    mouse = true;
+    baseIndex = 1;
+    escapeTime = 0;
+    historyLimit = 10000;
+    extraConfig = ''
+            # Options to make tmux more pleasant
+            # set -g mouse on
+            # set -g default-terminal "tmux-256color"
+            # set -ga terminal-overrides ",*256col*:Tc"
+            # set -ga terminal-overrides '*:Ss=\E[%p1%d q:Se=\E[ q'
+            # set-environment -g COLORTERM "truecolor"
+            # set -g renumber-windows on
+
+            # Make new windows/splits keep CWD
+            bind -n M-n new-window -c "#{pane_current_path}"
+            bind -n M-s split-window -c "#{pane_current_path}"
+            bind -n M-v split-window -h -c "#{pane_current_path}"
+            bind g display-popup -B -d "#{pane_current_path}" -xC -yC -w100% -h100% -E 'lazygit'
+
+            bind -n M-q kill-pane
+
+            bind -n M-w choose-window "join-pane -v -s "%%""
+            bind -n M-Space choose-window "join-pane -h -s "%%""
+
+            # pane vim-navigation
+            bind -n M-h select-pane -L
+            bind -n M-j select-pane -D
+            bind -n M-k select-pane -U
+            bind -n M-l select-pane -R
+
+            # Toggle pane zoom/fullscreen with Alt+f
+            bind -n M-f resize-pane -Z
+
+            # Resize panes
+            bind -n M-Left resize-pane -L
+            bind -n M-Down resize-pane -D
+            bind -n M-Up resize-pane -U
+            bind -n M-Right resize-pane -R
+
+            # Switch windows with alt+number
+            bind -n M-1 select-window -t 1
+            bind -n M-2 select-window -t 2
+            bind -n M-3 select-window -t 3
+            bind -n M-4 select-window -t 4
+            bind -n M-5 select-window -t 5
+            bind -n M-6 select-window -t 6
+            bind -n M-7 select-window -t 7
+            bind -n M-8 select-window -t 8
+            bind -n M-9 select-window -t 9
+
+            # Switch sessions with prefix+number
+            bind 1 attach-session -t 1
+            bind 2 attach-session -t 2
+            bind 3 attach-session -t 3
+            bind 4 attach-session -t 4
+            bind 5 attach-session -t 5
+            bind 6 attach-session -t 6
+            bind 7 attach-session -t 7
+            bind 8 attach-session -t 8
+            bind 9 attach-session -t 9
+
+            bind -n M-c copy-mode
+
+            # Use peasant standard vim keys for copy mode
+            bind -T copy-mode j send -X cursor-down
+            bind -T copy-mode l send -X cursor-right
+            bind -T copy-mode h send -X cursor-left
+            bind -T copy-mode k send -X cursor-up
+            bind -T copy-mode J send -X -N 12 scroll-down
+            bind -T copy-mode L send -X end-of-line
+            bind -T copy-mode H send -X start-of-line
+            bind -T copy-mode K send -X -N 12 scroll-up
+
+            # Don't exit copy mode after selecting something with the mouse
+            unbind -T copy-mode MouseDragEnd1Pane
+
+            bind -T copy-mode v     send -X begin-selection
+            bind -T copy-mode 'C-v' send -X begin-selection \; send -X rectangle-toggle
+            bind -T copy-mode V     send -X select-line
+            bind -T copy-mode r     send -X rectangle-toggle
+            bind -T copy-mode y     send -X copy-pipe-and-cancel "wl-copy"
+
+      # Status Bar Configuration
+            set-option -g status-position top
+            set -g status-style bg=default
+            set -g status-left-length 200
+            set -g status-right-length 200
+            set -g window-status-separator ""
+
+            # Colors
+            set -g status-bg default
+            set -g pane-active-border-style "fg=#5E81AC"
+            set -g pane-border-style "fg=#4C566A"
+
+            # Left status (session name)
+            set -g status-left "#[fg=#3B4252,bg=default]#[fg=#D8DEE9,bg=#3B4252] #S #[fg=#3B4252,bg=#434C5E]"
+
+            # Right status (multiple components) - now with proper rounded start
+            set -g status-right "#[fg=#434C5E,bg=default]\
+      #[fg=#D8DEE9,bg=#434C5E]   #(echo \"#{pane_current_path}\" | awk -F/ '{ if (NF<=2) print \$NF; else print \$(NF-1)\"/\"\$NF; }') \
+      #[fg=#434C5E,bg=#4C566A]#[fg=#D8DEE9,bg=#4C566A]  \
+      #[fg=#4C566A,bg=#5E81AC]#[fg=#ECEFF4,bg=#5E81AC] #(battery-status | awk '/charging/ {print \"󰂂 \" \$2; next} {print \$2}') \
+      #[fg=#5E81AC,bg=#3B4252]#[fg=#ECEFF4,bg=#33658A]  %H:%M \
+      #[fg=#33658A,bg=default]"
+
+            # Window status
+            set -g window-status-format "#[fg=#D8DEE9,bg=#4C566A] #I:#W "
+            set -g window-status-current-format "#[fg=#ECEFF4,bg=#5E81AC] #I:#W "
+    '';
+  };
+}

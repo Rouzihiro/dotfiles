@@ -78,7 +78,6 @@ qrimg() {
 compress() { tar c -I "xz -T 0 -7" -f "${1}.tar.xz" "$1"; }
 archive()  { tar c -I "xz -T 0 -0" -f "${1}.tar.xz" "$1"; }
 
-
 ta() {
     if [[ -z "$1" ]]; then
         tmux attach
@@ -171,29 +170,29 @@ uniso() {
     sudo umount ~/mount/iso
 }
 
-lf_cd() {
-  local tempfile
-  tempfile=$(mktemp -t tmp.XXXXXX)
-  lf -last-dir-path="$tempfile" "$@"
-
-  if [[ -f "$tempfile" ]]; then
-    local newdir
-    newdir=$(cat "$tempfile")
-    if [[ "$newdir" != "$(pwd)" ]]; then
-      zoxide add "$newdir"
-      cd "$newdir" || return
-    fi
-    rm -f "$tempfile"
-  fi
-}
-
-# Bind Ctrl+L to lf_cd
-bind -x '"\C-l": lf_cd'
+# lf_cd() {
+#   local tempfile
+#   tempfile=$(mktemp -t tmp.XXXXXX)
+#   lf -last-dir-path="$tempfile" "$@"
+#
+#   if [[ -f "$tempfile" ]]; then
+#     local newdir
+#     newdir=$(cat "$tempfile")
+#     if [[ "$newdir" != "$(pwd)" ]]; then
+#       zoxide add "$newdir"
+#       cd "$newdir" || return
+#     fi
+#     rm -f "$tempfile"
+#   fi
+# }
+#
+# # Bind Ctrl+L to lf_cd
+# bind -x '"\C-l": lf_cd'
 
 
 # --------------------------------------------------
 # Export All Functions
 # --------------------------------------------------
 
-export -f gitsync gitz ssh-start qrimg compress archive ta yturl DL bwu findreplace cpz s catz fontz iso uniso lf_cd 
+export -f gitsync gitz ssh-start qrimg compress archive ta yturl DL bwu findreplace cpz s catz fontz iso uniso 
 

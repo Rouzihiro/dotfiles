@@ -33,7 +33,7 @@
     ./programs/fzf-preview.nix
     ./programs/git.nix
     #./programs/kitty.nix
-    ./programs/lf
+    #./programs/lf
     ./programs/librewolf.nix
     ./programs/mpv.nix
     ./programs/nvim

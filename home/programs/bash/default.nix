@@ -49,6 +49,9 @@ in {
     enableCompletion = true;
     enableVteIntegration = true;
     initExtra = ''
+
+			export LS_COLORS="${builtins.getEnv "LS_COLORS"}:ex=38;5;111"
+
       export PATH="$HOME/dotfiles/home/scripts:$PATH"
       source ${nixBashFunctions}
 
