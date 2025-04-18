@@ -31,7 +31,8 @@ in {
     extraConfig = ''
        set $opacity 0.9
        for_window [app_id="foot"] opacity $opacity
-      for_window [title="^JDownloader.*"] opacity 0.8
+       for_window [title="^JDownloader.*"] opacity 0.8
+			 for_window [app_id="runner_floating"] floating enable, resize set width 1800 height 1000, move scratchpad
 
        set $term footclient
        set $launcher rofi -show drun
@@ -97,6 +98,9 @@ in {
         border = 2;
         titlebar = false;
         modifier = mod;
+				criteria = [
+          { app_id = "^com.saivert.pwvucontrol$"; }
+        ];
       };
 
       modes = {
@@ -104,6 +108,12 @@ in {
           "${mod}+i" = "mode \"default\"";
         };
       };
+      
+			assigns = {
+        "1" = [{ app_id = "^librewolf$"; }];
+      };
+
+
       keybindings = let
         unpack = set: lib.lists.foldr (a: b: a // b) {} (builtins.attrValues set);
 
@@ -145,6 +155,7 @@ in {
           "Shift+b" = "exec browse-web";
           "z" = "exec keybinds-list-shell";
           "Shift+z" = "exec keybinds-list-sway";
+					"r" = "exec $term --app-id=runner_floating -e ~/dotfiles/home/scripts/runner";
 
           # Layout stuff
           "f" = "fullscreen";
