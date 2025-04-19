@@ -1,16 +1,25 @@
-{...}: let
+{ config, lib, wm, ... }:
+let
+  inherit (lib) mkEnableOption mkIf;
   inherit (import ../../nixos/modules/variables.nix) currentTheme;
+
+  name = "waybar";
+  category = "statusBar";
+  cfg = config.${category}.${name};
 in {
-  programs.waybar = {
-    enable = true;
+  options.${category}.${name}.enable = mkEnableOption "Enable ${name}";
+
+  config = mkIf cfg.enable {
+    programs.${name} = {
+      enable = true;
     settings = [
       {
         height = 30;
         margin-top = 5;
         margin-left = 10;
         margin-right = 10;
-        modules-left = ["hyprland/window"];
-        modules-center = ["hyprland/workspaces"];
+        modules-left = ["${wm}/window"];
+        modules-center = ["${wm}/workspaces"];
         modules-right = [
           "pulseaudio"
           "network"
@@ -20,14 +29,14 @@ in {
           "clock"
         ];
 
-        "hyprland/window" = {
+        "${wm}/window" = {
           format = "{}";
           "max-length" = 35;
           rewrite = {"" = "Harsh";};
           "separate-outputs" = true;
         };
 
-        "sway/workspaces" = {
+        "${wm}/workspaces" = {
           format = "{icon}";
           "on-click" = "activate";
           "format-icons" = {"active" = " ";};
@@ -241,4 +250,5 @@ in {
       }
     '';
   };
+};
 }

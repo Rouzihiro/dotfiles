@@ -3,7 +3,6 @@
   pkgs,
   ...
 }: {
-
   terminal = {
     tmux.enable = true;
     foot.enable = true;
@@ -11,14 +10,14 @@
     kitty.enable = false;
   };
 
-	  shell = {
+  shell = {
     zsh.enable = false;
     fish.enable = false;
   };
 
   editor.neovim.enable = true;
-  
-	fileManager = {
+
+  fileManager = {
     vifm.enable = true;
     ranger.enable = false;
     yazi.enable = false;
@@ -39,12 +38,21 @@
 
   sysNotifier.dunst.enable = true;
 
-  media = {
-    freetube.enable = false;
-    mpv.enable = true; 
+  launcher = {
+    wofi.enable = true;
+    rofi.enable = true;
   };
 
-	# music.spicetify.enable = false;
+  statusBar = {
+    waybar.enable = false;
+  };
+
+  media = {
+    freetube.enable = false;
+    mpv.enable = true;
+  };
+
+  # music.spicetify.enable = false;
 
   graphics.gimp.enable = false;
 
@@ -64,26 +72,8 @@
   theme.stylix.enable = true;
 
   imports = [
-    #./system/anyrun.nix
-    ./system/dunst.nix
-    ./system/hyprland-uwsm.nix
-    ./system/mime.nix
-    ./system/rofi
-    ./system/qtile
-    ./system/i3.nix
-    ./system/stylix.nix
-    ./system/sway.nix
-    #./system/waybar.nix
-    ./system/wofi.nix
-    ./system/wlsunset.nix
-    # ./system/xdg.nix
-
-    ./programs
-  	./programs/bash
-    ./programs/lf
-    ./programs/nvim
-    ./programs/vifm
-
+    ./system
+		./programs
     ./scripts-nix
   ];
 
