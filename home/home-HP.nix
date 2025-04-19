@@ -50,35 +50,11 @@
     # ./system/xdg.nix
     #./programs/x11.nix
 
-    ./programs/alacritty.nix
-    ./programs/bash
-    ./programs/btop.nix
-    ./programs/brave.nix
-    ./programs/fastfetch.nix
-    ./programs/firefox.nix
-    ./programs/fish.nix
-    ./programs/foot.nix
-    ./programs/freetube.nix
-    ./programs/fzf-preview.nix
-    ./programs/git.nix
-		./programs/gimp.nix
-    ./programs/kitty.nix
+    ./programs
+  	./programs/bash
     ./programs/lf
-    ./programs/librewolf.nix
-    ./programs/mpv.nix
     ./programs/nvim
-    ./programs/packages.nix
-    ./programs/packages2.nix
-    ./programs/qutebrowser.nix
-    ./programs/ranger.nix
-    ./programs/shell.nix
-    #./programs/spicetify.nix
-    ./programs/starship.nix
-    ./programs/tmux.nix
     ./programs/vifm
-    ./programs/yazi.nix
-    ./programs/zathura.nix
-    ./programs/zsh.nix
 
     ./scripts-nix
   ];
