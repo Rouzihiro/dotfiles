@@ -19,8 +19,9 @@
 	terminal.kitty.enable = false;
 	shell.zsh.enable = false;
 	shell.fish.enable = false;
-	systemMonitor.btop.enable = true;
-	systemMonitor.fastfetch.enable = true;
+	sysMonitor.btop.enable = true;
+	sysMonitor.fastfetch.enable = true;
+	sysNotifier.dunst.enable = true;
 	media.freetube.enable = false;
 	media.mpv.enable = true;
 	#music.spicetify.enable = false;
@@ -28,11 +29,12 @@
 	dev.lazygit.enable = true;
 	cli.starship.enable = true;
 	docViewer.zathura.enable = true;
+	wm.hyprland.enable = true;
 
   imports = [
     #./system/anyrun.nix
     ./system/dunst.nix
-    #./system/hyprland-uwsm.nix
+    ./system/hyprland-uwsm.nix
     ./system/mime.nix
     ./system/rofi
     #./system/qtile

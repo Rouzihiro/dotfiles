@@ -5,7 +5,7 @@
 }: let
   inherit (lib) mkEnableOption mkIf;
   name = "fastfetch";
-  category = "systemMonitor";
+  category = "sysMonitor";
   cfg = config.${category}.${name};
 in {
   options.${category}.${name}.enable = mkEnableOption "Enable ${name}";
