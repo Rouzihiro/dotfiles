@@ -37,9 +37,15 @@
     # Shared variables across all hosts
     commonSettings = {
       username = "rey";
+			shell = "bash";
+			editor = "neovim"; 
       gitUsername = "Rouzihiro";
       gitEmail = "ryossj@gmail.com";
-      shell = "bash";
+     	browser = "librewolf";
+			imageViewer = "imv";
+			videoPlayer = "mpv";
+			pdfViewer = "org.pwmt.zathura";
+
     };
 
     hosts = [

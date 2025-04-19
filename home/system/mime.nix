@@ -1,6 +1,12 @@
-{...}: let
-  inherit (import ../../nixos/modules/variables.nix) browser-light imageViewer videoPlayer Editor pdfViewer;
-in {
+{
+	imageViewer,
+	browser,
+	pdfViewer,
+  videoPlayer,
+  ...
+}: 
+
+let nvimDesktop = "neovim-terminal.desktop"; in {
   xdg.mimeApps = {
     enable = true;
     defaultApplications = {
@@ -12,19 +18,19 @@ in {
       "image/gif" = "${imageViewer}.desktop";
 
       # Web and browser MIME types
-      "text/html" = "${browser-light}.desktop";
-      "x-scheme-handler/http" = "${browser-light}.desktop";
-      "x-scheme-handler/https" = "${browser-light}.desktop";
-      "x-scheme-handler/chrome" = "${browser-light}.desktop";
-      "x-scheme-handler/about" = "${browser-light}.desktop";
-      "x-scheme-handler/unknown" = "${browser-light}.desktop";
-      "default-web-browser" = "${browser-light}.desktop";
-      "application/xhtml+xml" = "${browser-light}.desktop";
-      "application/x-extension-htm" = "${browser-light}.desktop";
-      "application/x-extension-html" = "${browser-light}.desktop";
-      "application/x-extension-shtml" = "${browser-light}.desktop";
-      "application/x-extension-xhtml" = "${browser-light}.desktop";
-      "application/x-extension-xht" = "${browser-light}.desktop";
+      "text/html" = "${browser}.desktop";
+      "x-scheme-handler/http" = "${browser}.desktop";
+      "x-scheme-handler/https" = "${browser}.desktop";
+      "x-scheme-handler/chrome" = "${browser}.desktop";
+      "x-scheme-handler/about" = "${browser}.desktop";
+      "x-scheme-handler/unknown" = "${browser}.desktop";
+      "default-web-browser" = "${browser}.desktop";
+      "application/xhtml+xml" = "${browser}.desktop";
+      "application/x-extension-htm" = "${browser}.desktop";
+      "application/x-extension-html" = "${browser}.desktop";
+      "application/x-extension-shtml" = "${browser}.desktop";
+      "application/x-extension-xhtml" = "${browser}.desktop";
+      "application/x-extension-xht" = "${browser}.desktop";
 
       # PDF MIME type
       "application/pdf" = "${pdfViewer}.desktop";
@@ -53,26 +59,45 @@ in {
       "audio/x-mod" = "${videoPlayer}.desktop";
 
       # Text and code MIME types
-      "inode/x-empty" = "${Editor}.desktop";
-      "text/x-tex" = "${Editor}.desktop";
-      "text/x-ruby" = "${Editor}.desktop";
-      "text/x-readme" = "${Editor}.desktop";
-      "application/x-ruby" = "${Editor}.desktop";
-      "text/rhtml" = "${Editor}.desktop";
-      "text/plain" = "${Editor}.desktop";
-      "text/markdown" = "${Editor}.desktop";
-      "text/x-shellscript" = "${Editor}.desktop";
-      "application/x-sh" = "${Editor}.desktop";
-      "application/xml" = "${Editor}.desktop";
-      "text/x-nix" = "${Editor}.desktop";
-      "text/x-python" = "${Editor}.desktop";
-      "text/x-c" = "${Editor}.desktop";
-      "text/x-java" = "${Editor}.desktop";
-      "text/x-markdown" = "${Editor}.desktop";
-      "text/css" = "${Editor}.desktop";
-      "text/csv" = "${Editor}.desktop";
-      "text/javascript" = "${Editor}.desktop";
-      "application/json" = "${Editor}.desktop";
+			"text/plain" = nvimDesktop;
+      "text/markdown" = nvimDesktop;
+      "text/x-shellscript" = nvimDesktop;
+      "text/x-nix" = nvimDesktop;
+      "text/x-python" = nvimDesktop;
+      "text/x-c" = nvimDesktop;
+      "text/x-java" = nvimDesktop;
+      "text/x-lua" = nvimDesktop;
+      "text/x-tex" = nvimDesktop;
+      "text/css" = nvimDesktop;
+      "text/csv" = nvimDesktop;
+      "text/javascript" = nvimDesktop;
+      "application/json" = nvimDesktop;
+      "application/xml" = nvimDesktop;
+      "inode/x-empty" = nvimDesktop;
+      "text/x-ruby" = nvimDesktop;
+      "text/x-readme" = nvimDesktop;
+      "application/x-ruby" = nvimDesktop;
+      "text/rhtml" = nvimDesktop;
+      "application/x-sh" = nvimDesktop;
+      "text/x-markdown" = nvimDesktop;
     };
   };
+
+	xdg.desktopEntries.neovim-terminal = {
+  name = "Neovim (Terminal)";
+  genericName = "Text Editor";
+  comment = "Edit text files in terminal";
+  exec = "foot -e nvim %F";
+  terminal = true;
+  type = "Application";
+  mimeType = [
+    "text/plain" "text/markdown" "text/x-shellscript" "text/x-nix"
+    "text/x-python" "text/x-c" "text/x-java" "text/x-lua" "text/x-tex"
+    "text/css" "text/csv" "text/javascript" "application/json" "application/xml"
+  ];
+  icon = "neovim";
+  categories = ["Utility" "TextEditor"];
+};
+
+
 }

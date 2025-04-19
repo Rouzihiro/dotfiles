@@ -2,9 +2,8 @@
   config,
   lib,
   ...
-}: let
-  inherit (import ../../nixos/modules/variables.nix) shell Editor;
-in {
+}: 
+ {
   options = {
     terminal.kitty.enable = lib.mkEnableOption "Enable kitty";
   };
@@ -19,8 +18,6 @@ in {
         cursor_shape = "block";
         cursor_blink_interval = 0;
         enable_audio_bell = "no";
-        shell = "${shell}";
-        editor = "${Editor}";
         window_padding_width = 5;
         tab_title_template = "{index}";
         tab_bar_style = "powerline";

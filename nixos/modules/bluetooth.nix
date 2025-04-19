@@ -1,8 +1,4 @@
-let
-
-  inherit (import ./variables.nix) BT-status;
-in
-{
+{ BT-status, ... }: {
   services.blueman.enable = BT-status;
 
   hardware.bluetooth = {
