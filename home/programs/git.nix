@@ -2,10 +2,11 @@
   config,
   lib,
   pkgs,
+	gitUsername, 
+	gitEmail,
   ...
 }: let
   inherit (lib) mkEnableOption mkIf;
-  inherit (import ../../nixos/modules/variables.nix) gitUsername gitEmail; 
 
   name = "lazygit";
   category = "dev";
@@ -18,8 +19,8 @@ in {
       ${name}.enable = true;
       git = {
         enable = true;
-        userName = "${gitUsername}";
-        userEmail = "${gitEmail}";
+        userName = gitUsername;
+        userEmail = gitEmail;
         ignores = [
           ".cache/"
           ".DS_Store"

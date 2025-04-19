@@ -4,35 +4,64 @@
   ...
 }: {
 
-	editor.neovim.enable = true;
-  fileManager.vifm.enable = true;
- 	fileManager.ranger.enable = false;
-	fileManager.yazi.enable = false;
-	fileManager.lf.enable = false;
-	browser.librewolf.enable = true;
-	browser.brave.enable = false;
-	browser.qutebrowser.enable = false;
-	browser.firefox.enable = false;
-	terminal.tmux.enable = true;
-	terminal.foot.enable = true;
-	terminal.alacritty.enable = false;
-	terminal.kitty.enable = false;
-	shell.zsh.enable = false;
-	shell.fish.enable = false;
-	sysMonitor.btop.enable = true;
-	sysMonitor.fastfetch.enable = true;
-	sysNotifier.dunst.enable = true;
-	media.freetube.enable = false;
-	media.mpv.enable = true;
-	#music.spicetify.enable = false;
-	graphics.gimp.enable = false;
-	dev.lazygit.enable = true;
-	cli.starship.enable = true;
-	docViewer.zathura.enable = true;
-	wm.hyprland.enable = false;
-	wm.i3.enable = false;
-	wm.sway.enable = true;
-	wm.qtile.enable = false;
+  terminal = {
+    tmux.enable = true;
+    foot.enable = true;
+    alacritty.enable = false;
+    kitty.enable = false;
+  };
+
+	  shell = {
+    zsh.enable = false;
+    fish.enable = false;
+  };
+
+  editor.neovim.enable = true;
+  
+	fileManager = {
+    vifm.enable = true;
+    ranger.enable = false;
+    yazi.enable = false;
+    lf.enable = false;
+  };
+
+  browser = {
+    librewolf.enable = true;
+    brave.enable = false;
+    qutebrowser.enable = false;
+    firefox.enable = false;
+  };
+
+  sysMonitor = {
+    btop.enable = true;
+    fastfetch.enable = true;
+  };
+
+  sysNotifier.dunst.enable = true;
+
+  media = {
+    freetube.enable = false;
+    mpv.enable = true; 
+  };
+
+	# music.spicetify.enable = false;
+
+  graphics.gimp.enable = false;
+
+  dev.lazygit.enable = true;
+
+  cli.starship.enable = true;
+
+  docViewer.zathura.enable = true;
+
+  wm = {
+    hyprland.enable = false;
+    i3.enable = false;
+    sway.enable = true;
+    qtile.enable = false;
+  };
+
+  theme.stylix.enable = true;
 
   imports = [
     #./system/anyrun.nix
@@ -48,7 +77,6 @@
     ./system/wofi.nix
     ./system/wlsunset.nix
     # ./system/xdg.nix
-    #./programs/x11.nix
 
     ./programs
   	./programs/bash

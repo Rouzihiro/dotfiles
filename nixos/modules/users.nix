@@ -2,6 +2,8 @@
   inputs,
   username,
   hostname,
+	gitUsername, 
+	gitEmail,
   ...
 }: {
   imports = [inputs.home-manager.nixosModules.home-manager];
@@ -16,7 +18,7 @@
     useGlobalPkgs = true;
     useUserPackages = true;
     backupFileExtension = "backup";
-    extraSpecialArgs = {inherit inputs username hostname;};
+    extraSpecialArgs = {inherit inputs username hostname gitUsername gitEmail;};
 
     users.${username} = {
       imports = [(../../home + "/home-${hostname}.nix")];
