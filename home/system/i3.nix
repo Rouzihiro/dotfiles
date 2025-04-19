@@ -1,10 +1,18 @@
 {
+  config,
   lib,
   pkgs,
   ...
 }: let
-  i3blocksConf = pkgs.callPackage ./i3blocks.nix {};
+  inherit (lib) mkEnableOption mkIf;
+  name = "i3";
+  category = "wm";
+  cfg = config.${category}.${name};
+	i3blocksConf = pkgs.callPackage ./i3blocks.nix {};
 in {
+  options.${category}.${name}.enable = mkEnableOption "Enable ${name}";
+
+  config = mkIf cfg.enable {
   home.packages = with pkgs; [
     xautolock
     i3lock
@@ -164,4 +172,5 @@ in {
       ];
     };
   };
+};
 }

@@ -29,7 +29,10 @@
 	dev.lazygit.enable = true;
 	cli.starship.enable = true;
 	docViewer.zathura.enable = true;
-	wm.hyprland.enable = true;
+	wm.hyprland.enable = false;
+	wm.i3.enable = false;
+	wm.sway.enable = true;
+	wm.qtile.enable = false;
 
   imports = [
     #./system/anyrun.nix
@@ -37,8 +40,8 @@
     ./system/hyprland-uwsm.nix
     ./system/mime.nix
     ./system/rofi
-    #./system/qtile
-    #./system/i3.nix
+    ./system/qtile
+    ./system/i3.nix
     ./system/stylix.nix
     ./system/sway.nix
     #./system/waybar.nix

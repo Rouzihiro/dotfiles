@@ -1,11 +1,17 @@
 {
+  config,
   lib,
   pkgs,
   ...
 }: let
-  i3blocksConf = pkgs.callPackage ./i3blocks.nix {};
+  inherit (lib) mkEnableOption mkIf;
+  name = "sway";
+  category = "wm";
+  cfg = config.${category}.${name};
+	i3blocksConf = pkgs.callPackage ./i3blocks.nix {};
 in {
-  #imports = [ ];
+  options.${category}.${name}.enable = mkEnableOption "Enable ${name}";
+  config = mkIf cfg.enable {
   home.packages = with pkgs; [
     swayidle
     swaylock
@@ -269,4 +275,5 @@ in {
       ];
     };
   };
+};
 }
