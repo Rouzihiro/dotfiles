@@ -40,12 +40,12 @@
 
 <div align="center">
 	
-![fetch](https://github.com/user-attachments/assets/8fa2f1d5-93cd-4765-a14d-34fe09098157)
+![wallpicker](https://github.com/user-attachments/assets/e6f1f005-9de2-49dc-bb42-263faf6ea9f8)
 
-| ![vifm](https://github.com/user-attachments/assets/b096699a-41ed-4a7d-b7b5-772a8a4a9562) | ![Zen](https://github.com/user-attachments/assets/7f9d8891-106f-4c2f-aa84-f193bdf8474c) |
+| ![fetch](https://github.com/user-attachments/assets/8fa2f1d5-93cd-4765-a14d-34fe09098157) | ![Zen](https://github.com/user-attachments/assets/7f9d8891-106f-4c2f-aa84-f193bdf8474c) |
 |--|--|
 	
-| ![wallpicker](https://github.com/user-attachments/assets/e6f1f005-9de2-49dc-bb42-263faf6ea9f8) | ![Hyprlock](https://github.com/user-attachments/assets/d5315def-0dc3-44a0-a98a-11df3b6292ac) |
+| ![vifm](https://github.com/user-attachments/assets/b096699a-41ed-4a7d-b7b5-772a8a4a9562) | ![Hyprlock](https://github.com/user-attachments/assets/d5315def-0dc3-44a0-a98a-11df3b6292ac) |
 |--|--|
 
 </div>
