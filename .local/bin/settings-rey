@@ -1,0 +1,33 @@
+sudo timedatectl set-timezone Europe/Berlin
+
+flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+
+fc-cache -fv
+
+IPTV:
+https://iptv-org.github.io/iptv/index.m3u
+# ctrl + l inside vlc to see channel list
+
+# locale
+sudo nano /etc/locale.gen
+sudo nano /etc/locale.conf
+sudo locale-gen
+LANG=en_US.UTF-8
+LANG=de_DE.UTF-8
+
+yay -S bibata-cursor-theme ags blueman wl-clipboard network-manager-applet hyprcursor thunar
+sudo pacman -S tesseract tesseract-data-eng tesseract-data-deu
+sudo pacman -S texmaker
+
+chsh -s $(which zsh)
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
+
+#If your system uses XWayland, you can try:
+#xev | grep -A2 --line-buffered '^KeyRelease'
+#Then press the button to see its keycode.
+
+#Once you know the keycode (e.g., KEY_WWW), you can bind it in ~/.config/hypr/hyprland.conf:
+#bind = ,156, exec, firefox  # Use KEY_WWW to launch Firefox
+#(Replace 156 with your key's code.)
