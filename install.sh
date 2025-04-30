@@ -64,6 +64,9 @@ PACMAN_PACKAGES=(
     "yad"  # GUI dialogs
     "rsync"  # File syncing
     "swappy"  # Screenshot editing
+		"tesseract"
+		"tesseract-data-eng"
+		"tesseract-data-deu"
 
     # Multimedia
     "ffmpegthumbs" "imagemagick" "imv" "vlc" "yt-dlp"
