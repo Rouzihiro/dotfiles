@@ -1,0 +1,25 @@
+# iCloud IMAP (incoming)
+IMAPAccount icloud
+Host          imap.mail.me.com
+User          zohri@me.com 
+PassCmd "gpg --quiet --decrypt ~/.ssh/email_secrets/icloud_imap.gpg"
+Port          993
+SSLType       IMAPS
+AuthMechs     LOGIN
+CertificateFile /etc/ssl/certs/ca-certificates.crt
+
+IMAPStore icloud-remote
+Account   icloud
+
+MaildirStore icloud-local
+Path      ~/.mail/icloud/
+Inbox     ~/.mail/icloud/Inbox
+Subfolders Verbatim
+
+Channel icloud
+Master  :icloud-remote:
+Slave   :icloud-local:
+Patterns *
+Create Both
+Expunge Both
+SyncState *
