@@ -95,6 +95,7 @@ PACMAN_PACKAGES=(
 
 		#email-TUI
 		"offlineimap" "neomutt" "msmtp" "w3m" "notmuch" "ca-certificates"
+		"aerc"
 )
 
 AUR_PACKAGES=(
