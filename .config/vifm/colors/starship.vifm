@@ -1,0 +1,79 @@
+"============================================================================="
+"       Catppuccin Mocha (Custom, Starship inspired) ColorScheme              "
+"============================================================================="
+
+highlight clear
+highlight TopLine	cterm=none	ctermfg=189	ctermbg=default
+highlight TopLineSel	cterm=bold	ctermfg=111	ctermbg=default
+
+highlight Win		cterm=none	ctermfg=default	ctermbg=default
+highlight Directory	cterm=bold	ctermfg=111	ctermbg=default
+highlight Link		cterm=bold	ctermfg=117	ctermbg=default
+highlight BrokenLink	cterm=bold,inverse	ctermfg=204	ctermbg=Default
+
+highlight Executable	cterm=bold	ctermfg=111	ctermbg=default
+highlight Device	cterm=bold 	ctermfg=223	ctermbg=default
+highlight Fifo		cterm=bold 	ctermfg=117	ctermbg=default
+highlight Socket	cterm=bold 	ctermfg=183	ctermbg=default
+
+highlight CurrLine	cterm=bold,inverse	ctermfg=default	ctermbg=default
+highlight OtherLine	cterm=reverse	ctermfg=235	ctermbg=189
+highlight Selected	cterm=none	ctermfg=223	ctermbg=236
+
+highlight SuggestBox	cterm=bold	ctermfg=default	ctermbg=default
+highlight Border	cterm=none	ctermfg=default	ctermbg=default
+highlight JobLine	cterm=bold	ctermfg=103	ctermbg=236
+highlight StatusLine	cterm=bold	ctermfg=111	ctermbg=default
+highlight ErrorMsg	cterm=bold	ctermfg=204	ctermbg=default
+highlight WildMenu	cterm=bold	ctermfg=146	ctermbg=236
+highlight CmdLine	cterm=none	ctermfg=default	ctermbg=default
+
+
+"============================ [GROUP HIGHLIGHTING] ============================"
+" software documentation
+highlight {COPYRIGHT,COPYING*,BUGS,ChangeLog*,FAQ,INSTALL*,LICEN[CS]E,NEWS,
+          \README*,AUTHORS,TODO,THANKS}
+        \ cterm=none ctermfg=215 ctermbg=default
+" build system files
+highlight {Makefile,Makefile.am,Makefile.in,Makefile.win,*.mak,*.mk,*.m4,*.ac,
+          \configure,CMakeLists.txt,*.cmake,*.pro,*.pri,*.sln,meson.build,
+          \meson_options.txt}
+        \ cterm=none ctermfg=116 ctermbg=default
+" archives
+highlight {*.7z,*.ace,*.arj,*.bz2,*.cpio,*.deb,*.dz,*.gz,*.jar,*.lzh,*.lzma,
+          \*.rar,*.rpm,*.rz,*.tar,*.taz,*.tb2,*.tbz,*.tbz2,*.tgz,*.tlz,*.trz,
+          \*.txz,*.tz,*.tz2,*.xz,*.z,*.zip,*.zoo,*.apk,*.gzip,*.lz}
+        \ cterm=none ctermfg=215 ctermbg=default
+" text
+highlight {*.less,*.mkd,*.org,*.pandoc,*.pdc,*.tex,
+          \*.txt,*.log,*.rss,*.xul,*.yaml,*.yml,*.csv,*.plist,
+          \*.ini,*.cfg,*.rc,*.conf,*.spec,*.qrc,*.description,*.list,*.log.old,
+          \*.log.1,*.log.2,*.log.3,*.log.4,*.log.5,*.log.6,*.log.7,*.log.8,
+          \syslog,syslog.1}
+        \ cterm=none ctermfg=218 ctermbg=default
+" documents
+highlight {*.mobi,*.rtf,
+          \*.epub,*.fb2,*.djvu,*.djv,*.desktop,
+          \*.odg,*.odt,*.ods}
+        \ cterm=none ctermfg=218 ctermbg=default
+" media
+highlight {*.aac,*.anx,*.asf,*.au,*.avi,*.axa,*.axv,*.divx,*.flac,*.m2a,
+          \*.m2v,*.m4a,*.m4p,*.m4v,*.mid,*.midi,*.mka,*.mkv,*.mov,*.mp3,*.mp4,
+          \*.flv,*.mp4v,*.mpc,*.mpeg,*.mpg,*.nuv,*.oga,*.ogg,*.ogv,*.ogx,*.pbm,
+          \*.pgm,*.qt,*.ra,*.ram,*.rm,*.spx,*.vob,*.wav,*.wma,*.wmv,*.xvid,
+          \*.ac3}
+        \ cterm=none ctermfg=215 ctermbg=default
+" images
+highlight {*.bmp,*.gif,*.jpeg,*.jpg,*.ico,*.png,*.ppm,*.svg,*.svgz,*.tga,*.tif,
+          \*.tiff,*.xbm,*.xcf,*.xpm,*.xspf,*.xwd,*.ai,*.pbm,*.pgm,*.webp}
+        \ cterm=none ctermfg=110 ctermbg=default
+" executables
+highlight {*.sh,*.bash,*.zsh,*.bat,*.btm,*.cmd,*.com,*.dll,*.exe,*.run,*.msu,
+          \*.msi,*.fish,*.AppImage}
+        \ cterm=none ctermfg=102 ctermbg=default
+" source code
+highlight {*.patch,*.diff,*.cpp,*.hpp,*.cpp,*.hpp,*.cc,*.hh,*.ld,
+          \*.hs,*.vim,*.vifm,*.asm,*.s,*.java,*.cxx,*.c++,*.go,
+          \*.pl,*.pm,*.t,*.cs,*.asp,*.dart,*.rb,*.scala,*.coffee,
+          \*.ml,*.mli,*.sql,*.qml,vifmrc,vimrc,.vimrc,*.flex,*.ypp,*.S}
+        \ cterm=none ctermfg=116 ctermbg=default
