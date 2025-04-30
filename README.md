@@ -42,7 +42,7 @@
 	
 ![fetch](https://github.com/user-attachments/assets/8fa2f1d5-93cd-4765-a14d-34fe09098157)
 
-| ![mpv](https://github.com/user-attachments/assets/7211a828-b238-4ee4-8096-e4760569fd0f) | ![Zen](https://github.com/user-attachments/assets/7f9d8891-106f-4c2f-aa84-f193bdf8474c) |
+| ![vifm](https://github.com/user-attachments/assets/7a4c3857-1850-41f5-8a96-f826251815a6) | ![Zen](https://github.com/user-attachments/assets/7f9d8891-106f-4c2f-aa84-f193bdf8474c) |
 |--|--|
 	
 | ![yazi](https://github.com/user-attachments/assets/298b1c19-6894-40fe-90ba-edb49fe0efc6) | ![Hyprlock](https://github.com/user-attachments/assets/d5315def-0dc3-44a0-a98a-11df3b6292ac) |
