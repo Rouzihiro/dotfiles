@@ -1,0 +1,45 @@
+# github.com/pahasara/HyprDots
+
+[options]
+# Suppress built-in key bindings, and specify them explicitly in this config file.
+suppress_default_binds = true
+
+[aliases]
+# Define aliases here. Any arguments passed to an alias are appended to the
+# command.
+# alias = command to run
+
+[binds]
+q = quit
+<Escape> = quit
+
+# Image navigation
+<Left> = prev
+<Right> = next
+b = prev
+n = next
+<space> = next
+k = pan 0, 30
+j = pan 0, -30
+h = pan -30, 0
+l = pan 30, 0
+gg = goto 1
+<Shift+G> = goto -1
+
+# Zooming
+<Shift+plus> = zoom 2
+i = zoom 2
+<minus> = zoom -2
+o = zoom -2
+
+# Rotate Clockwise by 90 degrees
+<Ctrl+r> = rotate by 90
+
+# Other commands
+x = close
+c = center
+s = scaling next
+f = fullscreen
+<Shift+S> = upscaling next
+a = zoom actual
+r = reset

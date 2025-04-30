@@ -1,0 +1,7 @@
+2025/04/29-21:15:31.261 902 Reusing MANIFEST /home/rey/.config/BraveSoftware/Brave-Browser/Default/IndexedDB/https_chatgpt.com_0.indexeddb.leveldb/MANIFEST-000001
+2025/04/29-21:15:31.261 902 Recovering log #3
+2025/04/29-21:15:31.262 902 Reusing old log /home/rey/.config/BraveSoftware/Brave-Browser/Default/IndexedDB/https_chatgpt.com_0.indexeddb.leveldb/000003.log 
+2025/04/29-22:10:47.394 902 Level-0 table #5: started
+2025/04/29-22:10:47.405 902 Level-0 table #5: 667395 bytes OK
+2025/04/29-22:10:47.405 902 Delete type=0 #3
+2025/04/29-22:10:47.406 902 Manual compaction at level-0 from (begin) .. (end); will stop at (end)

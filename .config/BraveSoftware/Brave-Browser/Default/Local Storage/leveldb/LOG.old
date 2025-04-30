@@ -1,0 +1,45 @@
+2025/04/29-21:08:24.844 4 Reusing MANIFEST /home/rey/.config/BraveSoftware/Brave-Browser/Default/Local Storage/leveldb/MANIFEST-000001
+2025/04/29-21:08:24.847 4 Recovering log #28
+2025/04/29-21:08:24.848 4 Reusing old log /home/rey/.config/BraveSoftware/Brave-Browser/Default/Local Storage/leveldb/000028.log 
+2025/04/29-21:08:39.404 4 Level-0 table #32: started
+2025/04/29-21:08:39.408 4 Level-0 table #32: 24069 bytes OK
+2025/04/29-21:08:39.409 4 Delete type=0 #28
+2025/04/29-21:20:06.598 4 Level-0 table #34: started
+2025/04/29-21:20:06.600 4 Level-0 table #34: 17620 bytes OK
+2025/04/29-21:20:06.603 4 Delete type=0 #31
+2025/04/29-21:35:30.334 4 Level-0 table #36: started
+2025/04/29-21:35:30.340 4 Level-0 table #36: 17578 bytes OK
+2025/04/29-21:35:30.343 4 Delete type=0 #33
+2025/04/29-21:35:30.344 5 Compacting 4@0 + 1@1 files
+2025/04/29-21:35:30.356 5 Generated table #37@0: 205 keys, 225890 bytes
+2025/04/29-21:35:30.356 5 Compacted 4@0 + 1@1 files => 225890 bytes
+2025/04/29-21:35:30.357 5 compacted to: files[ 0 1 1 0 0 0 0 ]
+2025/04/29-21:35:30.359 5 Delete type=2 #34
+2025/04/29-21:35:30.359 5 Delete type=2 #29
+2025/04/29-21:35:30.359 5 Delete type=2 #27
+2025/04/29-21:35:30.359 5 Delete type=2 #32
+2025/04/29-21:35:30.360 5 Delete type=2 #36
+2025/04/29-21:46:19.666 4 Level-0 table #39: started
+2025/04/29-21:46:19.677 4 Level-0 table #39: 128241 bytes OK
+2025/04/29-21:46:19.679 4 Delete type=0 #35
+2025/04/29-21:47:14.637 5 Level-0 table #41: started
+2025/04/29-21:47:14.647 5 Level-0 table #41: 168716 bytes OK
+2025/04/29-21:47:14.650 5 Delete type=0 #38
+2025/04/29-21:47:30.334 5 Level-0 table #43: started
+2025/04/29-21:47:30.346 5 Level-0 table #43: 224673 bytes OK
+2025/04/29-21:47:30.349 5 Delete type=0 #40
+2025/04/29-22:08:19.117 5 Level-0 table #45: started
+2025/04/29-22:08:19.127 5 Level-0 table #45: 195138 bytes OK
+2025/04/29-22:08:19.128 5 Delete type=0 #42
+2025/04/29-22:08:19.129 5 Compacting 4@0 + 1@1 files
+2025/04/29-22:08:19.149 5 Generated table #46@0: 220 keys, 707119 bytes
+2025/04/29-22:08:19.149 5 Compacted 4@0 + 1@1 files => 707119 bytes
+2025/04/29-22:08:19.150 5 compacted to: files[ 0 1 1 0 0 0 0 ]
+2025/04/29-22:08:19.150 5 Delete type=2 #39
+2025/04/29-22:08:19.150 5 Delete type=2 #37
+2025/04/29-22:08:19.150 5 Delete type=2 #45
+2025/04/29-22:08:19.150 5 Delete type=2 #41
+2025/04/29-22:08:19.151 5 Delete type=2 #43
+2025/04/29-22:08:26.427 5 Level-0 table #48: started
+2025/04/29-22:08:26.436 5 Level-0 table #48: 81327 bytes OK
+2025/04/29-22:08:26.438 5 Delete type=0 #44

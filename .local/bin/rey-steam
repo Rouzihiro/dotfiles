@@ -1,0 +1,27 @@
+#!/bin/bash
+
+# Force XWayland mode
+export SDL_VIDEODRIVER=x11
+export GDK_BACKEND=x11
+export QT_QPA_PLATFORM=xcb
+export STEAM_DISABLE_WAYLAND=1
+
+# Fix D-Bus errors by using existing session
+export DBUS_SESSION_BUS_ADDRESS="unix:path=/run/user/$(id -u)/bus"
+
+# Bypass Steam Runtime sandbox issues
+export STEAM_RUNTIME=1
+export STEAM_RUNTIME_PREFER_HOST_LIBRARIES=1
+export PRESSURE_VESSEL_FILESYSTEMS_RO="/run/user/$(id -u)/bus"
+
+# Critical workarounds
+export TERM=xterm-256color  # Fix terminal detection
+export STEAM_DISABLE_PCI_DEVICE_LIST=1  # Silence PCI errors
+
+# Debugging
+echo "===== ENVIRONMENT ====="
+printenv | grep -E 'DBUS|STEAM|SDL|QT|GDK|TERM'
+echo "======================="
+
+# Launch Steam
+exec /usr/bin/steam -console -noverifyfiles -noreactlogin -silent "$@"

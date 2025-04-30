@@ -1,0 +1,36 @@
+#!/bin/bash
+
+# Source directory (your scripts)
+SRC_DIR="$HOME/dotfiles/linux/scripts"
+# Destination directory (system-wide scripts)
+DEST_DIR="/usr/local/bin"
+# Script name (to exclude from copying)
+THIS_SCRIPT="install-scripts.sh"
+
+# Check if source directory exists
+if [ ! -d "$SRC_DIR" ]; then
+    echo "❌ Error: Source directory '$SRC_DIR' not found!" >&2
+    exit 1
+fi
+
+# Check if destination directory exists
+if [ ! -d "$DEST_DIR" ]; then
+    echo "❌ Error: Destination directory '$DEST_DIR' not found!" >&2
+    exit 1
+fi
+
+# Copy all files EXCEPT this script
+echo "📦 Copying (and replacing) scripts from '$SRC_DIR' to '$DEST_DIR' (excluding '$THIS_SCRIPT')..."
+find "$SRC_DIR" -maxdepth 1 -type f ! -name "$THIS_SCRIPT" -exec sudo cp -fv {} "$DEST_DIR/" \; || {
+    echo "❌ Failed to copy files!" >&2
+    exit 1
+}
+
+# Make all scripts executable (excluding this script)
+echo "🔧 Making scripts in '$DEST_DIR' executable..."
+sudo find "$DEST_DIR" -maxdepth 1 -type f ! -name "$THIS_SCRIPT" -exec chmod -v +x {} \; || {
+    echo "❌ Failed to set executable permissions!" >&2
+    exit 1
+}
+
+echo "✅ Done! All scripts (excluding '$THIS_SCRIPT') were replaced and made executable."

@@ -1,0 +1,101 @@
+{
+  "schemaVersion": 1,
+  "campaigns": [
+    {
+      "campaignId": "1ee70c8a-8c43-4b2a-a736-05abd47c226c",
+      "logo": {
+        "imageUrl": "7eb76986-a6f8-4445-a394-985f162bc4f4.png",
+        "destinationUrl": "https://talk.brave.com/?mtm_source=brave-browser&mtm_medium=brave-ntp&mtm_campaign=brave-talk&mtm_content=424d2258-2671-4766-8352-e07d60ba1f0f&mtm_date=20250429",
+        "alt": "Zoom out with Brave Talk. Unlimited, private video calls, right in your browser. No apps. No login.",
+        "companyName": "Brave Software"
+      },
+      "wallpapers": [
+        {
+          "imageUrl": "8d5d7812-8b2a-4796-b907-b51c62704a35.jpg",
+          "creativeInstanceId": "424d2258-2671-4766-8352-e07d60ba1f0f",
+          "focalPoint": {
+            "x": 1280,
+            "y": 720
+          }
+        },
+        {
+          "imageUrl": "32e0b520-5c5c-4966-98be-f2e5ab020447.jpg",
+          "creativeInstanceId": "a57154d5-9681-4cc9-85f5-1f25ce5e803f",
+          "focalPoint": {
+            "x": 1280,
+            "y": 720
+          },
+          "logo": {
+            "imageUrl": "7eb76986-a6f8-4445-a394-985f162bc4f4.png",
+            "destinationUrl": "https://talk.brave.com/?mtm_source=brave-browser&mtm_medium=brave-ntp&mtm_campaign=brave-talk&mtm_content=a57154d5-9681-4cc9-85f5-1f25ce5e803f&mtm_date=20250429",
+            "alt": "Zoom out with Brave Talk. Unlimited, private video calls, right in your browser. No apps. No login.",
+            "companyName": "Brave Software"
+          }
+        },
+        {
+          "imageUrl": "652fb70c-850c-4ef2-bfea-bd167f00508c.jpg",
+          "creativeInstanceId": "8250050f-8e68-496a-899e-8aed75b41700",
+          "focalPoint": {
+            "x": 1280,
+            "y": 720
+          },
+          "logo": {
+            "imageUrl": "7eb76986-a6f8-4445-a394-985f162bc4f4.png",
+            "destinationUrl": "https://talk.brave.com/?mtm_source=brave-browser&mtm_medium=brave-ntp&mtm_campaign=brave-talk&mtm_content=8250050f-8e68-496a-899e-8aed75b41700&mtm_date=20250429",
+            "alt": "Zoom out with Brave Talk. Unlimited, private video calls, right in your browser. No apps. No login.",
+            "companyName": "Brave Software"
+          }
+        }
+      ]
+    }
+  ],
+  "campaigns2": [
+    {
+      "campaignId": "1ee70c8a-8c43-4b2a-a736-05abd47c226c",
+      "logo": {
+        "imageUrl": "7eb76986-a6f8-4445-a394-985f162bc4f4.png",
+        "destinationUrl": "https://talk.brave.com/?mtm_source=brave-browser&mtm_medium=brave-ntp&mtm_campaign=brave-talk&mtm_content=424d2258-2671-4766-8352-e07d60ba1f0f&mtm_date=20250429",
+        "alt": "Zoom out with Brave Talk. Unlimited, private video calls, right in your browser. No apps. No login.",
+        "companyName": "Brave Software"
+      },
+      "wallpapers": [
+        {
+          "imageUrl": "8d5d7812-8b2a-4796-b907-b51c62704a35.jpg",
+          "creativeInstanceId": "424d2258-2671-4766-8352-e07d60ba1f0f",
+          "focalPoint": {
+            "x": 1280,
+            "y": 720
+          }
+        },
+        {
+          "imageUrl": "32e0b520-5c5c-4966-98be-f2e5ab020447.jpg",
+          "creativeInstanceId": "a57154d5-9681-4cc9-85f5-1f25ce5e803f",
+          "focalPoint": {
+            "x": 1280,
+            "y": 720
+          },
+          "logo": {
+            "imageUrl": "7eb76986-a6f8-4445-a394-985f162bc4f4.png",
+            "destinationUrl": "https://talk.brave.com/?mtm_source=brave-browser&mtm_medium=brave-ntp&mtm_campaign=brave-talk&mtm_content=a57154d5-9681-4cc9-85f5-1f25ce5e803f&mtm_date=20250429",
+            "alt": "Zoom out with Brave Talk. Unlimited, private video calls, right in your browser. No apps. No login.",
+            "companyName": "Brave Software"
+          }
+        },
+        {
+          "imageUrl": "652fb70c-850c-4ef2-bfea-bd167f00508c.jpg",
+          "creativeInstanceId": "8250050f-8e68-496a-899e-8aed75b41700",
+          "focalPoint": {
+            "x": 1280,
+            "y": 720
+          },
+          "logo": {
+            "imageUrl": "7eb76986-a6f8-4445-a394-985f162bc4f4.png",
+            "destinationUrl": "https://talk.brave.com/?mtm_source=brave-browser&mtm_medium=brave-ntp&mtm_campaign=brave-talk&mtm_content=8250050f-8e68-496a-899e-8aed75b41700&mtm_date=20250429",
+            "alt": "Zoom out with Brave Talk. Unlimited, private video calls, right in your browser. No apps. No login.",
+            "companyName": "Brave Software"
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,62 @@
+#!/bin/bash
+
+# Sync all dotfiles to ~/dotfiles/linux/
+
+# --- 1. Sync .config ---
+echo "🔄 Syncing ~/.config/..."
+rsync -av --delete \
+    --exclude='BraveSoftware' \
+    --exclude='Cache' \
+    --exclude='Trash' \
+    --exclude='Spotify' \
+    --exclude='discord' \
+    "$HOME/.config/" "$HOME/dotfiles/linux/.config"
+
+# --- 2. Sync shell files ---
+SHELL_TARGET="$HOME/dotfiles/linux/shell"
+mkdir -p "$SHELL_TARGET"
+
+# Individual files to sync
+echo "🔄 Syncing shell dotfiles..."
+while IFS= read -r file; do
+    [ -f "$HOME/$file" ] && rsync -av "$HOME/$file" "$SHELL_TARGET/" && echo "  ✓ $file"
+done <<EOF
+.bashrc
+.bash_profile
+.bash_logout
+.zshrc
+.zprofile
+.profile
+.bash_aliases
+.gitconfig
+EOF
+
+# --- 3. Sync ~/.shell/ to ~/dotfiles/linux/shell/shell/ ---
+if [ -d "$HOME/.shell" ]; then
+    echo "🔄 Syncing ~/.shell/..."
+    rsync -av --delete "$HOME/.shell/" "$SHELL_TARGET/shell/"
+    echo "  ✓ .shell/ → shell/shell/"
+else
+    echo "  ⚠️  ~/.shell/ not found, skipping..."
+fi
+
+# --- 4. Sync ~/scripts/ to ~/dotfiles/linux/scripts/ ---
+SCRIPTS_TARGET="$HOME/dotfiles/linux/scripts"
+if [ -d "$HOME/scripts" ]; then
+    echo "🔄 Syncing ~/scripts/ to ~/dotfiles/linux/scripts/..."
+    rsync -av --delete "$HOME/scripts/" "$SCRIPTS_TARGET/"
+    echo "  ✓ ~/scripts/ → linux/scripts/"
+
+    # Reverse sync to capture any new files added to ~/dotfiles/linux/scripts/
+    echo "🔄 Reverse syncing ~/dotfiles/linux/scripts/ to ~/scripts/..."
+    rsync -av --ignore-existing "$SCRIPTS_TARGET/" "$HOME/scripts/"
+    echo "  ✓ linux/scripts/ → ~/scripts/"
+else
+    echo "  ⚠️  ~/scripts/ not found, skipping..."
+fi
+
+# --- 5. Skip sensitive files ---
+echo "⏭️  Skipped (sensitive): .bash_history, .zsh_history"
+
+echo -e "\n✅ Done! Dotfiles synced to: $HOME/dotfiles/linux/"
+

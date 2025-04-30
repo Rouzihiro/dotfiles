@@ -1,0 +1,32 @@
+#!/bin/sh
+
+SESSION_NAME="rey-docs"
+
+# Check if the session already exists
+if ! tmux has-session -t "$SESSION_NAME" 2>/dev/null; then
+    export DOCS_DIRECTORY="$HOME/dotfiles/home/docs"
+    mkdir -p "$DOCS_DIRECTORY/tasks"
+
+    # Create base session
+    tmux new-session -d -s "$SESSION_NAME" -c "$DOCS_DIRECTORY"
+
+    # Window 1: LF (top 70%) and terminal (bottom 30%)
+    tmux rename-window -t "$SESSION_NAME":1 'Main'
+    tmux send-keys -t "$SESSION_NAME":1 "vifm" C-m
+    tmux split-window -v -t "$SESSION_NAME":1
+    tmux resize-pane -D 15
+    tmux send-keys -t "$SESSION_NAME":1.2 "cd ~/dotfiles; clear; ls" C-m
+
+    # Window 2: Tasks (70% terminal left, 30% Neovim right)
+    tmux new-window -t "$SESSION_NAME":2 -c "$DOCS_DIRECTORY/tasks" -n "Tasks"
+    tmux split-window -h -t "$SESSION_NAME":2
+    tmux resize-pane -R 40
+    tmux send-keys -t "$SESSION_NAME":2.1 "cd $DOCS_DIRECTORY/tasks; clear; ls" C-m
+    tmux send-keys -t "$SESSION_NAME":2.2 "cd $DOCS_DIRECTORY/tasks; nvim README.md" C-m
+
+    # Final attach
+    tmux select-window -t "$SESSION_NAME":1
+fi
+
+# Attach to the session
+tmux attach -t "$SESSION_NAME"

@@ -1,0 +1,24 @@
+#!/bin/bash
+
+# Display options
+echo "Choose an option:"
+echo "1 - Mount NAS"
+echo "2 - Unmount NAS"
+read option
+
+case $option in
+    1)
+        # Mount the NAS using curlftpfs
+				curlftpfs -o user="$(awk -F= '/username/ {print $2}' ~/.ssh/ftp_credentials):$(awk -F= '/password/ {print $2}' ~/.ssh/ftp_credentials)" -o allow_other -o umask=0000 ftp://192.168.178.1/ ~/mnt/nas/
+       echo "NAS mounted at ~/mnt/nas/"
+        ;;
+    2)
+        # Unmount the NAS
+        fusermount -u ~/mnt/nas/
+        echo "NAS unmounted from ~/mnt/nas/"
+        ;;
+    *)
+        echo "Invalid option. Please enter 1 for mount or 2 for unmount."
+        ;;
+esac
+
