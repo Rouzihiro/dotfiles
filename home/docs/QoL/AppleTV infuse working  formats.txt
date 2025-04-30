@@ -1,0 +1,1 @@
+Stream #0:0[0x1](und): Video: h264 (High) (avc1 / 0x31637661), yuv420p(progressive), 640x360 [SAR 1:1 DAR 16:9], 381 kb/s, 25 fps, 25 tbr, 12800 tbn (default)

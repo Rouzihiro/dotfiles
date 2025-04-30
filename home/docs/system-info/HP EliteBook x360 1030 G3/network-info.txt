@@ -1,0 +1,49 @@
+GENERAL.DEVICE:                         wlp108s0
+GENERAL.TYPE:                           wifi
+GENERAL.HWADDR:                         A4:C3:F0:4C:A9:C3
+GENERAL.MTU:                            1500
+GENERAL.STATE:                          100 (connected)
+GENERAL.CONNECTION:                     SuperDjuDju
+GENERAL.CON-PATH:                       /org/freedesktop/NetworkManager/ActiveConnection/2
+IP4.ADDRESS[1]:                         192.168.178.72/24
+IP4.GATEWAY:                            192.168.178.1
+IP4.ROUTE[1]:                           dst = 192.168.178.0/24, nh = 0.0.0.0, mt = 600
+IP4.ROUTE[2]:                           dst = 0.0.0.0/0, nh = 192.168.178.1, mt = 600
+IP4.DNS[1]:                             192.168.178.1
+IP4.DOMAIN[1]:                          fritz.box
+IP6.ADDRESS[1]:                         fd00::2f14:baeb:bfc5:8cb8/64
+IP6.ADDRESS[2]:                         fd00::534d:d3dd:2495:1aaa/64
+IP6.ADDRESS[3]:                         fe80::8f4c:a981:fc5a:c9ba/64
+IP6.GATEWAY:                            --
+IP6.ROUTE[1]:                           dst = fe80::/64, nh = ::, mt = 1024
+IP6.ROUTE[2]:                           dst = fd00::/64, nh = ::, mt = 600
+IP6.ROUTE[3]:                           dst = fd00::/64, nh = fe80::2e3a:fdff:feb3:9fe1, mt = 605
+IP6.DNS[1]:                             fd00::2e3a:fdff:feb3:9fe1
+
+GENERAL.DEVICE:                         lo
+GENERAL.TYPE:                           loopback
+GENERAL.HWADDR:                         00:00:00:00:00:00
+GENERAL.MTU:                            65536
+GENERAL.STATE:                          100 (connected (externally))
+GENERAL.CONNECTION:                     lo
+GENERAL.CON-PATH:                       /org/freedesktop/NetworkManager/ActiveConnection/1
+IP4.ADDRESS[1]:                         127.0.0.1/8
+IP4.GATEWAY:                            --
+IP6.ADDRESS[1]:                         ::1/128
+IP6.GATEWAY:                            --
+
+GENERAL.DEVICE:                         p2p-dev-wlp108s0
+GENERAL.TYPE:                           wifi-p2p
+GENERAL.HWADDR:                         (unknown)
+GENERAL.MTU:                            0
+GENERAL.STATE:                          30 (disconnected)
+GENERAL.CONNECTION:                     --
+GENERAL.CON-PATH:                       --
+
+GENERAL.DEVICE:                         wwan0at1
+GENERAL.TYPE:                           gsm
+GENERAL.HWADDR:                         (unknown)
+GENERAL.MTU:                            0
+GENERAL.STATE:                          20 (unavailable)
+GENERAL.CONNECTION:                     --
+GENERAL.CON-PATH:                       --

@@ -1,0 +1,4 @@
+Script to create .cue from .bin
+
+
+IFS=$(echo -en "\n\b"); for i in $(find . -maxdepth 1 -type f -name "*.bin" | grep -v \(Track); do echo -e "FILE \""$i"\" Binary\n  TRACK 01 MODE2/2352\n    INDEX 01 00:00:00" > "${i%.bin}.cue" && sed -i 's/\.\///g' "${i%.bin}.cue"; done

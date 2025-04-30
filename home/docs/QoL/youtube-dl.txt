@@ -1,0 +1,27 @@
+youtube-dl -cit --batch-file=./1.txt
+
+
+
+
+youtube-dl -cit --format=mp4 --batch-file=./list-of-youtube-videos-link.txt was what worked for me combining https://askubuntu.com/a/947676/481688 and https://askubuntu.com/a/334097/481688 solutions. I'm recording it here standalone rather than scroll multiple answers again in future.
+
+--batch-file=./list-of-youtube-videos-link.txt file with a list of youtube links
+--format=mp4 mp4 format output desired
+-c resume partially downloaded files
+-i ignore any errors.
+-t use the video title as the file name.
+
+
+
+
+To download a YouTube playlist
+
+Run this command
+
+youtube-dl -citk -format mp4 -yes-playlist VIDEO_PLAYLIST_LINK
+-c resume partially downloaded files
+-i ignore any errors.
+-t use the video title as the file name.
+-k keep the video on the disk after the post-processing is finished.
+--format mp4 save the video files as MP4 files.
+--yes-playlist affirms that the URL that follows points to a video playlist.

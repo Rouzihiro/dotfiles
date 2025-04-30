@@ -40,8 +40,7 @@
 
 <div align="center">
 	
-![fetch](https://github.com/user-attachments/assets/4f8c2613-d275-4c01-b54e-d5e78d5e9b8d)
-
+![fetch](https://private-user-images.githubusercontent.com/170505629/439172025-8fa2f1d5-93cd-4765-a14d-34fe09098157.png)
 
 | ![mpv](https://github.com/user-attachments/assets/7211a828-b238-4ee4-8096-e4760569fd0f) | ![Zen](https://github.com/user-attachments/assets/7f9d8891-106f-4c2f-aa84-f193bdf8474c) |
 |--|--|
