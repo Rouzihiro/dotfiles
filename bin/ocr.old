@@ -17,8 +17,8 @@ if ! grim -g "$(slurp)" "$imgname"; then
     exit 1
 fi
 
-# Run OCR with both English and German
-if ! tesseract "$imgname" "$txtname" -l eng+deu; then
+# Run OCR (note: tesseract adds .txt extension automatically)
+if ! tesseract "$imgname" "$txtname"; then
     notify-send -t 2000 "OCR Screenshot" "OCR processing failed"
     rm -rf "$workdir"
     exit 1

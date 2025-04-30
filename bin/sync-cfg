@@ -41,6 +41,4 @@ else
     echo "  ⚠️  ~/bin/ not found, skipping..."
 fi
 
-echo "⏭️  Skipped (sensitive): .bash_history, .zsh_history"
-
 echo -e "\n✅ Done! Dotfiles synced to: $HOME/dotfiles/"

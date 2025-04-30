@@ -1,0 +1,16 @@
+# ~/.config/neomutt/mailcap
+text/html; bash -c 'F=/tmp/mutt-$$.html; w3m -dump -cols 80 -T text/html %s > $F && nvim -R -c "set ft=html nospell" $F; rm -f $F'; copiousoutput
+
+image/jpeg; imv %s
+image/png; imv %s
+image/gif; mpv --loop %s
+
+# PDFs
+application/pdf; zathura %s
+
+# Office Docs
+application/vnd.openxmlformats-officedocument.wordprocessingml.document; libreoffice --view %s
+application/msword; libreoffice --view %s
+
+# Fallback (unknown types)
+application/octet-stream; xdg-open %s
