@@ -27,6 +27,8 @@ done <<EOF
 .zshrc
 .zprofile
 .aliases
+.mbsyncrc
+.msmtprc
 .gitconfig
 EOF
 
