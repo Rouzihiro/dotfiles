@@ -1,6 +1,0 @@
-# ~/.config/neomutt/functions
-# Sync helper function
-function sync_mailbox {
-    sync-mailbox
-    echo "Mailbox synchronized"
-}
