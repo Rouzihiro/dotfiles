@@ -1,0 +1,2 @@
+sudo mount -t cifs //192.168.178.1/FRITZ.NAS ~/fritz_nas -o username=your_username,password=your_password
+

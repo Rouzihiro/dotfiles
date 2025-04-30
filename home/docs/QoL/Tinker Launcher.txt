@@ -1,0 +1,16 @@
+Steam Tinker Launch (short steamtinkerlaunch) is a Linux wrapper tool for use with the Steam client which allows customizing and start tools and options for games quickly on the fly
+
+By using a versatile configuration structure it is both easy to set up and flexible.
+
+Installation Instructions
+Packaging problems shouldn't be reported to upstream.
+
+# Enable this repository
+$ sudo dnf copr enable capucho/steamtinkerlaunch
+
+# Install steamtinkerlaunch
+$ sudo dnf install steamtinkerlaunch
+
+
+
+steamtinkerlaunch compat add

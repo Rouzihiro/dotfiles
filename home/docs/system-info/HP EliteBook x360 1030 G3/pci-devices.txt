@@ -1,0 +1,241 @@
+00:00.0 Host bridge [0600]: Intel Corporation Xeon E3-1200 v6/7th Gen Core Processor Host Bridge/DRAM Registers [8086:5914] (rev 08)
+	Subsystem: Hewlett-Packard Company Xeon E3-1200 v6/7th Gen Core Processor Host Bridge/DRAM Registers [103c:8438]
+	Flags: bus master, fast devsel, latency 0, IOMMU group 1
+	Capabilities: <access denied>
+	Kernel driver in use: skl_uncore
+
+00:02.0 VGA compatible controller [0300]: Intel Corporation UHD Graphics 620 [8086:5917] (rev 07) (prog-if 00 [VGA controller])
+	DeviceName: Onboard IGD
+	Subsystem: Hewlett-Packard Company UHD Graphics 620 [103c:8438]
+	Flags: bus master, fast devsel, latency 0, IRQ 192, IOMMU group 0
+	Memory at 1ffa000000 (64-bit, non-prefetchable) [size=16M]
+	Memory at b0000000 (64-bit, prefetchable) [size=256M]
+	I/O ports at 3000 [size=64]
+	Expansion ROM at 000c0000 [virtual] [disabled] [size=128K]
+	Capabilities: <access denied>
+	Kernel driver in use: i915
+	Kernel modules: i915
+
+00:04.0 Signal processing controller [1180]: Intel Corporation Xeon E3-1200 v5/E3-1500 v5/6th Gen Core Processor Thermal Subsystem [8086:1903] (rev 08)
+	Subsystem: Hewlett-Packard Company Xeon E3-1200 v5/E3-1500 v5/6th Gen Core Processor Thermal Subsystem [103c:8438]
+	Flags: fast devsel, IRQ 16, IOMMU group 2
+	Memory at 1ffb010000 (64-bit, non-prefetchable) [size=32K]
+	Capabilities: <access denied>
+	Kernel driver in use: proc_thermal
+	Kernel modules: processor_thermal_device_pci_legacy
+
+00:13.0 Non-VGA unclassified device [0000]: Intel Corporation Sunrise Point-LP Integrated Sensor Hub [8086:9d35] (rev 21)
+	Subsystem: Hewlett-Packard Company Sunrise Point-LP Integrated Sensor Hub [103c:8438]
+	Flags: bus master, fast devsel, latency 0, IRQ 20, IOMMU group 3
+	Memory at 1ffb021000 (64-bit, non-prefetchable) [size=4K]
+	Capabilities: <access denied>
+	Kernel driver in use: intel_ish_ipc
+	Kernel modules: intel_ish_ipc
+
+00:14.0 USB controller [0c03]: Intel Corporation Sunrise Point-LP USB 3.0 xHCI Controller [8086:9d2f] (rev 21) (prog-if 30 [XHCI])
+	Subsystem: Hewlett-Packard Company Sunrise Point-LP USB 3.0 xHCI Controller [103c:8438]
+	Flags: medium devsel, IRQ 130, IOMMU group 4
+	Memory at ee400000 (64-bit, non-prefetchable) [size=64K]
+	Capabilities: <access denied>
+	Kernel driver in use: xhci_hcd
+	Kernel modules: xhci_pci
+
+00:14.2 Signal processing controller [1180]: Intel Corporation Sunrise Point-LP Thermal subsystem [8086:9d31] (rev 21)
+	Subsystem: Hewlett-Packard Company Sunrise Point-LP Thermal subsystem [103c:8438]
+	Flags: fast devsel, IRQ 18, IOMMU group 4
+	Memory at 1ffb020000 (64-bit, non-prefetchable) [size=4K]
+	Capabilities: <access denied>
+	Kernel driver in use: intel_pch_thermal
+	Kernel modules: intel_pch_thermal
+
+00:15.0 Signal processing controller [1180]: Intel Corporation Sunrise Point-LP Serial IO I2C Controller #0 [8086:9d60] (rev 21)
+	Subsystem: Hewlett-Packard Company Sunrise Point-LP Serial IO I2C Controller [103c:8438]
+	Flags: bus master, fast devsel, latency 0, IRQ 16, IOMMU group 5
+	Memory at 1ffb01f000 (64-bit, non-prefetchable) [size=4K]
+	Capabilities: <access denied>
+	Kernel driver in use: intel-lpss
+	Kernel modules: intel_lpss_pci
+
+00:15.1 Signal processing controller [1180]: Intel Corporation Sunrise Point-LP Serial IO I2C Controller #1 [8086:9d61] (rev 21)
+	Subsystem: Hewlett-Packard Company Sunrise Point-LP Serial IO I2C Controller [103c:8438]
+	Flags: bus master, fast devsel, latency 0, IRQ 17, IOMMU group 5
+	Memory at 1ffb01e000 (64-bit, non-prefetchable) [size=4K]
+	Capabilities: <access denied>
+	Kernel driver in use: intel-lpss
+	Kernel modules: intel_lpss_pci
+
+00:16.0 Communication controller [0780]: Intel Corporation Sunrise Point-LP CSME HECI #1 [8086:9d3a] (rev 21)
+	Subsystem: Hewlett-Packard Company Sunrise Point-LP CSME HECI [103c:8438]
+	Flags: bus master, fast devsel, latency 0, IRQ 173, IOMMU group 6
+	Memory at 1ffb01d000 (64-bit, non-prefetchable) [size=4K]
+	Capabilities: <access denied>
+	Kernel driver in use: mei_me
+	Kernel modules: mei_me
+
+00:16.3 Serial controller [0700]: Intel Corporation Sunrise Point-LP Active Management Technology - SOL [8086:9d3d] (rev 21) (prog-if 02 [16550])
+	Subsystem: Hewlett-Packard Company Sunrise Point-LP Active Management Technology - SOL [103c:8438]
+	Flags: 66MHz, fast devsel, IRQ 19, IOMMU group 6
+	I/O ports at 3060 [size=8]
+	Memory at ee414000 (32-bit, non-prefetchable) [size=4K]
+	Capabilities: <access denied>
+	Kernel driver in use: serial
+
+00:1c.0 PCI bridge [0604]: Intel Corporation Sunrise Point-LP PCI Express Root Port #1 [8086:9d10] (rev f1) (prog-if 00 [Normal decode])
+	Subsystem: Hewlett-Packard Company Sunrise Point-LP PCI Express Root Port [103c:8438]
+	Flags: bus master, fast devsel, latency 0, IRQ 122, IOMMU group 7
+	Bus: primary=00, secondary=01, subordinate=6b, sec-latency=0
+	I/O behind bridge: 4000-6fff [size=12K] [16-bit]
+	Memory behind bridge: c0000000-ee0fffff [size=737M] [32-bit]
+	Prefetchable memory behind bridge: 1fb0000000-1ff9ffffff [size=1184M] [32-bit]
+	Capabilities: <access denied>
+	Kernel driver in use: pcieport
+
+00:1c.4 PCI bridge [0604]: Intel Corporation Sunrise Point-LP PCI Express Root Port #5 [8086:9d14] (rev f1) (prog-if 00 [Normal decode])
+	Subsystem: Hewlett-Packard Company Sunrise Point-LP PCI Express Root Port [103c:8438]
+	Flags: bus master, fast devsel, latency 0, IRQ 123, IOMMU group 8
+	Bus: primary=00, secondary=6c, subordinate=6c, sec-latency=0
+	I/O behind bridge: [disabled] [16-bit]
+	Memory behind bridge: ee300000-ee3fffff [size=1M] [32-bit]
+	Prefetchable memory behind bridge: [disabled] [64-bit]
+	Capabilities: <access denied>
+	Kernel driver in use: pcieport
+
+00:1c.6 PCI bridge [0604]: Intel Corporation Sunrise Point-LP PCI Express Root Port #7 [8086:9d16] (rev f1) (prog-if 00 [Normal decode])
+	Subsystem: Hewlett-Packard Company Sunrise Point-LP PCI Express Root Port [103c:8438]
+	Flags: bus master, fast devsel, latency 0, IRQ 124, IOMMU group 9
+	Bus: primary=00, secondary=6d, subordinate=6d, sec-latency=0
+	I/O behind bridge: [disabled] [16-bit]
+	Memory behind bridge: ee200000-ee2fffff [size=1M] [32-bit]
+	Prefetchable memory behind bridge: [disabled] [64-bit]
+	Capabilities: <access denied>
+	Kernel driver in use: pcieport
+
+00:1d.0 PCI bridge [0604]: Intel Corporation Sunrise Point-LP PCI Express Root Port #9 [8086:9d18] (rev f1) (prog-if 00 [Normal decode])
+	Subsystem: Hewlett-Packard Company Sunrise Point-LP PCI Express Root Port [103c:8438]
+	Flags: bus master, fast devsel, latency 0, IRQ 125, IOMMU group 10
+	Bus: primary=00, secondary=6e, subordinate=6e, sec-latency=0
+	I/O behind bridge: [disabled] [16-bit]
+	Memory behind bridge: ee100000-ee1fffff [size=1M] [32-bit]
+	Prefetchable memory behind bridge: [disabled] [64-bit]
+	Capabilities: <access denied>
+	Kernel driver in use: pcieport
+
+00:1f.0 ISA bridge [0601]: Intel Corporation Sunrise Point LPC/eSPI Controller [8086:9d4e] (rev 21)
+	Subsystem: Hewlett-Packard Company Sunrise Point LPC/eSPI Controller [103c:8438]
+	Flags: bus master, fast devsel, latency 0, IOMMU group 11
+
+00:1f.2 Memory controller [0580]: Intel Corporation Sunrise Point-LP PMC [8086:9d21] (rev 21)
+	Subsystem: Hewlett-Packard Company Sunrise Point-LP PMC [103c:8438]
+	Flags: fast devsel, IOMMU group 11
+	Memory at ee410000 (32-bit, non-prefetchable) [disabled] [size=16K]
+
+00:1f.3 Audio device [0403]: Intel Corporation Sunrise Point-LP HD Audio [8086:9d71] (rev 21) (prog-if 80)
+	Subsystem: Hewlett-Packard Company Sunrise Point-LP HD Audio [103c:8438]
+	Flags: bus master, fast devsel, latency 64, IRQ 193, IOMMU group 11
+	Memory at 1ffb018000 (64-bit, non-prefetchable) [size=16K]
+	Memory at 1ffb000000 (64-bit, non-prefetchable) [size=64K]
+	Capabilities: <access denied>
+	Kernel driver in use: snd_hda_intel
+	Kernel modules: snd_hda_intel, snd_soc_skl, snd_soc_avs, snd_sof_pci_intel_skl
+
+00:1f.4 SMBus [0c05]: Intel Corporation Sunrise Point-LP SMBus [8086:9d23] (rev 21)
+	Subsystem: Hewlett-Packard Company Sunrise Point-LP SMBus [103c:8438]
+	Flags: medium devsel, IRQ 16, IOMMU group 11
+	Memory at 1ffb01c000 (64-bit, non-prefetchable) [size=256]
+	I/O ports at efa0 [size=32]
+	Kernel driver in use: i801_smbus
+	Kernel modules: i2c_i801
+
+01:00.0 PCI bridge [0604]: Intel Corporation JHL6540 Thunderbolt 3 Bridge (C step) [Alpine Ridge 4C 2016] [8086:15d3] (rev 02) (prog-if 00 [Normal decode])
+	Subsystem: Hewlett-Packard Company JHL6540 Thunderbolt 3 Bridge (C step) [Alpine Ridge 4C 2016] [103c:8438]
+	Physical Slot: 0
+	Flags: bus master, fast devsel, latency 0, IRQ 16, IOMMU group 12
+	Bus: primary=01, secondary=02, subordinate=6b, sec-latency=0
+	I/O behind bridge: 4000-5fff [size=8K] [16-bit]
+	Memory behind bridge: c0000000-ee0fffff [size=737M] [32-bit]
+	Prefetchable memory behind bridge: 1fb0000000-1ff9ffffff [size=1184M] [32-bit]
+	Capabilities: <access denied>
+	Kernel driver in use: pcieport
+
+02:00.0 PCI bridge [0604]: Intel Corporation JHL6540 Thunderbolt 3 Bridge (C step) [Alpine Ridge 4C 2016] [8086:15d3] (rev 02) (prog-if 00 [Normal decode])
+	Subsystem: Hewlett-Packard Company JHL6540 Thunderbolt 3 Bridge (C step) [Alpine Ridge 4C 2016] [103c:8438]
+	Flags: bus master, fast devsel, latency 0, IRQ 126, IOMMU group 13
+	Bus: primary=02, secondary=03, subordinate=03, sec-latency=0
+	I/O behind bridge: [disabled] [32-bit]
+	Memory behind bridge: ee000000-ee0fffff [size=1M] [32-bit]
+	Prefetchable memory behind bridge: [disabled] [64-bit]
+	Capabilities: <access denied>
+	Kernel driver in use: pcieport
+
+02:01.0 PCI bridge [0604]: Intel Corporation JHL6540 Thunderbolt 3 Bridge (C step) [Alpine Ridge 4C 2016] [8086:15d3] (rev 02) (prog-if 00 [Normal decode])
+	Subsystem: Hewlett-Packard Company JHL6540 Thunderbolt 3 Bridge (C step) [Alpine Ridge 4C 2016] [103c:8438]
+	Flags: bus master, fast devsel, latency 0, IRQ 127, IOMMU group 14
+	Bus: primary=02, secondary=04, subordinate=36, sec-latency=0
+	I/O behind bridge: 4000-4fff [size=4K] [16-bit]
+	Memory behind bridge: c0000000-d7efffff [size=383M] [32-bit]
+	Prefetchable memory behind bridge: 1fb0000000-1fcfffffff [size=512M] [32-bit]
+	Capabilities: <access denied>
+	Kernel driver in use: pcieport
+
+02:02.0 PCI bridge [0604]: Intel Corporation JHL6540 Thunderbolt 3 Bridge (C step) [Alpine Ridge 4C 2016] [8086:15d3] (rev 02) (prog-if 00 [Normal decode])
+	Subsystem: Hewlett-Packard Company JHL6540 Thunderbolt 3 Bridge (C step) [Alpine Ridge 4C 2016] [103c:8438]
+	Flags: bus master, fast devsel, latency 0, IRQ 128, IOMMU group 15
+	Bus: primary=02, secondary=37, subordinate=37, sec-latency=0
+	I/O behind bridge: [disabled] [32-bit]
+	Memory behind bridge: d7f00000-d7ffffff [size=1M] [32-bit]
+	Prefetchable memory behind bridge: [disabled] [64-bit]
+	Capabilities: <access denied>
+	Kernel driver in use: pcieport
+
+02:04.0 PCI bridge [0604]: Intel Corporation JHL6540 Thunderbolt 3 Bridge (C step) [Alpine Ridge 4C 2016] [8086:15d3] (rev 02) (prog-if 00 [Normal decode])
+	Subsystem: Hewlett-Packard Company JHL6540 Thunderbolt 3 Bridge (C step) [Alpine Ridge 4C 2016] [103c:8438]
+	Flags: bus master, fast devsel, latency 0, IRQ 129, IOMMU group 16
+	Bus: primary=02, secondary=38, subordinate=6b, sec-latency=0
+	I/O behind bridge: 5000-5fff [size=4K] [16-bit]
+	Memory behind bridge: d8000000-edffffff [size=352M] [32-bit]
+	Prefetchable memory behind bridge: 1fd0000000-1ff9ffffff [size=672M] [32-bit]
+	Capabilities: <access denied>
+	Kernel driver in use: pcieport
+
+03:00.0 System peripheral [0880]: Intel Corporation JHL6540 Thunderbolt 3 NHI (C step) [Alpine Ridge 4C 2016] [8086:15d2] (rev 02)
+	Subsystem: Hewlett-Packard Company JHL6540 Thunderbolt 3 NHI (C step) [Alpine Ridge 4C 2016] [103c:8438]
+	Flags: bus master, fast devsel, latency 0, IRQ 16, IOMMU group 13
+	Memory at ee000000 (32-bit, non-prefetchable) [size=256K]
+	Memory at ee040000 (32-bit, non-prefetchable) [size=4K]
+	Capabilities: <access denied>
+	Kernel driver in use: thunderbolt
+	Kernel modules: thunderbolt
+
+37:00.0 USB controller [0c03]: Intel Corporation JHL6540 Thunderbolt 3 USB Controller (C step) [Alpine Ridge 4C 2016] [8086:15d4] (rev 02) (prog-if 30 [XHCI])
+	Subsystem: Hewlett-Packard Company JHL6540 Thunderbolt 3 USB Controller (C step) [Alpine Ridge 4C 2016] [103c:8438]
+	Flags: fast devsel, IRQ 138, IOMMU group 15
+	Memory at d7f00000 (32-bit, non-prefetchable) [size=64K]
+	Capabilities: <access denied>
+	Kernel driver in use: xhci_hcd
+	Kernel modules: xhci_pci
+
+6c:00.0 Network controller [0280]: Intel Corporation Wireless 8265 / 8275 [8086:24fd] (rev 78)
+	Subsystem: Intel Corporation Wireless 8265 / 8275 [8086:8010]
+	Flags: bus master, fast devsel, latency 0, IRQ 175, IOMMU group 17
+	Memory at ee300000 (64-bit, non-prefetchable) [size=8K]
+	Capabilities: <access denied>
+	Kernel driver in use: iwlwifi
+	Kernel modules: iwlwifi
+
+6d:00.0 Wireless controller [0d40]: Intel Corporation XMM7360 LTE Advanced Modem [8086:7360] (rev 01)
+	Subsystem: Hewlett-Packard Company XMM7360 LTE Advanced Modem [103c:8337]
+	Flags: bus master, fast devsel, latency 0, IRQ 174, IOMMU group 18
+	Memory at ee200000 (64-bit, non-prefetchable) [size=4K]
+	Memory at ee201000 (64-bit, non-prefetchable) [size=1K]
+	Capabilities: <access denied>
+	Kernel driver in use: iosm
+	Kernel modules: iosm
+
+6e:00.0 Non-Volatile memory controller [0108]: Sandisk Corp WD Blue SN500 / PC SN520 x2 M.2 2280 NVMe SSD [15b7:5003] (rev 01) (prog-if 02 [NVM Express])
+	Subsystem: Sandisk Corp WD Blue SN500 / PC SN520 x2 M.2 2280 NVMe SSD [15b7:5003]
+	Flags: bus master, fast devsel, latency 0, IRQ 16, IOMMU group 19
+	Memory at ee100000 (64-bit, non-prefetchable) [size=16K]
+	Capabilities: <access denied>
+	Kernel driver in use: nvme
+	Kernel modules: nvme
+

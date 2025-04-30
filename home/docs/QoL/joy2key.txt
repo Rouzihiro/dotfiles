@@ -1,0 +1,6 @@
+sudo dnf makecache --refresh
+sudo dnf -y install antimicrox
+
+
+uninstall:
+sudo dnf remove antimicrox

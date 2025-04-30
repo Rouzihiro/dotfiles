@@ -1,0 +1,4 @@
+ 
+This is a easy way to combine/join/merge several .001 .002 .003 etc files to one file.
+
+# cat filename.avi.* > filename.avi

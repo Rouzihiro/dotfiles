@@ -1,0 +1,11 @@
+Convert and mount bin & cue file
+
+To install
+sudo yum install bchunk
+
+To convert the files
+bchunk image.bin image.cue image.iso
+
+Then to mount the ISO in linux you run the command:
+sudo mkdir /mnt/images
+sudo mount -o loop -t iso9660 image.iso /mnt/images
