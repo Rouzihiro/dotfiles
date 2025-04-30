@@ -149,11 +149,11 @@ backup_configs() {
                 mkdir -p "$backup_dir"
                 
                 local items_to_backup=(
-                    ".config/waybar"
                     ".config/rofi"
-                    ".config/kitty"
-                    ".config/yazi"
                     ".config/neovim"
+										".config/hyprland"
+										"/bin/"
+										".aliases"
                     ".zshrc"
                 )
                 
@@ -274,6 +274,7 @@ install_dotfiles() {
 
     # Create necessary directories
     mkdir -p "$HOME/.config"
+ 		mkdir -p "$HOME/bin"
     mkdir -p "$HOME/.local/bin"
     mkdir -p "$HOME/.local/share"
     mkdir -p "$HOME/Pictures/wallpapers"
@@ -294,6 +295,12 @@ install_dotfiles() {
     if [ -d "$DOTFILES_SOURCE/.local" ]; then
         cp -r "$DOTFILES_SOURCE/.local/"* "$HOME/.local/" || log_warning "Error copying .local files"
         log_info "Copied local files to ~/.local/"
+    fi
+
+		    # Copy local files
+    if [ -d "$DOTFILES_SOURCE/bin" ]; then
+        cp -r "$DOTFILES_SOURCE/bin/"* "$HOME/bin/" || log_warning "Error copying bin files"
+        log_info "Copied local files to ~/bin/"
     fi
     
     # Copy theme files
@@ -396,7 +403,9 @@ install_omz() {
     
     # Copy zsh configuration files
     cp ".zshrc" "$HOME/.zshrc" 2>/dev/null || log_warning "Error copying .zshrc"
-    cp ".zshenv" "$HOME/.zshenv" 2>/dev/null || log_warning "Error copying .zshenv"
+    cp ".zshenv" "$HOME/.zprofile" 2>/dev/null || log_warning "Error copying .zprofile"
+ 		cp ".bashrc" "$HOME/.bashrc" 2>/dev/null || log_warning "Error copying .bashrc"
+		cp ".bash_profile" "$HOME/.bash_profile" 2>/dev/null || log_warning "Error copying .bash_profile"
     
     # Set zsh as default shell
     if [[ "$SHELL" != *"zsh"* ]]; then

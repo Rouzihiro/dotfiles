@@ -1,0 +1,5 @@
+Example (vertical sprite):
+convert image1.png image2.png image3.png -append result/result-sprite.png
+
+Example (horizontal sprite):
+convert image1.png image2.png image3.png +append result/result-sprite.png

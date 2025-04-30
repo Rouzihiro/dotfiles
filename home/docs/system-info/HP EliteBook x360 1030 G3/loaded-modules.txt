@@ -1,0 +1,218 @@
+Module                  Size  Used by
+ccm                    20480  6
+rfcomm                 98304  16
+snd_seq_dummy          12288  0
+snd_hrtimer            12288  1
+qrtr                   53248  2
+cmac                   12288  2
+algif_hash             12288  1
+algif_skcipher         16384  1
+af_alg                 32768  6 algif_hash,algif_skcipher
+bnep                   32768  2
+binfmt_misc            24576  1
+zfs                  6598656  6
+spl                   180224  1 zfs
+snd_sof_pci_intel_skl    12288  0
+snd_sof_intel_hda_common   217088  1 snd_sof_pci_intel_skl
+soundwire_intel        73728  1 snd_sof_intel_hda_common
+snd_sof_intel_hda_mlink    45056  2 soundwire_intel,snd_sof_intel_hda_common
+soundwire_cadence      40960  1 soundwire_intel
+snd_sof_intel_hda      24576  1 snd_sof_intel_hda_common
+snd_sof_pci            24576  2 snd_sof_intel_hda_common,snd_sof_pci_intel_skl
+snd_sof_xtensa_dsp     12288  1 snd_sof_intel_hda_common
+snd_sof               380928  3 snd_sof_pci,snd_sof_intel_hda_common,snd_sof_intel_hda
+snd_sof_utils          16384  1 snd_sof
+soundwire_generic_allocation    12288  1 soundwire_intel
+soundwire_bus         110592  3 soundwire_intel,soundwire_generic_allocation,soundwire_cadence
+snd_soc_avs           188416  0
+snd_soc_hda_codec      24576  1 snd_soc_avs
+snd_soc_skl           208896  0
+snd_hda_codec_hdmi     94208  1
+snd_soc_hdac_hda       24576  2 snd_sof_intel_hda_common,snd_soc_skl
+snd_hda_ext_core       32768  7 snd_soc_avs,snd_soc_hda_codec,snd_sof_intel_hda_common,snd_soc_hdac_hda,snd_sof_intel_hda_mlink,snd_soc_skl,snd_sof_intel_hda
+snd_soc_sst_ipc        20480  1 snd_soc_skl
+snd_soc_sst_dsp        36864  1 snd_soc_skl
+snd_soc_acpi_intel_match    98304  3 snd_sof_intel_hda_common,snd_soc_skl,snd_sof_pci_intel_skl
+snd_hda_codec_conexant    32768  1
+snd_soc_acpi           16384  3 snd_soc_acpi_intel_match,snd_sof_intel_hda_common,snd_soc_skl
+intel_uncore_frequency    16384  0
+snd_hda_codec_generic   122880  1 snd_hda_codec_conexant
+intel_uncore_frequency_common    16384  1 intel_uncore_frequency
+snd_soc_core          438272  7 snd_soc_avs,snd_soc_hda_codec,soundwire_intel,snd_sof,snd_sof_intel_hda_common,snd_soc_hdac_hda,snd_soc_skl
+snd_compress           28672  2 snd_soc_avs,snd_soc_core
+ac97_bus               12288  1 snd_soc_core
+snd_pcm_dmaengine      16384  1 snd_soc_core
+snd_hda_intel          61440  1
+intel_tcc_cooling      12288  0
+snd_intel_dspcfg       36864  5 snd_soc_avs,snd_hda_intel,snd_sof,snd_sof_intel_hda_common,snd_soc_skl
+x86_pkg_temp_thermal    20480  0
+snd_intel_sdw_acpi     16384  2 snd_sof_intel_hda_common,snd_intel_dspcfg
+intel_powerclamp       24576  0
+snd_hda_codec         204800  9 snd_hda_codec_generic,snd_hda_codec_conexant,snd_soc_avs,snd_hda_codec_hdmi,snd_soc_hda_codec,snd_hda_intel,snd_soc_hdac_hda,snd_soc_skl,snd_sof_intel_hda
+coretemp               24576  0
+kvm_intel             487424  0
+snd_hda_core          139264  12 snd_hda_codec_generic,snd_hda_codec_conexant,snd_soc_avs,snd_hda_codec_hdmi,snd_soc_hda_codec,snd_hda_intel,snd_hda_ext_core,snd_hda_codec,snd_sof_intel_hda_common,snd_soc_hdac_hda,snd_soc_skl,snd_sof_intel_hda
+snd_hwdep              20480  1 snd_hda_codec
+snd_pcm               192512  13 snd_soc_avs,snd_hda_codec_hdmi,snd_hda_intel,snd_hda_codec,soundwire_intel,snd_sof,snd_sof_intel_hda_common,snd_compress,snd_soc_core,snd_sof_utils,snd_soc_skl,snd_hda_core,snd_pcm_dmaengine
+kvm                  1404928  1 kvm_intel
+iwlmvm                868352  0
+snd_seq_midi           24576  0
+snd_seq_midi_event     16384  1 snd_seq_midi
+uvcvideo              139264  0
+btusb                  77824  0
+snd_rawmidi            57344  1 snd_seq_midi
+intel_rapl_msr         20480  0
+mei_pxp                16384  0
+mei_hdcp               28672  0
+irqbypass              12288  1 kvm
+videobuf2_vmalloc      20480  1 uvcvideo
+btrtl                  32768  1 btusb
+mac80211             1720320  1 iwlmvm
+btintel                57344  1 btusb
+uvc                    12288  1 uvcvideo
+snd_seq               114688  9 snd_seq_midi,snd_seq_midi_event,snd_seq_dummy
+btbcm                  24576  1 btusb
+videobuf2_memops       16384  1 videobuf2_vmalloc
+hid_sensor_als         16384  1
+processor_thermal_device_pci_legacy    12288  0
+hid_sensor_gyro_3d     16384  0
+hid_sensor_incl_3d     16384  0
+rapl                   20480  0
+hid_sensor_magn_3d     20480  1
+btmtk                  12288  1 btusb
+hid_sensor_accel_3d    16384  1
+hid_sensor_rotation    16384  0
+processor_thermal_device    20480  1 processor_thermal_device_pci_legacy
+hp_wmi                 28672  0
+videobuf2_v4l2         36864  1 uvcvideo
+snd_seq_device         16384  3 snd_seq,snd_seq_midi,snd_rawmidi
+hid_sensor_trigger     20480  14 hid_sensor_gyro_3d,hid_sensor_incl_3d,hid_sensor_als,hid_sensor_accel_3d,hid_sensor_magn_3d,hid_sensor_rotation
+processor_thermal_wt_hint    16384  1 processor_thermal_device
+i915                 4280320  15
+libarc4                12288  1 mac80211
+intel_cstate           24576  0
+intel_wmi_thunderbolt    16384  0
+platform_profile       12288  1 hp_wmi
+wmi_bmof               12288  0
+bluetooth            1028096  44 btrtl,btmtk,btintel,btbcm,bnep,btusb,rfcomm
+industrialio_triggered_buffer    12288  1 hid_sensor_trigger
+processor_thermal_rfim    32768  1 processor_thermal_device
+iwlwifi               598016  1 iwlmvm
+videodev              352256  2 videobuf2_v4l2,uvcvideo
+snd_timer              49152  3 snd_seq,snd_hrtimer,snd_pcm
+drm_buddy              20480  1 i915
+processor_thermal_rapl    16384  1 processor_thermal_device
+kfifo_buf              12288  1 industrialio_triggered_buffer
+hid_sensor_iio_common    24576  7 hid_sensor_gyro_3d,hid_sensor_trigger,hid_sensor_incl_3d,hid_sensor_als,hid_sensor_accel_3d,hid_sensor_magn_3d,hid_sensor_rotation
+ttm                   110592  1 i915
+intel_rapl_common      40960  2 intel_rapl_msr,processor_thermal_rapl
+videobuf2_common       81920  4 videobuf2_vmalloc,videobuf2_v4l2,uvcvideo,videobuf2_memops
+snd                   143360  18 snd_hda_codec_generic,snd_seq,snd_hda_codec_conexant,snd_seq_device,snd_hda_codec_hdmi,snd_hwdep,snd_hda_intel,snd_hda_codec,snd_sof,snd_timer,snd_compress,snd_soc_core,snd_pcm,snd_rawmidi
+ecdh_generic           16384  1 bluetooth
+drm_display_helper    237568  1 i915
+iosm                  126976  0
+processor_thermal_wt_req    12288  1 processor_thermal_device
+i2c_i801               36864  0
+mc                     81920  4 videodev,videobuf2_v4l2,uvcvideo,videobuf2_common
+ecc                    45056  1 ecdh_generic
+industrialio          126976  12 industrialio_triggered_buffer,hid_sensor_gyro_3d,hid_sensor_trigger,hid_sensor_incl_3d,kfifo_buf,hid_sensor_als,hid_sensor_accel_3d,hid_sensor_magn_3d,hid_sensor_rotation
+nls_iso8859_1          12288  1
+cfg80211             1323008  3 iwlmvm,iwlwifi,mac80211
+i2c_smbus              16384  1 i2c_i801
+wwan                   28672  1 iosm
+intel_xhci_usb_role_switch    12288  0
+processor_thermal_power_floor    12288  1 processor_thermal_device
+soundcore              16384  1 snd
+cec                    94208  2 drm_display_helper,i915
+mei_me                 53248  2
+rc_core                73728  1 cec
+intel_pch_thermal      20480  0
+processor_thermal_mbox    12288  4 processor_thermal_power_floor,processor_thermal_wt_req,processor_thermal_rfim,processor_thermal_wt_hint
+mei                   172032  5 mei_hdcp,mei_pxp,mei_me
+i2c_algo_bit           16384  1 i915
+intel_soc_dts_iosf     20480  1 processor_thermal_device_pci_legacy
+int3403_thermal        16384  0
+intel_vbtn             16384  0
+int340x_thermal_zone    16384  2 int3403_thermal,processor_thermal_device
+intel_pmc_core        118784  0
+intel_vsec             20480  1 intel_pmc_core
+int3400_thermal        24576  0
+pmt_telemetry          16384  1 intel_pmc_core
+acpi_thermal_rel       20480  1 int3400_thermal
+pmt_class              12288  1 pmt_telemetry
+intel_hid              28672  0
+wireless_hotkey        12288  0
+sparse_keymap          12288  3 hp_wmi,intel_hid,intel_vbtn
+acpi_pad              184320  0
+soc_button_array       20480  0
+input_leds             12288  0
+joydev                 32768  0
+mac_hid                12288  0
+serio_raw              20480  0
+sch_fq_codel           24576  1
+msr                    12288  0
+parport_pc             53248  0
+ppdev                  24576  0
+lp                     28672  0
+parport                73728  3 parport_pc,lp,ppdev
+efi_pstore             12288  0
+nfnetlink              20480  1
+dmi_sysfs              24576  0
+ip_tables              32768  0
+x_tables               65536  1 ip_tables
+autofs4                57344  2
+btrfs                2019328  0
+blake2b_generic        24576  0
+raid10                 73728  0
+raid456               192512  0
+async_raid6_recov      20480  1 raid456
+async_memcpy           16384  2 raid456,async_raid6_recov
+async_pq               20480  2 raid456,async_raid6_recov
+async_xor              16384  3 async_pq,raid456,async_raid6_recov
+async_tx               16384  5 async_pq,async_memcpy,async_xor,raid456,async_raid6_recov
+xor                    20480  2 async_xor,btrfs
+raid6_pq              126976  4 async_pq,btrfs,raid456,async_raid6_recov
+libcrc32c              12288  2 btrfs,raid456
+raid1                  57344  0
+raid0                  24576  0
+dm_mirror              24576  0
+dm_region_hash         24576  1 dm_mirror
+dm_log                 20480  2 dm_region_hash,dm_mirror
+hid_sensor_custom      28672  0
+hid_sensor_hub         28672  9 hid_sensor_gyro_3d,hid_sensor_trigger,hid_sensor_iio_common,hid_sensor_incl_3d,hid_sensor_als,hid_sensor_accel_3d,hid_sensor_magn_3d,hid_sensor_rotation,hid_sensor_custom
+intel_ishtp_hid        32768  0
+wacom                 163840  0
+usbhid                 77824  1 wacom
+crct10dif_pclmul       12288  1
+hid_multitouch         36864  0
+crc32_pclmul           12288  0
+hid_generic            12288  0
+polyval_clmulni        12288  0
+nvme                   61440  2
+polyval_generic        12288  1 polyval_clmulni
+ghash_clmulni_intel    16384  0
+nvme_core             208896  3 nvme
+sha256_ssse3           32768  0
+thunderbolt           516096  0
+psmouse               217088  0
+sha1_ssse3             32768  0
+ucsi_acpi              12288  0
+i2c_hid_acpi           12288  0
+nvme_auth              28672  1 nvme_core
+typec_ucsi             61440  1 ucsi_acpi
+intel_ish_ipc          32768  0
+intel_lpss_pci         24576  0
+xhci_pci               24576  0
+i2c_hid                40960  1 i2c_hid_acpi
+intel_lpss             12288  1 intel_lpss_pci
+intel_ishtp            65536  2 intel_ishtp_hid,intel_ish_ipc
+typec                 106496  1 typec_ucsi
+xhci_pci_renesas       20480  1 xhci_pci
+idma64                 20480  0
+hid                   180224  7 i2c_hid,wacom,usbhid,hid_multitouch,hid_sensor_hub,intel_ishtp_hid,hid_generic
+video                  73728  1 i915
+pinctrl_sunrisepoint    28672  2
+wmi                    28672  4 hp_wmi,video,intel_wmi_thunderbolt,wmi_bmof
+aesni_intel           356352  7
+crypto_simd            16384  1 aesni_intel
+cryptd                 24576  3 crypto_simd,ghash_clmulni_intel
