@@ -64,6 +64,9 @@ PACMAN_PACKAGES=(
     "yad"  # GUI dialogs
     "rsync"  # File syncing
     "swappy"  # Screenshot editing
+
+		# language
+		"hunspell-de"
 		"tesseract"
 		"tesseract-data-eng"
 		"tesseract-data-deu"
@@ -74,7 +77,7 @@ PACMAN_PACKAGES=(
 
     # Development
     "jdk-openjdk" "nodejs" "npm"  # Programming
-    "texlive-latexextra"  # LaTeX
+    "texlive-latexextra" "texmaker" # LaTeX
 
     # Graphics/GPU
     "mesa-utils" "vulkan-tools"
@@ -89,6 +92,9 @@ PACMAN_PACKAGES=(
     "zathura" "zathura-cb" "zathura-pdf-mupdf"  # Document viewers
     "neovim"  # Text editor
     "swww"  # Wallpaper utility
+
+		#email-TUI
+		"offlineimap" "neomutt" "msmtp" "w3m" "notmuch" "ca-certificates"
 )
 
 AUR_PACKAGES=(
@@ -104,6 +110,9 @@ AUR_PACKAGES=(
     "uwsm"              # Micro Wallpaper Switcher
     "wl-clipboard"      # Wayland clipboard tool
     "bibata-cursor-theme"  # Modern cursor theme
+
+		# Security
+		"bitwarden-cli"
 
     # Apps/Tools
     "jdownloader2"      # Download manager
