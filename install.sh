@@ -112,7 +112,6 @@ AUR_PACKAGES=(
     "bibata-cursor-theme"  # Modern cursor theme
 
 		# Security
-		"bitwarden-cli"
 
     # Apps/Tools
     "jdownloader2"      # Download manager
