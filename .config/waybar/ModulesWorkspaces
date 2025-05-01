@@ -186,7 +186,7 @@
 		"title<.*reddit.*>": " ",
 
 		"class<firefox|org.mozilla.firefox|librewolf|floorp|mercury-browser|[Cc]achy-browser>": " ",
-		"class<zen>": "󰰷 ",
+		"class<zen|[Zz]en-browser>": "󰰷 ",
 		"class<waterfox|waterfox-bin>": " ",
 		"class<microsoft-edge>": " ",
 		"class<Chromium|Thorium|[Cc]hrome>": " ",
@@ -197,6 +197,7 @@
 		"class<kitty|konsole>": " ",
 		"class<kitty-dropterm>": " ",
 		"class<com.mitchellh.ghostty>": " ",
+		"class<foot|foot-client>": " ",
 		"class<org.wezfurlong.wezterm>": " ",
 
 		"class<[Tt]hunderbird|[Tt]hunderbird-esr>": " ",
