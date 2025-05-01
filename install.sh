@@ -94,7 +94,7 @@ PACMAN_PACKAGES=(
     "swww"  # Wallpaper utility
 
 		#email-TUI
-		"offlineimap" "ca-certificates" "aerc" "w3m"
+		"thunderbird" "ca-certificates"
 )
 
 AUR_PACKAGES=(
