@@ -46,6 +46,7 @@ PACMAN_PACKAGES=(
     "swaync"  # Notifications
     "rofi"  # App launcher
     "wayland-utils"  # Wayland utilities
+		"btop"
 
     # Terminal and shell
     "zsh" "foot"  # Terminals
