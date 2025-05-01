@@ -1,0 +1,30 @@
+[general]
+accounts = icloud
+maxsyncaccounts = 1
+fsync = False
+
+[Account icloud]
+localrepository = icloud-local
+remoterepository = icloud-remote
+autorefresh = 15
+
+[Repository icloud-local]
+type = Maildir
+localfolders = ~/.mail/icloud
+# Single-line lambda for reliability
+nametrans = lambda folder: {'INBOX':'Inbox', 'Sent Messages':'Sent', 'Deleted Messages':'Trash', 'Drafts':'Drafts'}.get(folder, folder)
+
+[Repository icloud-remote]
+type = IMAP
+remotehost = imap.mail.me.com
+remoteuser = zohri@me.com
+remotepass = shell_eval("gpg --quiet --decrypt ~/.ssh/email_secrets/icloud_imap.gpg")
+ssl = yes
+sslcacertfile = /etc/ssl/certs/ca-certificates.crt
+ssl_version = tls1_2
+createfolders = False
+holdconnectionopen = True
+sync_deletes = yes
+idlefolders = ['INBOX']
+# Simplified folder filter
+folderfilter = lambda folder: folder in ['INBOX', 'Sent Messages', 'Drafts']
