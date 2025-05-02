@@ -17,17 +17,17 @@ need() {
 }
 compdef '_files -g "*.txt"' need
 
-
 alias test-yd="yt-dlp -f 'bv*[height<=1080][ext=mp4]+ba[ext=m4a]/b[height<=1080][ext=mp4]/bv*+ba/b' --embed-thumbnail --embed-metadata"
 alias test-yd720="yt-dlp -f 'bv[ext=mp4][height=720]+ba[ext=m4a]/b[ext=mp4][height<=720]' --embed-thumbnail --embed-metadata"
 
 # ===== Custom Aliases =====
 # Arch
+alias disk='ncdu'
 alias pm='sudo pacman -S'
 alias remove='sudo pacman -Rns'
 alias update='sudo pacman -Syu --noconfirm && yay -Syu --noconfirm'
+alias clean = 'yay -Rns $(yay -Qdtq); sudo pacman -Rns $(pacman -Qdtq)'
 alias clean2='sudo pacman -Scc --noconfirm && yay -Scc --noconfirm'
-alias clean='unused=$(pacman -Qdtq); if [ -n "$unused" ]; then sudo pacman -Rns $unused; else echo "No unused packages found."; fi'
 
 alias sctl="systemctl"
 alias sctls="systemctl status"
