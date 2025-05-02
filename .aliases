@@ -26,7 +26,7 @@ alias disk='ncdu'
 alias pm='sudo pacman -S'
 alias remove='sudo pacman -Rns'
 alias update='sudo pacman -Syu --noconfirm && yay -Syu --noconfirm'
-alias clean = 'yay -Rns $(yay -Qdtq); sudo pacman -Rns $(pacman -Qdtq)'
+alias clean='yay -Rns $(yay -Qdtq); sudo pacman -Rns $(pacman -Qdtq)'
 alias clean2='sudo pacman -Scc --noconfirm && yay -Scc --noconfirm'
 
 alias sctl="systemctl"
