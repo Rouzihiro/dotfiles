@@ -93,16 +93,16 @@ nnoremap S :sort<cr>
 " @bookmarks
 
 nnoremap gd :cd ~/Downloads<cr>
-nnoremap gs :cd ~/dotfiles/home/scripts<cr>
+nnoremap gw :cd ~/Documents<cr>
+nnoremap gs :cd ~/bin<cr>
 nnoremap gf :cd ~/dotfiles<cr>
-nnoremap gp :cd ~/dotfiles/home/programs<cr>
 nnoremap gv :cd ~/Videos<cr>
-nnoremap gx :cd ~/Pictures<cr>
+nnoremap gp :cd ~/Pictures<cr>
 nnoremap gc :cd ~/.config<cr>
 
 " =========================================================================== "
 
- nnoremap tx :!sxiv -t %d & <cr>
+nnoremap tx :!sxiv -t %d & <cr>
 
 nnoremap tp :!sh -c 'mkdir -p /tmp/pdfthumbs && rm -f /tmp/pdfthumbs/* && for f in %d/*.pdf; do [ -f "$f" ] && pdftoppm -png -f 1 -singlefile "$f" "/tmp/pdfthumbs/$(basename "$f" .pdf)" >/dev/null 2>&1; done && sxiv -t /tmp/pdfthumbs &' <cr>
 
