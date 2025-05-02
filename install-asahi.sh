@@ -46,7 +46,7 @@ PACMAN_PACKAGES=(
     "swaync"  # Notifications
     "rofi"  # App launcher
     "wayland-utils"  # Wayland utilities
-		"btop"
+	"btop"
 
     # Terminal and shell
     "zsh" "foot"  # Terminals
@@ -66,7 +66,7 @@ PACMAN_PACKAGES=(
     "rsync"  # File syncing
     "swappy"  # Screenshot editing
 
-		# language
+	# language
 		"hunspell-de"
 		"tesseract"
 		"tesseract-data-eng"
@@ -94,14 +94,15 @@ PACMAN_PACKAGES=(
     "neovim"  # Text editor
     "swww"  # Wallpaper utility
 
+		# Browsers
+
 		#email-TUI
 		"thunderbird" "ca-certificates"
 )
 
 AUR_PACKAGES=(
     # Browsers
-    "zen-browser-bin"  # Lightweight browser
-    "brave-bin"        # Privacy-focused browser
+	"zen-browser-bin"  # Lightweight browser
 
     # Fonts
     "adobe-source-code-pro-fonts"  # Monospace font
@@ -112,7 +113,8 @@ AUR_PACKAGES=(
     "wl-clipboard"      # Wayland clipboard tool
     "bibata-cursor-theme"  # Modern cursor theme
 
-		# Security
+	# dev
+	"shellcheck-bin"
 
     # Apps/Tools
     "jdownloader2"      # Download manager

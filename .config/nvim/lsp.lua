@@ -144,4 +144,19 @@ vim.api.nvim_create_autocmd('LspAttach', {
 -- ======================
 -- FIDGET (LSP PROGRESS) - Guaranteed Working Config
 -- ======================
-require('fidget').setup({}) -- Use all defaults
+local ok, fidget = pcall(require, 'fidget')
+if ok then
+  fidget.setup({
+    progress = {
+      display = {
+        done_icon = '✓',
+        progress_icon = { pattern = 'dots' },
+      }
+    },
+    notification = {
+      window = { winblend = 0 }
+    }
+  })
+else
+  vim.notify("Fidget.nvim not loaded", vim.log.levels.WARN)
+end
