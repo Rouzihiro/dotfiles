@@ -36,9 +36,11 @@ vim.keymap.set("n", "z=", "z=1<CR>", { silent = true, desc = "Accept 1st suggest
 -- Diagnostics
 vim.keymap.set("n", "<leader>gg", "<cmd>lua vim.diagnostic.open_float()<CR>", { desc = "Show grammar issues" })
 
--- File explorer
-vim.g.lf_map_keys = 0
-vim.keymap.set("n", "<leader>t", ":Lf<CR>")
+-- ======================
+-- FILE EXPLORER (Vifm)
+-- ======================
+vim.keymap.set("n", "<leader>fm", "<cmd>Vifm<CR>", { desc = "Open Vifm file manager" })
+vim.keymap.set("n", "<leader>fM", "<cmd>Vifm .<CR>", { desc = "Open Vifm in current directory" })
 
 -- Clear highlights
 vim.keymap.set("n", "<esc>", "<cmd>noh<CR>")
@@ -47,9 +49,54 @@ vim.keymap.set("n", "<esc>", "<cmd>noh<CR>")
 local builtin = require("telescope.builtin")
 vim.keymap.set("n", "<leader>fr", builtin.oldfiles, { desc = "Recent files" })
 vim.keymap.set("n", "<leader>ff", builtin.find_files, { desc = "Find files" })
-vim.keymap.set("n", "<leader>fg", builtin.live_grep, { desc = "Live grep" })
 vim.keymap.set("n", "<leader>fb", builtin.buffers, { desc = "Buffers" })
 vim.keymap.set("n", "<leader>fh", builtin.help_tags, { desc = "Help tags" })
 
+
+-- ======================
+-- DIAGNOSTICS NAVIGATION
+-- ======================
+
+-- Open all diagnostics in quickfix list
+vim.keymap.set('n', '<leader>tl', function() vim.diagnostic.setqflist() end,
+  { desc = 'Diagnostics to quickfix' })
+
+-- Open floating diagnostic under cursor
+vim.keymap.set('n', '<leader>tc', function() vim.diagnostic.open_float() end,
+  { desc = 'Line diagnostic' })
+
+
+-- ======================
+-- TELESCOPE DIAGNOSTICS
+-- ======================
+
+-- Project-wide diagnostics
+vim.keymap.set('n', '<leader>td', '<cmd>Telescope diagnostics<CR>',
+  { desc = 'Find diagnostics' })
+
+-- Current buffer diagnostics  
+vim.keymap.set('n', '<leader>tD', function()
+  require('telescope.builtin').diagnostics({ bufnr = 0 })
+end, { desc = 'Find buffer diagnostics' })
+
+-- Interactive grep diagnostics
+vim.keymap.set('n', '<leader>tg', function()
+  require('telescope.builtin').diagnostics({
+    prompt_title = 'Grep Diagnostics',
+    grep = true
+  })
+end, { desc = 'Grep diagnostics' })
+
+-- ======================
+-- DIAGNOSTICS TOGGLE
+-- ======================
+vim.keymap.set('n', '<leader>tx', function()
+  local current = not vim.diagnostic.is_enabled()
+  vim.diagnostic.enable(current)
+  print('Diagnostics ' .. (current and 'enabled' or 'disabled'))
+end, { desc = 'Toggle diagnostics' })
+
+
 -- Which-key
 require("which-key").setup({})
+
