@@ -77,6 +77,7 @@ PACMAN_PACKAGES=(
     "pamixer"  # Audio control
 
     # Development
+	"lazygit"
     "jdk-openjdk" "nodejs" "npm"  # Programming
     "texlive-latexextra" "texmaker" # LaTeX
 
