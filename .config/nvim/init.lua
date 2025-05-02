@@ -75,11 +75,20 @@ require("lazy").setup({
 
   -- Optional
   { "iamcco/markdown-preview.nvim" },
+	{ 'vifm/vifm.vim' }
 })
 
--- ======================
--- SOURCE OTHER FILES
--- ======================
-require('themes')  -- Loads ~/.config/nvim/themes.lua
-require('keymaps') -- Loads ~/.config/nvim/keymaps.lua
-require('lsp')     -- Loads ~/.config/nvim/lsp.lua
+-- Load config files with absolute paths
+local function load_config(name)
+  local path = vim.fn.stdpath('config') .. '/' .. name .. '.lua'
+  if vim.fn.filereadable(path) == 1 then
+    dofile(path)
+  else
+    vim.notify('Config file not found: ' .. path, vim.log.levels.ERROR)
+  end
+end
+
+-- Load configuration files
+load_config('themes')
+load_config('keymaps')
+load_config('lsp')
