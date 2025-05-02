@@ -31,3 +31,16 @@ gui:
   expandFocusedSidePanel: true
   mouseEvents: true
   editor: "nvim"
+
+  git:
+  paging:
+    colorArg: always
+    pager: delta --dark --paging=never
+  merging:
+    manualCommit: false
+  commit:
+    signOff: false
+  log:
+    showGraph: true
+
+notARepository: "quit" # exit lazygit when not in a repo

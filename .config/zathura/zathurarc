@@ -1,31 +1,38 @@
+# Zathura configuration file
 # See man `man zathurarc'
-set font "inconsolata 15"
 
-# Open document in best-fit mode by default
+
+# ============================== [ SETTINGS ] ============================== #
+
+# Open document in fit-width mode by default
 set adjust-open "best-fit"
 
 # One page per row by default
 set pages-per-row 1
 
-# Cliboard
-set selection-clipboard clipboard
-
-# Stop at page boundries 
+#stop at page boundries
 set scroll-page-aware "true"
 set smooth-scroll "true"
 set scroll-full-overlap 0.01
 set scroll-step 100
 
-# Zoom settings
+#zoom settings
 set zoom-min 10
-set guioptions "none"
+set guioptions ""
 
-# Zathurarc-dark
-set default-bg "#181818" #00
-set default-fg "#FFFFFF" #01
+set render-loading "false"
+set scroll-step 50
+
+# zathurarc-dark
+set font "inconsolata 15"
+set default-bg "rgba(25, 25, 25, 0.6)" #00
+set default-fg "#F7F7F6" #01
 
 set statusbar-fg "#B0B0B0" #04
 set statusbar-bg "#202020" #01
+
+set inputbar-bg "#151515" #00 currently not used
+set inputbar-fg "#FFFFFF" #02
 
 set notification-error-bg "#AC4142" #08
 set notification-error-fg "#151515" #00
@@ -33,34 +40,69 @@ set notification-error-fg "#151515" #00
 set notification-warning-bg "#AC4142" #08
 set notification-warning-fg "#151515" #00
 
-set highlight-color        "rgba(0,150, 200, 0.3)"
-set highlight-active-color "rgba(0,150, 200, 0.5)"
+set highlight-color "#F4BF75" #0A
+set highlight-active-color "#6A9FB5" #0D
 
 set completion-highlight-fg "#151515" #02
-set completion-highlight-bg "#0099c9" #0C
-
-set inputbar-bg "#202020"
-set inputbar-fg "#0099c9"
+set completion-highlight-bg "#90A959" #0C
 
 set completion-bg "#303030" #02
 set completion-fg "#E0E0E0" #0C
 
-set notification-bg "#161616" #0B
-set notification-fg "#DFDFDF" #00
+set notification-bg "#90A959" #0B
+set notification-fg "#151515" #00
 
-set render-loading "false"
+# Recolor PDF
+set recolor "true"
+set recolor-lightcolor "rgba(0, 0, 0, 0)" #00
+set recolor-darkcolor "rgba(255, 255, 255, 1)" #06
+set recolor-reverse-video "true"
+set recolor-keephue "true"
 
-# Keybindings
-map b toggle_statusbar
-map [fullscreen] b toggle_statusbar
+
+# =============================== [ REMAPS ] =============================== #
+
+# Booklet Mode Toggle
+map b toggle_page_mode
+map [fullscreen] b toggle_page_mode
+
+# i - Dark Mode Toggle
+map i recolor
+map [fullscreen] i recolor
+
+# f - fullscreen
 unmap f
 map f toggle_fullscreen
 map [fullscreen] f toggle_fullscreen
-map <Up> navigate previous
-map [fullscreen] <Up> navigate previous
-map <Down> navigate next
-map [fullscreen] <Down> navigate next
-map <Button3> navigate next
-map [fullscreen] <Button3> navigate next
-map <Button4> navigate next
-map [fullscreen] <Button4> navigate next
+
+# x - Kill
+map x quit
+map [fullscreen] x quit
+
+
+# d/u - Half Scroll
+unmap d
+map d scroll "half-down"
+map u scroll "half-up"
+map [fullscreen] d scroll "half-down"
+map [fullscreen] u scroll "half-up"
+
+# j/k - Smooth Scroll
+map j feedkeys "<C-Down>"
+map k feedkeys "<C-Up>"
+
+# h - Previous Page
+map h navigate "previous"
+map [fullscreen] h navigate "previous"
+
+# l - Next Page
+map l navigate "next"
+map [fullscreen] l navigate "next"
+
+# zoom page
+map 0 zoom "default"
+map - zoom "out"
+map = zoom "in"
+map [fullscreen] 0 zoom "default"
+map [fullscreen] - zoom "out"
+map [fullscreen] = zoom "in"

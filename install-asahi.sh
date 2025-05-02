@@ -51,6 +51,7 @@ PACMAN_PACKAGES=(
     # Terminal and shell
     "zsh" "foot"  # Terminals
     "starship" "eza" "bat" "fzf"  # Shell enhancements
+	"duf" "ncdu"
     "tmux"  # Terminal multiplexer
     "fastfetch"  # System info
 
