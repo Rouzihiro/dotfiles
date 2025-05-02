@@ -34,6 +34,7 @@ application/schema+json=nvim.desktop
 text/x-csrc=nvim.desktop
 text/css=nvim.desktop
 image/png=imv-dir.desktop
+image/jpeg=imv-dir.desktop
 
 [Added Associations]
 x-scheme-handler/http=zen.desktop;
@@ -65,3 +66,4 @@ application/schema+json=nvim.desktop;
 text/x-csrc=nvim.desktop;
 text/css=nvim.desktop;
 image/png=imv-dir.desktop;
+image/jpeg=imv-dir.desktop;
