@@ -16,6 +16,14 @@ vim.keymap.set({ "n", "v" }, "<leader>yb", '"by', { desc = "Yank into reg: b" })
 vim.keymap.set({ "n", "v" }, "<leader>pp", '"ap', { desc = "Paste from reg: a" })
 vim.keymap.set({ "n", "v" }, "<leader>pb", '"bp', { desc = "Paste from reg: b" })
 
+-- delete not cut
+vim.keymap.set ({"n", "v"}, "d", "\"_d")
+vim.keymap.set ({"n", "v"}, "D", "\"_D")
+
+vim.keymap.set ({"n", "v"}, "X", "dd")
+
+vim.keymap.set({"n"}, "<space>a", "mzA<space><esc>p`z", { desc = "paste to the end of line" })
+
 -- Clipboard
 vim.keymap.set({ "n", "v" }, "<leader>yc", '"+y', { desc = "Yank to clipboard" })
 vim.keymap.set({ "n", "v" }, "<leader>pc", '"+p', { desc = "Paste from clipboard" })

@@ -102,7 +102,7 @@ PACMAN_PACKAGES=(
 
 AUR_PACKAGES=(
     # Browsers
-	"zen-browser"  # Lightweight browser
+	"zen-browser-bin"  # Lightweight browser
 
     # Fonts
     "adobe-source-code-pro-fonts"  # Monospace font
