@@ -1,4 +1,4 @@
-#!/bin/bash
+l!/bin/bash
 
 # Color definitions
 GREEN='\033[0;32m'
@@ -178,7 +178,6 @@ backup_configs() {
                 local items_to_backup=(
                     ".config/rofi"
                     ".config/neovim"
-										".config/hyprland"
 										"/bin/"
 										".aliases"
                     ".zshrc"
@@ -458,14 +457,6 @@ configure_services() {
     #systemctl --user start pipewire.service || log_warning "Failed to start pipewire.service"
     #systemctl --user start pipewire-pulse.service || log_warning "Failed to start pipewire-pulse.service"
     #systemctl --user start wireplumber.service || log_warning "Failed to start wireplumber.service"
-    
-    # Enable hypridle only if it exists
-    if command -v hypridle &> /dev/null; then
-        systemctl --user enable hypridle.service || log_warning "Failed to enable hypridle.service"
-        systemctl --user start hypridle.service || log_warning "Failed to start hypridle.service"
-    else
-        log_warning "Hypridle not found. Skipping service setup."
-    fi
 
     # Enable system services
     #log_info "Enabling system services..."
