@@ -1,0 +1,43 @@
+#!/bin/sh
+
+# Create secure temp directory
+workdir=$(mktemp -d -t "ocr-XXXXXX") || {
+    notify-send -t 2000 "OCR Screenshot" "Failed to create temp directory"
+    exit 1
+}
+
+timestamp=$(date +%Y%m%d%H%M%S)
+imgname="$workdir/screenshot-${timestamp}.png"
+txtname="$workdir/text-${timestamp}"
+
+# Capture screenshot
+if ! grim -g "$(slurp)" "$imgname"; then
+    notify-send -t 2000 "OCR Screenshot" "Failed to capture screenshot"
+    rm -rf "$workdir"
+    exit 1
+fi
+
+# Run OCR with both English and German
+if ! tesseract "$imgname" "$txtname" -l eng+deu; then
+    notify-send -t 2000 "OCR Screenshot" "OCR processing failed"
+    rm -rf "$workdir"
+    exit 1
+fi
+
+# Verify output file exists
+output_file="${txtname}.txt"
+if [ ! -f "$output_file" ]; then
+    notify-send -t 2000 "OCR Screenshot" "No text output generated"
+    rm -rf "$workdir"
+    exit 1
+fi
+
+# Copy to clipboard and get first line
+wl-copy < "$output_file"
+ocr_text=$(head -n 1 "$output_file" 2>/dev/null || echo "[No text found]")
+
+# Send notification
+notify-send -t 2000 "OCR Screenshot" "Copied: ${ocr_text}"
+
+# Cleanup
+rm -rf "$workdir"

@@ -241,7 +241,7 @@ endif
 " @association
 
 fileviewer {*.pdf,*.jpg,*.jpeg,*.png,*.gif,*.bmp,*.xpm,*.mp4,*.avi,*.mov},<image/*,video/*,application/pdf,text/*>
-      \ !/usr/local/bin/preview.sh %f %pw %ph
+	  \ ffprobe -hide_banner -show_format -show_streams %c 2>&1
 
 "  GIT
 fileviewer {.git/}, git -c color.status=always status %d %pu
