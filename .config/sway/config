@@ -1,318 +1,180 @@
-# xwayland disable
-
+### Set variables
 set $mod Mod4
+set $opacity 0.9
+set $term foot
+set $launcher rofi -show drun
+set $browser zen-browser
+set $fileManager thunar
+set $TfileManager $term -e vifm
+set $editor $term -e nvim
 
-font pango:Terminus Bold 10
+### Opacity settings
+for_window [app_id="foot"] opacity $opacity
+for_window [title="^JDownloader.*"] opacity 0.8
+for_window [app_id="runner_floating"] floating enable, move position center, move scratchpad
 
-# output DP-1 mode 1920x1080@239.760Hz
-output HDMI-A-1 mode 1920x1080@239.760Hz
-
-# output DP-1 modeline 599.63 1920 1968 2000 2080 1080 1083 1088 1584 +hsync +vsync #182hz
-# output DP-1 modeline 571.08 1920 1968 2000 2080 1080 1083 1088 2288 +hsync +vsync #120hz
-# output DP-1 max_render_time 9 #120hz
-# output DP-1 modeline 457.60 1920 1968 2000 2080 1080 1083 1088 2200 +hsync +vsync #100hz
-
-seat * hide_cursor 2000
-
-seat seat0 xcursor_theme Adwaita 28
-
-exec_always {
-    # gsettings set org.gnome.desktop.interface gtk-theme 'Material-Black-Blueberry-3.36'
-    # gsettings set org.gnome.desktop.interface icon-theme 'Material-Black-Blueberry-Numix-FLAT'
-    # gsettings set org.gnome.desktop.interface cursor-theme 'macOSBigSur'
-    # gsettings set org.gnome.desktop.interface cursor-size '28'
-    # gsettings set org.gnome.desktop.interface font-name 'Ubuntu 11'
-    $HOME/.config/sway/startup.sh
-}
-exec {
-    systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
-    dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway
-    systemctl --user import-environment SWAYSOCK WAYLAND_DISPLAY
-    /usr/libexec/polkit-gnome-authentication-agent-1 &
-    nm-applet --indicator
-    playerctld daemon
-}
-
-set $lock_bg /home/korei/Pictures/wallpapers/carpathians.jpg
-
-output "*" bg $lock_bg fill #121212
-
-# set $lock swaylock -f -c 121212 -i $lock_bg -s fill --font Terminus --font-size 28 --indicator-radius 90 --indicator-thickness 15
-
-# exec swayidle -w \
-         # timeout 600 'playerctl -a pause & $lock' \
-         # timeout 600 'swaymsg "output * dpms off"' \
-         # resume 'swaymsg "output * dpms on"' \
-         # timeout 1200 'sudo systemctl suspend' \
-         # before-sleep '$lock'
-for_window [class="^.*"] inhibit_idle fullscreen 
-for_window [app_id="^.*"] inhibit_idle fullscreen
-
-smart_borders on
-# smart_gaps on
-
-# gaps inner 0
-# gaps outer 5
-
-# hide_edge_borders smart
-default_border pixel 3
-titlebar_border_thickness 2
-default_floating_border pixel 3
-# default_border none
-# hide_edge_borders --i3 smart
-# smart_borders smart
-
-for_window [class="^.*"] border pixel 3
-for_window [app_id="imv"] floating enable
-for_window [app_id="mpv"] floating enable
-for_window [app_id="mpv"] resize set 1280 960
-for_window [window_type="dialog"] floating enable
-for_window [window_type="dialog"] resize set 700 800
-
-# kill focused window
-bindsym --to-code $mod+w Kill
-
-# class                 border  backgr. text    indicator child_border
-client.focused          #008dc1 #008dc1 #000000 #008dc1   #008dc1
-client.focused_inactive #008dc1 #008dc1 #000000 #000000   #000000
-client.unfocused        #008dc1 #121212 #cccccc #000000   #000000
-client.urgent           #000000 #d3869b #cccccc #d3869b   #d3869b
-client.placeholder      #000000 #000000 #cccccc #000000   #000000    
-client.background       #000000
-
-# calc
-bindsym --to-code $mod+e exec foot -f "Ubuntu Mono:size=24" -e calc
-
-# calc
-bindsym --to-code Control+Shift+Escape exec foot -f "Ubuntu Mono:size=17" -e btop
-
-# emoji KEKW
-bindsym --to-code $mod+S exec wofi-emoji
-
-# Obs wayland crap (obs-websockets + obs-cli)
-bindsym --to-code {
-    $mod+Home exec $HOME/.config/sway/buffer-toggle.sh
-    $mod+End exec $HOME/.config/sway/buffer-save.sh
-    $mod+F12 exec $HOME/.config/sway/rec-toggle.sh
-}
-# bluetooth
-bindsym --to-code {
-    XF86AudioPlay exec playerctl play-pause
-    XF86AudioPause exec playerctl play-pause
-    XF86AudioNext exec playerctl next
-    XF86AudioPrev exec playerctl previous
-}
-# volume
-bindsym --to-code {
-    XF86AudioLowerVolume exec pamixer -d 1
-    XF86AudioRaiseVolume exec pamixer -i 1
-}
-# screenshots
-bindsym --to-code $mod+Print exec grim -o $(swaymsg -t get_outputs | jq -r '.[] | select(.focused) | .name') \
-$HOME/Pictures/Screens/$(date +'%Y-%m-%d-%H:%M:%S-screenshot.png');\
-exec notify-send "Saved" "to ~/Pictures/Screens/" -t 2000
-
-bindsym --to-code --release Print exec  $HOME/.config/sway/PrintNotify.sh
-bindsym --to-code --release $mod+Shift+Print exec slurp | grim -g - $HOME/Pictures/Screens/$(date +'%Y-%m-%d-%H:%M:%S-screenshot.png'); exec notify-send "Saved" "to ~/Pictures/Screens/" -t 2000
-bindsym --to-code --release Shift+Print exec $HOME/.config/sway/PrintSelectNotify.sh
-
-# scroll between workspaces
-bindsym --to-code {
-    --whole-window --border $mod+button4 workspace prev
-    --whole-window --border $mod+button5 workspace next
-    $mod+u workspace prev
-    $mod+o workspace next
-    $mod+Shift+u exec $HOME/.config/sway/workspaceminus.sh
-    $mod+Shift+o exec $HOME/.config/sway/workspaceplus.sh
-    $mod+Comma exec $HOME/.config/sway/workspaceminus.sh
-    $mod+Period exec $HOME/.config/sway/workspaceplus.sh
-}
-
-# focus
-bindsym --to-code $mod+Control+Left focus output left
-bindsym --to-code $mod+Control+Right focus output right
-
-# Pulsemixer
-bindsym --to-code $mod+Insert exec foot -e pulsemixer
-
-# mako
-bindsym --to-code $mod+Shift+Insert exec $HOME/.config/sway/mako.sh
-
-# screen lock
-bindsym --to-code --release $mod+Shift+BackSpace exec $lock
-
-# restart waybar
-bindsym --to-code $mod+Escape exec killall -SIGUSR2 waybar; exec  notify-send "waybar" "restarted"
-
-# Use Mouse+$mod to drag floating windows to their wanted position
-floating_modifier $mod
-
-# start a terminal
-bindsym --to-code $mod+Return exec alacritty
-
-# start bemenu (a program launcher)
-# set $uifont "Terminus 28"
-# set $highlight #f92672
-# set $prompt #f92672
-
-# tofi is better
-bindsym --to-code {
-    $mod+p exec $(tofi-drun)
-    $mod+Shift+p exec tofi-run | xargs swaymsg exec --
-    Mod1+Escape exec $HOME/.config/sway/tofi-powermenu.sh
-}
-# change focus
-bindsym --to-code {
-    $mod+h focus left
-    $mod+j focus down
-    $mod+k focus up
-    $mod+l focus right
-    
-    $mod+Left focus left
-    $mod+Down focus down
-    $mod+Up focus up
-    $mod+Right focus right
-    --whole-window --border $mod+button9 focus left
-    --whole-window --border $mod+button8 focus right
-}
-
-# move focused window
-bindsym --to-code {
-    $mod+Shift+h move left
-    $mod+Shift+j move down
-    $mod+Shift+k move up
-    $mod+Shift+l move right
-}
-
-# alternatively, you can use the cursor keys:
-bindsym --to-code {
-    $mod+Shift+Left move left
-    $mod+Shift+Down move down
-    $mod+Shift+Up move up
-    $mod+Shift+Right move right
-}
-
-# enter fullscreen mode for the focused container
-bindsym --to-code $mod+f fullscreen toggle
-
-bindsym --to-code $mod+g layout tabbed 
-
-bindsym --to-code $mod+t layout toggle split
-
-# toggle tiling / floating
-bindsym --to-code $mod+grave floating toggle
-
-# change focus between tiling / floating windows
-bindsym --to-code $mod+Tab focus mode_toggle
-
-# Define names for default workspaces for which we configure key bindings later on.
-workspace 1  output DP-1 
-workspace 2  output DP-1 
-workspace 3  output DP-1 
-workspace 3  output DP-1 
-workspace 4  output DP-1 
-workspace 5  output DP-1
-workspace 6  output DP-2 
-workspace 7  output DP-2 
-workspace 8  output DP-2 
-workspace 9  output DP-2  
-workspace 10 output DP-2  
-
-# switch to workspace
-bindsym --to-code {
-    $mod+1 workspace 1
-    $mod+2 workspace 2
-    $mod+3 workspace 3
-    $mod+4 workspace 4
-    $mod+5 workspace 5
-    $mod+6 workspace 6
-    $mod+7 workspace 7
-    $mod+8 workspace 8
-    $mod+9 workspace 9
-    $mod+0 workspace 10
-}
-
-# move focused container to workspace
-bindsym --to-code {
-    $mod+Shift+1 move container to workspace 1
-    $mod+Shift+2 move container to workspace 2
-    $mod+Shift+3 move container to workspace 3
-    $mod+Shift+4 move container to workspace 4
-    $mod+Shift+5 move container to workspace 5
-    $mod+Shift+6 move container to workspace 6
-    $mod+Shift+7 move container to workspace 7
-    $mod+Shift+8 move container to workspace 8
-    $mod+Shift+9 move container to workspace 9
-    $mod+Shift+0 move container to workspace 10
-}
-
-# reload the configuration file
-bindsym --to-code $mod+Mod1+c reload
-# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
-bindsym --to-code $mod+Mod1+r restart
-
-# bindsym --to-code $mod+Mod1+q exec  swaymsg exit
-
-# resize window (you can also use the mouse for that)
-mode "resize" {
-        # These bindings trigger as soon as you enter the resize mode
-
-        # Pressing left will shrink the window’s width.
-        # Pressing right will grow the window’s width.
-        # Pressing up will shrink the window’s height.
-        # Pressing down will grow the window’s height.
-        bindsym --to-code l resize shrink width 10 px or 10 ppt
-        bindsym --to-code j resize grow height 10 px or 10 ppt
-        bindsym --to-code k resize shrink height 10 px or 10 ppt
-        bindsym --to-code h resize grow width 10 px or 10 ppt
-
-        # same bindings, but for the arrow keys
-        bindsym --to-code Right resize shrink width 10 px or 10 ppt
-        bindsym --to-code Up resize grow height 10 px or 10 ppt
-        bindsym --to-code Down resize shrink height 10 px or 10 ppt
-        bindsym --to-code Left resize grow width 10 px or 10 ppt
-
-        # back to normal: Enter or Escape or $mod+r
-        bindsym --to-code Return mode "default"
-        bindsym --to-code Escape mode "default"
-        bindsym --to-code $mod+r mode "default"
-}
-
-#
-# Scratchpad:
-#
-# Sway has a "scratchpad", which is a bag of holding for windows.
-# You can send windows there and get them back later.
-
-# Move the currently focused window to the scratchpad
-bindsym --to-code $mod+Shift+minus move scratchpad
-
-# Show the next scratchpad window or hide the focused scratchpad window.
-# If there are multiple scratchpad windows, this command cycles through them.
-bindsym --to-code $mod+minus scratchpad show
-
-bindsym --to-code $mod+r mode "resize"
-
-input type:pointer {
-    accel_profile "flat"
-    pointer_accel -0.4
-}
-
+### Input devices
 input type:keyboard {
-    xkb_layout us,ua
-    xkb_options grp:win_space_toggle,caps:escape
-    repeat_delay 170
-    repeat_rate 50
+    xkb_layout de,us
 }
 
-# Compute region:
-# resolution: (1920x1080)
-# area wacom: (165x102mm) >$ libinput list-devices
-# 1080 * 165 / 1920 = x
-# x / 102 = y (use 'y')
-input 9580:109:GAOMON_Gaomon_Tablet_Pen {
-    accel_profile "flat"
-    pointer_accel 0
-    map_to_output DP-1
-    # map_from_region 0.0x0.0 1.0x0.909
+input type:touchpad {
+    dwt enabled
+    tap enabled
+    pointer_accel 1
+    accel_profile flat
+    natural_scroll enabled
 }
+
+input type:mouse {
+    pointer_accel 0.4
+    accel_profile flat
+}
+
+### Window rules
+for_window [app_id=".*"] inhibit_idle fullscreen
+
+### Gaps and borders
+gaps inner 5
+gaps outer 2
+default_border pixel 2
+default_floating_border pixel 2
+titlebar off
+
+### Floating windows
+floating_modifier $mod
+for_window [app_id="^com.saivert.pwvucontrol$"] floating enable
+
+### Assign applications to workspaces
+assign [app_id="^librewolf$"] workspace number 1
+
+### Startup programs
+exec foot --server
+exec autotiling-rs
+exec swww init && sleep 0.5 && swww img ~/Pictures/wallpapers/konoha 1.jpg
+exec swayidle -w \
+    before-sleep "swaylock -fF" \
+    timeout 90 'if ! pgrep -x "motrix"; then brightnessctl -s set 0; fi' \
+      resume 'brightnessctl -r' \
+    timeout 900 'if ! pgrep -x "motrix"; then systemctl suspend; fi' \
+    timeout 1800 'if ! pgrep -x "motrix"; then systemctl poweroff; fi'
+
+### Status bar
+bar {
+    position top
+    tray_padding 0
+    status_command i3blocks -c ~/.config/i3blocks/config
+    separator_symbol ""
+
+    font pango:DroidSansM Nerd Font 10
+
+    colors {
+        separator #1e1e2e
+        background #1e1e2e
+        focused_workspace  #1e1e2e #fab387 #fab387
+        active_workspace   #1e1e2e #eba0ac #eba0ac
+        urgent_workspace   #1e1e2e #74c7ec #74c7ec
+    }
+}
+
+### Workspaces
+set $ws1 "1"
+set $ws2 "2"
+set $ws3 "3"
+set $ws4 "4"
+set $ws5 "5"
+set $ws6 "6"
+set $ws6 "6"
+set $ws7 "7"
+set $ws8 "8"
+set $ws9 "9"
+
+bindsym $mod+1 workspace number $ws1
+bindsym $mod+2 workspace number $ws2
+bindsym $mod+3 workspace number $ws3
+bindsym $mod+4 workspace number $ws4
+bindsym $mod+5 workspace number $ws5
+bindsym $mod+6 workspace number $ws6
+bindsym $mod+7 workspace number $ws7
+bindsym $mod+8 workspace number $ws8
+bindsym $mod+9 workspace number $ws9
+
+bindsym $mod+Shift+1 move container to workspace number $ws1
+bindsym $mod+Shift+2 move container to workspace number $ws2
+bindsym $mod+Shift+3 move container to workspace number $ws3
+bindsym $mod+Shift+4 move container to workspace number $ws4
+bindsym $mod+Shift+5 move container to workspace number $ws5
+bindsym $mod+Shift+6 move container to workspace number $ws6
+bindsym $mod+Shift+7 move container to workspace number $ws7
+bindsym $mod+Shift+8 move container to workspace number $ws8
+bindsym $mod+Shift+9 move container to workspace number $ws9
+
+
+### Keybindings
+bindsym $mod+Return exec $term
+bindsym $mod+d exec $launcher
+bindsym $mod+n exec $editor
+bindsym $mod+e exec $TfileManager
+bindsym $mod+b exec $browser
+bindsym $mod+Shift+r reload
+bindsym $mod+q kill
+bindsym $mod+Ctrl+q exec swaymsg exit
+
+# Layout
+bindsym $mod+f fullscreen
+bindsym $mod+Shift+f floating toggle
+bindsym $mod+a focus parent
+
+# Navigation
+bindsym $mod+h focus left
+bindsym $mod+j focus down
+bindsym $mod+k focus up
+bindsym $mod+l focus right
+
+bindsym $mod+Shift+h move left
+bindsym $mod+Shift+j move down
+bindsym $mod+Shift+k move up
+bindsym $mod+Shift+l move right
+
+# Resize
+bindsym $mod+Ctrl+h resize shrink width 50px
+bindsym $mod+Ctrl+j resize shrink height 50px
+bindsym $mod+Ctrl+k resize grow height 50px
+bindsym $mod+Ctrl+l resize grow width 50px
+
+# Media and brightness
+bindsym XF86MonBrightnessDown exec brightnessctl set 5%-
+bindsym XF86MonBrightnessUp exec brightnessctl set +5%
+bindsym XF86AudioLowerVolume exec wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%-
+bindsym XF86AudioRaiseVolume exec wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+
+bindsym XF86AudioMute exec wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
+bindsym XF86AudioPlay exec playerctl play-pause
+bindsym XF86AudioPrev exec playerctl previous
+bindsym XF86AudioNext exec playerctl next
+
+# Scratchpad
+bindsym $mod+space scratchpad show
+bindsym $mod+Shift+space floating enable, resize set width 1800 height 1000, move scratchpad
+
+# Custom scripts
+bindsym $mod+Shift+m exec monitor-multi
+bindsym $mod+Shift+Backspace exec power-menu-sway
+#bindsym $mod+Shift+v exec video-tool
+#bindsym $mod+v exec browse-video
+#bindsym $mod+Shift+x exec $term -e ~/dotfiles/home/scripts/executer
+#bindsym $mod+x exec script-launcher
+bindsym $mod+o exec ~/bin/ocr
+#bindsym $mod+Shift+t exec ocr-prompt
+#bindsym $mod+t exec ocr-translate
+#bindsym $mod+Shift+w exec wallpaper
+#bindsym $mod+Shift+b exec browse-web
+#bindsym $mod+z exec keybinds-list-shell
+#bindsym $mod+Shift+z exec keybinds-list-sway
+bindsym $mod+r exec $term --app-id=runner_floating -e ~/bin/runner
+
+### Mode: vm_mode
+mode "vm_mode" {
+  bindsym $mod+i mode "default"
+}
+bindsym $mod+i mode "vm_mode"
+
