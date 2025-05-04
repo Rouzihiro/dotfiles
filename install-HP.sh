@@ -126,7 +126,7 @@ AUR_PACKAGES=(
     "bibata-cursor-theme"  # Modern cursor theme
 
 	# Development
-	"lazygit" "git-delta"
+	"lazygit" "git-delta" "openssh"
     "jdk-openjdk" "nodejs" "npm"  # Programming
     "texlive-latexextra" "texmaker" # LaTeX
 
