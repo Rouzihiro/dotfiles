@@ -40,19 +40,23 @@ log_success() {
 # Package lists
 PACMAN_PACKAGES=(
     # System and desktop environment
-    "hyprland" "waybar" "hypridle" "hyprlock" 
-    "asahi-desktop-meta" "asahi-meta"  # Asahi-specific
+    "waybar" 
     "power-profiles-daemon"  # Power management
     "swaync"  # Notifications
     "rofi"  # App launcher
     "wayland-utils"  # Wayland utilities
 	"btop"
+	
+	# Sway
+	"i3blocks" "autotiling-rs" "swaylock" "swayidle"
+	"xdg-desktop-portal" "xdg-desktop-portal-wlr"
 
     # Terminal and shell
     "zsh" "foot"  # Terminals
     "starship" "eza" "bat" "fzf"  # Shell enhancements
     "tmux"  # Terminal multiplexer
     "fastfetch"  # System info
+	"duf" "ncdu"
 
     # Utilities
     "aria2" "grim" "slurp" "brightnessctl" 
@@ -82,10 +86,11 @@ PACMAN_PACKAGES=(
 
     # Graphics/GPU
     "mesa-utils" "vulkan-tools"
+	"xf86-video-intel" "vulkan-intel" "mesa" "libglvnd"
 
     # Fonts and themes
   	"otf-font-awesome" "ttf-droid" "ttf-fira-code" "ttf-fantasque-nerd"
-		"ttf-jetbrains-mono" "ttf-jetbrains-mono-nerd"
+	"ttf-jetbrains-mono" "ttf-jetbrains-mono-nerd"
   	"ttf-firacode-nerd" "ttf-hack-nerd" "ttf-cascadia-code-nerd"
   	"ttf-font-awesome" "ttf-dejavu" "noto-fonts"
 
@@ -94,15 +99,22 @@ PACMAN_PACKAGES=(
     "neovim"  # Text editor
     "swww"  # Wallpaper utility
 
-		# Browsers
+	# Browsers
+	
+	# Games
+	"lutris"
 
-		#email-TUI
-		"thunderbird" "ca-certificates"
+	#email-TUI
+	"thunderbird" "ca-certificates"
 )
 
 AUR_PACKAGES=(
     # Browsers
 	"zen-browser-bin"  # Lightweight browser
+	
+	# Games
+	"heroic-games-launcher-bin"
+	"protonup-qt"
 
     # Fonts
     "adobe-source-code-pro-fonts"  # Monospace font
@@ -113,8 +125,10 @@ AUR_PACKAGES=(
     "wl-clipboard"      # Wayland clipboard tool
     "bibata-cursor-theme"  # Modern cursor theme
 
-		# dev
-		"shellcheck-bin"
+	# Development
+	"lazygit" "git-delta"
+    "jdk-openjdk" "nodejs" "npm"  # Programming
+    "texlive-latexextra" "texmaker" # LaTeX
 
     # Apps/Tools
     "jdownloader2"      # Download manager
