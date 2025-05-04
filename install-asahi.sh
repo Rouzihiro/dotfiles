@@ -122,7 +122,6 @@ AUR_PACKAGES=(
     # Apps/Tools
     "jdownloader2"      # Download manager
     "sdl2_sound"        # Audio library (for games/apps)
-    "ags"               # Aylur's Gtk Shell (GNOME Shell replacement)
 )
 
 # List of archive files to extract after copying
