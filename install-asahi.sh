@@ -58,6 +58,7 @@ PACMAN_PACKAGES=(
     # Utilities
     "aria2" "grim" "slurp" "brightnessctl" 
     "mediainfo" "jq" "bc" "trash-cli" "unzip"
+	"ntfs-3g" "highlight"
     "blueman"  # Bluetooth
     "curlftpfs"  # FTP mounting
     "vifm"  # File manager

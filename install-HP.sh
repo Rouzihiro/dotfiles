@@ -56,11 +56,12 @@ PACMAN_PACKAGES=(
     "starship" "eza" "bat" "fzf"  # Shell enhancements
     "tmux"  # Terminal multiplexer
     "fastfetch"  # System info
-	"duf" "ncdu"
+	"duf" "ncdu" "highlight"
 
     # Utilities
     "aria2" "grim" "slurp" "brightnessctl" 
     "mediainfo" "jq" "bc" "trash-cli" "unzip"
+	"ntfs-3g"
     "blueman"  # Bluetooth
     "curlftpfs"  # FTP mounting
     "vifm"  # File manager
