@@ -39,7 +39,6 @@ gaps inner 5
 gaps outer 2
 default_border pixel 2
 default_floating_border pixel 2
-titlebar off
 
 ### Floating windows
 floating_modifier $mod
@@ -51,7 +50,7 @@ assign [app_id="^librewolf$"] workspace number 1
 ### Startup programs
 exec foot --server
 exec autotiling-rs
-exec swww init && sleep 0.5 && swww img ~/Pictures/wallpapers/konoha 1.jpg
+exec swww init && sleep 0.5 && swww img ~/Pictures/wallpapers/konoha1.jpg
 exec swayidle -w \
     before-sleep "swaylock -fF" \
     timeout 90 'if ! pgrep -x "motrix"; then brightnessctl -s set 0; fi' \
