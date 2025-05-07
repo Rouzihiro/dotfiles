@@ -9,5 +9,5 @@
 #fi
 
 if uwsm check may-start && uwsm select; then
-exec uwsm start Hyprland
+exec uwsm start default
   fi
