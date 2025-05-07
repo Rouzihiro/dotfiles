@@ -51,7 +51,7 @@ PACMAN_PACKAGES=(
     # Terminal and shell
     "zsh" "foot"  # Terminals
     "starship" "eza" "bat" "fzf"  # Shell enhancements
-	"duf" "ncdu"
+	"duf" "ncdu" "tree"
     "tmux"  # Terminal multiplexer
     "fastfetch"  # System info
 
@@ -96,6 +96,9 @@ PACMAN_PACKAGES=(
     "zathura" "zathura-cb" "zathura-pdf-mupdf"  # Document viewers
     "neovim"  # Text editor
     "swww"  # Wallpaper utility
+
+	#wine
+	# "clang" "lld" "llvm"
 
 		# Browsers
 

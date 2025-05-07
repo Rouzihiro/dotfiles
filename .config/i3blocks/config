@@ -42,13 +42,13 @@ separator=true
 align=center
 label=   
 
-[bandwidth]
-command=bandwidth
-interval=1
-color=#a3be8c
-separator=true
-align=center
-label=   
+# [bandwidth]
+# command=bandwidth
+# interval=1
+# color=#a3be8c
+# separator=true
+# align=center
+# label=   
 
 [volume]
 command=wpctl get-volume @DEFAULT_AUDIO_SINK@ | awk '{if ($3 == "[MUTED]") print "MUTED"; else print int($2 * 100) " %"}'
@@ -67,8 +67,8 @@ align=center
 label=   
 
 [battery]
-command=cat /sys/class/power_supply/BAT0/capacity | awk '{print $1" %"}'
-#command=cat /sys/class/power_supply/macsmc-battery/capacity | awk '{print $1" %"}' 
+#command=cat /sys/class/power_supply/BAT0/capacity | awk '{print $1" %"}'
+command=cat /sys/class/power_supply/macsmc-battery/capacity | awk '{print $1" %"}' 
 interval=30
 color=#74c7ec
 separator=true
