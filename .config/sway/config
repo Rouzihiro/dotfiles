@@ -39,19 +39,19 @@ gaps inner 5
 gaps outer 2
 default_border pixel 2
 default_floating_border pixel 2
-titlebar off
+#titlebar off
 
 ### Floating windows
 floating_modifier $mod
 for_window [app_id="^com.saivert.pwvucontrol$"] floating enable
 
 ### Assign applications to workspaces
-assign [app_id="^librewolf$"] workspace number 1
+assign [app_id="^zen-browser$"] workspace number 2
 
 ### Startup programs
 exec foot --server
 exec autotiling-rs
-exec swww init && sleep 0.5 && swww img ~/Pictures/wallpapers/konoha 1.jpg
+exec swww-daemon && sleep 0.5 && swww img ~/Pictures/wallpapers/konoha1.jpg
 exec swayidle -w \
     before-sleep "swaylock -fF" \
     timeout 90 'if ! pgrep -x "motrix"; then brightnessctl -s set 0; fi' \
@@ -63,6 +63,7 @@ exec swayidle -w \
 bar {
     position top
     tray_padding 0
+	#status_command ~/bin/waybar.sh 
     status_command i3blocks -c ~/.config/i3blocks/config
     separator_symbol ""
 
@@ -157,6 +158,7 @@ bindsym $mod+space scratchpad show
 bindsym $mod+Shift+space floating enable, resize set width 1800 height 1000, move scratchpad
 
 # Custom scripts
+bindsym $mod+r exec swaymsg '[conmark="floating"] move position 15% 5%; resize set 70% 60%' && $term -e ~/bin/runner
 bindsym $mod+Shift+m exec monitor-multi
 bindsym $mod+Shift+Backspace exec power-menu-sway
 #bindsym $mod+Shift+v exec video-tool
@@ -170,7 +172,7 @@ bindsym $mod+o exec ~/bin/ocr
 #bindsym $mod+Shift+b exec browse-web
 #bindsym $mod+z exec keybinds-list-shell
 #bindsym $mod+Shift+z exec keybinds-list-sway
-bindsym $mod+r exec $term --app-id=runner_floating -e ~/bin/runner
+#bindsym $mod+r exec $term --app-id=runner_floating -e ~/bin/runner
 
 ### Mode: vm_mode
 mode "vm_mode" {
