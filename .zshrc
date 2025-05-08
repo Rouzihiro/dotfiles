@@ -15,6 +15,12 @@ if [ -z "$DBUS_SESSION_BUS_ADDRESS" ]; then
     eval $
 fi
 
+if [ -f ~/.aliases ]; then
+    source ~/.aliases
+else
+    echo "Note: ~/shell/aliases not found (create it for custom aliases)" >&2
+fi
+
 #fastfetch -c $HOME/.config/fastfetch/config-compact.jsonc
 
 # Set-up FZF key bindings (CTRL R for fuzzy history finder)
