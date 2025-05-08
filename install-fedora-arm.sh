@@ -40,9 +40,9 @@ log_success() {
 # Package lists for Fedora
 DNF_PACKAGES=(
     # System and desktop environment
-    "hyprland" "waybar" "swayidle" "swaylock"
+    "hyprland" "waybar" "swayidle" "swaylock" "wlogout"
     "power-profiles-daemon"  # Power management
-    "fuzzel" "rofi"  # App launcher
+    "fuzzel" "rofi-wayland"  # App launcher
     "wayland-utils"  # Wayland utilities
     "btop" "ps_mem"
 
@@ -164,6 +164,7 @@ install_sources() {
     sudo dnf copr enable sneexy/zen-browser -y
     sudo dnf copr enable atim/lazygit -y
     sudo dnf copr enable che/nerd-fonts -y
+	sudo dnf copr enable wef/wlogout -y
 	#sudo dnf copr enable solopasha/hyprland -y 
 }
 
