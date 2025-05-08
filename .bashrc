@@ -5,8 +5,8 @@ if [ -f /etc/bashrc ]; then
     . /etc/bashrc
 fi
 
-if [ -f ~/.shell/aliases ]; then
-    source ~/.shell/aliases
+if [ -f ~/.aliases ]; then
+    source ~/.aliases
 else
     echo "Note: ~/shell/aliases not found (create it for custom aliases)" >&2
 fi

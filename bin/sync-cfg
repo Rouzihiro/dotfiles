@@ -5,6 +5,7 @@
 # --- 1. Sync .config ---
 echo "🔄 Syncing ~/.config/..."
 rsync -av --delete \
+	--exclude='Ryujinx' \
     --exclude='BraveSoftware' \
     --exclude='Cache' \
     --exclude='Trash' \
