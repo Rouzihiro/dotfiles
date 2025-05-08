@@ -42,7 +42,7 @@ DNF_PACKAGES=(
     # System and desktop environment
     "hyprland" "waybar" "swayidle" "swaylock"
     "power-profiles-daemon"  # Power management
-    "rofi"  # App launcher
+    "fuzzel" "rofi"  # App launcher
     "wayland-utils"  # Wayland utilities
     "btop" "ps_mem"
 
