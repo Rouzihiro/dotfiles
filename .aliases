@@ -1,18 +1,3 @@
-function detect_distro() {
-  if [ -f /etc/os-release ]; then
-    . /etc/os-release
-    unalias remove 2>/dev/null
-    case "$ID" in
-      arch)
-        alias remove='sudo pacman -Rns'
-        ;;
-      fedora)
-        alias remove='sudo dnf remove && sudo dnf autoremove'
-        ;;
-    esac
-  fi
-}
-
 searchy() {
   find . -type f -exec grep --color=always --binary-files=without-match "$1" {} +
 }
@@ -35,26 +20,33 @@ compdef '_files -g "*.txt"' need
 alias test-yd="yt-dlp -f 'bv*[height<=1080][ext=mp4]+ba[ext=m4a]/b[height<=1080][ext=mp4]/bv*+ba/b' --embed-thumbnail --embed-metadata"
 alias test-yd720="yt-dlp -f 'bv[ext=mp4][height=720]+ba[ext=m4a]/b[ext=mp4][height<=720]' --embed-thumbnail --embed-metadata"
 
-# ===== Custom Aliases =====
-# Arch
-alias disk='ncdu'
-alias pm='sudo pacman -S'
+# ===== Arch =====
+#alias pm='sudo pacman -S'
 #alias remove='sudo pacman -Rns'
-alias update='yay -Syu'
-alias clean='yay -Rns $(yay -Qdtq); sudo pacman -Rns $(pacman -Qdtq)'
+#alias update='yay -Syu'
+#alias clean='yay -Rns $(yay -Qdtq); sudo pacman -Rns $(pacman -Qdtq)'
 alias clean2='sudo pacman -Scc --noconfirm && yay -Scc --noconfirm'
 
 # Yay Package Manager Aliases
-alias install='yay -S'
+#alias install='yay -S'
 #alias remove2='yay -Rns'
-alias search2='yay -Ss'
+#alias search2='yay -Ss'
+
+# ===== Fedora =====
+alias remove='sudo dnf remove' 
+alias clean='sudo dnf autoremove' 
+
+alias disk='ncdu'
+alias df='duf -hide special'
+alias mem2='free -h'
+alias mem='sudo ps_mem'
+alias folders='du -h --max-depth=1'
 
 alias sctl="systemctl"
 alias sctls="systemctl status"
 alias sctle="systemctl enable"
 alias sctld="systemctl disable"
 alias sctlr="systemctl restart"
-#alias pm="pacman"
 alias se="sudoedit"
 
 # File and directory management
@@ -71,9 +63,6 @@ alias md='mkdir -pv'
 alias mv='mv -iv'
 alias cp='cp -vr'
 alias crp='rsync -ah --progress'
-alias df='duf -hide special'
-alias mem='free -h'
-alias folders='du -h --max-depth=1'
 
 # Safer delete with trash-cli
 alias tp='trash-put'
