@@ -25,6 +25,7 @@
     "wireplumber",
     "clock",
 	"power-profiles-daemon",
+	"battery",
     "custom/separator",
     "group/custom-group"
   ],
