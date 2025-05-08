@@ -203,7 +203,7 @@
     "format": "{icon}",
     "format-icons": "",
     "exec-on-event": "true",
-    "on-click": "$HOME/scripts/rofi-bluetooth",
+	"on-click": "foot -T 'bt-connect' -e $HOME/bin/connect-bt",
     "tooltip-format": "Bluetooth Menu",
   },
 

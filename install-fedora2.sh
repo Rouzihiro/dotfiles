@@ -44,7 +44,7 @@ DNF_PACKAGES=(
     "power-profiles-daemon"  # Power management
     "rofi"  # App launcher
     "wayland-utils"  # Wayland utilities
-    "btop"
+    "btop" "ps_mem"
 
     # Terminal and shell
     "zsh" "foot"  # Terminals
