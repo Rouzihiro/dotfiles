@@ -22,7 +22,7 @@ else
 fi
 
 
-#fastfetch -c $HOME/.config/fastfetch/config-compact.jsonc
+fastfetch -c $HOME/.config/fastfetch/config-compact.jsonc
 
 # Set-up FZF key bindings (CTRL R for fuzzy history finder)
 source <(fzf --zsh)
