@@ -1,9 +1,10 @@
-# Start a dbus session if it's not already running
-#if [ -z "$DBUS_SESSION_BUS_ADDRESS" ]; then
-#    eval "$(dbus-launch --sh-syntax)"
-#fi
+# Only launch Hyprland on TTY1 (or any specific TTY)
+if [[ -z $DISPLAY && $(tty) = /dev/tty1 ]]; then
+    exec Hyprland
+fi
 
-# Start Hyprland (only if this is a TTY session, e.g., TTY1)
-#if [[ -z $DISPLAY && $(tty) = /dev/tty1 ]]; then
-#    exec Hyprland
-#fi
+# Source .zshrc for interactive shell setups like aliases and functions
+if [ -f ~/.zshrc ]; then
+    source ~/.zshrc
+fi
+
