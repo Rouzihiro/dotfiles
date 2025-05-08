@@ -14,16 +14,16 @@
 
   "modules-left": ["hyprland/workspaces", "river/tags", "tray"],
 
-  //"modules-center": ["clock"],
+  "modules-center": ["clock"],
 
   "modules-right": [
     "network",
     "cpu",
     "memory",
+	"disk",
     "temperature",
     "backlight",
     "wireplumber",
-    "clock",
 	"power-profiles-daemon",
 	"battery",
     "custom/separator",
@@ -73,7 +73,7 @@
   "cpu": {
     "interval": 2,
     "format": " {usage:>2}%",
-    "on-click": "hyprctl dispatcher togglespecialworkspace monitor",
+	"on-click": "foot -T 'floaty-medium' -e bash -c 'btop'",
   },
 
   "power-profiles-daemon": {
@@ -91,17 +91,31 @@
   "memory": {
     "interval": 2,
     "format": " {:>2}%",
+	"on-click": "foot -T 'floaty-small' -e bash -c 'sudo ps_mem; read -rp \"Press Enter to exit...\"'"
   },
 
   "disk": {
     "interval": 15,
     "format": "󰋊 {percentage_used:>2}%",
+	"on-click-right": "foot -T 'floaty-small' -e bash -c 'cd / && sudo ncdu'",
+	"on-click": "foot -T 'floaty-small' -e bash -c 'cd ~ && sudo ncdu'",
   },
 
-  "backlight": {
-    // "device": "acpi_video1",
-    "format": "{icon} {percent:>2}%",
-    "format-icons": ["", "", "", "", "", "", "", "", ""],
+"backlight": {
+	"interval": 2,
+	"align": 0,
+	"rotate": 0,
+	"format": "{icon} {percent}%",
+	"format-icons": ["","","","","","","","","","","","","","",""],
+	"tooltip-format": "backlight {percent}%",
+	"icon-size": 10,
+	"on-click": "",
+	"on-click-middle": "",
+	"on-click-right": "",
+	"on-update": "",
+	"on-scroll-up": "$HOME/.config/hypr/scripts/Brightness.sh --inc",
+	"on-scroll-down": "$HOME/.config/hypr/scripts/Brightness.sh --dec",
+	"smooth-scrolling-threshold": 1,
   },
 
   "network": {
@@ -195,7 +209,7 @@
     "format": "{icon}",
     "format-icons": "", //  
     "exec-on-event": "true",
-    "on-click": "$HOME/scripts/rofi-power",
+    "on-click": "$HOME/.config/hypr/scripts/Wlogout.sh",
     "tooltip-format": "Power Menu",
   },
 
@@ -203,7 +217,7 @@
     "format": "{icon}",
     "format-icons": "",
     "exec-on-event": "true",
-	"on-click": "foot -T 'bt-connect' -e $HOME/bin/connect-bt",
+	"on-click": "foot -T 'floaty-small' -e $HOME/bin/connect-bt",
     "tooltip-format": "Bluetooth Menu",
   },
 

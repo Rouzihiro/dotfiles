@@ -58,7 +58,6 @@ application/x-extension-rss=userapp-Thunderbird-X7Y152.desktop;
 x-scheme-handler/webcal=userapp-Thunderbird-VLHC62.desktop;
 x-scheme-handler/webcals=userapp-Thunderbird-VLHC62.desktop;
 application/x-shellscript=nvim.desktop;
-text/markdown=nvim.desktop;
 video/mp4=vlc.desktop;
 application/toml=nvim.desktop;
 application/json=nvim.desktop;
