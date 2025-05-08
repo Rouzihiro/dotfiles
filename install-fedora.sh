@@ -78,22 +78,26 @@ DNF_PACKAGES=(
 
     # Development
 	"lazygit" "git-delta"
-    "jdk-openjdk" "nodejs" "npm"  # Programming
+	#"java-latest-openjdk"
+    "nodejs" "npm"  # Programming
     "texmaker" # LaTeX
 
     # Graphics/GPU
-    "mesa-utils" "vulkan-tools"
+    "vulkan-tools"
 
     # Fonts and themes
-  	"otf-font-awesome" "ttf-droid" "ttf-fira-code" "ttf-fantasque-nerd"
-	"ttf-jetbrains-mono" "ttf-jetbrains-mono-nerd"
-  	"ttf-firacode-nerd" "ttf-hack-nerd" "ttf-cascadia-code-nerd"
-  	"ttf-font-awesome" "ttf-dejavu" "noto-fonts"
+	"jetbrains-mono-fonts-all"
+	"cascadia-code-fonts"
+	"google-noto-fonts-common"
+	"google-noto-emoji-fonts"
+	"fontawesome-fonts-all"
+	"dejavu-fonts-all"
+	"fira-code-fonts" 
+  	"google-droid-fonts-all"
 
     # Applications
     "zathura" "zathura-cb" "zathura-pdf-mupdf"  # Document viewers
     "neovim"  # Text editor
-    "swww"  # Wallpaper utility
 )
 
 # List of archive files to extract after copying
@@ -143,7 +147,7 @@ install_dnf_packages() {
         log_info "All official packages are already installed."
     else
         log_info "Installing ${#to_install[@]} packages..."
-        sudo dnf install -y --skip-unavailable"${to_install[@]}" || {
+        sudo dnf install -y "${to_install[@]}" --skip-unavailable || {
             log_error "Failed to install some packages. Please check the output above."
             read -p "Do you want to continue anyway? (y/n): " continue_choice
             [[ $continue_choice != [yY] ]] && exit 1
@@ -157,6 +161,7 @@ install_sources() {
 	sudo dnf copr enable sneexy/zen-browser -y
 	sudo dnf copr enable atim/lazygit -y
 	sudo dnf copr enable che/nerd-fonts -y
+	#sudo dnf copr enable solopasha/hyprland -y
         }
 
 # Install Oh My Zsh and plugins
