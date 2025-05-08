@@ -35,6 +35,7 @@ alias clean2='sudo pacman -Scc --noconfirm && yay -Scc --noconfirm'
 # ===== Fedora =====
 alias remove='sudo dnf remove' 
 alias clean='sudo dnf autoremove' 
+alias install='sudo dnf install'
 
 alias disk='ncdu'
 alias df='duf -hide special'
