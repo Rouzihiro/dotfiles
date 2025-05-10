@@ -225,7 +225,7 @@
     "format": "{icon}",
     "format-icons": "",
     "exec-on-event": "true",
-    "on-click": "$HOME/scripts/rofi-wifi",
+	"on-click": "foot -T 'floaty-small' -e nmtui",
     "tooltip-format": "Wifi Menu",
   },
 
