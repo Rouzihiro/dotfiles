@@ -48,7 +48,7 @@ DNF_PACKAGES=(
 
     # Terminal and shell
     "zsh" "foot"  # Terminals
-    "bat" "fzf"  # Shell enhancements
+    "bat" "fzf" "fd" # Shell enhancements
     "duf" "ncdu" "tree"
     "tmux"  # Terminal multiplexer
     "fastfetch"  # System info
@@ -57,6 +57,7 @@ DNF_PACKAGES=(
     "aria2" "grim" "slurp" "brightnessctl" 
     "mediainfo" "jq" "bc" "trash-cli" "unzip"
     "ntfs-3g" "highlight"
+	"poppler-utils" "sxiv" "ffmpegthumbnailer"
     "blueman"  # Bluetooth
     "curlftpfs"  # FTP mounting
     "vifm"  # File manager
@@ -79,7 +80,11 @@ DNF_PACKAGES=(
     # Development
     "lazygit" "git-delta"
     "nodejs"  # Programming
-    "texmaker" # LaTeX
+    "java-latest-openjdk"
+
+	# Latex
+    "texmaker"
+	"texlive-scheme-basic" #"texlive-scheme-full"
 
     # Graphics/GPU
     "vulkan-tools"

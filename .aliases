@@ -36,6 +36,7 @@ alias clean2='sudo pacman -Scc --noconfirm && yay -Scc --noconfirm'
 alias remove='sudo dnf remove' 
 alias clean='sudo dnf autoremove' 
 alias install='sudo dnf install'
+alias update='sudo dnf upgrade --refresh'
 
 alias disk='ncdu'
 alias df='duf -hide special'
