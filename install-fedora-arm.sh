@@ -44,7 +44,7 @@ DNF_PACKAGES=(
     "power-profiles-daemon"  # Power management
     "fuzzel" "rofi-wayland"  # App launcher
     "wayland-utils"  # Wayland utilities
-    "btop" "ps_mem"
+    "btop" "ps_mem" "NetworkManager" "NetworkManager-tui"
 
     # Terminal and shell
     "zsh" "foot"  # Terminals
@@ -78,7 +78,7 @@ DNF_PACKAGES=(
 
     # Development
     "lazygit" "git-delta"
-    "nodejs" "npm"  # Programming
+    "nodejs"  # Programming
     "texmaker" # LaTeX
 
     # Graphics/GPU
