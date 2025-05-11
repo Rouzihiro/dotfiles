@@ -1,0 +1,17 @@
+#!/bin/bash
+
+# Local save paths
+USER_SAVE="$HOME/.config/Ryujinx/bis/user/save/"
+SYSTEM_SAVE="$HOME/.config/Ryujinx/bis/system/save/"
+
+# Remote destination base
+DEST="$HOME/savegames/Switch/Ryujinx/bis"
+
+# Ensure destination folders exist
+mkdir -p "$DEST/user/save"
+mkdir -p "$DEST/system/save"
+
+# Sync user and system saves
+rsync -av --delete "$USER_SAVE" "$DEST/user/save/"
+rsync -av --delete "$SYSTEM_SAVE" "$DEST/system/save/"
+
