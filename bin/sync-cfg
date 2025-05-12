@@ -28,6 +28,8 @@ done <<EOF
 .zshrc
 .zprofile
 .aliases
+.aliases-arch
+.aliases-fedora
 .mbsyncrc
 .msmtprc
 .gitconfig
