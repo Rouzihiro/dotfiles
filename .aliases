@@ -20,24 +20,6 @@ compdef '_files -g "*.txt"' need
 alias test-yd="yt-dlp -f 'bv*[height<=1080][ext=mp4]+ba[ext=m4a]/b[height<=1080][ext=mp4]/bv*+ba/b' --embed-thumbnail --embed-metadata"
 alias test-yd720="yt-dlp -f 'bv[ext=mp4][height=720]+ba[ext=m4a]/b[ext=mp4][height<=720]' --embed-thumbnail --embed-metadata"
 
-# ===== Arch =====
-#alias pm='sudo pacman -S'
-#alias remove='sudo pacman -Rns'
-#alias update='yay -Syu'
-#alias clean='yay -Rns $(yay -Qdtq); sudo pacman -Rns $(pacman -Qdtq)'
-alias clean2='sudo pacman -Scc --noconfirm && yay -Scc --noconfirm'
-
-# Yay Package Manager Aliases
-#alias install='yay -S'
-#alias remove2='yay -Rns'
-#alias search2='yay -Ss'
-
-# ===== Fedora =====
-alias remove='sudo dnf remove' 
-alias clean='sudo dnf autoremove' 
-alias install='sudo dnf install'
-alias update='sudo dnf upgrade --refresh'
-
 alias disk='ncdu'
 alias df='duf -hide special'
 alias mem2='free -h'
