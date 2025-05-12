@@ -105,6 +105,10 @@ DNF_PACKAGES=(
     # Applications
     "zathura" "zathura-cb" "zathura-pdf-mupdf"  # Document viewers
     "neovim"  # Text editor
+
+	# email
+	"thunderbird"
+
 )
 
 # Check if script is run by root
