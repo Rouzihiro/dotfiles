@@ -53,10 +53,13 @@ DNF_PACKAGES=(
     "tmux"  # Terminal multiplexer
     "fastfetch"  # System info
 
+	# File-Management
+	"gdisk" "parted" "exfat-utils" "ntfs-3g" 
+
     # Utilities
     "aria2" "grim" "slurp" "brightnessctl" 
     "mediainfo" "jq" "bc" "trash-cli" "unzip"
-    "ntfs-3g" "highlight"
+    "highlight"
 	"poppler-utils" "sxiv" "ffmpegthumbnailer"
     "blueman"  # Bluetooth
     "curlftpfs"  # FTP mounting
