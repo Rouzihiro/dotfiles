@@ -89,6 +89,10 @@ AUR_PACKAGES=(
 
     # === Gaming ===
     # "heroic-games-launcher-bin" "protonup-qt"
+	
+	# === Remote Desktop ===
+	"rustdesk-bin"
+	"anydesk"
 
     # === Fonts ===
     "bibata-cursor-theme"     # Cursor theme
