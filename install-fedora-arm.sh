@@ -40,14 +40,17 @@ log_success() {
 # Package lists for Fedora
 DNF_PACKAGES=(
     # System and desktop environment
-    #"hyprland" 
-	"waybar" 
-	#"swayidle" "swaylock" 
-	"wlogout"
+	"waybar" "wlogout"
     "power-profiles-daemon"  # Power management
     "fuzzel" "rofi-wayland"  # App launcher
     "wayland-utils"  # Wayland utilities
     "btop" "ps_mem" "NetworkManager" "NetworkManager-tui"
+
+	# Hyprland
+	"hyprland" "hyprlock" "hypridle"
+
+	# Sway 
+	#"swayidle" "swaylock" 
 
     # Terminal and shell
     "zsh" "foot"  # Terminals
@@ -234,26 +237,34 @@ install_omz() {
 # Configure and enable system services
 configure_services() {
     log_step "Configuring system services"
-    
-    # Configure swayidle (replacement for hypridle)
-    if command -v swayidle &> /dev/null; then
-        log_info "Configuring swayidle (hypridle alternative)"
-        
-        SWAYIDLE_CONFIG="$HOME/.config/swayidle/config"
-        mkdir -p "$(dirname "$SWAYIDLE_CONFIG")"
-        
-        cat > "$SWAYIDLE_CONFIG" << EOF
-timeout 300 'swaylock -f'
-timeout 600 'hyprctl dispatch dpms off'
-resume 'hyprctl dispatch dpms on'
-EOF
-        
-        log_info "Created swayidle configuration"
+
+	   # Enable hypridle only if it exists
+    if command -v hypridle &> /dev/null; then
+        systemctl --user enable hypridle.service || log_warning "Failed to enable hypridle.service"
+        systemctl --user start hypridle.service || log_warning "Failed to start hypridle.service"
     else
-        log_warning "swayidle not found"
+        log_warning "Hypridle not found. Skipping service setup."
     fi
     
-    log_success "Services configured."
+    # Configure swayidle (replacement for hypridle)
+#     if command -v swayidle &> /dev/null; then
+#         log_info "Configuring swayidle (hypridle alternative)"
+#
+#         SWAYIDLE_CONFIG="$HOME/.config/swayidle/config"
+#         mkdir -p "$(dirname "$SWAYIDLE_CONFIG")"
+#
+#         cat > "$SWAYIDLE_CONFIG" << EOF
+# timeout 300 'swaylock -f'
+# timeout 600 'hyprctl dispatch dpms off'
+# resume 'hyprctl dispatch dpms on'
+# EOF
+#
+#         log_info "Created swayidle configuration"
+#     else
+#         log_warning "swayidle not found"
+#     fi
+#
+     log_success "Services configured."
 }
 
 # Main installation function
