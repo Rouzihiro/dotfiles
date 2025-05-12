@@ -1,4 +1,9 @@
 # ===== Fedora (DNF & Copr) =====
+#
+
+# Asahi
+alias emu1='muvm -- FEXBash'
+alias emu2='muvm -- bash'
 
 # DNF Basics
 alias dn='sudo dnf install'                        	# Install package
