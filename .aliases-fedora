@@ -1,0 +1,30 @@
+# ===== Fedora (DNF & Copr) =====
+
+# DNF Basics
+alias dn='sudo dnf install'                        	# Install package
+alias dnr='sudo dnf remove'                         # Remove package
+alias dnu='sudo dnf upgrade --refresh'              # Full system update with metadata refresh
+alias dns='dnf search'                              # Search packages
+alias dni='dnf info'                            	# Package info
+alias dnl='dnf list installed'                      # List installed packages
+
+# Cleaning & Maintenance
+alias dnc='sudo dnf autoremove && sudo dnf clean all'  # Remove unused deps, clean metadata/cache
+alias dn-sync='sudo dnf distro-sync'               # Sync to latest available versions
+
+# History
+alias dnh='dnf history'                            # View DNF transaction history
+alias dnz='sudo dnf history undo'             # Undo transaction by ID
+
+# Repos (Copr)
+alias cop='sudo dnf copr'                         # Copr shortcut (e.g. `copr enable user/project`)
+alias copl='dnf repolist'                      # Show enabled repos
+
+# Flatpak
+alias fp='flatpak install'
+alias fpr='flatpak uninstall'
+alias fpl='flatpak list'
+alias fp-run='flatpak run'
+
+# Misc Utilities
+alias dnw='dnf provides'                  # Which package provides a file
