@@ -224,6 +224,8 @@ install_omz() {
     done
     
     cp ".zshrc" "$HOME/.zshrc" 2>/dev/null || log_warning "Error copying .zshrc"
+	cp ".zprofile" "$HOME/.zprofile" 2>/dev/null || log_warning "Error copying .zprofile"
+	cp .aliases* "$HOME/" 2>/dev/null || log_warning "Error copying alias files"
     cp ".bashrc" "$HOME/.bashrc" 2>/dev/null || log_warning "Error copying .bashrc"
     cp ".bash_profile" "$HOME/.bash_profile" 2>/dev/null || log_warning "Error copying .bash_profile"
     
