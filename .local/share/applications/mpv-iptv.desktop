@@ -1,0 +1,9 @@
+[Desktop Entry]
+Version=1.0
+Name=MPV IPTV
+Comment=Watch IPTV channels using MPV
+Exec=mpv https://iptv-org.github.io/iptv/index.m3u
+Icon=mpv
+Terminal=false
+Type=Application
+Categories=Multimedia;Video;Player;
