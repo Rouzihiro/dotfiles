@@ -8,15 +8,6 @@ fzv() {
   done
 }
 
-need() {
-  if [[ -f "$1" ]]; then
-    sudo pacman -S --needed - < "$1"
-  else
-    echo "File not found: $1"
-  fi
-}
-compdef '_files -g "*.txt"' need
-
 alias test-yd="yt-dlp -f 'bv*[height<=1080][ext=mp4]+ba[ext=m4a]/b[height<=1080][ext=mp4]/bv*+ba/b' --embed-thumbnail --embed-metadata"
 alias test-yd720="yt-dlp -f 'bv[ext=mp4][height=720]+ba[ext=m4a]/b[ext=mp4][height<=720]' --embed-thumbnail --embed-metadata"
 
