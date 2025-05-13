@@ -40,11 +40,11 @@ log_success() {
 # Package lists
 PACMAN_PACKAGES=(
     # === System & LXDE Core ===
-    "lxde"                     # LXDE meta-package
-    "lxterminal"               # Lightweight terminal (➔ replaces 'foot')
+	"xorg" "xorg-xinit" "xfce4" "xfce4-goodies"
     "lightdm" "lightdm-gtk-greeter"  # Display manager (optional)
     "btop"                     # System monitor
     "power-profiles-daemon"    # Power management (still useful on X11)
+	"networkmanager"
 
     # === Utilities ===
     "feh" "nitrogen"           # Wallpaper tools (➔ replace 'swww')
@@ -76,23 +76,24 @@ PACMAN_PACKAGES=(
 
     # === GPU/X11 ===
     "mesa" "libglvnd" "xf86-video-intel" "vulkan-intel"
+	"libva-intel-driver" "libvdpau-va-gl"
 
     # === Apps ===
     "zathura" "zathura-pdf-mupdf"  # PDF viewer
-    "lutris"                  # Gaming
-    "thunderbird"             # Email
+    #"lutris"                  # Gaming
+    #"thunderbird"             # Email
 )
 
 AUR_PACKAGES=(
     # === Browsers ===
-    "zen-browser-bin"         # Lightweight browser
+    "ungoogled-chromium-bin"         # Lightweight browser
 
     # === Gaming ===
     # "heroic-games-launcher-bin" "protonup-qt"
 	
 	# === Remote Desktop ===
 	"rustdesk-bin"
-	"anydesk"
+	"anydesk-bin"
 
     # === Fonts ===
     "bibata-cursor-theme"     # Cursor theme

@@ -7,8 +7,7 @@
 ---
 
 ## 🧑‍💻 Personal
-- [] **Registry Office HH - date** (missing certificats)
-- [] **Registry Office H - date** (certificate requested 27.03.25)
+- [X] **Registry Office HH - date** (15.5. 11:30)
 - [ ] **Tax** , DATEV requested 
 - [ ] **Car**  
 - [X] **Health ensurance** 
