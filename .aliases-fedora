@@ -10,8 +10,10 @@ alias dn='sudo dnf install'                        	# Install package
 alias dnr='sudo dnf remove'                         # Remove package
 alias dnu='sudo dnf upgrade --refresh'              # Full system update with metadata refresh
 alias dns='dnf search'                              # Search packages
-alias dni='dnf info'                            	# Package info
-alias dnl='dnf list installed'                      # List installed packages
+alias dnl='dnf list installed'                      # Package info
+alias dnl2='dnf info'                            	# Package info in detail
+alias dni='dnf repoquery --userinstalled'			# List User-Installed (Excluding Dependencies)
+
 
 # Cleaning & Maintenance
 alias dnc='sudo dnf autoremove && sudo dnf clean all'  # Remove unused deps, clean metadata/cache
