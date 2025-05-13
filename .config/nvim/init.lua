@@ -75,7 +75,15 @@ require("lazy").setup({
 
   -- Optional
   { "iamcco/markdown-preview.nvim" },
-	{ 'vifm/vifm.vim' }
+	{ 'vifm/vifm.vim' },
+	{
+    "kylechui/nvim-surround",
+    version = "*",
+    event = "VeryLazy",
+    config = function()
+        require("nvim-surround").setup()
+    end,
+},
 })
 
 -- Load config files with absolute paths

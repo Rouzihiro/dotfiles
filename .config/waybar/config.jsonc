@@ -67,7 +67,7 @@
     "interval": 2,
     "format": " {temperatureC:>2}°C",
     "format-icons": ["", "", ""],
-    "on-click": "hyprctl dispatcher togglespecialworkspace monitor",
+    "on-click": "hyprsysteminfo",
   },
 
   "cpu": {
