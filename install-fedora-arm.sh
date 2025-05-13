@@ -84,7 +84,7 @@ DNF_PACKAGES=(
     "tesseract-langpack-deu"
 
     # Multimedia
-    "ffmpegthumbs" "ImageMagick" "imv" "vlc" "yt-dlp"
+    "ffmpegthumbs" "ImageMagick" "imv" "vlc" "mpv" "yt-dlp"
     "pamixer"  # Audio control
 
     # Development
