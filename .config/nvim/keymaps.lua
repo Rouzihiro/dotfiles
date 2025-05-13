@@ -1,6 +1,7 @@
 -- ======================
 -- KEYBINDINGS
 -- ======================
+
 -- Navigation
 vim.keymap.set("n", "}", "}zz")
 vim.keymap.set("n", "{", "{zz")
@@ -19,7 +20,6 @@ vim.keymap.set({ "n", "v" }, "<leader>pb", '"bp', { desc = "Paste from reg: b" }
 -- delete not cut
 vim.keymap.set ({"n", "v"}, "d", "\"_d")
 vim.keymap.set ({"n", "v"}, "D", "\"_D")
-
 vim.keymap.set ({"n", "v"}, "X", "dd")
 
 vim.keymap.set({"n"}, "<space>a", "mzA<space><esc>p`z", { desc = "paste to the end of line" })
@@ -31,6 +31,7 @@ vim.keymap.set("n", "<leader>za", 'ggVG"+y', { desc = "Yank entire buffer" })
 
 -- Search/replace
 vim.keymap.set({ "n", "v" }, "<leader>rw", ":%s/<C-r><C-w>//g<Left><Left>", { desc = "Replace word under cursor" })
+vim.api.nvim_set_keymap('n', '<leader>r"', 'ysiw"', { noremap = true, silent = true })
 
 -- Formatting
 vim.keymap.set("n", "<leader>al", "<cmd>lua vim.lsp.buf.format()<CR>", { desc = "Format with LSP" })

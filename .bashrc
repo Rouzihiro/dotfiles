@@ -5,11 +5,9 @@ if [ -f /etc/bashrc ]; then
     . /etc/bashrc
 fi
 
-if [ -f ~/.aliases ]; then
-    source ~/.aliases
-else
-    echo "Note: ~/shell/aliases not found (create it for custom aliases)" >&2
-fi
+[ -f ~/.aliases ] && source ~/.aliases
+#[ -f ~/.aliases-arch ] && source ~/.aliases-arch
+[ -f ~/.aliases-fedora ] && source ~/.aliases-fedora
 
 # User specific environment
 if ! [[ "$PATH" =~ "$HOME/.local/bin:$HOME/bin:" ]]; then

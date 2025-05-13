@@ -48,6 +48,7 @@ DNF_PACKAGES=(
 
 	# Hyprland
 	"hyprland" "hyprlock" "hypridle"
+	"hyprsysteminfo"
 
 	# Sway 
 	#"swayidle" "swaylock" 
