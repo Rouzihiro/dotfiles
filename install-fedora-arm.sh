@@ -91,6 +91,7 @@ DNF_PACKAGES=(
     "lazygit" "git-delta"
     "nodejs"  # Programming
     "java-latest-openjdk"
+	"zstd"
 
 	# Latex
     "texmaker"

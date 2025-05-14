@@ -39,12 +39,20 @@ log_success() {
 
 # Package lists
 PACMAN_PACKAGES=(
-    # === System & LXDE Core ===
+    # === System & XFCE Core ===
 	"xorg" "xorg-xinit" "xfce4" "xfce4-goodies"
     "lightdm" "lightdm-gtk-greeter"  # Display manager (optional)
     "btop"                     # System monitor
     "power-profiles-daemon"    # Power management (still useful on X11)
 	"networkmanager"
+
+	# === System & i3 Core ===
+	# "i3-wm" "xorg" "xorg-xinit"
+	# "polkit-gnome" "xdg-desktop-portal-gtk"
+	# "dunst" "alacritty"
+	# "network-manager-applet"
+	# "volumeicon" "gvfs"
+	
 
     # === Utilities ===
     "feh" "nitrogen"           # Wallpaper tools (➔ replace 'swww')

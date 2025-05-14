@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Define the groups to be added
-groups=("scanner" "wheel" "audio" "input" "lp" "storage" "video" "fuse")
+groups=("scanner" "wheel" "audio" "input" "lp" "storage" "video" "fuse" "docker")
 
 # User input: specify the username
 read -p "Enter the username to add to groups: " username
