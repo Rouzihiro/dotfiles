@@ -67,6 +67,7 @@ PACMAN_PACKAGES=(
     "yad"  # GUI dialogs
     "rsync"  # File syncing
     "swappy"  # Screenshot editing
+	"antimicrox"
 
 	# language
 		"hunspell-de"
