@@ -508,6 +508,11 @@ filextype */
       \ {Compress to ZIP with 7z}
       \ 7z a %c.zip %d/%c:r,
 
+filextype *.exe
+      \ {open with wine}
+      \ wine %f,
+      \ {open with terminal-wine}
+      \ foot -e wine %f,
   
 " LaTeX Options
 filetype *.tex
