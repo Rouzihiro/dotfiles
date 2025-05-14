@@ -28,5 +28,23 @@ for group in "${groups[@]}"; do
   echo "User $username added to group '$group'."
 done
 
-echo "All groups have been added to $username."
+# Create udev rule for /dev/uinput
+echo "Creating udev rule for /dev/uinput..."
+sudo bash -c 'echo "KERNEL==\"uinput\", MODE=\"0660\", GROUP=\"input\"" > /etc/udev/rules.d/99-uinput.rules'
+
+# Reload udev rules
+echo "Reloading udev rules..."
+sudo udevadm control --reload-rules
+sudo udevadm trigger
+
+# Prompt to load uinput module manually
+read -p "Do you want to load the uinput module now? (y/N): " answer
+if [[ "$answer" =~ ^[Yy]$ ]]; then
+  sudo modprobe uinput
+  echo "uinput module loaded."
+else
+  echo "Skipped loading uinput module. You can run 'sudo modprobe uinput' manually later."
+fi
+
+echo "Done. Please log out and back in for group changes to take effect."
 
