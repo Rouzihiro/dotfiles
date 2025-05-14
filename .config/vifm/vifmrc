@@ -321,10 +321,11 @@ fileviewer {*.bmp,*.jpg,*.jpeg,*.png,*.gif,*.xpm},<image/*>
 filextype {*.avi,*.mp4,*.wmv,*.dat,*.3gp,*.ogv,*.mkv,*.mpg,*.mpeg,*.vob,
       \*.fl[icv],*.m2v,*.mov,*.webm,*.mts,*.m4v,*.r[am],*.qt,*.divx,
       \*.as[fx],*.unknown_video},<video/*>
-      \ {View using vlc}
-      \ vlc %f,
       \ {Play using mpv}
       \ mpv --terminal=no %f,
+	  \ {View using vlc}
+      \ vlc %f,
+
 fileviewer {*.avi,*.mp4,*.wmv,*.dat,*.3gp,*.ogv,*.mkv,*.mpg,*.mpeg,*.vob,
       \*.fl[icv],*.m2v,*.mov,*.webm,*.mts,*.m4v,*.r[am],*.qt,*.divx,
       \*.as[fx],*.unknown_video},<video/*>
@@ -347,15 +348,15 @@ fileviewer {*.docx},
 filextype {*.ods,*.xls,*.xlsx},
       \ {Open in Libre Office}
       \ nohup libreoffice --calc %f & disown,
-
-"  WEB
-filextype {*.xhtml,*.html,*.htm},<text/html>
-      \ {Open with zen-browser}
-      \ zen-browser %f &,
-      \ {Open with zen}
-      \ zen-browser %f %i,
-filetype {*.xhtml,*.html,*.htm},<text/html> links, lynx
-
+"
+""  WEB
+"filextype {*.xhtml,*.html,*.htm},<text/html>
+"      \ {Open with zen-browser}
+"      \ zen-browser %f &,
+"      \ {Open with zen}
+"      \ zen-browser %f %i,
+"filetype {*.xhtml,*.html,*.htm},<text/html> links, lynx
+"
 "  FUSE ZIP MOUNT
 filetype {*.zip,*.jar,*.war,*.ear,*.oxt,*.apkg},
       \<application/zip,application/java-archive>
@@ -471,6 +472,10 @@ fileviewer {*.rar},<application/x-rar> unrar v %c
 
 " IsoMount
 filetype {*.iso},<application/x-iso9660-image>
+	  \ {Mount to ~/mount/iso}
+	  \ mount|sudo mount -o loop %f ~/mount/iso,
+	  \ {Unmount ~/mount/iso}
+	  \ umount|sudo umount ~/mount/iso,
       \ {Mount with fuseiso}
       \ FUSE_MOUNT|fuseiso %SOURCE_FILE %DESTINATION_DIR,
 
@@ -503,6 +508,13 @@ filextype */
       \ {Compress to ZIP with 7z}
       \ 7z a %c.zip %d/%c:r,
 
+  
+" LaTeX Options
+filetype *.tex
+      \ {Edit in nvim}
+      \ nvim %f,
+      \ {Convert to PDF with pdflatex (clean)}
+	  \ sh -c 'pdflatex %f && rm -f %c:r.aux %c:r.log %c:r.out %c:r.toc',
 
 " =========================================================================== "
 
@@ -787,6 +799,13 @@ fileviewer *.znn highlight -O ansi --syntax znn
 " Or leave it for automatic detection
 " fileviewer *[^/] pygmentize -O style=monokai -f console256 -g
 
+
+" Open Markdown files with Neovim by default
+filextype {*.md,*.markdown},<text/markdown>
+      \ {Edit with Neovim}
+      \ nvim %f,
+      \ {View with glow}
+      \ glow %f,
 
 " =========================================================================== "
 

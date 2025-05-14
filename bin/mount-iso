@@ -1,0 +1,33 @@
+#!/bin/sh
+
+# Set mount point
+MOUNT_POINT="$HOME/mount/iso"
+
+# Check if ISO file argument is given
+if [ -z "$1" ]; then
+    echo "Usage: $0 path_to_iso"
+    exit 1
+fi
+
+ISO_PATH="$1"
+
+# Check if ISO file exists
+if [ ! -f "$ISO_PATH" ]; then
+    echo "Error: File '$ISO_PATH' does not exist."
+    exit 1
+fi
+
+# Create mount directory if it doesn't exist
+mkdir -p "$MOUNT_POINT"
+
+# Mount the ISO
+echo "Mounting $ISO_PATH to $MOUNT_POINT..."
+sudo mount -o loop "$ISO_PATH" "$MOUNT_POINT"
+
+# Check if mount was successful
+if [ $? -eq 0 ]; then
+    echo "Successfully mounted ISO."
+else
+    echo "Failed to mount ISO."
+fi
+
