@@ -304,9 +304,13 @@ filextype {.blend}
 filextype {*.gif}
       \ {Play using mpv}
       \ mpv --terminal=no %f,
+	  \ {Convert to JPG}
+      \ magick %f %d/%n.jpg,
 filextype {*.bmp,*.jpg,*.jpeg,*.png,*.xpm},<image/*>
       \ {View in imv}
       \ imv-dir %f,
+	  \ {Convert to PNG}
+      \ magick %f %d/%n.png,
       \ {Set as Wallpaper with SWWW}
       \ swww img %f -t 'center',
       \ {Edit in NeoVim}
