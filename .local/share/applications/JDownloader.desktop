@@ -1,7 +1,7 @@
 [Desktop Entry]
 Name=JDownloader
 Exec=java -Dsun.java2d.uiScale=2.5 -jar /home/rey/apps/jdownloader/JDownloader.jar
-Icon=jd
+Icon=/home/rey/Pictures/icons/jdownloader.png
 Type=Application
 Categories=Network;
 
