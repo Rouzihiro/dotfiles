@@ -1,0 +1,7 @@
+[Desktop Entry]
+Name=WoW
+Exec=wine /home/rey/Games/wow/Wow-64.exe
+Icon=/home/rey/Pictures/icons/wow.png
+Type=Application
+Categories=Games;
+
