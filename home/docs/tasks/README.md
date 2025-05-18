@@ -7,7 +7,7 @@
 ---
 
 ## 🧑‍💻 Personal
-- [X] **Registry Office HH - date** (15.5. 11:30)
+- [X] **Registry Office HH** (feedback pending)
 - [ ] **Tax** , DATEV requested 
 - [ ] **Car**  
 - [X] **Health ensurance** 
