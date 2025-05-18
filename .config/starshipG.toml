@@ -1,0 +1,139 @@
+[aws]
+symbol = "  "
+
+[character]
+error_symbol = "[✗](bold red)"
+success_symbol = "[➜](bold green)"
+
+[cmd_duration]
+disabled = false
+min_time = 4
+show_milliseconds = false
+style = "bold italic red"
+
+[conda]
+symbol = " "
+
+[dart]
+symbol = " "
+
+[directory]
+read_only = " "
+style = "bold italic blue"
+truncate_to_repo = true
+truncation_length = 10
+
+[docker_context]
+detect_files = ["docker-compose.yml", "docker-compose.yaml", "Dockerfile"]
+detect_folders = []
+disabled = false
+format = "via [$symbol$context]($style) "
+only_with_files = true
+style = "blue bold"
+symbol = " "
+
+[elixir]
+symbol = " "
+
+[elm]
+symbol = " "
+
+[git_branch]
+symbol = " "
+
+[git_state]
+am = "am"
+am_or_rebase = "am/rebase"
+bisect = "bisect"
+cherry_pick = "cherry"
+format = "[$state( $progress_current/$progress_total) ]($style)"
+merge = "merge"
+rebase = "rebase"
+revert = "revert"
+style = "bold red"
+
+[git_status]
+ahead = "⇡${count}"
+behind = "⇣${count}"
+conflicted = "[${count}~](red)"
+deleted = "[${count}-](red)"
+format = "([\\[$all_status$ahead_behind\\]]($style) )"
+modified = "[${count}+](yellow)"
+staged = "[${count}+](green)"
+stashed = "[${count}*](green)"
+untracked = "[${count}?](blue)"
+
+[golang]
+symbol = " "
+
+[haskell]
+symbol = "λ "
+
+[hg_branch]
+symbol = " "
+
+[hostname]
+disabled = false
+format = "on [$hostname](bold purple) "
+ssh_only = false
+trim_at = "."
+
+[java]
+symbol = " "
+
+[julia]
+symbol = " "
+
+[memory_usage]
+symbol = " "
+
+[nim]
+symbol = " "
+
+[nix_shell]
+symbol = " "
+
+[nodejs]
+detect_files = ["package.json", ".node-version"]
+detect_folders = ["node_modules"]
+format = "via [ Node.js $version](bold green) "
+
+[package]
+symbol = " "
+
+[perl]
+symbol = " "
+
+[php]
+symbol = " "
+
+[python]
+detect_extensions = ["py"]
+format = "via [${symbol}python (${version} )(\\\\($virtualenv\\\\) )]($style)"
+pyenv_prefix = "venv "
+python_binary = ["./venv/bin/python", "python", "python3", "python2"]
+style = "bold yellow"
+symbol = "🐍 "
+version_format = "v${raw}"
+
+[ruby]
+symbol = " "
+
+[rust]
+symbol = " "
+
+[scala]
+symbol = " "
+
+[shlvl]
+symbol = " "
+
+[swift]
+symbol = "ﯣ "
+
+[username]
+disabled = false
+format = "[$user]($style) "
+show_always = true
+style_root = "red bold"
+style_user = "green bold"
