@@ -113,6 +113,7 @@ DNF_PACKAGES=(
 
     # Applications
     "zathura" "zathura-cb" "zathura-pdf-mupdf"  # Document viewers
+	"xournalpp" # PDF editor
     "neovim"  # Text editor
 
 	# email
