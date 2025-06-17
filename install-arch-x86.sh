@@ -41,15 +41,21 @@ log_success() {
 PACMAN_PACKAGES=(
     # System and desktop environment
     "waybar" 
-    "power-profiles-daemon"  # Power management
+     # "power-profiles-daemon"  # Power management - error on surface
     "swaync"  # Notifications
-    "rofi"  # App launcher
+	"swaybg"
+    "rofi" "fuzzel" # App launcher
     "wayland-utils"  # Wayland utilities
 	"btop"
 	
+	#Hyprland
+	"hyprland" "xdg-desktop-portal-hyprland"
+	"hyprpaper" "hyprlock" "hypridle" 
+	"polkit-gnome"
+
 	# Sway
-	"i3blocks" "autotiling-rs" "swaylock" "swayidle"
-	"xdg-desktop-portal" "xdg-desktop-portal-wlr"
+	#"i3blocks" "autotiling-rs" "swaylock" "swayidle"
+	#"xdg-desktop-portal" "xdg-desktop-portal-wlr"
 
     # Terminal and shell
     "zsh" "foot"  # Terminals
@@ -104,7 +110,7 @@ PACMAN_PACKAGES=(
 	# Browsers
 	
 	# Games
-	"lutris"
+	#"lutris"
 
 	#email-TUI
 	"thunderbird" "ca-certificates"
@@ -115,15 +121,15 @@ AUR_PACKAGES=(
 	"zen-browser-bin"  # Lightweight browser
 	
 	# Games
-	"heroic-games-launcher-bin"
-	"protonup-qt"
+	#"heroic-games-launcher-bin"
+	#"protonup-qt"
 
     # Fonts
     "adobe-source-code-pro-fonts"  # Monospace font
     "ttf-victor-mono"              # Programming font with ligatures
 
     # System Utilities
-    "uwsm"              # Micro Wallpaper Switcher
+    "uwsm"
     "wl-clipboard"      # Wayland clipboard tool
     "bibata-cursor-theme"  # Modern cursor theme
 
@@ -180,8 +186,8 @@ backup_configs() {
                 local items_to_backup=(
                     ".config/rofi"
                     ".config/neovim"
-										"/bin/"
-										".aliases"
+					"/bin/"
+					".aliases"
                     ".zshrc"
                 )
                 
@@ -302,10 +308,12 @@ install_dotfiles() {
 
     # Create necessary directories
     mkdir -p "$HOME/.config"
- 		mkdir -p "$HOME/bin"
+ 	mkdir -p "$HOME/bin"
     mkdir -p "$HOME/.local/bin"
     mkdir -p "$HOME/.local/share"
     mkdir -p "$HOME/Pictures/wallpapers"
+	mkdir -p "$HOME/Documents/"
+	mkdir -p "$HOME/Downloads"
     mkdir -p "$HOME/.themes"
     mkdir -p "$HOME/.icons"
     mkdir -p "$HOME/.local/share/icons"
@@ -432,8 +440,11 @@ install_omz() {
     # Copy zsh configuration files
     cp ".zshrc" "$HOME/.zshrc" 2>/dev/null || log_warning "Error copying .zshrc"
     cp ".zshenv" "$HOME/.zprofile" 2>/dev/null || log_warning "Error copying .zprofile"
- 		cp ".bashrc" "$HOME/.bashrc" 2>/dev/null || log_warning "Error copying .bashrc"
-		cp ".bash_profile" "$HOME/.bash_profile" 2>/dev/null || log_warning "Error copying .bash_profile"
+	cp ".aliases" "$HOME/.aliases" 2>/dev/null || log_warning "Error copying .aliases"
+	cp ".aliases-arch" "$HOME/.aliases-arch" 2>/dev/null || log_warning "Error copying .aliases-arch"
+	cp ".aliases-fedora" "$HOME/.aliases-fedora" 2>/dev/null || log_warning "Error copying .aliases-fedora"
+ 	cp ".bashrc" "$HOME/.bashrc" 2>/dev/null || log_warning "Error copying .bashrc"
+	cp ".bash_profile" "$HOME/.bash_profile" 2>/dev/null || log_warning "Error copying .bash_profile"
     
     # Set zsh as default shell
     if [[ "$SHELL" != *"zsh"* ]]; then
