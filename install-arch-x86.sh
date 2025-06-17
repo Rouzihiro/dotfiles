@@ -85,7 +85,7 @@ PACMAN_PACKAGES=(
 		"tesseract-data-deu"
 
     # Multimedia
-    "ffmpegthumbs" "imagemagick" "imv" "vlc" "yt-dlp"
+    "ffmpegthumbs" "imagemagick" "imv" "mpv" "yt-dlp"
     "pamixer"  # Audio control
 
     # Development
@@ -104,6 +104,7 @@ PACMAN_PACKAGES=(
 
     # Applications
     "zathura" "zathura-cb" "zathura-pdf-mupdf"  # Document viewers
+	"xournalpp" # PDF editor
     "neovim"  # Text editor
     "swww"  # Wallpaper utility
 
