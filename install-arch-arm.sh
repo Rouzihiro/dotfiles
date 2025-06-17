@@ -76,7 +76,7 @@ PACMAN_PACKAGES=(
 		"tesseract-data-deu"
 
     # Multimedia
-    "ffmpegthumbs" "imagemagick" "imv" "vlc" "yt-dlp"
+    "ffmpegthumbs" "imagemagick" "imv" "mpv" "yt-dlp"
     "pamixer"  # Audio control
 
     # Development
