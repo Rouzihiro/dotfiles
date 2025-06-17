@@ -119,6 +119,7 @@ PACMAN_PACKAGES=(
 
 AUR_PACKAGES=(
     # Browsers
+	"brave-bin"
 	"zen-browser-bin"  # Lightweight browser
 	
 	# Games
@@ -140,6 +141,7 @@ AUR_PACKAGES=(
     "texlive-latexextra" "texmaker" # LaTeX
 
     # Apps/Tools
+	"ps_mem"
     "jdownloader2"      # Download manager
     "sdl2_sound"        # Audio library (for games/apps)
 )
