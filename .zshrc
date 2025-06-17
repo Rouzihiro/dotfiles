@@ -11,8 +11,8 @@ plugins=(
 source $ZSH/oh-my-zsh.sh
 
 [ -f ~/.aliases ] && source ~/.aliases
-#[ -f ~/.aliases-arch ] && source ~/.aliases-arch
-[ -f ~/.aliases-fedora ] && source ~/.aliases-fedora
+[ -f ~/.aliases-arch ] && source ~/.aliases-arch
+#[ -f ~/.aliases-fedora ] && source ~/.aliases-fedora
 
 #fastfetch -c $HOME/.config/fastfetch/config-compact.jsonc
 
