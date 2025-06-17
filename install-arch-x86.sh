@@ -119,7 +119,7 @@ PACMAN_PACKAGES=(
 
 AUR_PACKAGES=(
     # Browsers
-	"brave-bin"
+	"librewolf-bin"
 	"zen-browser-bin"  # Lightweight browser
 	
 	# Games
@@ -131,7 +131,7 @@ AUR_PACKAGES=(
     "ttf-victor-mono"              # Programming font with ligatures
 
     # System Utilities
-    "uwsm"
+    # "uwsm"
     "wl-clipboard"      # Wayland clipboard tool
     "bibata-cursor-theme"  # Modern cursor theme
 
