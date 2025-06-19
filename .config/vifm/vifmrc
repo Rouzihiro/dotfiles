@@ -525,6 +525,14 @@ filetype *.tex
       \ {Convert to PDF with pdflatex (clean)}
 	  \ sh -c 'pdflatex %f && rm -f %c:r.aux %c:r.log %c:r.out %c:r.toc',
 
+
+" Text to PDF options
+filetype *.txt
+      \ {Edit in nvim}
+      \ nvim %f,
+      \ {Convert to PDF with LibreOffice}
+      \ sh -c 'libreoffice --headless --convert-to pdf %f',
+
 " =========================================================================== "
 
 
