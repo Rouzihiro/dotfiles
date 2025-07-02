@@ -1,6 +1,6 @@
 [Desktop Entry]
-Name=WoW
-Exec=wine /home/rey/Games/wow/Wow-64.exe
+Name=WoW Stormforge
+Exec=wine /home/rey/Games/Stormforge/Wow-SF.exe
 Icon=/home/rey/Pictures/icons/wow.png
 Type=Application
 Categories=Games;
