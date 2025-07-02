@@ -7,12 +7,12 @@
 ---
 
 ## 🧑‍💻 Personal
-- [X] **Registry Office HH** (feedback pending)
-- [ ] **Tax** , DATEV requested 
+- [X] **Registry Office** (inform HH)
+- [ ] **Tax**, add flatex / plus500 to 2024 
 - [ ] **Car**  
-- [X] **Health ensurance** 
+- [X] **Health insurance** 
 - [📅] **🔧 Heating Repair** (date pending)  
-- [ ] **🏠 Basement Renovation**
+- [📅] **🏠 Basement Renovation** (date pending)
 
 ---
 
