@@ -1,4 +1,49 @@
-searchy() {
+# Quick note taking
+note() {
+    echo "$(date): $*" >> ~/Documents/notes
+    echo "Note added: $*"
+}
+
+# View notes
+notes() {
+    if [ -f ~/Documents/notes ]; then
+        cat ~/Documents/notes
+    else
+        echo "No notes file found"
+    fi
+}
+
+# Search history more efficiently  
+hg() {
+    history | grep "$1"
+}
+
+# Find and kill process by name
+tko() {
+    ps aux | grep "$1" | grep -v grep | awk '{print $2}' | xargs kill -9
+}
+
+# Create directory and cd into it
+mkcd() {
+    mkdir -p "$1" && cd "$1"
+}
+
+# Show directory size sorted
+dirsize() {
+    du -sh */ 2>/dev/null | sort -hr
+}
+
+# Quick file search
+ff() {
+    find . -type f -name "*$1*" 2>/dev/null
+}
+
+# Quick directory search  
+fd() {
+    find . -type d -name "*$1*" 2>/dev/null
+}
+
+fs() {
   find . -type f -exec grep --color=always --binary-files=without-match "$1" {} +
 }
 
@@ -15,7 +60,8 @@ alias disk='ncdu'
 alias df='duf -hide special'
 alias mem2='free -h'
 alias mem='sudo ps_mem'
-alias folders='du -h --max-depth=1'
+alias folders='du -sh * 2>/dev/null | sort -hr'
+alias temps='sensors'
 
 alias sctl="systemctl"
 alias sctls="systemctl status"
@@ -105,8 +151,9 @@ alias h='history | fzf'
 alias jour='journalctl -xe'
 alias fz='fzf --preview '\''bat --color=always --style=numbers --line-range=:500 {}'\'' --bind '\''enter:execute(xdg-open {})'\'''
 alias openports='netstat -nape --inet'
+alias ports='ss -tuln'
 alias myip='curl https://ipinfo.io/ip && echo'
-alias ff='clear && fastfetch'
+alias fetch='clear && fastfetch'
 alias startup='clear && systemctl list-unit-files --type=service | grep enabled'
 
 # Miscellaneous
