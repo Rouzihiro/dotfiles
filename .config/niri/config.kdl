@@ -7,11 +7,11 @@
 // Find the full list of options on the wiki:
 // https://github.com/YaLTeR/niri/wiki/Configuration:-Input
 
-cursor {
-    xcursor-theme "Bibata-Modern-Ice"
-    xcursor-size 28
-    hide-after-inactive-ms 5000
-}
+//cursor {
+//    xcursor-theme "Bibata-Modern-Ice"
+//    xcursor-size 28
+//    hide-after-inactive-ms 5000
+// }
 
 input {
     keyboard {
@@ -68,14 +68,14 @@ debug {
     position x=0 y=0
  }
 
-environment {
-    DISPLAY ":1"
-    QT_QPA_PLATFORM "wayland"
-}
-
 // environment {
-//    DISPLAY ":0"
+//    DISPLAY ":1"
+//    QT_QPA_PLATFORM "wayland"
 // }
+
+ environment {
+    DISPLAY ":0"
+ }
 
 switch-events {
     lid-close {spawn "hyprlock";}
@@ -250,16 +250,13 @@ spawn-at-startup "swayidle" "-w"
 layer-rule {
     match namespace="waybar"
     match at-startup=true
-
     opacity 0.8
-
     shadow {
         on
         softness 10
         spread 10
         offset x=0 y=5
     }
-
     geometry-corner-radius 10
     }
 
@@ -387,7 +384,6 @@ window-rule {
 window-rule {
     match app-id="firefox"
     default-column-width { fixed 1425; }
-    open-on-output "HDMI-A-1"
     draw-border-with-background true    
 }
 
