@@ -12,7 +12,7 @@
 
   // Choose the order of the modules
 
-  "modules-left": ["hyprland/workspaces", "river/tags", "tray"],
+  "modules-left": ["hyprland/workspaces", "niri/workspaces", "tray"],
 
   "modules-center": ["clock"],
 
@@ -41,10 +41,20 @@
   },
 
   // Modules configuration
-  "river/tags": {
-    "num-tags": 7,
-    "tag-labels": ["󰈹", "", "", "", "", "", "󰠮", "", "", ""],
-  },
+
+"niri/workspaces": {
+	"format": "{icon}",
+	"format-icons": {
+		// Named workspaces
+		// (you need to configure them in niri)
+		"browser": "",
+		"discord": "",
+		"chat": "<b></b>",
+		// Icons by state
+		"active": "",
+		"default": ""
+	}
+},
 
   "tray": {
     "icon-size": 16,

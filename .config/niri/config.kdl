@@ -6,6 +6,13 @@
 // Input device configuration.
 // Find the full list of options on the wiki:
 // https://github.com/YaLTeR/niri/wiki/Configuration:-Input
+
+cursor {
+    xcursor-theme "Bibata-Modern-Ice"
+    xcursor-size 28
+    hide-after-inactive-ms 5000
+}
+
 input {
     keyboard {
         track-layout "global"
@@ -49,6 +56,29 @@ input {
 
     // Focus windows and outputs automatically when moving the mouse into them.
     focus-follows-mouse max-scroll-amount="10%"
+}
+
+debug {
+    render-drm-device "/dev/dri/renderD128"
+}
+
+	output "eDP-1" {
+    mode "2560x1600"
+	scale 1.75
+    position x=0 y=0
+ }
+
+environment {
+    DISPLAY ":1"
+    QT_QPA_PLATFORM "wayland"
+}
+
+// environment {
+//    DISPLAY ":0"
+// }
+
+switch-events {
+    lid-close {spawn "hyprlock";}
 }
 
 // You can configure outputs by their name, which you can find
@@ -210,11 +240,28 @@ layout {
 // spawn-at-startup "alacritty" "-e" "fish"
 spawn-at-startup "swaync"
 spawn-at-startup "waybar"
-//spawn-at-startup "firefox"
-spawn-at-startup "/usr/lib/polkit-kde-authentication-agent-1"
+// spawn-at-startup "firefox"
+// spawn-at-startup "/usr/lib/polkit-kde-authentication-agent-1"
 spawn-at-startup "swaybg" "-i" "/home/rey/Pictures/wallpapers/konoha1.jpg" "-m" "fill"
-spawn-at-startup "wl-paste" "--watch" "clapboard" "store"
+spawn-at-startup "wl-paste" "--watch" "cliphist" "store"
+spawn-at-startup "xwayland-satellite"
+spawn-at-startup "swayidle" "-w"
 
+layer-rule {
+    match namespace="waybar"
+    match at-startup=true
+
+    opacity 0.8
+
+    shadow {
+        on
+        softness 10
+        spread 10
+        offset x=0 y=5
+    }
+
+    geometry-corner-radius 10
+    }
 
 // Uncomment this line to ask the clients to omit their client-side decorations if possible.
 // If the client will specifically ask for CSD, the request will be honored.
@@ -301,8 +348,34 @@ window-rule {
     default-column-width {}
 }
 
+
 window-rule {
+    match app-id="waybar"
+    opacity 0.7
+    
+}
+window-rule {
+draw-border-with-background false
+    match app-id="foot"
     match app-id="kitty"
+    match app-id="vesktop"
+    match app-id="org.qbittorrent.qBittorrent"
+    match app-id="thunar"
+    match app-id="org.gnome.Nautilus"
+    match app-id="chromium"
+    match app-id="zathura"
+    match app-id="engrampa"
+    match app-id="abaddon"
+    match app-id="obsidian"
+    match app-id="zen"
+    match app-id="tsuzuku"
+    match app-id="obs-studio"
+    opacity 0.95
+}
+
+
+window-rule {
+    match app-id="foot"
     default-column-width { proportion 0.5; }
 }
 
@@ -319,16 +392,8 @@ window-rule {
 }
 
 window-rule {
-    match app-id="io.github.kukuruzka165.materialgram"
-    default-column-width { fixed 440; }
-    open-on-output "HDMI-A-1"
-}
-
-window-rule {
-    match app-id="vesktop"
-    default-column-width { fixed 920; }
+    match app-id="zen-browser"
     open-maximized true
-    open-on-output "DP-3"
 }
 
 window-rule {
@@ -338,7 +403,7 @@ window-rule {
 }
 
 window-rule {
-    match app-id="vlc"
+    match app-id="mpv"
     default-column-width { fixed 920; }
     open-maximized true
 }
@@ -357,12 +422,6 @@ window-rule {
     match app-id="Waydroid"
     default-column-width { fixed 1256; }
 }
-
-window-rule {
-    match title="runner$"
-    open-floating true
-}
-
 
 
 // Example: block out two password managers from screen capture.
@@ -394,10 +453,11 @@ binds {
 
     // Suggested binds for running programs: terminal, app launcher, screen locker.
     Mod+Return { spawn "foot"; }
-    Mod+D { spawn "fuzzel"; }
-    Mod+Shift+D { spawn "wmenu-run"; }
-    Super+Alt+L { spawn "swaylock"; }
+    Mod+SPACE { spawn "fuzzel"; }
+    Super+Alt+L { spawn "hyprlock"; }
 	Mod+B { spawn "zen-browser"; }
+	// Mod+G { spawn "foot" "-e" "bash" "-c" "wow.sh"; }
+	Mod+Escape { spawn "foot" "-e" "btop"; }
 
 
     XF86AudioRaiseVolume allow-when-locked=true {
@@ -438,7 +498,7 @@ binds {
 
     Mod+S { spawn "sh" "-c" "$HOME/.config/hypr/scripts/ScreenShot.sh --swappy"; }
     Mod+O { spawn "sh" "-c" "~/bin/ocr"; }
-    Mod+R { spawn "foot" "-e" "~/bin/runner"; }
+	Mod+R { spawn "foot" "-e" "runner"; }
 
     // You can also use a shell. Do this if you need pipes, multiple commands, etc.
     // Note: the entire command goes as a single argument in the end.
@@ -474,6 +534,11 @@ binds {
     // Mod+K     { focus-window-or-workspace-up; }
     // Mod+Ctrl+J     { move-window-down-or-to-workspace-down; }
     // Mod+Ctrl+K     { move-window-up-or-to-workspace-up; }
+
+	Mod+J     { focus-window-or-workspace-down; }
+    Mod+K     { focus-window-or-workspace-up; }
+    Mod+Shift+J     { move-window-down-or-to-workspace-down; }
+    Mod+Shift+L     { move-window-up-or-to-workspace-up; }
 
     Mod+Home { focus-column-first; }
     Mod+End  { focus-column-last; }
@@ -573,21 +638,22 @@ binds {
     Mod+7 { focus-workspace 7; }
     Mod+8 { focus-workspace 8; }
     Mod+9 { focus-workspace 9; }
-    Mod+Ctrl+1 { move-column-to-workspace 1; }
-    Mod+Ctrl+2 { move-column-to-workspace 2; }
-    Mod+Ctrl+3 { move-column-to-workspace 3; }
-    Mod+Ctrl+4 { move-column-to-workspace 4; }
-    Mod+Ctrl+5 { move-column-to-workspace 5; }
-    Mod+Ctrl+6 { move-column-to-workspace 6; }
-    Mod+Ctrl+7 { move-column-to-workspace 7; }
-    Mod+Ctrl+8 { move-column-to-workspace 8; }
-    Mod+Ctrl+9 { move-column-to-workspace 9; }
+    Mod+Shift+1 { move-window-to-workspace 1; }
+    Mod+Shift+2 { move-window-to-workspace 2; }
+    Mod+Shift+3 { move-window-to-workspace 3; }
+    Mod+Shift+4 { move-window-to-workspace 4; }
+    Mod+Shift+5 { move-window-to-workspace 5; }
+    Mod+Shift+6 { move-window-to-workspace 6; }
+    Mod+Shift+7 { move-window-to-workspace 7; }
+    Mod+Shift+8 { move-window-to-workspace 8; }
+    Mod+Shift+9 { move-window-to-workspace 9; }
 
     // Alternatively, there are commands to move just a single window:
     // Mod+Ctrl+1 { move-window-to-workspace 1; }
 
     // Switches focus between the current and the previous workspace.
     // Mod+Tab { focus-workspace-previous; }
+	Mod+Tab repeat=false { toggle-overview; }
 
     Mod+Comma  { consume-window-into-column; }
     Mod+Period { expel-window-from-column; }
@@ -624,16 +690,21 @@ binds {
     // since it will switch twice upon pressing the hotkey (once by xkb, once by niri).
     // Mod+Space       { switch-layout "next"; }
     // Mod+Shift+Space { switch-layout "prev"; }
+	
+	// Mod+ { switch-layout "next"; }
+
+	Mod+W       { toggle-window-floating; }
+    Mod+Shift+W { switch-focus-between-floating-and-tiling; }
 
     Print { screenshot; }
     Mod+Shift+S { screenshot; }
     Ctrl+Print { screenshot-screen; }
     // Alt+Print { screenshot-window; }
-    // Mod+Shift+R { spawn "fish" "-c" "wl-screenrec -f ~/Videos/Screenrecs/screenrec-$(math 1 + $(ls ~/Videos/Screenrecs/ | count)).mp4 -g $(slurp -d -F \"Mononoki Nerd Font Mono\" -c \"#8bf6d4\") -b 3MB --audio --audio-device alsa_output.pci-0000_08_00.3.analog-stereo.monitor"; }
-    // Mod+Shift+Ctrl+R { spawn "fish" "-c" "killall wl-screenrec && notify-send \"wl-screenrec\" \"Finished recording.\""; }
 
     // The quit action will show a confirmation dialog to avoid accidental exits.
     Mod+Shift+E { quit; }
+
+Ctrl+Alt+Delete { spawn "rofi" "-show" "menu" "-modi" "'menu:~/.config/rofi/rofi-power-menu-niri --choices=logout/suspend/reboot/shutdown'" "-config" "~/.config/rofi/power.rasi"; }
 
     // Powers off the monitors. To turn them back on, do any input like
     // moving the mouse or pressing any other key.

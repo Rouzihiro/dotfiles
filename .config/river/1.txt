@@ -1,8 +1,0 @@
-scratchTag=$((1 << 20))
-riverctl map normal Super 0 toggle-focused-tags $scratchTag
-riverctl map normal Super+Shift 0 set-view-tags $scratchTag
-riverctl spawn-tagmask $((((1 << 32) - 1) ^ scratchTag))
-
-stickyTag=$((1 << 10))
-riverctl map normal Super S toggle-view-tags $stickyTag
-riverctl spawn-tagmask $((((1 << 32) - 1) ^ stickyTag))
