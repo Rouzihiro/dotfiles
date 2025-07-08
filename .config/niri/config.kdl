@@ -373,7 +373,7 @@ draw-border-with-background false
 
 window-rule {
     match app-id="foot"
-    default-column-width { proportion 0.5; }
+    default-column-width { proportion 0.8; }
 }
 
 window-rule {
@@ -388,7 +388,7 @@ window-rule {
 }
 
 window-rule {
-    match app-id="zen-browser"
+    match app-id="zen"
     open-maximized true
 }
 
