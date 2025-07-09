@@ -7,6 +7,9 @@
 # Open document in fit-width mode by default
 set adjust-open "best-fit"
 
+# Database - store input, bookmarks
+set database "null" # null, sqlite
+
 # One page per row by default
 set pages-per-row 1
 
@@ -21,7 +24,8 @@ set zoom-min 10
 set guioptions ""
 
 set render-loading "false"
-set scroll-step 50
+
+# =============================== [ COLORS ] =============================== #
 
 # zathurarc-dark
 set font "inconsolata 15"
@@ -53,7 +57,7 @@ set notification-bg "#90A959" #0B
 set notification-fg "#151515" #00
 
 # Recolor PDF
-set recolor "true"
+set recolor "false"
 set recolor-lightcolor "rgba(0, 0, 0, 0)" #00
 set recolor-darkcolor "rgba(255, 255, 255, 1)" #06
 set recolor-reverse-video "true"
@@ -62,13 +66,16 @@ set recolor-keephue "true"
 
 # =============================== [ REMAPS ] =============================== #
 
-# Booklet Mode Toggle
+# b - Booklet Mode Toggle
 map b toggle_page_mode
 map [fullscreen] b toggle_page_mode
 
-# i - Dark Mode Toggle
-map i recolor
-map [fullscreen] i recolor
+# i - Information Toggle
+map i toggle_statusbar
+
+# I - Invert Colorscheme (Dark mode toggle)
+map I recolor
+map [fullscreen] I recolor
 
 # f - fullscreen
 unmap f
@@ -79,6 +86,17 @@ map [fullscreen] f toggle_fullscreen
 map x quit
 map [fullscreen] x quit
 
+# D/U - Zoom
+map D zoom "out"
+map U zoom "in"
+map [fullscreen] D zoom "out"
+map [fullscreen] U zoom "in"
+
+# <C-o>/<C-i> - Zoom
+map <C-o> zoom "out"
+map <C-i> zoom "in"
+map [fullscreen] <C-o> zoom "out"
+map [fullscreen] <C-i> zoom "in"
 
 # d/u - Half Scroll
 unmap d
@@ -90,14 +108,20 @@ map [fullscreen] u scroll "half-up"
 # j/k - Smooth Scroll
 map j feedkeys "<C-Down>"
 map k feedkeys "<C-Up>"
+map [fullscreen] j feedkeys "<C-Down>"
+map [fullscreen] k feedkeys "<C-Up>"
 
-# h - Previous Page
+# h/l - Previous or Next Page
 map h navigate "previous"
-map [fullscreen] h navigate "previous"
-
-# l - Next Page
 map l navigate "next"
+map [fullscreen] h navigate "previous"
 map [fullscreen] l navigate "next"
+
+# left/right - Previous or Next Page
+map <Left> navigate "previous"
+map <Right> navigate "next"
+map [fullscreen] <Left> navigate "previous"
+map [fullscreen] <Right> navigate "next"
 
 # zoom page
 map 0 zoom "default"
