@@ -23,17 +23,42 @@ ex() {
 
 # Quick note taking
 note() {
-    echo "$(date): $*" >> ~/Documents/notes
+    echo "$*" >> ~/Documents/notes
     echo "Note added: $*"
 }
+
 
 # View notes
 notes() {
     if [ -f ~/Documents/notes ]; then
-        cat ~/Documents/notes
+        if command -v bat >/dev/null 2>&1; then
+            bat ~/Documents/notes
+        else
+            cat ~/Documents/notes
+        fi
     else
         echo "No notes file found"
     fi
+}
+
+
+noter() {
+    local file=~/Documents/notes
+    [[ -f $file ]] || { echo "No notes file found"; return 1; }
+
+    if command -v bat >/dev/null 2>&1; then
+        bat -n --paging=never "$file"
+    else
+        cat -n "$file"
+    fi
+
+    echo -n "Enter line number to delete (or leave empty to cancel): "
+    read lineno
+
+    [[ $lineno =~ ^[0-9]+$ ]] || { echo "Cancelled"; return 1; }
+
+    sed -i "${lineno}d" "$file"
+    echo "Deleted line $lineno."
 }
 
 # Search history more efficiently  
