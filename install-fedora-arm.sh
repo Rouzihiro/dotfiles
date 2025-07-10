@@ -115,6 +115,7 @@ DNF_PACKAGES=(
     "zathura" "zathura-cb" "zathura-pdf-mupdf"  # Document viewers
 	"xournalpp" # PDF editor
     "neovim"  # Text editor
+	"foliate" # Book reading
 
 	# email
 	"thunderbird"

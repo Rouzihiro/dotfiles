@@ -108,6 +108,8 @@ alias mv='mv -iv'
 alias cp='cp -vr'
 alias crp='rsync -ah --progress'
 
+alias rm='rm -rf'
+
 # Safer delete with trash-cli
 alias tp='trash-put'
 alias tl='trash-list | fzf | xargs -r trash-info'
@@ -176,7 +178,7 @@ alias fz='fzf --preview '\''bat --color=always --style=numbers --line-range=:500
 alias openports='netstat -nape --inet'
 alias ports='ss -tuln'
 alias myip='curl https://ipinfo.io/ip && echo'
-alias fetch='clear && fastfetch'
+alias fetch='clear && fastfetch && echo "Install Date: $(rpm -q --qf %{installtime:date} basesystem)"'
 alias startup='clear && systemctl list-unit-files --type=service | grep enabled'
 
 # Miscellaneous
@@ -186,9 +188,11 @@ alias xx='exit'
 alias c='clear'
 alias o='xdg-open'
 alias t='tmux'
-alias yt1='yt-dlp --external-downloader aria2c --external-downloader-args '\''aria2c:-x10 -s10 -k1M'\'''
-alias yt2='yt-dlp --external-downloader aria2c --external-downloader-args '\''aria2c:-x10 -s10 -k1M'\'' -o '\''video_%(id)s.%(ext)s'\'''
-alias ytbest='yt-dlp -f '\''bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best'\'''
+alias yd='yt-dlp --external-downloader aria2c --external-downloader-args '\''aria2c:-x10 -s10 -k1M'\'''
+alias ydbest='yt-dlp -f '\''bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best'\'''
+alias yd1080="yt-dlp -f 'bv*[height<=1080][ext=mp4]+ba[ext=m4a]/b[height<=1080][ext=mp4]/bv*+ba/b' --embed-thumbnail --embed-metadata"
+alias yd720="yt-dlp -f 'bv[ext=mp4][height=720]+ba[ext=m4a]/b[ext=mp4][height<=720]' --embed-thumbnail --embed-metadata"
+
 alias wget1='wget --mirror --convert-links --adjust-extension --page-requisites --no-parent'
 alias wget2='wget --tries=5 --retry-connrefused --waitretry=30'
 alias curldl='curl -L -C - -O'
