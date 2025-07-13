@@ -41,7 +41,7 @@ log_success() {
 PACMAN_PACKAGES=(
     # System and desktop environment
     "waybar" 
-     # "power-profiles-daemon"  # Power management - error on surface
+    "power-profiles-daemon"  # Power management - error on surface
     "swaync"  # Notifications
 	"swaybg"
     "rofi" "fuzzel" # App launcher
@@ -49,13 +49,16 @@ PACMAN_PACKAGES=(
 	"btop"
 	
 	#Hyprland
-	"hyprland" "xdg-desktop-portal-hyprland"
-	"hyprpaper" "hyprlock" "hypridle" 
-	"polkit-gnome"
+	#"hyprland" "xdg-desktop-portal-hyprland"
+	#"hyprpaper" 
+	"hyprlock" 
+	#"hypridle" 
+	#"polkit-gnome"
 
 	# Sway
-	#"i3blocks" "autotiling-rs" "swaylock" "swayidle"
-	#"xdg-desktop-portal" "xdg-desktop-portal-wlr"
+	#"i3blocks" "autotiling-rs" "swaylock" 
+	"swayidle"
+	#"xdg-desktop-portal" "xdg-desktop-portal-wlr" "xdg-desktop-portal-gtk"
 
     # Terminal and shell
     "zsh" "foot"  # Terminals
