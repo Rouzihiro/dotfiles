@@ -365,6 +365,7 @@ draw-border-with-background false
     match app-id="abaddon"
     match app-id="obsidian"
     match app-id="zen"
+	match app-id="Brave-browser"
     match app-id="tsuzuku"
     match app-id="obs-studio"
     opacity 0.95
@@ -389,6 +390,11 @@ window-rule {
 
 window-rule {
     match app-id="zen"
+    open-maximized true
+}
+
+window-rule {
+    match app-id="Brave-browser"
     open-maximized true
 }
 
@@ -451,7 +457,7 @@ binds {
     Mod+Return { spawn "foot"; }
     Mod+SPACE { spawn "fuzzel"; }
     Super+Alt+L { spawn "hyprlock"; }
-	Mod+B { spawn "zen-browser"; }
+	Mod+B { spawn "brave-browser"; }
 	// Mod+G { spawn "foot" "-e" "bash" "-c" "wow.sh"; }
 	Mod+Escape { spawn "foot" "-e" "btop"; }
 
@@ -494,7 +500,8 @@ binds {
 
     Mod+S { spawn "sh" "-c" "$HOME/.config/hypr/scripts/ScreenShot.sh --swappy"; }
     Mod+O { spawn "sh" "-c" "~/bin/ocr"; }
-	Mod+R { spawn "foot" "-e" "runner"; }
+	Mod+R { spawn "foot" "-e" "sh" "-c" "~/bin/runner"; }
+
 
     // You can also use a shell. Do this if you need pipes, multiple commands, etc.
     // Note: the entire command goes as a single argument in the end.

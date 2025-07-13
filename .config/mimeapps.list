@@ -1,9 +1,9 @@
 [Default Applications]
-text/html=zen-browser.desktop
-x-scheme-handler/http=zen-browser.desktop
-x-scheme-handler/https=zen-browser.desktop
-x-scheme-handler/about=zen.desktop
-x-scheme-handler/unknown=zen.desktop
+text/html=brave-browser.desktop
+x-scheme-handler/http=brave-browser.desktop
+x-scheme-handler/https=brave-browser.desktop
+x-scheme-handler/about=brave-browser.desktop
+x-scheme-handler/unknown=brave-browser.desktop
 x-scheme-handler/chrome=zen-browser.desktop
 application/x-extension-htm=zen-browser.desktop
 application/x-extension-html=zen-browser.desktop
