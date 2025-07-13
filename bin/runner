@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
 TERM=xterm-256color
 APP=$(echo -e "Neovim\nBrowser\nThunar\nFoot\nBluetooth\nReddit\nChatGPT\nGitHub\nDeepSeek\nTranslate\nYouTube\nRapidMovies\nNoodle\nEporner\nFitGirl\nDodi\nFzMovies\nMoviesjoytv\nMaps" | fzf --reverse --border rounded)
