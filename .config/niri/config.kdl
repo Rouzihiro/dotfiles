@@ -10,8 +10,18 @@
 //cursor {
 //    xcursor-theme "Bibata-Modern-Ice"
 //    xcursor-size 28
+//    hide-when-typing
 //    hide-after-inactive-ms 5000
 // }
+
+// hotkey-overlay {
+//     skip-at-startup
+// }
+//
+// cursor {
+//     xcursor-theme "catppuccin-frappe-lavender-cursors"
+// }
+//
 
 input {
     keyboard {
@@ -19,11 +29,6 @@ input {
         repeat-delay 350
         repeat-rate 30
         xkb {
-            // You can set rules, model, layout, variant and options.
-            // For more information, see xkeyboard-config(7).
-
-            // For example:
-            // options "grp:win_space_toggle,compose:ralt,ctrl:nocaps"
             layout "us,de"
             options "grp:alt_shift_toggle"
         }
@@ -37,7 +42,7 @@ input {
         // dwt
         // dwtp
         natural-scroll
-        // accel-speed 0.2
+        // accel-speed 0.3
         // accel-profile "flat"
         scroll-method "two-finger"
         // disabled-on-external-mouse
@@ -56,6 +61,14 @@ input {
 
     // Focus windows and outputs automatically when moving the mouse into them.
     focus-follows-mouse max-scroll-amount="10%"
+
+  workspace-auto-back-and-forth
+  }
+
+  gestures {
+  hot-corners {
+    off
+  }
 }
 
 debug {
@@ -73,179 +86,202 @@ debug {
 //    QT_QPA_PLATFORM "wayland"
 // }
 
+ // environment {
+ //    DISPLAY ":0"
+ // }
+ //
+// Environment Variables
  environment {
-    DISPLAY ":0"
+   QT_QPA_PLATFORM "wayland"
+   ELECTRON_OZONE_PLATFORM_HINT "auto"
+   EDITOR "nvim"
+   MOZ_ENABLE_WAYLAND "1" 
+   DISPLAY ":0"
  }
+//
+
 
 switch-events {
     lid-close {spawn "hyprlock";}
 }
 
-// You can configure outputs by their name, which you can find
-// by running `niri msg outputs` while inside a niri instance.
-// The built-in laptop monitor is usually called "eDP-1".
-// Find more information on the wiki:
-// https://github.com/YaLTeR/niri/wiki/Configuration:-Outputs
-// Remember to uncomment the node by removing "/-"!
-/-output "eDP-1" {
-    // Uncomment this line to disable this output.
-    // off
 
-    // Resolution and, optionally, refresh rate of the output.
-    // The format is "<width>x<height>" or "<width>x<height>@<refresh rate>".
-    // If the refresh rate is omitted, niri will pick the highest refresh rate
-    // for the resolution.
-    // If the mode is omitted altogether or is invalid, niri will pick one automatically.
-    // Run `niri msg outputs` while inside a niri instance to list all outputs and their modes.
-    mode "1920x1080@120.030"
-
-    // You can use integer or fractional scale, for example use 1.5 for 150% scale.
-    scale 2
-
-    // Transform allows to rotate the output counter-clockwise, valid values are:
-    // normal, 90, 180, 270, flipped, flipped-90, flipped-180 and flipped-270.
-    transform "normal"
-
-    // Position of the output in the global coordinate space.
-    // This affects directional monitor actions like "focus-monitor-left", and cursor movement.
-    // The cursor can only move between directly adjacent outputs.
-    // Output scale and rotation has to be taken into account for positioning:
-    // outputs are sized in logical, or scaled, pixels.
-    // For example, a 3840×2160 output with scale 2.0 will have a logical size of 1920×1080,
-    // so to put another output directly adjacent to it on the right, set its x to 1920.
-    // If the position is unset or results in an overlap, the output is instead placed
-    // automatically.
-    position x=1280 y=0
-}
-
-// output "DP-3" {
-  //  mode "1280x1024@75.025"
-  //  position x=-1280 y=0
-// }
-
-// output "HDMI-A-1" {
-//    mode "1920x1080@74.973"
-//    position x=0 y=0
-// }
-
-// Settings that influence how windows are positioned and sized.
-// Find more information on the wiki:
-// https://github.com/YaLTeR/niri/wiki/Configuration:-Layout
+/*
+██╗      █████╗ ██╗   ██╗ ██████╗ ██╗   ██╗████████╗
+██║     ██╔══██╗╚██╗ ██╔╝██╔═══██╗██║   ██║╚══██╔══╝
+██║     ███████║ ╚████╔╝ ██║   ██║██║   ██║   ██║
+██║     ██╔══██║  ╚██╔╝  ██║   ██║██║   ██║   ██║
+███████╗██║  ██║   ██║   ╚██████╔╝╚██████╔╝   ██║
+╚══════╝╚═╝  ╚═╝   ╚═╝    ╚═════╝  ╚═════╝    ╚═╝
+*/
 layout {
-    // Set gaps around windows in logical pixels.
-    gaps 16
+  gaps 9
+  center-focused-column "never"
 
-    // When to center a column when changing focus, options are:
-    // - "never", default behavior, focusing an off-screen column will keep at the left
-    //   or right edge of the screen.
-    // - "always", the focused column will always be centered.
-    // - "on-overflow", focusing a column will center it if it doesn't fit
-    //   together with the previously focused column.
-    center-focused-column "never"
+  preset-column-widths {
+    proportion 0.25
+    proportion 0.5
+    proportion 0.75
+    proportion 1.0
+  }
 
-    // You can customize the widths that "switch-preset-column-width" (Mod+R) toggles between.
-    preset-column-widths {
-        // Proportion sets the width as a fraction of the output width, taking gaps into account.
-        // For example, you can perfectly fit four windows sized "proportion 0.25" on an output.
-        // The default preset widths are 1/3, 1/2 and 2/3 of the output.
-        proportion 0.33333
-        proportion 0.5
-        proportion 0.66667
+  preset-window-heights {
+    proportion 0.2
+    proportion 0.4
+    proportion 0.5
+    proportion 0.6
+    proportion 0.8
+  }
 
-        // Fixed sets the width in logical pixels exactly.
-        // fixed 1920
+  default-column-width { 
+    proportion 0.5
+  }
+
+  focus-ring {
+    width 2
+    active-color "#cba6f7"
+    inactive-color "#45475A"
+  }
+
+  border {
+    off
+  }
+
+  shadow {
+    on
+    softness 20
+    spread 7
+    offset x=-1 y=-5
+    color "#0009"
+  }
+  struts {}
+}
+
+// NOTE: Animations
+/*
+ █████╗ ███╗   ██╗██╗███╗   ███╗ █████╗ ████████╗██╗ ██████╗ ███╗   ██╗
+██╔══██╗████╗  ██║██║████╗ ████║██╔══██╗╚══██╔══╝██║██╔═══██╗████╗  ██║
+███████║██╔██╗ ██║██║██╔████╔██║███████║   ██║   ██║██║   ██║██╔██╗ ██║
+██╔══██║██║╚██╗██║██║██║╚██╔╝██║██╔══██║   ██║   ██║██║   ██║██║╚██╗██║
+██║  ██║██║ ╚████║██║██║ ╚═╝ ██║██║  ██║   ██║   ██║╚██████╔╝██║ ╚████║
+╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝╚═╝     ╚═╝╚═╝  ╚═╝   ╚═╝   ╚═╝ ╚═════╝ ╚═╝  ╚═══╝
+*/
+animations {
+  off
+  slowdown 0.6
+
+  window-open {
+    duration-ms 200
+    curve "linear"
+    custom-shader r"
+
+    vec4 expanding_circle(vec3 coords_geo, vec3 size_geo) {
+      vec3 coords_tex = niri_geo_to_tex * coords_geo;
+      vec4 color = texture2D(niri_tex, coords_tex.st);
+      vec2 coords = (coords_geo.xy - vec2(0.5, 0.5)) * size_geo.xy * 2.0;
+      coords = coords / length(size_geo.xy);
+      float p = niri_clamped_progress;
+      if (p * p <= dot(coords, coords))
+      color = vec4(0.0);
+
+      return color;
     }
 
-    // You can change the default width of the new windows.
-    default-column-width { proportion 0.66667; }
-    // If you leave the brackets empty, the windows themselves will decide their initial width.
-    // default-column-width {}
+    vec4 open_color(vec3 coords_geo, vec3 size_geo) {
+      return expanding_circle(coords_geo, size_geo);
+    }
+    "
+  }
 
-    // By default focus ring and border are rendered as a solid background rectangle
-    // behind windows. That is, they will show up through semitransparent windows.
-    // This is because windows using client-side decorations can have an arbitrary shape.
-    //
-    // If you don't like that, you should uncomment `prefer-no-csd` below.
-    // Niri will draw focus ring and border *around* windows that agree to omit their
-    // client-side decorations.
-    //
-    // Alternatively, you can override it with a window rule called
-    // `draw-border-with-background`.
 
-    // You can change how the focus ring looks.
-    focus-ring {
-        // Uncomment this line to disable the focus ring.
-        // off
+  window-close {
+    duration-ms 175
+    curve "linear"
+    custom-shader r"
+    vec4 shrinking_circle(vec3 coords_geo, vec3 size_geo) {
+      vec3 coords_tex = niri_geo_to_tex * coords_geo;
+      vec4 color = texture2D(niri_tex, coords_tex.st);
+      // Calculate coordinates relative to center, scaled appropriately
+      vec2 coords = (coords_geo.xy - vec2(0.5, 0.5)) * size_geo.xy * 2.0;
+      // Normalize coordinates based on diagonal length for a circular shape
+      coords = coords / length(size_geo.xy);
 
-        // How many logical pixels the ring extends out from the windows.
-        width 4
+      // Invert the progress for closing effect: 1 -> 0
+      float p_close = 1.0 - niri_clamped_progress;
 
-        // Colors can be set in a variety of ways:
-        // - CSS named colors: "red"
-        // - RGB hex: "#rgb", "#rgba", "#rrggbb", "#rrggbbaa"
-        // - CSS-like notation: "rgb(255, 127, 0)", rgba(), hsl() and a few others.
+      // If pixel's squared distance from center is >= shrinking radius squared, make transparent
+      // (Keeps pixels *inside* the shrinking radius p_close)
+      if (p_close * p_close <= dot(coords, coords))
+      color = vec4(0.0);
 
-        // Color of the ring on the active monitor.
-        active-color "#8cf6d4"
+      // Optional: You could also fade the alpha slightly faster at the end if desired
+      // color.a *= p_close; // Fades out completely as radius reaches 0
 
-        // Color of the ring on inactive monitors.
-        inactive-color "#111716"
-
-        // You can also use gradients. They take precedence over solid colors.
-        // Gradients are rendered the same as CSS linear-gradient(angle, from, to).
-        // The angle is the same as in linear-gradient, and is optional,
-        // defaulting to 180 (top-to-bottom gradient).
-        // You can use any CSS linear-gradient tool on the web to set these up.
-        //
-        // active-gradient from="#80c8ff" to="#bbddff" angle=45
-
-        // You can also color the gradient relative to the entire view
-        // of the workspace, rather than relative to just the window itself.
-        // To do that, set relative-to="workspace-view".
-        //
-        // inactive-gradient from="#505050" to="#808080" angle=45 relative-to="workspace-view"
+      return color;
     }
 
-    // You can also add a border. It's similar to the focus ring, but always visible.
-    border {
-        // The settings are the same as for the focus ring.
-        // If you enable the border, you probably want to disable the focus ring.
-        off
+    vec4 close_color(vec3 coords_geo, vec3 size_geo) {
+      return shrinking_circle(coords_geo, size_geo);
+    }"
+  }
 
-        width 1
-        active-color "#13171e"
-        inactive-color "#505050"
+  window-resize {
+  }
+}
 
-        // active-gradient from="#ffbb66" to="#ffc880" angle=45 relative-to="workspace-view"
-        // inactive-gradient from="#505050" to="#808080" angle=45 relative-to="workspace-view"
-    }
 
-    // Struts shrink the area occupied by windows, similarly to layer-shell panels.
-    // You can think of them as a kind of outer gaps. They are set in logical pixels.
-    // Left and right struts will cause the next window to the side to always be visible.
-    // Top and bottom struts will simply add outer gaps in addition to the area occupied by
-    // layer-shell panels and regular gaps.
-    struts {
-        // left 64
-        // right 64
-        // top 64
-        // bottom 64
+/*
+ NOTE: Workspace 
+*/
+workspace "1"
+workspace "2"
+workspace "3"
+// workspace "4"
+// workspace "5"
+// workspace "6"
+// workspace "7"
+// workspace "8"
+// workspace "9"
+// workspace "0"
+
+/*
+
+[[ Layer Rule ]]
+
+*/ 
+layer-rule {
+  match namespace="^launcher$"
+  opacity 1.0
+}
+
+layer-rule {
+  //  eww
+    match namespace="gtk-layer-shell"
+    match at-startup=true
+    shadow {
+        on
+        softness 10
+        spread 1
+        offset x=0 y=1
+        draw-behind-window true
+        color "#00000030"
     }
 }
 
-// Add lines like this to spawn processes at startup.
-// Note that running niri as a session supports xdg-desktop-autostart,
-// which may be more convenient to use.
-// See the binds section below for more spawn examples.
-// spawn-at-startup "alacritty" "-e" "fish"
-spawn-at-startup "swaync"
-spawn-at-startup "waybar"
-// spawn-at-startup "firefox"
-// spawn-at-startup "/usr/lib/polkit-kde-authentication-agent-1"
-spawn-at-startup "swaybg" "-i" "/home/rey/Pictures/wallpapers/konoha1.jpg" "-m" "fill"
-spawn-at-startup "wl-paste" "--watch" "cliphist" "store"
-spawn-at-startup "xwayland-satellite"
-spawn-at-startup "swayidle" "-w"
+layer-rule {
+  //  eww
+    match namespace="rofi"
+    match at-startup=true
+    shadow {
+        on
+        softness 10
+        spread 1
+        offset x=0 y=1
+        draw-behind-window true
+        color "#00000030"
+    }
+}
+
 
 layer-rule {
     match namespace="waybar"
@@ -260,80 +296,61 @@ layer-rule {
     geometry-corner-radius 10
     }
 
-// Uncomment this line to ask the clients to omit their client-side decorations if possible.
-// If the client will specifically ask for CSD, the request will be honored.
-// Additionally, clients will be informed that they are tiled, removing some rounded corners.
-prefer-no-csd
 
-// You can change the path where screenshots are saved.
-// A ~ at the front will be expanded to the home directory.
-// The path is formatted with strftime(3) to give you the screenshot date and time.
-screenshot-path "~/Pictures/Screenshots/ from %Y-%m-%d %H-%M-%S.png"
 
-// You can also set this to null to disable saving screenshots to disk.
-// screenshot-path null
+/*
 
-// Animation settings.
-// The wiki explains how to configure individual animations:
-// https://github.com/YaLTeR/niri/wiki/Configuration:-Animations
-
-animations {
-    // Uncomment to turn off all animations.
-    // off
-
-    // Slow down all animations by this factor. Values below 1 speed them up instead.
-    // slowdown 3.0
-
-    window-close {
-        duration-ms 200
-        curve "linear"
-
-        custom-shader r"
-            // Example: make the window 'fall down' with slight rotation.
-            vec4 close_color(vec3 coords_geo, vec3 size_geo) {
-                // For this shader, set animation curve to linear for best results.
-
-                // Simulate an accelerated fall: square the (linear) progress.
-                float progress = niri_clamped_progress * niri_clamped_progress;
-
-                // Get our rotation pivot point coordinates at the bottom center of the window.
-                vec2 coords = (coords_geo.xy - vec2(0.5, 1.0)) * size_geo.xy;
-
-                // Move the window down to simulate a fall.
-                coords.y -= progress * 200.0;
-
-                // Randomize rotation direction and maximum angle.
-                float random = (niri_random_seed - 0.5) / 2.0;
-                random = sign(random) - random;
-                float max_angle = 0.05 * random;
-
-                // Rotate the window around our pivot point.
-                float angle = progress * max_angle;
-                mat2 rotate = mat2(cos(angle), -sin(angle), sin(angle), cos(angle));
-                coords = rotate * coords;
-
-                // Transform the coordinates back.
-                coords_geo = vec3(coords / size_geo.xy + vec2(0.5, 1.0), 1.0);
-
-                // Sample the window texture.
-                vec3 coords_tex = niri_geo_to_tex * coords_geo;
-                vec4 color = texture2D(niri_tex, coords_tex.st);
-
-                // Multiply by alpha to fade out.
-                return color * (1.0 - niri_clamped_progress);
-            }
-        "
-    }
+██╗    ██╗██╗███╗   ██╗██████╗  ██████╗ ██╗    ██╗    ██████╗ ██╗   ██╗██╗     ███████╗███████╗
+██║    ██║██║████╗  ██║██╔══██╗██╔═══██╗██║    ██║    ██╔══██╗██║   ██║██║     ██╔════╝██╔════╝
+██║ █╗ ██║██║██╔██╗ ██║██║  ██║██║   ██║██║ █╗ ██║    ██████╔╝██║   ██║██║     █████╗  ███████╗
+██║███╗██║██║██║╚██╗██║██║  ██║██║   ██║██║███╗██║    ██╔══██╗██║   ██║██║     ██╔══╝  ╚════██║
+╚███╔███╔╝██║██║ ╚████║██████╔╝╚██████╔╝╚███╔███╔╝    ██║  ██║╚██████╔╝███████╗███████╗███████║
+ ╚══╝╚══╝ ╚═╝╚═╝  ╚═══╝╚═════╝  ╚═════╝  ╚══╝╚══╝     ╚═╝  ╚═╝ ╚═════╝ ╚══════╝╚══════╝╚══════╝
+*/ 
+window-rule {
+  match title="^(file_progress)$"
+  match title="^(confirm)$"
+  match title="^(dialog)$"
+  match title="^(download)$"
+  match title="^(notification )$"
+  match title="^(error)$"
+  match title="^(splash)$"
+  match title="^(nwg-look)$"
+  match title="^(confirmreset)$"
+  match title="^(Delete profile)$"
+  match title="^File Operation Progress$"
+  match title="^Confirm to replace files$"
+  match title="^KDE Connect URL handler$"
+  match title="^(Open File)(.*)$"
+  match title="^(Select a File)(.*)$"
+  match title="^(Choose wallpaper)(.*)$"
+  match title="^(Open Folder)(.*)$"
+  match title="^(Save As)(.*)$"
+  match title="^(Library)(.*)$"
+  match title="^(File Upload)(.*)$"
+  match title="^(hyprland-share-picker)$"
+  match title="^(.*)-Google$"
+  match title="^(.*)System Update$"
+  match title="(.*) - Google (.*) - (.*)"
+  
+  match app-id="^xdm-app$"
+  match app-id="^org.qbittorrent.qBittorrent$"
+  match app-id="^org.pulseaudio.pavucontrol$"
+  match app-id="^net.davidotek.pupgui2$"
+  
+  open-floating true
 }
-
-// Window rules let you adjust behavior for individual windows.
-// Find more information on the wiki:
-// https://github.com/YaLTeR/niri/wiki/Configuration:-Window-Rules
 
 window-rule {
-    min-height 400
-    min-width 420
+  match app-id=r#"zen$"# title="^Picture-in-Picture$"
+  open-floating true
 }
+
+window-rule {
+    match app-id=r#"browser"# title="^Picture-in-Picture$"
+    open-floating true
+}
+
 
 // Work around WezTerm's initial configure bug
 // by setting an empty default-column-width.
@@ -345,32 +362,123 @@ window-rule {
     default-column-width {}
 }
 
+// Needed for steam, read wiki for more
+window-rule {
+  match app-id="steam" title=r#"^notificationtoasts_\d+_desktop$"#
+  default-floating-position x=10 y=10 relative-to="bottom-right"
+}
+
+window-rule {
+  match app-id="org.telegram.desktop$"
+  match app-id="zen$"
+  match app-id="vesktop$"
+  match app-id="thunar$"
+  match app-id="obsidian$"
+  match app-id="com.github.th_ch.youtube_music"
+  match app-id="Postman"
+  match app-id="Spotify"
+  match app-id="Element"
+
+  open-maximized true
+   
+}
+
+window-rule {
+  match app-id="mpv$"
+
+  open-fullscreen true
+}
+
+window-rule {
+    geometry-corner-radius 0
+    clip-to-geometry true
+}
+
+
+/*
+[[ App Rules ]]
+*/ 
+
+window-rule {
+  draw-border-with-background false
+  match app-id="kitty$"
+  match app-id="com.mitchellh.ghostty$"
+  // opacity 0.70
+}
+
+window-rule {
+  match app-id="zen$"
+  open-on-workspace "1"
+}
+
+window-rule {
+  match app-id="Postman$"
+  open-on-workspace "2"
+}
+
+window-rule {
+  match app-id="^thunar$"
+  open-on-workspace "6"
+}
+
+window-rule{
+    match app-id="^obsidian$"
+    open-on-workspace "7"
+}
+
+window-rule {
+  match app-id="com.github.th_ch.youtube_music$"
+  match app-id="Spotify"
+  open-on-workspace "8"
+}
+
+window-rule {
+  match app-id=r#"^vesktop$"#
+  open-on-workspace "9"
+}
+
+window-rule {
+  match app-id=r#"^org.telegram.desktop$"#
+  open-on-workspace "0"
+}
+
+/*
+██╗  ██╗███████╗██╗   ██╗██████╗ ██╗███╗   ██╗██████╗ ███████╗
+██║ ██╔╝██╔════╝╚██╗ ██╔╝██╔══██╗██║████╗  ██║██╔══██╗██╔════╝
+█████╔╝ █████╗   ╚████╔╝ ██████╔╝██║██╔██╗ ██║██║  ██║███████╗
+██╔═██╗ ██╔══╝    ╚██╔╝  ██╔══██╗██║██║╚██╗██║██║  ██║╚════██║
+██║  ██╗███████╗   ██║   ██████╔╝██║██║ ╚████║██████╔╝███████║
+╚═╝  ╚═╝╚══════╝   ╚═╝   ╚═════╝ ╚═╝╚═╝  ╚═══╝╚═════╝ ╚══════╝
+*/
+
+spawn-at-startup "swaync"
+spawn-at-startup "waybar"
+// spawn-at-startup "/usr/lib/polkit-kde-authentication-agent-1"
+spawn-at-startup "swaybg" "-i" "/home/rey/Pictures/wallpapers/konoha1.jpg" "-m" "fill"
+spawn-at-startup "wl-paste" "--watch" "cliphist" "store"
+spawn-at-startup "xwayland-satellite"
+spawn-at-startup "swayidle" "-w"
+spawn-at-startup "systemctl" "--user" "start" "xdg-desktop-portal-wlr"
+
+prefer-no-csd
+screenshot-path "~/Pictures/Screenshots/ from %Y-%m-%d %H-%M-%S.png"
 
 window-rule {
     match app-id="waybar"
     opacity 0.7
-    
 }
 window-rule {
 draw-border-with-background false
     match app-id="foot"
     match app-id="kitty"
-    match app-id="vesktop"
-    match app-id="org.qbittorrent.qBittorrent"
     match app-id="thunar"
     match app-id="org.gnome.Nautilus"
     match app-id="chromium"
     match app-id="zathura"
-    match app-id="engrampa"
-    match app-id="abaddon"
-    match app-id="obsidian"
-    match app-id="zen"
 	match app-id="Brave-browser"
     match app-id="tsuzuku"
-    match app-id="obs-studio"
     opacity 0.95
 }
-
 
 window-rule {
     match app-id="foot"
@@ -383,46 +491,8 @@ window-rule {
 }
 
 window-rule {
-    match app-id="firefox"
-    default-column-width { fixed 1425; }
-    draw-border-with-background true    
-}
-
-window-rule {
-    match app-id="zen"
-    open-maximized true
-}
-
-window-rule {
     match app-id="Brave-browser"
     open-maximized true
-}
-
-window-rule {
-    match app-id="code"
-    default-column-width { fixed 920; }
-    open-maximized true
-}
-
-window-rule {
-    match app-id="mpv"
-    default-column-width { fixed 920; }
-    open-maximized true
-}
-
-window-rule {
-    match app-id="org.gnome.Nautilus"
-    default-column-width { proportion 0.75; }
-}
-
-window-rule {
-    match title="Friends List" app-id="steam"
-    default-column-width { fixed 340; }
-}
-
-window-rule {
-    match app-id="Waydroid"
-    default-column-width { fixed 1256; }
 }
 
 
@@ -439,28 +509,17 @@ window-rule {
 }
 
 binds {
-    // Keys consist of modifiers separated by + signs, followed by an XKB key name
-    // in the end. To find an XKB name for a particular key, you may use a program
-    // like wev.
-    //
-    // "Mod" is a special modifier equal to Super when running on a TTY, and to Alt
-    // when running as a winit window.
-    //
-    // Most actions that you can bind here can also be invoked programmatically with
-    // `niri msg action do-something`.
-
-    // Mod-Shift-/, which is usually the same as Mod-?,
-    // shows a list of important hotkeys.
-    Mod+Shift+Slash { show-hotkey-overlay; }
-
-    // Suggested binds for running programs: terminal, app launcher, screen locker.
+	Mod+Shift+Slash { show-hotkey-overlay; }
     Mod+Return { spawn "foot"; }
     Mod+SPACE { spawn "fuzzel"; }
     Super+Alt+L { spawn "hyprlock"; }
-	Mod+B { spawn "brave-browser"; }
+	Mod+B { spawn "~/bin/brave-arm.sh"; }
+	//Mod+B { spawn "brave-browser"; }
+
 	// Mod+G { spawn "foot" "-e" "bash" "-c" "wow.sh"; }
 	Mod+Escape { spawn "foot" "-e" "btop"; }
-
+	// Mod+V { spawn "bash" "-c" "pkill fuzzel || cliphist list | fuzzel  --match-mode fzf --dmenu --anchor center --lines 15 --width 80 | cliphist decode | wl-copy"; }
+	Mod+E { spawn "~/bin/fuzzel-emoji"; }
 
     XF86AudioRaiseVolume allow-when-locked=true {
         spawn "sh" "-c" "$HOME/.config/hypr/scripts/Volume.sh --inc";
@@ -503,11 +562,7 @@ binds {
 	Mod+R { spawn "foot" "-e" "sh" "-c" "~/bin/runner"; }
 
 
-    // You can also use a shell. Do this if you need pipes, multiple commands, etc.
-    // Note: the entire command goes as a single argument in the end.
-    // Mod+T { spawn "bash" "-c" "notify-send hello && exec alacritty"; }
-
-    XF86AudioNext        allow-when-locked=true { spawn "playerctl" "next"; }
+	XF86AudioNext        allow-when-locked=true { spawn "playerctl" "next"; }
     XF86AudioPrev        allow-when-locked=true { spawn "playerctl" "previous"; }
     XF86AudioPlay        allow-when-locked=true { spawn "playerctl" "play-pause"; }
 
@@ -686,12 +741,7 @@ binds {
     Mod+Shift+Minus { set-window-height "-10%"; }
     Mod+Shift+Equal { set-window-height "+10%"; }
 
-    // Actions to switch layouts.
-    // Note: if you uncomment these, make sure you do NOT have
-    // a matching layout switch hotkey configured in xkb options above.
-    // Having both at once on the same hotkey will break the switching,
-    // since it will switch twice upon pressing the hotkey (once by xkb, once by niri).
-    // Mod+Space       { switch-layout "next"; }
+   // Mod+Space       { switch-layout "next"; }
     // Mod+Shift+Space { switch-layout "prev"; }
 	
 	// Mod+ { switch-layout "next"; }
@@ -706,8 +756,6 @@ binds {
 
     // The quit action will show a confirmation dialog to avoid accidental exits.
     Mod+Shift+E { quit; }
-
-Ctrl+Alt+Delete { spawn "rofi" "-show" "menu" "-modi" "'menu:~/.config/rofi/rofi-power-menu-niri --choices=logout/suspend/reboot/shutdown'" "-config" "~/.config/rofi/power.rasi"; }
 
     // Powers off the monitors. To turn them back on, do any input like
     // moving the mouse or pressing any other key.
