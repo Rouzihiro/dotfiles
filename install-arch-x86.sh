@@ -46,6 +46,7 @@ PACMAN_PACKAGES=(
 	"swaybg"
     "rofi" "fuzzel" # App launcher
     "wayland-utils"  # Wayland utilities
+	"wlr-randr"
 	"btop"
 	
 	#Hyprland
@@ -58,7 +59,9 @@ PACMAN_PACKAGES=(
 	# Sway
 	#"i3blocks" "autotiling-rs" "swaylock" 
 	"swayidle"
-	#"xdg-desktop-portal" "xdg-desktop-portal-wlr" "xdg-desktop-portal-gtk"
+	#"xdg-desktop-portal" 
+	"xdg-desktop-portal-wlr" 
+	#"xdg-desktop-portal-gtk"
 
     # Terminal and shell
     "zsh" "foot"  # Terminals
@@ -80,6 +83,7 @@ PACMAN_PACKAGES=(
     "rsync"  # File syncing
     "swappy"  # Screenshot editing
 	"antimicrox"
+	"zenity"
 
 	# language
 		"hunspell-de"
@@ -122,8 +126,9 @@ PACMAN_PACKAGES=(
 
 AUR_PACKAGES=(
     # Browsers
-	"librewolf-bin"
-	"zen-browser-bin"  # Lightweight browser
+	#"librewolf-bin"
+	"brave-bin"	
+	#"zen-browser-bin"  # Lightweight browser
 	
 	# Games
 	#"heroic-games-launcher-bin"
