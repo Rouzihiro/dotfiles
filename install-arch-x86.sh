@@ -120,6 +120,9 @@ PACMAN_PACKAGES=(
 	# Games
 	#"lutris"
 
+	# steam utilities
+	# "gamemode" "lib32-gamemode" "ttf-liberation"
+
 	#email-TUI
 	"thunderbird" "ca-certificates"
 )
@@ -131,6 +134,7 @@ AUR_PACKAGES=(
 	#"zen-browser-bin"  # Lightweight browser
 	
 	# Games
+	#"winetricks"
 	#"heroic-games-launcher-bin"
 	#"protonup-qt"
 
