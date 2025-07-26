@@ -41,7 +41,7 @@ log_success() {
 PACMAN_PACKAGES=(
     # System and desktop environment
     "waybar" 
-    "power-profiles-daemon"  # Power management - error on surface
+    #"power-profiles-daemon"  # Power management - error on surface
     "swaync"  # Notifications
 	"swaybg"
     "rofi" "fuzzel" # App launcher
@@ -129,8 +129,8 @@ PACMAN_PACKAGES=(
 
 AUR_PACKAGES=(
     # Browsers
-	#"librewolf-bin"
-	"brave-bin"	
+	"librewolf-bin"
+	#"brave-bin"	
 	#"zen-browser-bin"  # Lightweight browser
 	
 	# Games
