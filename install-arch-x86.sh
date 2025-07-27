@@ -39,21 +39,15 @@ log_success() {
 
 # Package lists
 PACMAN_PACKAGES=(
-    # System and desktop environment
-    "waybar" 
-    #"power-profiles-daemon"  # Power management - error on surface
-    "swaync"  # Notifications
-	"swaybg"
-    "rofi" "fuzzel" # App launcher
-    "wayland-utils"  # Wayland utilities
-	"wlr-randr"
-	"btop"
+    # Niri 
+	"niri" "xwayland-satellite"
+	"polkit-gnome"
 	
 	#Hyprland
 	#"hyprland" "xdg-desktop-portal-hyprland"
 	#"hyprpaper" 
 	"hyprlock" 
-	#"hypridle" 
+	"hypridle" 
 	#"polkit-gnome"
 
 	# Sway
@@ -63,6 +57,16 @@ PACMAN_PACKAGES=(
 	"xdg-desktop-portal-wlr" 
 	#"xdg-desktop-portal-gtk"
 
+	# System and desktop environment
+    "waybar" 
+    #"power-profiles-daemon"  # Power management - error on surface
+    "swaync"  # Notifications
+	"swaybg"
+    "rofi" "fuzzel" # App launcher
+    "wayland-utils"  # Wayland utilities
+	"wlr-randr"
+	"btop"
+	
     # Terminal and shell
     "zsh" "foot"  # Terminals
     "starship" "eza" "bat" "fzf"  # Shell enhancements
