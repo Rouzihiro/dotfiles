@@ -1,7 +1,11 @@
 [Desktop Entry]
-Name=JDownloader
-Exec=java -Dsun.java2d.uiScale=2.5 -jar /home/rey/apps/jdownloader/JDownloader.jar
-Icon=/home/rey/Pictures/icons/jdownloader.png
+Name=JDownloader (scaled)
+GenericName=Download Manager
+Comment=Powerful download manager with multi-connection support
+Exec=sh -c 'java -Dsun.java2d.uiScale=2.5 -jar "$HOME/.jd/JDownloader.jar"'
+Icon=jdownloader
+Terminal=false
 Type=Application
-Categories=Network;
-
+Categories=Network;FileTransfer;
+StartupWMClass=JDownloader
+Keywords=download;manager;internet;
