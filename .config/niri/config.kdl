@@ -120,6 +120,11 @@ window-rule {
 }
 
 window-rule {
+  match app-id="zenity"
+  open-floating true
+}
+
+window-rule {
     match app-id="foot"
     match app-id="kitty"
     match app-id="thunar"
@@ -207,6 +212,7 @@ binds {
     Mod+S { spawn "sh" "-c" "$HOME/.config/niri/scripts/ScreenShot.sh --swappy"; }
 
     // Utility shortcuts
+	Mod+Escape { spawn "foot" "-e" "btop"; }
     Mod+O { spawn "sh" "-c" "~/bin/ocr"; }
     Mod+R { spawn "foot" "-e" "sh" "-c" "~/bin/runner"; }
     Mod+Q { close-window; }
