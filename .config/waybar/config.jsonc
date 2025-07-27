@@ -2,7 +2,7 @@
 {
   "layer": "top",
   "position": "top",
-  "height": 25,
+  "height": 27,
   "margin-left": 10,
   "margin-right": 10,
   "margin-top": 10,
@@ -45,8 +45,6 @@
 "niri/workspaces": {
 	"format": "{icon}",
 	"format-icons": {
-		// Named workspaces
-		// (you need to configure them in niri)
 		"browser": "",
 		"discord": "",
 		"chat": "<b></b>",
@@ -123,8 +121,8 @@
 	"on-click-middle": "",
 	"on-click-right": "",
 	"on-update": "",
-	"on-scroll-up": "$HOME/.config/hypr/scripts/Brightness.sh --inc",
-	"on-scroll-down": "$HOME/.config/hypr/scripts/Brightness.sh --dec",
+	"on-scroll-up": "$HOME/.config/niri/scripts/Brightness.sh --inc",
+	"on-scroll-down": "$HOME/.config/niri/scripts/Brightness.sh --dec",
 	"smooth-scrolling-threshold": 1,
   },
 
@@ -219,7 +217,7 @@
     "format": "{icon}",
     "format-icons": "", //  
     "exec-on-event": "true",
-    "on-click": "$HOME/.config/hypr/scripts/Wlogout.sh",
+    "on-click": "$HOME/.config/niri/scripts/logout.sh",
     "tooltip-format": "Power Menu",
   },
 

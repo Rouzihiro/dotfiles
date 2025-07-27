@@ -59,7 +59,7 @@ PACMAN_PACKAGES=(
 
 	# System and desktop environment
     "waybar" 
-    #"power-profiles-daemon"  # Power management - error on surface
+    "power-profiles-daemon"  # Power management
     "swaync"  # Notifications
 	"swaybg"
     "rofi" "fuzzel" # App launcher
