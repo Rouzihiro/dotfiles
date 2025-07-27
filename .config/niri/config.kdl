@@ -32,13 +32,27 @@ input {
   }
 
 environment {
-  QT_QPA_PLATFORM "wayland"
-  ELECTRON_OZONE_PLATFORM_HINT "auto"
-  MOZ_ENABLE_WAYLAND "1"
-  OZONE_PLATFORM "x11"
-  DISPLAY ":0"
-  EDITOR "nvim"
-}
+     DISPLAY ":0"
+     QT_QPA_PLATFORM "wayland"
+     QT_QPA_PLATFORMTHEME "qt6ct"
+     XDG_SESSION_TYPE "wayland"
+     XDG_SESSION_DESKTOP "Niri"
+     QT_WAYLAND_DISABLE_WINDOWDECORATION "1"
+     QT_AUTO_SCREEN_SCALE_FACTOR "1"
+     MOZ_ENABLE_WAYLAND "1"
+     GDK_SCALE "1"
+    // BROWSER "google-chrome-stable"
+     _JAVA_AWT_WM_NONREPARENTING "1"
+   // GTK_THEME "catppuccin-macchiato-green-standard+default"
+     ELECTRON_OZONE_PLATFORM_HINT "auto"
+//    OZONE_PLATFORM "auto"
+     // CHROME_EXECUTABLE "google-chrome-stable"
+     // XCURSOR_THEME "Bibata-Modern-Ice"
+     // HYPRSHOT_DIR "$HOME/Pictures/Screenshots/"
+     // XDG_SCREENSHOTS_DIR "$HOME/Pictures/Screenshots"
+	 EDITOR "nvim"
+ }
+
 
 switch-events {
     lid-close { spawn "hyprlock"; }
@@ -89,7 +103,10 @@ spawn-at-startup "waybar"
 spawn-at-startup "swaybg" "-i" "/home/rey/Pictures/wallpapers/konoha1.jpg" "-m" "fill"
 spawn-at-startup "wl-paste" "--watch" "cliphist" "store"
 spawn-at-startup "xwayland-satellite"
-spawn-at-startup "swayidle" "-w"
+spawn-at-startup "hypridle -c $HOME/.config/niri/scripts/hypridle.conf"
+// spawn-at-startup "hypridle -t 300 -l hyprlock -s systemctl suspend"
+// spawn-at-startup "swayidle" "-w"
+spawn-at-startup "/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1"
 spawn-at-startup "systemctl" "--user" "start" "xdg-desktop-portal-wlr"
 
 window-rule {
@@ -110,6 +127,7 @@ window-rule {
     match app-id="chromium"
     match app-id="zathura"
     match app-id="Brave-browser"
+	match app-id="librewolf"
     match app-id="tsuzuku"
     opacity 0.95
 }
@@ -130,6 +148,7 @@ window-rule {
     match app-id="org.telegram.desktop"
     match app-id="zen"
 	match app-id="Brave-browser"
+	match app-id="librewolf"
     match app-id="thunar"
     match app-id="obsidian"
     match app-id="com.github.th_ch.youtube_music"
@@ -157,35 +176,35 @@ binds {
     Mod+Return { spawn "foot"; }
     Mod+Space { spawn "fuzzel"; }
     Mod+Shift+D { spawn "wmenu-run"; }
-    Mod+B { spawn "brave"; }
+    Mod+B { spawn "librewolf"; }
 
     // System controls
-    Super+Alt+L { spawn "swaylock"; }
+    Super+Alt+L { spawn "hyprlock"; }
     XF86Sleep allow-when-locked=true { spawn "systemctl" "suspend"; }
     XF86RFKill allow-when-locked=true { spawn "sh" "-c" "$HOME/.config/hypr/scripts/AirplaneMode.sh"; }
 
     // Media controls
-    XF86AudioMute allow-when-locked=true { spawn "sh" "-c" "$HOME/.config/hypr/scripts/Volume.sh --toggle"; }
-    XF86AudioRaiseVolume allow-when-locked=true { spawn "sh" "-c" "$HOME/.config/hypr/scripts/Volume.sh --inc"; }
-    XF86AudioLowerVolume allow-when-locked=true { spawn "sh" "-c" "$HOME/.config/hypr/scripts/Volume.sh --dec"; }
-    XF86AudioMicMute allow-when-locked=true { spawn "sh" "-c" "$HOME/.config/hypr/scripts/Volume.sh --toggle-mic"; }
+    XF86AudioMute allow-when-locked=true { spawn "sh" "-c" "$HOME/.config/niri/scripts/Volume.sh --toggle"; }
+    XF86AudioRaiseVolume allow-when-locked=true { spawn "sh" "-c" "$HOME/.config/niri/scripts/Volume.sh --inc"; }
+    XF86AudioLowerVolume allow-when-locked=true { spawn "sh" "-c" "$HOME/.config/niri/scripts/Volume.sh --dec"; }
+    XF86AudioMicMute allow-when-locked=true { spawn "sh" "-c" "$HOME/.config/niri/scripts/Volume.sh --toggle-mic"; }
     XF86AudioNext allow-when-locked=true { spawn "playerctl" "next"; }
     XF86AudioPrev allow-when-locked=true { spawn "playerctl" "previous"; }
     XF86AudioPlay allow-when-locked=true { spawn "playerctl" "play-pause"; }
 
     // Brightness controls
-    XF86MonBrightnessDown allow-when-locked=true { spawn "sh" "-c" "$HOME/.config/hypr/scripts/Brightness.sh --dec"; }
-    XF86MonBrightnessUp allow-when-locked=true { spawn "sh" "-c" "$HOME/.config/hypr/scripts/Brightness.sh --inc"; }
-    XF86KbdBrightnessDown allow-when-locked=true { spawn "sh" "-c" "$HOME/.config/hypr/scripts/BrightnessKbd.sh --dec"; }
-    XF86KbdBrightnessUp allow-when-locked=true { spawn "sh" "-c" "$HOME/.config/hypr/scripts/BrightnessKbd.sh --inc"; }
+    XF86MonBrightnessDown allow-when-locked=true { spawn "sh" "-c" "$HOME/.config/niri/scripts/Brightness.sh --dec"; }
+    XF86MonBrightnessUp allow-when-locked=true { spawn "sh" "-c" "$HOME/.config/niri/scripts/Brightness.sh --inc"; }
+    XF86KbdBrightnessDown allow-when-locked=true { spawn "sh" "-c" "$HOME/.config/niri/scripts/BrightnessKbd.sh --dec"; }
+    XF86KbdBrightnessUp allow-when-locked=true { spawn "sh" "-c" "$HOME/.config/niri/scripts/BrightnessKbd.sh --inc"; }
 
     // Screenshots
-    Mod+Print { spawn "sh" "-c" "$HOME/.config/hypr/scripts/ScreenShot.sh --now"; }
-    Mod+Shift+Print { spawn "sh" "-c" "$HOME/.config/hypr/scripts/ScreenShot.sh --area"; }
-    Mod+Control+Print { spawn "sh" "-c" "$HOME/.config/hypr/scripts/ScreenShot.sh --in5"; }
-    Mod+Control+Shift+Print { spawn "sh" "-c" "$HOME/.config/hypr/scripts/ScreenShot.sh --in10"; }
-    Alt+Print { spawn "sh" "-c" "$HOME/.config/hypr/scripts/ScreenShot.sh --active"; }
-    Mod+S { spawn "sh" "-c" "$HOME/.config/hypr/scripts/ScreenShot.sh --swappy"; }
+    Mod+Print { spawn "sh" "-c" "$HOME/.config/niri/scripts/ScreenShot.sh --now"; }
+    Mod+Shift+Print { spawn "sh" "-c" "$HOME/.config/niri/scripts/ScreenShot.sh --area"; }
+    Mod+Control+Print { spawn "sh" "-c" "$HOME/.config/niri/scripts/ScreenShot.sh --in5"; }
+    Mod+Control+Shift+Print { spawn "sh" "-c" "$HOME/.config/niri/scripts/ScreenShot.sh --in10"; }
+    Alt+Print { spawn "sh" "-c" "$HOME/.config/niri/scripts/ScreenShot.sh --active"; }
+    Mod+S { spawn "sh" "-c" "$HOME/.config/niri/scripts/ScreenShot.sh --swappy"; }
 
     // Utility shortcuts
     Mod+O { spawn "sh" "-c" "~/bin/ocr"; }
