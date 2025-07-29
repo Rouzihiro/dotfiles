@@ -57,6 +57,8 @@ sudo pacman -S --needed --noconfirm --overwrite '*' \
     lutris \
     gamemode \
     lib32-gamemode \
+	lib32-freetype2 \
+	lib32-glibc \
     vulkan-icd-loader \
     lib32-vulkan-icd-loader \
     lib32-gnutls \
