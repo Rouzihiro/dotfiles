@@ -52,7 +52,7 @@ PACMAN_PACKAGES=(
 
 	# Sway
 	#"i3blocks" "autotiling-rs" "swaylock" 
-	"swayidle"
+	#"swayidle"
 	#"xdg-desktop-portal" 
 	"xdg-desktop-portal-wlr" 
 	#"xdg-desktop-portal-gtk"
@@ -134,8 +134,8 @@ PACMAN_PACKAGES=(
 AUR_PACKAGES=(
     # Browsers
 	"librewolf-bin"
-	#"brave-bin"	
-	#"zen-browser-bin"  # Lightweight browser
+	"brave-bin"	
+	#"zen-browser-bin"
 	
 	# Games
 	#"winetricks"
