@@ -1,7 +1,0 @@
-sway 
-i3blocks
-autotiling-rs
-swaylock 
-swayidle 
-brightnessctl 
-playerctl 
