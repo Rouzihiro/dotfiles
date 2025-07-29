@@ -1,0 +1,38 @@
+# vim: ft=conf
+# Basic Settings
+
+set shell zsh
+set shellopts '-euy'
+set ifs "\n"
+set drawbox true    # Shows the box around the panes
+set roundbox true
+set dirfirst true
+set mouse true
+set hidden true     # Hidden Files
+set ratios 1:2:2    # Preview should be set after setting ratios, Needed for singlePane function
+set icons true      # Icons(Needs a Icons file or LF_ICONS env variable)
+set preview true
+set sixel true
+set period 1
+set preserve "mode,timestamps"
+set incsearch true
+set incfilter true
+set ignorecase true # Ignore case when searching
+set scrolloff 5    # Leaves space on Top and Bottom of the screen
+set cursorpreviewfmt "\033[7;2m"
+
+
+set previewer ~/.config/lf/preview
+
+# Sort Downloads directory by creation time, reverse
+setlocal ~/Downloads/ sortby ctime
+setlocal ~/Downloads/ reverse
+
+# Sort Screenshots directory by creation time, reverse
+setlocal ~/Pictures/Screenshots/ sortby ctime
+setlocal ~/Pictures/Screenshots/ info ctime
+setlocal ~/Pictures/Screenshots/ reverse
+
+source ~/.config/lf/functions
+source ~/.config/lf/nicheFunc
+source ~/.config/lf/mappings

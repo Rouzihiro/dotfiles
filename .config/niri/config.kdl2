@@ -1,0 +1,274 @@
+input {
+    keyboard {
+        track-layout "global"
+        repeat-delay 350
+        repeat-rate 30
+        xkb {
+            layout "us,de"
+            options "grp:alt_shift_toggle"
+        }
+    }
+
+    touchpad {
+        tap
+        dwt                      // disable-while-typing
+        natural-scroll
+        scroll-method "two-finger"
+    }
+
+    mouse {
+        accel-speed -0.1
+        accel-profile "adaptive"
+    }
+
+    focus-follows-mouse max-scroll-amount="10%"
+    workspace-auto-back-and-forth
+}
+
+  gestures {
+  hot-corners {
+    off
+  }
+  }
+
+environment {
+     DISPLAY ":0"
+     QT_QPA_PLATFORM "wayland"
+     QT_QPA_PLATFORMTHEME "qt6ct"
+     XDG_SESSION_TYPE "wayland"
+     XDG_SESSION_DESKTOP "Niri"
+     QT_WAYLAND_DISABLE_WINDOWDECORATION "1"
+     QT_AUTO_SCREEN_SCALE_FACTOR "1"
+     MOZ_ENABLE_WAYLAND "1"
+     GDK_SCALE "1"
+    // BROWSER "google-chrome-stable"
+     _JAVA_AWT_WM_NONREPARENTING "1"
+   // GTK_THEME "catppuccin-macchiato-green-standard+default"
+     ELECTRON_OZONE_PLATFORM_HINT "auto"
+//    OZONE_PLATFORM "auto"
+     // CHROME_EXECUTABLE "google-chrome-stable"
+     // XCURSOR_THEME "Bibata-Modern-Ice"
+     // HYPRSHOT_DIR "$HOME/Pictures/Screenshots/"
+     // XDG_SCREENSHOTS_DIR "$HOME/Pictures/Screenshots"
+	 EDITOR "nvim"
+ }
+
+
+switch-events {
+    lid-close { spawn "hyprlock"; }
+}
+
+output "eDP-1" {
+    mode "3240x2160@59.994999"
+    scale 2.0
+    transform "normal"
+    position x=0 y=0
+}
+
+layout {
+    gaps 16
+    center-focused-column "never"
+    
+    preset-column-widths {
+        proportion 0.33333
+        proportion 0.5
+        proportion 0.66667
+    }
+    
+    default-column-width { proportion 0.66667; }
+    
+    focus-ring {
+        width 4
+        active-color "#8cf6d4"
+        inactive-color "#111716"
+    }
+    
+    border {
+	  "off" 
+	}
+}
+
+prefer-no-csd
+screenshot-path "~/Pictures/Screenshots/%Y-%m-%d_%H-%M-%S.png"
+
+animations {
+    window-close {
+        duration-ms 200
+        curve "linear"
+    }
+}
+
+spawn-at-startup "swaync"
+spawn-at-startup "waybar"
+spawn-at-startup "swaybg" "-i" "/home/rey/Pictures/wallpapers/konoha1.jpg" "-m" "fill"
+spawn-at-startup "wl-paste" "--watch" "cliphist" "store"
+spawn-at-startup "xwayland-satellite"
+// spawn-at-startup "hypridle -c $HOME/.config/niri/scripts/hypridle.conf"
+spawn-at-startup "hypridle -t 300 -l hyprlock -s systemctl suspend"
+spawn-at-startup "/home/rey/.config/niri/scripts/hypridle.sh"
+// spawn-at-startup "swayidle" "-w"
+spawn-at-startup "/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1"
+spawn-at-startup "systemctl" "--user" "start" "xdg-desktop-portal-wlr"
+
+window-rule {
+    min-height 400
+    min-width 420
+}
+
+window-rule {
+    match app-id="waybar"
+    opacity 0.7
+}
+
+window-rule {
+  match app-id="zenity"
+  open-floating true
+}
+
+window-rule {
+    match app-id="foot"
+    match app-id="kitty"
+    match app-id="thunar"
+    match app-id="org.gnome.Nautilus"
+    match app-id="chromium"
+    match app-id="zathura"
+    match app-id="Brave-browser"
+	match app-id="librewolf"
+    match app-id="tsuzuku"
+    opacity 0.95
+}
+
+window-rule {
+    match app-id="firefox"
+    default-column-width { fixed 1425; }
+    draw-border-with-background true    
+}
+
+window-rule {
+    match app-id="vesktop"
+    default-column-width { fixed 920; }
+    open-maximized true
+}
+
+window-rule {
+    match app-id="org.telegram.desktop"
+    match app-id="zen"
+	match app-id="Brave-browser"
+	match app-id="librewolf"
+    match app-id="thunar"
+    match app-id="obsidian"
+    match app-id="com.github.th_ch.youtube_music"
+    match app-id="Postman"
+    match app-id="Spotify"
+    match app-id="Element"
+    open-maximized true
+}
+
+window-rule {
+    match app-id="mpv"
+    open-fullscreen true
+}
+
+window-rule {
+    geometry-corner-radius 0
+    clip-to-geometry true
+}
+
+binds {
+    // Help overlay
+    Mod+Shift+Slash { show-hotkey-overlay; }
+
+    // Application launchers
+    Mod+Return { spawn "foot"; }
+    Mod+Space { spawn "fuzzel"; }
+    Mod+Shift+D { spawn "wmenu-run"; }
+    Mod+B { spawn "librewolf"; }
+
+    // System controls
+    Super+Alt+L { spawn "hyprlock"; }
+    XF86Sleep allow-when-locked=true { spawn "systemctl" "suspend"; }
+    XF86RFKill allow-when-locked=true { spawn "sh" "-c" "$HOME/.config/hypr/scripts/AirplaneMode.sh"; }
+
+    // Media controls
+    XF86AudioMute allow-when-locked=true { spawn "sh" "-c" "$HOME/.config/niri/scripts/Volume.sh --toggle"; }
+    XF86AudioRaiseVolume allow-when-locked=true { spawn "sh" "-c" "$HOME/.config/niri/scripts/Volume.sh --inc"; }
+    XF86AudioLowerVolume allow-when-locked=true { spawn "sh" "-c" "$HOME/.config/niri/scripts/Volume.sh --dec"; }
+    XF86AudioMicMute allow-when-locked=true { spawn "sh" "-c" "$HOME/.config/niri/scripts/Volume.sh --toggle-mic"; }
+    XF86AudioNext allow-when-locked=true { spawn "playerctl" "next"; }
+    XF86AudioPrev allow-when-locked=true { spawn "playerctl" "previous"; }
+    XF86AudioPlay allow-when-locked=true { spawn "playerctl" "play-pause"; }
+
+    // Brightness controls
+    XF86MonBrightnessDown allow-when-locked=true { spawn "sh" "-c" "$HOME/.config/niri/scripts/Brightness.sh --dec"; }
+    XF86MonBrightnessUp allow-when-locked=true { spawn "sh" "-c" "$HOME/.config/niri/scripts/Brightness.sh --inc"; }
+    XF86KbdBrightnessDown allow-when-locked=true { spawn "sh" "-c" "$HOME/.config/niri/scripts/BrightnessKbd.sh --dec"; }
+    XF86KbdBrightnessUp allow-when-locked=true { spawn "sh" "-c" "$HOME/.config/niri/scripts/BrightnessKbd.sh --inc"; }
+
+    // Screenshots
+    Mod+Print { spawn "sh" "-c" "$HOME/.config/niri/scripts/ScreenShot.sh --now"; }
+    Mod+Shift+Print { spawn "sh" "-c" "$HOME/.config/niri/scripts/ScreenShot.sh --area"; }
+    Mod+Control+Print { spawn "sh" "-c" "$HOME/.config/niri/scripts/ScreenShot.sh --in5"; }
+    Mod+Control+Shift+Print { spawn "sh" "-c" "$HOME/.config/niri/scripts/ScreenShot.sh --in10"; }
+    Alt+Print { spawn "sh" "-c" "$HOME/.config/niri/scripts/ScreenShot.sh --active"; }
+    Mod+S { spawn "sh" "-c" "$HOME/.config/niri/scripts/ScreenShot.sh --swappy"; }
+
+    // Utility shortcuts
+	Mod+Escape { spawn "foot" "-e" "btop"; }
+    Mod+O { spawn "sh" "-c" "~/bin/ocr"; }
+    Mod+R { spawn "foot" "-e" "sh" "-c" "~/bin/runner"; }
+    Mod+Q { close-window; }
+
+    // Window navigation
+    Mod+Left { focus-column-left; }
+    Mod+Right { focus-column-right; }
+    Mod+Down { focus-window-down; }
+    Mod+Up { focus-window-up; }
+    Mod+Home { focus-column-first; }
+    Mod+End { focus-column-last; }
+
+    // Window movement
+    Mod+Ctrl+Left { move-column-left; }
+    Mod+Ctrl+Right { move-column-right; }
+    Mod+Ctrl+Down { move-window-down; }
+    Mod+Ctrl+Up { move-window-up; }
+    Mod+Ctrl+Home { move-column-to-first; }
+    Mod+Ctrl+End { move-column-to-last; }
+
+    // Workspace navigation
+	Mod+0 { focus-workspace 0; }
+	Mod+1 { focus-workspace 1; }
+    Mod+2 { focus-workspace 2; }
+    Mod+3 { focus-workspace 3; }
+    Mod+4 { focus-workspace 4; }
+    Mod+5 { focus-workspace 5; }
+    Mod+6 { focus-workspace 6; }
+    Mod+7 { focus-workspace 7; }
+    Mod+8 { focus-workspace 8; }
+    Mod+9 { focus-workspace 9; }
+    Mod+Shift+1 { move-window-to-workspace 1; }
+    Mod+Shift+2 { move-window-to-workspace 2; }
+    Mod+Shift+3 { move-window-to-workspace 3; }
+    Mod+Shift+4 { move-window-to-workspace 4; }
+    Mod+Shift+5 { move-window-to-workspace 5; }
+    Mod+Shift+6 { move-window-to-workspace 6; }
+    Mod+Shift+7 { move-window-to-workspace 7; }
+    Mod+Shift+8 { move-window-to-workspace 8; }
+    Mod+Shift+9 { move-window-to-workspace 9; }
+	Mod+Shift+0 { move-window-to-workspace 0; }
+    Mod+Tab { toggle-overview; }
+
+    // Window management
+    Mod+F { maximize-column; }
+    Mod+Shift+F { fullscreen-window; }
+    Mod+C { center-column; }
+    Mod+Comma { consume-window-into-column; }
+    Mod+Period { expel-window-from-column; }
+    Mod+Minus { set-column-width "-10%"; }
+    Mod+Equal { set-column-width "+10%"; }
+    Mod+Shift+Minus { set-window-height "-10%"; }
+    Mod+Shift+Equal { set-window-height "+10%"; }
+
+    // System controls
+    Mod+Shift+E { quit; }
+    Mod+Shift+P { power-off-monitors; }
+}

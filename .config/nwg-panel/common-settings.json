@@ -1,8 +1,0 @@
-{
-  "restart-on-display": true,
-  "restart-delay": 500,
-  "processes-background-only": false,
-  "processes-own-only": true,
-  "processes-interval-ms": 2000,
-  "run-through-compositor": true
-}
