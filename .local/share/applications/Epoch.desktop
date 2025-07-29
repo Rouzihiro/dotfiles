@@ -1,7 +1,7 @@
 [Desktop Entry]
 Name=WoW Epoch
 Exec=wine /home/rey/Games/epoch/epoch-installer.exe
-Icon=/home/rey/Pictures/icons/wow.png
+Icon=wow
 Type=Application
 Categories=Games;
 

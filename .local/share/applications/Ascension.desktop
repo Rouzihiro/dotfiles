@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=Ascension WoW (Rey)
+Comment=Play Project Ascension WoW via Wine
+Exec=sh -c 'WINEPREFIX="$HOME/Games/ascension-wow" wine "$HOME/Games/ascension-wow/drive_c/Program Files/Ascension Launcher/Ascension Launcher.exe"'
+Type=Application
+StartupNotify=true
+Icon=wow
+Categories=Game;Roleplaying;

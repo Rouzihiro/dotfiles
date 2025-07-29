@@ -1,0 +1,49 @@
+name          : Ascension WoW
+description   : Ascension WoW
+version       : Ascension WoW
+game_slug     : ascension-wow
+slug          : ascension-wow
+installer_slug: ascension-wow
+notes         : "Project Ascension WoW installer. For more details, please visit https://ascension.gg/download/unix"
+year          : 2017
+runner        : wine
+script        :
+  # Files that can be downloaded from external source.
+  files:
+    - launcher: https://api.ascension.gg/api/bootstrap/launcher/latest
+
+  # Game executable, in this case will be our Launcher.
+  game:
+    arch             : win64
+    prefix           : $GAMEDIR
+    exe              : "$GAMEDIR/drive_c/Program Files/Ascension Launcher/Ascension Launcher.exe"
+    include_processes: 
+      - Ascension.exe                 # Ascension WoW executable x86
+      - MMgr64.exe                    # Ascension WoW extensions x64
+      - project-ascension-update.exe  # Ascension WoW installer for updating Launcher.
+
+  # For initial setup.
+  installer:
+    # 1. Setup wine bottle.
+    - task:
+        name        : create_prefix
+        description : Create wine prefix for Ascension
+        arch        : win64
+        prefix      : $GAMEDIR
+        install_mono: true # Required for DivxTac.dll
+
+    # 2. Setup wine dependencies.
+    - task:
+        name        : winetricks
+        description : Install WINE dependencies
+        arch        : win64
+        app         : -f win10 ie8 corefonts dotnet48 vcrun2015 # note: not sure if dotnet and vcrun are required, because our installer installs them later.
+        prefix      : $GAMEDIR
+
+    # 3. Start the launcher installer.
+    - task:
+        name        : wineexec
+        description : "Install Ascension Launcher"
+        arch        : win64
+        executable  : launcher
+        prefix      : $GAMEDIR
