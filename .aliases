@@ -203,7 +203,6 @@ alias fz='fzf --preview '\''bat --color=always --style=numbers --line-range=:500
 alias openports='netstat -nape --inet'
 alias ports='ss -tuln'
 alias myip='curl https://ipinfo.io/ip && echo'
-alias fetch='clear && fastfetch && echo "Install Date: $(rpm -q --qf %{installtime:date} basesystem)"'
 alias startup='clear && systemctl list-unit-files --type=service | grep enabled'
 
 # Miscellaneous
