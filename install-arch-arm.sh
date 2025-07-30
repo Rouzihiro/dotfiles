@@ -44,7 +44,7 @@ PACMAN_PACKAGES=(
     "asahi-desktop-meta" "asahi-meta"  # Asahi-specific
     "power-profiles-daemon"  # Power management
     "swaync"  # Notifications
-    "rofi"  # App launcher
+    "rofi-wayland"  # App launcher
     "wayland-utils"  # Wayland utilities
 	"btop"
 

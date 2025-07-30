@@ -62,7 +62,7 @@ PACMAN_PACKAGES=(
     "power-profiles-daemon"  # Power management
     "swaync"  # Notifications
 	"swaybg"
-    "rofi" "fuzzel" # App launcher
+    "rofi-wayland" "fuzzel" # App launcher
     "wayland-utils"  # Wayland utilities
 	"wlr-randr"
 	"btop"

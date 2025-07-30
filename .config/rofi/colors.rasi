@@ -1,8 +1,11 @@
 * {
   font:                   "JetBrainsMono Nerd Font 12";
-  foreground:             #C8C093;
-  background:             #1F1F28;
-  highlight:              #F1EDEE;
+  foreground:             #cdd6f4;   /* Text */
+  background:             #1e1e2e;   /* Base */
+  highlight:              #f5c2e7;   /* Pink */
+  bordercolor:            #89b4fa;   /* Blue */
+  alert:                  #f38ba8;   /* Red */
+  activegreen:            #a6e3a1;   /* Green */
 }
 
 element-icon {
@@ -14,7 +17,8 @@ element-text {
 }
 
 window {
-  border-color:     @foreground;
+  border-color:     @bordercolor;
+  border-radius:    10px;
 }
 
 inputbar {
@@ -24,12 +28,14 @@ inputbar {
 
 prompt {
   text-color:       @background;
-  background-color: @foreground;
+  background-color: @bordercolor;
+  border-radius:    5px;
+  padding:          0px 5px;
 }
 
 textbox-prompt-colon {
   text-color:       @background;
-  background-color: @foreground;
+  background-color: @bordercolor;
 }
 
 message {
@@ -44,6 +50,7 @@ entry {
 
 listview {
   background-color: @background;
+  border-radius:    10px;
 }
 
 mode-switcher {
@@ -58,7 +65,7 @@ button {
 
 button selected {
   text-color:       @background;
-  background-color: @foreground;
+  background-color: @bordercolor;
 }
 
 element {
@@ -78,11 +85,11 @@ element normal.active {
 
 element selected.normal {
   text-color:       @background;
-  background-color: @foreground;
+  background-color: @bordercolor;
 }
 
 element selected.active {
-  background-color: @foreground;
+  background-color: @bordercolor;
   text-color:       @background;
 }
 
@@ -96,4 +103,7 @@ element alternate.active {
   text-color:       @foreground;
 }
 
-// @import "~/.cache/wal/colors-rofi-dark.rasi"
+element urgent {
+  background-color: @alert;
+  text-color:       @background;
+}
