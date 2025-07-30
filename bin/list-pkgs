@@ -1,0 +1,12 @@
+#!/bin/bash
+
+# Ensure the Documents directory exists
+mkdir -p ~/Documents
+
+# Generate list of explicitly installed native packages (no versions)
+pacman -Qeqnt > ~/Documents/pacman.txt
+
+# Generate list of explicitly installed packages including AUR (no versions)
+yay -Qeq > ~/Documents/yay.txt
+
+echo "Package lists saved to ~/Documents/pacman.txt and ~/Documents/yay.txt"
