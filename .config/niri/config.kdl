@@ -48,13 +48,16 @@ input {
     // workspace-auto-back-and-forth // Very disorienting
 }
 
-
-output "eDP-1" {
-    mode "3240x2160@59.994999"
-    scale 2.0
-    transform "normal"
-    // position x=0 y=0
+debug {
+    render-drm-device "/dev/dri/renderD128"
 }
+
+	output "eDP-1" {
+    mode "2560x1600"
+	scale 1.75
+ }
+
+
 
 // Settings that influence how windows are positioned and sized.
 layout {

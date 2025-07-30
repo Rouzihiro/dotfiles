@@ -1,0 +1,68 @@
+VER 3 010000000000000E "0" "INV_MISC_QUESTIONMARK"
+#showtooltip
+/castsequence reset=179 Rapid Fire, Stampede
+END
+VER 3 0100000000000001 "1" "INV_MISC_QUESTIONMARK"
+#showtooltip
+/targetenemy [noexists][help]
+/startattack
+/castsequence reset=14 Glaive Toss, Serpent Sting, Arcane Shot, Arcane Shot, Arcane Shot, Arcane Shot, Arcane Shot, Arcane Shot, Arcane Shot
+END
+VER 3 0100000000000002 "2" "INV_MISC_QUESTIONMARK"
+#showtooltip
+/targetenemy [noexists][help]
+/startattack
+/castsequence reset=23 Black Arrow, A Murder of Crows
+END
+VER 3 0100000000000011 "2." "INV_MISC_QUESTIONMARK"
+#showtooltip
+/targetenemy [noexists][help]
+/castsequence reset=5 Concussive Shot, 10, Rocket Barrage(Racial)
+END
+VER 3 0100000000000005 "3" "INV_MISC_QUESTIONMARK"
+#showtooltip
+#/targetenemy
+/startattack
+/cast Explosive Shot
+END
+VER 3 010000000000000D "3." "INV_MISC_QUESTIONMARK"
+#showtooltip
+/targetenemy [noexists][help]
+/startattack
+/castsequence Multi-Shot
+END
+VER 3 0100000000000004 "4" "INV_MISC_QUESTIONMARK"
+#showtooltip
+/cast Kill Shot
+END
+VER 3 0100000000000006 "4." "INV_MISC_QUESTIONMARK"
+#showtooltip
+#/targetenemy
+/startattack
+/castsequence reset=60 Intimidation, Counter Shot, Counter Shot,
+END
+VER 3 0100000000000012 "6" "INV_MISC_QUESTIONMARK"
+#showtooltip
+/castsequence reset=19 Disengage, Rocket Jump
+END
+VER 3 010000000000000F "belt" "INV_MISC_QUESTIONMARK"
+#showtooltip
+/use 6
+END
+VER 3 010000000000000A "cam" "INV_MISC_QUESTIONMARK"
+/run SetView(5); ResetView(5); CameraZoomOut(100)
+/targetenemy
+END
+VER 3 0100000000000003 "Focus" "INV_MISC_QUESTIONMARK"
+#showtooltip
+/targetenemy [noexists][help]
+/cast Steady Shot
+END
+VER 3 0100000000000010 "helm" "INV_MISC_QUESTIONMARK"
+#showtooltip
+/equip Mist-Piercing Goggles
+END
+VER 3 0100000000000008 "Trap" "INV_MISC_QUESTIONMARK"
+#showtooltip
+/castsequence reset=23 Ice Trap, Snake Trap
+END
