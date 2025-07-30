@@ -1,0 +1,9 @@
+#! /usr/bin/env bash
+
+# Open clipboard history with rofi and cliphist
+cliphist list |
+  rofi -dmenu \
+    -p 'Clipboard' \
+    -config "$HOME/.config/rofi/regular.rasi" |
+  cliphist decode |
+  wl-copy

@@ -1,0 +1,6 @@
+#! /usr/bin/env bash
+#
+#Get a cheat sheet of a command line tool using cheat.sh
+
+query=$1
+curl cheat.sh/"$query"

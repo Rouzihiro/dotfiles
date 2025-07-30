@@ -8,6 +8,7 @@ suppress_default_binds = true
 # Define aliases here. Any arguments passed to an alias are appended to the
 # command.
 # alias = command to run
+set_wallpaper = exec swaybg -i "$imv_current_file" -m fill && pkill imv
 
 [binds]
 q = quit
@@ -43,3 +44,5 @@ f = fullscreen
 <Shift+S> = upscaling next
 a = zoom actual
 r = reset
+
+w = set_wallpaper

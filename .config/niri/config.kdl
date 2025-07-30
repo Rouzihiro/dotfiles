@@ -309,6 +309,7 @@ window-rule {
 
 // Float rule
 window-rule {
+	match app-id="zenity"
     match title="Special Offers"
     match title="Friends List"
     match title="Steam Settings"
@@ -398,8 +399,8 @@ binds {
 
     Mod+V  		{ toggle-window-floating;      }
     Mod+Shift+F { fullscreen-window;           }
-    Mod+W       { switch-preset-column-width;  }
-    Mod+Shift+W { switch-preset-window-height; }
+	Mod+W       { switch-preset-column-width;  }
+	Mod+Shift+W { switch-preset-window-height; }
     Mod+F  		{ maximize-column;             }
 
     Mod+Alt+C { center-column; }
@@ -438,16 +439,16 @@ binds {
     Mod+Shift+I hotkey-overlay-title="Ticktick scratchpad" { spawn "~/.config/niri/spawn-or-focus.sh" "ticktick";        }
 
     // Scripts
-    Mod+Ctrl+V { spawn "~/scripts/rofi-clipboard";   }
-    Mod+C      { spawn "~/scripts/colorpicker";      }
-    Mod+Ctrl+Tab { spawn "~/scripts/random-swwwbg";    }
-    Mod+Grave  { spawn "~/scripts/list-niri-window"; }
-    Mod+P 	   { spawn "~/scripts/rofi-power";       }
-    Mod+Ctrl+W { spawn "~/scripts/rofi-wifi";        }
-    Mod+Ctrl+B { spawn "~/scripts/rofi-bluetooth";   }
-    Mod+Ctrl+S { spawn "~/scripts/rofi-wall";        }
-    Mod+Ctrl+C { spawn "~/scripts/text-picker";      }
-    Mod+Ctrl+D { spawn "~/scripts/rofi-docs";        }
+    Mod+Ctrl+V { spawn "~/bin/rofi-clipboard";   }
+    // Mod+C      { spawn "~/scripts/colorpicker";      }
+    Mod+Ctrl+Tab { spawn "~/bin/wall-random";    }
+    Mod+Grave  { spawn "~/bin/list-niri-window"; }
+    Mod+Ctrl+P { spawn "~/bin/rofi-power";       }
+    Mod+Ctrl+W { spawn "~/bin/rofi-wall";        }
+    Mod+Ctrl+B { spawn "~/bin/rofi-bluetooth";   }
+    Mod+Ctrl+I { spawn "~/bin/rofi-wifi";        }
+    Mod+Ctrl+O { spawn "sh" "-c" "~/bin/text-picker";      }
+    Mod+Ctrl+D { spawn "~/bin/rofi-docs";        }
 
     XF86AudioMedia { spawn "playerctl" "play-pause"; }
    	 // Media controls

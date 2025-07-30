@@ -1,6 +1,6 @@
 configuration {
   modi:                 "drun,run,filebrowser,window";
-  dpi:                  180;
+  dpi:                  90;
   show-icons:           true;
   icon-theme:           "Papirus";
   terminal:             "footclient";
