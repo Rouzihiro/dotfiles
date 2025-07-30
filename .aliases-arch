@@ -30,3 +30,4 @@ alias fixkeys='sudo pacman-key --init && sudo pacman-key --populate archlinux'
 alias unlock='sudo rm /var/lib/pacman/db.lck'
 alias mirrors='sudo reflector --latest 10 --sort rate --save /etc/pacman.d/mirrorlist'
 
+alias fetch='clear && fastfetch && echo "Install Date: $(head -n 1 /var/log/pacman.log | cut -d"[" -f2 | cut -d"]" -f1 | xargs -I{} date -d "{}" "+%b %d %Y %H:%M")"'

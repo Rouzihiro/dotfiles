@@ -35,3 +35,5 @@ alias fp-run='flatpak run'
 
 # Misc Utilities
 alias dnw='dnf provides'                  # Which package provides a file
+
+alias fetch='clear && fastfetch && echo "Install Date: $(rpm -q --qf %{installtime:date} basesystem)"'
