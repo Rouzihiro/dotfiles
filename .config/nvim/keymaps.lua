@@ -96,6 +96,14 @@ vim.keymap.set("n", "<leader>ff", builtin.find_files, { desc = "Find files" })
 vim.keymap.set("n", "<leader>fb", builtin.buffers, { desc = "Buffers" })
 vim.keymap.set("n", "<leader>fH", builtin.help_tags, { desc = "Help tags" })
 
+vim.keymap.set('n', '<leader>fg', builtin.live_grep, { desc = '[F]ind by [G]rep (search content)' })
+vim.keymap.set('n', '<leader>fw', function()
+  builtin.grep_string({ search = vim.fn.expand('<cword>') })
+end, { desc = '[F]ind current [W]ord' })
+vim.keymap.set('n', '<leader>fd', function()
+  builtin.live_grep({ search_dirs = { vim.fn.input('Directory: ') } })
+end, { desc = '[F]ind in [D]irectory' })
+
 -- Open file in vertical split
 vim.keymap.set('n', '<leader>fv', ':vsplit<CR>:Telescope find_files<CR>', { desc = 'Find file (vertical split)' })
 -- Open file in horizontal split
@@ -118,6 +126,14 @@ vim.keymap.set('n', '<leader>o', function()
     vim.cmd('wincmd p')  -- Return to previous window
   end, 200)
 end, { desc = 'Smart Explorer Focus' })
+
+
+-- Terminal
+-- Make Esc exit terminal insert mode (just like normal Vim)
+vim.keymap.set('t', '<Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
+
+-- Bonus: Toggle terminal quickly
+vim.keymap.set('n', '<leader>tt', ':term<CR>i', { desc = 'Open [T]erminal (insert mode)' })
 
 -- ======================
 -- DIAGNOSTICS NAVIGATION

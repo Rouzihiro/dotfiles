@@ -117,6 +117,36 @@ require("nvim-tree").setup({
   },
 })
 
+-- ======================
+-- TELESCOPE (GREP) CONFIGURATION
+-- ======================
+require('telescope').setup({
+  defaults = {
+    vimgrep_arguments = {
+      'rg', -- Ripgrep
+      '--color=never',
+      '--no-heading',
+      '--with-filename',
+      '--line-number',
+      '--column',
+      '--smart-case',
+      '--hidden',
+    },
+    mappings = {
+      i = {
+        ['<C-q>'] = require('telescope.actions').send_to_qflist,
+      },
+    },
+  },
+  pickers = {
+    live_grep = {
+      additional_args = function(opts)
+        return { "--hidden", "--glob=!**/.git/*" } -- Search hidden files but ignore .git
+      end,
+    },
+  },
+})
+
 -- Load config files with absolute paths
 local function load_config(name)
   local path = vim.fn.stdpath('config') .. '/' .. name .. '.lua'
