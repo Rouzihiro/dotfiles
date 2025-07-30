@@ -6,6 +6,27 @@
 vim.keymap.set("n", "}", "}zz")
 vim.keymap.set("n", "{", "{zz")
 
+-- Vertical split (split right)
+vim.keymap.set('n', '<leader>v', ':vsplit<CR>', { desc = 'Vertical split' })
+
+-- Horizontal split (split below)
+vim.keymap.set('n', '<leader>h', ':split<CR>', { desc = 'Horizontal split' })
+
+-- Quick navigation between splits
+vim.keymap.set('n', '<C-h>', '<C-w>h', { desc = 'Move to left split' })
+vim.keymap.set('n', '<C-j>', '<C-w>j', { desc = 'Move to lower split' })
+vim.keymap.set('n', '<C-k>', '<C-w>k', { desc = 'Move to upper split' })
+vim.keymap.set('n', '<C-l>', '<C-w>l', { desc = 'Move to right split' })
+
+-- Resize splits more easily
+vim.keymap.set('n', '<leader>>', ':vertical resize +5<CR>', { desc = 'Increase split width' })
+vim.keymap.set('n', '<leader><', ':vertical resize -5<CR>', { desc = 'Decrease split width' })
+vim.keymap.set('n', '<leader>+', ':resize +5<CR>', { desc = 'Increase split height' })
+vim.keymap.set('n', '<leader>-', ':resize -5<CR>', { desc = 'Decrease split height' })
+
+-- Close current split (but keep buffer)
+vim.keymap.set('n', '<leader>wc', '<C-w>c', { desc = 'Close split window' })
+
 -- File operations
 vim.keymap.set("n", "<leader>s", ":w<CR>", { desc = "Save file" })
 vim.keymap.set("n", "<C-s>", "ZZ", { desc = "Save & exit" })
@@ -59,8 +80,17 @@ local builtin = require("telescope.builtin")
 vim.keymap.set("n", "<leader>fr", builtin.oldfiles, { desc = "Recent files" })
 vim.keymap.set("n", "<leader>ff", builtin.find_files, { desc = "Find files" })
 vim.keymap.set("n", "<leader>fb", builtin.buffers, { desc = "Buffers" })
-vim.keymap.set("n", "<leader>fh", builtin.help_tags, { desc = "Help tags" })
+vim.keymap.set("n", "<leader>fH", builtin.help_tags, { desc = "Help tags" })
 
+-- Open file in vertical split
+vim.keymap.set('n', '<leader>fv', ':vsplit<CR>:Telescope find_files<CR>', { desc = 'Find file (vertical split)' })
+-- Open file in horizontal split
+vim.keymap.set('n', '<leader>fh', ':split<CR>:Telescope find_files<CR>', { desc = 'Find file (horizontal split)' })
+
+-- Nvim-tree keymaps
+vim.keymap.set('n', '<leader>nn', ':NvimTreeToggle<CR>', { desc = 'Toggle file explorer' })
+vim.keymap.set('n', '<leader>ne', ':NvimTreeFindFile<CR>', { desc = 'Reveal current file in explorer' })
+vim.keymap.set('n', '<leader>nf', ':NvimTreeFocus<CR>', { desc = 'Focus file explorer' })
 
 -- ======================
 -- DIAGNOSTICS NAVIGATION
