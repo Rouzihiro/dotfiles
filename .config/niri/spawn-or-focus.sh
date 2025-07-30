@@ -2,8 +2,6 @@
 exec &>> /tmp/niri-scratchpad.log
 echo "Invoked with: $1"
 
-# Port of my River scratchpad script for Niri
-
 #   █████████                                █████             █████                              █████
 #  ███░░░░░███                              ░░███             ░░███                              ░░███
 # ░███    ░░░   ██████  ████████   ██████   ███████    ██████  ░███████   ████████   ██████    ███████
@@ -27,8 +25,9 @@ terminal="footclient"
 # Commands to run the programs
 term="$terminal --app-id special-term -e zsh -ic 'tmux new-session -As Terminal'"
 btop="$terminal --app-id special-btop -e zsh -ic btop"
-nvim="$terminal --app-id special-nvim --working-directory=$HOME/dotfiles/ -e zsh -ic 'tmux new-session -As Editor nvim'"
-files="$terminal --app-id special-files -e zsh -ic yazi"
+nvim="$terminal --app-id special-nvim --working-directory=$HOME -e zsh -ic 'tmux new-session -As Editor nvim'"
+files="$terminal --app-id special-files --working-directory=$HOME -e zsh -ic 'tmux new-session -As Files vifm'"
+# files="$terminal --app-id special-files -e zsh -ic yazi"
 projectTerm="$terminal --app-id special-project -e zsh -ic '$HOME/scripts/project.tmux'"
 spotify="spotify"
 ticktick="ticktick"
