@@ -24,8 +24,16 @@ vim.keymap.set('n', '<leader><', ':vertical resize -5<CR>', { desc = 'Decrease s
 vim.keymap.set('n', '<leader>+', ':resize +5<CR>', { desc = 'Increase split height' })
 vim.keymap.set('n', '<leader>-', ':resize -5<CR>', { desc = 'Decrease split height' })
 
+
+-- Better Buffer Management
+-- Close current buffer and switch to previous (like tabs in other editors)
+vim.keymap.set('n', '<leader>cc', ':bp<bar>bd#<CR>', { desc = 'Close buffer (keep window)' })
+
+-- Force-close current buffer (discard changes)
+vim.keymap.set('n', '<leader>cb', ':bd!<CR>', { desc = 'Force close buffer (no save)' })
+
 -- Close current split (but keep buffer)
-vim.keymap.set('n', '<leader>wc', '<C-w>c', { desc = 'Close split window' })
+vim.keymap.set('n', '<leader>cw', '<C-w>c', { desc = 'Close split window' })
 
 -- File operations
 vim.keymap.set("n", "<leader>s", ":w<CR>", { desc = "Save file" })
