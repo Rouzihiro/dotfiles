@@ -46,6 +46,7 @@ require("lazy").setup({
   -- UI Components
   { "nvim-lualine/lualine.nvim" },
   { "nvim-tree/nvim-web-devicons" },
+  { "nvim-tree/nvim-tree.lua" },
 
   -- LSP & Completion
   { "neovim/nvim-lspconfig" },
@@ -84,6 +85,36 @@ require("lazy").setup({
         require("nvim-surround").setup()
     end,
 },
+})
+
+-- ======================
+-- NVIM-TREE CONFIGURATION
+-- ======================
+require("nvim-tree").setup({
+  sort_by = "case_sensitive",
+  view = {
+    width = 30,
+    side = "left",
+  },
+  renderer = {
+    group_empty = true,
+    icons = {
+      glyphs = {
+        folder = {
+          arrow_closed = "▶",
+          arrow_open = "▼",
+        },
+      },
+    },
+  },
+  filters = {
+    dotfiles = false,
+  },
+  actions = {
+    open_file = {
+      quit_on_open = true,
+    },
+  },
 })
 
 -- Load config files with absolute paths
