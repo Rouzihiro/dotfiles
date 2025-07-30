@@ -18,6 +18,12 @@ vim.keymap.set('n', '<C-j>', '<C-w>j', { desc = 'Move to lower split' })
 vim.keymap.set('n', '<C-k>', '<C-w>k', { desc = 'Move to upper split' })
 vim.keymap.set('n', '<C-l>', '<C-w>l', { desc = 'Move to right split' })
 
+-- Arrow keys (alternative to Ctrl+hjkl)
+vim.keymap.set('n', '<C-Left>',  '<C-w>h', { desc = 'Move to left split' })
+vim.keymap.set('n', '<C-Down>',  '<C-w>j', { desc = 'Move to lower split' })
+vim.keymap.set('n', '<C-Up>',    '<C-w>k', { desc = 'Move to upper split' })
+vim.keymap.set('n', '<C-Right>', '<C-w>l', { desc = 'Move to right split' })
+
 -- Resize splits more easily
 vim.keymap.set('n', '<leader>>', ':vertical resize +5<CR>', { desc = 'Increase split width' })
 vim.keymap.set('n', '<leader><', ':vertical resize -5<CR>', { desc = 'Decrease split width' })
@@ -30,7 +36,7 @@ vim.keymap.set('n', '<leader>-', ':resize -5<CR>', { desc = 'Decrease split heig
 vim.keymap.set('n', '<leader>cc', ':bp<bar>bd#<CR>', { desc = 'Close buffer (keep window)' })
 
 -- Force-close current buffer (discard changes)
-vim.keymap.set('n', '<leader>cb', ':bd!<CR>', { desc = 'Force close buffer (no save)' })
+vim.keymap.set('n', '<leader>cx', ':bd!<CR>', { desc = 'Force close buffer (no save)' })
 
 -- Close current split (but keep buffer)
 vim.keymap.set('n', '<leader>cw', '<C-w>c', { desc = 'Close split window' })
@@ -95,10 +101,23 @@ vim.keymap.set('n', '<leader>fv', ':vsplit<CR>:Telescope find_files<CR>', { desc
 -- Open file in horizontal split
 vim.keymap.set('n', '<leader>fh', ':split<CR>:Telescope find_files<CR>', { desc = 'Find file (horizontal split)' })
 
--- Nvim-tree keymaps
-vim.keymap.set('n', '<leader>nn', ':NvimTreeToggle<CR>', { desc = 'Toggle file explorer' })
-vim.keymap.set('n', '<leader>ne', ':NvimTreeFindFile<CR>', { desc = 'Reveal current file in explorer' })
-vim.keymap.set('n', '<leader>nf', ':NvimTreeFocus<CR>', { desc = 'Focus file explorer' })
+-- Enhanced Nvim-tree Keymaps
+vim.keymap.set('n', '<leader>e', ':NvimTreeToggle<CR>', { desc = 'Toggle Explorer' })
+vim.keymap.set('n', '<leader>E', ':NvimTreeFindFile<CR>', { desc = 'Reveal Current File' })
+
+-- Smart Focus Control (fixed version)
+vim.keymap.set('n', '<leader>o', function()
+  local nvim_tree = require('nvim-tree.api')
+  if nvim_tree.tree.is_visible() then
+    nvim_tree.tree.focus()  -- Focus tree if visible
+  else
+    nvim_tree.tree.find_file()  -- Reveal and focus if hidden
+  end
+  -- Return focus to document after delay
+  vim.defer_fn(function()
+    vim.cmd('wincmd p')  -- Return to previous window
+  end, 200)
+end, { desc = 'Smart Explorer Focus' })
 
 -- ======================
 -- DIAGNOSTICS NAVIGATION
