@@ -108,7 +108,7 @@ alias disk='ncdu'
 alias df='duf -hide special'
 alias mem2='free -h'
 alias mem='sudo ps_mem'
-alias folders='du -sh * 2>/dev/null | sort -hr'
+alias df2='du -sh * 2>/dev/null | sort -hr'
 alias temps='sensors'
 
 alias sctl="systemctl"
