@@ -122,12 +122,6 @@ symbol = ""
 style = "bg:#86BBD8"
 format = '[ $symbol ($version) ]($style)'
 
-[nix_shell]
-disabled = false  # Ensures it's active
-symbol = " "
-style = "bold blue"
-format = 'via [$symbol$state( \($name\))]($style) '  # Shows pure/impure state and shell name
-
 [time]
 disabled = false
 time_format = "%R" # Hour:Minute Format
