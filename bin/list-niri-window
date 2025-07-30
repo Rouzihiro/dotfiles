@@ -1,0 +1,17 @@
+#! /usr/bin/env bash
+#
+# For Niri
+# Send notification of all running programs app id via niri msg
+#
+windows=$(niri msg windows |
+  grep -i "app id" |
+  awk '{print length($3), $3}' |
+  sed 's/"//g' |
+  sort -n |
+  cut -d' ' -f2-)
+
+if [ -z "$windows" ]; then
+  notify-send -t 1500 "No windows open"
+else
+  notify-send -t 1500 "$windows"
+fi
