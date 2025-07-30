@@ -40,15 +40,15 @@ log_success() {
 # Package lists for Fedora
 DNF_PACKAGES=(
     # System and desktop environment
-	"waybar" "wlogout"
+	"waybar"
     "power-profiles-daemon"  # Power management
     "fuzzel" "rofi-wayland"  # App launcher
     "wayland-utils"  # Wayland utilities
     "btop" "ps_mem" "NetworkManager" "NetworkManager-tui"
 
 	# Hyprland
-	"hyprland" "hyprlock" "hypridle"
-	"hyprsysteminfo"
+	# "hyprland" "hyprlock" "hypridle"
+	# "hyprsysteminfo"
 
 	# Sway 
 	#"swayidle" "swaylock" 

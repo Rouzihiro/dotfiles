@@ -1,0 +1,9 @@
+#!/bin/bash
+
+# Set source and destination
+SOURCE="$HOME/Documents/"
+DEST="$HOME/mount/usb/Documents/"
+
+# Run rsync with options
+rsync -avh --delete "$SOURCE" "$DEST"
+
