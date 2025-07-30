@@ -1,0 +1,10 @@
+#! /usr/bin/env bash
+
+# Open Books/pdfs in zathura with rofi
+choice=$(fd . -e pdf --base-directory "$HOME" -c never |
+  rofi -dmenu -i -l 20 -p "Books" -config "$HOME/.config/rofi/regular.rasi")
+
+# Prepend choice with $HOME, since fd will output relative path from $HOME
+if [[ -n $choice ]]; then
+  zathura "$HOME/$choice"
+fi
