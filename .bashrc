@@ -6,6 +6,7 @@ if [ -f /etc/bashrc ]; then
 fi
 
 [ -f ~/.aliases ] && source ~/.aliases
+[ -f ~/.aliases-functions ] && source ~/.aliases-functions
 [ -f ~/.aliases-arch ] && source ~/.aliases-arch
 #[ -f ~/.aliases-fedora ] && source ~/.aliases-fedora
 
