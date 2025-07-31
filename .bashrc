@@ -6,8 +6,8 @@ if [ -f /etc/bashrc ]; then
 fi
 
 [ -f ~/.aliases ] && source ~/.aliases
-#[ -f ~/.aliases-arch ] && source ~/.aliases-arch
-[ -f ~/.aliases-fedora ] && source ~/.aliases-fedora
+[ -f ~/.aliases-arch ] && source ~/.aliases-arch
+#[ -f ~/.aliases-fedora ] && source ~/.aliases-fedora
 
 # User specific environment
 if ! [[ "$PATH" =~ "$HOME/.local/bin:$HOME/bin:" ]]; then
