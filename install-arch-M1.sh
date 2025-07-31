@@ -1,4 +1,4 @@
-#!/bin/bash
+l!/bin/bash
 
 # Color definitions
 GREEN='\033[0;32m'
@@ -39,26 +39,46 @@ log_success() {
 
 # Package lists
 PACMAN_PACKAGES=(
-    # System and desktop environment
-    "hyprland" "waybar" "hypridle" "hyprlock" 
-    "asahi-desktop-meta" "asahi-meta"  # Asahi-specific
-    "power-profiles-daemon"  # Power management
-    "swaync"  # Notifications
-    "rofi-wayland"  # App launcher
-    "wayland-utils"  # Wayland utilities
-	"btop"
+	"asahi-desktop-meta"
 
+    # Niri 
+	"niri" "xwayland-satellite"
+	"polkit-gnome"
+	
+	#Hyprland
+	#"hyprland" "xdg-desktop-portal-hyprland"
+	#"hyprpaper" 
+	#"hyprlock" 
+	#"hypridle" 
+	#"polkit-gnome"
+
+	# Sway
+	#"i3blocks" "autotiling-rs" "swaylock" 
+	"swayidle" "swaync" "swaybg"
+	#"xdg-desktop-portal" 
+	"xdg-desktop-portal-wlr" 
+	#"xdg-desktop-portal-gtk"
+
+	# System and desktop environment
+	"gtklock"
+    "waybar" 
+    "power-profiles-daemon"  # Power management
+    "rofi-wayland" "fuzzel" # App launcher
+    "wayland-utils"  # Wayland utilities
+	"wlr-randr"
+	"btop"
+	
     # Terminal and shell
     "zsh" "foot"  # Terminals
-    "starship" "eza" "bat" "fzf"  # Shell enhancements
-	"duf" "ncdu" "tree"
+    "starship" "eza" "bat" "fzf" "fd" # Shell enhancements
     "tmux"  # Terminal multiplexer
     "fastfetch"  # System info
+	"duf" "ncdu" "highlight"
 
     # Utilities
     "aria2" "grim" "slurp" "brightnessctl" 
     "mediainfo" "jq" "bc" "trash-cli" "unzip"
-	"ntfs-3g" "highlight"
+	"ntfs-3g"
     "blueman"  # Bluetooth
     "curlftpfs"  # FTP mounting
     "vifm"  # File manager
@@ -68,62 +88,77 @@ PACMAN_PACKAGES=(
     "rsync"  # File syncing
     "swappy"  # Screenshot editing
 	"antimicrox"
+	"zenity"
 
 	# language
-		"hunspell-de"
-		"tesseract"
-		"tesseract-data-eng"
-		"tesseract-data-deu"
+	"hunspell-de"
+  	"tesseract"
+	"tesseract-data-eng"
+	"tesseract-data-deu"
 
     # Multimedia
     "ffmpegthumbs" "imagemagick" "imv" "mpv" "yt-dlp"
     "pamixer"  # Audio control
 
     # Development
-	"lazygit" "git-delta"
     "jdk-openjdk" "nodejs" "npm"  # Programming
     "texlive-latexextra" "texmaker" # LaTeX
 
     # Graphics/GPU
     "mesa-utils" "vulkan-tools"
+	"mesa" "libglvnd"
 
     # Fonts and themes
   	"otf-font-awesome" "ttf-droid" "ttf-fira-code" "ttf-fantasque-nerd"
-		"ttf-jetbrains-mono" "ttf-jetbrains-mono-nerd"
+	"ttf-jetbrains-mono" "ttf-jetbrains-mono-nerd"
   	"ttf-firacode-nerd" "ttf-hack-nerd" "ttf-cascadia-code-nerd"
   	"ttf-font-awesome" "ttf-dejavu" "noto-fonts"
 
     # Applications
     "zathura" "zathura-cb" "zathura-pdf-mupdf"  # Document viewers
+	"xournalpp" # PDF editor
     "neovim"  # Text editor
     "swww"  # Wallpaper utility
 
-	#wine
-	# "clang" "lld" "llvm"
+	# Browsers
+	
+	# Games
+	#"lutris"
 
-		# Browsers
+	# steam utilities
+	# "gamemode" "lib32-gamemode" "ttf-liberation"
 
-		#email-TUI
-		"thunderbird" "ca-certificates"
+	#email-TUI
+	"thunderbird" "ca-certificates"
 )
 
 AUR_PACKAGES=(
     # Browsers
-	"zen-browser-bin"  # Lightweight browser
+	"librewolf-bin"
+	"brave-bin"	
+	#"zen-browser-bin"
+	
+	# Games
+	#"winetricks"
+	#"heroic-games-launcher-bin"
+	#"protonup-qt"
 
     # Fonts
     "adobe-source-code-pro-fonts"  # Monospace font
     "ttf-victor-mono"              # Programming font with ligatures
 
     # System Utilities
-    "uwsm"              # Micro Wallpaper Switcher
+    # "uwsm"
     "wl-clipboard"      # Wayland clipboard tool
     "bibata-cursor-theme"  # Modern cursor theme
 
-	# dev
-	"shellcheck-bin"
+	# Development
+	"lazygit" "git-delta" "openssh"
+    "jdk-openjdk" "nodejs" "npm"  # Programming
+    "texlive-latexextra" "texmaker" # LaTeX
 
     # Apps/Tools
+	"ps_mem"
     "jdownloader2"      # Download manager
     "sdl2_sound"        # Audio library (for games/apps)
 )
@@ -171,9 +206,8 @@ backup_configs() {
                 local items_to_backup=(
                     ".config/rofi"
                     ".config/neovim"
-										".config/hyprland"
-										"/bin/"
-										".aliases"
+					"/bin/"
+					".aliases"
                     ".zshrc"
                 )
                 
@@ -294,10 +328,12 @@ install_dotfiles() {
 
     # Create necessary directories
     mkdir -p "$HOME/.config"
- 		mkdir -p "$HOME/bin"
+ 	mkdir -p "$HOME/bin"
     mkdir -p "$HOME/.local/bin"
     mkdir -p "$HOME/.local/share"
     mkdir -p "$HOME/Pictures/wallpapers"
+	mkdir -p "$HOME/Documents/"
+	mkdir -p "$HOME/Downloads"
     mkdir -p "$HOME/.themes"
     mkdir -p "$HOME/.icons"
     mkdir -p "$HOME/.local/share/icons"
@@ -424,8 +460,11 @@ install_omz() {
     # Copy zsh configuration files
     cp ".zshrc" "$HOME/.zshrc" 2>/dev/null || log_warning "Error copying .zshrc"
     cp ".zshenv" "$HOME/.zprofile" 2>/dev/null || log_warning "Error copying .zprofile"
- 		cp ".bashrc" "$HOME/.bashrc" 2>/dev/null || log_warning "Error copying .bashrc"
-		cp ".bash_profile" "$HOME/.bash_profile" 2>/dev/null || log_warning "Error copying .bash_profile"
+	cp ".aliases" "$HOME/.aliases" 2>/dev/null || log_warning "Error copying .aliases"
+	cp ".aliases-arch" "$HOME/.aliases-arch" 2>/dev/null || log_warning "Error copying .aliases-arch"
+	cp ".aliases-fedora" "$HOME/.aliases-fedora" 2>/dev/null || log_warning "Error copying .aliases-fedora"
+ 	cp ".bashrc" "$HOME/.bashrc" 2>/dev/null || log_warning "Error copying .bashrc"
+	cp ".bash_profile" "$HOME/.bash_profile" 2>/dev/null || log_warning "Error copying .bash_profile"
     
     # Set zsh as default shell
     if [[ "$SHELL" != *"zsh"* ]]; then
@@ -451,14 +490,6 @@ configure_services() {
     #systemctl --user start pipewire.service || log_warning "Failed to start pipewire.service"
     #systemctl --user start pipewire-pulse.service || log_warning "Failed to start pipewire-pulse.service"
     #systemctl --user start wireplumber.service || log_warning "Failed to start wireplumber.service"
-    
-    # Enable hypridle only if it exists
-    if command -v hypridle &> /dev/null; then
-        systemctl --user enable hypridle.service || log_warning "Failed to enable hypridle.service"
-        systemctl --user start hypridle.service || log_warning "Failed to start hypridle.service"
-    else
-        log_warning "Hypridle not found. Skipping service setup."
-    fi
 
     # Enable system services
     #log_info "Enabling system services..."

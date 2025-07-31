@@ -53,8 +53,10 @@ debug {
 }
 
 	output "eDP-1" {
-    mode "2560x1600"
-	scale 1.75
+    // mode "2560x1600" // MacM1
+	// mode "3240x2160" // Surface
+	scale 1.75			// MacM1
+	// scale 2.00 		// Surface
  }
 
 
@@ -353,7 +355,7 @@ window-rule {
   match app-id="footclient"
   match title="foot"
   draw-border-with-background false
-  opacity 0.95
+  opacity 0.90
    shadow {
      on
      draw-behind-window true

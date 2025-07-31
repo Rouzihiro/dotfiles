@@ -46,22 +46,21 @@ PACMAN_PACKAGES=(
 	#Hyprland
 	#"hyprland" "xdg-desktop-portal-hyprland"
 	#"hyprpaper" 
-	"hyprlock" 
-	"hypridle" 
+	#"hyprlock" 
+	#"hypridle" 
 	#"polkit-gnome"
 
 	# Sway
 	#"i3blocks" "autotiling-rs" "swaylock" 
-	#"swayidle"
+	"swayidle" "swaync" "swaybg"
 	#"xdg-desktop-portal" 
 	"xdg-desktop-portal-wlr" 
 	#"xdg-desktop-portal-gtk"
 
 	# System and desktop environment
+	"gtklock"
     "waybar" 
     "power-profiles-daemon"  # Power management
-    "swaync"  # Notifications
-	"swaybg"
     "rofi-wayland" "fuzzel" # App launcher
     "wayland-utils"  # Wayland utilities
 	"wlr-randr"
@@ -69,7 +68,7 @@ PACMAN_PACKAGES=(
 	
     # Terminal and shell
     "zsh" "foot"  # Terminals
-    "starship" "eza" "bat" "fzf"  # Shell enhancements
+    "starship" "eza" "bat" "fzf" "fd" # Shell enhancements
     "tmux"  # Terminal multiplexer
     "fastfetch"  # System info
 	"duf" "ncdu" "highlight"
@@ -90,10 +89,10 @@ PACMAN_PACKAGES=(
 	"zenity"
 
 	# language
-		"hunspell-de"
-		"tesseract"
-		"tesseract-data-eng"
-		"tesseract-data-deu"
+	"hunspell-de"
+  	"tesseract"
+	"tesseract-data-eng"
+	"tesseract-data-deu"
 
     # Multimedia
     "ffmpegthumbs" "imagemagick" "imv" "mpv" "yt-dlp"
