@@ -1,7 +1,4 @@
 #!/bin/bash
-# 💫 https://github.com/JaKooLit 💫 #
-# Global Functions for Scripts #
-
 set -e
 
 # Set some colors for output messages
@@ -45,8 +42,6 @@ show_progress() {
     printf "\r${NOTE} Installing ${YELLOW}%s${RESET} ... Done!%-20s \n" "$package_name" ""
     tput cnorm  
 }
-
-
 
 # Function to install packages with pacman
 install_package_pacman() {

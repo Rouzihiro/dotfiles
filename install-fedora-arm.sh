@@ -40,20 +40,27 @@ log_success() {
 # Package lists for Fedora
 DNF_PACKAGES=(
     # System and desktop environment
-	"waybar"
+    "waybar"
     "power-profiles-daemon"  # Power management
     "fuzzel" "rofi-wayland"  # App launcher
     "wayland-utils"  # Wayland utilities
     "btop" "ps_mem" "NetworkManager" "NetworkManager-tui"
+    "gtklock"
+    "wlr-randr"
+	
 
 	# Hyprland
 	# "hyprland" "hyprlock" "hypridle"
 	# "hyprsysteminfo"
 
 	# Sway 
-	#"swayidle" "swaylock" 
+	"swayidle" "swaync" "swaybg" #"swaylock" 
+	"xdg-desktop-portal" 
+	"xdg-desktop-portal-wlr" 
+	"xdg-desktop-portal-gtk"
 
     # Terminal and shell
+    "starship"
     "zsh" "foot"  # Terminals
     "bat" "fzf" "fd" # Shell enhancements
     "duf" "ncdu" "tree"
@@ -62,6 +69,13 @@ DNF_PACKAGES=(
 
 	# File-Management
 	"gdisk" "parted" "exfat-utils" "ntfs-3g" 
+
+    # Terminal and shell
+    "zsh" "foot"  # Terminals
+    "starship" "eza" "bat" "fzf" "fd" # Shell enhancements
+    "tmux"  # Terminal multiplexer
+    "fastfetch"  # System info
+	"duf" "ncdu" "highlight"
 
     # Utilities
     "aria2" "grim" "slurp" "brightnessctl" 
@@ -111,11 +125,22 @@ DNF_PACKAGES=(
     "fira-code-fonts" 
     "google-droid-fonts-all"
 
+    "google-droid-sans-fonts"
+    "google-noto-fonts"
+    "google-noto-emoji-fonts"
+	"nerd-fonts-fantasque-sans-mono"
+    "nerd-fonts-jetbrains-mono"
+    "nerd-fonts-fira-code"
+    "nerd-fonts-hack"
+    "nerd-fonts-cascadia-code"
+
     # Applications
     "zathura" "zathura-cb" "zathura-pdf-mupdf"  # Document viewers
 	"xournalpp" # PDF editor
     "neovim"  # Text editor
 	"foliate" # Book reading
+
+#browser
 
 	# email
 	"thunderbird"
@@ -183,12 +208,12 @@ install_dnf_packages() {
 
 # Install sources from COPR
 install_sources() {
-    sudo dnf copr enable atim/starship -y
-    sudo dnf copr enable sneexy/zen-browser -y
-    sudo dnf copr enable atim/lazygit -y
-    sudo dnf copr enable che/nerd-fonts -y
-	sudo dnf copr enable wef/wlogout -y
-	sudo dnf copr enable solopasha/hyprland -y 
+    	sudo dnf copr enable atim/starship -y
+    	sudo dnf copr enable sneexy/zen-browser -y
+    	sudo dnf copr enable atim/lazygit -y
+    	sudo dnf copr enable che/nerd-fonts -y
+		sudo dnf copr enable solopasha/hyprland -y
+		sudo dnf copr enable evana/nerd-fonts -y
 }
 
 # Install Oh My Zsh and plugins
@@ -243,18 +268,18 @@ install_omz() {
 
 # Configure and enable system services
 configure_services() {
-    log_step "Configuring system services"
-
-	   # Enable hypridle only if it exists
-    if command -v hypridle &> /dev/null; then
-        systemctl --user enable hypridle.service || log_warning "Failed to enable hypridle.service"
-        systemctl --user start hypridle.service || log_warning "Failed to start hypridle.service"
-    else
-        log_warning "Hypridle not found. Skipping service setup."
-    fi
-    
-    # Configure swayidle (replacement for hypridle)
-#     if command -v swayidle &> /dev/null; then
+#     log_step "Configuring system services"
+#
+# 	   # Enable hypridle only if it exists
+#     if command -v hypridle &> /dev/null; then
+#         systemctl --user enable hypridle.service || log_warning "Failed to enable hypridle.service"
+#         systemctl --user start hypridle.service || log_warning "Failed to start hypridle.service"
+#     else
+#         log_warning "Hypridle not found. Skipping service setup."
+#     fi
+#
+#     # Configure swayidle (replacement for hypridle)
+# #     if command -v swayidle &> /dev/null; then
 #         log_info "Configuring swayidle (hypridle alternative)"
 #
 #         SWAYIDLE_CONFIG="$HOME/.config/swayidle/config"
