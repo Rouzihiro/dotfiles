@@ -118,3 +118,4 @@ alias wget1='wget --mirror --convert-links --adjust-extension --page-requisites 
 alias wget2='wget --tries=5 --retry-connrefused --waitretry=30'
 alias curldl='curl -L -C - -O'
 alias ac='aria2c'
+alias aria='aria2c --check-certificate=false -x 16 -s 16'
