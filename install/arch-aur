@@ -1,0 +1,28 @@
+# Browsers
+librewolf-bin
+brave-bin
+# zen-browser-bin
+
+# Games
+# winetricks
+# heroic-games-launcher-bin
+# protonup-qt
+
+# Fonts
+adobe-source-code-pro-fonts
+ttf-victor-mono
+
+# System Utilities
+# uwsm
+wl-clipboard
+bibata-cursor-theme
+
+# Development Tools
+lazygit
+git-delta
+openssh
+
+# Applications
+ps_mem
+jdownloader2
+sdl2_sound

@@ -1,0 +1,96 @@
+# Terminal & Shell
+zsh
+foot
+starship
+eza
+bat
+fzf
+fd
+tmux
+fastfetch
+duf
+ncdu
+highlight
+
+# File Management
+ntfs-3g
+vifm
+thunar
+xdg-user-dirs
+rsync
+
+# Utilities
+aria2
+grim
+slurp
+brightnessctl
+mediainfo
+jq
+bc
+trash-cli
+unzip
+blueman
+curlftpfs
+yad
+swappy
+antimicrox
+zenity
+
+# Language Support
+hunspell-de
+tesseract
+tesseract-data-eng
+tesseract-data-deu
+
+# Multimedia
+ffmpegthumbs
+imagemagick
+imv
+mpv
+yt-dlp
+pamixer
+
+# Development
+jdk-openjdk
+nodejs
+npm
+texlive-latexextra
+texmaker
+
+# Graphics/GPU
+mesa-utils
+vulkan-tools
+xf86-video-intel
+vulkan-intel
+mesa
+libglvnd
+
+# Fonts
+otf-font-awesome
+ttf-droid
+ttf-fira-code
+ttf-fantasque-nerd
+ttf-jetbrains-mono
+ttf-jetbrains-mono-nerd
+ttf-firacode-nerd
+ttf-hack-nerd
+ttf-cascadia-code-nerd
+ttf-font-awesome
+ttf-dejavu
+noto-fonts
+
+# Applications
+zathura
+zathura-cb
+zathura-pdf-mupdf
+xournalpp
+neovim
+swww
+thunderbird
+ca-certificates
+
+# Future Packages (Uncomment to activate)
+# lutris
+# gamemode
+# lib32-gamemode
+# ttf-liberation
