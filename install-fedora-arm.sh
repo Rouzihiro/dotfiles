@@ -6,15 +6,14 @@ YELLOW='\033[1;33m'
 RED='\033[0;31m'
 BLUE='\033[0;34m'
 CYAN='\033[0;36m'
+MAGENTA='\033[0;35m'
 NC='\033[0m'
-
 
 # ===============================================
 # Configuration Variables - EDIT THESE IF NEEDED
 # ===============================================
 DOTFILES_SOURCE="$HOME/dotfiles/"  # Change this to your dotfiles location
 # ===============================================
-
 
 # Logging functions
 log_info() {
@@ -37,114 +36,74 @@ log_success() {
     echo -e "${CYAN}[SUCCESS]${NC} $1"
 }
 
-# Package lists for Fedora
+log_prompt() {
+    echo -e "${MAGENTA}[PROMPT]${NC} $1"
+}
+
+# Prompt execution system
+prompt_user() {
+    local description="$1"
+    local command="$2"
+    local destructive="${3:-false}"
+    
+    log_prompt "$description"
+    [[ "$destructive" == "true" ]] && echo -e "${RED}WARNING: Destructive operation!${NC}"
+    
+    read -p "Execute this? (y/N): " choice
+    if [[ $choice =~ ^[Yy]$ ]]; then
+        log_info "Executing: $command"
+        eval "$command"
+        return $?
+    fi
+    log_info "Skipped by user"
+    return 1
+}
+
+# Package lists for Fedora (deduplicated)
 DNF_PACKAGES=(
     # System and desktop environment
-    "waybar"
-    "power-profiles-daemon"  # Power management
-    "fuzzel" "rofi-wayland"  # App launcher
-    "wayland-utils"  # Wayland utilities
-    "btop" "ps_mem" "NetworkManager" "NetworkManager-tui"
-    "gtklock"
-    "wlr-randr"
-	
+    "waybar" "power-profiles-daemon" "fuzzel" "rofi-wayland" "wayland-utils"
+    "btop" "ps_mem" "NetworkManager" "NetworkManager-tui" "gtklock" "wlr-randr"
 
-	# Hyprland
-	# "hyprland" "hyprlock" "hypridle"
-	# "hyprsysteminfo"
-
-	# Sway 
-	"swayidle" "swaync" "swaybg" #"swaylock" 
-	"xdg-desktop-portal" 
-	"xdg-desktop-portal-wlr" 
-	"xdg-desktop-portal-gtk"
+    # Sway 
+    "swayidle" "swaync" "swaybg" "xdg-desktop-portal" 
+    "xdg-desktop-portal-wlr" "xdg-desktop-portal-gtk"
 
     # Terminal and shell
-    "starship"
-    "zsh" "foot"  # Terminals
-    "bat" "fzf" "fd" # Shell enhancements
-    "duf" "ncdu" "tree"
-    "tmux"  # Terminal multiplexer
-    "fastfetch"  # System info
+    "starship" "zsh" "foot" "bat" "fzf" "fd" "duf" "ncdu" "tree"
+    "tmux" "fastfetch" "highlight"
 
-	# File-Management
-	"gdisk" "parted" "exfat-utils" "ntfs-3g" 
-
-    # Terminal and shell
-    "zsh" "foot"  # Terminals
-    "starship" "eza" "bat" "fzf" "fd" # Shell enhancements
-    "tmux"  # Terminal multiplexer
-    "fastfetch"  # System info
-	"duf" "ncdu" "highlight"
+    # File-Management
+    "gdisk" "parted" "exfatprogs" "ntfs-3g" 
 
     # Utilities
-    "aria2" "grim" "slurp" "brightnessctl" 
-    "mediainfo" "jq" "bc" "trash-cli" "unzip"
-    "highlight"
-	"poppler-utils" "sxiv" "ffmpegthumbnailer"
-    "blueman"  # Bluetooth
-    "curlftpfs"  # FTP mounting
-    "vifm"  # File manager
-    "thunar"  # GUI file manager
-    "xdg-user-dirs"  # Default user directories
-    "yad"  # GUI dialogs
-    "rsync"  # File syncing
-    "swappy"  # Screenshot editing
-	"antimicrox"
+    "aria2" "grim" "slurp" "brightnessctl" "mediainfo" "jq" "bc" 
+    "trash-cli" "unzip" "poppler-utils" "sxiv" "ffmpegthumbnailer"
+    "blueman" "curlftpfs" "vifm" "thunar" "xdg-user-dirs" "yad"
+    "rsync" "swappy" "antimicrox"
 
-    # language
-    "hunspell-de"
-    "tesseract"
-    "tesseract-langpack-eng"
-    "tesseract-langpack-deu"
+    # Language support
+    "hunspell-de" "tesseract" "tesseract-langpack-eng" "tesseract-langpack-deu"
 
     # Multimedia
-    "ffmpegthumbs" "ImageMagick" "imv" "vlc" "mpv" "yt-dlp"
-    "pamixer"  # Audio control
+    "ffmpegthumbs" "ImageMagick" "imv" "vlc" "mpv" "yt-dlp" "pamixer"
 
     # Development
-    "lazygit" "git-delta"
-    "nodejs"  # Programming
-    "java-latest-openjdk"
-	"zstd"
+    "lazygit" "git-delta" "nodejs" "java-latest-openjdk" "zstd"
 
-	# Latex
-    "texmaker"
-	"texlive-scheme-basic" #"texlive-scheme-full"
+    # Latex
+    "texmaker" "texlive-scheme-basic"
 
     # Graphics/GPU
     "vulkan-tools"
 
     # Fonts and themes
-    "jetbrains-mono-fonts-all"
-    "cascadia-code-fonts"
-    "google-noto-fonts-common"
-    "google-noto-emoji-fonts"
-    "fontawesome-fonts-all"
-    "dejavu-fonts-all"
-    "fira-code-fonts" 
-    "google-droid-fonts-all"
-
-    "google-droid-sans-fonts"
-    "google-noto-fonts"
-    "google-noto-emoji-fonts"
-	"nerd-fonts-fantasque-sans-mono"
-    "nerd-fonts-jetbrains-mono"
-    "nerd-fonts-fira-code"
-    "nerd-fonts-hack"
-    "nerd-fonts-cascadia-code"
+    "jetbrains-mono-fonts-all" "cascadia-code-fonts" "google-noto-fonts-common"
+    "google-noto-emoji-fonts" "fontawesome-fonts-all" "dejavu-fonts-all"
+    "fira-code-fonts" "google-droid-fonts-all" "google-droid-sans-fonts"
 
     # Applications
-    "zathura" "zathura-cb" "zathura-pdf-mupdf"  # Document viewers
-	"xournalpp" # PDF editor
-    "neovim"  # Text editor
-	"foliate" # Book reading
-
-#browser
-
-	# email
-	"thunderbird"
-
+    "zathura" "zathura-cb" "zathura-pdf-mupdf" "xournalpp" "neovim" "foliate" "thunderbird"
 )
 
 # Check if script is run by root
@@ -177,43 +136,30 @@ update_system() {
 install_dnf_packages() {
     log_step "Installing packages from official repositories"
     
+    # Create list of packages to install
     local to_install=()
-    local missing_packages=()
-    
     for pkg in "${DNF_PACKAGES[@]}"; do
         if ! rpm -q "$pkg" &> /dev/null; then
-            if dnf list available "$pkg" &> /dev/null; then
-                to_install+=("$pkg")
-            else
-                missing_packages+=("$pkg")
-            fi
+            to_install+=("$pkg")
         fi
     done
-
-    if [ ${#missing_packages[@]} -gt 0 ]; then
-        log_warning "These packages aren't available: ${missing_packages[*]}"
-    fi
 
     if [ ${#to_install[@]} -gt 0 ]; then
         log_info "Installing ${#to_install[@]} packages..."
         sudo dnf install -y "${to_install[@]}" || {
             log_error "Failed to install some packages."
-            read -p "Continue anyway? (y/n): " continue_choice
-            [[ $continue_choice != [yY] ]] && exit 1
+            read -p "Continue anyway? (y/N): " continue_choice
+            [[ $continue_choice =~ ^[Yy]$ ]] || exit 1
         }
     else
-        log_info "All available packages are already installed."
+        log_info "All packages are already installed."
     fi
 }
 
 # Install sources from COPR
 install_sources() {
-    	sudo dnf copr enable atim/starship -y
-    	sudo dnf copr enable sneexy/zen-browser -y
-    	sudo dnf copr enable atim/lazygit -y
-    	sudo dnf copr enable che/nerd-fonts -y
-		sudo dnf copr enable solopasha/hyprland -y
-		sudo dnf copr enable evana/nerd-fonts -y
+    log_step "Enabling COPR repositories"
+    sudo dnf copr enable -y atim/starship sneexy/zen-browser atim/lazygit che/nerd-fonts solopasha/hyprland evana/nerd-fonts
 }
 
 # Install Oh My Zsh and plugins
@@ -222,7 +168,7 @@ install_omz() {
     
     if ! command -v zsh &> /dev/null; then
         log_error "Zsh is not installed."
-        exit 1
+        return 1
     fi
     
     if [ ! -d "$HOME/.oh-my-zsh" ]; then
@@ -234,33 +180,29 @@ install_omz() {
     
     log_info "Installing Zsh plugins..."
     
-    plugin_repos=(
-        "https://github.com/zsh-users/zsh-autosuggestions.git"
-        "https://github.com/zsh-users/zsh-syntax-highlighting.git"
-        "https://github.com/marlonrichert/zsh-autocomplete.git"
+    declare -A plugin_repos=(
+        ["zsh-autosuggestions"]="https://github.com/zsh-users/zsh-autosuggestions.git"
+        ["zsh-syntax-highlighting"]="https://github.com/zsh-users/zsh-syntax-highlighting.git"
+        ["zsh-autocomplete"]="https://github.com/marlonrichert/zsh-autocomplete.git"
     )
     
-    plugin_dirs=(
-        "$ZSH_CUSTOM/plugins/zsh-autosuggestions"
-        "$ZSH_CUSTOM/plugins/zsh-syntax-highlighting"
-        "$ZSH_CUSTOM/plugins/zsh-autocomplete"
-    )
-    
-    for i in "${!plugin_repos[@]}"; do
-        if [ ! -d "${plugin_dirs[$i]}" ]; then
-            git clone --depth 1 "${plugin_repos[$i]}" "${plugin_dirs[$i]}" || log_warning "Failed to clone ${plugin_repos[$i]}"
+    for plugin in "${!plugin_repos[@]}"; do
+        if [ ! -d "$ZSH_CUSTOM/plugins/$plugin" ]; then
+            git clone --depth 1 "${plugin_repos[$plugin]}" "$ZSH_CUSTOM/plugins/$plugin" || 
+            log_warning "Failed to clone $plugin"
         fi
     done
     
-    cp ".zshrc" "$HOME/.zshrc" 2>/dev/null || log_warning "Error copying .zshrc"
-	cp ".zprofile" "$HOME/.zprofile" 2>/dev/null || log_warning "Error copying .zprofile"
-	cp .aliases* "$HOME/" 2>/dev/null || log_warning "Error copying alias files"
-    cp ".bashrc" "$HOME/.bashrc" 2>/dev/null || log_warning "Error copying .bashrc"
-    cp ".bash_profile" "$HOME/.bash_profile" 2>/dev/null || log_warning "Error copying .bash_profile"
+    # Copy configuration files
+    for file in .zshrc .zprofile .aliases* .bashrc .bash_profile; do
+        if [ -f "$file" ]; then
+            cp -v "$file" "$HOME/" || log_warning "Error copying $file"
+        fi
+    done
     
     if [[ "$SHELL" != *"zsh"* ]]; then
         log_info "Setting Zsh as default shell..."
-        chsh -s $(which zsh) || log_warning "Failed to set Zsh as default shell."
+        chsh -s "$(command -v zsh)" || log_warning "Failed to set Zsh as default shell."
     fi
     
     log_success "Zsh setup completed."
@@ -268,35 +210,21 @@ install_omz() {
 
 # Configure and enable system services
 configure_services() {
-#     log_step "Configuring system services"
-#
-# 	   # Enable hypridle only if it exists
-#     if command -v hypridle &> /dev/null; then
-#         systemctl --user enable hypridle.service || log_warning "Failed to enable hypridle.service"
-#         systemctl --user start hypridle.service || log_warning "Failed to start hypridle.service"
-#     else
-#         log_warning "Hypridle not found. Skipping service setup."
-#     fi
-#
-#     # Configure swayidle (replacement for hypridle)
-# #     if command -v swayidle &> /dev/null; then
-#         log_info "Configuring swayidle (hypridle alternative)"
-#
-#         SWAYIDLE_CONFIG="$HOME/.config/swayidle/config"
-#         mkdir -p "$(dirname "$SWAYIDLE_CONFIG")"
-#
-#         cat > "$SWAYIDLE_CONFIG" << EOF
-# timeout 300 'swaylock -f'
-# timeout 600 'hyprctl dispatch dpms off'
-# resume 'hyprctl dispatch dpms on'
-# EOF
-#
-#         log_info "Created swayidle configuration"
-#     else
-#         log_warning "swayidle not found"
-#     fi
-#
-     log_success "Services configured."
+    log_step "Configuring system services"
+    log_success "Services configured."
+}
+
+# Cleanup operations
+run_cleanups() {
+    log_step "Running optional cleanups"
+    
+    # Neovim cache cleaner
+    prompt_user "Clear Neovim cache? (Removes config, cache, and state)" \
+        "rm -rf ~/.local/share/nvim ~/.cache/nvim ~/.local/state/nvim" "true"
+    
+    # Brave browser installer
+    prompt_user "Install Brave browser via official script?" \
+        "curl -fsS https://dl.brave.com/install.sh | sh"
 }
 
 # Main installation function
@@ -327,27 +255,28 @@ EOF
     check_system
     
     echo
-    read -p "Do you want to start the ReyDots installation? (y/n): " confirm
-    if [[ $confirm != [yY] ]]; then
+    read -p "Do you want to start the ReyDots installation? (y/N): " confirm
+    if [[ ! $confirm =~ ^[Yy]$ ]]; then
         log_info "Installation aborted by user."
         exit 0
     fi
     
     update_system
     install_sources 
-    install_omz
     install_dnf_packages
+    install_omz
     configure_services
+    run_cleanups
     
     echo
     log_success "ReyDots installation complete!"
-    log_success "Welcome to your new Hyprland desktop environment!"
+    log_success "Welcome to your new optimized desktop environment!"
     echo
     log_warning "Please reboot your system to apply all changes."
     echo
     
-    read -p "Would you like to reboot now? (y/n): " reboot_choice
-    if [[ $reboot_choice == [yY] ]]; then
+    read -p "Would you like to reboot now? (y/N): " reboot_choice
+    if [[ $reboot_choice =~ ^[Yy]$ ]]; then
         log_info "Rebooting system..."
         sudo reboot
     else
