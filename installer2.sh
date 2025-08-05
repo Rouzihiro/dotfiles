@@ -108,36 +108,12 @@ install_arch() {
         install_packages_from_file "$file"
     done
 
-    # Install AUR packages (interactive selection from arch-aur-* files)
-    if command -v yay >/dev/null; then
-        log_step "Checking for available AUR package sets..."
-        aur_files=($(ls install/arch-aur-* 2>/dev/null | sed 's|install/||'))
-
-        if [ ${#aur_files[@]} -gt 0 ]; then
-            echo -e "\n${CYAN}Select AUR package sets to install:${NC}"
-            select_aur_files=()
-
-            for i in "${!aur_files[@]}"; do
-                printf "%3d) %s\n" $((i+1)) "${aur_files[$i]}"
-            done
-
-            echo
-            read -rp "Enter numbers (space-separated) or leave empty to skip AUR: " -a selected_indices
-
-            for i in "${selected_indices[@]}"; do
-                index=$((i - 1))
-                [[ $index -ge 0 && $index -lt ${#aur_files[@]} ]] && select_aur_files+=("${aur_files[$index]}")
-            done
-
-            for aur_file in "${select_aur_files[@]}"; do
-                log_step "Installing AUR packages from $aur_file"
-                yay -S --noconfirm $(clean_package_list "$aur_file") || log_warning "Failed installing from $aur_file"
-            done
-        else
-            log_info "No arch-aur-* files found in install/"
-        fi
-    else
-        log_warning "yay not found. Skipping AUR package installation."
+    # AUR
+    if [[ -f install/arch-aur && "$(command -v yay)" ]]; then
+        log_step "Installing AUR packages..."
+        yay -S --noconfirm $(clean_package_list "arch-aur")
+    elif [[ -f install/arch-aur ]]; then
+        log_warning "yay not found. Skipping AUR."
     fi
 }
 
