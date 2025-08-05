@@ -1,0 +1,42 @@
+# Terminal and shell
+starship
+zsh
+foot
+bat
+fzf
+fd
+duf
+ncdu
+tree
+tmux
+fastfetch
+highlight
+
+# File management
+gdisk
+parted
+exfatprogs
+ntfs-3g
+
+# Utilities
+aria2
+grim
+slurp
+brightnessctl
+mediainfo
+jq
+bc
+trash-cli
+unzip
+poppler-utils
+sxiv
+ffmpegthumbnailer
+blueman
+curlftpfs
+vifm
+thunar
+xdg-user-dirs
+yad
+rsync
+swappy
+antimicrox
