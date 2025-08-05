@@ -1,0 +1,14 @@
+#!/bin/bash
+
+# This script will use scrot/grim to take a screenshot of the current screen based on the current compositor
+FILENAME=$(date +%F_%T)
+
+# Screenshots folder
+FOLDER="$HOME/Media/screenshots"
+
+# Make screenshot folder
+mkdir -p $FOLDER
+
+grim -g "$(slurp)" - | wl-copy && wl-paste -t image/png > "$FOLDER/$FILENAME.png"
+dunstify "📸 Captured screenshot"
+exit 0

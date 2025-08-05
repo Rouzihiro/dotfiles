@@ -1,0 +1,588 @@
+//   █████████            █████     █████     ███
+//  ███░░░░░███          ░░███     ░░███     ░░░
+// ░███    ░░░   ██████  ███████   ███████   ████  ████████    ███████  █████
+// ░░█████████  ███░░███░░░███░   ░░░███░   ░░███ ░░███░░███  ███░░███ ███░░
+//  ░░░░░░░░███░███████   ░███      ░███     ░███  ░███ ░███ ░███ ░███░░█████
+//  ███    ░███░███░░░    ░███ ███  ░███ ███ ░███  ░███ ░███ ░███ ░███ ░░░░███
+// ░░█████████ ░░██████   ░░█████   ░░█████  █████ ████ █████░░███████ ██████
+//  ░░░░░░░░░   ░░░░░░     ░░░░░     ░░░░░  ░░░░░ ░░░░ ░░░░░  ░░░░░███░░░░░░
+//                                                            ███ ░███
+//                                                           ░░██████
+//                                                            ░░░░░░
+
+input {
+    keyboard {
+	    track-layout "global"
+        xkb {
+            // For more information, see xkeyboard-config(7).
+            layout "us,de"
+			options "grp:alt_shift_toggle"
+        }
+        repeat-delay 300
+        repeat-rate 30
+        // Enable numlock on startup, omitting this setting disables it.
+        // numlock
+    }
+    // Omitting settings disables them, or leaves them at their default values.
+    touchpad {
+        tap
+        dwt
+        drag true
+        // drag-lock
+        natural-scroll
+        accel-speed 0.0
+        accel-profile "flat"
+        scroll-method "two-finger"
+        middle-emulation
+        // disabled-on-external-mouse
+    }
+    mouse {
+        // off
+        accel-speed 0.0
+        accel-profile "flat"
+        middle-emulation
+    }
+    // disable-power-key-handling
+    warp-mouse-to-focus mode="center-xy"
+    focus-follows-mouse max-scroll-amount="10%"
+    // workspace-auto-back-and-forth // Very disorienting
+}
+
+debug {
+    render-drm-device "/dev/dri/renderD128"
+}
+
+	output "eDP-1" {
+    // mode "2560x1600" // MacM1
+	// mode "3240x2160" // Surface
+	scale 1.75			// MacM1
+	// scale 2.00 		// Surface
+ }
+
+
+
+// Settings that influence how windows are positioned and sized.
+layout {
+    gaps 8
+    center-focused-column "on-overflow" // options are: "never", "always", "on-overflow"
+    background-color "transparent" // Needed to show swww-daemon from the background
+    default-column-display "normal"
+    always-center-single-column
+    // empty-workspace-above-first
+
+    // If you leave the brackets empty, the windows themselves will decide their initial width.
+    default-column-width { proportion 0.66667; }
+    // default-column-width { }
+
+    preset-column-widths {
+        proportion 0.33333
+        proportion 0.5
+        proportion 0.66667
+        proportion 0.9
+    }
+    preset-window-heights {
+        proportion 0.33333
+        proportion 0.5
+        proportion 0.66667
+        proportion 1.0
+    }
+    focus-ring {
+        // off
+        width 2
+        active-color "#7fc8ff"
+        inactive-color "#505050"
+    }
+    border {
+        off
+        width 2
+        active-color "#ffc87f"
+        inactive-color "#505050"
+        urgent-color "#9b0000"
+    }
+    shadow {
+        // on
+        // draw-behind-window true
+        softness 30
+        spread 5
+        offset x=0 y=5
+        color "#00000070"
+    }
+    tab-indicator {
+        // off
+        hide-when-single-tab
+        place-within-column
+        gap 5
+        width 4
+        length total-proportion=1.0
+        position "right"
+        gaps-between-tabs 2
+        corner-radius 8
+        active-color "red"
+        inactive-color "gray"
+        urgent-color "blue"
+    }
+    insert-hint {
+        // off
+        color "#ffc87f50"
+    }
+}
+
+animations {
+  off
+  slowdown 0.6
+
+  window-open {
+    duration-ms 200
+    curve "linear"
+    custom-shader r"
+
+    vec4 expanding_circle(vec3 coords_geo, vec3 size_geo) {
+      vec3 coords_tex = niri_geo_to_tex * coords_geo;
+      vec4 color = texture2D(niri_tex, coords_tex.st);
+      vec2 coords = (coords_geo.xy - vec2(0.5, 0.5)) * size_geo.xy * 2.0;
+      coords = coords / length(size_geo.xy);
+      float p = niri_clamped_progress;
+      if (p * p <= dot(coords, coords))
+      color = vec4(0.0);
+
+      return color;
+    }
+
+    vec4 open_color(vec3 coords_geo, vec3 size_geo) {
+      return expanding_circle(coords_geo, size_geo);
+    }
+    "
+  }
+
+  window-close {
+    duration-ms 175
+    curve "linear"
+    custom-shader r"
+    vec4 shrinking_circle(vec3 coords_geo, vec3 size_geo) {
+      vec3 coords_tex = niri_geo_to_tex * coords_geo;
+      vec4 color = texture2D(niri_tex, coords_tex.st);
+      // Calculate coordinates relative to center, scaled appropriately
+      vec2 coords = (coords_geo.xy - vec2(0.5, 0.5)) * size_geo.xy * 2.0;
+      // Normalize coordinates based on diagonal length for a circular shape
+      coords = coords / length(size_geo.xy);
+
+      // Invert the progress for closing effect: 1 -> 0
+      float p_close = 1.0 - niri_clamped_progress;
+
+      // If pixel's squared distance from center is >= shrinking radius squared, make transparent
+      // (Keeps pixels *inside* the shrinking radius p_close)
+      if (p_close * p_close <= dot(coords, coords))
+      color = vec4(0.0);
+
+      // Optional: You could also fade the alpha slightly faster at the end if desired
+      // color.a *= p_close; // Fades out completely as radius reaches 0
+
+      return color;
+    }
+
+    vec4 close_color(vec3 coords_geo, vec3 size_geo) {
+      return shrinking_circle(coords_geo, size_geo);
+    }"
+  }
+
+  window-resize {
+  }
+}
+
+environment {
+     DISPLAY ":0"
+	 XCURSOR_THEME "Bibata-Modern-Classic"
+     XCURSOR_SIZE "18"
+     QT_QPA_PLATFORM "wayland"
+     QT_QPA_PLATFORMTHEME "qt6ct"
+     XDG_SESSION_TYPE "wayland"
+     XDG_SESSION_DESKTOP "Niri"
+     QT_WAYLAND_DISABLE_WINDOWDECORATION "1"
+     QT_AUTO_SCREEN_SCALE_FACTOR "1"
+     MOZ_ENABLE_WAYLAND "1"
+     GDK_SCALE "1"
+	 BROWSER "firefox"
+     _JAVA_AWT_WM_NONREPARENTING "1"
+   // GTK_THEME "catppuccin-macchiato-green-standard+default"
+     ELECTRON_OZONE_PLATFORM_HINT "auto"
+//    OZONE_PLATFORM "auto"
+     // CHROME_EXECUTABLE "google-chrome-stable"
+     // XCURSOR_THEME "Bibata-Modern-Ice"
+     // XDG_SCREENSHOTS_DIR "$HOME/Pictures/Screenshots"
+	 EDITOR "nvim"
+ }
+
+//
+// environment {
+//     DISPLAY ":0"
+//     XCURSOR_THEME "Bibata-Modern-Classic"
+//     XCURSOR_SIZE "18"
+//     XDG_CURRENT_DESKTOP "Niri"
+//     XDG_SESSION_DESKTOP "Niri"
+//     XDG_SESSION_TYPE "wayland"
+//     DESKTOP_SESSION "niri"
+//     MOZ_ENABLE_WAYLAND "1"
+//     ELECTRON_OZONE_PLATFORM_HINT "wayland"
+//     BEMENU_BACKEND "wayland"
+//     CLUTTER_BACKEND "wayland"
+//     SDL_VIDEODRIVER "wayland"
+//     QT_QPA_PLATFORM "wayland;xcb"
+//     QT_QPA_PLATFORMTHEME "qt6ct"
+//     QT_WAYLAND_DISABLE_WINDOWDECORATION "1"
+//     QT_SCALE_FACTOR "1"
+//     QT_AUTO_SCREEN_SCALE_FACTOR "1"
+//     GDK_SCALE "1"
+//     GDK_BACKEND "wayland,x11,*"
+//     GTK_USE_PORTAL "1"
+//     WLR_NO_HARDWARE_CURSORS "1"
+// }
+
+cursor {
+    xcursor-theme "Bibata-Modern-Classic"
+    xcursor-size 24
+    hide-when-typing
+    hide-after-inactive-ms 10000
+}
+
+overview {
+    zoom 0.5
+    workspace-shadow {
+        // off
+        softness 60
+        spread 20
+        offset x=0 y=10
+        color "#00000090"
+    }
+}
+
+layer-rule {
+    // Send swww wallpaper to backdrop, show behind overview too
+    // Set backdrop-color to transparent in layout
+    match namespace="swww-daemon"
+    place-within-backdrop true
+}
+
+clipboard {
+    // disable-primary // Disable the middle click paste clipboard
+}
+
+hotkey-overlay {
+    // hide-not-bound
+    skip-at-startup
+}
+
+gestures {
+    dnd-edge-view-scroll {
+        trigger-width 30
+        delay-ms 100
+        max-speed 1500
+    }
+    dnd-edge-workspace-switch {
+        trigger-height 50
+        delay-ms 100
+        max-speed 1500
+    }
+    hot-corners {
+        off
+    }
+}
+
+switch-events {
+  lid-close { spawn "gtklock"; }
+  // lid-open  { spawn "notify-send" "Screen is locked!"; }
+}
+
+//    █████████               █████                      █████                         █████
+//   ███░░░░░███             ░░███                      ░░███                         ░░███
+//  ░███    ░███  █████ ████ ███████    ██████   █████  ███████    ██████   ████████  ███████
+//  ░███████████ ░░███ ░███ ░░░███░    ███░░███ ███░░  ░░░███░    ░░░░░███ ░░███░░███░░░███░
+//  ░███░░░░░███  ░███ ░███   ░███    ░███ ░███░░█████   ░███      ███████  ░███ ░░░   ░███
+//  ░███    ░███  ░███ ░███   ░███ ███░███ ░███ ░░░░███  ░███ ███ ███░░███  ░███       ░███ ███
+//  █████   █████ ░░████████  ░░█████ ░░██████  ██████   ░░█████ ░░████████ █████      ░░█████
+// ░░░░░   ░░░░░   ░░░░░░░░    ░░░░░   ░░░░░░  ░░░░░░     ░░░░░   ░░░░░░░░ ░░░░░        ░░░░░
+
+spawn-at-startup "xwayland-satellite"
+spawn-at-startup "swaybg" "-i" "/home/rey/Pictures/wallpapers/konoha1.jpg" "-m" "fill"
+// spawn-at-startup "swww-daemon" "--format" "xrgb"
+spawn-at-startup "~/.config/waybar/launch.sh"
+spawn-at-startup "swaync"
+// spawn-at-startup "~/.config/dunst/launch-dunst.sh"
+// spawn-at-startup "/usr/bin/kdeconnectd"
+// spawn-at-startup "/usr/bin/kdeconnect-indicator"
+// spawn-at-startup "nm-applet" "--indicator"
+// spawn-at-startup "blueman-applet"
+spawn-at-startup "foot" "--server"
+spawn-at-startup "swayidle" "-w"
+spawn-at-startup "/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1"
+spawn-at-startup "wl-paste" "--type" "text" "--watch" "cliphist" "store"
+spawn-at-startup "wl-paste" "--type" "image" "--watch" "cliphist" "store"
+spawn-at-startup "dbus-update-activation-environment" "--systemd" "WAYLAND_DISPLAY" "XDG_CURRENT_DESKTOP=niri"
+spawn-at-startup "systemctl" "--user" "import-environment" "WAYLAND_DISPLAY" "XDG_CURRENT_DESKTOP=niri"
+spawn-at-startup "systemctl" "--user" "start" "xdg-desktop-portal-wlr"
+
+workspace "Scratchpad"
+workspace "Main"
+workspace "Media"
+prefer-no-csd
+screenshot-path "~/Pictures/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png"
+spawn-at-startup "niri" "msg" "action" "focus-workspace" "Main"
+
+
+//  ███████████              ████
+// ░░███░░░░░███            ░░███
+//  ░███    ░███  █████ ████ ░███   ██████   █████
+//  ░██████████  ░░███ ░███  ░███  ███░░███ ███░░
+//  ░███░░░░░███  ░███ ░███  ░███ ░███████ ░░█████
+//  ░███    ░███  ░███ ░███  ░███ ░███░░░   ░░░░███
+//  █████   █████ ░░████████ █████░░██████  ██████
+// ░░░░░   ░░░░░   ░░░░░░░░ ░░░░░  ░░░░░░  ░░░░░░
+
+// Example: enable rounded corners for all windows.
+window-rule {
+    geometry-corner-radius 15
+    clip-to-geometry true
+}
+
+// Scratchpad rule
+window-rule {
+    match app-id=r#"^special*"#
+    default-column-width { proportion 0.9; }
+    open-on-workspace "Scratchpad"
+}
+
+ window-rule {
+  match app-id="foot"
+  match app-id="footclient"
+  match title="foot"
+  draw-border-with-background false
+  opacity 0.90
+   shadow {
+     on
+     draw-behind-window true
+     softness 0
+     spread 0
+     offset x=0 y=0
+  //   color "#000000"
+  // inactive-color "#000000"
+   }
+}
+
+
+// Float rule
+window-rule {
+	match app-id="zenity"
+    match title="Special Offers"
+    match title="Friends List"
+    match title="Steam Settings"
+    match app-id="steam" title="Brawlhalla"
+    match app-id="galculator"
+    match app-id="org.kde.kcalc"
+    match app-id="blueman-manager"
+    match app-id="org.kde.kdeconnect.app"
+    match app-id="nm-connection-editor"
+    match app-id="org.kde.polkit-kde-authentication-agent-1"
+    match app-id="polkit-gnome-authentication-agent-1"
+    match title="gtk*"
+    match app-id="GParted"
+    match app-id="nwg-look"
+    match app-id="qt6ct"
+    match app-id="qt5ct"
+    match app-id="firefox" title="Picture-in-Picture"
+    match app-id="floorp" title="Picture-in-Picture"
+    match app-id="zen" title="Picture-in-Picture"
+    match app-id="xdg-desktop-portal-gtk"
+    match app-id="org.pulseaudio.pavucontrol"
+    match title="popup title with spaces"
+    match title="zoom"
+    match title="Picture-in-Picture"
+    match app-id="anki" title="Profile Name"
+
+    open-floating true
+    open-focused true
+    default-column-width { }
+    default-window-height { }
+}
+
+// Open on Media workspace
+window-rule {
+    match app-id="com.libretro.RetroArch"
+    match app-id="Celeste.bin.x86_64"
+    match app-id="hollow_knight.x86_64"
+    match title="Brawlhalla"
+    match app-id="Minecraft"
+    match app-id="citra-qt"
+    match app-id="Ryujinx"
+    match app-id="es-de"
+    match app-id="steam"
+    match app-id="ticktick"
+    match app-id="Spotify"
+    match title="YouTube Music"
+
+    open-on-workspace "Media"
+}
+
+// Fullscreen rule
+window-rule {
+    match app-id="com.libretro.RetroArch"
+    match app-id="Celeste.bin.x86_64"
+    match app-id="hollow_knight.x86_64"
+    match title="Brawlhalla"
+    match app-id="Minecraft"
+    match app-id="citra-qt"
+    match app-id="Ryujinx"
+    match app-id="es-de"
+    match app-id="mpv"
+    match app-id="feh"
+	match app-id="firefox"
+    open-focused true
+    open-fullscreen true
+}
+
+//  ███████████   ███                 █████
+// ░░███░░░░░███ ░░░                 ░░███
+//  ░███    ░███ ████  ████████    ███████   █████
+//  ░██████████ ░░███ ░░███░░███  ███░░███  ███░░
+//  ░███░░░░░███ ░███  ░███ ░███ ░███ ░███ ░░█████
+//  ░███    ░███ ░███  ░███ ░███ ░███ ░███  ░░░░███
+//  ███████████  █████ ████ █████░░████████ ██████
+// ░░░░░░░░░░░  ░░░░░ ░░░░ ░░░░░  ░░░░░░░░ ░░░░░░
+
+binds {
+    // shows a list of important hotkeys.
+    Mod+Shift+Slash { show-hotkey-overlay; }
+
+    // You can also move the mouse into the top-left hot corner,
+    // or do a four-finger swipe up on a touchpad.
+    Mod+Tab repeat=false { toggle-overview; }
+
+    Mod+Q       { close-window;                }
+    Mod+Shift+Q { quit;                        }
+
+    Mod+V  		{ toggle-window-floating;      }
+    Mod+Shift+F { fullscreen-window;           }
+	Mod+W       { switch-preset-column-width;  }
+	Mod+Shift+W { switch-preset-window-height; }
+    Mod+F  		{ maximize-column;             }
+
+    Mod+Alt+C { center-column; }
+    Mod+Alt+P { power-off-monitors; }
+    Mod+Alt+T { toggle-column-tabbed-display; }
+    Mod+Alt+F { switch-focus-between-floating-and-tiling; }
+    Mod+Alt+L hotkey-overlay-title="Lock the Screen: Gtklock" { spawn "gtklock"; }
+
+    // Mod+Return { expand-column-to-available-width; }
+
+    // Program binds
+    Mod+Return hotkey-overlay-title="Open a Terminal: Foot"    { spawn "footclient"; }
+    Mod+Shift+Space  hotkey-overlay-title="Run an Application: Rofi" { spawn "rofi" "-show" "drun"; }
+	Mod+Space  hotkey-overlay-title="Run an Application: Fuzzel" { spawn "fuzzel"; }
+    Mod+E      hotkey-overlay-title="Open File Manager"        { spawn "thunar"; }
+    Mod+B      hotkey-overlay-title="Open Browser"             { spawn "firefox"; }
+    Mod+O      hotkey-overlay-title="OCR script"     		   { spawn "sh" "-c" "~/bin/ocr"; }
+	Mod+R      hotkey-overlay-title="Runner script"     	   { spawn "foot" "-e" "sh" "-c" "~/bin/runner"; }
+    Mod+D      hotkey-overlay-title="Open Discord"             { spawn "vesktop"; }
+    Mod+G      hotkey-overlay-title="Open Retroarch"           { spawn "retroarch"; }
+    Mod+S      hotkey-overlay-title="Open Spotify"             { spawn "spotify"; }
+    Mod+A      hotkey-overlay-title="Open Anki"                { spawn "anki"; }
+    Mod+I      hotkey-overlay-title="Open Ticktick"            { spawn "ticktick"; }
+    Mod+N      hotkey-overlay-title="Open Notification Center" { spawn "swaync-client" "-t" "-sw"; }
+    Mod+Y      hotkey-overlay-title="Open Yazi"                { spawn "foot" "-e" "zsh" "-ic" "yazi"; }
+    Mod+Escape hotkey-overlay-title="Open Btop"                { spawn "foot" "-e" "zsh" "-ic" "btop"; }
+    Mod+KP_ADD hotkey-overlay-title="Calculator"               { spawn "galculator"; }
+
+    // Scratchpads
+    Mod+Shift+Escape hotkey-overlay-title="Btop scratchpad"     { spawn "~/.config/niri/spawn-or-focus.sh" "special-btop";    }
+    Mod+Shift+E hotkey-overlay-title="Files scratchpad"    { spawn "~/.config/niri/spawn-or-focus.sh" "special-files";   }
+    Mod+Shift+Return hotkey-overlay-title="Term scratchpad"     { spawn "~/.config/niri/spawn-or-focus.sh" "special-term";    }
+    Mod+Shift+N hotkey-overlay-title="Nvim scratchpad"     { spawn "~/.config/niri/spawn-or-focus.sh" "special-nvim";    }
+    Mod+Shift+P hotkey-overlay-title="Project scratchpad"  { spawn "~/.config/niri/spawn-or-focus.sh" "special-project"; }
+    Mod+Shift+S hotkey-overlay-title="Spotify scratchpad"  { spawn "~/.config/niri/spawn-or-focus.sh" "Spotify";         }
+    Mod+Shift+I hotkey-overlay-title="Ticktick scratchpad" { spawn "~/.config/niri/spawn-or-focus.sh" "ticktick";        }
+
+    // Scripts
+    Mod+Ctrl+V { spawn "~/bin/rofi-clipboard";   }
+    // Mod+C      { spawn "~/scripts/colorpicker";      }
+    Mod+Ctrl+Tab { spawn "~/bin/wall-random";    }
+    Mod+Grave  { spawn "~/bin/list-niri-window"; }
+    Mod+Ctrl+P { spawn "~/bin/rofi-power";       }
+    Mod+Ctrl+W { spawn "~/bin/rofi-wall";        }
+    Mod+Ctrl+B { spawn "~/bin/rofi-bluetooth";   }
+    Mod+Ctrl+I { spawn "~/bin/rofi-wifi";        }
+    Mod+Ctrl+O { spawn "sh" "-c" "~/bin/text-picker";      }
+    Mod+Ctrl+D { spawn "~/bin/rofi-docs";        }
+
+    XF86AudioMedia { spawn "playerctl" "play-pause"; }
+   	 // Media controls
+    XF86AudioMute allow-when-locked=true { spawn "sh" "-c" "$HOME/.config/niri/scripts/Volume.sh --toggle"; }
+    XF86AudioRaiseVolume allow-when-locked=true { spawn "sh" "-c" "$HOME/.config/niri/scripts/Volume.sh --inc"; }
+    XF86AudioLowerVolume allow-when-locked=true { spawn "sh" "-c" "$HOME/.config/niri/scripts/Volume.sh --dec"; }
+    XF86AudioMicMute allow-when-locked=true { spawn "sh" "-c" "$HOME/.config/niri/scripts/Volume.sh --toggle-mic"; }
+    XF86AudioNext allow-when-locked=true { spawn "playerctl" "next"; }
+    XF86AudioPrev allow-when-locked=true { spawn "playerctl" "previous"; }
+    XF86AudioPlay allow-when-locked=true { spawn "playerctl" "play-pause"; }
+
+    // Brightness controls
+    XF86MonBrightnessDown allow-when-locked=true { spawn "sh" "-c" "$HOME/.config/niri/scripts/Brightness.sh --dec"; }
+    XF86MonBrightnessUp allow-when-locked=true { spawn "sh" "-c" "$HOME/.config/niri/scripts/Brightness.sh --inc"; }
+    XF86KbdBrightnessDown allow-when-locked=true { spawn "sh" "-c" "$HOME/.config/niri/scripts/BrightnessKbd.sh --dec"; }
+    XF86KbdBrightnessUp allow-when-locked=true { spawn "sh" "-c" "$HOME/.config/niri/scripts/BrightnessKbd.sh --inc"; }
+
+    Print      { screenshot;        }
+    Ctrl+Print { screenshot-screen; }
+    Alt+Print  { screenshot-window; }
+
+    Mod+Minus       { set-column-width  "-10%"; }
+    Mod+Equal       { set-column-width  "+10%"; }
+    Mod+Shift+Equal { set-window-height "+10%"; }
+    Mod+Shift+Minus { set-window-height "-10%"; }
+
+    Mod+1 { focus-workspace 1; }
+    Mod+2 { focus-workspace 2; }
+    Mod+3 { focus-workspace 3; }
+    Mod+4 { focus-workspace 4; }
+    Mod+5 { focus-workspace 5; }
+    Mod+6 { focus-workspace 6; }
+    Mod+7 { focus-workspace 7; }
+    Mod+8 { focus-workspace 8; }
+    Mod+9 { focus-workspace 9; }
+    Mod+0 { focus-workspace 10; }
+    Mod+Shift+1 { move-column-to-workspace 1; }
+    Mod+Shift+2 { move-column-to-workspace 2; }
+    Mod+Shift+3 { move-column-to-workspace 3; }
+    Mod+Shift+4 { move-column-to-workspace 4; }
+    Mod+Shift+5 { move-column-to-workspace 5; }
+    Mod+Shift+6 { move-column-to-workspace 6; }
+    Mod+Shift+7 { move-column-to-workspace 7; }
+    Mod+Shift+8 { move-column-to-workspace 8; }
+    Mod+Shift+9 { move-column-to-workspace 9; }
+    Mod+Shift+0 { move-column-to-workspace 10; }
+
+    Mod+H { focus-column-left;              }
+    Mod+J { focus-window-or-workspace-down; }
+    Mod+K { focus-window-or-workspace-up;   }
+    Mod+L { focus-column-right;             }
+
+    Mod+Left 	{ focus-column-left; }
+    Mod+Right 	{ focus-column-right; }
+    Mod+Down 	{ focus-window-down; }
+    Mod+Up 		{ focus-window-up; }
+
+    Mod+Ctrl+H { move-column-left;                      }
+    Mod+Ctrl+J { move-window-down-or-to-workspace-down; }
+    Mod+Ctrl+K { move-window-up-or-to-workspace-up;     }
+    Mod+Ctrl+L { move-column-right;                     }
+
+    Mod+WheelScrollDown      cooldown-ms=150 { focus-workspace-down; }
+    Mod+WheelScrollUp        cooldown-ms=150 { focus-workspace-up;   }
+    Mod+Ctrl+WheelScrollDown cooldown-ms=150 { focus-column-right;   }
+    Mod+Ctrl+WheelScrollUp   cooldown-ms=150 { focus-column-left;    }
+
+    Mod+MouseForward { focus-column-right;            }
+    Mod+MouseBack    { focus-column-left;             }
+
+    Mod+BracketLeft  { consume-or-expel-window-left;  }
+    Mod+BracketRight { consume-or-expel-window-right; }
+
+    Mod+Comma        { consume-window-into-column;    }
+    Mod+Period       { expel-window-from-column;      }
+}
