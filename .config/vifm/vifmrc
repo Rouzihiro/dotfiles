@@ -225,7 +225,7 @@ endif
 " █▄▀ █ ▄█ █▀█ █▄█ █▄▄ ██▄ █▄▀
 " @disabled
 
-" set dotfiles
+set dotfiles
 " set lsview
 
 

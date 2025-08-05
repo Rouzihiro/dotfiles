@@ -1,0 +1,4 @@
+#!/bin/bash
+
+# Print a message every 20 minutes to take a break using Dunstify
+killall watch || watch -n 1200 'dunstify "👀 Look away for 20 seconds"'
