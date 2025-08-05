@@ -1,16 +1,4 @@
 # Window Managers/Compositors
-niri
-xwayland-satellite
-# hyprland
-# xdg-desktop-portal-hyprland
-# hyprpaper
-# hyprlock
-# hypridle
-
-# Sway
-swayidle
-swaync
-swaybg
 xdg-desktop-portal-wlr
 # xdg-desktop-portal
 # xdg-desktop-portal-gtk
