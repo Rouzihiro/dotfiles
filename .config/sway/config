@@ -12,6 +12,8 @@ set $editor $term -e nvim
 for_window [app_id="foot"] opacity $opacity
 for_window [title="^JDownloader.*"] opacity 0.8
 for_window [app_id="runner_floating"] floating enable, move position center, move scratchpad
+for_window [title="^Wow-SF-64.exe - Wine Desktop$"] floating enable, move position center
+for_window [title="^Wow-SF.exe - Wine Desktop$"] floating enable, move position center
 
 ### Input devices
 input type:keyboard {
@@ -48,6 +50,7 @@ for_window [app_id="^com.saivert.pwvucontrol$"] floating enable
 ### Assign applications to workspaces
 assign [app_id="^librewolf$"] workspace number 1
 assign [app_id="firefox"] workspace number 2
+assign [title="^JDownloader.*"] workspace number 4
 
 output * bg ~/Pictures/wallpapers/konoha1.jpg fill
 
@@ -55,6 +58,7 @@ output * bg ~/Pictures/wallpapers/konoha1.jpg fill
 exec foot --server
 exec autotiling-rs
 exec dunst
+exec waybar
 exec swayidle -w \
     before-sleep "swaylock -fF" \
     timeout 90 'if ! pgrep -x "motrix"; then brightnessctl -s set 0; fi' \
