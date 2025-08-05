@@ -11,10 +11,7 @@ NetworkManager-tui
 gtklock
 wlr-randr
 
-# Sway components
-swayidle
-swaync
-swaybg
+# components
 xdg-desktop-portal 
 xdg-desktop-portal-wlr
 xdg-desktop-portal-gtk
