@@ -1,0 +1,7 @@
+#!/bin/bash
+
+# Define a constructive message
+MESSAGE='Goodbye soldier, you did your best. Rest. Better days are coming for you <3'
+
+# Print the message and shutdown one second later
+echo $MESSAGE && sleep 1 && shutdown now

@@ -12,7 +12,7 @@
 
   // Choose the order of the modules
 
-  "modules-left": ["hyprland/workspaces", "niri/workspaces", "tray"],
+  "modules-left": ["hyprland/workspaces", "niri/workspaces", "sway/workspaces", "tray"],
 
   "modules-center": ["clock"],
 

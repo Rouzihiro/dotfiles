@@ -1,0 +1,19 @@
+#!/bin/bash
+
+# This is a script that uses dunstify and watch to send a notification
+
+# This is a script that will take in 3 parameters:
+#		1. Message
+#		2. Absolute time/time increment
+#		3. A '-r' flag if message must be repeated (optional)
+
+MESSAGE=$1
+TIME=$2
+REPEAT=$3
+
+if [ "$REPEAT" == "-r" ]; then
+    watch -n $(($TIME*60)) dunstify $MESSAGE & > /dev/null 2>&1
+else
+    sleep $(($TIME*60)) && dunstify $MESSAGE & > /dev/null 2>&1
+fi
+

@@ -1,56 +1,192 @@
-# Default config for sway
-#
-# Copy this to ~/.config/sway/config and edit it to your liking.
-#
-# Read `man 5 sway` for a complete reference.
-
-### Variables
-#
-# Logo key. Use Mod1 for Alt.
+### Set variables
 set $mod Mod4
-# Home row direction keys, like vim
-set $left h
-set $down j
-set $up k
-set $right l
+set $opacity 0.9
+set $term foot
+set $launcher rofi -show drun
+set $browser firefox
+set $fileManager thunar
+set $TfileManager $term -e vifm
+set $editor $term -e nvim
 
-# Your preferred application launcher
-# Note: pass the final command to swaymsg so that the resulting window can be opened
-# on the original workspace that the command was run on.
-set $menu rofi -show drun | xargs swaymsg exec --
+### Opacity settings
+for_window [app_id="foot"] opacity $opacity
+for_window [title="^JDownloader.*"] opacity 0.8
+for_window [app_id="runner_floating"] floating enable, move position center, move scratchpad
 
+### Input devices
+input type:keyboard {
+    xkb_layout us,de
+	xkb_options grp:alt_shift_toggle
+}
 
+input type:touchpad {
+    dwt enabled
+    tap enabled
+    pointer_accel 1
+    accel_profile flat
+    natural_scroll enabled
+}
+
+input type:mouse {
+    pointer_accel 0.4
+    accel_profile flat
+}
+
+### Window rules
+for_window [app_id=".*"] inhibit_idle fullscreen
+
+### Gaps and borders
+gaps inner 5
+gaps outer 2
 default_border pixel 2
 default_floating_border pixel 2
-gaps outer 3px
-gaps inner 3px
-smart_gaps inverse_outer
 
-font pango:  JetBrainsMono Nerd Font 10
+### Floating windows
+floating_modifier $mod
+for_window [app_id="^com.saivert.pwvucontrol$"] floating enable
 
-#
-# Example configuration:
-#
-#   output HDMI-A-1 resolution 1920x1080 position 1920,0
-#
-# You can get the names of your outputs by running: swaymsg -t get_outputs
+### Assign applications to workspaces
+assign [app_id="^librewolf$"] workspace number 1
+assign [app_id="firefox"] workspace number 2
 
-### Idle configuration
+output * bg ~/Pictures/wallpapers/konoha1.jpg fill
 
-### Input configuration
-#
-# Example configuration:
-#
-#   input "2:14:SynPS/2_Synaptics_TouchPad" {
-#       dwt enabled
-#       tap enabled
-#       natural_scroll enabled
-#       middle_emulation enabled
-#   }
-#
+### Startup programs
+exec foot --server
+exec autotiling-rs
+exec dunst
+exec swayidle -w \
+    before-sleep "swaylock -fF" \
+    timeout 90 'if ! pgrep -x "motrix"; then brightnessctl -s set 0; fi' \
+      resume 'brightnessctl -r' \
+    timeout 900 'if ! pgrep -x "motrix"; then systemctl suspend; fi' \
+    timeout 1800 'if ! pgrep -x "motrix"; then systemctl poweroff; fi'
 
-include ./bind
-include ./rules
-include ./autostart
-# include ./environment
-include /etc/sway/config.d/*
+### Status bar
+# bar {
+#     position top
+#     tray_padding 0
+#     status_command i3blocks -c ~/.config/i3blocks/config
+#     separator_symbol ""
+#
+#     font pango:DroidSansM Nerd Font 10
+#
+#     colors {
+#         separator #1e1e2e
+#         background #1e1e2e
+#         focused_workspace  #1e1e2e #fab387 #fab387
+#         active_workspace   #1e1e2e #eba0ac #eba0ac
+#         urgent_workspace   #1e1e2e #74c7ec #74c7ec
+#     }
+# }
+
+### Keybindings
+bindsym $mod+Return exec $term
+bindsym $mod+d exec $launcher
+bindsym $mod+n exec $editor
+bindsym $mod+e exec $TfileManager
+bindsym $mod+b exec $browser
+bindsym $mod+Shift+r reload
+bindsym $mod+q kill
+bindsym $mod+Ctrl+q exec swaymsg exit
+
+# Layout
+bindsym $mod+f fullscreen
+bindsym $mod+Shift+f floating toggle
+bindsym $mod+a focus parent
+
+# Navigation
+bindsym $mod+h focus left
+bindsym $mod+j focus down
+bindsym $mod+k focus up
+bindsym $mod+l focus right
+
+bindsym $mod+Shift+h move left
+bindsym $mod+Shift+j move down
+bindsym $mod+Shift+k move up
+bindsym $mod+Shift+l move right
+
+# Resize
+bindsym $mod+Ctrl+h resize shrink width 50px
+bindsym $mod+Ctrl+j resize shrink height 50px
+bindsym $mod+Ctrl+k resize grow height 50px
+bindsym $mod+Ctrl+l resize grow width 50px
+
+# Media and brightness
+bindsym XF86MonBrightnessDown exec brightnessctl set 5%-
+bindsym XF86MonBrightnessUp exec brightnessctl set +5%
+bindsym XF86AudioLowerVolume exec wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%-
+bindsym XF86AudioRaiseVolume exec wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+
+bindsym XF86AudioMute exec wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
+bindsym XF86AudioPlay exec playerctl play-pause
+bindsym XF86AudioPrev exec playerctl previous
+bindsym XF86AudioNext exec playerctl next
+
+# Scratchpad
+bindsym $mod+space scratchpad show
+bindsym $mod+Shift+space floating enable, resize set width 1800 height 1000, move scratchpad
+
+# Custom scripts
+#bindsym $mod+Shift+v exec video-tool
+#bindsym $mod+v exec browse-video
+#bindsym $mod+Shift+x exec $term -e ~/dotfiles/home/scripts/executer
+#bindsym $mod+x exec script-launcher
+bindsym $mod+o exec ~/bin/ocr
+#bindsym $mod+Shift+t exec ocr-prompt
+#bindsym $mod+t exec ocr-translate
+#bindsym $mod+Shift+w exec wallpaper
+#bindsym $mod+Shift+b exec browse-web
+#bindsym $mod+z exec keybinds-list-shell
+#bindsym $mod+Shift+z exec keybinds-list-sway
+bindsym $mod+r exec $term --app-id=runner_floating -e ~/bin/runner
+
+bindsym $mod+mod1+v exec "$HOME/bin/rofi-clipboard"
+# bindsym $mod+c exec "$HOME/scripts/colorpicker"
+bindsym $mod+mod1+Tab exec "$HOME/bin/wall-random"
+bindsym $mod+grave exec "$HOME/bin/list-niri-window"
+bindsym $mod+mod1+p exec "$HOME/bin/rofi-power"
+bindsym $mod+mod1+w exec "$HOME/bin/rofi-wall"
+bindsym $mod+mod1+b exec "$HOME/bin/rofi-bluetooth"
+bindsym $mod+mod1+i exec "$HOME/bin/rofi-wifi"
+bindsym $mod+mod1+o exec sh -c "$HOME/bin/text-picker"
+bindsym $mod+mod1+d exec "$HOME/bin/rofi-docs"
+
+### Workspaces
+set $ws1 "1"
+set $ws2 "2"
+set $ws3 "3"
+set $ws4 "4"
+set $ws5 "5"
+set $ws6 "6"
+set $ws6 "6"
+set $ws7 "7"
+set $ws8 "8"
+set $ws9 "9"
+
+bindsym $mod+1 workspace number $ws1
+bindsym $mod+2 workspace number $ws2
+bindsym $mod+3 workspace number $ws3
+bindsym $mod+4 workspace number $ws4
+bindsym $mod+5 workspace number $ws5
+bindsym $mod+6 workspace number $ws6
+bindsym $mod+7 workspace number $ws7
+bindsym $mod+8 workspace number $ws8
+bindsym $mod+9 workspace number $ws9
+
+bindsym $mod+Shift+1 move container to workspace number $ws1
+bindsym $mod+Shift+2 move container to workspace number $ws2
+bindsym $mod+Shift+3 move container to workspace number $ws3
+bindsym $mod+Shift+4 move container to workspace number $ws4
+bindsym $mod+Shift+5 move container to workspace number $ws5
+bindsym $mod+Shift+6 move container to workspace number $ws6
+bindsym $mod+Shift+7 move container to workspace number $ws7
+bindsym $mod+Shift+8 move container to workspace number $ws8
+bindsym $mod+Shift+9 move container to workspace number $ws9
+
+### Mode: vm_mode
+mode "vm_mode" {
+  bindsym $mod+i exec ~/.config/sway/scipts/vm-mode-left.sh
+}
+bindsym $mod+i exec ~/.config/sway/scipts/vm-mode-enter.sh
+
+

@@ -201,7 +201,7 @@ environment {
      QT_AUTO_SCREEN_SCALE_FACTOR "1"
      MOZ_ENABLE_WAYLAND "1"
      GDK_SCALE "1"
-	 BROWSER "librewolf"
+	 BROWSER "brave-browser"
      _JAVA_AWT_WM_NONREPARENTING "1"
    // GTK_THEME "catppuccin-macchiato-green-standard+default"
      ELECTRON_OZONE_PLATFORM_HINT "auto"
@@ -387,6 +387,7 @@ window-rule {
     match app-id="nwg-look"
     match app-id="qt6ct"
     match app-id="qt5ct"
+	match app-id="brave-browser" title="Picture-in-Picture"
     match app-id="firefox" title="Picture-in-Picture"
     match app-id="floorp" title="Picture-in-Picture"
     match app-id="zen" title="Picture-in-Picture"
@@ -433,7 +434,6 @@ window-rule {
     match app-id="es-de"
     match app-id="mpv"
     match app-id="feh"
-
     open-focused true
     open-fullscreen true
 }
@@ -477,12 +477,12 @@ binds {
     Mod+Shift+Space  hotkey-overlay-title="Run an Application: Rofi" { spawn "rofi" "-show" "drun"; }
 	Mod+Space  hotkey-overlay-title="Run an Application: Fuzzel" { spawn "fuzzel"; }
     Mod+E      hotkey-overlay-title="Open File Manager"        { spawn "thunar"; }
-    Mod+B      hotkey-overlay-title="Open Browser"             { spawn "librewolf"; }
+    Mod+B      hotkey-overlay-title="Open Browser"             { spawn "brave-browser"; }
     Mod+O      hotkey-overlay-title="OCR script"     		   { spawn "sh" "-c" "~/bin/ocr"; }
 	Mod+R      hotkey-overlay-title="Runner script"     	   { spawn "foot" "-e" "sh" "-c" "~/bin/runner"; }
     Mod+D      hotkey-overlay-title="Open Discord"             { spawn "vesktop"; }
     Mod+G      hotkey-overlay-title="Open Retroarch"           { spawn "retroarch"; }
-    Mod+S      hotkey-overlay-title="Open Spotify"             { spawn "spotify"; }
+   // Mod+S      hotkey-overlay-title="Open Spotify"             { spawn "spotify"; }
     Mod+A      hotkey-overlay-title="Open Anki"                { spawn "anki"; }
     Mod+I      hotkey-overlay-title="Open Ticktick"            { spawn "ticktick"; }
     Mod+N      hotkey-overlay-title="Open Notification Center" { spawn "swaync-client" "-t" "-sw"; }
@@ -528,6 +528,7 @@ binds {
     XF86KbdBrightnessUp allow-when-locked=true { spawn "sh" "-c" "$HOME/.config/niri/scripts/BrightnessKbd.sh --inc"; }
 
     Print      { screenshot;        }
+	Mod+S      { screenshot;        }
     Ctrl+Print { screenshot-screen; }
     Alt+Print  { screenshot-window; }
 

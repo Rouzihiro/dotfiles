@@ -1,0 +1,11 @@
+#!/bin/bash
+
+# This script will run the command 'gammastep -O 3000' if gammastep isn't already running.
+# If gammastep is already running, it will run 'killall gammastep'
+
+if pgrep wlsunset > /dev/null
+then
+		killall wlsunset
+else
+		wlsunset -T 5000 -g 0.7 &
+fi

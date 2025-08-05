@@ -1,0 +1,25 @@
+#!/bin/bash
+
+# This script will use ffmpeg to record a video from the screen and audio from the microphone will be separated into a separate file.
+
+# If the argument is "start" then the recording will start.
+# If the argument is "stop" then the recording will stop.
+
+FILENAME=$(date +%F_%T)
+DIRECTORY="$HOME/Media/screenrecords/"
+
+# Make screenshot folder
+mkdir -p $DIRECTORY
+
+if [ "$1" = "start" ]; then
+	# Start recording
+	dunstify "🔴 Recording Started"
+	wf-recorder --file="$DIRECTORY/$FILENAME.mp4"
+
+fi
+
+if [ "$1" = "stop" ]; then
+	# Stop recording
+	dunstify "🔴 Recording Stopped"
+	killall wf-recorder
+fi

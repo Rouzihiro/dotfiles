@@ -1,0 +1,351 @@
+###############################################################################
+# 1) FONT & COLORS
+###############################################################################
+font_settings: &font_settings
+  font: "Iosevka Nerd Font:pixelsize=18"
+
+workspace_font_settings: &workspace_font_settings
+  font: "Iosevka Nerd Font:pixelsize=26"
+
+color_green: &color_green
+  foreground: "A6E3A1FF"
+
+color_purple: &color_purple
+  foreground: "583794FF"
+
+color_red: &color_red
+  foreground: "F38BA8FF"
+
+color_blue_gray: &color_blue_gray
+  foreground: "6D8895FF"
+
+color_blue: &color_blue
+  foreground: "7AA2F7FF"
+
+color_arch_blue: &color_arch_blue
+  foreground: "0A9CF5FF"
+
+color_white: &color_white
+  foreground: "F1F1F1FF"
+
+color_lime: &color_lime
+  foreground: "B9C244FF"
+
+color_cyan: &color_cyan
+  foreground: "7DCFFFFF"
+
+color_yellow: &color_yellow
+  foreground: "E0AF68FF"
+
+###############################################################################
+# 2) ANCHORS FOR SEPARATORS, LOGOS, ETC.
+###############################################################################
+anchors:
+  # A “separator” label with a special glyph
+  separator: &separator
+    label:
+      content:
+        string:
+          text: ""
+          <<: *color_red
+
+  # Arch logo label
+  arch_logo: &arch_logo
+    label:
+      content:
+        string:
+          text: "󰣇 "
+          <<: *color_arch_blue
+
+###############################################################################
+# 3) ANCHORS FOR MODULES
+###############################################################################
+# 3A) BATTERY MODULE
+battery_module: &battery_module
+  battery:
+    name: macsmc-battery
+    content:
+      string:
+        text: "{capacity}%"
+        <<: *color_white
+# 3B) CLOCK MODULE
+clock_module: &clock_module
+  clock:
+    time-format: "%I:%M %p"
+    content:
+      - string:
+          text: "{time}"
+
+# 3C) PIPEWIRE (VOLUME) MODULE
+pipewire_module: &pipewire_module
+  pipewire:
+    content:
+      map:
+        conditions:
+          type == "sink":
+            list:
+              spacing: 5
+              items:
+                - map:
+                    default:
+                      string:
+                        text: " "
+                        <<: *color_yellow
+                        on-click:
+                          left: "pactl set-sink-mute @DEFAULT_SINK@ toggle"
+                          wheel-up: "pactl set-sink-volume @DEFAULT_SINK@ +1%"
+                          wheel-down: "pactl set-sink-volume @DEFAULT_SINK@ -1%"
+                    conditions:
+                      muted:
+                        string:
+                          text: " "
+                          <<: *color_red
+                          on-click:
+                            left: "pactl set-sink-mute @DEFAULT_SINK@ toggle"
+                            wheel-up: "pactl set-sink-volume @DEFAULT_SINK@ +1%"
+                            wheel-down: "pactl set-sink-volume @DEFAULT_SINK@ -1%"
+
+                # (2) Volume text (always white)
+                - string:
+                    text: "{linear_volume}%"
+
+# 3D) NETWORK MODULE
+network_module: &network_module
+  network:
+    poll-interval: 1000
+    content:
+      map:
+        default: {empty: {}}
+        conditions:
+          name == "wlo1":
+            map:
+              default:
+                list:
+                  spacing: 0
+                  items:
+                    - string:
+                        text: " "
+                        <<: *color_blue
+                    - string:
+                        text: " {ssid}"
+              conditions:
+                ssid == "":
+                  list:
+                    spacing: 0
+                    items:
+                      - string:
+                          text: "󰖪 "
+                          <<: *color_red
+
+# 3E) BACKLIGHT MODULE
+backlight_module: &backlight_module
+  backlight:
+    name: amdgpu_bl2
+    content:
+      list:
+        spacing: 2
+        items:
+          - string:
+              text: " "
+              << : *color_red
+              on-click:
+                left: "toggleRedLight"
+                wheel-up: "brightnessctl set +1%"
+                wheel-down: "brightnessctl set 1%-"
+          - string:
+              text: "{percent}%"
+
+# 3F) CPU MODULE (Show only total usage)
+cpu_module: &cpu_module
+  cpu:
+    poll-interval: 1000
+    content:
+      map:
+        default: {empty: {}}
+        conditions:
+          id < 0:
+            list:
+              spacing: 5
+              items:
+                - string:
+                    text: " "
+                    <<: *color_red
+                - string:
+                    text: "{cpu}%"
+
+# 3G) MEM MODULE
+mem_module: &mem_module
+  mem:
+    poll-interval: 1000
+    content:
+      list:
+        spacing: 0
+        items:
+          - string:
+              text: " "
+              <<: *color_cyan
+          - string:
+              text: " {percent_used}%"
+
+# 3H) SCRIPT MODULE FOR PLAYER STATUS
+player_status_module: &player_status_module
+  script:
+    path: "/usr/bin/playerctl"
+    args:
+      - "--follow"
+      - "status"
+      - "--format"
+      - |
+        my_status|string|{{status}}
+
+
+    # Keep above newlines or else the format gets messed up
+    content:
+      list:
+        spacing: 5
+        items:
+          # Previous icon
+          - string:
+              <<: *color_blue
+              text: " "
+              on-click:
+                left: "playerctl previous"
+
+          # Middle icon depends on my_status
+          - map:
+              default:
+                string:
+                  <<: *color_lime
+                  text: " "
+                  on-click:
+                    left: "playerctl play-pause"
+
+              conditions:
+                'my_status == "No players found"':
+                  string:
+                    <<: *color_lime
+                    text: "󰝛 Not Playing"
+                    on-click:
+                      left: "playerctl play-pause"
+
+                'my_status == "Stopped"':
+                  string:
+                    <<: *color_lime
+                    text: " "
+                    on-click:
+                      left: "playerctl play-pause"
+
+                'my_status == "Playing"':
+                  string:
+                    <<: *color_lime
+                    text: " "
+                    on-click:
+                      left: "playerctl play-pause"
+
+                'my_status == "Paused"':
+                  string:
+                    <<: *color_lime
+                    text: " "
+                    on-click:
+                      left: "playerctl play-pause"
+
+          # Next icon
+          - string:
+              <<: *color_blue
+              text: ""
+              on-click:
+                left: "playerctl next"
+
+# 3I) SCRIPT MODULE FOR PLAYER METADATA (Title, etc.)
+player_metadata_module: &player_metadata_module
+  script:
+    path: "/usr/bin/playerctl"
+    args:
+      - "--follow"
+      - "metadata"
+      - "--format"
+      - |
+        title|string|{{trunc(title,30)}}
+
+
+    # Keep above newlines or else the format gets messed up
+    content:
+      list:
+        spacing: 5
+        items:
+          - map:
+              default:
+                string:
+                  text: "Not Playing"
+
+              conditions:
+                'title != ""':
+                  string:
+                    text: "{title}"
+
+#3J) SCRIPT MODULE FOR i3/SWAY WORKSPACES
+workspaces_module: &workspaces_module
+  i3:
+    persistent: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"]
+    spacing: 8
+    sort: native
+
+    content:
+      "":
+        map:
+          default:
+            string:
+              text: "󰊠 "
+              << :
+                - *color_blue
+                - *workspace_font_settings
+
+          conditions:
+            empty:
+              string:
+                text: "󰑊 "
+                << : *color_purple
+            focused:
+              string:
+                text: "󰮯 "
+                << : *color_yellow
+
+###############################################################################
+# 4) THE BAR DEFINITION
+###############################################################################
+bar:
+  location: top
+  height: 35
+  background: "1A1B26FF"
+  spacing: 5
+  margin: 20
+  <<:
+    - *color_white
+    - *font_settings
+
+  left:
+    # Left side modules
+    - *arch_logo
+    - *separator
+    - *player_status_module
+    - *separator
+    - *player_metadata_module
+
+  center:
+    - *workspaces_module
+
+  right:
+    # Right side modules
+    - *cpu_module
+    - *separator
+    - *mem_module
+    - *separator
+    - *battery_module
+    - *separator
+    - *pipewire_module
+    - *separator
+    - *network_module
+    - *separator
+    - *backlight_module
+    - *separator
+    - *clock_module
