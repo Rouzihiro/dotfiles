@@ -84,3 +84,6 @@ map('n', '<leader>V', ':split<CR>:Telescope find_files<CR>', { desc = 'Find file
 -- Enhanced Nvim-tree Keymaps
 -- map('n', '<leader>e', ':NvimTreeToggle<CR>', { desc = 'Toggle Explorer' })
 -- map('n', '<leader>E', ':NvimTreeFindFile<CR>', { desc = 'Reveal Current File' })
+
+
+-- vim.api.nvim_set_keymap('i', '<C-Space>', "cmp.complete()", { noremap = true, expr = true, silent = true })
