@@ -26,6 +26,7 @@
     "wireplumber",
 	"power-profiles-daemon",
 	"battery",
+	"sway/language",
     "custom/separator",
     "group/custom-group"
   ],
@@ -228,6 +229,11 @@
 	"on-click": "foot -T 'floaty-small' -e $HOME/bin/connect-bt",
     "tooltip-format": "Bluetooth Menu",
   },
+
+ "sway/language": {
+  "format": " ",
+  "on-click": "swaymsg 'input * xkb_switch_layout next'",
+},
 
   "custom/wifi": {
     "format": "{icon}",

@@ -1,5 +1,7 @@
+export LANG=en_US.UTF-8
 export PATH=$HOME/bin:/usr/local/bin:$PATH
 export ZSH="$HOME/.oh-my-zsh"
+export PATH="$HOME/.local/share/bob/nvim-bin:$PATH"
 
 plugins=( 
     git
@@ -12,8 +14,8 @@ source $ZSH/oh-my-zsh.sh
 
 [ -f ~/.aliases ] && source ~/.aliases
 [ -f ~/.aliases-functions ] && source ~/.aliases-functions
-#[ -f ~/.aliases-arch ] && source ~/.aliases-arch
-[ -f ~/.aliases-fedora ] && source ~/.aliases-fedora
+[ -f ~/.aliases-arch ] && source ~/.aliases-arch
+#[ -f ~/.aliases-fedora ] && source ~/.aliases-fedora
 
 #fastfetch -c $HOME/.config/fastfetch/config-compact.jsonc
 

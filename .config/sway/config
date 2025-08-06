@@ -8,13 +8,6 @@ set $fileManager thunar
 set $TfileManager $term -e vifm
 set $editor $term -e nvim
 
-### Opacity settings
-for_window [app_id="foot"] opacity $opacity
-for_window [title="^JDownloader.*"] opacity 0.8
-for_window [app_id="runner_floating"] floating enable, move position center, move scratchpad
-for_window [title="^Wow-SF-64.exe - Wine Desktop$"] floating enable, move position center
-for_window [title="^Wow-SF.exe - Wine Desktop$"] floating enable, move position center
-
 ### Input devices
 input type:keyboard {
     xkb_layout us,de
@@ -34,23 +27,7 @@ input type:mouse {
     accel_profile flat
 }
 
-### Window rules
-for_window [app_id=".*"] inhibit_idle fullscreen
-
-### Gaps and borders
-gaps inner 5
-gaps outer 2
-default_border pixel 2
-default_floating_border pixel 2
-
-### Floating windows
-floating_modifier $mod
-for_window [app_id="^com.saivert.pwvucontrol$"] floating enable
-
-### Assign applications to workspaces
-assign [app_id="^librewolf$"] workspace number 1
-assign [app_id="firefox"] workspace number 2
-assign [title="^JDownloader.*"] workspace number 4
+ assign [title="^JDownloader.*"] workspace number 4
 
 output * bg ~/Pictures/wallpapers/konoha1.jpg fill
 
@@ -66,23 +43,33 @@ exec swayidle -w \
     timeout 900 'if ! pgrep -x "motrix"; then systemctl suspend; fi' \
     timeout 1800 'if ! pgrep -x "motrix"; then systemctl poweroff; fi'
 
-### Status bar
-# bar {
-#     position top
-#     tray_padding 0
-#     status_command i3blocks -c ~/.config/i3blocks/config
-#     separator_symbol ""
-#
-#     font pango:DroidSansM Nerd Font 10
-#
-#     colors {
-#         separator #1e1e2e
-#         background #1e1e2e
-#         focused_workspace  #1e1e2e #fab387 #fab387
-#         active_workspace   #1e1e2e #eba0ac #eba0ac
-#         urgent_workspace   #1e1e2e #74c7ec #74c7ec
-#     }
-# }
+exec_always {
+    export MOZ_ENABLE_WAYLAND=1
+    export QT_QPA_PLATFORM=wayland;xcb
+    export SDL_VIDEODRIVER=wayland
+    export GDK_BACKEND=wayland,x11
+    export CLUTTER_BACKEND=wayland
+    export XDG_SESSION_TYPE=wayland
+    export XDG_CURRENT_DESKTOP=sway
+    export OZONE_PLATFORM=wayland
+}
+
+
+
+bindgesture {
+	# Workspaces
+	swipe:3:right workspace prev
+	swipe:3:left workspace next
+
+	# Toggle floating
+	swipe:3:up floating toggle
+
+	# Move active window
+	swipe:4:left move left
+	swipe:4:right move right
+	swipe:4:up move up
+	swipe:4:down move down
+}
 
 ### Keybindings
 bindsym $mod+Return exec $term
@@ -162,7 +149,6 @@ set $ws3 "3"
 set $ws4 "4"
 set $ws5 "5"
 set $ws6 "6"
-set $ws6 "6"
 set $ws7 "7"
 set $ws8 "8"
 set $ws9 "9"
@@ -193,4 +179,4 @@ mode "vm_mode" {
 }
 bindsym $mod+i exec ~/.config/sway/scipts/vm-mode-enter.sh
 
-
+include ~/.config/sway/config.d/*

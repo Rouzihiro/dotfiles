@@ -35,6 +35,7 @@ text/x-csrc=nvim.desktop
 text/css=nvim.desktop
 image/png=imv-dir.desktop
 image/jpeg=imv-dir.desktop
+application/pdf=org.pwmt.zathura-pdf-mupdf.desktop
 
 [Added Associations]
 x-scheme-handler/http=zen-browser.desktop;zen.desktop;
@@ -66,3 +67,4 @@ text/x-csrc=nvim.desktop;
 text/css=nvim.desktop;
 image/png=imv-dir.desktop;
 image/jpeg=imv-dir.desktop;
+application/pdf=org.pwmt.zathura-pdf-mupdf.desktop;

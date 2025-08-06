@@ -1,0 +1,27 @@
+/* themes/solarized-dark.css */
+@define-color black      #073642;
+@define-color red        #DC322F;
+@define-color green      #859900;
+@define-color yellow     #B58900;
+@define-color blue       #268BD2;
+@define-color purple     #6C71C4;
+@define-color aqua       #2AA198;
+@define-color gray       #586E75;
+@define-color white      #EEE8D5;
+
+@define-color warning   @yellow;
+@define-color critical  @red;
+@define-color mode      @black;
+@define-color unfocused #002B36;
+@define-color focused   @blue;
+@define-color inactive  #073642;
+@define-color sound     @purple;
+@define-color network   @purple;
+@define-color memory    @aqua;
+@define-color cpu       @green;
+@define-color temp      #859900;
+@define-color layout    @yellow;
+@define-color battery   @green;
+@define-color date      @black;
+@define-color time      @white;
+
