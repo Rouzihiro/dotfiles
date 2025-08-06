@@ -1,0 +1,19 @@
+### Startup programs
+exec foot --server
+exec autotiling-rs
+exec dunst
+exec swayidle -w \
+    before-sleep "swaylock -fF" \
+    timeout 90 'if ! pgrep -x "motrix"; then brightnessctl -s set 0; fi' \
+      resume 'brightnessctl -r' \
+    timeout 900 'if ! pgrep -x "motrix"; then systemctl suspend; fi' \
+    timeout 1800 'if ! pgrep -x "motrix"; then systemctl poweroff; fi'
+
+# Polkit authentication agent for Sway
+exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
+
+# Update dbus environment variables for systemd compatibility
+exec --no-startup-id dbus-update-activation-environment --systemd --all
+
+# Update dbus environment with the XDG_CURRENT_DESKTOP set to Sway for better desktop environment compatibility
+exec --no-startup-id dbus-update-activation-environment --systemd XDG_CURRENT_DESKTOP=sway
