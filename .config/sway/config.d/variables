@@ -1,0 +1,12 @@
+### Set variables
+set $mod Mod4
+set $opacity 0.9
+set $term foot
+set $launcher rofi -show drun
+set $browser librewolf
+set $fileManager thunar
+set $TfileManager $term -e vifm
+set $editor $term -e nvim
+
+# set $powermenu ~/.config/custom_scripts/power.sh
+set $lockscreen swaylock -i ~/Pictures/lockscreen/VIM.png

@@ -64,6 +64,7 @@ PACMAN_PACKAGES=(
 	"xdg-desktop-portal" 
 	"xdg-desktop-portal-wlr" 
 	"xdg-desktop-portal-gtk"
+	"polkit-gnome"
 
 	# System and desktop environment
   "waybar" 
@@ -82,7 +83,7 @@ PACMAN_PACKAGES=(
 		"duf" "ncdu" "highlight" "ripgrep"
 
     # Utilities
-    "aria2" "grim" "slurp" "brightnessctl" 
+    "aria2" "grim" "slurp" "satty" "brightnessctl" 
     "mediainfo" "jq" "bc" "trash-cli" "unzip"
 		"ntfs-3g"
     "blueman"  # Bluetooth
@@ -92,7 +93,6 @@ PACMAN_PACKAGES=(
     "xdg-user-dirs"  # Default user directories
     "yad"  # GUI dialogs
     "rsync"  # File syncing
-    "swappy"  # Screenshot editing
 		"antimicrox"
 		"zenity"
 

@@ -1,0 +1,14 @@
+  bindgesture {
+	# Workspaces
+	swipe:3:right workspace prev
+	swipe:3:left workspace next
+
+	# Toggle floating
+	swipe:3:up floating toggle
+
+	# Move active window
+	swipe:4:left move left
+	swipe:4:right move right
+	swipe:4:up move up
+	swipe:4:down move down
+}

@@ -1,4 +1,11 @@
 ### Status bar
+
+bar {
+	swaybar_command waybar
+	position top
+	mode dock
+}
+
 # bar {
 #     position top
 #     tray_padding 0

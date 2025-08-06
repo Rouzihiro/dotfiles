@@ -1,0 +1,25 @@
+# Custom scripts
+#bindsym $mod+Shift+v exec video-tool
+#bindsym $mod+v exec browse-video
+#bindsym $mod+Shift+x exec $term -e ~/dotfiles/home/scripts/executer
+#bindsym $mod+x exec script-launcher
+bindsym $mod+o exec ~/bin/ocr
+#bindsym $mod+Shift+t exec ocr-prompt
+#bindsym $mod+t exec ocr-translate
+#bindsym $mod+Shift+w exec wallpaper
+#bindsym $mod+Shift+b exec browse-web
+#bindsym $mod+z exec keybinds-list-shell
+#bindsym $mod+Shift+z exec keybinds-list-sway
+bindsym $mod+r exec $term --app-id=runner_floating -e ~/bin/runner
+
+bindsym $mod+mod1+v exec "$HOME/bin/rofi-clipboard"
+# bindsym $mod+c exec "$HOME/scripts/colorpicker"
+bindsym $mod+mod1+Tab exec "$HOME/bin/wall-random"
+bindsym $mod+grave exec "$HOME/bin/list-niri-window"
+bindsym $mod+mod1+p exec "$HOME/bin/rofi-power"
+bindsym $mod+mod1+w exec "$HOME/bin/rofi-wall"
+bindsym $mod+mod1+b exec "$HOME/bin/rofi-bluetooth"
+bindsym $mod+mod1+i exec "$HOME/bin/rofi-wifi"
+bindsym $mod+mod1+o exec sh -c "$HOME/bin/text-picker"
+bindsym $mod+mod1+d exec "$HOME/bin/rofi-docs"
+
