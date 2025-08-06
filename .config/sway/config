@@ -3,7 +3,7 @@ set $mod Mod4
 set $opacity 0.9
 set $term foot
 set $launcher rofi -show drun
-set $browser firefox
+set $browser librewolf
 set $fileManager thunar
 set $TfileManager $term -e vifm
 set $editor $term -e nvim
@@ -42,18 +42,6 @@ exec swayidle -w \
       resume 'brightnessctl -r' \
     timeout 900 'if ! pgrep -x "motrix"; then systemctl suspend; fi' \
     timeout 1800 'if ! pgrep -x "motrix"; then systemctl poweroff; fi'
-
-exec_always {
-    export MOZ_ENABLE_WAYLAND=1
-    export QT_QPA_PLATFORM=wayland;xcb
-    export SDL_VIDEODRIVER=wayland
-    export GDK_BACKEND=wayland,x11
-    export CLUTTER_BACKEND=wayland
-    export XDG_SESSION_TYPE=wayland
-    export XDG_CURRENT_DESKTOP=sway
-    export OZONE_PLATFORM=wayland
-}
-
 
 
 bindgesture {
@@ -118,6 +106,7 @@ bindsym $mod+space scratchpad show
 bindsym $mod+Shift+space floating enable, resize set width 1800 height 1000, move scratchpad
 
 # Custom scripts
+bindsym $mod+s exec "$HOME/.config/sway/scripts/screenshot.sh --swappy"
 #bindsym $mod+Shift+v exec video-tool
 #bindsym $mod+v exec browse-video
 #bindsym $mod+Shift+x exec $term -e ~/dotfiles/home/scripts/executer
@@ -149,6 +138,7 @@ set $ws3 "3"
 set $ws4 "4"
 set $ws5 "5"
 set $ws6 "6"
+set $ws6 "6"
 set $ws7 "7"
 set $ws8 "8"
 set $ws9 "9"
@@ -175,8 +165,8 @@ bindsym $mod+Shift+9 move container to workspace number $ws9
 
 ### Mode: vm_mode
 mode "vm_mode" {
-  bindsym $mod+i exec ~/.config/sway/scipts/vm-mode-left.sh
+  bindsym $mod+i exec ~/.config/sway/scripts/vm-mode-left.sh
 }
-bindsym $mod+i exec ~/.config/sway/scipts/vm-mode-enter.sh
+bindsym $mod+i exec ~/.config/sway/scripts/vm-mode-enter.sh
 
 include ~/.config/sway/config.d/*
