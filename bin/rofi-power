@@ -24,7 +24,7 @@ case "$chosen" in
   if command -v gtklock &>/dev/null; then
     gtklock
   elif command -v swaylock &>/dev/null; then
-    swaylock -f
+    swaylock -fF -i "~/Pictures/lockscreen/VIM.png" 
   elif command -v hyprlock &>/dev/null; then
     hyprlock
   else
