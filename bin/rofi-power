@@ -15,10 +15,10 @@ chosen=$(echo -e "$shutdown\n$reboot\n$logout\n$suspend\n$lock" | rofi_command)
 
 case "$chosen" in
 "$shutdown")
-  systemctl poweroff
+  poweroff
   ;;
 "$reboot")
-  systemctl reboot
+  reboot now
   ;;
 "$lock")
   if command -v gtklock &>/dev/null; then
