@@ -22,13 +22,15 @@ vim.pack.add({
 	{ src = "https://github.com/neovim/nvim-lspconfig" },
 	{ src = "https://github.com/hrsh7th/nvim-cmp" },
 	{ src = "https://github.com/hrsh7th/cmp-path" },
---	{ src = "https://github.com/stevearc/oil.nvim" },
 	{ src = "https://github.com/stevearc/oil.nvim", version = "master", opt = false },
 	{ src = "https://github.com/echasnovski/mini.pick" },
 	{ src = "https://github.com/nvim-treesitter/nvim-treesitter" },
 	{ src = "https://github.com/chomosuke/typst-preview.nvim" },
 	{ src = "https://github.com/mason-org/mason.nvim" },
 	{ src = 'https://github.com/NvChad/showkeys',                opt = true },
+	{ src = "https://github.com/nvim-lua/plenary.nvim" },
+	{ src = "https://github.com/nvim-telescope/telescope.nvim" },
+  { src = "https://github.com/nvim-telescope/telescope-fzf-native.nvim", build = "make" },
 })
 
 local cmp = require("cmp")
@@ -48,6 +50,26 @@ require "mason".setup()
 require "showkeys".setup({ position = "top-right" })
 require "mini.pick".setup()
 require "oil".setup()
+
+require "nvim-treesitter.configs".setup({
+ensure_installed = { "lua", "rust", "ini", "markdown", "markdown_inline", "css" },
+highlight = { enable = true }
+})
+
+
+local telescope = require("telescope")
+
+telescope.setup({
+  defaults = {
+    layout_strategy = "horizontal",
+    layout_config = { width = 0.9 },
+    sorting_strategy = "ascending",
+    prompt_prefix = "   ",
+    selection_caret = " ",
+    winblend = 10,
+    file_ignore_patterns = { "node_modules", "%.git/", "%.cache" },
+  },
+})
 
 local lspconfig = require("lspconfig")
 local tinymist_config = require("lsp.tinymist")
