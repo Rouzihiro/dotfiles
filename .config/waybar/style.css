@@ -1,16 +1,15 @@
-@define-color bordercolor #89b4fa;   /* Blue */
-@define-color bg         #1e1e2e;   /* Base */
-@define-color fg         #cdd6f4;   /* Text */
-@define-color highlight  #f5c2e7;   /* Pink */
-@define-color alert      #f38ba8;   /* Red */
-@define-color disabled   #a5a5a5;
-@define-color activegreen #a6e3a1;  /* Green */
-
 * {
   min-height: 0;
   font-family: "JetBrainsMono Nerd Font", Roboto, Helvetica, Arial, sans-serif;
   font-size: 12px;
 }
+
+@import "themes/kanagawa.css";
+/* @import "themes/nord.css"; */
+/* @import "themes/solarized.css"; */
+/* @import "themes/mocha.css"; */
+/* @import "themes/gruvbox.css"; */
+/* @import "themes/rey.css"; */
 
 window#waybar {
   color: @fg;

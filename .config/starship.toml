@@ -1,94 +1,218 @@
-# ======================
-# KANAGAWA WAVE PROMPT
-# ======================
-palette = 'kanagawa_wave'
+# Kanagawa v0.1.0
+
+"$schema" = 'https://starship.rs/config-schema.json'
 
 format = """
-($status\n)\
-[](color_wave_purple)\
+[░▒▓](color_wave_blue)\
 $os\
+[](bg:color_purple fg:color_wave_blue)\
 $username\
-[ ](bg:color_wave_purple fg:color_bg)\
-${custom.is_folder_config}\
+[](bg:color_blue fg:color_purple)\
 $directory\
-[ ](fg:color_wave_purple bg:color_bg)\
+[](bg:color_wave_blue fg:color_blue)\
+[ ](color_wave_blue)\
+"""
+
+right_format = """
+[](bg:color_wave_blue fg:color_bg1)\
+[█](color_wave_blue)\
+$cmd_duration\
 $git_branch\
 $git_status\
-$git_commit\
-\
-${custom.jjstate_changed}\
-${custom.jjstate_added}\
-${custom.jjstate_deleted}\
-${custom.jj}\
-[ ](fg:color_wave_purple bg:color_bg)\
-$c\
-${custom.clang}\
-${custom.cpp-gcc}\
-$rust\
-$golang\
+$docker_context\
 $nodejs\
 $php\
-$java\
-$kotlin\
-$haskell\
-$lua\
-$python\
-$cmake\
-$docker_context\
-\
-$meson\
-${env_var.shell}\
-$shell\
-${custom.nvim}\
-${nix_shell}\
-[ ](fg:color_wave_purple bg:color_bg)\
-$cmd_duration\
-[ ](fg:color_wave_purple)\
-$line_break$character"""
+$rust\
+$time\
+[▓▒░](color_wave_blue)\
+"""
 
+# Set the theme palette
+palette = 'kanagawa_wave' # Options: kanagawa_wave, kanagawa_dragon, kanagawa_lotus
+
+# Palette colors
 [palettes.kanagawa_wave]
-# Core Kanagawa wave colors
-color_bg = "#1F1F28"          # Deep wave background
-color_bg_terminal = "#16161D"  # Darker terminal bg
-color_fg = "#DCD7BA"          # Base text (ivory)
-color_fg_light = "#938AA9"     # Muted purple
-color_wave_purple = "#957FB8"  # Iconic wave purple
-color_wave_gold = "#C0A36E"    # Classic gold accent
+# Main colors for the theme
+color_fg0 = '#DCD7BA'      # fujiWhite - main text
+color_fg1 = '#C8C093'      # oldWhite - secondary text
+color_bg0 = '#16161D'      # sumiInk0 - darkest background
+color_bg1 = '#1F1F28'      # sumiInk3 - main background
+color_bg2 = '#2A2A37'      # sumiInk4 - medium background
+color_bg3 = '#54546D'      # sumiInk6 - light background/borders
 
-# Semantic colors
-color_fg_recognized = "#7FB4CA"  # Teal for language indicators
-color_fg_git = "#FF5D62"         # Coral for git elements
-color_fail = "#E82424"           # Strong red for errors
-color_fg_warn = "#FF9E64"        # Peach for warnings
-color_fg_info = "#6A9589"        # Muted teal for info
+# Highlight colors
+color_red = '#C34043'      # autumnRed
+color_green = '#76946A'    # autumnGreen  
+color_yellow = '#C0A36E'   # boatYellow2
+color_blue = '#7E9CD8'     # crystalBlue
+color_purple = '#957FB8'   # oniViolet
+color_cyan = '#6A9589'     # waveAqua1
+color_orange = '#FFA066'   # surimiOrange
 
-# Git specific
-color_git_add = "#76946A"        # Soft green
-color_git_delete = "#C34043"     # Deep red
-color_git_change = "#DCA561"     # Amber gold
+# Bright/alternative colors
+color_bright_red = '#E82424'     # samuraiRed
+color_bright_green = '#98BB6C'   # springGreen
+color_bright_yellow = '#E6C384'  # carpYellow
+color_bright_blue = '#7FB4CA'    # springBlue
+color_bright_purple = '#938AA9'  # springViolet1
+color_bright_cyan = '#7AA89F'    # waveAqua2
 
-[git_branch]
-symbol = " "
-format = "[$symbol $branch(:$remote_branch) ]($style)"
-style = "fg:color_wave_gold bg:color_bg"  # Gold branches
+# Git/Diff specific colors
+color_git_add = '#76946A'        # autumnGreen
+color_git_change = '#DCA561'     # autumnYellow
+color_git_delete = '#C34043'     # autumnRed
+
+# Comments and details colors
+color_comment = '#727169'        # fujiGray
+color_wave_blue = '#2D4F67'      # waveBlue2 - for popups/floats
+
+[palettes.kanagawa_dragon]
+# Main colors for the theme
+color_fg0 = '#c5c9c5'      # dragonWhite - main text
+color_fg1 = '#a6a69c'      # dragonGray - secondary text
+color_bg0 = '#0d0c0c'      # dragonBlack0 - darkest background
+color_bg1 = '#181616'      # dragonBlack3 - main background
+color_bg2 = '#282727'      # dragonBlack4 - medium background
+color_bg3 = '#625e5a'      # dragonBlack6 - light background/borders
+
+# Highlight colors
+color_red = '#c4746e'      # dragonRed
+color_green = '#8a9a7b'    # dragonGreen2
+color_yellow = '#c4b28a'   # dragonYellow
+color_blue = '#8ba4b0'     # dragonBlue2
+color_purple = '#a292a3'   # dragonPink
+color_cyan = '#8ea4a2'     # dragonAqua
+color_orange = '#b6927b'   # dragonOrange
+
+# Bright/alternative colors
+color_bright_red = '#E46876'     # waveRed
+color_bright_green = '#87a987'   # dragonGreen
+color_bright_yellow = '#E6C384'  # carpYellow
+color_bright_blue = '#7FB4CA'    # springBlue
+color_bright_purple = '#938AA9'  # springViolet1
+color_bright_cyan = '#7AA89F'    # waveAqua2
+
+# Git/Diff specific colors
+color_git_add = '#87a987'        # dragonGreen
+color_git_change = '#c4b28a'     # dragonYellow
+color_git_delete = '#c4746e'     # dragonRed
+
+# Comments and details colors
+color_comment = '#737c73'        # dragonAsh
+color_wave_blue = '#949fb5'      # dragonTeal
+
+[palettes.kanagawa_lotus]
+# Main colors for the theme
+color_fg0 = '#545464'      # lotusInk1 - main text
+color_fg1 = '#43436c'      # lotusInk2 - secondary text
+color_bg0 = '#f2ecbc'      # lotusWhite3 - lightest background
+color_bg1 = '#e5ddb0'      # lotusWhite2 - main background
+color_bg2 = '#dcd5ac'      # lotusWhite1 - medium background
+color_bg3 = '#c9cbd1'      # lotusViolet3 - darker background/borders
+
+# Highlight colors
+color_red = '#c84053'      # lotusRed
+color_green = '#6f894e'    # lotusGreen
+color_yellow = '#77713f'   # lotusYellow
+color_blue = '#4d699b'     # lotusBlue4
+color_purple = '#b35b79'   # lotusPink
+color_cyan = '#597b75'     # lotusAqua
+color_orange = '#e98a00'   # lotusOrange2
+
+# Bright/alternative colors
+color_bright_red = '#d7474b'     # lotusRed2
+color_bright_green = '#6e915f'   # lotusGreen2
+color_bright_yellow = '#836f4a'  # lotusYellow2
+color_bright_blue = '#6693bf'    # lotusTeal2
+color_bright_purple = '#624c83'  # lotusViolet4
+color_bright_cyan = '#5e857a'    # lotusAqua2
+
+# Git/Diff specific colors
+color_git_add = '#6f894e'        # lotusGreen
+color_git_change = '#77713f'     # lotusYellow
+color_git_delete = '#c84053'     # lotusRed
+
+# Comments and details colors
+color_comment = '#8a8980'        # lotusGray3
+color_wave_blue = '#c7d7e0'      # lotusBlue1
+
+# Items to show in the prompt
+[os]
+disabled = false
+format = '[ $symbol ]($style)'
+style = 'bg:color_wave_blue fg:color_fg0'
+
+[os.symbols]
+Windows = "󰍲"
+Ubuntu = "󰕈"
+SUSE = ""
+Raspbian = "󰐿"
+Mint = "󰣭"
+Macos = "󰀵"
+Manjaro = ""
+Linux = "󰌽"
+Gentoo = "󰣨"
+Fedora = "󰣛"
+Alpine = ""
+Amazon = ""
+Android = ""
+Arch = "󰣇"
+Artix = "󰣇"
+EndeavourOS = ""
+CentOS = ""
+Debian = "󰣚"
+Redhat = "󱄛"
+RedHatEnterprise = "󱄛"
+Pop = ""
+
+[username]
+show_always = true
+format = '[ $user ]($style)'
+style_user = 'bg:color_purple fg:color_fg0'
+style_root = 'bg:color_cyan fg:color_fg0 bold'
 
 [directory]
-style = "fg:color_fg bg:color_bg"
-format = "[$path]($style)"
-truncation_length = 3
-truncate_to_repo = true
+format = '[ $path ]($style)[$read_only]($read_only_style)'
+style = 'bg:color_blue fg:color_fg0'
+read_only = '󰌾 '
+read_only_style = 'bg:color_blue fg:color_bright_red dimmed'
+
+[time]
+disabled = false
+format = '[ $time ]($style)'
+time_format = '%R'
+style = 'bg:color_wave_blue fg:color_fg0'
 
 [cmd_duration]
-style = "fg:color_wave_gold bg:color_bg"
-format = "[$duration]($style)"
+format = '[  $duration ]($style)'
+style = 'bg:color_bg3 fg:color_fg0'
 
-[python]
-style = "fg:color_wave_gold bg:color_bg"  # Gold for Python
+[git_branch]
+format = '[ $symbol$branch(:$remote_branch)]($style)'
+style = 'bg:color_yellow fg:color_bg0'
+symbol = '󰘬 '
+truncation_length = 12
+
+[git_status]
+format = '[ $all_status$ahead_behind ]($style)'
+style = 'bg:color_yellow fg:color_bg0'
+
+[nodejs]
+format = '[ $symbol($version) ]($style)'
+style = 'bg:color_green fg:color_fg0'
+not_capable_style = 'bg:color_red fg:color_fg0'
+
+[php]
+format = '[ $symbol ($version) ]($style)'
+style = 'bg:color_purple fg:color_fg0'
+symbol = ''
 
 [rust]
-style = "fg:color_wave_purple bg:color_bg"  # Purple for Rust
+format = '[ $symbol ($version) ]($style)'
+style = 'bg:color_orange fg:color_bg0'
+symbol = '󱘗'
 
 [docker_context]
-style = "fg:color_wave_purple bg:color_bg"  # Purple for Docker
-
-# ... (keep other sections but update their styles)
+format = '[ $symbol $context ]($style)'
+style = 'bg:color_cyan fg:color_fg0'
+symbol = '󰡨'

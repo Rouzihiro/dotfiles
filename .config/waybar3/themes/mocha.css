@@ -1,0 +1,27 @@
+/* themes/catppuccin-mocha.css */
+@define-color black       #1E1E2E;
+@define-color red         #F38BA8;
+@define-color green       #A6E3A1;
+@define-color yellow      #F9E2AF;
+@define-color blue        #89B4FA;
+@define-color purple      #F5C2E7;
+@define-color aqua        #94E2D5;
+@define-color gray        #585B70;
+@define-color white       #CDD6F4;
+
+@define-color warning     @yellow;
+@define-color critical    @red;
+@define-color mode        @black;
+@define-color unfocused   #313244;
+@define-color focused     @blue;
+@define-color inactive    #45475A;
+@define-color sound       @purple;
+@define-color network     @purple;
+@define-color memory      @aqua;
+@define-color cpu         @green;
+@define-color temp        #89B4FA;
+@define-color layout      @yellow;
+@define-color battery     @green;
+@define-color date        @black;
+@define-color time        @white;
+
