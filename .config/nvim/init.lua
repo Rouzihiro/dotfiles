@@ -22,6 +22,8 @@ vim.pack.add({
 	{ src = "https://github.com/neovim/nvim-lspconfig" },
 	{ src = "https://github.com/hrsh7th/nvim-cmp" },
 	{ src = "https://github.com/hrsh7th/cmp-path" },
+	{ src = "https://github.com/hrsh7th/cmp-buffer" },
+	{ src = "https://github.com/hrsh7th/cmp-nvim-lsp" },
 	{ src = "https://github.com/stevearc/oil.nvim", version = "master", opt = false },
 	{ src = "https://github.com/echasnovski/mini.pick" },
 	{ src = "https://github.com/nvim-treesitter/nvim-treesitter" },
@@ -40,9 +42,11 @@ cmp.setup({
 		['<Tab>'] = cmp.mapping.select_next_item(),
 		['<S-Tab>'] = cmp.mapping.select_prev_item(),
 	}),
-	sources = {
-		{ name = 'path' },
-	}
+sources = {
+  { name = 'path' },
+  { name = 'buffer' },
+  { name = 'nvim_lsp' },
+}
 })
 
 require("keymaps")
@@ -58,6 +62,7 @@ highlight = { enable = true }
 
 
 local telescope = require("telescope")
+local builtin = require("telescope.builtin")
 
 telescope.setup({
   defaults = {

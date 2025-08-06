@@ -79,7 +79,7 @@ PACMAN_PACKAGES=(
     "starship" "eza" "bat" "fzf" "fd" # Shell enhancements
     "tmux"  # Terminal multiplexer
     "fastfetch"  # System info
-		"duf" "ncdu" "highlight"
+		"duf" "ncdu" "highlight" "ripgrep"
 
     # Utilities
     "aria2" "grim" "slurp" "brightnessctl" 
