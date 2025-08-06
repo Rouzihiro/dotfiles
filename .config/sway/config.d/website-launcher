@@ -1,8 +1,10 @@
-# Launch Website Mode
-bindsym $mod+w mode "Website Launch"
+
+# Launch Website Mode with info displayed after mode is activated
+bindsym $mod+w mode "Website Launch" 
 
 mode "Website Launch" {
-    # Escape to return to the default mode
+    
+		# Escape to return to the default mode
     bindsym Escape mode default
 
     # Website key bindings
