@@ -1,129 +1,94 @@
+# ======================
+# KANAGAWA WAVE PROMPT
+# ======================
+palette = 'kanagawa_wave'
+
 format = """
-[](#3B4252)\
-$python\
+($status\n)\
+[](color_wave_purple)\
+$os\
 $username\
-[](bg:#434C5E fg:#3B4252)\
+[ ](bg:color_wave_purple fg:color_bg)\
+${custom.is_folder_config}\
 $directory\
-[](fg:#434C5E bg:#4C566A)\
+[ ](fg:color_wave_purple bg:color_bg)\
 $git_branch\
 $git_status\
-[](fg:#4C566A bg:#86BBD8)\
+$git_commit\
+\
+${custom.jjstate_changed}\
+${custom.jjstate_added}\
+${custom.jjstate_deleted}\
+${custom.jj}\
+[ ](fg:color_wave_purple bg:color_bg)\
 $c\
-$elixir\
-$elm\
-$golang\
-$haskell\
-$java\
-$julia\
-$nodejs\
-$nim\
+${custom.clang}\
+${custom.cpp-gcc}\
 $rust\
-[](fg:#86BBD8 bg:#06969A)\
+$golang\
+$nodejs\
+$php\
+$java\
+$kotlin\
+$haskell\
+$lua\
+$python\
+$cmake\
 $docker_context\
-[](fg:#06969A bg:#33658A)\
-$time\
-[ ](fg:#33658A)\
-"""
-command_timeout = 5000
-# Disable the blank line at the start of the prompt
-# add_newline = false
+\
+$meson\
+${env_var.shell}\
+$shell\
+${custom.nvim}\
+${nix_shell}\
+[ ](fg:color_wave_purple bg:color_bg)\
+$cmd_duration\
+[ ](fg:color_wave_purple)\
+$line_break$character"""
 
-# You can also replace your username with a neat symbol like  to save some space
-[username]
-show_always = true
-style_user = "bg:#3B4252"
-style_root = "bg:#3B4252"
-format = '[$user ]($style)'
+[palettes.kanagawa_wave]
+# Core Kanagawa wave colors
+color_bg = "#1F1F28"          # Deep wave background
+color_bg_terminal = "#16161D"  # Darker terminal bg
+color_fg = "#DCD7BA"          # Base text (ivory)
+color_fg_light = "#938AA9"     # Muted purple
+color_wave_purple = "#957FB8"  # Iconic wave purple
+color_wave_gold = "#C0A36E"    # Classic gold accent
 
-[directory]
-style = "bg:#434C5E"
-format = "[ $path ]($style)"
-truncation_length = 3
-truncation_symbol = "…/"
+# Semantic colors
+color_fg_recognized = "#7FB4CA"  # Teal for language indicators
+color_fg_git = "#FF5D62"         # Coral for git elements
+color_fail = "#E82424"           # Strong red for errors
+color_fg_warn = "#FF9E64"        # Peach for warnings
+color_fg_info = "#6A9589"        # Muted teal for info
 
-# Here is how you can shorten some long paths by text replacement
-# similar to mapped_locations in Oh My Posh:
-[directory.substitutions]
-"Documents" = "󰈙 "
-"Downloads" = " "
-"Music" = " "
-"Pictures" = " "
-# Keep in mind that the order matters. For example:
-# "Important Documents" = "  "
-# will not be replaced, because "Documents" was already substituted before.
-# So either put "Important Documents" before "Documents" or use the substituted version:
-# "Important  " = "  "
-
-[c]
-symbol = " "
-style = "bg:#86BBD8"
-format = '[ $symbol ($version) ]($style)'
-
-[docker_context]
-symbol = " "
-style = "bg:#06969A"
-format = '[ $symbol $context ]($style)$path'
-
-[elixir]
-symbol = " "
-style = "bg:#86BBD8"
-format = '[ $symbol ($version) ]($style)'
-
-[elm]
-symbol = " "
-style = "bg:#86BBD8"
-format = '[ $symbol ($version) ]($style)'
+# Git specific
+color_git_add = "#76946A"        # Soft green
+color_git_delete = "#C34043"     # Deep red
+color_git_change = "#DCA561"     # Amber gold
 
 [git_branch]
-symbol = ""
-style = "bg:#4C566A"
-format = '[ $symbol $branch ]($style)'
+symbol = " "
+format = "[$symbol $branch(:$remote_branch) ]($style)"
+style = "fg:color_wave_gold bg:color_bg"  # Gold branches
 
-[git_status]
-style = "bg:#4C566A"
-format = '[$all_status$ahead_behind ]($style)'
+[directory]
+style = "fg:color_fg bg:color_bg"
+format = "[$path]($style)"
+truncation_length = 3
+truncate_to_repo = true
 
-[golang]
-symbol = " "
-style = "bg:#86BBD8"
-format = '[ $symbol ($version) ]($style)'
-
-[haskell]
-symbol = " "
-style = "bg:#86BBD8"
-format = '[ $symbol ($version) ]($style)'
-
-[java]
-symbol = " "
-style = "bg:#86BBD8"
-format = '[ $symbol ($version) ]($style)'
-
-[julia]
-symbol = " "
-style = "bg:#86BBD8"
-format = '[ $symbol ($version) ]($style)'
-
-[nodejs]
-symbol = ""
-style = "bg:#86BBD8"
-format = '[ $symbol ($version) ]($style)'
-
-[nim]
-symbol = " "
-style = "bg:#86BBD8"
-format = '[ $symbol ($version) ]($style)'
+[cmd_duration]
+style = "fg:color_wave_gold bg:color_bg"
+format = "[$duration]($style)"
 
 [python]
-style = "bg:#3B4252"
-format = '[(\($virtualenv\) )]($style)'
+style = "fg:color_wave_gold bg:color_bg"  # Gold for Python
 
 [rust]
-symbol = ""
-style = "bg:#86BBD8"
-format = '[ $symbol ($version) ]($style)'
+style = "fg:color_wave_purple bg:color_bg"  # Purple for Rust
 
-[time]
-disabled = false
-time_format = "%R" # Hour:Minute Format
-style = "bg:#33658A"
-format = '[ $time ]($style)'
+[docker_context]
+style = "fg:color_wave_purple bg:color_bg"  # Purple for Docker
+
+# ... (keep other sections but update their styles)
