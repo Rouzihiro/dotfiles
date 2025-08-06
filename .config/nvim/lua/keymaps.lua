@@ -1,26 +1,23 @@
 local map = vim.keymap.set
 
 vim.g.mapleader = " "
-map('n', '<leader>o', ':update<CR> :source<CR>')
-map('n', '<leader>s', ':write<CR>')
-map('n', '<leader>q', ':quit<CR>')
--- map({ 'n', 'v', 'x' }, '<leader>s', ':e #<CR>')
-map({ 'n', 'v', 'x' }, '<leader>O', ':sf #<CR>')
-map('n', '<leader>x', ':bd<CR>', { desc = "Close buffer" })
-map("n", "K", vim.lsp.buf.hover, { desc = "LSP Hover" })
+
+map("n", "<leader>e", function()
+  vim.cmd("Oil --float " .. vim.loop.cwd())
+end, { desc = "Open Oil floating file manager" })
 
 map('n', '<leader>o', ':update<CR> :source<CR>')
 map('n', '<leader>s', ':write<CR>')
-map('n', '<leader>q', ':quit<CR>')
 -- map({ 'n', 'v', 'x' }, '<leader>s', ':e #<CR>')
-map({ 'n', 'v', 'x' }, '<leader>O', ':sf #<CR>')
 map('n', '<leader>x', ':bd<CR>', { desc = "Close buffer" })
 map("n", "K", vim.lsp.buf.hover, { desc = "LSP Hover" })
+
+map('n', '<leader>q', ':quit<CR>')
+map('n', '<C-q>', '<Cmd>bd!<CR>', { desc = "Force close buffer" })
 
 map("n", "<esc>", "<cmd>noh<CR>")
 map('n', '<leader>f', ":Pick files<CR>")
 map('n', '<leader>h', ":Pick help<CR>")
-map('n', '<leader>e', ":Oil<CR>")
 map('t', '', "")
 map('t', '', "")
 map('n', '<leader>lf', vim.lsp.buf.format)

@@ -22,7 +22,8 @@ vim.pack.add({
 	{ src = "https://github.com/neovim/nvim-lspconfig" },
 	{ src = "https://github.com/hrsh7th/nvim-cmp" },
 	{ src = "https://github.com/hrsh7th/cmp-path" },
-	{ src = "https://github.com/stevearc/oil.nvim" },
+--	{ src = "https://github.com/stevearc/oil.nvim" },
+	{ src = "https://github.com/stevearc/oil.nvim", version = "master", opt = false },
 	{ src = "https://github.com/echasnovski/mini.pick" },
 	{ src = "https://github.com/nvim-treesitter/nvim-treesitter" },
 	{ src = "https://github.com/chomosuke/typst-preview.nvim" },
@@ -47,7 +48,6 @@ require "mason".setup()
 require "showkeys".setup({ position = "top-right" })
 require "mini.pick".setup()
 require "oil".setup()
-require("keyoil")
 
 local lspconfig = require("lspconfig")
 local tinymist_config = require("lsp.tinymist")
