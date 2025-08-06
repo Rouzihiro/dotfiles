@@ -40,10 +40,11 @@ log_success() {
 # Package lists
 PACMAN_PACKAGES=(
 	"asahi-desktop-meta"
+	"asahi-audio"
 
-    # Niri 
-	"niri" "xwayland-satellite"
-	"polkit-gnome"
+  # Niri 
+	#"niri" "xwayland-satellite"
+	#"polkit-gnome"
 	
 	#Hyprland
 	#"hyprland" "xdg-desktop-portal-hyprland"
@@ -53,32 +54,37 @@ PACMAN_PACKAGES=(
 	#"polkit-gnome"
 
 	# Sway
-	#"i3blocks" "autotiling-rs" "swaylock" 
-	"swayidle" "swaync" "swaybg"
-	#"xdg-desktop-portal" 
+	#"i3blocks" 
+	"sway"
+	"xorg-xwayland" #check if thats needed
+	"autotiling-rs" 
+	"swaylock" "swayidle" 
+	"dunst" #"swaync" 
+	"swaybg"
+	"xdg-desktop-portal" 
 	"xdg-desktop-portal-wlr" 
-	#"xdg-desktop-portal-gtk"
+	"xdg-desktop-portal-gtk"
 
 	# System and desktop environment
-	"gtklock"
-    "waybar" 
-    "power-profiles-daemon"  # Power management
-    "rofi-wayland" "fuzzel" # App launcher
-    "wayland-utils"  # Wayland utilities
+  "waybar" 
+  "power-profiles-daemon"  # Power management
+  "rofi-wayland" "fuzzel" # App launcher
+  "wayland-utils"  # Wayland utilities
 	"wlr-randr"
 	"btop"
+	"bob"
 	
     # Terminal and shell
     "zsh" "foot"  # Terminals
     "starship" "eza" "bat" "fzf" "fd" # Shell enhancements
     "tmux"  # Terminal multiplexer
     "fastfetch"  # System info
-	"duf" "ncdu" "highlight"
+		"duf" "ncdu" "highlight"
 
     # Utilities
     "aria2" "grim" "slurp" "brightnessctl" 
     "mediainfo" "jq" "bc" "trash-cli" "unzip"
-	"ntfs-3g"
+		"ntfs-3g"
     "blueman"  # Bluetooth
     "curlftpfs"  # FTP mounting
     "vifm"  # File manager
@@ -87,14 +93,16 @@ PACMAN_PACKAGES=(
     "yad"  # GUI dialogs
     "rsync"  # File syncing
     "swappy"  # Screenshot editing
-	"antimicrox"
-	"zenity"
+		"antimicrox"
+		"zenity"
 
 	# language
 	"hunspell-de"
   	"tesseract"
 	"tesseract-data-eng"
 	"tesseract-data-deu"
+
+	"lua-language-server"
 
     # Multimedia
     "ffmpegthumbs" "imagemagick" "imv" "mpv" "yt-dlp"
@@ -103,10 +111,11 @@ PACMAN_PACKAGES=(
     # Development
     "jdk-openjdk" "nodejs" "npm"  # Programming
     "texlive-latexextra" "texmaker" # LaTeX
+		"tinymist" # Tinymist
 
     # Graphics/GPU
     "mesa-utils" "vulkan-tools"
-	"mesa" "libglvnd"
+		"mesa" "libglvnd"
 
     # Fonts and themes
   	"otf-font-awesome" "ttf-droid" "ttf-fira-code" "ttf-fantasque-nerd"
@@ -156,6 +165,8 @@ AUR_PACKAGES=(
 	"lazygit" "git-delta" "openssh"
     "jdk-openjdk" "nodejs" "npm"  # Programming
     "texlive-latexextra" "texmaker" # LaTeX
+		
+		"typst/bin"
 
     # Apps/Tools
 	"ps_mem"
