@@ -1,0 +1,19 @@
+### Input devices
+input type:keyboard {
+  xkb_layout us,de
+	xkb_options grp:alt_shift_toggle
+}
+
+input type:touchpad {
+    dwt enabled
+    tap enabled
+    pointer_accel 1
+    accel_profile flat
+    natural_scroll enabled
+}
+
+input type:mouse {
+    pointer_accel 0.4
+    accel_profile flat
+}
+
