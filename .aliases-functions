@@ -1,3 +1,36 @@
+ali() {
+  echo -e "\n\033[1;34m───────────[ Your Aliases ]───────────\033[0m\n"
+  
+  # List all aliases, exclude git-related ones and show in a neat format
+  alias | grep -E "^[a-zA-Z_][a-zA-Z0-9_-]*=" | grep -v "^showalias=" | grep -v "git" | while IFS= read -r line; do
+    # Extract alias name and value
+    name="${line%%=*}"
+    value="${line#*=}"
+    
+    # Remove leading/trailing single quotes if any
+    value="${value#\'}"
+    value="${value%\'}"
+    
+    # Display alias in cyan and gray colors, formatted
+    printf " \033[1;36m%-20s\033[0m → \033[0;37m%s\033[0m\n" "$name" "$value"
+  done | sort
+  
+  echo -e "\n\033[1;34m──────────────────────────────────────\033[0m\n"
+}
+
+
+show-alias() {
+  echo -e "\n\033[1;34m───────────[ Your Aliases ]───────────\033[0m\n"
+  alias | grep -E "^[a-zA-Z_][a-zA-Z0-9_-]*=" | grep -v "^showalias=" | while IFS= read -r line; do
+    name="''${line%%=*}"
+    value="''${line#*=}"
+    value="''${value#\'}"
+    value="''${value%\'}"
+    printf " \033[1;36m%-20s\033[0m → \033[0;37m%s\033[0m\n" "$name" "$value"
+  done | sort
+  echo -e "\n\033[1;34m──────────────────────────────────────\033[0m\n"
+}
+
 # Extract any archive type
 ex() {
     if [ -f $1 ]; then
