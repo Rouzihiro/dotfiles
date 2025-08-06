@@ -8,8 +8,8 @@ default_border pixel 2
 default_floating_border pixel 2
 
 ### Opacity settings
-for_window [app_id="foot"] opacity $opacity
-for_window [title="^JDownloader.*"] opacity 0.8
+for_window [app_id="foot"] opacity 0.9
+for_window [title="^JDownloader.*"] opacity 0.9
 for_window [app_id="runner_floating"] floating enable, move position center, move scratchpad
 for_window [title="^Wow-SF-64.exe - Wine Desktop$"] floating enable, move position center
 for_window [title="^Wow-SF.exe - Wine Desktop$"] floating enable, move position center
