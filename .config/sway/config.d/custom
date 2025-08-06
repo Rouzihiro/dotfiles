@@ -1,4 +1,10 @@
 # Custom scripts
+
+set $lockscreen swaylock -i ~/Pictures/lockscreen/VIM.png
+bindsym $mod+mod1+l exec $lockscreen
+
+bindsym $mod+Escape exec $term -e btop
+
 #bindsym $mod+Shift+v exec video-tool
 #bindsym $mod+v exec browse-video
 #bindsym $mod+Shift+x exec $term -e ~/dotfiles/home/scripts/executer
@@ -6,8 +12,6 @@
 bindsym $mod+o exec ~/bin/ocr
 #bindsym $mod+Shift+t exec ocr-prompt
 #bindsym $mod+t exec ocr-translate
-#bindsym $mod+Shift+w exec wallpaper
-#bindsym $mod+Shift+b exec browse-web
 #bindsym $mod+z exec keybinds-list-shell
 #bindsym $mod+Shift+z exec keybinds-list-sway
 bindsym $mod+r exec $term --app-id=runner_floating -e ~/bin/runner
