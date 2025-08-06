@@ -1,4 +1,6 @@
 # .bashrc
+export LANG=en_US.UTF-8
+export PATH="$HOME/.local/share/bob/nvim-bin:$PATH"
 
 # Source global definitions
 if [ -f /etc/bashrc ]; then
