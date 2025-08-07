@@ -11,6 +11,7 @@ fi
 [ -f ~/.aliases-functions ] && source ~/.aliases-functions
 [ -f ~/.aliases-arch ] && source ~/.aliases-arch
 #[ -f ~/.aliases-fedora ] && source ~/.aliases-fedora
+[[ -f ~/.profile ]] && . ~/.profile
 
 # User specific environment
 if ! [[ "$PATH" =~ "$HOME/.local/bin:$HOME/bin:" ]]; then

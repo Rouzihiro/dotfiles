@@ -1,0 +1,14 @@
+# GTK settings for Kanagawa‑Dark
+set $gnome_schema org.gnome.desktop.interface
+
+exec_always {
+  gsettings set $gnome_schema gtk-theme Kanagawa‑Dark
+  gsettings set $gnome_schema gtk-application-prefer-dark-theme true
+  gsettings set $gnome_schema icon-theme Papirus‑Dark
+  gsettings set $gnome_schema cursor-theme Adwaita
+  gsettings set $gnome_schema font-name 'DejaVu Sans Mono'
+}
+
+# Optionally export variables
+exec_always { setenv GTK_THEME Kanagawa‑Dark }
+exec_always { setenv GTK2_RC_FILES $HOME/.themes/Kanagawa-Dark/gtk-2.0/gtkrc }
