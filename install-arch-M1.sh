@@ -57,7 +57,7 @@ PACMAN_PACKAGES=(
 
 	# Sway
 	#"i3blocks" 
-	"sway"
+	"sway" "wev" "clipman" 
 	"xorg-xwayland" #check if thats needed
 	"autotiling-rs" 
 	"swaylock" "swayidle" 
@@ -123,7 +123,7 @@ PACMAN_PACKAGES=(
   	"otf-font-awesome" "ttf-droid" "ttf-fira-code" "ttf-fantasque-nerd"
 	"ttf-jetbrains-mono" "ttf-jetbrains-mono-nerd"
   	"ttf-firacode-nerd" "ttf-hack-nerd" "ttf-cascadia-code-nerd"
-  	"ttf-font-awesome" "ttf-dejavu" "noto-fonts"
+  	"ttf-font-awesome" "ttf-dejavu" "noto-fonts" "noto-fonts-emoji"
 
     # Applications
     "zathura" "zathura-cb" "zathura-pdf-mupdf"  # Document viewers
