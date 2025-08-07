@@ -16,6 +16,9 @@ rsync -av --delete \
 	--exclude='warp-terminal' \
     "$HOME/.config/" "$HOME/dotfiles/.config/"
 
+echo "🔄 Syncing ~/.themes/..."
+rsync -av --delete "$HOME/.themes/" "$HOME/dotfiles/.themes/"
+
 # --- 2. Sync shell files directly to ~/dotfiles/ ---
 DOTFILES_TARGET="$HOME/dotfiles"
 mkdir -p "$DOTFILES_TARGET"
@@ -30,6 +33,7 @@ done <<EOF
 .bash_logout
 .zshrc
 .zprofile
+.profile
 .aliases
 .aliases-functions
 .aliases-arch
