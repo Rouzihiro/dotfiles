@@ -18,7 +18,7 @@ case "$chosen" in
   poweroff
   ;;
 "$reboot")
-  reboot now
+  reboot
   ;;
 "$lock")
   if command -v gtklock &>/dev/null; then

@@ -39,6 +39,8 @@ log_success() {
 
 # Package lists
 PACMAN_PACKAGES=(
+
+	#asahi
 	"asahi-desktop-meta"
 	"asahi-audio"
 
