@@ -66,6 +66,10 @@ separator=true
 align=center
 label=   
 
+[keymap]
+command=~/.config/i3blocks/kb_layout.sh
+interval=2
+
 [battery]
 #command=cat /sys/class/power_supply/BAT0/capacity | awk '{print $1" %"}'
 command=cat /sys/class/power_supply/macsmc-battery/capacity | awk '{print $1" %"}' 
