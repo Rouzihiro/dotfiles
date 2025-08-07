@@ -1,4 +1,66 @@
-#!/bin/zsh
-# Load functions then execute the script
-source ~/bin/Global_functions.sh
-exec "$@"
+#!/bin/bash
+
+# Color definitions
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+BLUE='\033[0;34m'
+CYAN='\033[0;36m'
+NC='\033[0m'
+
+SCRIPT_DIR="$HOME/dotfiles/scripts"
+
+show_menu() {
+    echo -e "\n${CYAN}📦 Rey Utilities Menu${NC}"
+    echo -e "${BLUE}════════════════════${NC}"
+    
+    # Find all executable scripts and sort them
+    mapfile -t scripts < <(find "$SCRIPT_DIR" -type f -executable -name "*.sh" | sort)
+    
+    if [ ${#scripts[@]} -eq 0 ]; then
+        echo -e "${YELLOW}No scripts found in $SCRIPT_DIR${NC}"
+        exit 1
+    fi
+
+    # Display menu
+    for i in "${!scripts[@]}"; do
+        script_name=$(basename "${scripts[$i]}")
+        echo -e "${GREEN}$((i+1)))${NC} ${script_name%.sh}"
+    done
+    
+    echo -e "${BLUE}════════════════════${NC}"
+    echo -e "${GREEN}0)${NC} Exit"
+}
+
+run_script() {
+    local script="$1"
+    echo -e "\n${CYAN}🚀 Running: ${script}${NC}"
+    echo -e "${YELLOW}----------------------${NC}"
+    bash "$script"
+    echo -e "${YELLOW}----------------------${NC}"
+    echo -e "${GREEN}✅ Done!${NC}"
+}
+
+while true; do
+    show_menu
+    
+    read -p "Select a script (number): " choice
+    
+    # Exit if 0
+    [[ "$choice" == 0 ]] && break
+    
+    # Validate input
+    if ! [[ "$choice" =~ ^[0-9]+$ ]]; then
+        echo -e "${RED}❌ Invalid input. Please enter a number.${NC}"
+        continue
+    fi
+    
+    # Get selected script
+    selected=$((choice-1))
+    if [ "$selected" -ge 0 ] && [ "$selected" -lt "${#scripts[@]}" ]; then
+        run_script "${scripts[$selected]}"
+    else
+        echo -e "${RED}❌ Invalid selection. Try again.${NC}"
+    fi
+    
+    read -p "Press [Enter] to continue..."
+done
