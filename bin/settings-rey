@@ -16,8 +16,6 @@ sudo locale-gen
 LANG=en_US.UTF-8
 LANG=de_DE.UTF-8
 
-yay -S bibata-cursor-theme ags blueman wl-clipboard network-manager-applet hyprcursor thunar
-
 chsh -s $(which zsh)
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions

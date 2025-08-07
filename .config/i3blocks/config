@@ -5,15 +5,15 @@ markup=pango
 [time]
 command=date '+%a %d %b | %H:%M'
 interval=60
-color=#f5f5f5
+color=#dcd7ba
 separator=false
 align=center
 label=   
 
 [cpu]
-command=awk -F'[, ]+' '/^Cpu/ {print $2+$4" %"}' <(grep 'cpu ' /proc/stat)
+command=~/.config/i3blocks/cpu_usage.sh
 interval=5
-color=#fcd1d1
+color=#e46876
 separator=true
 align=center
 label=    
@@ -21,7 +21,7 @@ label= 
 [memory]
 command=free -h | awk '/^Mem:/ {print $3 "/" $2}'
 interval=10
-color=#a6e3a1
+color=#98bb6c
 separator=true
 align=center
 label=  
@@ -29,7 +29,7 @@ label= 
 [disk]
 command=df -h / | awk 'NR==2 {print $3 "/" $2}'
 interval=60
-color=#f5a3c7
+color=#ffa066
 separator=true
 align=center
 label=  
@@ -37,23 +37,23 @@ label= 
 [network]
 command=nmcli -t -f active,ssid,signal dev wifi | grep '^yes' | cut -d ':' -f2,3 | awk -F',' '{if ($1) print $1 " (" $2 "%)"; else print "Disconnected"}'
 interval=10
-color=#ebacb7
+color=#d27e99
 separator=true
 align=center
 label=   
 
-# [bandwidth]
-# command=bandwidth
-# interval=1
-# color=#a3be8c
-# separator=true
-# align=center
-# label=   
+[bandwidth]
+command=~/.config/i3blocks/bandwith.sh
+interval=1
+color=#a3be8c
+separator=true
+align=center
+label=   
 
 [volume]
 command=wpctl get-volume @DEFAULT_AUDIO_SINK@ | awk '{if ($3 == "[MUTED]") print "MUTED"; else print int($2 * 100) " %"}'
 interval=1
-color=#f9e2af
+color=#e6c384
 separator=true
 align=center
 label=   
@@ -61,7 +61,7 @@ label= 
 [brightness]
 command=brightnessctl g | awk '{print $1}'
 interval=5
-color=#fab387
+color=#ffa066
 separator=true
 align=center
 label=   
@@ -70,7 +70,7 @@ label= 
 #command=cat /sys/class/power_supply/BAT0/capacity | awk '{print $1" %"}'
 command=cat /sys/class/power_supply/macsmc-battery/capacity | awk '{print $1" %"}' 
 interval=30
-color=#74c7ec
+color=#7fb4ca
 separator=true
 align=center
 label=   
@@ -78,7 +78,7 @@ label= 
 [separator]
 command=echo " "
 interval=1
-color=#1e1e2e
+color=#1f1f28
 separator=true
 align=center
 
