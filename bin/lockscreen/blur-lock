@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+PICTURE=/tmp/swaylock.png
+
+# Take screenshot with grim
+grim "$PICTURE"
+
+# Blur the screenshot using magick (ImageMagick 7)
+magick "$PICTURE" -blur 5x4 "$PICTURE"
+
+# Lock screen using swaylock (without --clock)
+swaylock -i "$PICTURE"
+
+# Remove the screenshot after locking
+rm "$PICTURE"
+
