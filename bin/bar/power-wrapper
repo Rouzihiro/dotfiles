@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+# Get the directory this script resides in
+SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)"
+
+# On left click (button 1), toggle power profile
+if [ "$BLOCK_BUTTON" == "1" ]; then
+    "$SCRIPT_DIR/power-profiles"
+fi
+
+# Always show the current status
+"$SCRIPT_DIR/pp-status"
