@@ -1,1 +1,1 @@
-@import "topbox.rasi"
+@import "./themes/topbox.rasi"
