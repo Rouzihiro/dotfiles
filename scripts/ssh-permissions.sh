@@ -14,9 +14,11 @@ chmod 644 ~/.ssh/environment
 
 chmod 600 ~/.ftp_credentials
 
+chmod 600 ~/.ssh/openweather_api_key
+
 # Verify the permissions
 echo "Permissions set. Verifying:"
-ls -l ~/.ssh/HP-Nixo ~/.ssh/HP-Nixo.pub ~/.ssh/known_hosts ~/.ssh/environment ~/.ssh/ftp_credentials ~/.ssh/email_secrets/
+ls -l ~/.ssh/HP-Nixo ~/.ssh/HP-Nixo.pub ~/.ssh/known_hosts ~/.ssh/environment ~/.ssh/openweather_api_key ~/.ssh/ftp_credentials ~/.ssh/email_secrets/
 
 
 # Ensure You're Using SSH for Git Operations

@@ -85,7 +85,7 @@ PACMAN_PACKAGES=(
 		"duf" "ncdu" "highlight" "ripgrep"
 
     # Utilities
-    "aria2" "grim" "slurp" "satty" "brightnessctl" 
+    "aria2" "wget" "grim" "slurp" "satty" "brightnessctl" 
     "mediainfo" "jq" "bc" "trash-cli" "unzip"
 		"ntfs-3g"
     "blueman"  # Bluetooth
