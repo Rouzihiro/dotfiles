@@ -7,10 +7,10 @@ Aborting."; exit 1; }
 
 # To use this script you need to create an API key here https://home.openweathermap.org
 # You need to put your Open Weather APIKEY here:
-APIKEY=""
+APIKEY=$(< ~/.ssh/openweather_api_key)
 # find your City ID here: https://openweathermap.org/
 # search for your city and copy the ID from the URL inside the browser.
-CITY_ID=""
+CITY_ID="2911298"
 URL="http://api.openweathermap.org/data/2.5/weather?id=${CITY_ID}&units=metric&APPID=${APIKEY}"
 
 WEATHER_RESPONSE=$(timeout --signal=1 2s curl -s "${URL}") ||  exit 1;
