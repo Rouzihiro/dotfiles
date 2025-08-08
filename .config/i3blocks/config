@@ -125,17 +125,23 @@ label= 
 # needs package power-profiles-daemon installed and the service running see here:
 # https://wiki.archlinux.org/title/CPU_frequency_scaling#power-profiles-daemon
 
-#set power-profile
-[ppd_menu]
-full_text= 
-command=~/.config/i3blocks/scripts/power-profiles
-color=#a5a5ff
-
-#Show the current power-profile
-[ppd-status]
-command=~/.config/i3blocks/scripts/pp-status
+[power-profile]
+command=~/.config/i3blocks/scripts/power-wrapper
 interval=5
+signal=10
 
+
+#set power-profile
+# [ppd_menu]
+# full_text= 
+# command=~/.config/i3blocks/scripts/power-profiles
+# color=#a5a5ff
+#
+#Show the current power-profile
+# [ppd-status]
+# command=~/.config/i3blocks/scripts/pp-status
+# interval=5
+#
 [time]
 #label= 
 command=date '+%a %d %b %H:%M:%S'
