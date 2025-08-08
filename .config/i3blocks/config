@@ -1,88 +1,148 @@
-# i3blocks configuration
+# i3blocksblocks EndeavourOS config file tweaked by void
+
+# source for the original config is available here:
+# https://raw.githubusercontent.com/endeavouros-team/endeavouros-i3blockswm-setup/main/etc/skel/.config/i3blocks/i3blocksblocks.conf
+
+# Please see man i3blocksblocks for a complete reference!
+# The man page is also hosted at http://vivien.github.io/i3blocksblocks
+
+
+# List of valid properties:
+#
+# align
+# color
+# command
+# full_text
+# instance
+# interval
+# label
+# min_width
+# name
+# separator
+# separator_block_width
+# short_text
+# signal
+# urgent
+
+# Global properties
+#
+# The top properties below are applied to every block, but can be overridden.
 separator=false
 markup=pango
+separator_block_width=10
 
-[time]
-command=date '+%a %d %b | %H:%M'
-interval=60
-color=#dcd7ba
-separator=false
-align=center
-label=   
+[Weather]
+#command=~/.config/i3blocks/scripts/openweather
+# or:
+command=~/.config/i3blocks/scripts/openweather-city
+interval=1800
+color=#6969a8
 
-[cpu]
-command=~/.config/i3blocks/cpu_usage.sh
-interval=5
-color=#e46876
-separator=true
-align=center
-label=    
+[simple-2]
+full_text=" "
 
-[memory]
-command=free -h | awk '/^Mem:/ {print $3 "/" $2}'
-interval=10
-color=#98bb6c
-separator=true
-align=center
-label=  
+#[terminal]
+#full_text=  
+#color=#807dfe
+#command=i3-msg -q exec xfce4-terminal
 
+#[browser]
+#full_text=  
+#color=#ff7f81
+#command=i3-msg -q exec firefox
+
+#[files]
+#full_text=  
+#color=#7f3fbf
+#command=i3-msg -q exec thunar ~/
+
+#[mail]
+#full_text=  
+#color=#dbcb75
+#command=i3-msg -q exec thunderbird
+
+# Disk usage
+#
+# The directory defaults to $HOME if the instance is not specified.
+# The script may be called with a optional argument to set the alert
+# (defaults to 10 for 10%).
 [disk]
+label= 
+instance=/
+#command=~/.config/i3blocks/scripts/disk
 command=df -h / | awk 'NR==2 {print $3 "/" $2}'
-interval=60
-color=#ffa066
-separator=true
-align=center
-label=  
+interval=30
 
-[network]
-command=nmcli -t -f active,ssid,signal dev wifi | grep '^yes' | cut -d ':' -f2,3 | awk -F',' '{if ($1) print $1 " (" $2 "%)"; else print "Disconnected"}'
-interval=10
-color=#d27e99
-separator=true
-align=center
-label=   
+# Memory usage
+[memory]
+label= 
+command=free -h | awk '/^Mem:/ {print $3 "/" $2}'
+#command=~/.config/i3blocks/scripts/memory
+interval=2
 
-[bandwidth]
-command=~/.config/i3blocks/bandwith.sh
-interval=1
-color=#a3be8c
-separator=true
-align=center
-label=   
+[cpu_usage]
+label= 
+command=~/.config/i3blocks/scripts/cpu_usage
+interval=2
 
+[CPU-temperature]
+label=
+command=~/.config/i3blocks/scripts/temperature
+interval=30
+#T_WARN=70
+#T_CRIT=90
+#SENSOR_CHIP=""
+# where SENSOR_CHIP can be find with sensors output
+# can be used also for GPU temperature or other temperature sensors lm-sensors detects.
+
+# showing name of connected network (enable for wifi use)
+#[net]
+#label= 
+#command=echo "$(LANG=C nmcli d | grep connected  | awk '{print $4}')"
+#interval=30
+
+# [simple-2]
+# full_text=" "
+#
 [volume]
 command=wpctl get-volume @DEFAULT_AUDIO_SINK@ | awk '{if ($3 == "[MUTED]") print "MUTED"; else print int($2 * 100) " %"}'
 interval=1
-color=#e6c384
-separator=true
-align=center
 label=   
 
-[brightness]
-command=brightnessctl g | awk '{print $1}'
+# [pavucontrol]
+# full_text= 
+# command=pavucontrol
+#
+# [volume-pulseaudio]
+# command=~/.config/i3blocks/scripts/volume
+# instance=Master
+# interval=1
+#
+# [simple-2]
+# full_text=" "
+#
+# power-profiles-daemon implementation:
+# needs package power-profiles-daemon installed and the service running see here:
+# https://wiki.archlinux.org/title/CPU_frequency_scaling#power-profiles-daemon
+
+#set power-profile
+[ppd_menu]
+full_text= 
+command=~/.config/i3blocks/scripts/power-profiles
+color=#a5a5ff
+
+#Show the current power-profile
+[ppd-status]
+command=~/.config/i3blocks/scripts/pp-status
 interval=5
-color=#ffa066
-separator=true
-align=center
-label=   
 
-[keymap]
-command=~/.config/i3blocks/kb_layout.sh
-interval=2
-
-[battery]
-#command=cat /sys/class/power_supply/BAT0/capacity | awk '{print $1" %"}'
-command=cat /sys/class/power_supply/macsmc-battery/capacity | awk '{print $1" %"}' 
-interval=30
-color=#7fb4ca
-separator=true
-align=center
-label=   
-
-[separator]
-command=echo " "
+[time]
+#label= 
+command=date '+%a %d %b %H:%M:%S'
 interval=1
-color=#1f1f28
-separator=true
+min_width=170
 align=center
 
+[shutdown_menu]
+full_text= 
+command=~/.config/i3blocks/scripts/powermenu

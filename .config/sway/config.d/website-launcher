@@ -11,11 +11,11 @@ mode "Website Launch" {
     bindsym r exec xdg-open https://reddit.com, mode default
     bindsym y exec xdg-open https://www.youtube.com, mode default
     bindsym c exec xdg-open https://chat.openai.com, mode default 
-    bindsym s exec xdg-open https://deepseek.io, mode default      
+    bindsym d exec xdg-open https://chat.deepseek.com, mode default      
     bindsym h exec xdg-open https://github.com, mode default        
-    bindsym m exec xdg-open https://www.google.com/maps, mode default
-    bindsym d exec xdg-open https://dodi-repacks.site/, mode default  
+    bindsym o exec xdg-open https://www.google.com/maps, mode default
+    bindsym g exec xdg-open https://dodi-repacks.site/, mode default  
  		bindsym f exec xdg-open https://fitgirl-repacks.site/, mode default
-    bindsym j exec xdg-open https://moviesjoy.to/, mode default  
+    bindsym m exec xdg-open https://moviesjoy.to/, mode default  
 }
 

@@ -57,7 +57,7 @@ PACMAN_PACKAGES=(
 
 	# Sway
 	#"i3blocks" 
-	"sway" "wev" "clipman" 
+	"sway" "wev" "clipman" "darkman" 
 	"xorg-xwayland" #check if thats needed
 	"autotiling-rs" 
 	"swaylock" "swayidle" 

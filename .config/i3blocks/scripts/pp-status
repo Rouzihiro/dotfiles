@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+# Script to show current power profile with symbols
+
+current_profile=$(/usr/bin/powerprofilesctl get)
+
+case "$current_profile" in
+    power-saver)
+        echo "🌿"  # Herb for power saver
+        ;;
+    balanced)
+        echo "⚖️"  # Scales for balanced
+        ;;
+    performance)
+        echo "🚀"  # Rocket for performance
+        ;;
+    *)
+        echo "❓"  # Unknown profile
+        ;;
+esac
