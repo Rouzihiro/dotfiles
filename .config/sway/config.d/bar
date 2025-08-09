@@ -16,11 +16,16 @@
 		 font pango:DejaVu Sans Mono 10
 		 #font pango:Noto Color Emoji 10
      
-		 colors {
-         separator #1e1e2e
-         background #1e1e2e
-         focused_workspace  #1e1e2e #fab387 #fab387
-         active_workspace   #1e1e2e #eba0ac #eba0ac
-         urgent_workspace   #1e1e2e #74c7ec #74c7ec
-     }
+		 # colors {
+		 #       separator #1e1e2e
+		 #       background #1e1e2e
+		 #       focused_workspace  #1e1e2e #fab387 #fab387
+		 #       active_workspace   #1e1e2e #eba0ac #eba0ac
+		 #       urgent_workspace   #1e1e2e #74c7ec #74c7ec
+		 #   }
  }
+
+#  bar {
+#     position bottom
+#     status_command i3blocks -c ~/.config/i3blocks/config_bottom
+# }

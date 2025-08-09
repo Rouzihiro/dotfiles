@@ -31,12 +31,14 @@ separator=false
 markup=pango
 separator_block_width=10
 
-[Weather]
-#command=~/bin/bar/openweather
-# or:
-command=~/bin/bar/openweather-city
-interval=1800
-color=#6969a8
+[weather]
+command=~/bin/bar/weather-short
+interval=1000
+
+# [Weather]
+# command=~/bin/bar/openweather-city
+# interval=1800
+# color=#6969a8
 
 [simple-2]
 full_text=" "
@@ -76,16 +78,28 @@ instance=/
 command=df -h / | awk 'NR==2 {print $3 "/" $2}'
 interval=30
 
+[separator]
+full_text="⟨"
+color=#585b70
+
 # Memory usage
 [memory]
 label= 
 command=free -h | awk '/^Mem:/ {print $3 "/" $2}'
 interval=2
 
+[separator]
+full_text="⟨"
+color=#585b70
+
 [cpu_usage]
 label= 
 command=~/bin/bar/cpu-usage
 interval=2
+
+[separator]
+full_text="⟨"
+color=#585b70
 
 [CPU-temperature]
 label=
@@ -96,6 +110,11 @@ interval=30
 #SENSOR_CHIP=""
 # where SENSOR_CHIP can be find with sensors output
 # can be used also for GPU temperature or other temperature sensors lm-sensors detects.
+
+[separator]
+full_text="⟨"
+color=#585b70
+
 
 # [net]
 # label= 
@@ -109,6 +128,10 @@ interval=30
 command=wpctl get-volume @DEFAULT_AUDIO_SINK@ | awk '{if ($3 == "[MUTED]") print "MUTED"; else print int($2 * 100) " %"}'
 interval=1
 label=   
+
+[separator]
+full_text="⟨"
+color=#585b70
 
 # [pavucontrol]
 # full_text= 
@@ -126,22 +149,38 @@ command=~/bin/bar/power-wrapper
 interval=5
 signal=10
 
+[separator]
+full_text="⟨"
+color=#585b70
+
 [brightness]
 command=brightnessctl g | awk '{print $1}'
 interval=5
 color=#ffa066
 label=   
 
+[separator]
+full_text="⟨"
+color=#585b70
+
 [time]
-#label= 
-command=date '+%a %d %b %H:%M:%S'
 interval=1
-min_width=170
-align=center
+command=~/bin/bar/timer
+separator_block_width=10
+#color=#b4befe
+label= 
+
+[separator]
+full_text="⟨"
+color=#585b70
 
 [keymap]
 command=~/bin/bar/kb-layout
 interval=2
+
+[separator]
+full_text="⟨"
+color=#585b70
 
 [battery]
 #command=cat /sys/class/power_supply/BAT0/capacity | awk '{print $1" %"}'
@@ -151,6 +190,10 @@ color=#7fb4ca
 separator=true
 align=center
 label=   
+
+[separator]
+full_text="⟨"
+color=#585b70
 
 [shutdown_menu]
 full_text= 
