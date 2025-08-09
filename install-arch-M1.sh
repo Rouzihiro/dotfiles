@@ -56,7 +56,7 @@ PACMAN_PACKAGES=(
 	#"polkit-gnome"
 
 	# Sway
-	#"i3blocks" 
+	"i3blocks" 
 	"sway" "wev" "clipman" "darkman" 
 	"xorg-xwayland" #check if thats needed
 	"autotiling-rs" 
