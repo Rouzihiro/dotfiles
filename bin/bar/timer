@@ -1,0 +1,24 @@
+#!/usr/bin/bash
+
+# Safer state file (not self-modifying)
+STATE_FILE="/tmp/i3blocks_timer_state"
+
+# Read state or default to 1 (short format)
+a=$(cat "$STATE_FILE" 2>/dev/null || echo "1")
+
+toggle_state() {
+  a=$((1 - a))  # Toggle 0 ↔ 1
+  echo "$a" > "$STATE_FILE"
+}
+
+# Toggle on click
+if [[ $BLOCK_BUTTON -eq 1 ]]; then
+  toggle_state
+fi
+
+# Output
+if [[ $a -eq 0 ]]; then
+  date '+%a %d %b %H:%M'
+else
+  date '+%H:%M'
+fi
