@@ -40,8 +40,9 @@ interval=1000
 # interval=1800
 # color=#6969a8
 
-[simple-2]
-full_text=" "
+[separator]
+full_text="⟨"
+color=#585b70
 
 [bandwidth]
 command=~/bin/bar/bandwith
@@ -49,7 +50,11 @@ interval=1
 color=#a3be8c
 separator=true
 align=center
-label=   
+label=  
+
+[separator]
+full_text="⟨"
+color=#585b70
 
 # [terminal]
 # full_text=  
@@ -115,15 +120,18 @@ interval=30
 full_text="⟨"
 color=#585b70
 
+[wifi]
+label=  
+command=nmcli -f IN-USE,SIGNAL dev wifi | grep "^*" | awk "{print \$2 \"%\"}"
+interval=10
 
-# [net]
-# label= 
-# command=echo "$(LANG=C nmcli d | grep connected  | awk '{print $4}')"
-# interval=30
-#
-# [simple-2]
-# full_text=" "
-#
+[separator]
+full_text="⟨"
+color=#585b70
+
+#[simple-2]
+#full_text=" "
+
 [volume]
 command=wpctl get-volume @DEFAULT_AUDIO_SINK@ | awk '{if ($3 == "[MUTED]") print "MUTED"; else print int($2 * 100) " %"}'
 interval=1

@@ -25,7 +25,7 @@
 		 #   }
  }
 
-#  bar {
-#     position bottom
-#     status_command i3blocks -c ~/.config/i3blocks/config_bottom
-# }
+ #  bar {
+ #     position bottom
+ #     status_command i3blocks -c ~/.config/i3blocks/config_bottom
+ # }
