@@ -3,7 +3,7 @@
 <br>
 ArchLinux & NixOS for a Lightweight & Beautiful Setup
 <br>
-<img src="./assets/kanagawa.png" width="600px" alt="kanagawa Theme" />
+<img src="./assets/kanagawa.png" width="100px" alt="kanagawa Theme" />
 </h1>
 
 ### Arch Linux (Project Asahi - alarm) on MacM1
