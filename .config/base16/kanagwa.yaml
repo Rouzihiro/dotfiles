@@ -1,0 +1,22 @@
+# Kanagawa Wave Color Scheme - Functional Reference
+base00: "1F1F28"       # Dark Navy (Primary background)
+base01: "2A2A37"       # Deep Navy (Secondary background)
+base02: "223249"       # Blue-Gray (Line numbers, comments)
+base03: "727169"       # Stone Gray (Disabled text)
+base04: "C8C093"       # Pale Gold (Primary text)
+base05: "DCD7BA"       # Ivory (Bold text)
+base06: "938AA9"       # Lavender Gray (Punctuation)
+base07: "363646"       # Dark Gray (Visual selection)
+base08: "C34043"       # Red (Errors/warnings)
+base09: "FFA066"       # Orange (Numbers/constants)
+base0A: "DCA561"       # Gold (Strings/type hints)
+base0B: "98BB6C"       # Green (Functions/success)
+base0C: "7FB4CA"       # Cyan (Documentation)
+base0D: "7E9CD8"       # Blue (Keywords/actions)
+base0E: "957FB8"       # Purple (Methods/syntax)
+base0F: "D27E99"       # Pink (Tags/metadata)
+
+# UI: base00-base07 for backgrounds/text
+# Syntax: base08-base0F for semantic highlighting
+# Focus: Use Purple (base0E) for active elements
+# Errors: Red (base08) exclusively for critical alerts
