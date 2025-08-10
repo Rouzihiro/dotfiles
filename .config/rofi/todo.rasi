@@ -8,9 +8,11 @@ configuration {
     scroll-method:       0;
     disable-history:     false;
     sidebar-mode:        false;
+		kb-custom-1: "Alt+d";
 }
 
 @import "~/.config/rofi/themes/arc_dark_transparent_colors.rasi"
+@import "keybindings.rasi"
 
 window {
     background-color: @background;
