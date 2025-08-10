@@ -39,7 +39,7 @@ ArchLinux for a Lightweight & Beautiful Setup
 | Component | Description | Language |
 |-----------|-------------|-----------|
 | [Tmux](https://github.com/tmux/tmux) | Terminal Multiplexer | ![C][c] |
-| [Starship](https://github.com/starship/starship) | Cross-Shell Prompt | ![Rust][rs] |
+| [Starship](https://github.com/starship/starship) | Cross-Shell Prompt | ![Rust][rust] |
 | [Dunst](https://dunst-project.org/) | Notification Daemon | ![C][c] |
 | [Rofi-Wayland](https://gitlab.com/dgirault/wofi) | Application Launcher | ![C][c] |
 | [wlr-randr](https://sr.ht/~emersion/wlr-randr/) | Display Output Manager| ![C][c] |
@@ -84,7 +84,7 @@ git clone https://github.com/Rouzihiro/dotfiles.git
 ---
 
 <!-- Badge Definitions -->
-[rust]: https://img.shields.io/badge/-Rust-000000?logo=rust&logoColor=white
+[rust]: https://img.shields.io/badge/-Rust-DEA584?logo=rust&logoColor=black
 [nim]: https://img.shields.io/badge/-nim-%23ffe953
 [sh]: https://img.shields.io/badge/-shell-green
 [go]: https://img.shields.io/badge/-go-68D7E2
