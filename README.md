@@ -1,7 +1,7 @@
 <h1 align="center" style="display: flex; justify-content: center; align-items: center;">
 <img src="./assets/arch-logo.png" width="100px" alt="Arch Logo" style="margin-right: 30px;" />
 <br>
-ArchLinux & NixOS for a Lightweight & Beautiful Setup
+ArchLinux for a Lightweight & Beautiful Setup
 <br>
 <img src="./assets/kanagawa.png" width="100px" alt="kanagawa Theme" />
 </h1>
@@ -9,7 +9,7 @@ ArchLinux & NixOS for a Lightweight & Beautiful Setup
 ### Arch Linux (Project Asahi - alarm) on MacM1
 
 # Core System
-- **Shell:** `zsh`
+- **Shell:** `zsh` & `bash`
 - **Kernel:** Linux 6.14.8-asahi-1-1-ARCH
 
 ![Sway Home Screenshot](./assets/wall.png)
@@ -84,7 +84,7 @@ git clone https://github.com/Rouzihiro/dotfiles.git
 ---
 
 <!-- Badge Definitions -->
-[rs]: https://img.shields.io/badge/-rust-orange
+[rust]: https://img.shields.io/badge/-Rust-000000?logo=rust&logoColor=white
 [nim]: https://img.shields.io/badge/-nim-%23ffe953
 [sh]: https://img.shields.io/badge/-shell-green
 [go]: https://img.shields.io/badge/-go-68D7E2
