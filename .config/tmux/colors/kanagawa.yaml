@@ -1,0 +1,10 @@
+# ~/.config/tmux/colors/kanagawa-wave.yaml
+primary_bg: "1F1F28"
+primary_text: "DCD7BA"
+active_border: "957FB8"
+inactive_border: "54546D"
+window_inactive: "54546D"
+window_active: "C0A36E"
+alert: "FF5D62"
+path_bg: "7E9CD8"
+menu_accent: "C0A36E"
