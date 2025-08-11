@@ -1,4 +1,7 @@
 # Terminal & Shell
+bob
+dialog
+ripgrep
 zsh
 foot
 starship
@@ -51,11 +54,12 @@ yt-dlp
 pamixer
 
 # Development
+tinymist
 jdk-openjdk
 nodejs
 npm
-texlive-latexextra
-texmaker
+#texlive-latexextra
+#texmaker
 
 # Graphics/GPU
 mesa-utils

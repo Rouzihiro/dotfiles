@@ -1,0 +1,4 @@
+mesa
+mesa-utils
+vulkan-tools
+libglvnd
