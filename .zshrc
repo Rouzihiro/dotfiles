@@ -1,3 +1,6 @@
+export BROWSER=librewolf
+export EDITOR=nvim
+export VISUAL=nvim
 export LANG=en_US.UTF-8
 export ZSH="$HOME/.oh-my-zsh"
 export PATH="$HOME/.local/share/bob/nvim-bin:$PATH"
