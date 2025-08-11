@@ -74,7 +74,7 @@ install_pacman_packages() {
   log_info "Installing ${#pkgs[@]} packages via pacman..."
   if ! sudo pacman -S --needed --noconfirm "${pkgs[@]}"; then
     log_warning "Some packages failed to install."
-    read -rp "Continue anyway? (y/n): " yn < /dev/tty
+    read -rp "Continue anyway? (y/n): " yn
     [[ "$yn" != [yY]* ]] && exit 1
   fi
   log_success "Pacman packages installed."
@@ -90,7 +90,7 @@ install_aur_packages() {
   log_info "Installing ${#pkgs[@]} AUR packages via yay..."
   if ! yay -S --needed --noconfirm "${pkgs[@]}"; then
     log_warning "Some AUR packages failed to install."
-    read -rp "Continue anyway? (y/n): " yn < /dev/tty
+    read -rp "Continue anyway? (y/n): " yn
     [[ "$yn" != [yY]* ]] && exit 1
   fi
   log_success "AUR packages installed (or attempted)."
@@ -129,7 +129,7 @@ install_omz() {
 }
 
 backup_configs() {
-  read -rp "Create backup of current configs? [y/N]: " backup_choice < /dev/tty
+  read -rp "Create backup of current configs? [y/N]: " backup_choice
   if [[ "$backup_choice" =~ ^[Yy]$ ]]; then
     local backup_dir="$HOME/reydots_backup_$(date +%Y%m%d_%H%M%S)"
     mkdir -p "$backup_dir"
@@ -145,7 +145,7 @@ update_system() {
   sudo pacman -Syu --noconfirm || log_warning "System update completed with warnings."
 }
 
-# Utilities menu - numbered list, fetch scripts from GitHub, run selected
+# Utilities menu - use fzf for selection
 utilities_menu() {
   log_info "Fetching available utility scripts from GitHub..."
 
@@ -157,39 +157,24 @@ utilities_menu() {
     return
   fi
 
+  # Extract script names into array
   local script_names
-  script_names=($(echo "$scripts_json" | jq -r '.[] | select(.type=="file") | .name'))
+  mapfile -t script_names < <(echo "$scripts_json" | jq -r '.[] | select(.type=="file") | .name')
 
   if [ "${#script_names[@]}" -eq 0 ]; then
     log_warning "No scripts found in the repository."
     return
   fi
 
-  echo -e "\nAvailable Utility Scripts:"
-  local i=1
-  for script in "${script_names[@]}"; do
-    echo "  [$i] $script"
-    ((i++))
-  done
+  echo -e "\nSelect a utility script to run:"
+  local selected_script
+  selected_script=$(printf '%s\n' "${script_names[@]}" | fzf --height=15 --border --prompt="Utilities > ")
 
-  echo
-  read -rp "Enter the number of the script to run (or 0 to cancel): " choice < /dev/tty
-  if [[ ! "$choice" =~ ^[0-9]+$ ]]; then
-    log_warning "Invalid input."
-    return
-  fi
-
-  if [ "$choice" -eq 0 ]; then
+  if [[ -z "$selected_script" ]]; then
     log_info "Cancelled."
     return
   fi
 
-  if (( choice < 1 || choice > ${#script_names[@]} )); then
-    log_warning "Choice out of range."
-    return
-  fi
-
-  local selected_script="${script_names[choice-1]}"
   log_info "Downloading and running $selected_script ..."
 
   local script_path="$TMPDIR/$selected_script"
@@ -202,8 +187,6 @@ utilities_menu() {
   echo -e "${YELLOW}--- Begin output of $selected_script ---${NC}"
   "$script_path"
   echo -e "${YELLOW}--- End output of $selected_script ---${NC}"
-
-  # Cleanup done automatically by trap
 }
 
 main_menu() {
