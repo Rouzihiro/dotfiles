@@ -1,0 +1,42 @@
+#!/usr/bin/env bash
+
+DIR="$HOME/Documents/Notes"
+mkdir -p "$DIR"
+
+# Choose terminal dynamically
+term="${TERMINAL:-foot}"
+if ! command -v "$term" >/dev/null 2>&1; then
+    term=$(command -v kitty || command -v alacritty || command -v wezterm || command -v xterm)
+fi
+
+# Get list of .md files with icon
+entries=$(find "$DIR" -maxdepth 1 -type f -name "*.md" -printf "📝 %f\n" | sort)
+
+# Add create and delete options
+options="📄 Create New Note\n🗑️ Delete Note\n$entries"
+
+# Launch rofi
+selection=$(echo -e "$options" | rofi -dmenu -i -p "🗒 Notes")
+
+[ -z "$selection" ] && exit
+
+if [[ "$selection" == "📄 Create New Note" ]]; then
+    new_name=$(rofi -dmenu -p "New note name (no .md):")
+    [ -z "$new_name" ] && exit
+    file="$DIR/$new_name.md"
+    [ -e "$file" ] || touch "$file"
+    "$term" -e nvim "$file" &
+    exit
+fi
+
+if [[ "$selection" == "🗑️ Delete Note" ]]; then
+    delete_target=$(find "$DIR" -maxdepth 1 -type f -name "*.md" -printf "📝 %f\n" | sort | rofi -dmenu -i -p "🗑 Select note to delete:")
+    [ -z "$delete_target" ] && exit
+    filename="${delete_target#📝 }"
+    rm -f "$DIR/$filename"
+    exit
+fi
+
+filename="${selection#📝 }"
+"$term" -e nvim "$DIR/$filename" &
+
