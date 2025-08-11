@@ -30,6 +30,7 @@ vim.pack.add({
 	{ src = "https://github.com/chomosuke/typst-preview.nvim" },
 	{ src = "https://github.com/mason-org/mason.nvim" },
 	{ src = 'https://github.com/NvChad/showkeys',                opt = true },
+	{ src = "https://github.com/L3MON4D3/LuaSnip" },
 	{ src = "https://github.com/nvim-lua/plenary.nvim" },
 	{ src = "https://github.com/nvim-telescope/telescope.nvim" },
   { src = "https://github.com/nvim-telescope/telescope-fzf-native.nvim", build = "make" },
@@ -55,20 +56,12 @@ require "showkeys".setup({ position = "top-right" })
 require "mini.pick".setup()
 require("plugins.oil")
 
--- require("oil").setup({
---   view_options = {
---     show_hidden = true,
---   },
--- })
-
-require "nvim-treesitter.configs".setup({
-ensure_installed = { "lua", "rust", "ini", "markdown", "markdown_inline", "css" },
-highlight = { enable = true }
-})
-
+vim.lsp.enable({ "lua_ls", "svelte", "tinymist", "emmetls" })
+require('nvim-treesitter.configs').setup({ highlight = { enable = true, }, })
 
 local telescope = require("telescope")
 local builtin = require("telescope.builtin")
+local map = vim.keymap.set
 
 telescope.setup({
   defaults = {
@@ -82,13 +75,15 @@ telescope.setup({
   },
 })
 
-local lspconfig = require("lspconfig")
-local tinymist_config = require("lsp.tinymist")
-lspconfig.tinymist.setup(tinymist_config)
-
-vim.lsp.enable({ "lua_ls", "svelte", "tinymist", "emmetls" })
-
 -- colors
 require "kanagawa".setup({ transparent = true })
 vim.cmd("colorscheme kanagawa")
 vim.cmd(":hi statusline guibg=NONE")
+
+-- snippets
+require("luasnip").setup({ enable_autosnippets = true })
+require("luasnip.loaders.from_lua").load({ paths = "~/.config/nvim/snippets/" })
+local ls = require("luasnip")
+map("i", "<C-e>", function() ls.expand_or_jump(1) end, { silent = true })
+-- map({ "i", "s" }, "<C-J>", function() ls.jump(1) end, { silent = true })
+-- map({ "i", "s" }, "<C-K>", function() ls.jump(-1) end, { silent = true })
