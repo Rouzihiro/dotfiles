@@ -1,3 +1,4 @@
+# Sway Window Manager and essentials
 sway
 swayidle
 swaylock

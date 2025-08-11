@@ -1,4 +1,4 @@
-# Description: Essential X11 utilities
+# Essential X11 utilities
 feh
 nitrogen
 scrot
