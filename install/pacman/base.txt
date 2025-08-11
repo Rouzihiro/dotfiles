@@ -9,6 +9,7 @@ eza
 bat
 fzf
 fd
+git
 tmux
 fastfetch
 duf
@@ -52,14 +53,6 @@ imv
 mpv
 yt-dlp
 pamixer
-
-# Development
-tinymist
-jdk-openjdk
-nodejs
-npm
-#texlive-latexextra
-#texmaker
 
 # Fonts
 otf-font-awesome

@@ -1,0 +1,8 @@
+# Development
+tinymist
+typst
+jdk-openjdk
+nodejs
+npm
+#texlive-latexextra
+#texmaker
