@@ -114,7 +114,6 @@ text_select_packages() {
     done
 }
 
-# Function for dialog-based package selection
 dialog_select_packages() {
     local dir="$1"
     local category="$2"
@@ -139,7 +138,15 @@ dialog_select_packages() {
     local choices
     choices=$(dialog --stdout --title "Select $category Packages" \
         --checklist "Choose package groups to install:" \
-        20 60 15 "${options[@]}") || return 1
+        20 60 15 "${options[@]}")
+    local dialog_exit=$?
+    
+    # Clear the screen after dialog closes
+    clear
+    
+    if [ $dialog_exit -ne 0 ]; then
+        return 1
+    fi
     
     array_ref=()
     for choice in $choices; do
@@ -352,9 +359,6 @@ main() {
     
     echo
     log_success "Package installation complete!"
-    log_info "Note: No dotfiles were copied (as requested)"
-    echo
-    log_warning "You may now manually install your configuration files."
 }
 
 main
