@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+# Get all app_ids of open windows in Sway
+windows=$(swaymsg -t get_tree | jq -r '
+  recurse(.nodes[]?) | 
+  select(.app_id != null) | 
+  .app_id' | sort | uniq | xargs)
+
+if [ -z "$windows" ]; then
+  notify-send -t 1500 "No windows open"
+else
+  notify-send -t 1500 "$windows"
+fi
+
