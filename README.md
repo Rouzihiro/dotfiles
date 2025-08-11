@@ -1,10 +1,34 @@
 <h1 align="center" style="display: flex; justify-content: center; align-items: center;">
 <img src="./assets/arch-logo.png" width="100px" alt="Arch Logo" style="margin-right: 30px;" />
 <br>
-ArchLinux for a Lightweight & Beautiful Setup
+ArchLinux Universal Installer for a Lightweight & Beautiful Setup
 <br>
 <img src="./assets/kanagawa.png" width="100px" alt="kanagawa Theme" />
 </h1>
+
+## 🌟 Features
+
+- **Cross-Platform Compatibility**: Works on:
+  - All standard x86_64 PCs
+  - Apple Silicon (M1/M2) via Asahi Linux
+  - Microsoft Surface devices
+  - Various consumer laptops (HP, Dell, Lenovo, etc.)
+- **Modular Design**: Select only the packages you need
+- **Proven Stability**: Successfully installed on:
+  - MacBook Air M1 (8GB)
+  - MacBook Pro (Intel)
+  - Microsoft Surface Pro 2
+  - Various friends/family devices
+- **Included Fixes**: Hardware-specific solutions in `/fixes` directory
+
+## 🛠️ Tested Configurations
+
+| Device | Status | Notes |
+|--------|--------|-------|
+| MacBook Air M1 (8GB) | ✅ Fully Working | Includes Asahi fixes |
+| Microsoft Surface Pro 2 | ✅ Fully Working | Touchscreen support |
+| Generic Intel Laptops | ✅ Fully Working | Broad compatibility |
+
 
 ### Arch Linux (Project Asahi - alarm) on MacM1
 
@@ -77,12 +101,21 @@ ArchLinux for a Lightweight & Beautiful Setup
 ### Installation
 ```bash
 git clone https://github.com/Rouzihiro/dotfiles.git
+cd dotfiles
+chmod +x installer.sh
+./installer.sh
 ```
 
-## run the installer (installer.sh) script inside the root folder. if u install dialog it will look beautiful as in this picture.
-
-
 ![Installer Script](./assets/installer.png)
+
+### 🌈 Customization
+
+    Edit package lists in /install directory
+
+    Add your fixes to /fixes (see existing examples)
+
+    Select packages interactively during installation
+
 
 ### several Shell Enhanced Functions
 
