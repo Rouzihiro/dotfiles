@@ -85,7 +85,7 @@ nnoremap S :sort<cr>
 
 nnoremap gd :cd ~/Downloads<cr>
 nnoremap gw :cd ~/Documents<cr>
-nnoremap gs :cd ~/bin<cr>
+nnoremap gb :cd ~/bin<cr>
 nnoremap gf :cd ~/dotfiles<cr>
 nnoremap gv :cd ~/Videos<cr>
 nnoremap gp :cd ~/Pictures<cr>

@@ -43,17 +43,16 @@ require("oil").setup({
     ["`"] = { "actions.cd", mode = "n" },
     ["~"] = { "actions.cd", opts = { scope = "tab" }, mode = "n" },
     ["gs"] = { "actions.change_sort", mode = "n" },
-    ["gx"] = "actions.open_external",
+    ["go"] = "actions.open_external",
     ["g."] = { "actions.toggle_hidden", mode = "n" },
     ["<C-d>"] = { "actions.toggle_trash", mode = "n" },
-
-["gd"] = {
-  mode = "n",
-  callback = function()
-    vim.cmd("Oil " .. vim.fn.expand("~/Downloads"))
-  end,
-  desc = "Jump Oil to ~/Downloads",
-}
+["gd"] = { mode = "n", callback = function() vim.cmd("Oil " .. vim.fn.expand("~/Downloads")) end, },
+["gw"] = { mode = "n", callback = function() vim.cmd("Oil " .. vim.fn.expand("~/Documents/")) end, },
+["gp"] = { mode = "n", callback = function() vim.cmd("Oil " .. vim.fn.expand("~/Pictures/")) end, },
+["gv"] = { mode = "n", callback = function() vim.cmd("Oil " .. vim.fn.expand("~/Videos/")) end, },
+["gf"] = { mode = "n", callback = function() vim.cmd("Oil " .. vim.fn.expand("~/dotfiles/")) end, },
+["gc"] = { mode = "n", callback = function() vim.cmd("Oil " .. vim.fn.expand("~/.config/")) end, },
+["gb"] = { mode = "n", callback = function() vim.cmd("Oil " .. vim.fn.expand("~/bin/")) end, },
   },
   use_default_keymaps = true,
   view_options = {
