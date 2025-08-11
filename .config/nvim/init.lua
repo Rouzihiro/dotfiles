@@ -53,7 +53,13 @@ require("keymaps")
 require "mason".setup()
 require "showkeys".setup({ position = "top-right" })
 require "mini.pick".setup()
-require "oil".setup()
+require("plugins.oil")
+
+-- require("oil").setup({
+--   view_options = {
+--     show_hidden = true,
+--   },
+-- })
 
 require "nvim-treesitter.configs".setup({
 ensure_installed = { "lua", "rust", "ini", "markdown", "markdown_inline", "css" },

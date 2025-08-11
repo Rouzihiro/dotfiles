@@ -15,7 +15,7 @@ rsync -av --delete \
     --exclude='discord' \
     --exclude='qBittorrent' \
     --exclude='libreoffice' \
-    --exclude='warp-terminal' \
+    --exclude='warp-tERminal' \
     "$HOME/dotfiles/.config/" "$HOME/.config/"
 
 # --- 2. Restore shell dotfiles ---
@@ -29,7 +29,7 @@ done <<EOF
 .bash_profile
 .bash_logout
 .zshrc
-.zprofile
+.profile
 .aliases
 .aliases-functions
 .aliases-arch
@@ -37,6 +37,8 @@ done <<EOF
 .mbsyncrc
 .msmtprc
 .gitconfig
+.xinitrc
+.Xauthority
 EOF
 
 # --- 3. Restore bin/ folder ---
