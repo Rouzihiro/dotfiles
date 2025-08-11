@@ -56,7 +56,7 @@ ex() {
 
 # Quick note taking
 note() {
-    echo "$*" >> ~/Documents/notes
+    echo "$*" >> ~/Documents/Notes/notes.md
     echo "Note added: $*"
 }
 

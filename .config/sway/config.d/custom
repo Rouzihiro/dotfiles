@@ -16,7 +16,7 @@ bindsym $mod+o exec ~/bin/ocr
 bindsym $mod+r exec $term --app-id=runner_floating -e ~/bin/runner
 
 bindsym $mod+mod1+v exec "$HOME/bin/rofi/rofi-clipboard"
-bindsym $mod+mod1+t exec "rofi -config ~/.config/rofi/todo.rasi -modi Todo:~/bin/rofi/rofitodo.sh -show Todo"
+bindsym $mod+mod1+n exec "rofi-notes"
 # bindsym $mod+c exec "$HOME/scripts/colorpicker"
 bindsym $mod+mod1+Tab exec "$HOME/bin/rofi/wall-random"
 bindsym $mod+grave exec "$HOME/bin/list-sway-window"
