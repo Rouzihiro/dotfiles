@@ -1,4 +1,4 @@
-# Mac M1 GPU Essentials
+# Mac M1 GPU essentials
 mesa
 mesa-utils
 vulkan-tools

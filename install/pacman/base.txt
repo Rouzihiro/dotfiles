@@ -35,7 +35,7 @@ unzip
 blueman
 curlftpfs
 yad
-swappy
+# swappy
 antimicrox
 zenity
 
@@ -61,14 +61,6 @@ npm
 #texlive-latexextra
 #texmaker
 
-# Graphics/GPU
-mesa-utils
-vulkan-tools
-xf86-video-intel
-vulkan-intel
-mesa
-libglvnd
-
 # Fonts
 otf-font-awesome
 ttf-droid
@@ -82,6 +74,7 @@ ttf-cascadia-code-nerd
 ttf-font-awesome
 ttf-dejavu
 noto-fonts
+ttf-liberation
 
 # Applications
 zathura
@@ -93,8 +86,4 @@ swww
 thunderbird
 ca-certificates
 
-# Future Packages (Uncomment to activate)
-# lutris
-# gamemode
-# lib32-gamemode
-# ttf-liberation
+

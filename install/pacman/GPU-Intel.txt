@@ -1,0 +1,7 @@
+# Intel GPU essentials
+mesa-utils
+vulkan-tools
+xf86-video-intel
+vulkan-intel
+mesa
+libglvnd
