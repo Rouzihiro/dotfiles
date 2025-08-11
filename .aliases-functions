@@ -1,20 +1,29 @@
 ali() {
+  local filter="$1"
+  local filter_lc filter_name filter_value
+
+  # Lowercase filter for case-insensitive match
+  filter_lc=$(echo "$filter" | command tr '[:upper:]' '[:lower:]')
+
   echo -e "\n\033[1;34m───────────[ Your Aliases ]───────────\033[0m\n"
-  
-  # List all aliases, exclude git-related ones and show in a neat format
+
   alias | grep -E "^[a-zA-Z_][a-zA-Z0-9_-]*=" | grep -v "^showalias=" | grep -v "git" | while IFS= read -r line; do
-    # Extract alias name and value
-    name="${line%%=*}"
-    value="${line#*=}"
-    
-    # Remove leading/trailing single quotes if any
+    local name="${line%%=*}"
+    local value="${line#*=}"
     value="${value#\'}"
     value="${value%\'}"
-    
-    # Display alias in cyan and gray colors, formatted
+
+    # Lowercase alias name and value for case-insensitive match
+    filter_name=$(echo "$name" | command tr '[:upper:]' '[:lower:]')
+    filter_value=$(echo "$value" | command tr '[:upper:]' '[:lower:]')
+
+    if [[ -n "$filter" && "$filter_name" != *"$filter_lc"* && "$filter_value" != *"$filter_lc"* ]]; then
+      continue
+    fi
+
     printf " \033[1;36m%-20s\033[0m → \033[0;37m%s\033[0m\n" "$name" "$value"
   done | sort
-  
+
   echo -e "\n\033[1;34m──────────────────────────────────────\033[0m\n"
 }
 
