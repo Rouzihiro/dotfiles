@@ -182,13 +182,20 @@ full_text="⟨"
 color=#585b70
 
 [battery]
-#command=cat /sys/class/power_supply/BAT0/capacity | awk '{print $1" %"}'
-command=cat /sys/class/power_supply/macsmc-battery/capacity | awk '{print $1" %"}' 
-interval=30
-color=#7fb4ca
+command=~/bin/bar/battery
+interval=10
+markup=pango
 separator=true
 align=center
-label=   
+
+# [battery]
+# #command=cat /sys/class/power_supply/BAT0/capacity | awk '{print $1" %"}'
+# command=cat /sys/class/power_supply/macsmc-battery/capacity | awk '{print $1" %"}' 
+# interval=30
+# color=#7fb4ca
+# separator=true
+# align=center
+# label=   
 
 [separator]
 full_text="⟨"
