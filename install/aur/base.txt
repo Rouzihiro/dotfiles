@@ -3,11 +3,6 @@ librewolf-bin
 brave-bin
 # zen-browser-bin
 
-# Games
-# winetricks
-# heroic-games-launcher-bin
-# protonup-qt
-
 # Fonts
 adobe-source-code-pro-fonts
 ttf-victor-mono

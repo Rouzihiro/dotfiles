@@ -1,0 +1,19 @@
+# Description: Essential X11 utilities
+feh
+nitrogen
+scrot
+maim
+xclip
+picom
+rofi
+brightnessctl
+pamixer
+blueman
+
+# Description: File managers for X11
+thunar
+vifm
+
+# Description: System monitoring/power tools
+btop
+power-profiles-daemon

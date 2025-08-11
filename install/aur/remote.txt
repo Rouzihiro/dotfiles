@@ -1,0 +1,2 @@
+rustdesk-bin
+anydesk-bin

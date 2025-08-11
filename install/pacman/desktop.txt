@@ -5,10 +5,11 @@ xdg-desktop-portal-wlr
 
 # System Essentials
 polkit-gnome
-gtklock
-waybar
+#waybar
 power-profiles-daemon
 rofi-wayland
-fuzzel
+#fuzzel
 wayland-utils
 wlr-randr
+wev
+darkman

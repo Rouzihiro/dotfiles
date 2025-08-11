@@ -1,0 +1,8 @@
+# Description: Core X11 system components
+xorg
+xorg-xinit
+lightdm
+lightdm-gtk-greeter
+polkit-gnome
+xdg-desktop-portal-gtk
+networkmanager
