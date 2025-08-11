@@ -145,8 +145,11 @@ update_system() {
   sudo pacman -Syu --noconfirm || log_warning "System update completed with warnings."
 }
 
-# Utilities menu - numbered list, fetch scripts from GitHub, run selected
+# Utilities menu - numbered list, fetch scripts from GitHub, cache & run
 utilities_menu() {
+  local cache_dir="$HOME/.local/share/reydots_scripts"
+  mkdir -p "$cache_dir"
+
   log_info "Fetching available utility scripts from GitHub..."
 
   local scripts_json
@@ -158,7 +161,7 @@ utilities_menu() {
   fi
 
   local script_names
-  script_names=($(echo "$scripts_json" | jq -r '.[] | select(.type=="file") | .name'))
+  mapfile -t script_names < <(echo "$scripts_json" | jq -r '.[] | select(.type=="file") | .name')
 
   if [ "${#script_names[@]}" -eq 0 ]; then
     log_warning "No scripts found in the repository."
@@ -190,20 +193,22 @@ utilities_menu() {
   fi
 
   local selected_script="${script_names[choice-1]}"
-  log_info "Downloading and running $selected_script ..."
+  local script_path="$cache_dir/$selected_script"
 
-  local script_path="$TMPDIR/$selected_script"
-  curl -sfL "$GITHUB_SCRIPTS_BASE/$selected_script" -o "$script_path" || {
-    log_error "Failed to download $selected_script"
-    return
-  }
+  if [ ! -f "$script_path" ]; then
+    log_info "Downloading $selected_script ..."
+    curl -sfL "$GITHUB_SCRIPTS_BASE/$selected_script" -o "$script_path" || {
+      log_error "Failed to download $selected_script"
+      return
+    }
+  else
+    log_info "$selected_script already cached locally."
+  fi
 
   chmod +x "$script_path"
   echo -e "${YELLOW}--- Begin output of $selected_script ---${NC}"
   "$script_path"
   echo -e "${YELLOW}--- End output of $selected_script ---${NC}"
-
-  # Cleanup done automatically by trap
 }
 
 main_menu() {
