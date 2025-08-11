@@ -1,0 +1,6 @@
+base.txt|Basic AUR packages
+development.txt|Development related AUR packages
+gaming.txt|Gaming AUR packages
+remote.txt|Remote control and related packages
+ungoogled-chrome.txt|ungoogled chromium browser
+
