@@ -6,6 +6,22 @@ ArchLinux Universal Installer for a Lightweight & Beautiful Setup
 <img src="./assets/kanagawa.png" width="100px" alt="kanagawa Theme" />
 </h1>
 
+
+## 🚀 Great performance for x86 and Apple Silicon M1
+  
+This setup with Sway WM idles at ~600MB RAM with our ultra-efficient stack:  
+
+✓ **C/Rust-powered tools**
+
+✓ **Asahi Linux**-tuned kernel
+
+✓ **Battery-optimized** power profiles  
+
+**Why it flies:**  
+- Zero Electron apps  
+- GPU-optimized compositing  
+- Minimal background services  
+
 ## 🌟 Features
 
 - **Cross-Platform Compatibility**: Works on:
@@ -28,9 +44,6 @@ ArchLinux Universal Installer for a Lightweight & Beautiful Setup
 | MacBook Air M1 (8GB) | ✅ Fully Working | Includes Asahi fixes |
 | Microsoft Surface Pro 2 | ✅ Fully Working | Touchscreen support |
 | Generic Intel Laptops | ✅ Fully Working | Broad compatibility |
-
-
-### Arch Linux (Project Asahi - alarm) on MacM1
 
 # Core System
 - **Shell:** `zsh` & `bash`
@@ -98,8 +111,12 @@ ArchLinux Universal Installer for a Lightweight & Beautiful Setup
 | [AntimicroX](https://github.com/AntiMicroX/antimicrox) | Gamepad to Keyboard/Mouse Mapper | ![C++][cpp] |
 ---
 
-### Installation
+
+### 🖥️ Enhanced Installation Experience
+
+**For best visual experience (recommended):**
 ```bash
+sudo pacman -S dialog  # Beautiful TUI menus
 git clone https://github.com/Rouzihiro/dotfiles.git
 cd dotfiles
 chmod +x installer.sh
