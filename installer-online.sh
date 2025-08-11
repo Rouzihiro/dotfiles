@@ -74,7 +74,7 @@ install_pacman_packages() {
   log_info "Installing ${#pkgs[@]} packages via pacman..."
   if ! sudo pacman -S --needed --noconfirm "${pkgs[@]}"; then
     log_warning "Some packages failed to install."
-    read -rp "Continue anyway? (y/n): " yn
+    read -rp "Continue anyway? (y/n): " yn < /dev/tty
     [[ "$yn" != [yY]* ]] && exit 1
   fi
   log_success "Pacman packages installed."
@@ -90,7 +90,7 @@ install_aur_packages() {
   log_info "Installing ${#pkgs[@]} AUR packages via yay..."
   if ! yay -S --needed --noconfirm "${pkgs[@]}"; then
     log_warning "Some AUR packages failed to install."
-    read -rp "Continue anyway? (y/n): " yn
+    read -rp "Continue anyway? (y/n): " yn < /dev/tty
     [[ "$yn" != [yY]* ]] && exit 1
   fi
   log_success "AUR packages installed (or attempted)."
@@ -129,7 +129,7 @@ install_omz() {
 }
 
 backup_configs() {
-  read -rp "Create backup of current configs? [y/N]: " backup_choice
+  read -rp "Create backup of current configs? [y/N]: " backup_choice < /dev/tty
   if [[ "$backup_choice" =~ ^[Yy]$ ]]; then
     local backup_dir="$HOME/reydots_backup_$(date +%Y%m%d_%H%M%S)"
     mkdir -p "$backup_dir"
@@ -145,11 +145,8 @@ update_system() {
   sudo pacman -Syu --noconfirm || log_warning "System update completed with warnings."
 }
 
-# Utilities menu - numbered list, fetch scripts from GitHub, cache & run
+# Utilities menu - numbered list, fetch scripts from GitHub, run selected
 utilities_menu() {
-  local cache_dir="$HOME/.local/share/reydots_scripts"
-  mkdir -p "$cache_dir"
-
   log_info "Fetching available utility scripts from GitHub..."
 
   local scripts_json
@@ -161,7 +158,7 @@ utilities_menu() {
   fi
 
   local script_names
-  mapfile -t script_names < <(echo "$scripts_json" | jq -r '.[] | select(.type=="file") | .name')
+  script_names=($(echo "$scripts_json" | jq -r '.[] | select(.type=="file") | .name'))
 
   if [ "${#script_names[@]}" -eq 0 ]; then
     log_warning "No scripts found in the repository."
@@ -176,7 +173,7 @@ utilities_menu() {
   done
 
   echo
-  read -rp "Enter the number of the script to run (or 0 to cancel): " choice
+  read -rp "Enter the number of the script to run (or 0 to cancel): " choice < /dev/tty
   if [[ ! "$choice" =~ ^[0-9]+$ ]]; then
     log_warning "Invalid input."
     return
@@ -193,22 +190,20 @@ utilities_menu() {
   fi
 
   local selected_script="${script_names[choice-1]}"
-  local script_path="$cache_dir/$selected_script"
+  log_info "Downloading and running $selected_script ..."
 
-  if [ ! -f "$script_path" ]; then
-    log_info "Downloading $selected_script ..."
-    curl -sfL "$GITHUB_SCRIPTS_BASE/$selected_script" -o "$script_path" || {
-      log_error "Failed to download $selected_script"
-      return
-    }
-  else
-    log_info "$selected_script already cached locally."
-  fi
+  local script_path="$TMPDIR/$selected_script"
+  curl -sfL "$GITHUB_SCRIPTS_BASE/$selected_script" -o "$script_path" || {
+    log_error "Failed to download $selected_script"
+    return
+  }
 
   chmod +x "$script_path"
   echo -e "${YELLOW}--- Begin output of $selected_script ---${NC}"
   "$script_path"
   echo -e "${YELLOW}--- End output of $selected_script ---${NC}"
+
+  # Cleanup done automatically by trap
 }
 
 main_menu() {
