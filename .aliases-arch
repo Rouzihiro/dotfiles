@@ -5,12 +5,13 @@ alias pm='sudo pacman -S'                          # Install package
 alias pmr='sudo pacman -Rns'                       # Remove package with unused deps
 alias pmu='sudo pacman -Syu'                       # Full system upgrade
 alias pmu2='sudo pacman -Syu --overwrite "/usr/lib/firmware/nvidia/*" linux-firmware-nvidia' # Pacman Update with Nvidia Firmware Override (for Surface devices) 
-alias pms='f() { pacman -Ss "$1" | GREP_COLORS="mt=01;31" grep --color=auto -i "$1"; }; f'
+alias pms='f() { pacman -Ss "$1" | GREP_COLORS="mt=01;96" grep --color=auto -i "$1"; }; f'
 alias pmi='pacman -Qi'                             # Package info
 alias pml='pacman -Ql'                             # List files in a package
 alias pmf='pacman -F'                              # Search for file provider
 alias pmo='pacman -Qdtq'                           # List orphans
-alias pmc='sudo pacman -Rns $(pacman -Qdtq)'       # Remove orphans
+alias pmc='pacman -Qdtq | xargs -r sudo pacman -Rns' #Remove orphans safely
+alias pmc2='sudo pacman -Rns $(pacman -Qdtq)'       # Remove orphans
 
 # Yay (AUR Helper)
 alias ya='yay -S'                                  # Install AUR package
