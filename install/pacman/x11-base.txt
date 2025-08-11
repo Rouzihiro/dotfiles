@@ -1,4 +1,4 @@
-# Description: Core X11 system components
+# Core X11 system components
 xorg
 xorg-xinit
 lightdm

@@ -1,3 +1,4 @@
+# Hyprland Window Manager and essentials
 hyprland
 hyprpaper
 hyprlock
