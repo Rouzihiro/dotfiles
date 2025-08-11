@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+selection=$(clipman pick --tool=rofi)
+
+if [ -n "$selection" ]; then
+  echo -n "$selection" | wl-copy
+  notify-send "Clipboard updated"
+else
+  notify-send "Clipboard updated"
+fi
+
