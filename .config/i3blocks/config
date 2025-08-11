@@ -41,7 +41,7 @@ interval=1
 color=#a3be8c
 separator=true
 align=center
-label=  
+label=   
 
 [separator]
 full_text="⟨"
