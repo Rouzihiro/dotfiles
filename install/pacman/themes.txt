@@ -1,0 +1,3 @@
+# Theme essentials
+gtk-engine-murrine
+gtk-engines
