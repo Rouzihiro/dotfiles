@@ -1,1 +1,2 @@
-ungoogled-chromium-bin         # Lightweight browser
+# Lightweight browser
+ungoogled-chromium-bin         

@@ -77,7 +77,10 @@ ArchLinux for a Lightweight & Beautiful Setup
 ### Installation
 ```bash
 git clone https://github.com/Rouzihiro/dotfiles.git
+run the installer (installer.sh) script inside the root folder
 ```
+
+![Installer Script](./assets/installer.png)
 
 ### several Shell Enhanced Functions
 
