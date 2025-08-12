@@ -1,5 +1,7 @@
 #!/bin/bash
 
+export DIALOGRC="$HOME/.dialogrc"
+
 # Color definitions
 GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
