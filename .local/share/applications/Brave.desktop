@@ -1,0 +1,12 @@
+[Desktop Entry]
+Name=Brave Browser (Wayland)
+GenericName=Web Browser
+Comment=Access the Internet
+Exec=brave --enable-features=UseOzonePlatform --ozone-platform=wayland %U
+StartupWMClass=Brave-browser
+Icon=brave-desktop
+Type=Application
+Categories=Network;WebBrowser;
+MimeType=text/html;text/xml;application/xhtml+xml;x-scheme-handler/http;x-scheme-handler/https;x-scheme-handler/ftp;x-scheme-handler/chrome;
+Actions=new-window;new-private-window;
+Keywords=Internet;WWW;Browser;Web;Explorer;
