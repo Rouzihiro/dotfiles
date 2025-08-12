@@ -19,7 +19,7 @@ if ! tmux has-session -t "$SESSION_NAME" 2>/dev/null; then
 
     # Window 2: just one pane with nvim inside ~/.config
     tmux new-window -t "$SESSION_NAME":2 -c "$HOME/.config" -n "nvim"
-		tmux send-keys -t "$SESSION_NAME":2 "nvim -c 'Oil'" C-m
+tmux send-keys -t "$SESSION_NAME":2 "nvim -c 'lua require(\"mini.pick\").builtin.files()'" C-m
 
     # Final attach
     tmux select-window -t "$SESSION_NAME":1
