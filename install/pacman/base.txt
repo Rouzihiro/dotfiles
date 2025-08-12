@@ -24,6 +24,7 @@ xdg-user-dirs
 rsync
 
 # Utilities
+btop
 aria2
 grim
 slurp
@@ -74,7 +75,7 @@ zathura
 zathura-cb
 zathura-pdf-mupdf
 xournalpp
-neovim
+# neovim
 swww
 thunderbird
 ca-certificates
