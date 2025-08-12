@@ -18,7 +18,6 @@ vim.opt.signcolumn = "yes"
 vim.o.spelllang = "en_us,de"
 vim.o.spellsuggest = "best,9"
 
--- Plugin loader (example with vim.pack, adapt if you use packer or other plugin manager)
 vim.pack.add({
   { src = "https://github.com/rebelot/kanagawa.nvim" },
   { src = "https://github.com/neovim/nvim-lspconfig" },
@@ -126,7 +125,7 @@ lspconfig.tinymist.setup({
     end
 
     -- Keymap for quick PDF export
-    vim.api.nvim_buf_set_keymap(bufnr, "n", "<leader>ep", ":ExportPdf<CR>", { noremap = true, silent = true })
+    vim.api.nvim_buf_set_keymap(bufnr, "n", "<leader>t", ":ExportPdf<CR>", { noremap = true, silent = true })
   end,
   filetypes = { "typst" },
   root_dir = lspconfig.util.root_pattern(".git"),
