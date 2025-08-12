@@ -39,9 +39,9 @@ nnoremap M :mkdir<SPACE>
 " create new tab
 nnoremap <c-t> :tabnew<cr>:view!<cr>
 " switch to tab to the left
-nnoremap <a-h> :tabprevious<cr>:view!<cr>
+nnoremap <c-j> :tabprevious<cr>:view!<cr>
 " switch to tab to the left
-nnoremap <a-l> :tabnext<cr>:view!<cr>
+nnoremap <c-k> :tabnext<cr>:view!<cr>
 " switch to tab to the left
 nnoremap x :q<cr>
 nnoremap q :q<cr>

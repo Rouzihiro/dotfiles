@@ -4,6 +4,7 @@ polkit-gnome
 power-profiles-daemon
 rofi-wayland
 #fuzzel
+wofi
 wayland-utils
 wlr-randr
 wev
