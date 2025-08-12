@@ -18,7 +18,7 @@
 
 ## Author: Pahasara Dewnith (https://github.com/Pahasara)
 
-BATTERY_PATH="/sys/class/power_supply/BAT0"
+BATTERY_PATH="/sys/class/power_supply/macsmc-battery/"
 STATUS_FILE="${BATTERY_PATH}/status"
 ICON_PATH_CONNECTED="$HOME/.local/share/icons/dunst/plugged.png"
 ICON_PATH_DISCONNECTED="$HOME/.local/share/icons/dunst/unplugged.png"

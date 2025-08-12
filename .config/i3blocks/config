@@ -16,31 +16,23 @@
 # urgent
 
 # Global properties
-#
 # The top properties below are applied to every block, but can be overridden.
 separator=false
 markup=pango
 separator_block_width=10
 
 [weather]
-command=~/bin/bar/weather-short
+command=weather-short
 interval=1000
-
-# [Weather]
-# command=~/bin/bar/openweather-city
-# interval=1800
-# color=#6969a8
 
 [separator]
 full_text="⟨"
 color=#585b70
 
 [bandwidth]
-command=~/bin/bar/bandwith
+command=bandwith
 interval=1
-color=#a3be8c
-separator=true
-align=center
+#color=#a3be8c
 label=   
 
 [separator]
@@ -67,7 +59,6 @@ color=#585b70
 # color=#dbcb75
 # command=swaymsg -q exec thunderbird
 
-# Disk usage
 [disk]
 label= 
 instance=/
@@ -78,7 +69,6 @@ interval=30
 full_text="⟨"
 color=#585b70
 
-# Memory usage
 [memory]
 label= 
 command=free -h | awk '/^Mem:/ {print $3 "/" $2}'
@@ -90,7 +80,7 @@ color=#585b70
 
 [cpu_usage]
 label= 
-command=~/bin/bar/cpu-usage
+command=cpu-usage
 interval=2
 
 [separator]
@@ -98,30 +88,24 @@ full_text="⟨"
 color=#585b70
 
 [CPU-temperature]
-label=
-command=~/bin/bar/cpu-temp
+command=cpu-temp
 interval=30
-#T_WARN=70
-#T_CRIT=90
-#SENSOR_CHIP=""
-# where SENSOR_CHIP can be find with sensors output
-# can be used also for GPU temperature or other temperature sensors lm-sensors detects.
 
 [separator]
 full_text="⟨"
 color=#585b70
 
 [wifi]
-label=  
-command=nmcli -f IN-USE,SIGNAL dev wifi | grep "^*" | awk "{print \$2 \"%\"}"
-interval=10
+command=wifi-status
+interval=30
+
+[updates]
+command=update-status
+interval=10800
 
 [separator]
 full_text="⟨"
 color=#585b70
-
-#[simple-2]
-#full_text=" "
 
 [volume]
 command=wpctl get-volume @DEFAULT_AUDIO_SINK@ | awk '{if ($3 == "[MUTED]") print "MUTED"; else print int($2 * 100) " %"}'
@@ -132,19 +116,8 @@ label= 
 full_text="⟨"
 color=#585b70
 
-# [pavucontrol]
-# full_text= 
-# command=pavucontrol
-#
-# [volume-pulseaudio]
-# command=~/bin/bar/volume
-# instance=Master
-# interval=1
-#
-# [simple-2]
-# full_text=" "
 [power-profile]
-command=~/bin/bar/power-wrapper
+command=power-wrapper
 interval=5
 signal=10
 
@@ -155,7 +128,6 @@ color=#585b70
 [brightness]
 command=brightnessctl g | awk '{print $1}'
 interval=5
-color=#ffa066
 label=   
 
 [separator]
@@ -164,9 +136,8 @@ color=#585b70
 
 [time]
 interval=1
-command=~/bin/bar/timer
+command=timer
 separator_block_width=10
-#color=#b4befe
 label= 
 
 [separator]
@@ -174,7 +145,7 @@ full_text="⟨"
 color=#585b70
 
 [keymap]
-command=~/bin/bar/kb-layout
+command=kb-layout
 interval=2
 
 [separator]
@@ -182,20 +153,8 @@ full_text="⟨"
 color=#585b70
 
 [battery]
-command=~/bin/bar/battery
-interval=10
-markup=pango
-separator=true
-align=center
-
-# [battery]
-# #command=cat /sys/class/power_supply/BAT0/capacity | awk '{print $1" %"}'
-# command=cat /sys/class/power_supply/macsmc-battery/capacity | awk '{print $1" %"}' 
-# interval=30
-# color=#7fb4ca
-# separator=true
-# align=center
-# label=   
+command=battery
+interval=30
 
 [separator]
 full_text="⟨"
@@ -203,4 +162,4 @@ color=#585b70
 
 [shutdown_menu]
 full_text= 
-command=~/bin/bar/powermenu
+command=powermenu

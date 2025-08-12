@@ -9,9 +9,8 @@
 
 ## Author: Pahasara Dewnith (https://github.com/Pahasara)
 
-battery_percentage=$(cat /sys/class/power_supply/BAT0/capacity)
-
-battery_status=$(cat /sys/class/power_supply/BAT0/status)
+battery_percentage=$(cat /sys/class/power_supply/macsmc-battery/capacity)
+battery_status=$(cat /sys/class/power_supply/macsmc-battery/status)
 
 battery_icons=("󰂃" "󰁺" "󰁻" "󰁼" "󰁽" "󰁾" "󰁿" "󰂀" "󰂁" "󰁹")
 
