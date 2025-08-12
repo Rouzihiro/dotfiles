@@ -1,7 +1,3 @@
-export BROWSER=librewolf
-export EDITOR=nvim
-export VISUAL=nvim
-export LANG=en_US.UTF-8
 export ZSH="$HOME/.oh-my-zsh"
 export PATH="$HOME/.local/share/bob/nvim-bin:$PATH"
 export PATH=$HOME/bin:/usr/local/bin:$PATH
@@ -21,6 +17,7 @@ source $ZSH/oh-my-zsh.sh
 [[ -f ~/.profile ]] && . ~/.profile
 [ -f ~/.aliases ] && source ~/.aliases
 [ -f ~/.aliases-functions ] && source ~/.aliases-functions
+[ -f ~/.aliases-functions2 ] && source ~/.aliases-functions2
 [ -f ~/.aliases-arch ] && source ~/.aliases-arch
 #[ -f ~/.aliases-fedora ] && source ~/.aliases-fedora
 

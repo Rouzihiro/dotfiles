@@ -1,0 +1,8 @@
+brightnessctl
+playerctl
+pamixer
+wiremix
+wireplumber
+# pipewire 
+# pipewire-pulse 
+speakersafetyd
