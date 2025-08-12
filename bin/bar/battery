@@ -1,8 +1,17 @@
 #!/bin/bash
 
 capacity=$(cat /sys/class/power_supply/macsmc-battery/capacity)
-status=$(cat /sys/class/power_supply/macsmc-battery/status)  # Check charging status
-color="#7fb4ca"  # Default color
+status=$(cat /sys/class/power_supply/macsmc-battery/status)
+color="#7fb4ca"
+
+# Battery icons from empty to full
+icons=("" "" "" "" "")
+
+# Calculate icon index (0-4)
+icon_index=$(( capacity / 20 ))
+if (( icon_index > 4 )); then
+    icon_index=4
+fi
 
 # Check if charging (yellow takes priority)
 if [[ "$status" == "Charging" ]]; then
@@ -11,4 +20,5 @@ elif [[ "$capacity" -lt 30 ]]; then
     color="#FF0000"  # Red when below 30%
 fi
 
-echo "<span color='$color'> $capacity%</span>"
+echo "<span color='$color'>${icons[icon_index]} $capacity%</span>"
+
