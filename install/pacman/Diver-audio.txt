@@ -1,0 +1,5 @@
+pipewire 
+pipewire-pulse 
+wireplumber
+speakersafetyd
+

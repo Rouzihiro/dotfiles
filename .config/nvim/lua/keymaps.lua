@@ -9,10 +9,10 @@ end, { desc = "Open Oil floating file manager" })
 map('n', '<leader>u', ':update<CR> :source<CR>')
 map('n', '<leader>s', ':write<CR>')
 -- map({ 'n', 'v', 'x' }, '<leader>s', ':e #<CR>')
-map('n', '<leader>x', ':bd<CR>', { desc = "Close buffer" })
+map('n', '<leader>q', ':bd<CR>', { desc = "Close buffer" })
 map("n", "K", vim.lsp.buf.hover, { desc = "LSP Hover" })
 
-map('n', '<leader>q', ':quit<CR>')
+map('n', '<leader>x', ':quit<CR>')
 map('n', '<C-q>', '<Cmd>bd!<CR>', { desc = "Force close buffer" })
 
 map("n", "<esc>", "<cmd>noh<CR>")
