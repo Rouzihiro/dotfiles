@@ -5,6 +5,5 @@ swaylock
 dunst
 #swaync
 swaybg
-i3blocks
 autotiling-rs
 xorg-xwayland

@@ -26,8 +26,6 @@ rsync
 # Utilities
 btop
 aria2
-grim
-slurp
 brightnessctl
 mediainfo
 jq
@@ -37,7 +35,6 @@ unzip
 blueman
 curlftpfs
 yad
-# swappy
 antimicrox
 zenity
 
@@ -55,20 +52,6 @@ mpv
 yt-dlp
 pamixer
 
-# Fonts
-otf-font-awesome
-ttf-droid
-ttf-fira-code
-ttf-fantasque-nerd
-ttf-jetbrains-mono
-ttf-jetbrains-mono-nerd
-ttf-firacode-nerd
-ttf-hack-nerd
-ttf-cascadia-code-nerd
-ttf-font-awesome
-ttf-dejavu
-noto-fonts
-ttf-liberation
 
 # Applications
 zathura

@@ -2,4 +2,15 @@
 noto-fonts 
 noto-fonts-emoji 
 noto-fonts-cjk
-
+otf-font-awesome
+ttf-droid
+ttf-fira-code
+ttf-fantasque-nerd
+ttf-jetbrains-mono
+ttf-jetbrains-mono-nerd
+ttf-firacode-nerd
+ttf-hack-nerd
+ttf-cascadia-code-nerd
+ttf-font-awesome
+ttf-dejavu
+ttf-liberation
