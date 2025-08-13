@@ -1,4 +1,0 @@
-#!/bin/zsh
-# Load functions then execute the script
-source ~/bin/Global_functions.sh
-exec "$@"

@@ -1,6 +1,3 @@
-alias test-yd="yt-dlp -f 'bv*[height<=1080][ext=mp4]+ba[ext=m4a]/b[height<=1080][ext=mp4]/bv*+ba/b' --embed-thumbnail --embed-metadata"
-alias test-yd720="yt-dlp -f 'bv[ext=mp4][height=720]+ba[ext=m4a]/b[ext=mp4][height<=720]' --embed-thumbnail --embed-metadata"
-
 alias disk='ncdu'
 alias df='duf -hide special'
 alias mem2='free -h'
@@ -108,8 +105,8 @@ alias szsh='source ~/.zshrc'
 alias xx='exit'
 alias c='clear'
 alias t='tmux'
-alias yd='yt-dlp --external-downloader aria2c --external-downloader-args '\''aria2c:-x10 -s10 -k1M'\'''
-alias ydbest='yt-dlp -f '\''bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best'\'''
+alias yd='yt-dlp'
+alias yda='yt-dlp --external-downloader aria2c --external-downloader-args '\''aria2c:-x10 -s10 -k1M'\'''
 alias yd1080="yt-dlp -f 'bv*[height<=1080][ext=mp4]+ba[ext=m4a]/b[height<=1080][ext=mp4]/bv*+ba/b' --embed-thumbnail --embed-metadata"
 alias yd720="yt-dlp -f 'bv[ext=mp4][height=720]+ba[ext=m4a]/b[ext=mp4][height<=720]' --embed-thumbnail --embed-metadata"
 
