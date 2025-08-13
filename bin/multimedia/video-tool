@@ -1,278 +1,169 @@
-  #!/bin/sh
+#!/bin/bash
+# video-tool2.sh — fully functional bash video toolbox with fzf main menu
 
-  # Create the output folder in ~/Videos if it doesn't exist
-  mkdir -p ~/Videos/converted ~/Videos/split ~/Videos/merged ~/Videos/thumbnails ~/Videos/gifs
+# Output directories
+VIDEO_OUT_DIR="$HOME/Videos"
+MERGE_OUT_DIR="$VIDEO_OUT_DIR/merged"
+SPLIT_OUT_DIR="$VIDEO_OUT_DIR/split"
+GIF_OUT_DIR="$VIDEO_OUT_DIR/gifs"
+THUMB_OUT_DIR="$VIDEO_OUT_DIR/thumbnails"
+CONVERT_OUT_DIR="$VIDEO_OUT_DIR/converted"
 
-  # Function to convert video
-  convert_video() {
-      local input_file="$1"
-      local output_file="$2"
-      local video_codec="$3"
-      local audio_codec="$4"
-      local preset="$5"
+mkdir -p "$MERGE_OUT_DIR" "$SPLIT_OUT_DIR" "$GIF_OUT_DIR" "$THUMB_OUT_DIR" "$CONVERT_OUT_DIR"
 
-      if [ "$video_codec" = "Passthrough" ]; then
-          video_codec="copy"
-      fi
+# --- fzf multi-select ---
+select_multiple_with_fzf() {
+    local prompt="$1"
+    shift
+    printf '%s\n' "$@" | fzf --multi --height=15 --border --prompt="$prompt > " \
+        --preview 'ffprobe -hide_banner {} 2>&1 | head -n 20'
+}
 
-      if [ "$audio_codec" = "Passthrough" ]; then
-          audio_codec="copy"
-      fi
+# --- Merge videos safely ---
+merge_videos() {
+    local tmp
+    tmp=$(mktemp)
+    for f in "$@"; do
+        local esc="${f//\'/\'\\\'\'}"
+        echo "file '$esc'" >> "$tmp"
+    done
+    local out="$MERGE_OUT_DIR/merged_$(date +%Y%m%d_%H%M%S).mkv"
+    ffmpeg -f concat -safe 0 -i "$tmp" -c copy "$out"
+    rm "$tmp"
+    echo "✅ Merged file: $out"
+}
 
-      ffmpeg -i "$input_file" -c:v "$video_codec" -preset "$preset" -c:a "$audio_codec" "$output_file"
-  }
+# --- Merge & Compress videos ---
+merge_and_compress() {
+    local tmp
+    tmp=$(mktemp)
+    for f in "$@"; do
+        local esc="${f//\'/\'\\\'\'}"
+        echo "file '$esc'" >> "$tmp"
+    done
+    local out="$MERGE_OUT_DIR/merged_compressed_$(date +%Y%m%d_%H%M%S).mp4"
+    ffmpeg -f concat -safe 0 -i "$tmp" -c:v libx265 -preset fast -crf 28 -c:a aac -b:a 128k "$out"
+    rm "$tmp"
+    echo "✅ Merged & Compressed file: $out"
+}
 
-  # Function to split video
-  split_video() {
-      local input_file="$1"
-      local output_file="$2"
-      local start_time="$3"
-      local end_time="$4"
+# --- Split video ---
+split_video() {
+    local file="$1"
+    read -rp "Start time (HH:MM:SS, default 00:00:00): " start
+    start=${start:-00:00:00}
+    read -rp "End time (HH:MM:SS, default 00:01:00): " end
+    end=${end:-00:01:00}
+    local base=$(basename "$file")
+    local out="$SPLIT_OUT_DIR/split_${base%.*}_$(date +%H%M%S).${base##*.}"
+    ffmpeg -i "$file" -ss "$start" -to "$end" -c copy "$out"
+    echo "✅ Split saved: $out"
+}
 
-      ffmpeg -i "$input_file" -ss "$start_time" -to "$end_time" -c copy "$output_file"
-  }
+# --- Convert video ---
+convert_video() {
+    local file="$1"
+    read -rp "Video codec (Passthrough/libx264/libx265, default libx264): " vcodec
+    vcodec=${vcodec:-libx264}
+    read -rp "Audio codec (Passthrough/aac/mp3, default aac): " acodec
+    acodec=${acodec:-aac}
+    read -rp "Preset (fast/normal/slow, default fast): " preset
+    preset=${preset:-fast}
+    local base=$(basename "$file")
+    local out="$CONVERT_OUT_DIR/${base%.*}.mkv"
+    [[ "$vcodec" == "Passthrough" ]] && vcodec="copy"
+    [[ "$acodec" == "Passthrough" ]] && acodec="copy"
+    ffmpeg -i "$file" -c:v "$vcodec" -preset "$preset" -c:a "$acodec" "$out"
+    echo "✅ Converted: $out"
+}
 
-  # Function to merge videos
-  merge_videos() {
-      local input_files="$1"
-      local output_file="$2"
+# --- Create GIF ---
+make_gif() {
+    local file="$1"
+    read -rp "Start time (HH:MM:SS, default 00:00:00): " start
+    start=${start:-00:00:00}
+    read -rp "Duration (seconds, default 5): " duration
+    duration=${duration:-5}
+    local base=$(basename "$file")
+    local out="$GIF_OUT_DIR/${base%.*}_$(date +%H%M%S).gif"
+    ffmpeg -ss "$start" -t "$duration" -i "$file" -vf "fps=15,scale=480:-1:flags=lanczos" "$out"
+    echo "✅ GIF saved: $out"
+}
 
-      ffmpeg -f concat -safe 0 -i "$input_files" -c copy "$output_file"
-  }
+# --- Create Thumbnail ---
+make_thumbnail() {
+    local file="$1"
+    read -rp "Time for thumbnail (HH:MM:SS, default 00:00:05): " t
+    t=${t:-00:00:05}
+    local base=$(basename "$file")
+    local out="$THUMB_OUT_DIR/${base%.*}_thumb.jpg"
+    ffmpeg -ss "$t" -i "$file" -vframes 1 "$out"
+    echo "✅ Thumbnail saved: $out"
+}
 
-  # Function to create a GIF
-  create_gif() {
-      local input_file="$1"
-      local start_time="$2"
-      local duration="$3"
-      local output_file="$4"
+# --- Show metadata ---
+show_metadata() {
+    ffprobe -hide_banner "$1"
+}
 
-      ffmpeg -ss "$start_time" -t "$duration" -i "$input_file" -vf "fps=15,scale=480:-1:flags=lanczos" "$output_file"
-  }
+# --- Collect video files safely ---
+video_files=()
+while IFS= read -r -d '' file; do
+    video_files+=("$file")
+done < <(find ~/Downloads ~/Videos -type f \( -iname "*.mp4" -o -iname "*.mkv" -o -iname "*.mov" -o -iname "*.avi" -o -iname "*.webm" \) -print0)
 
-  # Function to create a thumbnail grid
-  create_thumbnail() {
-      local input_file="$1"
-      local output_file="$2"
+[[ ${#video_files[@]} -eq 0 ]] && { echo "❌ No video files found in ~/Downloads or ~/Videos."; exit 1; }
 
-      local duration=$(ffprobe -i "$input_file" -show_entries format=duration -v quiet -of csv="p=0" | awk '{print int($1)}')
-      local interval=$((duration / 16))
+# --- Main menu with fzf ---
+while true; do
+    action=$(printf "%s\n" \
+        "Merge videos" \
+        "Merge & Compress videos" \
+        "Split video" \
+        "Convert video" \
+        "Make GIF" \
+        "Make thumbnail" \
+        "Show metadata" \
+        "Exit" | fzf --height=10 --border --prompt="Main Menu > ")
 
-      ffmpeg -i "$input_file" -vf "select='not(mod(n,''${interval}))',scale=320:240,tile=4x4" -frames:v 1 "$output_file"
-  }
-
-  # Function to remove metadata
-  remove_metadata() {
-      local input_file="$1"
-      local output_file="$2"
-
-      ffmpeg -i "$input_file" -map_metadata -1 -c:v copy -c:a copy "$output_file"
-  }
-
-  # Function to handle file selection
-  select_file() {
-      find ~/Downloads ~/Videos -type f \( -iname "*.avi" -o -iname "*.mp4" -o -iname "*.mkv" -o -iname "*.flv" -o -iname "*.webm" \) \
-          -exec realpath {} \; | sort -u | wofi --dmenu --prompt "Select a video file"
-  }
-
-  # Function to ask the operation type
-  select_operation() {
-      echo -e "Convert\nSplit\nMerge\nCreate GIF\nCreate Thumbnail\nRemove Metadata" | wofi --dmenu --prompt "Select an operation"
-  }
-
-  # Function to ask for start time for splitting or GIF creation
-  get_start_time() {
-      wofi --dmenu --prompt "Enter start time (HH:MM:SS, default 00:00:00)" <<< "00:00:00"
-  }
-
-  # Function to ask for end time for splitting
-  get_end_time() {
-      wofi --dmenu --prompt "Enter end time (HH:MM:SS, default 00:01:00)" <<< "00:01:00"
-  }
-
-  # Function to ask for GIF duration
-  get_duration() {
-      wofi --dmenu --prompt "Enter GIF duration in seconds (default 5)" <<< "5"
-  }
-
-  # Function to ask how many videos to merge
-  get_merge_count() {
-      wofi --dmenu --prompt "How many video files do you want to merge?"
-  }
-
-  # Function to ask if user wants to select another file
-  ask_for_another_file() {
-      echo -e "Yes\nNo" | wofi --dmenu --prompt "Do you want to select another file?"
-  }
-
-  # Function to select video codec
-  select_video_codec() {
-      echo -e "Passthrough\nlibx264\nlibx265" | wofi --dmenu --prompt "Select video codec"
-  }
-
-  # Function to select audio codec
-  select_audio_codec() {
-      echo -e "Passthrough\naac\nmp3" | wofi --dmenu --prompt "Select audio codec"
-  }
-
-  # Function to select preset (encoding speed)
-  select_preset() {
-      echo -e "fast\nnormal\nslow" | wofi --dmenu --prompt "Select encoding preset"
-  }
-
-  # Main workflow
-  operation=$(select_operation)
-  if [ -z "$operation" ]; then
-      notify-send "Video Tool" "No operation selected. Exiting."
-      exit 1
-  fi
-
-  selected_files=()
-  if [ "$operation" = "Merge" ]; then
-      merge_count=$(get_merge_count)
-      if ! [[ "$merge_count" =~ ^[0-9]+$ ]]; then
-          notify-send "Video Tool" "Invalid number entered. Exiting."
-          exit 1
-      fi
-
-      for ((i = 1; i <= merge_count; i++)); do
-          file_to_merge=$(select_file)
-
-          if [ -z "$file_to_merge" ]; then
-              notify-send "Video Tool" "No file selected. Exiting."
-              exit 1
-          fi
-
-          selected_files+=("$file_to_merge")
-      done
-
-      temp_file_list=$(mktemp)
-      for file in "''${selected_files[@]}"; do
-          echo "file '$file'" >> "$temp_file_list"
-      done
-
-      output_file="$HOME/Videos/merged/merged_video_$(date +%Y%m%d%H%M%S).mkv"
-      merge_videos "$temp_file_list" "$output_file"
-      rm "$temp_file_list"
-
-      notify-send "Video Tool" "Merging complete: $output_file"
-      exit 0
-  elif [ "$operation" = "Split" ]; then
-      while true; do
-          file_to_split=$(select_file)
-          if [ -z "$file_to_split" ]; then
-              notify-send "Video Tool" "No file selected. Exiting."
-              exit 1
-          fi
-
-          start_time=$(get_start_time)
-          if [ -z "$start_time" ]; then
-              notify-send "Video Tool" "No start time provided. Exiting."
-              exit 1
-          fi
-
-          end_time=$(get_end_time)
-          if [ -z "$end_time" ]; then
-              notify-send "Video Tool" "No end time provided. Exiting."
-              exit 1
-          fi
-
-          output_file="$HOME/Videos/split/$(basename "$file_to_split" .''${file_to_split##*.})_split_''${start_time}_''${end_time}.mp4"
-          split_video "$file_to_split" "$output_file" "$start_time" "$end_time"
-          notify-send "Video Tool" "Split complete: $output_file"
-
-          another_file=$(ask_for_another_file)
-          if [ "$another_file" != "Yes" ]; then
-              break
-          fi
-      done
-      exit 0
-  elif [ "$operation" = "Create GIF" ]; then
-      file_to_process=$(select_file)
-      if [ -z "$file_to_process" ]; then
-          notify-send "Video Tool" "No file selected. Exiting."
-          exit 1
-      fi
-
-      start_time=$(get_start_time)
-      if [ -z "$start_time" ]; then
-          notify-send "Video Tool" "No start time provided. Exiting."
-          exit 1
-      fi
-
-      duration=$(get_duration)
-      if [ -z "$duration" ]; then
-          notify-send "Video Tool" "No duration provided. Exiting."
-          exit 1
-      fi
-
-      output_file="$HOME/Videos/gifs/$(basename "$file_to_process" .''${file_to_process##*.}).gif"
-      create_gif "$file_to_process" "$start_time" "$duration" "$output_file"
-      notify-send "Video Tool" "GIF creation complete: $output_file"
-      exit 0
-  elif [ "$operation" = "Create Thumbnail" ]; then
-      file_to_process=$(select_file)
-      if [ -z "$file_to_process" ]; then
-          notify-send "Video Tool" "No file selected. Exiting."
-          exit 1
-      fi
-
-      output_file="$HOME/Videos/thumbnails/$(basename "$file_to_process" .''${file_to_process##*.})_preview.jpg"
-      create_thumbnail "$file_to_process" "$output_file"
-      notify-send "Video Tool" "Thumbnail creation complete: $output_file"
-      exit 0
-  elif [ "$operation" = "Remove Metadata" ]; then
-      file_to_process=$(select_file)
-      if [ -z "$file_to_process" ]; then
-          notify-send "Video Tool" "No file selected. Exiting."
-          exit 1
-      fi
-
-      output_file="$HOME/Videos/$(basename "$file_to_process" .''${file_to_process##*.})_nometa.''${file_to_process##*.}"
-      remove_metadata "$file_to_process" "$output_file"
-      notify-send "Video Tool" "Metadata removal complete: $output_file"
-      exit 0
-  fi
-
-  while true; do
-      file_to_process=$(select_file)
-
-      if [ -z "$file_to_process" ]; then
-          notify-send "Video Tool" "No file selected. Exiting."
-          exit 1
-      fi
-
-      selected_files+=("$file_to_process")
-
-      another_file=$(ask_for_another_file)
-
-      if [ "$another_file" != "Yes" ]; then
-          break
-      fi
-  done
-
-  for file_to_process in "''${selected_files[@]}"; do
-      if [ "$operation" = "Convert" ]; then
-          video_codec_choice=$(select_video_codec)
-          if [ -z "$video_codec_choice" ]; then
-              notify-send "Video Tool" "No video codec selected. Exiting."
-              exit 1
-          fi
-
-          audio_codec_choice=$(select_audio_codec)
-          if [ -z "$audio_codec_choice" ]; then
-              notify-send "Video Tool" "No audio codec selected. Exiting."
-              exit 1
-          fi
-
-          preset_choice=$(select_preset)
-          if [ -z "$preset_choice" ]; then
-              notify-send "Video Tool" "No preset selected. Exiting."
-              exit 1
-          fi
-
-          output_file="$HOME/Videos/converted/$(basename "$file_to_process" .''${file_to_process##*.}).mkv"
-          convert_video "$file_to_process" "$output_file" "$video_codec_choice" "$audio_codec_choice" "$preset_choice"
-          notify-send "Video Tool" "Conversion complete: $output_file"
-      fi
-  done
+    case "$action" in
+        "Merge videos")
+            files=$(select_multiple_with_fzf "Select videos to merge" "${video_files[@]}")
+            [[ -z "$files" ]] && continue
+            merge_videos $files
+            ;;
+        "Merge & Compress videos")
+            files=$(select_multiple_with_fzf "Select videos to merge & compress" "${video_files[@]}")
+            [[ -z "$files" ]] && continue
+            merge_and_compress $files
+            ;;
+        "Split video")
+            file=$(select_multiple_with_fzf "Select single video" "${video_files[@]}" | head -n1)
+            [[ -z "$file" ]] && continue
+            split_video "$file"
+            ;;
+        "Convert video")
+            file=$(select_multiple_with_fzf "Select single video" "${video_files[@]}" | head -n1)
+            [[ -z "$file" ]] && continue
+            convert_video "$file"
+            ;;
+        "Make GIF")
+            file=$(select_multiple_with_fzf "Select single video" "${video_files[@]}" | head -n1)
+            [[ -z "$file" ]] && continue
+            make_gif "$file"
+            ;;
+        "Make thumbnail")
+            file=$(select_multiple_with_fzf "Select single video" "${video_files[@]}" | head -n1)
+            [[ -z "$file" ]] && continue
+            make_thumbnail "$file"
+            ;;
+        "Show metadata")
+            file=$(select_multiple_with_fzf "Select single video" "${video_files[@]}" | head -n1)
+            [[ -z "$file" ]] && continue
+            show_metadata "$file"
+            ;;
+        "Exit")
+            break
+            ;;
+    esac
+done
