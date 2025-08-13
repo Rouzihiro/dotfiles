@@ -1,18 +1,11 @@
 # System Essentials
 polkit-gnome
-#waybar
 power-profiles-daemon
-rofi-wayland
-#fuzzel
-wofi
 wayland-utils
 wlr-randr
 wev
-darkman
 
 # Window Managers/Compositors
 xdg-desktop-portal-wlr
 # xdg-desktop-portal
 # xdg-desktop-portal-gtk
-
-
