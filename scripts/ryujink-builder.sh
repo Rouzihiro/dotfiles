@@ -1,44 +1,43 @@
 #!/bin/bash
-set -e
+# setup-ryujinx-launcher.sh — auto-detect latest publish folder and create launcher
 
-# 1️⃣ Install system dependencies for M1
-sudo pacman -S --needed --noconfirm \
-    mono sdl2 vulkan-headers vulkan-validation-layers git base-devel
+# 1. Find newest publish directory automatically
+PUBLISH_DIR=$(find "$HOME/Games/ryujinx/src/Ryujinx/bin/Release" -type d -path "*/linux-arm64/publish" | sort -V | tail -n 1)
 
-# 2️⃣ Install .NET 9 SDK from AUR if not present
-if ! dotnet --list-sdks | grep -q '^9'; then
-    echo "Installing .NET 9 SDK (dotnet-sdk-bin) from AUR..."
-    yay -S --noconfirm dotnet-sdk-bin
+if [[ -z "$PUBLISH_DIR" ]]; then
+    echo "❌ Could not find Ryujinx publish directory."
+    exit 1
 fi
 
-# 3️⃣ Go to Ryujinx source folder
-RYUJINX_DIR="$HOME/Games/ryujinx"
-cd "$RYUJINX_DIR"
-
-# 4️⃣ Adjust global.json if necessary
-GLOBAL_SDK=$(jq -r '.sdk.version' global.json)
-if ! dotnet --list-sdks | grep -q "^${GLOBAL_SDK%.*}"; then
-    echo "global.json expects $GLOBAL_SDK, updating to installed SDK..."
-    INSTALLED_SDK=$(dotnet --list-sdks | head -n1 | awk '{print $1}')
-    jq ".sdk.version=\"$INSTALLED_SDK\"" global.json > global.json.tmp && mv global.json.tmp global.json
-fi
-
-# 5️⃣ Restore dependencies (may take a few minutes)
-dotnet restore
-
-# 6️⃣ Build standalone ARM64 release
-dotnet publish -c Release -r linux-arm64 --self-contained true -p:DebugType=None
-
-# 7️⃣ Output location
-PUBLISH_DIR="$RYUJINX_DIR/src/Ryujinx/bin/Release/net8.0/linux-arm64/publish"
-echo "✅ Ryujinx built successfully!"
-echo "Run it with: $PUBLISH_DIR/Ryujinx"
-
-# 8️⃣ Create launcher in $HOME/bin
-mkdir -p "$HOME/bin"
+# 2. Define launcher and desktop file locations
 LAUNCHER="$HOME/bin/ryujinx"
-echo -e "#!/bin/bash\ncd $PUBLISH_DIR && ./Ryujinx" > "$LAUNCHER"
+DESKTOP_FILE="$HOME/.local/share/applications/ryujinx.desktop"
+
+# 3. Ensure ~/bin exists
+mkdir -p "$HOME/bin"
+
+# 4. Create launcher script
+cat > "$LAUNCHER" <<EOF
+#!/bin/bash
+"$PUBLISH_DIR/Ryujinx" "\$@"
+EOF
 chmod +x "$LAUNCHER"
-echo "Launcher created: $LAUNCHER"
-echo "Add $HOME/bin to your PATH if not already: export PATH=\$HOME/bin:\$PATH"
+
+# 5. Create .desktop entry
+mkdir -p "$(dirname "$DESKTOP_FILE")"
+cat > "$DESKTOP_FILE" <<EOF
+[Desktop Entry]
+Name=Ryujinx
+Exec=$LAUNCHER
+Icon=ryujinx
+Type=Application
+Categories=Game;
+EOF
+
+# 6. Refresh desktop database
+update-desktop-database "$(dirname "$DESKTOP_FILE")"
+
+echo "✅ Launcher created at $LAUNCHER"
+echo "✅ Desktop entry created at $DESKTOP_FILE"
+echo "📂 Ryujinx path: $PUBLISH_DIR"
 
