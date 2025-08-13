@@ -1,0 +1,6 @@
+[Desktop Entry]
+Name=Ryujinx
+Exec=/home/rey/bin/ryujinx
+Icon=ryujinx
+Type=Application
+Categories=Game;

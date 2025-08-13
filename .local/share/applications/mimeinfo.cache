@@ -1,2 +1,9 @@
 [MIME Cache]
+application/xhtml+xml=Brave.desktop;
+text/html=Brave.desktop;
 text/plain=nvim.desktop;
+text/xml=Brave.desktop;
+x-scheme-handler/chrome=Brave.desktop;
+x-scheme-handler/ftp=Brave.desktop;
+x-scheme-handler/http=Brave.desktop;
+x-scheme-handler/https=Brave.desktop;
