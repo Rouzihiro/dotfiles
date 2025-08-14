@@ -99,9 +99,9 @@ color=#585b70
 command=wifi-status
 interval=30
 
-[updates]
-command=update-status
-interval=10800
+# [updates]
+# command=update-status
+# interval=10800
 
 [separator]
 full_text="⟨"
