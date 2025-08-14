@@ -1,0 +1,25 @@
+# Set mod key to Super (Windows) key
+set $mod Mod4
+
+# Launch terminal
+bindsym $mod+Return exec kitty
+
+# Kill focused window
+bindsym $mod+Shift+q kill
+
+# Reload i3 configuration
+bindsym $mod+Shift+c reload
+
+# Restart i3 in place (preserves layout)
+bindsym $mod+Shift+r restart
+
+# Exit i3 (logs you out)
+bindsym $mod+Shift+e exit
+
+# Basic floating rules (optional)
+for_window [class="^.*"] floating enable
+
+# Use gaps if you like (optional)
+gaps inner 10
+gaps outer 10
+
