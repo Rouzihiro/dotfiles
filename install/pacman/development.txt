@@ -4,5 +4,6 @@ typst
 jdk-openjdk
 nodejs
 npm
+python-gobject #used for power-profile
 #texlive-latexextra
 #texmaker
