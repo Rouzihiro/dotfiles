@@ -1,0 +1,8 @@
+cmd togglepreview ${{
+    current=$(lf -remote "send $id get preview")
+    if [ "$current" = "true" ]; then
+        lf -remote "send $id set preview false; set ratios 1:1"
+    else
+        lf -remote "send $id set preview true; set ratios 1:2:2"
+    fi
+}}

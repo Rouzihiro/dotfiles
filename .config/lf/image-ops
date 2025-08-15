@@ -1,0 +1,27 @@
+cmd image-ops ${{
+    choice=$(echo -e "↻ Rotate 90°\n↺ Rotate -90°\n🔄 Flip horizontal\n🔄 Flip vertical\n🖼️ Convert to PNG\n📐 Resize 50%\n🌈 Grayscale\n✂️ Crop (interactive)\n💧 Blur\n✨ Sharpen\n📝 Watermark\n📏 Border\nCancel" | fzf --height=50% --reverse --prompt="Image operation: ")
+
+    case "$choice" in
+        "↻ Rotate 90°") magick "$f" -rotate 90 "$f" ;;
+        "↺ Rotate -90°") magick "$f" -rotate -90 "$f" ;;
+        "🔄 Flip horizontal") magick "$f" -flip "$f" ;;
+        "🔄 Flip vertical") magick "$f" -flop "$f" ;;
+        "🖼️ Convert to PNG") magick "$f" "${f%.*}.png" ;;
+        "📐 Resize 50%") magick "$f" -resize 50% "$f" ;;
+        "🌈 Grayscale") magick "$f" -colorspace Gray "$f" ;;
+        "✂️ Crop (interactive)") 
+            geometry=$(magick "$f" -format "%wx%h+%x+%y" -write info: -crop 0x0+0+0 +repage - | fzf --prompt="Click+drag to crop | Enter to confirm: ")
+            [ -n "$geometry" ] && magick "$f" -crop "$geometry" +repage "$f"
+            ;;
+        "💧 Blur") magick "$f" -blur 0x8 "$f" ;;
+        "✨ Sharpen") magick "$f" -sharpen 0x1 "$f" ;;
+				"🌞 Brighten") magick "$f" -modulate 110 "$f" ;;
+				"🌑 Darken") magick "$f" -modulate 90 "$f" ;;
+        "📝 Watermark")
+            echo "Enter watermark text:" && read watermark
+            magick "$f" -pointsize 36 -fill "rgba(255,255,255,0.5)" -gravity southeast -annotate +10+10 "$watermark" "$f"
+            ;;
+        "📏 Border") magick "$f" -bordercolor black -border 10x10 "$f" ;;
+        *) ;;
+    esac
+}}

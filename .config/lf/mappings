@@ -2,6 +2,17 @@
 # Remove some default keybindings
 clearmaps # Clears all mappings except :
 
+# Arrow keys navigation
+map <up> up
+map <down> down
+map <left> updir
+map <right> open
+map n :nvim<cr>
+map o :context
+#map i :image-ops
+map t touch
+map i togglepreview 
+
 map q quit
 map k up
 map j down
@@ -12,8 +23,8 @@ map G bottom
 map K :updir; up; open
 map J :updir; down; open
 map x cut
-map c copy
-map C copyToClipboard
+map y copy
+map Y copyToClipboard
 map yp :yankPath
 map yn :yankFilename
 map yd :yankDirname
@@ -27,14 +38,13 @@ map f search
 map F :fzfJump
 map / search
 map e $$f # Execute the selected file, must be executable
-map w $$SHELL
-map r rename
-map R bulkRename
-map o &xdg-open $f
-map O lfrc
+map s $$SHELL
+map c rename
+map C bulkRename
+map O &xdg-open $f
+#map L lfrc
 map N newDir
 map a :push %mkdir<space>
-map D $rm -rf -- $fx
 map | :set ratios 1:2
 # map ` shell
 map ` selectRandom
@@ -63,7 +73,6 @@ map <delete> delete
 map <backspace2> clear
 map <space> :toggle; down
 
-map dd trash
 map mp chmod #use 664, 777 notation rather than u+x
 map md mkdir
 map mf mkfile
@@ -73,6 +82,8 @@ map ua unarchive
 map bg setWallpaper
 map du directorySize # Requires dua-cli utility
 map dg dragAndDrop
+map dd $trash-put $fx
+map D $rm -rf -- $fx
 
 map zh set hidden!
 map zr set reverse!
@@ -89,27 +100,15 @@ map se :set sortby ext; set info
 
 # Bookmark Bindings
 map gh cd ~ # This is default
-map g/ cd /
-map gD cd ~/Documents/
+map gr cd /
+map gw cd ~/Documents/
 map gd cd ~/Downloads/
 map gc cd ~/.config/
-map gw cd ~/wallpapers/Images/
-map gt cd ~/Test/
-map gT cd ~/.trash/
+map gp cd ~/Pictures/
+map gt cd ~/.trash/
 map ga cd ~/Android/
-map gs cd ~/Sync/
-map g. cd ~/dotfiles/
-map gr cd ~/Roms/
-map go cd ~/Obsidian/Vault/
-map gb cd ~/.local/bin/
-map gls cd ~/.local/share/
-map gpc cd ~/Pictures/
-map gps cd ~/Pictures/Screenshots/
-
-map gpp cd ~/Projects/Python/
-map gpg cd ~/Projects/Go/
-map gpw cd ~/Projects/Web/
-map gpo cd ~/Projects/Web/TheOdinProject/
-map gpi cd '~/Projects/Go/N-Cover-Scraper/Saved'
-
-map gA cd /run/user/1001/07b84bc3_33cd_4b24_a7ac_af034681c2a5/storage/emulated/0/
+map gb cd ~/bin/
+map gf cd ~/dotfiles/
+map gg cd ~/Games/
+map gl cd ~/.local/
+map gu cd ~/mount/usb/

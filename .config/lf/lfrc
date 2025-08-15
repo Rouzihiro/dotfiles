@@ -9,9 +9,9 @@ set roundbox true
 set dirfirst true
 set mouse true
 set hidden true     # Hidden Files
-set ratios 1:2:2    # Preview should be set after setting ratios, Needed for singlePane function
+set ratios 1:5    # Preview should be set after setting ratios, Needed for singlePane function
 set icons true      # Icons(Needs a Icons file or LF_ICONS env variable)
-set preview true
+set preview false
 set sixel true
 set period 1
 set preserve "mode,timestamps"
@@ -29,10 +29,12 @@ setlocal ~/Downloads/ sortby ctime
 setlocal ~/Downloads/ reverse
 
 # Sort Screenshots directory by creation time, reverse
-setlocal ~/Pictures/Screenshots/ sortby ctime
-setlocal ~/Pictures/Screenshots/ info ctime
-setlocal ~/Pictures/Screenshots/ reverse
+setlocal ~/Pictures/screenshot/ sortby ctime
+setlocal ~/Pictures/screenshot/ info ctime
+setlocal ~/Pictures/screenshot/ reverse
 
 source ~/.config/lf/functions
 source ~/.config/lf/nicheFunc
 source ~/.config/lf/mappings
+source ~/.config/lf/context
+source ~/.config/lf/image-ops
