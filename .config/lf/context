@@ -1,0 +1,38 @@
+cmd context ${{
+    case "$f" in
+        *.pdf)
+            choice=$(echo -e "Zathura\nEvince\nCancel" | fzf --height=30% --reverse --prompt="Open PDF with: ")
+            case "$choice" in
+                Zathura) zathura "$f" & ;;
+                Evince) evince "$f" & ;;
+                *) ;;
+            esac
+            ;;
+        *.mp4|*.mkv|*.avi)
+            choice=$(echo -e "MPV\nVLC\nCancel" | fzf --height=30% --reverse --prompt="Open video with: ")
+            case "$choice" in
+                MPV) mpv "$f" & ;;
+                VLC) vlc "$f" & ;;
+                *) ;;
+            esac
+            ;;
+        *.jpg|*.png|*.jpeg|*.webp)
+            choice=$(echo -e "🖼️ View (sxiv)\n🛠️ Edit (GIMP)\n🔧 Image Operations\nCancel" | fzf --height=30% --reverse --prompt="Image action: ")
+            case "$choice" in
+                "🖼️ View (sxiv)") sxiv "$f" & ;;
+                "🛠️ Edit (GIMP)") gimp "$f" & ;;
+                "🔧 Image Operations") 
+                    if [ -n "$id" ]; then
+                        lf -remote "send $id image-ops"
+                    else
+                        image-ops
+                    fi
+                    ;;
+                *) ;;
+            esac
+            ;;
+        *.html|*.htm) firefox "$f" & ;;
+        *.md|*.txt) nvim "$f" & ;;
+        *) lf -remote "send $id open" ;;
+    esac
+}}
