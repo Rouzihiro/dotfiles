@@ -42,12 +42,12 @@ map s $$SHELL
 map c rename
 map C bulkRename
 map O &xdg-open $f
-#map L lfrc
-map N newDir
-map a :push %mkdir<space>
+# map L lfrc
+# map M newDir
+map M :push %mkdir<space>
 map | :set ratios 1:2
 # map ` shell
-map ` selectRandom
+# map ` selectRandom
 map ; find-next
 map , find-prev
 map \% shell-pipe
@@ -75,7 +75,8 @@ map <space> :toggle; down
 
 map mp chmod #use 664, 777 notation rather than u+x
 map md mkdir
-map mf mkfile
+# map mf mkfile
+map T mkfile
 map mc mark-save
 map mx chmodx
 map ua unarchive
