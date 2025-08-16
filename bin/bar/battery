@@ -1,24 +1,46 @@
 #!/bin/bash
 
-capacity=$(cat /sys/class/power_supply/macsmc-battery/capacity)
-status=$(cat /sys/class/power_supply/macsmc-battery/status)
-color="#7fb4ca"
+# Detect battery folder (BAT* on PCs, macsmc-battery on Apple Silicon)
+BATTERY=$(ls /sys/class/power_supply/ | grep -m1 -E '^BAT|^macsmc-battery')
 
-# Battery icons from empty to full
-icons=("" "" "" "" "")
-
-# Calculate icon index (0-4)
-icon_index=$(( capacity / 20 ))
-if (( icon_index > 4 )); then
-    icon_index=4
+if [ -z "$BATTERY" ]; then
+  echo "No battery found"
+  exit 1
 fi
 
-# Check if charging (yellow takes priority)
+BATPATH="/sys/class/power_supply/$BATTERY"
+
+# Read capacity
+if [ -f "$BATPATH/capacity" ]; then
+  capacity=$(cat "$BATPATH/capacity")
+else
+  echo "No capacity info"
+  exit 1
+fi
+
+# Read status (charging/discharging)
+if [ -f "$BATPATH/status" ]; then
+  status=$(cat "$BATPATH/status")
+else
+  # Asahi sometimes uses "charging" file (0/1)
+  if [ -f "$BATPATH/charging" ]; then
+    charging=$(cat "$BATPATH/charging")
+    if [ "$charging" = "1" ]; then
+      status="Charging"
+    else
+      status="Discharging"
+    fi
+  else
+    status="Unknown"
+  fi
+fi
+
+color="#7fb4ca"  # Default blue
+
 if [[ "$status" == "Charging" ]]; then
-    color="#FFFF00"  # Yellow when charging
+    color="#FFFF00"  # Yellow
 elif [[ "$capacity" -lt 30 ]]; then
-    color="#FF0000"  # Red when below 30%
+    color="#FF0000"  # Red
 fi
 
-echo "<span color='$color'>${icons[icon_index]} $capacity%</span>"
-
+echo "<span color='$color'> $capacity%</span>"
