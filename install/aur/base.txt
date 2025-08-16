@@ -1,3 +1,7 @@
+#TUI
+ghostty-git
+#ghostty-x86_64-v3-git
+
 # Browsers
 librewolf-bin
 brave-bin

@@ -1,4 +1,10 @@
 # Terminal & Shell
+#foot
+#alacritty
+#kitty
+lf
+#vifm
+git
 bob
 dialog
 ripgrep
@@ -10,7 +16,6 @@ bat
 fzf
 fd
 git
-tmux
 fastfetch
 duf
 ncdu
@@ -18,7 +23,6 @@ highlight
 
 # File Management
 ntfs-3g
-vifm
 thunar
 xdg-user-dirs
 rsync
@@ -52,7 +56,6 @@ mpv
 yt-dlp
 pamixer
 
-
 # Applications
 zathura
 zathura-cb
@@ -62,5 +65,3 @@ xournalpp
 swww
 thunderbird
 ca-certificates
-
-
