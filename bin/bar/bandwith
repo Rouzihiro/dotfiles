@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# Hardcode the interface as "wlan0"
-INTERFACE="wlan0"
+# Detect first wireless interface (names usually start with wl*)
+INTERFACE=$(ip -o link show | awk -F': ' '{print $2}' | grep '^wl' | head -n1)
 
 # Check if the interface exists
 if ! ip link show "$INTERFACE" &>/dev/null; then
