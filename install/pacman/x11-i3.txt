@@ -1,7 +1,6 @@
 # i3 Window Manager and essentials
 i3-wm
 dunst
-alacritty
 network-manager-applet
 volumeicon
 gvfs

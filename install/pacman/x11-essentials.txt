@@ -12,7 +12,6 @@ blueman
 
 # Description: File managers for X11
 thunar
-vifm
 
 # Description: System monitoring/power tools
 btop
