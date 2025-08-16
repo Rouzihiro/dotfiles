@@ -1,14 +1,22 @@
 #!/bin/bash
 
-# Your keyboard identifier here
-ID="1452:641:Apple_SPI_Keyboard"
+# Auto-detect first keyboard device identifier
+ID=$(swaymsg -t get_inputs | jq -r '.[] | select(.type=="keyboard") | .identifier' | head -n1)
+
+if [ -z "$ID" ]; then
+  echo "No keyboard found"
+  exit 1
+fi
 
 layout=$(swaymsg -t get_inputs | jq -r \
   --arg id "$ID" \
   '.[] | select(.identifier == $id) | .xkb_active_layout_name')
 
-case "$layout" in
-  "English (US)") echo "US" ;;
-  "German")       echo "DE" ;;
-  *)              echo "$layout" ;;
-esac
+# Normalize to short codes
+if [[ "$layout" == *"English"* ]]; then
+    echo "US"
+elif [[ "$layout" == *"German"* ]]; then
+    echo "DE"
+else
+    echo "$layout"
+fi
