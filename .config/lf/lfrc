@@ -11,7 +11,7 @@ set mouse true
 set hidden true     # Hidden Files
 set ratios 1:5    # Preview should be set after setting ratios, Needed for singlePane function
 set icons true      # Icons(Needs a Icons file or LF_ICONS env variable)
-set preview false
+set preview true
 set sixel true
 set period 1
 set preserve "mode,timestamps"
