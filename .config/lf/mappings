@@ -104,6 +104,7 @@ map gh cd ~ # This is default
 map gr cd /
 map gw cd ~/Documents/
 map gd cd ~/Downloads/
+map gv cd ~/Videos/
 map gc cd ~/.config/
 map gp cd ~/Pictures/
 map gt cd ~/.trash/

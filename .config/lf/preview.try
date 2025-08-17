@@ -1,0 +1,109 @@
+#!/usr/bin/env bash
+
+# ---------- Helpers ----------
+
+# Preview images adaptively
+image() {
+    local file="$1"
+    local width="$2"
+    local height="$3"
+
+    case "$TERM" in
+        xterm-ghostty)
+            # Use ANSI in ghostty
+            chafa "$file" -f ansi -s "${width}x${height}" --animate off --polite on
+            ;;
+        xterm*|mlterm*|foot*)
+            # Use sixel in capable terminals
+            chafa "$file" -f sixel -s "${width}x${height}" --animate off --polite on
+            ;;
+        *)
+            # Fallback to ASCII
+            chafa "$file" -f ascii -s "${width}x${height}" --animate off --polite on
+            ;;
+    esac
+}
+
+# Cat / highlight files
+batorcat() {
+    local file="$1"
+    shift
+    if command -v bat >/dev/null 2>&1; then
+        bat --color=always --style=plain --pager=never "$file" "$@"
+    else
+        cat "$file"
+    fi
+}
+
+# Markdown preview
+glowormdcat() {
+    local file="$1"
+    shift
+    if command -v glow >/dev/null 2>&1; then
+        glow "$file"
+    else
+        mdcat "$file"
+    fi
+}
+
+# ---------- Main ----------
+
+FILE="$1"
+CACHE="$HOME/.cache/lf/thumbnail.$(stat --printf '%n\0%i\0%F\0%s\0%W\0%Y' -- "$(readlink -f "$FILE")" | sha256sum | awk '{print $1}')"
+
+case "$(printf "%s\n" "$(readlink -f "$FILE")" | awk '{print tolower($0)}')" in
+
+*.tgz|*.tar.gz) tar tzf "$FILE" ;;
+*.tar.bz2|*.tbz2) tar tjf "$FILE" ;;
+*.tar.txz|*.txz) xz --list "$FILE" ;;
+*.tar) tar tf "$FILE" ;;
+*.zip|*.jar|*.war|*.ear|*.oxt) unzip -l "$FILE" ;;
+*.rar) unrar l "$FILE" ;;
+*.7z) 7z l "$FILE" ;;
+*.md) glowormdcat "$FILE" ;;
+*.[1-8]) man "$FILE" | col -b ;;
+*.o) nm "$FILE" ;;
+*.torrent) transmission-show "$FILE" ;;
+*.iso) iso-info --no-header -l "$FILE" ;;
+*.odt|*.ods|*.odp|*.sxw) odt2txt "$FILE" ;;
+*.doc) catdoc "$FILE" ;;
+*.docx) docx2txt "$FILE" ;;
+*.xml|*.html) batorcat "$FILE" ;;
+*.xls|*.xlsx)
+    ssconvert --export-type=Gnumeric_stf:stf_csv "$FILE" "fd://1" | batorcat --language=csv
+    ;;
+*.wav|*.mp3|*.flac|*.m4a|*.wma|*.ape|*.ac3|*.og[agx]|*.spx|*.opus|*.as[fx]|*.mka)
+    exiftool "$FILE"
+    ;;
+*.pdf)
+    [ ! -f "${CACHE}.jpg" ] && pdftoppm -jpeg -f 1 -singlefile "$FILE" "$CACHE"
+    image "${CACHE}.jpg" "$2" "$3" "$4" "$5"
+    ;;
+*.epub)
+    [ ! -f "$CACHE" ] && epub-thumbnailer "$FILE" "$CACHE" 1024
+    image "$CACHE" "$2" "$3" "$4" "$5"
+    ;;
+*.cbz|*.cbr|*.cbt)
+    [ ! -f "$CACHE" ] && comicthumb "$FILE" "$CACHE" 1024
+    image "${CACHE}.jpg" "$2" "$3" "$4" "$5"
+    ;;
+*.avi|*.mp4|*.wmv|*.dat|*.3gp|*.ogv|*.mkv|*.mpg|*.mpeg|*.vob|*.fl[icv]|*.m2v|*.mov|*.webm|*.ts|*.mts|*.m4v|*.r[am]|*.qt|*.divx)
+    [ ! -f "${CACHE}.jpg" ] && ffmpegthumbnailer -i "$FILE" -o "${CACHE}.jpg" -s 0 -q 5
+    image "${CACHE}.jpg" "$2" "$3" "$4" "$5"
+    ;;
+*.bmp|*.jpg|*.jpeg|*.png|*.xpm|*.webp|*.tiff|*.gif|*.jfif|*.ico)
+    image "$FILE" "$2" "$3" "$4" "$5"
+    ;;
+*.svg)
+    [ ! -f "${CACHE}.jpg" ] && convert "$FILE" "${CACHE}.jpg"
+    image "${CACHE}.jpg" "$2" "$3" "$4" "$5"
+    ;;
+*.ino)
+    batorcat --language=cpp "$FILE"
+    ;;
+*)
+    batorcat "$FILE"
+    ;;
+esac
+
+exit 0
