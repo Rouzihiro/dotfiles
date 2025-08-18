@@ -1,47 +1,61 @@
 export ZSH="$HOME/.oh-my-zsh"
-export PATH="$HOME/.local/share/bob/nvim-bin:$PATH"
-export PATH="$HOME/.local/bin:$PATH"
-export PATH=$HOME/bin:/usr/local/bin:$PATH
-for dir in $HOME/.local/bin/*/; do
-    export PATH="$PATH:$dir"
+[ -f "$ZSH/oh-my-zsh.sh" ] && source "$ZSH/oh-my-zsh.sh"
+
+export HISTFILE="$XDG_CACHE_HOME/zsh/.zsh_history"
+mkdir -p "$(dirname "$HISTFILE")"
+
+export HISTORY_IGNORE="(ls|ls -a|cd|clear|pwd|exit|cd -|cd ..)"
+HISTSIZE=10000
+SAVEHIST=10000
+setopt HIST_IGNORE_ALL_DUPS
+setopt HIST_FIND_NO_DUPS
+setopt appendhistory
+
+export PATH="$HOME/.local/share/bob/nvim-bin:$HOME/.local/bin:$HOME/bin:/usr/local/bin:$PATH"
+for dir in "$HOME/.local/bin/"*/; do
+    [ -d "$dir" ] && export PATH="$PATH:$dir"
 done
 
-plugins=( 
+plugins=(
     git
     dnf
     zsh-autosuggestions
-    zsh-syntax-highlighting
+    # zsh-syntax-highlighting will be sourced manually last
 )
 
-source $ZSH/oh-my-zsh.sh
+for file in .profile .aliases .aliases-functions .aliases-functions2 .aliases-arch; do
+    [ -f "$ZDOTDIR/$file" ] && source "$ZDOTDIR/$file"
+done
+# [ -f "$ZDOTDIR/.aliases-fedora" ] && source "$ZDOTDIR/.aliases-fedora"
 
-[[ -f ~/.config/zsh/.profile ]] && . ~/.config/zsh/.profile
-[ -f ~/.config/zsh/.aliases ] && source ~/.config/zsh/.aliases
-[ -f ~/.config/zsh/.aliases-functions ] && source ~/.config/zsh/.aliases-functions
-[ -f ~/.config/zsh/.aliases-functions2 ] && source ~/.config/zsh/.aliases-functions2
-[ -f ~/.config/zsh/.aliases-arch ] && source ~/.config/zsh/.aliases-arch
-#[ -f ~/.aliases-fedora ] && source ~/.aliases-fedora
+if command -v fzf >/dev/null 2>&1; then
+    source <(fzf --zsh)
+fi
 
-#fastfetch -c $HOME/.config/fastfetch/config-compact.jsonc
+ENABLE_CORRECTION="true"
 
-# Set-up FZF key bindings (CTRL R for fuzzy history finder)
-source <(fzf --zsh)
-
-HISTFILE=~/.zsh_history
-HISTSIZE=10000
-SAVEHIST=10000
-setopt appendhistory
-
+# -------------------------------
 # SSH Agent Management
+# -------------------------------
 if [ -z "$SSH_AUTH_SOCK" ]; then
-    # Try all possible socket locations
     export SSH_AUTH_SOCK=$(find /tmp -type s -name "agent.*" 2>/dev/null | head -n 1)
-    # Fallback: Start new agent if none found
     if [ -z "$SSH_AUTH_SOCK" ]; then
         eval "$(ssh-agent -s)" >/dev/null
     fi
-    # Add key if not already loaded
-    ssh-add -l >/dev/null || ssh-add ~/.ssh/HP-Nixo
+    ssh-add -l >/dev/null 2>&1 || ssh-add ~/.ssh/HP-Nixo
 fi
 
-eval "$(starship init zsh)"
+# -------------------------------
+# Starship prompt
+# -------------------------------
+if command -v starship >/dev/null 2>&1; then
+    eval "$(starship init zsh)"
+fi
+
+# -------------------------------
+# Syntax highlighting (must be last)
+# -------------------------------
+if [ -f "${ZSH_CUSTOM:-$ZSH/custom}/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ]; then
+    source "${ZSH_CUSTOM:-$ZSH/custom}/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+fi
+
