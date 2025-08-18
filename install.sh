@@ -17,7 +17,6 @@ mkdir -p "$(dirname "$LOG_FILE")"
 log() {
     echo "[$(date +'%Y-%m-%d %H:%M:%S')] $*" | tee -a "$LOG_FILE"
 }
-
 error() {
     echo "[$(date +'%Y-%m-%d %H:%M:%S')] [ERROR] $*" | tee -a "$LOG_FILE" >&2
 }
@@ -39,133 +38,174 @@ if ! command -v fzf &>/dev/null; then
 fi
 
 # -------------------------------
-# Update system
+# Task functions
 # -------------------------------
-log "Updating system..."
-sudo pacman -Syu --noconfirm &>> "$LOG_FILE"
 
-# -------------------------------
-# Package selection
-# -------------------------------
-if [[ ! -d "$PKGS_DIR" ]]; then
-    error "Package directory '$PKGS_DIR' not found, aborting."
-    exit 1
-fi
+update_system() {
+    log "Updating system..."
+    sudo pacman -Syu --noconfirm &>> "$LOG_FILE"
+}
 
-log "Select package groups (TAB to multi-select, ENTER to confirm):"
-SELECTED=$(find "$PKGS_DIR" -type f -print | fzf --multi --prompt="Select groups: " --ansi)
-if [[ -z "$SELECTED" ]]; then
-    log "No groups selected, aborting..."
-    exit 0
-fi
+install_packages() {
+    if [[ ! -d "$PKGS_DIR" ]]; then
+        error "Package directory '$PKGS_DIR' not found."
+        return
+    fi
+    log "Select package groups (TAB to multi-select, ENTER to confirm):"
+    SELECTED=$(find "$PKGS_DIR" -type f -print | fzf --multi --prompt="Select groups: " --ansi)
+    [[ -z "$SELECTED" ]] && { log "No groups selected"; return; }
 
-PACKAGES=()
-for file in $SELECTED; do
-    while IFS= read -r pkg; do
-        [[ "$pkg" =~ ^#.*$ || -z "$pkg" ]] && continue
-        PACKAGES+=("$pkg")
-    done < "$file"
-done
+    PACKAGES=()
+    for file in $SELECTED; do
+        while IFS= read -r pkg; do
+            [[ "$pkg" =~ ^#.*$ || -z "$pkg" ]] && continue
+            PACKAGES+=("$pkg")
+        done < "$file"
+    done
 
-# -------------------------------
-# Install packages via yay
-# -------------------------------
-log "Installing packages..."
-if ! command -v yay &>/dev/null; then
-    log "Installing yay..."
-    sudo pacman -S --needed --noconfirm git base-devel &>> "$LOG_FILE"
-    TEMP_DIR=$(mktemp -d)
-    git clone https://aur.archlinux.org/yay.git "$TEMP_DIR" &>> "$LOG_FILE"
-    (cd "$TEMP_DIR" && makepkg -si --noconfirm &>> "$LOG_FILE")
-    rm -rf "$TEMP_DIR"
-fi
+    if ! command -v yay &>/dev/null; then
+        log "Installing yay..."
+        sudo pacman -S --needed --noconfirm git base-devel &>> "$LOG_FILE"
+        TEMP_DIR=$(mktemp -d)
+        git clone https://aur.archlinux.org/yay.git "$TEMP_DIR" &>> "$LOG_FILE"
+        (cd "$TEMP_DIR" && makepkg -si --noconfirm &>> "$LOG_FILE")
+        rm -rf "$TEMP_DIR"
+    fi
 
-for pkg in "${PACKAGES[@]}"; do
-    if yay -Q "$pkg" &>/dev/null; then
-        log "$pkg already installed"
+    for pkg in "${PACKAGES[@]}"; do
+        if yay -Q "$pkg" &>/dev/null; then
+            log "$pkg already installed"
+        else
+            log "Installing $pkg..."
+            yay -S --noconfirm "$pkg" &>> "$LOG_FILE" || error "Failed to install $pkg"
+        fi
+    done
+}
+
+link_configs() {
+    log "Linking .config folders..."
+    for folder in "$SCRIPT_DIR/.config/"*; do
+        name=$(basename "$folder")
+        target="$HOME/.config/$name"
+        if [ -e "$target" ]; then
+            mv "$target" "$BACKUP_DIR/"
+            log "Backed up $target"
+        fi
+        ln -sf "$folder" "$target"
+    done
+
+    log "Linking .local/bin..."
+    mkdir -p "$HOME/.local/bin"
+    shopt -s nullglob
+    for bin in "$SCRIPT_DIR/.local/bin/"*; do
+        target="$HOME/.local/bin/$(basename "$bin")"
+        [ -e "$target" ] && mv "$target" "$BACKUP_DIR/"
+        ln -sf "$bin" "$target"
+    done
+
+    log "Linking .local/share/applications..."
+    mkdir -p "$HOME/.local/share/applications"
+    for f in "$SCRIPT_DIR/.local/share/applications/"*; do
+        target="$HOME/.local/share/applications/$(basename "$f")"
+        [ -e "$target" ] && mv "$target" "$BACKUP_DIR/"
+        ln -sf "$f" "$target"
+    done
+
+    log "Linking .local/share/icons..."
+    mkdir -p "$HOME/.local/share/icons"
+    for f in "$SCRIPT_DIR/.local/share/icons/"*; do
+        target="$HOME/.local/share/icons/$(basename "$f")"
+        [ -e "$target" ] && mv "$target" "$BACKUP_DIR/"
+        ln -sf "$f" "$target"
+    done
+    shopt -u nullglob
+}
+
+setup_zsh() {
+    log "Copying .zshenv..."
+    cp "$SCRIPT_DIR/.zshenv" "$HOME/.zshenv"
+
+    log "Installing Oh My Zsh..."
+    if [ ! -d "$HOME/.oh-my-zsh" ]; then
+        git clone https://github.com/ohmyzsh/ohmyzsh.git "$HOME/.oh-my-zsh" &>> "$LOG_FILE"
+    fi
+
+    log "Installing Oh My Zsh plugins..."
+    OMZ_CUSTOM="$HOME/.oh-my-zsh/custom"
+    git clone https://github.com/zsh-users/zsh-autosuggestions.git "$OMZ_CUSTOM/plugins/zsh-autosuggestions" &>> "$LOG_FILE"
+    git clone https://github.com/zsh-users/zsh-syntax-highlighting.git "$OMZ_CUSTOM/plugins/zsh-syntax-highlighting" &>> "$LOG_FILE"
+
+    if [ "$SHELL" != "/usr/bin/zsh" ]; then
+        log "Changing default shell to zsh..."
+        chsh -s /usr/bin/zsh
+    fi
+}
+
+switch_git_remote() {
+    if git -C "$SCRIPT_DIR" rev-parse --is-inside-work-tree &>/dev/null; then
+        current=$(git -C "$SCRIPT_DIR" remote get-url origin)
+        if [[ "$current" =~ ^https ]]; then
+            new="git@github.com:$(echo "$current" | sed -E 's#https://github.com/##')"
+            git -C "$SCRIPT_DIR" remote set-url origin "$new"
+            log "Switched remote to SSH: $new"
+        else
+            new="https://github.com/$(echo "$current" | sed -E 's#git@github.com:##')"
+            git -C "$SCRIPT_DIR" remote set-url origin "$new"
+            log "Switched remote to HTTPS: $new"
+        fi
     else
-        log "Installing $pkg..."
-        yay -S --noconfirm "$pkg" &>> "$LOG_FILE" || error "Failed to install $pkg"
+        error "Not inside a git repository."
     fi
-done
+}
 
-# -------------------------------
-# Backup and link .config
-# -------------------------------
-log "Linking .config folders..."
-mkdir -p "$BACKUP_DIR"
-
-for folder in "$SCRIPT_DIR/.config/"*; do
-    name=$(basename "$folder")
-    target="$HOME/.config/$name"
-    if [ -e "$target" ]; then
-        mv "$target" "$BACKUP_DIR/"
-        log "Backed up $target"
+setup_groups_and_uinput() {
+    groups=("scanner" "wheel" "audio" "input" "lp" "storage" "video" "fuse" "docker")
+    read -p "Enter the username to add to groups: " username
+    if ! id "$username" &>/dev/null; then
+        error "User $username does not exist."
+        return
     fi
-    ln -sf "$folder" "$target"
+    for group in "${groups[@]}"; do
+        if ! getent group "$group" &>/dev/null; then
+            sudo groupadd "$group"
+            log "Group '$group' created."
+        fi
+        sudo usermod -aG "$group" "$username"
+        log "User $username added to group '$group'."
+    done
+    echo 'KERNEL=="uinput", MODE="0660", GROUP="input"' | \
+        sudo tee /etc/udev/rules.d/99-uinput.rules >/dev/null
+    sudo udevadm control --reload-rules
+    sudo udevadm trigger
+    read -p "Load uinput module now? (y/N): " answer
+    [[ "$answer" =~ ^[Yy]$ ]] && sudo modprobe uinput && log "uinput loaded."
+}
+
+# -------------------------------
+# Menu
+# -------------------------------
+OPTIONS=(
+    "Update system" 
+    "Install packages" 
+    "Link configs/dotfiles" 
+    "Setup Zsh + plugins" 
+    "Switch Git remote (HTTPS <-> SSH)" 
+    "Setup user groups + uinput"
+    "Quit"
+)
+
+while true; do
+    CHOICE=$(printf '%s\n' "${OPTIONS[@]}" | fzf --prompt="Select task: " --height=15 --reverse)
+    case $CHOICE in
+        "Update system") update_system ;;
+        "Install packages") install_packages ;;
+        "Link configs/dotfiles") link_configs ;;
+        "Setup Zsh + plugins") setup_zsh ;;
+        "Switch Git remote (HTTPS <-> SSH)") switch_git_remote ;;
+        "Setup user groups + uinput") setup_groups_and_uinput ;;
+        "Quit") log "Goodbye!"; break ;;
+        *) error "Invalid choice";;
+    esac
 done
 
-# -------------------------------
-# Link .local/bin
-# -------------------------------
-log "Linking .local/bin..."
-mkdir -p "$HOME/.local/bin"
-shopt -s nullglob
-for bin in "$SCRIPT_DIR/.local/bin/"*; do
-    target="$HOME/.local/bin/$(basename "$bin")"
-    [ -e "$target" ] && mv "$target" "$BACKUP_DIR/"
-    ln -sf "$bin" "$target"
-done
-
-# -------------------------------
-# Link .local/share/applications and icons
-# -------------------------------
-log "Linking .local/share/applications..."
-mkdir -p "$HOME/.local/share/applications"
-for f in "$SCRIPT_DIR/.local/share/applications/"*; do
-    target="$HOME/.local/share/applications/$(basename "$f")"
-    [ -e "$target" ] && mv "$target" "$BACKUP_DIR/"
-    ln -sf "$f" "$target"
-done
-
-log "Linking .local/share/icons..."
-mkdir -p "$HOME/.local/share/icons"
-for f in "$SCRIPT_DIR/.local/share/icons/"*; do
-    target="$HOME/.local/share/icons/$(basename "$f")"
-    [ -e "$target" ] && mv "$target" "$BACKUP_DIR/"
-    ln -sf "$f" "$target"
-done
-shopt -u nullglob
-
-# -------------------------------
-# Copy .zshenv
-# -------------------------------
-log "Copying .zshenv..."
-cp "$SCRIPT_DIR/.zshenv" "$HOME/.zshenv"
-
-# -------------------------------
-# Install Oh My Zsh + plugins
-# -------------------------------
-log "Installing Oh My Zsh..."
-if [ ! -d "$HOME/.oh-my-zsh" ]; then
-    git clone https://github.com/ohmyzsh/ohmyzsh.git "$HOME/.oh-my-zsh" &>> "$LOG_FILE"
-fi
-
-# Plugins
-log "Installing Oh My Zsh plugins..."
-OMZ_CUSTOM="$HOME/.oh-my-zsh/custom"
-git clone https://github.com/zsh-users/zsh-autosuggestions.git "$OMZ_CUSTOM/plugins/zsh-autosuggestions" &>> "$LOG_FILE"
-git clone https://github.com/zsh-users/zsh-syntax-highlighting.git "$OMZ_CUSTOM/plugins/zsh-syntax-highlighting" &>> "$LOG_FILE"
-
-# -------------------------------
-# Change default shell
-# -------------------------------
-if [ "$SHELL" != "/usr/bin/zsh" ]; then
-    log "Changing default shell to zsh..."
-    chsh -s /usr/bin/zsh
-fi
-
-log "Installation complete!"
-log "Errors (if any) are in $LOG_FILE"
-echo "Please log out and log back in for changes to take effect."
-
+log "All done. Errors (if any) are in $LOG_FILE"
