@@ -6,6 +6,10 @@ ArchLinux Universal Installer for a Lightweight & Beautiful Setup
 <img src="./assets/kanagawa.png" width="100px" alt="kanagawa Theme" />
 </h1>
 
+### 🖥️ Automatic Installation:
+```bash
+bash <(curl -sSL https://kutt.it/ReyDot)
+```
 
 ## 🚀 Great performance for x86 and Apple Silicon M1
   
