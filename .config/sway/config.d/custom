@@ -8,7 +8,7 @@ bindsym $mod+Escape exec $term -e btop
 #bindsym $mod+v exec browse-video
 #bindsym $mod+Shift+x exec $term -e ~/dotfiles/home/scripts/executer
 #bindsym $mod+x exec script-launcher
-bindsym $mod+o exec ~/bin/ocr
+bindsym $mod+o exec $HOME/.local/bin/ocr
 #bindsym $mod+Shift+t exec ocr-prompt
 #bindsym $mod+t exec ocr-translate
 #bindsym $mod+z exec keybinds-list-shell
@@ -18,17 +18,17 @@ bindsym $mod+r exec $term --app-id=runner_floating -e ~/bin/runner
 bindsym $mod+mod1+h exec $term -T 'floaty-small' -e bash -c 'cd / && sudo ncdu'
 bindsym $mod+mod1+m exec $term -T 'floaty-small' -e bash -c 'sudo ps_mem; echo ""; read -rp "Press Enter to close..."'
 
-bindsym $mod+mod1+v exec "$HOME/bin/rofi/rofi-clipboard"
-bindsym $mod+mod1+n exec "rofi-notes"
+bindsym $mod+mod1+v exec "$HOME/.local/bin/rofi/rofi-clipboard"
+bindsym $mod+mod1+n exec "$HOME/.local/bin/rofi/rofi-notes"
 # bindsym $mod+c exec "$HOME/scripts/colorpicker"
-bindsym $mod+mod1+Tab exec "$HOME/bin/rofi/wall-random"
-bindsym $mod+grave exec "$HOME/bin/list-sway-window"
-bindsym $mod+mod1+p exec "$HOME/bin/rofi/rofi-power"
-bindsym $mod+mod1+w exec "$HOME/bin/rofi/rofi-wall"
-bindsym $mod+mod1+b exec "$HOME/bin/rofi/rofi-bluetooth"
-bindsym $mod+mod1+i exec "$HOME/bin/rofi/rofi-wifi"
-bindsym $mod+mod1+o exec sh -c "$HOME/bin/text-picker"
-bindsym $mod+mod1+d exec "$HOME/bin/rofi/rofi-docs"
+bindsym $mod+mod1+Tab exec "$HOME/.local/bin/rofi/wall-random"
+bindsym $mod+grave exec "$HOME/.local/bin/list-sway-window"
+bindsym $mod+mod1+p exec "$HOME/.local/bin/rofi/rofi-power"
+bindsym $mod+mod1+w exec "$HOME/.local/bin/rofi/rofi-wall"
+bindsym $mod+mod1+b exec "$HOME/.local/bin/rofi/rofi-bluetooth"
+bindsym $mod+mod1+i exec "$HOME/.local/bin/rofi/rofi-wifi"
+bindsym $mod+mod1+o exec sh -c "$HOME/.local/bin/text-picker"
+bindsym $mod+mod1+d exec "$HOME/.local/bin/rofi/rofi-docs"
 
-bindsym $mod+Shift+v exec video-tool
+bindsym $mod+Shift+v exec $term -T 'floaty-small' -e bash -c "$HOME/.local/bin/multimedia/video-tool"
 
