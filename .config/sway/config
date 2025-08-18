@@ -8,7 +8,7 @@ set $fileManager thunar
 set $TfileManager $term -e vifm
 set $editor $term -e nvim
 
-output * bg ~/Pictures/wallpapers/konoha1.jpg fill
+output * bg ~/dotfiles/.wall/Wallpapers/konoha1.jpg fill
 
 ### Keybindings
 bindsym $mod+Return exec $term
