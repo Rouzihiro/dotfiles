@@ -15,11 +15,11 @@ plugins=(
 
 source $ZSH/oh-my-zsh.sh
 
-[[ -f ~/.profile ]] && . ~/.profile
-[ -f ~/.aliases ] && source ~/.aliases
-[ -f ~/.aliases-functions ] && source ~/.aliases-functions
-[ -f ~/.aliases-functions2 ] && source ~/.aliases-functions2
-[ -f ~/.aliases-arch ] && source ~/.aliases-arch
+[[ -f ~/.config/zsh/.profile ]] && . ~/.config/zsh/.profile
+[ -f ~/.config/zsh/.aliases ] && source ~/.config/zsh/.aliases
+[ -f ~/.config/zsh/.aliases-functions ] && source ~/.config/zsh/.aliases-functions
+[ -f ~/.config/zsh/.aliases-functions2 ] && source ~/.config/zsh/.aliases-functions2
+[ -f ~/.config/zsh/.aliases-arch ] && source ~/.config/zsh/.aliases-arch
 #[ -f ~/.aliases-fedora ] && source ~/.aliases-fedora
 
 #fastfetch -c $HOME/.config/fastfetch/config-compact.jsonc
