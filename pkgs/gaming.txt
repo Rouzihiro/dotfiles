@@ -1,6 +1,8 @@
-# Gaming essentials
+# Future Packages 
+lutris
+gamemode
+lib32-gamemode
 winetricks
 heroic-games-launcher-bin
 protonup-qt
-
 

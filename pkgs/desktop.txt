@@ -5,6 +5,8 @@ wayland-utils
 wlr-randr
 wev
 
+# uwsm
+
 # Window Managers/Compositors
 xdg-desktop-portal-wlr
 # xdg-desktop-portal
