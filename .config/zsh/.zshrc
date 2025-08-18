@@ -1,7 +1,8 @@
 export ZSH="$HOME/.oh-my-zsh"
 export PATH="$HOME/.local/share/bob/nvim-bin:$PATH"
+export PATH="$HOME/.local/bin:$PATH"
 export PATH=$HOME/bin:/usr/local/bin:$PATH
-for dir in $HOME/bin/*/; do
+for dir in $HOME/.local/bin/*/; do
     export PATH="$PATH:$dir"
 done
 

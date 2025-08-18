@@ -1,9 +1,13 @@
 # Development
+lazygit
+git-delta
+openssh
 tinymist
 typst
 jdk-openjdk
 nodejs
 npm
 python-gobject #used for power-profile
+#n8n
 #texlive-latexextra
 #texmaker

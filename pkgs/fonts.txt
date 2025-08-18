@@ -14,3 +14,6 @@ ttf-cascadia-code-nerd
 ttf-font-awesome
 ttf-dejavu
 ttf-liberation
+adobe-source-code-pro-fonts
+ttf-victor-mono
+

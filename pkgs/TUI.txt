@@ -1,0 +1,9 @@
+#TUI
+#foot
+#alacritty
+#kitty
+lf
+#vifm
+ghostty-git
+#ghostty-x86_64-v3-git
+
