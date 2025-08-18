@@ -1,9 +1,4 @@
 # Terminal & Shell
-#foot
-#alacritty
-#kitty
-lf
-#vifm
 git
 bob
 dialog
@@ -20,6 +15,10 @@ fastfetch
 duf
 ncdu
 highlight
+wl-clipboard
+ps_mem
+jdownloader2
+sdl2_sound
 
 # File Management
 ntfs-3g
