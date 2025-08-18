@@ -100,8 +100,8 @@ alias myip='curl https://ipinfo.io/ip && echo'
 alias startup='clear && systemctl list-unit-files --type=service | grep enabled'
 
 # Miscellaneous
-alias sbash='source ~/.bashrc'
-alias szsh='source ~/.zshrc'
+alias sb='source ~/.bashrc'
+alias sz='source "$ZDOTDIR/.zshrc" && echo "Zsh config reloaded ✅"'
 alias xx='exit'
 alias c='clear'
 alias t='tmux'
