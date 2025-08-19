@@ -1,6 +1,20 @@
+# -------------------------------
+# Oh-My-Zsh Setup
+# -------------------------------
 export ZSH="$HOME/.oh-my-zsh"
+
+plugins=(
+    git
+    dnf
+    zsh-autosuggestions
+    zsh-syntax-highlighting
+)
+
 [ -f "$ZSH/oh-my-zsh.sh" ] && source "$ZSH/oh-my-zsh.sh"
 
+# -------------------------------
+# History Settings
+# -------------------------------
 export HISTFILE="$XDG_CACHE_HOME/zsh/.zsh_history"
 mkdir -p "$(dirname "$HISTFILE")"
 
@@ -11,28 +25,30 @@ setopt HIST_IGNORE_ALL_DUPS
 setopt HIST_FIND_NO_DUPS
 setopt appendhistory
 
-export PATH="$HOME/.local/share/bob/nvim-bin:$HOME/.local/bin:$HOME/bin:/usr/local/bin:$PATH"
+# -------------------------------
+# PATH Setup (prioritize ~/.local/bin)
+# -------------------------------
+export PATH="$HOME/.local/bin:$HOME/.local/share/bob/nvim-bin:/usr/local/bin:$PATH"
+
+# Add subfolders inside ~/.local/bin (priority preserved)
 for dir in "$HOME/.local/bin/"*/; do
-    [ -d "$dir" ] && export PATH="$PATH:$dir"
+    [ -d "$dir" ] && export PATH="$dir:$PATH"
 done
 
-plugins=(
-    git
-    dnf
-    zsh-autosuggestions
-    # zsh-syntax-highlighting will be sourced manually last
-)
-
+# -------------------------------
+# Load extra configs
+# -------------------------------
 for file in .profile .aliases .aliases-functions .aliases-functions2 .aliases-arch; do
     [ -f "$ZDOTDIR/$file" ] && source "$ZDOTDIR/$file"
 done
 # [ -f "$ZDOTDIR/.aliases-fedora" ] && source "$ZDOTDIR/.aliases-fedora"
 
+# -------------------------------
+# FZF key bindings
+# -------------------------------
 if command -v fzf >/dev/null 2>&1; then
     source <(fzf --zsh)
 fi
-
-ENABLE_CORRECTION="true"
 
 # -------------------------------
 # SSH Agent Management
@@ -51,11 +67,3 @@ fi
 if command -v starship >/dev/null 2>&1; then
     eval "$(starship init zsh)"
 fi
-
-# -------------------------------
-# Syntax highlighting (must be last)
-# -------------------------------
-if [ -f "${ZSH_CUSTOM:-$ZSH/custom}/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ]; then
-    source "${ZSH_CUSTOM:-$ZSH/custom}/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
-fi
-
