@@ -1,6 +1,11 @@
 #!/bin/bash
 
 # -------------------------------
+# Strict mode (keeps interactive prompts working)
+# -------------------------------
+set -o pipefail
+
+# -------------------------------
 # Variables
 # -------------------------------
 SCRIPT_DIR=$(pwd)
@@ -38,6 +43,42 @@ if ! command -v fzf &>/dev/null; then
 fi
 
 # -------------------------------
+# Symlink helper (idempotent + safe backups)
+# -------------------------------
+backup_and_link() {
+    local source="$1"
+    local target="$2"
+
+    # ensure parent dir exists
+    mkdir -p "$(dirname "$target")"
+
+    if [[ ! -e "$source" && ! -L "$source" ]]; then
+        error "Source $source does not exist; skipping."
+        return
+    fi
+
+    # If target is a symlink and already points (resolving) to source, skip
+    if [[ -L "$target" ]]; then
+        local target_resolved
+        target_resolved="$(readlink -f "$target" 2>/dev/null || true)"
+        local source_resolved
+        source_resolved="$(readlink -f "$source" 2>/dev/null || true)"
+        if [[ -n "$target_resolved" && -n "$source_resolved" && "$target_resolved" == "$source_resolved" ]]; then
+            log "$target already symlinked to $source; skipping."
+            return
+        fi
+        log "Backing up existing symlink $target -> $BACKUP_DIR/"
+        mv "$target" "$BACKUP_DIR/"
+    elif [[ -e "$target" ]]; then
+        log "Backing up existing $target -> $BACKUP_DIR/"
+        mv "$target" "$BACKUP_DIR/"
+    fi
+
+    log "Linking $source -> $target"
+    ln -s "$source" "$target"
+}
+
+# -------------------------------
 # Task functions
 # -------------------------------
 
@@ -56,12 +97,12 @@ install_packages() {
     [[ -z "$SELECTED" ]] && { log "No groups selected"; return; }
 
     PACKAGES=()
-    for file in $SELECTED; do
-        while IFS= read -r pkg; do
+    while IFS= read -r file; do
+        while IFS= read -r pkg || [[ -n "$pkg" ]]; do
             [[ "$pkg" =~ ^#.*$ || -z "$pkg" ]] && continue
             PACKAGES+=("$pkg")
         done < "$file"
-    done
+    done <<< "$SELECTED"
 
     if ! command -v yay &>/dev/null; then
         log "Installing yay..."
@@ -83,80 +124,79 @@ install_packages() {
 }
 
 link_configs() {
-    log "Linking .config folders..."
-    for folder in "$SCRIPT_DIR/.config/"*; do
-        name=$(basename "$folder")
-        target="$HOME/.config/$name"
-        if [ -e "$target" ]; then
-            mv "$target" "$BACKUP_DIR/"
-            log "Backed up $target"
-        fi
-        ln -sf "$folder" "$target"
-    done
+    log "Linking .config subfolders (directory symlinks)..."
+    # Link every item inside repo .config as ~/.config/<name>
+    if [[ -d "$SCRIPT_DIR/.config" ]]; then
+        for folder in "$SCRIPT_DIR/.config/"*; do
+            [[ -e "$folder" ]] || continue
+            local name
+            name="$(basename "$folder")"
+            local target="$HOME/.config/$name"
+            backup_and_link "$folder" "$target"
+        done
+    else
+        log "No .config directory in repo; skipping."
+    fi
 
-    log "Linking .local/bin..."
-    mkdir -p "$HOME/.local/bin"
-    shopt -s nullglob
-    for bin in "$SCRIPT_DIR/.local/bin/"*; do
-        target="$HOME/.local/bin/$(basename "$bin")"
-        [ -e "$target" ] && mv "$target" "$BACKUP_DIR/"
-        ln -sf "$bin" "$target"
-    done
+    log "Linking .local/bin as ONE symlink..."
+    backup_and_link "$SCRIPT_DIR/.local/bin" "$HOME/.local/bin"
 
-    log "Linking .local/share/applications..."
-    mkdir -p "$HOME/.local/share/applications"
-    for f in "$SCRIPT_DIR/.local/share/applications/"*; do
-        target="$HOME/.local/share/applications/$(basename "$f")"
-        [ -e "$target" ] && mv "$target" "$BACKUP_DIR/"
-        ln -sf "$f" "$target"
-    done
+    log "Linking .local/share/applications as ONE symlink..."
+    backup_and_link "$SCRIPT_DIR/.local/share/applications" "$HOME/.local/share/applications"
 
-    log "Linking .local/share/icons..."
-    mkdir -p "$HOME/.local/share/icons"
-    for f in "$SCRIPT_DIR/.local/share/icons/"*; do
-        target="$HOME/.local/share/icons/$(basename "$f")"
-        [ -e "$target" ] && mv "$target" "$BACKUP_DIR/"
-        ln -sf "$f" "$target"
-    done
-    shopt -u nullglob
+    log "Linking .local/share/icons as ONE symlink..."
+    backup_and_link "$SCRIPT_DIR/.local/share/icons" "$HOME/.local/share/icons"
 }
 
 setup_zsh() {
-    log "Copying .zshenv..."
-    cp "$SCRIPT_DIR/.zshenv" "$HOME/.zshenv"
+    log "Linking .zshenv (symlink + backup)..."
+    backup_and_link "$SCRIPT_DIR/.zshenv" "$HOME/.zshenv"
 
     log "Installing Oh My Zsh..."
-    if [ ! -d "$HOME/.oh-my-zsh" ]; then
+    if [[ ! -d "$HOME/.oh-my-zsh" ]]; then
         git clone https://github.com/ohmyzsh/ohmyzsh.git "$HOME/.oh-my-zsh" &>> "$LOG_FILE"
+    else
+        log "Oh My Zsh already present; skipping clone."
     fi
 
     log "Installing Oh My Zsh plugins..."
     OMZ_CUSTOM="$HOME/.oh-my-zsh/custom"
-    git clone https://github.com/zsh-users/zsh-autosuggestions.git "$OMZ_CUSTOM/plugins/zsh-autosuggestions" &>> "$LOG_FILE"
-    git clone https://github.com/zsh-users/zsh-syntax-highlighting.git "$OMZ_CUSTOM/plugins/zsh-syntax-highlighting" &>> "$LOG_FILE"
+    mkdir -p "$OMZ_CUSTOM/plugins"
+    if [[ ! -d "$OMZ_CUSTOM/plugins/zsh-autosuggestions" ]]; then
+        git clone https://github.com/zsh-users/zsh-autosuggestions.git "$OMZ_CUSTOM/plugins/zsh-autosuggestions" &>> "$LOG_FILE"
+    else
+        log "zsh-autosuggestions already present; skipping."
+    fi
+    if [[ ! -d "$OMZ_CUSTOM/plugins/zsh-syntax-highlighting" ]]; then
+        git clone https://github.com/zsh-users/zsh-syntax-highlighting.git "$OMZ_CUSTOM/plugins/zsh-syntax-highlighting" &>> "$LOG_FILE"
+    else
+        log "zsh-syntax-highlighting already present; skipping."
+    fi
 
-    if [ "$SHELL" != "/usr/bin/zsh" ]; then
+    if [[ "$SHELL" != "/usr/bin/zsh" ]]; then
         log "Changing default shell to zsh..."
         chsh -s /usr/bin/zsh
+    else
+        log "Default shell already zsh."
     fi
 }
 
 switch_git_remote() {
     if git -C "$SCRIPT_DIR" rev-parse --is-inside-work-tree &>/dev/null; then
         current=$(git -C "$SCRIPT_DIR" remote get-url origin)
-        if [[ "$current" =~ ^https ]]; then
-            new="git@github.com:$(echo "$current" | sed -E 's#https://github.com/##')"
+        if [[ "$current" =~ ^https://github.com/ ]]; then
+            user_repo=$(echo "$current" | sed -E 's#https://github.com/(.+)#\1#')
+            new="git@github.com:$user_repo"
             git -C "$SCRIPT_DIR" remote set-url origin "$new"
             log "Switched remote to SSH: $new"
         else
-            new="https://github.com/$(echo "$current" | sed -E 's#git@github.com:##')"
-            git -C "$SCRIPT_DIR" remote set-url origin "$new"
-            log "Switched remote to HTTPS: $new"
+            log "Remote already using SSH: $current"
         fi
     else
-        error "Not inside a git repository."
+        error "Not inside a git repository at $SCRIPT_DIR."
     fi
 }
+
 
 setup_groups_and_uinput() {
     groups=("scanner" "wheel" "audio" "input" "lp" "storage" "video" "fuse" "docker")
@@ -208,4 +248,5 @@ while true; do
     esac
 done
 
-log "All done. Errors (if any) are in $LOG_FILE"
+log "All done. Backups (if any) are in $BACKUP_DIR. Errors (if any) are in $LOG_FILE"
+
