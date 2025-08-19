@@ -1,9 +1,11 @@
 # ===== Arch =====
 
+alias update="yay && dunstify 'Arch Linux' 'System updated successfully ✨' -a System -u low"
+alias clean="yay -Rns $(pacman -Qtdq) && dunstify 'Arch Linux' 'Removed unused packages 🧹' -a System -u low"
+
 # Pacman
 alias pm='sudo pacman -S'                          # Install package
 alias pmr='sudo pacman -Rns'                       # Remove package with unused deps
-alias pmu='sudo pacman -Syu'                       # Full system upgrade
 alias pmu2='sudo pacman -Syu --overwrite "/usr/lib/firmware/nvidia/*" linux-firmware-nvidia' # Pacman Update with Nvidia Firmware Override (for Surface devices) 
 alias pms='f() { pacman -Ss "$1" | GREP_COLORS="mt=01;96" grep --color=auto -i "$1"; }; f'
 alias pmi='pacman -Qi'                             # Package info
@@ -17,14 +19,7 @@ alias pmc2='sudo pacman -Rns $(pacman -Qdtq)'       # Remove orphans
 alias ya='yay -S'                                  # Install AUR package
 alias yar='yay -Rns'                               # Remove AUR package
 alias yas='yay -Ss'                                # Search AUR
-alias yau='yay -Sua'                               # Update AUR only
 alias yai='yay -Qi'                                # AUR package info
-alias yac='yay -Rns $(yay -Qdtq); yay -Scc --noconfirm'  # Clean orphans & cache
-
-# Combined
-alias update='yay -Syu'                            # Full system + AUR update
-alias clean='yac; pmc'                             # Clean orphaned + cache
-alias clean2='sudo pacman -Scc --noconfirm && yay -Scc --noconfirm'  # Deep clean cache
 
 # Troubleshooting & Maintenance
 alias fixkeys='sudo pacman-key --init && sudo pacman-key --populate archlinux'
