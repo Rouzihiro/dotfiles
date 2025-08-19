@@ -116,11 +116,10 @@ This setup with Sway WM idles at ~600MB RAM with our ultra-efficient stack:
 ---
 
 
-### 🖥️ Enhanced Installation Experience
+### 🖥️ Manual Installation Experience
 
-**For best visual experience (recommended):**
+**For best visual experience install FZF:**
 ```bash
-sudo pacman -S dialog  # Beautiful TUI menus
 git clone https://github.com/Rouzihiro/dotfiles.git
 cd dotfiles
 chmod +x installer.sh
