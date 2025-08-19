@@ -7,7 +7,7 @@ tmux has-session -t $SESSION_NAME 2>/dev/null || {
   tmux new-session -d -s $SESSION_NAME -n "Main Window"
 
   # Run lf in the first (full) pane
-  tmux send-keys -t $SESSION_NAME:1.1 'lf' C-m
+  tmux send-keys -t $SESSION_NAME:1.1 'yazi' C-m
 
   # Split off a bottom pane (20%) for shell
   tmux split-window -v -t $SESSION_NAME:1 -p 20

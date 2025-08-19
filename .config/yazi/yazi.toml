@@ -3,14 +3,14 @@
 "$schema" = "https://yazi-rs.github.io/schemas/yazi.json"
 
 [mgr]
-ratio          = [ 1, 2, 2 ]
+# ratio          = [1, 2]
 sort_by        = "natural"
 sort_sensitive = false
 sort_reverse   = false
 sort_dir_first = true
 sort_translit  = true
 linemode       = "none"
-show_hidden    = false
+show_hidden    = true
 show_symlink   = true
 scrolloff      = 5
 mouse_event    = [ "touch", "scroll", "click", "move", "drag" ]
