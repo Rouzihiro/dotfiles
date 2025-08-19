@@ -71,7 +71,7 @@ color=#585b70
 
 [memory]
 label= 
-command="$HOME/.local/bin/bar/bandwith"
+command="$HOME/.local/bin/bar/memory"
 interval=2
 
 [separator]
