@@ -13,7 +13,7 @@ bindsym $mod+o exec $HOME/.local/bin/ocr
 #bindsym $mod+t exec ocr-translate
 #bindsym $mod+z exec keybinds-list-shell
 #bindsym $mod+Shift+z exec keybinds-list-sway
-bindsym $mod+r exec $term --app-id=runner_floating -e ~/bin/runner
+bindsym $mod+r exec $term --app-id=runner_floating -e ~/.local/bin/runner
 
 bindsym $mod+mod1+h exec $term -T 'floaty-small' -e bash -c 'cd / && sudo ncdu'
 bindsym $mod+mod1+m exec $term -T 'floaty-small' -e bash -c 'sudo ps_mem; echo ""; read -rp "Press Enter to close..."'
