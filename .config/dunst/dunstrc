@@ -1,120 +1,123 @@
+# Global Configuration
 [global]
-monitor = 0
-follow = mouse
-enable_posix_regex = true
-width = 300
-height = (0, 120)
-notification_limit = 0
-origin = top-right
-offset = (0, 10)
-scale = 0
-progress_bar = true
-progress_bar_horizontal_alignment = center
-progress_bar_height = 10
-progress_bar_min_width = 120
-progress_bar_max_width = 300
-progress_bar_frame_width = 1
-progress_bar_corner_radius = 0
-progress_bar_corners = all
-icon_corners = all
-indicate_hidden = true
-transparency = 0
-shrink = false
-separator_height = 1
-separator_color = auto
-padding = 10
-horizontal_padding = 10
-text_icon_padding = 0
-frame_width = 2
-gap_size = 0
-sort = false
-idle_threshold = 0
-layer = overlay
-force_xwayland = false
-font = Roboto Regular 11
-line_height = 2
-markup = full
-format = "<b>%s</b>\n%b\n<sub>%a</sub>"
-alignment = left
-vertical_alignment = center
-show_age_threshold = 60
-word_wrap = true
-ignore_newline = false
-stack_duplicates = true
-hide_duplicate_count = false
-show_indicators = true
-icon_position = left
-enable_recursive_icon_lookup = true
-icon_theme = breeze-dark
-max_icon_size = 50
-sticky_history = true
-history_length = 2000
-dmenu = /usr/bin/rofi -dmenu
-browser = /usb/bin/xdg-open
-always_run_script = true
-title = Dunst
-class = Dunst
-force_xinerama = false
-corner_radius = 5
-corners = all
-mouse_left_click = do_action
-mouse_right_click = context
-mouse_middle_click = close_current
-ignore_dbusclose = false
-override_pause_level = 0
+    # Display and Positioning
+    monitor = 0                     # Primary monitor
+    follow = mouse                  # Follow mouse position
+    origin = bottom-right           # Notification placement
+    offset = (12, 10)                 # Offset from screen edge
+    layer = top
 
+    # Notification Size and Dimensions
+    width = (0, 500)                # Min and max width
+    progress_bar = true             # Enable progress bars
+    progress_bar_height = 8         # Progress bar height
+    progress_bar_min_width = 100    # Minimum progress bar width
+    progress_bar_max_width = 300    # Maximum progress bar width
+    progress_bar_corner_radius = 4  # Progress bar corner roundness
+
+    # Visual Appearance
+    corner_radius = 12               # Notification corner roundness
+    separator_height = 2             # Separator line thickness
+    separator_color = "#11111B"      # Separator color
+    padding = 15                     # Internal padding
+    horizontal_padding = 15          # Horizontal internal padding
+    frame_width = 2                  # Frame border thickness
+
+    # Text Formatting
+    font = Sans Serif Medium 12.75   # Default font
+    format = "<span weight='bold' font='16'>%s</span>\n%b"  # Title and body format
+    alignment = left                 # Text alignment
+    vertical_alignment = center      # Vertical text alignment
+    line_height = 0                  # Line spacing
+    word_wrap = yes                  # Wrap long text
+    ellipsize = middle               # Truncate long text
+
+    # Notification Behavior
+    indicate_hidden = yes            # Show count of hidden notifications
+    shrink = no                      # Don't shrink notifications
+    idle_threshold = 120             # Idle time before marking as idle
+    sort = yes                       # Sort notifications
+    show_age_threshold = 60          # Show age if older than 60 seconds
+    stack_duplicates = true          # Stack duplicate notifications
+    hide_duplicate_count = false     # Show duplicate count
+
+    # Icon Configuration
+    icon_position = left             # Icon placement
+    min_icon_size = 48               # Minimum icon size
+    max_icon_size = 96               # Maximum icon size
+    icon_path = $HOME/.local/share/icons/dunst  # Icon directory
+
+    # History and Advanced Options
+    sticky_history = yes             # Keep notification history
+    history_length = 20              # Maximum history entries
+    always_run_script = true         # Always run scripts
+
+    # Mouse Actions
+    mouse_left_click = do_action, close_current
+    mouse_middle_click = do_action, close_current
+    mouse_right_click = close_all
+
+# Experimental Section
+[experimental]
+    per_monitor_dpi = false          # Disable per-monitor DPI scaling
+
+# Urgency Levels
 [urgency_low]
-timeout = 2
-background = "#181818"
-foreground = "#ffffff"
-frame_color = "#7d80b8"
+    background = "#020A0F8F"
+    foreground = "#F5F5F5"
+    highlight = "#64B5F6"
+    frame_color = "#00BBEE98"
+    max_icon_size = 96
+    timeout = 7
 
 [urgency_normal]
-timeout = 5
-background = "#181818"
-foreground = "#ffffff"
-frame_color = "#7d80b0"
+    default_icon = "$HOME/.local/share/icons/dunst/info.png"
+    background = "#12131596"
+    foreground = "#FFFFFF"
+    highlight = "#DFEFFE"
+    frame_color = "#00BBEEBA"
+    max_icon_size = 72
+    timeout = 20
 
 [urgency_critical]
-timeout = 0
-background = "#181818"
-foreground = "#ffffff"
-frame_color = "#b87e7d"
+    default_icon = "$HOME/.local/share/icons/dunst/caution.png"
+    background = "#1213149D"
+    foreground = "#FFBB44"
+    highlight = "#FF6633EE"
+    frame_color = "#FF66336F"
+    max_icon_size = 96
+    timeout = 1000
 
-[transient_history_ignore]
-match_transient = yes
-history_ignore = yes
+# Special Notification Config
+[play_sound]
+    msg_urgency = "normal"
+    script = ~/.local/bin/sound-alert
 
-[audio_volume]
-category = "audio.volume"
-set_transient = true
-format = "<b>%n</b>"
-frame_color = "#181818"
-fullscreen = pushback
+[system]
+    appname = "System"
+    max_icon_size = 72
+    default_icon = "$HOME/.local/share/icons/dunst/arch.png"
+    timeout = 5
 
-[audio_muted]
-category = "audio.muted"
-set_transient = true
-format = "Muted"
-frame_color = "#181818"
-fullscreen = pushback
+[gamemode]
+    appname = "gamemode"
+    default_icon = "$HOME/.local/share/icons/dunst/gamemode.png"
+    max_icon_size = 72
+    timeout = 5
 
-[audio_mic_volume]
-category = "audio.mic_volume"
-set_transient = true
-format = "<b>%n</b>"
-frame_color = "#181818"
-fullscreen = pushback
+[mic_low]
+    appname = "Mic"
+    msg_urgency = "low"
+    max_icon_size = 72
+    default_icon = "$HOME/.local/share/icons/dunst/mic-off.png"
 
-[audio_mic_muted]
-category = "audio.mic_muted"
-set_transient = true
-format = "Muted"
-frame_color = "#181818"
-fullscreen = pushback
+[mic_high]
+    appname = "Mic"
+    msg_urgency = "normal"
+    max_icon_size = 72
+    default_icon = "$HOME/.local/share/icons/dunst/mic-on.png"
 
-[brightness]
-category = "brightness"
-set_transient = true
-format = "<b>%n</b>"
-frame_color = "#181818"
+[volume]
+    appname = "Volume"
+    max_icon_size = 72
+
