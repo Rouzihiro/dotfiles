@@ -8,7 +8,7 @@ read option
 
 case $option in
     1)
-	  curlftpfs -o user="$(awk -F= '/username/ {print $2}' ~/.ssh/ftp_credentials):$(awk -F= '/password/ {print $2}' ~/.ssh/ftp_credentials)",allow_other,uid=$(id -u rey),gid=$(id -g rey),umask=0000 ftp://192.168.178.1/ ~/mount/nas
+	  curlftpfs -o user="$(awk -F= '/username/ {print $2}' ~/.ssh/id_ftp):$(awk -F= '/password/ {print $2}' ~/.ssh/id_ftp)",allow_other,uid=$(id -u rey),gid=$(id -g rey),umask=0000 ftp://192.168.178.1/ ~/mount/nas
 
        echo "NAS mounted at ~/mount/nas/"
         ;;
