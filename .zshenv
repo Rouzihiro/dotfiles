@@ -1,5 +1,20 @@
+export LANG="en_US.UTF-8"
 export XDG_CONFIG_HOME="$HOME/.config"
 export ZDOTDIR=$XDG_CONFIG_HOME/zsh
 export XDG_CACHE_HOME="$HOME/.cache"
 export ZSH_CACHE_DIR="$XDG_CACHE_HOME/zsh"
 export ZSH_COMPDUMP="${ZSH_CACHE_DIR}/.zcompdump-${(%):-%m}-${ZSH_VERSION}"
+export SHADER_CACHE_DIR="${XDG_CACHE_HOME:-$HOME/.cache}/mesa_shader_cache"
+export BROWSER=librewolf
+export EDITOR="nvim"
+export SUDO_EDITOR="$EDITOR"
+export VISUAL="$EDITOR"
+export GTK_THEME="Kanagawa-Dark"
+export GTK2_RC_FILES="$HOME/.themes/Kanagawa-Dark/gtk-2.0/gtkrc"
+export BAT_THEME="Kanagawa-Dark"
+export MANPAGER="sh -c 'col -bx | bat -l man -p'"
+export MANROFFOPT="-c"
+export DOTNET_CLI_TELEMETRY_OPTOUT=1
+export ANV_DEBUG="video-decode,video-encode"
+
+[ "$(tty)" = "/dev/tty1" ] && exec sway
