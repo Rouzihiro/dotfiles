@@ -50,6 +50,11 @@ if command -v fzf >/dev/null 2>&1; then
     source <(fzf --zsh)
 fi
 
+# ─────────────────────────────
+# Autostart sway on tty1
+# ─────────────────────────────
+[ "$(tty)" = "/dev/tty1" ] && exec sway
+
 
 # ─────────────────────────────
 # SSH Agent Setup (only once per login)
@@ -76,4 +81,5 @@ fi
 if command -v starship >/dev/null 2>&1; then
     eval "$(starship init zsh)"
 fi
+
 

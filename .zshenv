@@ -36,8 +36,3 @@ export MANROFFOPT="-c"
 export DOTNET_CLI_TELEMETRY_OPTOUT=1
 export SHADER_CACHE_DIR="${XDG_CACHE_HOME:-$HOME/.cache}/mesa_shader_cache"
 export ANV_DEBUG="video-decode,video-encode"
-
-# ─────────────────────────────
-# Autostart sway on tty1
-# ─────────────────────────────
-[ "$(tty)" = "/dev/tty1" ] && exec sway
