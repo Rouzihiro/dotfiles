@@ -1,7 +1,7 @@
 ### Set variables
 set $mod Mod4
 set $opacity 0.9
-set $term ghostty
+set $term foot
 set $launcher rofi -show drun
 set $browser librewolf
 set $fileManager thunar

@@ -1,6 +1,23 @@
 ### Window rules
 for_window [app_id=".*"] inhibit_idle fullscreen
 
+#for_window [app_id="runner_floating"] floating enable, move position center, move scratchpad
+
+for_window [app_id="runner_floating"] floating enable
+for_window [app_id="runner_floating"] move position center
+for_window [app_id="runner_floating"] resize set 800 600
+for_window [app_id="runner_floating"] opacity 0.8
+
+for_window [title="floaty-small"] floating enable
+for_window [title="floaty-small"] move position center
+for_window [title="floaty-small"] resize set 800 600
+for_window [title="floaty-small"] opacity 0.8
+
+for_window [title="floaty-medium"] floating enable
+for_window [title="floaty-medium"] move position center
+for_window [title="floaty-medium"] resize set 1000 800
+for_window [title="floaty-medium"] opacity 0.8
+
 ### Gaps and borders
 gaps inner 5
 gaps outer 2
@@ -10,13 +27,13 @@ default_floating_border pixel 2
 ### Opacity settings
 for_window [app_id="foot"] opacity 0.9
 for_window [title="^JDownloader.*"] opacity 0.9
-for_window [app_id="runner_floating"] floating enable, move position center, move scratchpad
 for_window [title="^Wow-SF-64.exe - Wine Desktop$"] floating enable, move position center
 for_window [title="^Wow-SF.exe - Wine Desktop$"] floating enable, move position center
 
 ### Floating windows
 floating_modifier $mod
 for_window [app_id="^com.saivert.pwvucontrol$"] floating enable
+for_window [con_mark="floaty-small"] floating enable, resize set 800 600, move position center
 
 ### Assign applications to workspaces
 assign [app_id="^librewolf$"] workspace number 2

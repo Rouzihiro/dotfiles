@@ -1,5 +1,5 @@
 ### Startup programs
-# exec foot --server
+exec foot --server
 exec autotiling-rs
 exec wl-paste -t text --watch clipman store --no-persist
 exec dunst
