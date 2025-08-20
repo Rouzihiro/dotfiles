@@ -35,10 +35,12 @@ for dir in "$HOME/.local/bin/"*/; do
     [ -d "$dir" ] && export PATH="$dir:$PATH"
 done
 
+export PATH="$HOME/.local/bin:$PATH:$HOME/.dotnet/tools"
+
 # -------------------------------
 # Load extra configs
 # -------------------------------
-for file in .profile .aliases .aliases-functions .aliases-functions2 .aliases-arch; do
+for file in .aliases .aliases-functions .aliases-functions2 .aliases-arch; do
     [ -f "$ZDOTDIR/$file" ] && source "$ZDOTDIR/$file"
 done
 # [ -f "$ZDOTDIR/.aliases-fedora" ] && source "$ZDOTDIR/.aliases-fedora"
