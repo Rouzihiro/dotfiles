@@ -22,7 +22,7 @@ markup=pango
 separator_block_width=10
 
 [weather]
-command="$HOME/.local/bin/bar/weather-short"
+command=weather-short
 interval=1000
 
 [separator]
@@ -30,7 +30,7 @@ full_text="⟨"
 color=#585b70
 
 [bandwidth]
-command="$HOME/.local/bin/bar/bandwith"
+command=bandwith
 interval=1
 #color=#a3be8c
 label=   
@@ -71,7 +71,7 @@ color=#585b70
 
 [memory]
 label= 
-command="$HOME/.local/bin/bar/memory"
+command=memory
 interval=2
 
 [separator]
@@ -80,7 +80,7 @@ color=#585b70
 
 [cpu_usage]
 label= 
-command="$HOME/.local/bin/bar/cpu-usage"
+command=cpu-usage
 interval=2
 
 [separator]
@@ -88,7 +88,7 @@ full_text="⟨"
 color=#585b70
 
 [CPU-temperature]
-command="$HOME/.local/bin/bar/cpu-temp"
+command=cpu-temp
 interval=30
 
 [separator]
@@ -96,7 +96,7 @@ full_text="⟨"
 color=#585b70
 
 [wifi]
-command="$HOME/.local/bin/bar/wifi-status"
+command=wifi-status
 interval=30
 
 # [updates]
@@ -117,7 +117,7 @@ full_text="⟨"
 color=#585b70
 
 [power-profile]
-command="$HOME/.local/bin/bar/power-wrapper"
+command=power-wrapper
 interval=5
 signal=10
 
@@ -136,7 +136,7 @@ color=#585b70
 
 [time]
 interval=1
-command="$HOME/.local/bin/bar/timer"
+command=timer
 separator_block_width=10
 label= 
 
@@ -145,7 +145,7 @@ full_text="⟨"
 color=#585b70
 
 [keymap]
-command="$HOME/.local/bin/bar/kb-layout"
+command=kb-layout
 interval=2
 
 [separator]
@@ -153,7 +153,7 @@ full_text="⟨"
 color=#585b70
 
 [battery]
-command="$HOME/.local/bin/bar/battery"
+command=battery
 interval=30
 
 [separator]
@@ -162,4 +162,4 @@ color=#585b70
 
 [shutdown_menu]
 full_text= 
-command="$HOME/.local/bin/bar/powermenu"
+command=powermenu
