@@ -1,9 +1,11 @@
 #TUI
-#foot
+foot
 #alacritty
 #kitty
-lf
+
+yazi
+#lf
 #vifm
-ghostty-git
+#ghostty-git
 #ghostty-x86_64-v3-git
 
