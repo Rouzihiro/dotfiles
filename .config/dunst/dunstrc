@@ -3,8 +3,8 @@
     # Display and Positioning
     monitor = 0                     # Primary monitor
     follow = mouse                  # Follow mouse position
-    origin = bottom-right           # Notification placement
-    offset = (12, 10)                 # Offset from screen edge
+    origin = top-right              # Notification placement
+    offset = (12, 10)               # Offset from screen edge
     layer = top
 
     # Notification Size and Dimensions
