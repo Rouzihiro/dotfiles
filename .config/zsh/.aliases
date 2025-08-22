@@ -14,12 +14,11 @@ alias se="sudoedit"
 
 # File and directory management
 alias :q="exit"
-alias ls='ls --color=auto -F --group-directories-first'
-alias ll='ls -lh'
-alias la='ls -A'
-alias lla='ls -lAh'
-alias tree='tree -C --dirsfirst'
-alias tree2='tree -L 2'
+alias ls="eza --color=always --long --git --no-filesize --icons=always --no-time --no-user --no-permissions"
+alias lsp="eza --color=always --long --git --no-filesize --icons=always --no-time --no-user"
+alias lsa="eza --color=always --long --git --icons=always -b -a --total-size"
+alias lt="eza --tree --level=2 --long --icons --git"
+alias tree="eza --tree --level=3 --icons --git"
 
 alias cat='bat'
 alias md='mkdir -pv'
@@ -38,9 +37,9 @@ alias te='rm -rfv ~/.local/share/vifm/Trash/*; trash-empty'
 # Navigation
 alias cdd="cd && cd Downloads"
 alias cdp="cd && cd Pictures"
-alias cdc="cd && cd Documents"
+alias cdw="cd && cd Documents"
 alias cdv="cd && cd Videos"
-alias cds="cd && cd scripts"
+alias cds="cd && cd .local/bin"
 alias cdf="cd && cd dotfiles"
 alias ..='cd ..'
 alias ...='cd ../..'
@@ -48,7 +47,7 @@ alias .3='cd ../../..'
 alias .4='cd ../../../..'
 alias .5='cd ../../../../..'
 
-alias fm='vifm'
+alias fm='yazi'
 
 # Editors
 alias v='nvim'
