@@ -1,6 +1,7 @@
 # ===== Arch =====
 
 alias update="yay && dunstify 'Arch Linux' 'System updated successfully ✨' -a System -u low"
+alias upgrade='yay -Syu'
 alias clean="yay -Rns $(pacman -Qtdq) && dunstify 'Arch Linux' 'Removed unused packages 🧹' -a System -u low"
 
 # Pacman
@@ -8,9 +9,7 @@ alias pm='sudo pacman -S'                          # Install package
 alias pmr='sudo pacman -Rns'                       # Remove package with unused deps
 alias pmu2='sudo pacman -Syu --overwrite "/usr/lib/firmware/nvidia/*" linux-firmware-nvidia' # Pacman Update with Nvidia Firmware Override (for Surface devices) 
 alias pms='f() { pacman -Ss "$1" | GREP_COLORS="mt=01;96" grep --color=auto -i "$1"; }; f'
-alias pmi='pacman -Qi'                             # Package info
-alias pml='pacman -Ql'                             # List files in a package
-alias pmf='pacman -F'                              # Search for file provider
+alias pms2="yay -Slq | fzf --multi --preview 'yay -Sii {1}' --preview-window=down:75% | xargs -ro yay -S"
 alias pmo='pacman -Qdtq'                           # List orphans
 alias pmc='pacman -Qdtq | xargs -r sudo pacman -Rns' #Remove orphans safely
 alias pmc2='sudo pacman -Rns $(pacman -Qdtq)'       # Remove orphans

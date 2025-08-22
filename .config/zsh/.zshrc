@@ -25,6 +25,19 @@ setopt HIST_IGNORE_ALL_DUPS
 setopt HIST_FIND_NO_DUPS
 setopt INC_APPEND_HISTORY 
 setopt SHARE_HISTORY
+setopt autocd              # change directory just by typing its name
+setopt auto_pushd          # push old dir onto stack when changing dirs
+setopt pushd_ignore_dups   # no duplicate entries in directory stack
+setopt correctall 
+setopt interactivecomments # allow # comments in interactive shell
+setopt magicequalsubst     # expand filenames in foo=*.txt style arguments
+setopt extended_glob       # advanced globbing (regex-like patterns)
+setopt nonomatch           # don’t throw error if glob matches nothing
+setopt no_clobber          # prevent overwriting files with > (use >! to force)
+setopt rm_star_wait        # warn & wait before running rm * (safety net)
+setopt notify              # report status of background jobs immediately
+setopt numericglobsort     # natural numeric sort order (file1 file2 file10)
+setopt promptsubst         # allow variables/commands in your prompt
 
 # -------------------------------
 # PATH Setup (prioritize ~/.local/bin)
