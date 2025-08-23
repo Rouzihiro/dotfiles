@@ -1,11 +1,5 @@
 #!/usr/bin/env bash
 
-## This script retrieves Wi-Fi connection details and signal strength
-## for use in Hyprlock or other status bars.
-
-## Author: Pahasara Dewnith (https://github.com/Pahasara)
-## Adapted to use nmcli instead of iw
-
 # Function to find the wireless interface
 get_wireless_interface() {
     # Find wireless interfaces using /sys/class/net
