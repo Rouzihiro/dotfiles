@@ -1,0 +1,1 @@
+/home/rey/.config/suckless/scripts/start.sh && exec dwm
