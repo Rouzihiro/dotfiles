@@ -129,7 +129,7 @@ static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() 
      NULL
  };
 
-static const char *termcmd[]  = { "kitty", NULL };
+static const char *termcmd[]  = { "st", NULL };
 
 /*First arg only serves to match against key in rules*/
 static const char *scratchpadcmd[] = {"s", "scratchpad", NULL};
