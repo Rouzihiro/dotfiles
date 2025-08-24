@@ -1,80 +1,94 @@
-/* See LICENSE file for copyright and license details. */
+/* Functions */
+#include <X11/XF86keysym.h>
+static const unsigned int borderpx  = 2;        /* border pixel of windows */
+static const unsigned int snap      = 20;       /* snap pixel */
+static const unsigned int gappih    = 5;       /* horiz inner gap between windows */
+static const unsigned int gappiv    = 5;       /* vert inner gap between windows */
+static const unsigned int gappoh    = 5;       /* horiz outer gap between windows and screen edge */
+static const unsigned int gappov    = 5;       /* vert outer gap between windows and screen edge */
+static       int smartgaps          = 0;        /* 1 means no outer gap when there is only one window */
+static const int showbar            = 1;        /* 0 means no bar */
+static const int topbar             = 1;        /* 0 means bottom bar */
+static const int focusonwheel       = 0;
+static const unsigned int systraypinning = 0;   /* 0: sloppy systray follows selected monitor, >0: pin systray to monitor X */
+static const unsigned int systrayonleft  = 0;   /* 0: systray in the right corner, >0: systray on left of status text */
+static const unsigned int systrayspacing = 2;   /* systray spacing */
+static const int systraypinningfailfirst = 1;   /* 1: if pinning fails, display systray on the first monitor, False: display systray on the last monitor*/
+static const int showsystray        = 1;        /* 0 means no systray */
+static const int vertpad            = 4;       /* vertical padding of bar */
+static const int sidepad            = 5;       /* horizontal padding of bar */
+static const int horizpadbar        = 5;        /* horizontal padding for statusbar */
+static const int vertpadbar         = 5;        /* vertical padding for statusbar */
 
-/* appearance */
-static const unsigned int refresh_rate        = 60;  /* matches dwm's mouse event processing to your monitor's refresh rate for smoother window interactions */
-static const unsigned int enable_noborder     = 1;   /* toggles noborder feature (0=disabled, 1=enabled) */
-static const unsigned int borderpx            = 1;   /* border pixel of windows */
-static const unsigned int snap                = 26;  /* snap pixel */
-static const int swallowfloating              = 1;   /* 1 means swallow floating windows by default */
-static const unsigned int systraypinning      = 0;   /* 0: sloppy systray follows selected monitor, >0: pin systray to monitor X */
-static const unsigned int systrayonleft       = 0;   /* 0: systray in the right corner, >0: systray on left of status text */
-static const unsigned int systrayspacing      = 5;   /* systray spacing */
-static const int systraypinningfailfirst      = 1;   /* 1: if pinning fails, display systray on the first monitor, False: display systray on the last monitor */
-static const int showsystray                  = 1;   /* 0 means no systray */
-static const int showbar                      = 1;   /* 0 means no bar */
-static const int topbar                       = 1;   /* 0 means bottom bar */
-#define ICONSIZE                              24     /* icon size */
-#define ICONSPACING                           5      /* space between icon and title */
-#define SHOWWINICON                           1      /* 0 means no winicon */
-static const char *fonts[]          = { "JetBrainsMono Nerd Font:style:semibold:size=12" };
-static const char dmenufont[]       = "monospace:size=10";
-static const char col_gray1[]       = "#2e3440";
-static const char col_gray2[]       = "#4c566a";
-static const char col_gray3[]       = "#bbbbbb";
-static const char col_gray4[]       = "#eeeeee";
-static const char col_cyan[]        = "#5e81ac";
-static const char col_cyan1[]       = "#88c0d0";
-static const char col_red[]	    		= "#bf616a";
+#define ICONSIZE 20   /* icon size */
+#define ICONSPACING 3 /* space between icon and title */
+
+static const char *fonts[]          = {  "JetBrainsMono Nerd Font:antialias=true:autohint=true:size=11", "Noto Sans CJK JP:size=11"  };
+
+/* Color Scheme */
+static const char normal_bar_background[]                 = "#282828";
+static const char selected_bar_background[]               = "#32303f";
+static const char normal_bar_foreground[]                 = "#ebddd2";
+static const char selected_bar_foreground[]               = "#ebddd2";
+static const char normal_window_border[]                  = "#7c6f64";
+static const char selected_window_border[]                = "#ebddd2";
+static const char special_normal_window_border[]          = "#7c6f64";
+static const char special_selected_window_border[]        = "#8ec07c";
 static const char *colors[][3]      = {
 	/*               fg         bg         border   */
-	[SchemeNorm] = { col_gray3, col_gray1, col_red },
-	[SchemeSel]  = { col_cyan, col_gray1,  col_cyan  },
+   [SchemeNorm] = { normal_bar_foreground, normal_bar_background, normal_window_border },
+   [SchemeSel]  = { selected_bar_foreground, selected_bar_background, selected_window_border  },
+   [SchemeScratchNorm] = { normal_bar_foreground, normal_bar_background, special_normal_window_border },
+   [SchemeScratchSel]  = { selected_bar_foreground, selected_bar_background, special_selected_window_border },
 };
 
-static const char *tagsel[][2] = {
-   /*   fg         bg    */
-  { col_cyan1, col_gray1 }, /* norm */
-  { col_gray4, col_cyan  }, /* sel */
-  { col_red,  col_gray1  }, /* occ but not sel */
-  { col_cyan,  col_gray3 }, /* has pinned tag */
+/* AutoStart */
+static const char *const autostart[] = {
+    		"xset", "s", "off", NULL,
+    		"xset", "s", "noblank", NULL,
+    		"xset", "-dpms", NULL,
+        "dunst", NULL,
+        "picom", NULL,
+    		// "picom", "-b", NULL,
+			  "flameshot", NULL,
+       	// "xfce4-power-manager", NULL,
+        "xsetroot", "-cursor_name", "left_ptr", NULL,
+        "sh", "-c", "$HOME/.local/bin/dwm/superbar.sh", NULL,
+ 				"dbus-update-activation-environment", "--systemd", "--all", NULL,
+        "sh", "-c", "/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1", NULL,
+  			"sh", "-c", "feh --randomize --bg-fill ~/Pictures/wallpapers/*", NULL,
+        NULL /* terminate */
 };
 
 /* tagging */
 static const char *tags[] = {"", "󰈹", "", "", ""};
 
-static const char *const autostart[] = {
-    "xset", "s", "off", NULL,
-    "xset", "s", "noblank", NULL,
-    "xset", "-dpms", NULL,
-    "dbus-update-activation-environment", "--systemd", "--all", NULL,
-    "/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1", NULL,
-		"dwmblocks", NULL,
-    "flameshot", NULL,
-    "dunst", NULL,
-    "picom", "-b", NULL,
-    "sh", "-c", "feh --randomize --bg-fill ~/Pictures/wallpapers/*", NULL,
-    NULL /* terminate */
-};
+static const unsigned int ulinepad	= 1;	/* horizontal padding between the underline and tag */
+static const unsigned int ulinestroke	= 1;	/* thickness / height of the underline */
+static const unsigned int ulinevoffset	= 0;	/* how far above the bottom of the bar the line should appear */
+static const int ulineall 		= 0;	/* 1 to show underline on all tags, 0 for just the active ones */
 
 static const Rule rules[] = {
-    /* class                instance  title           tags mask  isfloating  isterminal  noswallow  monitor */
-    { "St",                 NULL,     NULL,           0,         0,          1,          0,         0 },
-    { "kitty",              NULL,     NULL,           0,         0,          1,          0,         0 },
-    { "alacritty",          NULL,     NULL,           0,         0,          1,          0,         0 },
-    { "ghostty",            NULL,     NULL,           0,         0,          1,          0,         0 },
-    { "warp-terminal",      NULL,     NULL,           0,         0,          1,          0,         0 },
-    { "terminator",         NULL,     NULL,           0,         0,          1,          0,         0 },
-    { "lutris",             NULL,     NULL,           0,         1,          0,          0,         0 },
-    { "steam_app_default",  NULL,     NULL,           0,         1,          0,          0,         0 },
-    { "thunar",             NULL,     NULL,           0,         1,          0,          0,         0 },
-    { NULL,                 NULL,     "Event Tester", 0,         0,          0,          1,        -1 }, /* xev */
+        /* xprop(1):
+         *      WM_CLASS(STRING) = instance, class
+         *      WM_NAME(STRING) = title
+         */
+   /* class      instance    title       tags mask     isfloating   monitor    scratch key */
+   { "Anime",     NULL,       NULL,       0,            1,           -1,        0  },
+   { "Spotify",   NULL,       NULL,       0,            1,           -1,       's' },
+   { "Cmus",      NULL,       NULL,       0,            1,           -1,        0  },
+   { NULL,        NULL,   "scratchpad",   0,            1,           -1,       'a' },
 };
 
 /* layout(s) */
-static const float mfact     = 0.6; /* factor of master area size [0.05..0.95] */
+static const float mfact     = 0.52; /* factor of master area size [0.05..0.95] */
 static const int nmaster     = 1;    /* number of clients in master area */
 static const int resizehints = 0;    /* 1 means respect size hints in tiled resizals */
 static const int lockfullscreen = 1; /* 1 will force focus on the fullscreen window */
+
+#define FORCE_VSPLIT 1  /* nrowgrid layout: force two clients to always split vertically */
+#include "vanitygaps.c"
+
 
 static const Layout layouts[] = {
     /* symbol     arrange function */
@@ -86,86 +100,123 @@ static const Layout layouts[] = {
 /* key definitions */
 #define MODKEY Mod4Mask
 #define TAGKEYS(KEY,TAG) \
-    { MODKEY,                       KEY,      view,           {.ui = 1 << TAG} }, \
-    { MODKEY|ControlMask,           KEY,      toggleview,     {.ui = 1 << TAG} }, \
-    { MODKEY|ShiftMask,             KEY,      tag,            {.ui = 1 << TAG} }, \
-    { MODKEY|ControlMask|ShiftMask, KEY,      toggletag,      {.ui = 1 << TAG} },
+	{ MODKEY,                       KEY,      view,           {.ui = 1 << TAG} }, \
+	{ MODKEY|ControlMask,           KEY,      toggleview,     {.ui = 1 << TAG} }, \
+	{ MODKEY|ShiftMask,             KEY,      tag,            {.ui = 1 << TAG} }, \
+	{ MODKEY|ControlMask|ShiftMask, KEY,      toggletag,      {.ui = 1 << TAG} },
 
 /* helper for spawning shell commands in the pre dwm-5.0 fashion */
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
-#define STATUSBAR "dwmblocks"
 
 /* commands */
-static const char *launchercmd[] = { "rofi", "-show", "drun", NULL };
-static const char *termcmd[]     = { "kitty", NULL };
+static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
+static const char *dmenucmd[] = { "rofi", "-show", "drun" , NULL };
+static const char *termcmd[]  = { "kitty", NULL };
 
-static Key keys[] = {
-    /* modifier                     key                        function        argument */
-    { MODKEY,                       XK_r,                      spawn,          {.v = launchercmd} },
-    { MODKEY|ControlMask,           XK_r,                      spawn,          SHCMD ("protonrestart")},
-    { MODKEY,                       XK_Return,                 spawn,          {.v = termcmd } },
-    { MODKEY,                       XK_b,                      spawn,          SHCMD ("xdg-open https://")},
-    { MODKEY,                       XK_p,                      spawn,          SHCMD ("flameshot full -p $HOME/Pictures/screenshot/")},
-    { MODKEY|ShiftMask,             XK_p,                      spawn,          SHCMD ("flameshot gui -p $HOME/Pictures/screenshot/")},
-    { MODKEY|ControlMask,           XK_p,                      spawn,          SHCMD ("flameshot gui --clipboard")},
-    { MODKEY,                       XK_e,                      spawn,          SHCMD ("xdg-open .")},
-    // { MODKEY,                       XK_w,                      spawn,          SHCMD ("looking-glass-client -F")},
-		{ MODKEY|ControlMask, 					XK_w, 										 spawn, 				 SHCMD("bash -c '$HOME/.local/bin/rofi/rofi-wall-x11'") },
-    { MODKEY|ShiftMask,             XK_w,                      spawn,          SHCMD ("feh --randomize --bg-fill ~/Pictures/wallpapers/*")},
-    // { 0,                            XF86XK_MonBrightnessUp,    spawn,          SHCMD ("xbacklight -inc 10")},
-    // { 0,                            XF86XK_MonBrightnessDown,  spawn,          SHCMD ("xbacklight -dec 10")},
+/*First arg only serves to match against key in rules*/
+static const char *scratchpadcmd[] = {"s", "scratchpad", NULL};
+
+#include "movestack.c"
+#include "unfloat.c"
+
+
+static const Key keys[] = {
+        /* modifier                     key        function        argument */
+        { MODKEY,                    XK_space,     spawn,          {.v = dmenucmd } },
+        { MODKEY,                    XK_Return,    spawn,          {.v = termcmd } },
+
+  	{ MODKEY|ShiftMask,             XK_p,     spawn,          SHCMD ("flameshot full -p $HOME/Pictures/screenshot/")},
+    { MODKEY|Mod1Mask,              XK_p,     spawn,          SHCMD ("flameshot gui -p $HOME/Pictures/screenshot/")},
+    { MODKEY,              					XK_p,     spawn,          SHCMD ("flameshot gui --clipboard")},
+		{ MODKEY,                       XK_b,     spawn,          SHCMD ("xdg-open https://")},
+    { MODKEY,                       XK_e,     spawn,          SHCMD ("xdg-open .")},
+		{ MODKEY|Mod1Mask, 							XK_w, 	  spawn, 				  SHCMD ("bash -c '$HOME/.local/bin/rofi/rofi-wall-x11'") },
+    { MODKEY|ShiftMask,             XK_w,     spawn,          SHCMD ("feh --randomize --bg-fill ~/Pictures/wallpapers/*")},
 		{ 0, XF86XK_MonBrightnessUp,   spawn, SHCMD("$HOME/.local/bin/multimedia/brightness.sh up") },
 		{ 0, XF86XK_MonBrightnessDown, spawn, SHCMD("$HOME/.local/bin/multimedia/brightness.sh down") },
 		{ 0, XF86XK_AudioLowerVolume, spawn, SHCMD("$HOME/.local/bin/multimedia/volume.sh down") },
 		{ 0, XF86XK_AudioRaiseVolume, spawn, SHCMD("$HOME/.local/bin/multimedia/volume.sh up") },
 		{ 0, XF86XK_AudioMute,        spawn, SHCMD("$HOME/.local/bin/multimedia/volume.sh mute") },
-    { MODKEY|ShiftMask,             XK_b,                      togglebar,      {0} },
-    { MODKEY,                       XK_j,                      focusstack,     {.i = +1 } },
-    { MODKEY,                       XK_k,                      focusstack,     {.i = -1 } },
-    { MODKEY|ShiftMask,             XK_j,                      movestack,      {.i = +1 } },
-    { MODKEY|ShiftMask,             XK_k,                      movestack,      {.i = -1 } },
-    { MODKEY,                       XK_i,                      incnmaster,     {.i = +1 } },
-    { MODKEY,                       XK_d,                      incnmaster,     {.i = -1 } },
-    { MODKEY,                       XK_h,                      setmfact,       {.f = -0.05} },
-    { MODKEY,                       XK_l,                      setmfact,       {.f = +0.05} },
-    { MODKEY|ShiftMask,             XK_h,                      setcfact,       {.f = +0.25} },
-    { MODKEY|ShiftMask,             XK_l,                      setcfact,       {.f = -0.25} },
-    { MODKEY|ShiftMask,             XK_o,                      setcfact,       {.f =  0.00} },
-    { MODKEY,                       XK_z,                 		 zoom,           {0} },
-    { MODKEY,                       XK_Tab,                    view,           {0} },
-    { MODKEY,                       XK_q,                      killclient,     {0} },
-    { MODKEY,                       XK_t,                      setlayout,      {.v = &layouts[0]} },
-    { MODKEY,                       XK_m,                      setlayout,      {.v = &layouts[1]} },
-    { MODKEY,                       XK_f,                      fullscreen,     {0} },
-    { MODKEY,                       XK_space,                  setlayout,      {0} },
-    { MODKEY|ShiftMask,             XK_m,                      togglefloating, {0} },
-    { MODKEY|ShiftMask,             XK_f,                      togglefakefullscreen, {0} },
-    { MODKEY,                       XK_0,                      view,           {.ui = ~0 } },
-    { MODKEY,                       XK_comma,                  focusmon,       {.i = -1 } },
-    { MODKEY,                       XK_period,                 focusmon,       {.i = +1 } },
-    { MODKEY|ShiftMask,             XK_comma,                  tagmon,         {.i = -1 } },
-    { MODKEY|ShiftMask,             XK_period,                 tagmon,         {.i = +1 } },
-    TAGKEYS(                        XK_1,                      0)
-    TAGKEYS(                        XK_2,                      1)
-    TAGKEYS(                        XK_3,                      2)
-    TAGKEYS(                        XK_4,                      3)
-    TAGKEYS(                        XK_5,                      4)
-    { MODKEY|ShiftMask,             XK_q,                      quit,           {0} },
-    { MODKEY|ControlMask,           XK_p,                      spawn,          SHCMD("$HOME/.local/bin/rofi/rofi-power")},
-    { MODKEY|ControlMask|ShiftMask, XK_r,                      spawn,          SHCMD("systemctl reboot")},
-    { MODKEY|ControlMask|ShiftMask, XK_s,                      spawn,          SHCMD("systemctl suspend")},
-};
 
+    { MODKEY|Mod1Mask,              XK_b,      togglebar,      {0} },
+
+    { MODKEY,                       XK_o,      focusstack,     {.i = +1 } },
+        // { MODKEY,                       XK_p,      focusstack,     {.i = -1 } },
+        { MODKEY,                   XK_equal,      incnmaster,     {.i = +1 } },
+        { MODKEY,                   XK_minus,      incnmaster,     {.i = -1 } },
+
+        { MODKEY,             XK_bracketleft,      shiftview,      {.i = -1 } },
+        { MODKEY,            XK_bracketright,      shiftview,      {.i = +1 } },
+        { MODKEY,                     XK_Tab,      view,           {0} }, /* ws repeat*/
+
+        { MODKEY,                       XK_j,      setmfact,       {.f = -0.05} },
+        { MODKEY,                       XK_k,      setmfact,       {.f = +0.05} },
+
+        { MODKEY|Mod1Mask,              XK_k,      setcfact,       {.f = -0.05} },
+        { MODKEY|Mod1Mask,              XK_j,      setcfact,       {.f = +0.05} },
+        { MODKEY,                       XK_l,      setcfact,       {.f = +0.00} },
+
+
+        { MODKEY|Mod1Mask,              XK_0,      togglegaps,     {0} },
+        { MODKEY|Mod1Mask|ShiftMask,    XK_0,      defaultgaps,    {0} },
+        { MODKEY|Mod1Mask,          XK_equal,      incrgaps,       {.i = +1 } },
+        { MODKEY|Mod1Mask,          XK_minus,      incrgaps,       {.i = -1 } },
+
+        { MODKEY|ShiftMask,             XK_o,      movestack,      {.i = +1 } },
+        { MODKEY|ShiftMask,             XK_p,      movestack,      {.i = -1 } },
+        { MODKEY|ShiftMask,   XK_bracketleft,      shifttag,       {.i = -1 } },
+        { MODKEY|ShiftMask,  XK_bracketright,      shifttag,       {.i = +1 } },
+        { MODKEY|ShiftMask,             XK_0,      tag,            {.ui = ~0 } }, /* Sticky window */
+        { MODKEY|ShiftMask,        XK_Return,      zoom,           {0} },
+
+
+        { MODKEY,                       XK_f,      togglefullscr,  {0} },
+        { MODKEY,                       XK_s,      togglefloating, {0} },
+        { MODKEY,                       XK_S,      unfloatvisible, {0} },
+
+        { MODKEY,                       XK_w,      togglescratch,  {.v = scratchpadcmd } },
+        { MODKEY,                       XK_q,      removescratch,  {.v = scratchpadcmd } },
+        { MODKEY|Mod1Mask,         XK_Return,      setscratch,     {.v = scratchpadcmd } },
+
+
+        { MODKEY,                       XK_0,      view,           {.ui = ~0 } },
+        TAGKEYS(                        XK_1,                      0)
+        TAGKEYS(                        XK_2,                      1)
+        TAGKEYS(                        XK_3,                      2)
+        TAGKEYS(                        XK_4,                      3)
+        TAGKEYS(                        XK_5,                      4)
+
+        { MODKEY|Mod1Mask,    XK_bracketleft,      cyclelayout,    {.i = -1 } },
+        { MODKEY|Mod1Mask,   XK_bracketright,      cyclelayout,    {.i = +1 } },
+
+        { MODKEY|Mod1Mask,              XK_1,      setlayout,      {.v = &layouts[0]} },
+        { MODKEY|Mod1Mask,              XK_2,      setlayout,      {.v = &layouts[1]} },
+        { MODKEY|Mod1Mask,              XK_3,      setlayout,      {.v = &layouts[2]} },
+        { MODKEY|Mod1Mask,              XK_4,      setlayout,      {.v = &layouts[3]} },
+        { MODKEY|Mod1Mask,              XK_5,      setlayout,      {.v = &layouts[4]} },
+        { MODKEY|Mod1Mask,              XK_6,      setlayout,      {.v = &layouts[5]} },
+        { MODKEY|Mod1Mask,              XK_7,      setlayout,      {.v = &layouts[6]} },
+        { MODKEY|Mod1Mask,              XK_8,      setlayout,      {.v = &layouts[7]} },
+        { MODKEY|Mod1Mask,              XK_9,      setlayout,      {.v = &layouts[8]} },
+
+        { MODKEY,                       XK_q,      killclient,     {0} },
+        { MODKEY|Mod1Mask,              XK_q,      quit,           {0} },
+        { MODKEY|Mod1Mask,              XK_r,      quit,           {1} },
+};
 /* button definitions */
 /* click can be ClkTagBar, ClkLtSymbol, ClkStatusText, ClkWinTitle, ClkClientWin, or ClkRootWin */
-static Button buttons[] = {
-    /* click                event mask      button          function        argument */
-    { ClkTagBar,            MODKEY,         Button1,        tag,            {0} },
-    { ClkTagBar,            MODKEY,         Button3,        toggletag,      {0} },
-    { ClkClientWin,         MODKEY,         Button1,        moveorplace,    {.i = 2} },
-    { ClkClientWin,         MODKEY,         Button3,        resizemouse,    {0} },
-    { ClkTagBar,            0,              Button1,        view,           {0} },
-    { ClkTagBar,            0,              Button3,        toggleview,     {0} },
-    { ClkTagBar,            MODKEY,         Button1,        tag,            {0} },
-    { ClkTagBar,            MODKEY,         Button3,        toggletag,      {0} },
+static const Button buttons[] = {
+        /* click                event mask      button          function        argument */
+        { ClkLtSymbol,          0,              Button1,        setlayout,      {0} },
+        { ClkLtSymbol,          0,              Button3,        setlayout,      {.v = &layouts[2]} },
+        { ClkStatusText,        0,              Button2,        spawn,          {.v = termcmd } },
+        { ClkClientWin,         MODKEY,         Button1,        movemouse,      {0} },
+        { ClkClientWin,         MODKEY,         Button2,        togglefloating, {0} },
+        { ClkClientWin,         MODKEY,         Button3,        resizemouse,    {0} },
+        { ClkClientWin,         MODKEY|Mod1Mask, Button3,       dragmfact,      {0} },
+        { ClkClientWin,         MODKEY|Mod1Mask, Button3,       dragcfact,      {0} },
+        { ClkTagBar,            0,              Button1,        view,           {0} },
+        { ClkTagBar,            0,              Button3,        toggleview,     {0} },
+        { ClkTagBar,            MODKEY,         Button1,        tag,            {0} },
+        { ClkTagBar,            MODKEY,         Button3,        toggletag,      {0} },
 };

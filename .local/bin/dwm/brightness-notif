@@ -1,0 +1,13 @@
+#!/bin/bash
+
+brightness=$(brightnessctl | grep -oP '\d+(?=%)')
+
+icon="/usr/share/icons/BeautyLine/actions/scalable/contrast.svg"
+
+
+notify-send -u normal \
+            "Brightness : $brightness%" \
+            -i audio-volume-muted \
+            -h int:value:$brightness \
+            -i "$icon" \
+            -r 67544677
