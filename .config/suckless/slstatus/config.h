@@ -4,7 +4,7 @@
 const unsigned int interval = 1000;
 
 /* text to show if no value can be retrieved */
-static const char unknown_str[] = "N/A";
+static const char unknown_str[] = "n/a";
 
 /* maximum output string length */
 #define MAXLEN 2048
@@ -63,16 +63,11 @@ static const char unknown_str[] = "N/A";
  * wifi_essid          WiFi ESSID                      interface name (wlan0)
  * wifi_perc           WiFi signal in percent          interface name (wlan0)
  */
-
 static const struct arg args[] = {
-    /* function        format          argument */
-    {disk_perc,         "   %s% |",   "/"},                   // root disk usage
-    {cpu_perc,          "   %s% |",  NULL},                  // CPU usage
-    {keymap,            "   %s |",    NULL},                  // keyboard layout
-    {ram_used,          "   %s |",   NULL},                  // RAM used
-    {swap_used,         " 🔄 %s |",   NULL},                  // swap used
-    {netspeed_rx,       " ↓ %sB/s |", "wlan0"},               // download speed
-    {netspeed_tx,       " ↑ %sB/s |", "wlan0"},               // upload speed
-    {battery_perc,      " 🔋 %s%% |", "macsmc-battery"},       // battery percentage
-    {datetime,          " 󱑃 %s",     "%T"},                  // time
+    /* function format          argument */
+    {run_command, "   %s% |", "cat /sys/class/power_supply/macsmc-battery/capacity"},
+    {run_command, "   %s% |", "pamixer --get-volume"},
+    {ram_used, "   %s |", NULL},
+    {run_command, " 󱑃 %s |", "date +%H:%M"},
+    {wifi_essid, "   %s ", "wlan0"},
 };

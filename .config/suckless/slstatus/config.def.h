@@ -65,16 +65,9 @@ static const char unknown_str[] = "n/a";
  */
 static const struct arg args[] = {
     /* function format          argument */
-    {battery_state, "| %s /", "BAT1"},
-    {battery_perc, "   %s% |", "BAT1"},
-    {run_command, "   %s% |", "light -G | awk '{print int($1)}'"},
+    {battery_perc, "   %s% |", "cat /sys/class/power_supply/macsmc-battery/capacity"},
     {run_command, "   %s% |", "pamixer --get-volume"},
-    {cpu_perc, "  %s% /", NULL},
-    {temp, "  %s󰔄 |", "/sys/class/thermal/thermal_zone3/temp"},
     {ram_used, "   %s |", NULL},
-    {datetime, " 󱑃 %s |", "%T"},
-    {disk_perc, "   %s% |", "/home"},
+    {run_command, " 󱑃 %s |", "date +%H:%M"},
     {wifi_essid, "   %s |", "wlan0"},
-    {keymap, "   %s |", NULL},
-
 };
