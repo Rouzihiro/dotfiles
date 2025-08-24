@@ -51,6 +51,7 @@ static const char *const autostart[] = {
         "picom", NULL,
     		// "picom", "-b", NULL,
 			  "flameshot", NULL,
+				"/home/rey/.local/bin/dwm/autolock.sh", NULL,
        	// "xfce4-power-manager", NULL,
         "xsetroot", "-cursor_name", "left_ptr", NULL,
         "sh", "-c", "$HOME/.local/bin/dwm/superbar.sh", NULL,

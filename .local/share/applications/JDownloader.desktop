@@ -2,7 +2,7 @@
 Name=JDownloader (scaled)
 GenericName=Download Manager
 Comment=Powerful download manager with multi-connection support
-Exec=sh -c 'java -Dsun.java2d.uiScale=2.5 -jar "$HOME/.jd/JDownloader.jar"'
+Exec=sh -c 'java -Dsun.java2d.uiScale=2.5 -jar "$HOME/apps/JDownloader/JDownloader.jar"'
 Icon=jdownloader
 Terminal=false
 Type=Application
