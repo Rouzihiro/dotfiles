@@ -1,15 +1,14 @@
 #!/bin/sh
-# dmenu-desktop: List all .desktop applications and launch the selected one
 
-# Collect .desktop files from system and user directories
-APPS=$(ls /usr/share/applications ~/.local/share/applications 2>/dev/null \
-       | grep '\.desktop$' | sed 's/\.desktop$//' | sort)
+DMENU="dmenu -c -l 17 -i \
+    -fn 'JetBrainsMono Nerd Font:size=11' \
+    -nb '#1f1f28' -nf '#dcd7ba' \
+    -sb '#2f2f3f' -sf '#c8c093' \
+    -nhb '#1f1f28' -nhf '#dcd7ba' \
+    -shb '#2f2f3f' -shf '#c8c093'"
 
-# Use dmenu to select an app
-CHOSEN=$(echo "$APPS" | dmenu -i -p "Run:")
+APP_LIST=$(ls /usr/share/applications ~/.local/share/applications 2>/dev/null \
+           | grep '\.desktop$' | sed 's/\.desktop$//' | sort)
 
-# Launch the selected app
-if [ -n "$CHOSEN" ]; then
-    gtk-launch "$CHOSEN"
-fi
-
+CHOICE=$(echo "$APP_LIST" | eval "$DMENU" -p "Run:")
+[ -n "$CHOICE" ] && gtk-launch "$CHOICE"
