@@ -1,0 +1,15 @@
+#!/bin/sh
+# dmenu-desktop: List all .desktop applications and launch the selected one
+
+# Collect .desktop files from system and user directories
+APPS=$(ls /usr/share/applications ~/.local/share/applications 2>/dev/null \
+       | grep '\.desktop$' | sed 's/\.desktop$//' | sort)
+
+# Use dmenu to select an app
+CHOSEN=$(echo "$APPS" | dmenu -i -p "Run:")
+
+# Launch the selected app
+if [ -n "$CHOSEN" ]; then
+    gtk-launch "$CHOSEN"
+fi
+
