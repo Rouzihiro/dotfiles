@@ -5,6 +5,7 @@ xorg-server
 xorg-auth
 xorg-xrandr
 xorg-xset
+xprintidle
 #xorg-xhost
 #xorg-xwayland
 #xorg-servere-xvfb
