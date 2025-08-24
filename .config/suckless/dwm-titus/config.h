@@ -93,16 +93,27 @@ static const Layout layouts[] = {
 
 /* helper for spawning shell commands in the pre dwm-5.0 fashion */
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
-#define STATUSBAR "dwmblocks"
 
 /* commands */
-static const char *launchercmd[] = { "rofi", "-show", "drun", NULL };
 static const char *termcmd[]     = { "kitty", NULL };
+
+static const char *launchercmd[] = {
+    "dmenu_run",
+    "-fn", "monospace-12",
+    "-nb", "#1F1F28", // normal background
+    "-nf", "#DCD7BA", // normal foreground
+    "-sb", "#2D4F67", // selected background
+    "-sf", "#C8C093", // selected foreground
+    "-nhb", "#1F1F28", // normal highlight background
+    "-nhf", "#7E9CD8", // normal highlight foreground
+    "-shb", "#2D4F67", // selected highlight background
+    "-shf", "#7E9CD8", // selected highlight foreground
+    NULL
+};
 
 static Key keys[] = {
     /* modifier                     key                        function        argument */
     { MODKEY,                       XK_r,                      spawn,          {.v = launchercmd} },
-    { MODKEY|ControlMask,           XK_r,                      spawn,          SHCMD ("protonrestart")},
     { MODKEY,                       XK_Return,                 spawn,          {.v = termcmd } },
     { MODKEY,                       XK_b,                      spawn,          SHCMD ("xdg-open https://")},
     { MODKEY,                       XK_p,                      spawn,          SHCMD ("flameshot full -p $HOME/Pictures/screenshot/")},
