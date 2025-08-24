@@ -10,21 +10,32 @@ timestamp=$(date +%Y%m%d%H%M%S)
 imgname="$workdir/screenshot-${timestamp}.png"
 txtname="$workdir/text-${timestamp}"
 
-# Capture screenshot
-if ! grim -g "$(slurp)" "$imgname"; then
+# Capture screenshot using slop + maim
+geometry=$(slop -f "%x %y %w %h")
+if [ -z "$geometry" ]; then
+    notify-send -t 2000 "OCR Screenshot" "No region selected"
+    rm -rf "$workdir"
+    exit 1
+fi
+
+x=$(echo $geometry | awk '{print $1}')
+y=$(echo $geometry | awk '{print $2}')
+w=$(echo $geometry | awk '{print $3}')
+h=$(echo $geometry | awk '{print $4}')
+
+if ! maim -g "${w}x${h}+${x}+${y}" "$imgname"; then
     notify-send -t 2000 "OCR Screenshot" "Failed to capture screenshot"
     rm -rf "$workdir"
     exit 1
 fi
 
-# Run OCR with both English and German
+# Run OCR with English + German
 if ! tesseract "$imgname" "$txtname" -l deu+eng; then
     notify-send -t 2000 "OCR Screenshot" "OCR processing failed"
     rm -rf "$workdir"
     exit 1
 fi
 
-# Verify output file exists
 output_file="${txtname}.txt"
 if [ ! -f "$output_file" ]; then
     notify-send -t 2000 "OCR Screenshot" "No text output generated"
@@ -32,12 +43,13 @@ if [ ! -f "$output_file" ]; then
     exit 1
 fi
 
-# Copy to clipboard and get first line
-wl-copy < "$output_file"
+# Copy first line to X11 clipboard
 ocr_text=$(head -n 1 "$output_file" 2>/dev/null || echo "[No text found]")
+echo -n "$ocr_text" | xclip -selection clipboard
 
 # Send notification
 notify-send -t 2000 "OCR Screenshot" "Copied: ${ocr_text}"
 
 # Cleanup
 rm -rf "$workdir"
+
