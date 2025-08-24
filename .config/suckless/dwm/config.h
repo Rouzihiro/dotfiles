@@ -48,8 +48,8 @@ static const char *const autostart[] = {
     		"xset", "s", "noblank", NULL,
     		"xset", "-dpms", NULL,
         "dunst", NULL,
-        "picom", NULL,
-    		// "picom", "-b", NULL,
+        // "picom", NULL,
+    		"picom", "-b", NULL,
 			  "flameshot", NULL,
 				"/home/rey/.local/bin/dwm/autolock.sh", NULL,
        	// "xfce4-power-manager", NULL,
@@ -110,8 +110,21 @@ static const Layout layouts[] = {
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
 
 /* commands */
-static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[] = { "rofi", "-show", "drun" , NULL };
+ static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
+ static const char *dmenucmd[] = {
+     "dmenu_run",
+     "-fn", "monospace-12",
+     "-nb", "#1F1F28", // normal background
+     "-nf", "#DCD7BA", // normal foreground
+     "-sb", "#2D4F67", // selected background
+     "-sf", "#C8C093", // selected foreground
+     "-nhb", "#1F1F28", // normal highlight background
+    "-nhf", "#7E9CD8", // normal highlight foreground
+     "-shb", "#2D4F67", // selected highlight background
+     "-shf", "#7E9CD8", // selected highlight foreground
+     NULL
+ };
+
 static const char *termcmd[]  = { "kitty", NULL };
 
 /*First arg only serves to match against key in rules*/
@@ -122,9 +135,10 @@ static const char *scratchpadcmd[] = {"s", "scratchpad", NULL};
 
 
 static const Key keys[] = {
-        /* modifier                     key        function        argument */
-        { MODKEY,                    XK_space,     spawn,          {.v = dmenucmd } },
-        { MODKEY,                    XK_Return,    spawn,          {.v = termcmd } },
+    /* modifier                     key        function        argument */
+		{MODKEY, XK_space, spawn, SHCMD("dmenu_run -c -l 17")},
+		{MODKEY|ShiftMask,           XK_space,     spawn,          {.v = dmenucmd } },
+    { MODKEY,                    XK_Return,    spawn,          {.v = termcmd } },
 
   	{ MODKEY|ShiftMask,             XK_p,     spawn,          SHCMD ("flameshot full -p $HOME/Pictures/screenshot/")},
     { MODKEY|Mod1Mask,              XK_p,     spawn,          SHCMD ("flameshot gui -p $HOME/Pictures/screenshot/")},
@@ -133,62 +147,58 @@ static const Key keys[] = {
     { MODKEY,                       XK_e,     spawn,          SHCMD ("xdg-open .")},
 		{ MODKEY|Mod1Mask, 							XK_w, 	  spawn, 				  SHCMD ("bash -c '$HOME/.local/bin/rofi/rofi-wall-x11'") },
     { MODKEY|ShiftMask,             XK_w,     spawn,          SHCMD ("feh --randomize --bg-fill ~/Pictures/wallpapers/*")},
-		{ 0, XF86XK_MonBrightnessUp,   spawn, SHCMD("$HOME/.local/bin/multimedia/brightness.sh up") },
+		{ MODKEY|ControlMask,           XK_r,     spawn,          SHCMD ("bash -c '$HOME/.local/bin/rofi/rofi-power'")},
+		{ 0, XF86XK_MonBrightnessUp,  spawn, SHCMD("$HOME/.local/bin/multimedia/brightness.sh up") },
 		{ 0, XF86XK_MonBrightnessDown, spawn, SHCMD("$HOME/.local/bin/multimedia/brightness.sh down") },
 		{ 0, XF86XK_AudioLowerVolume, spawn, SHCMD("$HOME/.local/bin/multimedia/volume.sh down") },
 		{ 0, XF86XK_AudioRaiseVolume, spawn, SHCMD("$HOME/.local/bin/multimedia/volume.sh up") },
 		{ 0, XF86XK_AudioMute,        spawn, SHCMD("$HOME/.local/bin/multimedia/volume.sh mute") },
 
     { MODKEY|Mod1Mask,              XK_b,      togglebar,      {0} },
-
     { MODKEY,                       XK_o,      focusstack,     {.i = +1 } },
-        // { MODKEY,                       XK_p,      focusstack,     {.i = -1 } },
-        { MODKEY,                   XK_equal,      incnmaster,     {.i = +1 } },
-        { MODKEY,                   XK_minus,      incnmaster,     {.i = -1 } },
+    // { MODKEY,                       XK_p,      focusstack,     {.i = -1 } },
+    { MODKEY,                   XK_equal,      incnmaster,     {.i = +1 } },
+    { MODKEY,                   XK_minus,      incnmaster,     {.i = -1 } },
+    { MODKEY,             XK_bracketleft,      shiftview,      {.i = -1 } },
+    { MODKEY,            XK_bracketright,      shiftview,      {.i = +1 } },
+    { MODKEY,                     XK_Tab,      view,           {0} }, /* ws repeat*/
 
-        { MODKEY,             XK_bracketleft,      shiftview,      {.i = -1 } },
-        { MODKEY,            XK_bracketright,      shiftview,      {.i = +1 } },
-        { MODKEY,                     XK_Tab,      view,           {0} }, /* ws repeat*/
+    { MODKEY,                       XK_j,      setmfact,       {.f = -0.05} },
+    { MODKEY,                       XK_k,      setmfact,       {.f = +0.05} },
 
-        { MODKEY,                       XK_j,      setmfact,       {.f = -0.05} },
-        { MODKEY,                       XK_k,      setmfact,       {.f = +0.05} },
+    { MODKEY|Mod1Mask,              XK_k,      setcfact,       {.f = -0.05} },
+    { MODKEY|Mod1Mask,              XK_j,      setcfact,       {.f = +0.05} },
+    { MODKEY,                       XK_l,      setcfact,       {.f = +0.00} },
 
-        { MODKEY|Mod1Mask,              XK_k,      setcfact,       {.f = -0.05} },
-        { MODKEY|Mod1Mask,              XK_j,      setcfact,       {.f = +0.05} },
-        { MODKEY,                       XK_l,      setcfact,       {.f = +0.00} },
+    { MODKEY|Mod1Mask,              XK_0,      togglegaps,     {0} },
+    { MODKEY|Mod1Mask|ShiftMask,    XK_0,      defaultgaps,    {0} },
+    { MODKEY|Mod1Mask,          XK_equal,      incrgaps,       {.i = +1 } },
+    { MODKEY|Mod1Mask,          XK_minus,      incrgaps,       {.i = -1 } },
 
+    { MODKEY|ShiftMask,             XK_o,      movestack,      {.i = +1 } },
+    { MODKEY|ShiftMask,             XK_p,      movestack,      {.i = -1 } },
+    { MODKEY|ShiftMask,   XK_bracketleft,      shifttag,       {.i = -1 } },
+    { MODKEY|ShiftMask,  XK_bracketright,      shifttag,       {.i = +1 } },
+    { MODKEY|ShiftMask,             XK_0,      tag,            {.ui = ~0 } }, /* Sticky window */
+    { MODKEY|ShiftMask,        XK_Return,      zoom,           {0} },
 
-        { MODKEY|Mod1Mask,              XK_0,      togglegaps,     {0} },
-        { MODKEY|Mod1Mask|ShiftMask,    XK_0,      defaultgaps,    {0} },
-        { MODKEY|Mod1Mask,          XK_equal,      incrgaps,       {.i = +1 } },
-        { MODKEY|Mod1Mask,          XK_minus,      incrgaps,       {.i = -1 } },
+    { MODKEY,                       XK_f,      togglefullscr,  {0} },
+    { MODKEY,                       XK_t,      togglefloating, {0} },
+    { MODKEY,                       XK_T,      unfloatvisible, {0} },
 
-        { MODKEY|ShiftMask,             XK_o,      movestack,      {.i = +1 } },
-        { MODKEY|ShiftMask,             XK_p,      movestack,      {.i = -1 } },
-        { MODKEY|ShiftMask,   XK_bracketleft,      shifttag,       {.i = -1 } },
-        { MODKEY|ShiftMask,  XK_bracketright,      shifttag,       {.i = +1 } },
-        { MODKEY|ShiftMask,             XK_0,      tag,            {.ui = ~0 } }, /* Sticky window */
-        { MODKEY|ShiftMask,        XK_Return,      zoom,           {0} },
+    { MODKEY,                       XK_w,      togglescratch,  {.v = scratchpadcmd } },
+    { MODKEY,                       XK_q,      removescratch,  {.v = scratchpadcmd } },
+    { MODKEY|Mod1Mask,         XK_Return,      setscratch,     {.v = scratchpadcmd } },
 
+    { MODKEY,                       XK_0,      view,           {.ui = ~0 } },
+    TAGKEYS(                        XK_1,                      0)
+    TAGKEYS(                        XK_2,                      1)
+    TAGKEYS(                        XK_3,                      2)
+    TAGKEYS(                        XK_4,                      3)
+    TAGKEYS(                        XK_5,                      4)
 
-        { MODKEY,                       XK_f,      togglefullscr,  {0} },
-        { MODKEY,                       XK_s,      togglefloating, {0} },
-        { MODKEY,                       XK_S,      unfloatvisible, {0} },
-
-        { MODKEY,                       XK_w,      togglescratch,  {.v = scratchpadcmd } },
-        { MODKEY,                       XK_q,      removescratch,  {.v = scratchpadcmd } },
-        { MODKEY|Mod1Mask,         XK_Return,      setscratch,     {.v = scratchpadcmd } },
-
-
-        { MODKEY,                       XK_0,      view,           {.ui = ~0 } },
-        TAGKEYS(                        XK_1,                      0)
-        TAGKEYS(                        XK_2,                      1)
-        TAGKEYS(                        XK_3,                      2)
-        TAGKEYS(                        XK_4,                      3)
-        TAGKEYS(                        XK_5,                      4)
-
-        { MODKEY|Mod1Mask,    XK_bracketleft,      cyclelayout,    {.i = -1 } },
-        { MODKEY|Mod1Mask,   XK_bracketright,      cyclelayout,    {.i = +1 } },
+    { MODKEY|Mod1Mask,    XK_bracketleft,      cyclelayout,    {.i = -1 } },
+    { MODKEY|Mod1Mask,   XK_bracketright,      cyclelayout,    {.i = +1 } },
 
         { MODKEY|Mod1Mask,              XK_1,      setlayout,      {.v = &layouts[0]} },
         { MODKEY|Mod1Mask,              XK_2,      setlayout,      {.v = &layouts[1]} },
@@ -202,7 +212,6 @@ static const Key keys[] = {
 
         { MODKEY,                       XK_q,      killclient,     {0} },
         { MODKEY|Mod1Mask,              XK_q,      quit,           {0} },
-        { MODKEY|Mod1Mask,              XK_r,      quit,           {1} },
 };
 /* button definitions */
 /* click can be ClkTagBar, ClkLtSymbol, ClkStatusText, ClkWinTitle, ClkClientWin, or ClkRootWin */
