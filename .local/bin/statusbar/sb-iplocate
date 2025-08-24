@@ -1,0 +1,15 @@
+#!/bin/sh
+
+# Gets your public ip address checks which country you are in and
+# displays that information in the statusbar
+#
+# https://www.maketecheasier.com/ip-address-geolocation-lookups-linux/
+
+set -e
+
+ifinstalled "geoip"
+addr="$(geoiplookup "$(curl -sfm 1 ifconfig.me 2>/dev/null)")"
+name="${addr##*, }"
+flag="$(grep "flag: $name" "${XDG_DATA_HOME:-$HOME/.local/share}/larbs/emoji")"
+flag="${flag%% *}"
+printf "%s %s\\n" "$flag" "$name"

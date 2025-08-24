@@ -1,0 +1,69 @@
+diff --git a/config.def.h b/config.def.h
+index a2ac963..1bbede2 100644
+--- a/config.def.h
++++ b/config.def.h
+@@ -69,6 +69,10 @@ static Key keys[] = {
+ 	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
+ 	{ MODKEY,                       XK_i,      incnmaster,     {.i = +1 } },
+ 	{ MODKEY,                       XK_d,      incnmaster,     {.i = -1 } },
++	{ MODKEY,                       XK_Left,   shiftview,      {.i = -1 } },
++	{ MODKEY,                       XK_Right,  shiftview,      {.i = +1 } },
++	{ MODKEY|ShiftMask,             XK_Left,   shifttag,       {.i = -1 } },
++	{ MODKEY|ShiftMask,             XK_Right,  shifttag,       {.i = +1 } },
+ 	{ MODKEY,                       XK_h,      setmfact,       {.f = -0.05} },
+ 	{ MODKEY,                       XK_l,      setmfact,       {.f = +0.05} },
+ 	{ MODKEY,                       XK_Return, zoom,           {0} },
+diff --git a/dwm.c b/dwm.c
+index a96f33c..4bf0f70 100644
+--- a/dwm.c
++++ b/dwm.c
+@@ -204,6 +204,8 @@ static void setlayout(const Arg *arg);
+ static void setmfact(const Arg *arg);
+ static void setup(void);
+ static void seturgent(Client *c, int urg);
++static void shiftview(const Arg *arg);
++static void shifttag(const Arg *arg);
+ static void showhide(Client *c);
+ static void sigchld(int unused);
+ static void spawn(const Arg *arg);
+@@ -1632,6 +1634,40 @@ showhide(Client *c)
+ 	}
+ }
+ 
++void
++shiftview(const Arg *arg) {
++	Arg shifted;
++
++	if(arg->i > 0) /* left circular shift */
++		shifted.ui = (selmon->tagset[selmon->seltags] << arg->i)
++		   | (selmon->tagset[selmon->seltags] >> (LENGTH(tags) - arg->i));
++
++	else /* right circular shift */
++		shifted.ui = selmon->tagset[selmon->seltags] >> (- arg->i)
++		   | selmon->tagset[selmon->seltags] << (LENGTH(tags) + arg->i);
++
++	view(&shifted);
++}
++
++void
++shifttag(const Arg *arg) {
++	Arg shifted;
++	Client *c;
++
++	if (!selmon->sel)
++		return;
++	c = selmon->sel;
++
++	if (arg->i > 0) /* left circular shift */
++		shifted.ui = (c->tags ^ (c->tags << arg->i)) 
++			^ (c->tags >> (LENGTH(tags) - arg->i));
++	else /* right circular shift */
++		shifted.ui = (c->tags ^ (c->tags >> (-arg->i)))
++			^ (c->tags << (LENGTH(tags) + arg->i));
++
++	toggletag(&shifted);
++}
++
+ void
+ sigchld(int unused)
+ {
