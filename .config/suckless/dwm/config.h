@@ -112,21 +112,22 @@ static const Layout layouts[] = {
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[] = {
-    "dmenu_run",
-    "-c",           // center
-    "-l", "17",     // number of lines
-    "-fn", "JetBrainsMono Nerd Font:size=11",
-    "-nb", normal_bar_background,
-    "-nf", normal_bar_foreground,
-    "-sb", selected_bar_background,
-    "-sf", selected_bar_foreground,
-    "-nhb", normal_bar_background,
-    "-nhf", normal_bar_foreground,
-    "-shb", selected_bar_background,
-    "-shf", selected_bar_foreground,
-    NULL
-};
+
+ static const char *dmenucmd[] = {
+     "dmenu_run",
+     "-c",           // center
+     "-l", "17",     // number of lines
+     "-fn", "JetBrainsMono Nerd Font:size=11",
+     "-nb", normal_bar_background,
+     "-nf", normal_bar_foreground,
+     "-sb", selected_bar_background,
+     "-sf", selected_bar_foreground,
+     "-nhb", normal_bar_background,
+     "-nhf", normal_bar_foreground,
+     "-shb", selected_bar_background,
+     "-shf", selected_bar_foreground,
+     NULL
+ };
 
 static const char *termcmd[]  = { "kitty", NULL };
 
@@ -139,6 +140,7 @@ static const char *scratchpadcmd[] = {"s", "scratchpad", NULL};
 
 static const Key keys[] = {
     /* modifier                     key        function        argument */
+		{ MODKEY|Mod1Mask,              XK_space,  spawn,         SHCMD("~/.local/bin/dwm/dmenu-desktop") },
 		{ MODKEY, 										  XK_space,  spawn, 				{.v = dmenucmd}},
     { MODKEY,                    		XK_Return, spawn,         {.v = termcmd } },
 
@@ -149,9 +151,8 @@ static const Key keys[] = {
     { MODKEY,                       XK_e,     spawn,          SHCMD ("xdg-open .")},
 		{ MODKEY|Mod1Mask, 							XK_w, 	  spawn, 				  SHCMD ("bash -c '$HOME/.local/bin/rofi/rofi-wall-x11'") },
     { MODKEY|ShiftMask,             XK_w,     spawn,          SHCMD ("feh --randomize --bg-fill ~/Pictures/wallpapers/*")},
-		{ MODKEY|ControlMask,           XK_r,     spawn,          SHCMD ("$HOME/.local/bin/rofi/rofi-power")},
+		{ MODKEY|Mod1Mask,           		XK_r,     spawn,          SHCMD ("$HOME/.local/bin/rofi/rofi-power")},
 		{ MODKEY|Mod1Mask,         		  XK_n,     spawn,          SHCMD ("bash -c '$HOME/.local/bin/rofi/rofi-notes'")},
-		{ MODKEY|Mod1Mask,         		  XK_v,     spawn,          SHCMD ("bash -c '$HOME/.local/bin/multimedia/video-tool'")},
 		{ 0, XF86XK_MonBrightnessUp,  spawn, SHCMD("$HOME/.local/bin/multimedia/brightness.sh up") },
 		{ 0, XF86XK_MonBrightnessDown, spawn, SHCMD("$HOME/.local/bin/multimedia/brightness.sh down") },
 		{ 0, XF86XK_AudioLowerVolume, spawn, SHCMD("$HOME/.local/bin/multimedia/volume.sh down") },
