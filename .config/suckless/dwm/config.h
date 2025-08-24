@@ -25,15 +25,16 @@ static const int vertpadbar         = 5;        /* vertical padding for statusba
 
 static const char *fonts[]          = {  "JetBrainsMono Nerd Font:antialias=true:autohint=true:size=11", "Noto Sans CJK JP:size=11"  };
 
-/* Color Scheme */
-static const char normal_bar_background[]                 = "#282828";
-static const char selected_bar_background[]               = "#32303f";
-static const char normal_bar_foreground[]                 = "#ebddd2";
-static const char selected_bar_foreground[]               = "#ebddd2";
-static const char normal_window_border[]                  = "#7c6f64";
-static const char selected_window_border[]                = "#ebddd2";
-static const char special_normal_window_border[]          = "#7c6f64";
-static const char special_selected_window_border[]        = "#8ec07c";
+
+/* Color Scheme — Kanagawa colors */
+static const char normal_bar_background[]          = "#1f1f28"; // sumi ink #1
+static const char selected_bar_background[]        = "#2f2f3f"; // sumi ink #2
+static const char normal_bar_foreground[]          = "#dcd7ba"; // old paper
+static const char selected_bar_foreground[]        = "#c8c093"; // fuji gray
+static const char normal_window_border[]           = "#4f4f5f"; // sumi shadow
+static const char selected_window_border[]         = "#c8c093"; // fuji gray
+static const char special_normal_window_border[]   = "#7f7f87"; // sumi middle
+static const char special_selected_window_border[] = "#7fbbb3"; // wave green
 static const char *colors[][3]      = {
 	/*               fg         bg         border   */
    [SchemeNorm] = { normal_bar_foreground, normal_bar_background, normal_window_border },
@@ -110,20 +111,22 @@ static const Layout layouts[] = {
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
 
 /* commands */
- static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
- static const char *dmenucmd[] = {
-     "dmenu_run",
-     "-fn", "monospace-12",
-     "-nb", "#1F1F28", // normal background
-     "-nf", "#DCD7BA", // normal foreground
-     "-sb", "#2D4F67", // selected background
-     "-sf", "#C8C093", // selected foreground
-     "-nhb", "#1F1F28", // normal highlight background
-    "-nhf", "#7E9CD8", // normal highlight foreground
-     "-shb", "#2D4F67", // selected highlight background
-     "-shf", "#7E9CD8", // selected highlight foreground
-     NULL
- };
+static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
+static const char *dmenucmd[] = {
+    "dmenu_run",
+    "-c",           // center
+    "-l", "17",     // number of lines
+    "-fn", "JetBrainsMono Nerd Font:size=11",
+    "-nb", normal_bar_background,
+    "-nf", normal_bar_foreground,
+    "-sb", selected_bar_background,
+    "-sf", selected_bar_foreground,
+    "-nhb", normal_bar_background,
+    "-nhf", normal_bar_foreground,
+    "-shb", selected_bar_background,
+    "-shf", selected_bar_foreground,
+    NULL
+};
 
 static const char *termcmd[]  = { "kitty", NULL };
 
@@ -136,9 +139,8 @@ static const char *scratchpadcmd[] = {"s", "scratchpad", NULL};
 
 static const Key keys[] = {
     /* modifier                     key        function        argument */
-		{MODKEY, XK_space, spawn, SHCMD("dmenu_run -c -l 17")},
-		{MODKEY|ShiftMask,           XK_space,     spawn,          {.v = dmenucmd } },
-    { MODKEY,                    XK_Return,    spawn,          {.v = termcmd } },
+		{ MODKEY, 										  XK_space,  spawn, 				{.v = dmenucmd}},
+    { MODKEY,                    		XK_Return, spawn,         {.v = termcmd } },
 
   	{ MODKEY|ShiftMask,             XK_p,     spawn,          SHCMD ("flameshot full -p $HOME/Pictures/screenshot/")},
     { MODKEY|Mod1Mask,              XK_p,     spawn,          SHCMD ("flameshot gui -p $HOME/Pictures/screenshot/")},
