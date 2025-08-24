@@ -1,0 +1,45 @@
+#!/usr/bin/env bash
+
+# OCR script for X11
+
+if ! command -v tesseract >/dev/null 2>&1; then
+    notify-send -t 1500 "Tesseract is not installed"
+    exit 1
+fi
+
+if ! command -v maim >/dev/null 2>&1; then
+    notify-send -t 1500 "maim is not installed"
+    exit 1
+fi
+
+if ! command -v slop >/dev/null 2>&1; then
+    notify-send -t 1500 "slop is not installed"
+    exit 1
+fi
+
+location=$(mktemp /tmp/image-XXXXXXXX.png)
+
+geometry=$(slop -f "%x %y %w %h")
+if [ -z "$geometry" ]; then
+    notify-send -t 1500 "No region selected"
+    exit 1
+fi
+
+x=$(echo $geometry | awk '{print $1}')
+y=$(echo $geometry | awk '{print $2}')
+w=$(echo $geometry | awk '{print $3}')
+h=$(echo $geometry | awk '{print $4}')
+
+maim -g "${w}x${h}+${x}+${y}" "$location"
+
+tesseract "$location" "$location" --psm 6
+
+if [ -s "$location".txt ]; then
+    tr '\n' ' ' <"$location".txt | xclip -selection clipboard
+    notify-send -t 1500 "Text copied from Image"
+else
+    notify-send -t 1500 "No text found in image"
+fi
+
+rm -f "$location" "$location".txt
+
