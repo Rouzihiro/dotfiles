@@ -3,7 +3,9 @@
 dmenu \- dynamic menu
 .SH SYNOPSIS
 .B dmenu
-.RB [ \-bfirvP ]
+.RB [ \-bfiv ]
+.RB [ \-g
+.IR columns ]
 .RB [ \-l
 .IR lines ]
 .RB [ \-m
@@ -58,14 +60,14 @@ is faster, but will lock up X until stdin reaches end\-of\-file.
 .B \-i
 dmenu matches menu items case insensitively.
 .TP
-.B \-P
-dmenu will not directly display the keyboard input, but instead replace it with dots. All data from stdin will be ignored.
-.TP
-.B \-r
-dmenu will reject any input which would result in no matching option left.
+.BI \-g " columns"
+dmenu lists items in a grid with the given number of columns.
 .TP
 .BI \-l " lines"
-dmenu lists items vertically, with the given number of lines.
+dmenu lists items in a grid with the given number of lines.
+.TP
+.BI \-h " height"
+dmenu uses a menu line of at least 'height' pixels tall, but no less than 8.
 .TP
 .BI \-m " monitor"
 dmenu is displayed on the monitor number supplied. Monitor numbers are starting
