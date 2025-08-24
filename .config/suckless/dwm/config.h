@@ -16,19 +16,31 @@ static const int topbar                       = 1;   /* 0 means bottom bar */
 #define ICONSIZE                              24     /* icon size */
 #define ICONSPACING                           5      /* space between icon and title */
 #define SHOWWINICON                           1      /* 0 means no winicon */
-static const char *fonts[]                    = { "MesloLGS Nerd Font Mono:size=14", "NotoColorEmoji:pixelsize=20:antialias=true:autohint=true" };
-static const char normbordercolor[]           = "#3B4252";
-static const char normbgcolor[]               = "#2E3440";
-static const char normfgcolor[]               = "#D8DEE9";
-static const char selbordercolor[]            = "#434C5E";
-static const char selbgcolor[]                = "#434C5E";
-static const char selfgcolor[]                = "#ECEFF4";
-
-static const char *colors[][3] = {
-    /*               fg           bg           border   */
-    [SchemeNorm] = { normfgcolor, normbgcolor, normbordercolor },
-    [SchemeSel]  = { selfgcolor,  selbgcolor,  selbordercolor },
+static const char *fonts[]          = { "JetBrainsMono Nerd Font:style:semibold:size=12" };
+static const char dmenufont[]       = "monospace:size=10";
+static const char col_gray1[]       = "#2e3440";
+static const char col_gray2[]       = "#4c566a";
+static const char col_gray3[]       = "#bbbbbb";
+static const char col_gray4[]       = "#eeeeee";
+static const char col_cyan[]        = "#5e81ac";
+static const char col_cyan1[]       = "#88c0d0";
+static const char col_red[]	    		= "#bf616a";
+static const char *colors[][3]      = {
+	/*               fg         bg         border   */
+	[SchemeNorm] = { col_gray3, col_gray1, col_red },
+	[SchemeSel]  = { col_cyan, col_gray1,  col_cyan  },
 };
+
+static const char *tagsel[][2] = {
+   /*   fg         bg    */
+  { col_cyan1, col_gray1 }, /* norm */
+  { col_gray4, col_cyan  }, /* sel */
+  { col_red,  col_gray1  }, /* occ but not sel */
+  { col_cyan,  col_gray3 }, /* has pinned tag */
+};
+
+/* tagging */
+static const char *tags[] = {"", "󰈹", "", "", ""};
 
 static const char *const autostart[] = {
     "xset", "s", "off", NULL,
@@ -36,22 +48,13 @@ static const char *const autostart[] = {
     "xset", "-dpms", NULL,
     "dbus-update-activation-environment", "--systemd", "--all", NULL,
     "/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1", NULL,
-		"slstatus", NULL,
+		"dwmblocks", NULL,
     "flameshot", NULL,
     "dunst", NULL,
     "picom", "-b", NULL,
     "sh", "-c", "feh --randomize --bg-fill ~/Pictures/wallpapers/*", NULL,
-		// "setxkbmap", "-layout", "us,de", "-option", "grp:alt_shift_toggle", NULL,
-    // "/opt/Synergy/synergy-service", NULL,
     NULL /* terminate */
 };
-
-/* tagging */
-static const char *tags[] = { "", "", "󰊖", "", "" };
-
-static const char ptagf[] = "[%s %s]";  /* format of a tag label */
-static const char etagf[] = "[%s]";     /* format of an empty tag */
-static const int lcaselbl = 0;          /* 1 means make tag label lowercase */
 
 static const Rule rules[] = {
     /* class                instance  title           tags mask  isfloating  isterminal  noswallow  monitor */
@@ -90,7 +93,7 @@ static const Layout layouts[] = {
 
 /* helper for spawning shell commands in the pre dwm-5.0 fashion */
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
-#define STATUSBAR "slstatus"
+#define STATUSBAR "dwmblocks"
 
 /* commands */
 static const char *launchercmd[] = { "rofi", "-show", "drun", NULL };
