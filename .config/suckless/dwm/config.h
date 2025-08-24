@@ -152,6 +152,7 @@ static const Key keys[] = {
 		{ MODKEY|Mod1Mask, 							XK_w, 	  spawn, 				  SHCMD ("bash -c '$HOME/.local/bin/rofi/rofi-wall-x11'") },
     { MODKEY|ShiftMask,             XK_w,     spawn,          SHCMD ("feh --randomize --bg-fill ~/Pictures/wallpapers/*")},
 		{ MODKEY|Mod1Mask,           		XK_r,     spawn,          SHCMD ("$HOME/.local/bin/rofi/rofi-power")},
+		{ MODKEY|Mod1Mask,           		XK_o,     spawn,          SHCMD ("$HOME/.local/bin/ocr2-x11")},
 		{ MODKEY|Mod1Mask,         		  XK_n,     spawn,          SHCMD ("bash -c '$HOME/.local/bin/rofi/rofi-notes'")},
 		{ 0, XF86XK_MonBrightnessUp,  spawn, SHCMD("$HOME/.local/bin/multimedia/brightness.sh up") },
 		{ 0, XF86XK_MonBrightnessDown, spawn, SHCMD("$HOME/.local/bin/multimedia/brightness.sh down") },
