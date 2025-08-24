@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # video-tool2.sh — fully functional bash video toolbox with fzf main menu
 
 # Output directories
