@@ -1,15 +1,23 @@
 #!/usr/bin/bash
 
-while true :; do
+while true; do
+  # Kanagawa colors
+  FG="#dcd7ba"   # default foreground
+  VOL="#7e9cd8"  # blue
+  BAT="#98bb6c"  # green
+  DAY="#e6c384"  # yellow
+  TIME="#957fb8" # purple
+  MUS="#c8a6ff"  # softer violet (matches style)
+  BKLIT="#ffa066" # orange
 
-  Vol="^c#83a598^ ^c#ebdbb2^$(pamixer --get-volume-human)"
-  Bat="^c#b8bb26^ ^c#ebdbb2^$(cat /sys/class/power_supply/macsmc-battery/capacity)%"
-  Day="^c#fabd2f^ ^c#ebdbb2^$(date '+%a,%Y-%m-%d')"
-  Time="^c#d3869b^ ^c#ebdbb2^$(date '+%I:%M %p')"
-  Music=" ^c#cba6f7^ ^c#ebdbb2^$(playerctl metadata --format "{{ artist }} - {{ title }}" | awk '{print substr($0, 1, 32)}')"
-  Bklit="^c#fe8019^󰃟 ^c#ebdbb2^$(brightnessctl i | awk '/Current brightness/ {print $4}' | sed 's/[()]//g')"
+  Vol="^c${VOL}^ ^c${FG}^$(pamixer --get-volume-human)"
+  Bat="^c${BAT}^ ^c${FG}^$(cat /sys/class/power_supply/macsmc-battery/capacity)%"
+  Day="^c${DAY}^ ^c${FG}^$(date '+%a,%Y-%m-%d')"
+  Time="^c${TIME}^ ^c${FG}^$(date '+%I:%M %p')"
+  Music=" ^c${MUS}^ ^c${FG}^$(playerctl metadata --format "{{ artist }} - {{ title }}" | awk '{print substr($0, 1, 32)}')"
+  Bklit="^c${BKLIT}^󰃟 ^c${FG}^$(brightnessctl i | awk '/Current brightness/ {print $4}' | sed 's/[()]//g')"
+
   xsetroot -name "$Music | $Vol | $Bklit | $Day | $Time | $Bat"
-
   sleep 1
-
 done
+
