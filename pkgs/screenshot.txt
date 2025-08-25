@@ -2,3 +2,6 @@ satty
 grim
 slurp
 # swappy
+scrot 
+xclip
+viewnior

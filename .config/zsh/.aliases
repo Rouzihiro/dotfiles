@@ -51,8 +51,9 @@ alias fm='yazi'
 
 # Editors
 alias v='nvim'
-alias vi='nvim'
-alias vim='nvim'
+alias vi='nvim -c "lua require[[mini.pick]].builtin.files()"'
+alias vim='nvim -c "lua require[[oil]].open()"'
+alias nv='nvim -c "lua require[[oil]].open()"'
 alias sv='sudo nvim'
 
 # Git
@@ -99,6 +100,7 @@ alias myip='curl https://ipinfo.io/ip && echo'
 alias startup='clear && systemctl list-unit-files --type=service | grep enabled'
 
 # Miscellaneous
+
 alias sb='source ~/.bashrc'
 alias sz='source "$ZDOTDIR/.zshrc" && echo "Zsh config reloaded ✅"'
 alias xx='exit'
