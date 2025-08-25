@@ -1,0 +1,17 @@
+/**
+ *
+ * Author : Rey Z (Rouzihiro)
+ * Github : @Rouzihiro
+ * 
+ * Kanagawa Colors
+ **/
+
+* {
+    background:     #1F1F28FF; /* sumiInk0 */
+    background-alt: #2A2A37FF; /* sumiInk1 */
+    foreground:     #DCD7BAFF; /* fujiWhite */
+    selected:       #7E9CD8FF; /* crystalBlue */
+    active:         #98BB6CFF; /* springGreen */
+    urgent:         #E46876FF; /* samuraiRed */
+}
+

@@ -25,7 +25,6 @@ static const int vertpadbar         = 5;        /* vertical padding for statusba
 
 static const char *fonts[]          = {  "JetBrainsMono Nerd Font:antialias=true:autohint=true:size=11", "Noto Sans CJK JP:size=11"  };
 
-
 /* Color Scheme — Kanagawa colors */
 static const char normal_bar_background[]          = "#1f1f28"; // sumi ink #1
 static const char selected_bar_background[]        = "#2f2f3f"; // sumi ink #2
@@ -130,6 +129,9 @@ static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() 
  };
 
 static const char *termcmd[]  = { "st", NULL };
+static const char *powermenu[] = {"bash", "-c", ".config/rofi/powermenu/type-4/powermenu.sh", NULL};
+static const char *rofi[] = {"bash", "-c", ".config/rofi/launchers/type-7/launcher.sh", NULL};
+static const char *applet[] = {"bash", "-c", ".config/rofi/applets/bin/apps.sh", NULL};
 
 /*First arg only serves to match against key in rules*/
 static const char *scratchpadcmd[] = {"s", "scratchpad", NULL};
@@ -140,9 +142,14 @@ static const char *scratchpadcmd[] = {"s", "scratchpad", NULL};
 
 static const Key keys[] = {
     /* modifier                     key        function        argument */
-		{ MODKEY|Mod1Mask,              XK_space,  spawn,         SHCMD("~/.local/bin/dwm/dmenu-desktop") },
-		{ MODKEY, 										  XK_space,  spawn, 				{.v = dmenucmd}},
-    { MODKEY,                    		XK_Return, spawn,         {.v = termcmd } },
+
+    {MODKEY, 						XK_Return,spawn, {.v = termcmd}},
+		{MODKEY, 						XK_space, spawn, {.v = rofi}},
+    {MODKEY, 						XK_a, spawn, {.v = applet}},
+		{MODKEY|Mod1Mask,		XK_d, 		spawn, SHCMD("~/.local/bin/dwm/dmenu-desktop")},
+		{MODKEY, 						XK_d, 		spawn, {.v = dmenucmd}},
+
+    {MODKEY|Mod1Mask,		XK_r, spawn, {.v = powermenu}},
 
   	{ MODKEY|ShiftMask,             XK_p,     spawn,          SHCMD ("flameshot full -p $HOME/Pictures/screenshot/")},
     { MODKEY|Mod1Mask,              XK_p,     spawn,          SHCMD ("flameshot gui -p $HOME/Pictures/screenshot/")},
@@ -151,14 +158,13 @@ static const Key keys[] = {
     { MODKEY,                       XK_e,     spawn,          SHCMD ("xdg-open .")},
 		{ MODKEY|Mod1Mask, 							XK_w, 	  spawn, 				  SHCMD ("bash -c '$HOME/.local/bin/rofi/rofi-wall-x11'") },
     { MODKEY|ShiftMask,             XK_w,     spawn,          SHCMD ("feh --randomize --bg-fill ~/Pictures/wallpapers/*")},
-		{ MODKEY|Mod1Mask,           		XK_r,     spawn,          SHCMD ("$HOME/.local/bin/rofi/rofi-power")},
 		{ MODKEY|Mod1Mask,           		XK_o,     spawn,          SHCMD ("$HOME/.local/bin/ocr2-x11")},
 		{ MODKEY|Mod1Mask,         		  XK_n,     spawn,          SHCMD ("bash -c '$HOME/.local/bin/rofi/rofi-notes'")},
-		{ 0, XF86XK_MonBrightnessUp,  spawn, SHCMD("$HOME/.local/bin/multimedia/brightness.sh up") },
-		{ 0, XF86XK_MonBrightnessDown, spawn, SHCMD("$HOME/.local/bin/multimedia/brightness.sh down") },
-		{ 0, XF86XK_AudioLowerVolume, spawn, SHCMD("$HOME/.local/bin/multimedia/volume.sh down") },
-		{ 0, XF86XK_AudioRaiseVolume, spawn, SHCMD("$HOME/.local/bin/multimedia/volume.sh up") },
-		{ 0, XF86XK_AudioMute,        spawn, SHCMD("$HOME/.local/bin/multimedia/volume.sh mute") },
+		{ 0, XF86XK_MonBrightnessUp,  spawn, SHCMD("$HOME/.local/bin/multimedia/brightness.sh up")},
+		{ 0, XF86XK_MonBrightnessDown,spawn, SHCMD("$HOME/.local/bin/multimedia/brightness.sh down")},
+		{ 0, XF86XK_AudioLowerVolume, spawn, SHCMD("$HOME/.local/bin/multimedia/volume.sh down")},
+		{ 0, XF86XK_AudioRaiseVolume, spawn, SHCMD("$HOME/.local/bin/multimedia/volume.sh up")},
+		{ 0, XF86XK_AudioMute,        spawn, SHCMD("$HOME/.local/bin/multimedia/volume.sh mute")},
 
     { MODKEY|Mod1Mask,              XK_b,      togglebar,      {0} },
     { MODKEY,                       XK_o,      focusstack,     {.i = +1 } },
@@ -203,8 +209,8 @@ static const Key keys[] = {
     TAGKEYS(                        XK_4,                      3)
     TAGKEYS(                        XK_5,                      4)
 
-    { MODKEY|Mod1Mask,    XK_bracketleft,      cyclelayout,    {.i = -1 } },
-    { MODKEY|Mod1Mask,   XK_bracketright,      cyclelayout,    {.i = +1 } },
+    { MODKEY|Mod1Mask,   XK_bracketleft,      cyclelayout,    {.i = -1 } },
+    { MODKEY|Mod1Mask,   XK_bracketright,     cyclelayout,    {.i = +1 } },
 
         { MODKEY|Mod1Mask,              XK_1,      setlayout,      {.v = &layouts[0]} },
         { MODKEY|Mod1Mask,              XK_2,      setlayout,      {.v = &layouts[1]} },
