@@ -110,7 +110,7 @@ run_cmd() {
 	elif [[ "$1" == '--opt3' ]]; then
 		xfce4-power-manager-settings
 	elif [[ "$1" == '--opt4' ]]; then
-		${polkit_cmd} alacritty -e powertop
+		${polkit_cmd} st -e powertop
 	fi
 }
 
