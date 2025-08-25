@@ -43,12 +43,12 @@ if [ ! -f "$output_file" ]; then
     exit 1
 fi
 
-# Copy first line to X11 clipboard
-ocr_text=$(head -n 1 "$output_file" 2>/dev/null || echo "[No text found]")
-echo -n "$ocr_text" | xclip -selection clipboard
+# Copy entire OCR output to X11 clipboard
+xclip -selection clipboard < "$output_file"
 
-# Send notification
-notify-send -t 2000 "OCR Screenshot" "Copied: ${ocr_text}"
+# Send notification with first 50 characters as preview
+preview=$(head -c 50 "$output_file" | tr '\n' ' ')
+notify-send -t 2000 "OCR Screenshot" "Copied: ${preview}..."
 
 # Cleanup
 rm -rf "$workdir"
