@@ -14,3 +14,10 @@ xprintidle
 polkit-gnome
 xdg-desktop-portal-gtk
 networkmanager
+xfce4-power-manager 
+upower 
+acpid
+
+#sudo systemctl enable --now acpid.service
+#sudo systemctl enable --now upower.service
+
