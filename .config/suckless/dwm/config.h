@@ -129,7 +129,8 @@ static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() 
  };
 
 static const char *termcmd[]  = { "st", NULL };
-static const char *powermenu[] = {"bash", "-c", ".config/rofi/powermenu/type-4/powermenu.sh", NULL};
+// static const char *powermenu[] = {"bash", "-c", ".config/rofi/powermenu/type-4/powermenu.sh", NULL};
+static const char *powermenu[] = {"bash", "-c", "~/.local/bin/rofi/rofi-power", NULL};
 static const char *rofi[] = {"bash", "-c", ".config/rofi/launchers/type-7/launcher.sh", NULL};
 static const char *applet[] = {"bash", "-c", ".config/rofi/applets/bin/apps.sh", NULL};
 static const char *quicklinks[] = {"bash", "-c", ".config/rofi/applets/bin/quicklinks.sh", NULL};
