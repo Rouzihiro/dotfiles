@@ -8,6 +8,7 @@ while true; do
   DAY="#e6c384"  # yellow
   TIME="#957fb8" # purple
   MUS="#c8a6ff"  # softer violet (matches style)
+	MEM="#7fb4ca"   # teal/cyan for memory
   BKLIT="#ffa066" # orange
 
   Vol="^c${VOL}^ ^c${FG}^$(pamixer --get-volume-human)"
@@ -16,8 +17,10 @@ while true; do
   Time="^c${TIME}^ ^c${FG}^$(date '+%I:%M %p')"
   Music=" ^c${MUS}^ ^c${FG}^$(playerctl metadata --format "{{ artist }} - {{ title }}" | awk '{print substr($0, 1, 32)}')"
   Bklit="^c${BKLIT}^󰃟 ^c${FG}^$(brightnessctl i | awk '/Current brightness/ {print $4}' | sed 's/[()]//g')"
+	mem_used=$(awk '/MemTotal/ {total=$2} /MemAvailable/ {avail=$2} END {printf "%dMiB", (total-avail)/1024}' /proc/meminfo)
+  Mem="^c${MEM}^ ^c${FG}^$mem_used"
 
-  xsetroot -name "$Music | $Vol | $Bklit | $Day | $Time | $Bat"
+  xsetroot -name "$Music | $Mem | $Vol | $Bklit | $Day | $Time | $Bat"
   sleep 1
 done
 
