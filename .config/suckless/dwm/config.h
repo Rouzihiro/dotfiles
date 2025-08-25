@@ -132,6 +132,7 @@ static const char *termcmd[]  = { "st", NULL };
 static const char *powermenu[] = {"bash", "-c", ".config/rofi/powermenu/type-4/powermenu.sh", NULL};
 static const char *rofi[] = {"bash", "-c", ".config/rofi/launchers/type-7/launcher.sh", NULL};
 static const char *applet[] = {"bash", "-c", ".config/rofi/applets/bin/apps.sh", NULL};
+static const char *quicklinks[] = {"bash", "-c", ".config/rofi/applets/bin/quicklinks.sh", NULL};
 
 /*First arg only serves to match against key in rules*/
 static const char *scratchpadcmd[] = {"s", "scratchpad", NULL};
@@ -146,8 +147,9 @@ static const Key keys[] = {
     {MODKEY, 						XK_Return,spawn, {.v = termcmd}},
 		{MODKEY, 						XK_space, spawn, {.v = rofi}},
     {MODKEY, 						XK_a, spawn, {.v = applet}},
-		{MODKEY|Mod1Mask,		XK_d, 		spawn, SHCMD("~/.local/bin/dwm/dmenu-desktop")},
-		{MODKEY, 						XK_d, 		spawn, {.v = dmenucmd}},
+		{MODKEY|Mod1Mask,		XK_b, spawn, {.v = quicklinks}},
+		{MODKEY|Mod1Mask,		XK_d,	spawn, SHCMD("~/.local/bin/dwm/dmenu-desktop")},
+		{MODKEY, 						XK_d,	spawn, {.v = dmenucmd}},
 
     {MODKEY|Mod1Mask,		XK_r, spawn, {.v = powermenu}},
 
@@ -166,7 +168,7 @@ static const Key keys[] = {
 		{ 0, XF86XK_AudioRaiseVolume, spawn, SHCMD("$HOME/.local/bin/multimedia/volume.sh up")},
 		{ 0, XF86XK_AudioMute,        spawn, SHCMD("$HOME/.local/bin/multimedia/volume.sh mute")},
 
-    { MODKEY|Mod1Mask,              XK_b,      togglebar,      {0} },
+    { MODKEY|ShiftMask,             XK_b,      togglebar,      {0} },
     { MODKEY,                       XK_o,      focusstack,     {.i = +1 } },
     // { MODKEY,                       XK_p,      focusstack,     {.i = -1 } },
     { MODKEY,                   XK_equal,      incnmaster,     {.i = +1 } },
