@@ -16,4 +16,6 @@ ttf-dejavu
 ttf-liberation
 adobe-source-code-pro-fonts
 ttf-victor-mono
+ttf-nerd-fonts-symbols 
+ttf-nerd-fonts-symbols-mono
 
