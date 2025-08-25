@@ -17,10 +17,17 @@ tmux has-session -t $SESSION_NAME 2>/dev/null || {
 
   # Window 2: Neovim in ~/.config with file picker
   tmux new-window -t $SESSION_NAME:2 -n "nvim" -c "$HOME/dotfiles/.config"
-  tmux send-keys -t $SESSION_NAME:2 "nvim -c 'lua require(\"mini.pick\").builtin.files()'" C-m
+	tmux send-keys -t $SESSION_NAME:2.1 "nvim -c 'lua require(\"telescope.builtin\").oldfiles()'" C-m
+  #tmux send-keys -t $SESSION_NAME:2.1 "nvim -c 'lua require(\"mini.pick\").builtin.files()'" C-m
+
+  # Right pane (split horizontally)
+	tmux split-window -h -t $SESSION_NAME:2 -c "$HOME/dotfiles"
+  tmux send-keys -t $SESSION_NAME:2.2 "nvim -c 'lua require(\"mini.pick\").builtin.files()'" C-m
+	#tmux send-keys -t $SESSION_NAME:2.2 "nvim -c 'Oil'" C-m
 
   # Focus back on Window 1
-  tmux select-window -t $SESSION_NAME:1
+	tmux select-window -t $SESSION_NAME:2
+  tmux select-pane -t $SESSION_NAME:2.1
 }
 
 # Attach
