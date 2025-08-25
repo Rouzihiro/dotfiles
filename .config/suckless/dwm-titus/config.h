@@ -18,26 +18,25 @@ static const int topbar                       = 1;   /* 0 means bottom bar */
 #define SHOWWINICON                           1      /* 0 means no winicon */
 static const char *fonts[]          = { "JetBrainsMono Nerd Font:style:semibold:size=12" };
 static const char dmenufont[]       = "monospace:size=10";
-static const char col_gray1[]       = "#2e3440";
-static const char col_gray2[]       = "#4c566a";
-static const char col_gray3[]       = "#bbbbbb";
-static const char col_gray4[]       = "#eeeeee";
-static const char col_cyan[]        = "#5e81ac";
-static const char col_cyan1[]       = "#88c0d0";
-static const char col_red[]	    		= "#bf616a";
+
+// static const char *fonts[]          = {  "JetBrainsMono Nerd Font:antialias=true:autohint=true:size=11", "Noto Sans CJK JP:size=11"  };
+
+
+/* Color Scheme — Kanagawa colors */
+static const char normal_bar_background[]          = "#1f1f28"; // sumi ink #1
+static const char selected_bar_background[]        = "#2f2f3f"; // sumi ink #2
+static const char normal_bar_foreground[]          = "#dcd7ba"; // old paper
+static const char selected_bar_foreground[]        = "#c8c093"; // fuji gray
+static const char normal_window_border[]           = "#4f4f5f"; // sumi shadow
+static const char selected_window_border[]         = "#c8c093"; // fuji gray
+static const char special_normal_window_border[]   = "#7f7f87"; // sumi middle
+static const char special_selected_window_border[] = "#7fbbb3"; // wave green
 static const char *colors[][3]      = {
 	/*               fg         bg         border   */
-	[SchemeNorm] = { col_gray3, col_gray1, col_red },
-	[SchemeSel]  = { col_cyan, col_gray1,  col_cyan  },
+   [SchemeNorm] = { normal_bar_foreground, normal_bar_background, normal_window_border },
+   [SchemeSel]  = { selected_bar_foreground, selected_bar_background, selected_window_border  },
 };
 
-static const char *tagsel[][2] = {
-   /*   fg         bg    */
-  { col_cyan1, col_gray1 }, /* norm */
-  { col_gray4, col_cyan  }, /* sel */
-  { col_red,  col_gray1  }, /* occ but not sel */
-  { col_cyan,  col_gray3 }, /* has pinned tag */
-};
 
 /* tagging */
 static const char *tags[] = {"", "󰈹", "", "", ""};
@@ -48,7 +47,9 @@ static const char *const autostart[] = {
     "xset", "-dpms", NULL,
     "dbus-update-activation-environment", "--systemd", "--all", NULL,
     "/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1", NULL,
- 		"sh", "-c", "$HOME/.local/bin/dwm/superbar.sh", NULL,
+ 		"sh", "-c", "$HOME/.local/bin/dwm/superbar2.sh", NULL,
+		"/home/rey/.local/bin/dwm/autolock.sh", NULL,
+ 		// "xsetroot", "-cursor_name", "left_ptr", NULL,
     "flameshot", NULL,
     "dunst", NULL,
     "picom", "-b", NULL,
@@ -93,27 +94,30 @@ static const Layout layouts[] = {
 
 /* helper for spawning shell commands in the pre dwm-5.0 fashion */
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
-
+#define STATUSBAR "dwmblocks"
 /* commands */
-static const char *termcmd[]     = { "kitty", NULL };
-
-static const char *launchercmd[] = {
-    "dmenu_run",
-    "-fn", "monospace-12",
-    "-nb", "#1F1F28", // normal background
-    "-nf", "#DCD7BA", // normal foreground
-    "-sb", "#2D4F67", // selected background
-    "-sf", "#C8C093", // selected foreground
-    "-nhb", "#1F1F28", // normal highlight background
-    "-nhf", "#7E9CD8", // normal highlight foreground
-    "-shb", "#2D4F67", // selected highlight background
-    "-shf", "#7E9CD8", // selected highlight foreground
-    NULL
-};
+static const char *termcmd[]     = { "st", NULL };
+// static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
+static const char *dmenucmd[] = {
+     "dmenu_run",
+     "-c",           // center
+     "-l", "17",     // number of lines
+     "-fn", "JetBrainsMono Nerd Font:size=11",
+     "-nb", normal_bar_background,
+     "-nf", normal_bar_foreground,
+     "-sb", selected_bar_background,
+     "-sf", selected_bar_foreground,
+     "-nhb", normal_bar_background,
+     "-nhf", normal_bar_foreground,
+     "-shb", selected_bar_background,
+     "-shf", selected_bar_foreground,
+     NULL
+ };
 
 static Key keys[] = {
     /* modifier                     key                        function        argument */
-    { MODKEY,                       XK_r,                      spawn,          {.v = launchercmd} },
+		{ MODKEY|Mod1Mask,              XK_space,  								 spawn,          SHCMD ("~/.local/bin/dwm/dmenu-desktop") },
+    { MODKEY,                       XK_space,                  spawn,          {.v = dmenucmd} },
     { MODKEY,                       XK_Return,                 spawn,          {.v = termcmd } },
     { MODKEY,                       XK_b,                      spawn,          SHCMD ("xdg-open https://")},
     { MODKEY,                       XK_p,                      spawn,          SHCMD ("flameshot full -p $HOME/Pictures/screenshot/")},
@@ -123,8 +127,11 @@ static Key keys[] = {
     // { MODKEY,                       XK_w,                      spawn,          SHCMD ("looking-glass-client -F")},
 		{ MODKEY|ControlMask, 					XK_w, 										 spawn, 				 SHCMD("bash -c '$HOME/.local/bin/rofi/rofi-wall-x11'") },
     { MODKEY|ShiftMask,             XK_w,                      spawn,          SHCMD ("feh --randomize --bg-fill ~/Pictures/wallpapers/*")},
-    // { 0,                            XF86XK_MonBrightnessUp,    spawn,          SHCMD ("xbacklight -inc 10")},
-    // { 0,                            XF86XK_MonBrightnessDown,  spawn,          SHCMD ("xbacklight -dec 10")},
+		{ MODKEY|Mod1Mask,           		XK_r,     spawn,          SHCMD ("$HOME/.local/bin/rofi/rofi-power")},
+		{ MODKEY|Mod1Mask,           		XK_o,     spawn,          SHCMD ("$HOME/.local/bin/ocr2-x11")},
+		{ MODKEY|Mod1Mask,         		  XK_n,     spawn,          SHCMD ("bash -c '$HOME/.local/bin/rofi/rofi-notes'")},
+	
+
 		{ 0, XF86XK_MonBrightnessUp,   spawn, SHCMD("$HOME/.local/bin/multimedia/brightness.sh up") },
 		{ 0, XF86XK_MonBrightnessDown, spawn, SHCMD("$HOME/.local/bin/multimedia/brightness.sh down") },
 		{ 0, XF86XK_AudioLowerVolume, spawn, SHCMD("$HOME/.local/bin/multimedia/volume.sh down") },

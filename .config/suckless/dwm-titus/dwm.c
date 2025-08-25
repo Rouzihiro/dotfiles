@@ -315,7 +315,7 @@ static const char autostartblocksh[] = "autostart_blocking.sh";
 static const char autostartsh[] = "autostart.sh";
 static Systray *systray = NULL;
 static const char broken[] = "broken";
-static const char dwmdir[] = ".config./suckless/dwm/scripts";
+static const char dwmdir[] = "github/dwm-titus/scripts";
 static const char localshare[] = "";
 static char stext[256];
 static int statusw;
@@ -3250,7 +3250,7 @@ void
 updatestatus(void)
 {
 	if (!gettextprop(root, XA_WM_NAME, stext, sizeof(stext))) {
-		strcpy(stext, "dwm-Rey:"VERSION);
+		strcpy(stext, "dwm-titus:"VERSION);
 		statusw = TEXTW(stext) - lrpad + 2;
 	} else {
 		char *text, *s, ch;
