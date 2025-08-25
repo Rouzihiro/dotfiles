@@ -22,12 +22,12 @@ elif [[ ("$theme" == *'type-2'*) || ("$theme" == *'type-4'*) ]]; then
 fi
 
 # CMDs (add your apps here)
-term_cmd='runner'
+term_cmd='st -e runner'
 file_cmd='st -e yazi'
 text_cmd='st -e nvim'
 web_cmd='brave'
 music_cmd='spotify'
-setting_cmd=''
+setting_cmd='st -e btop'
 
 # Options
 layout=$(cat ${theme} | grep 'USE_ICON' | cut -d'=' -f2)
