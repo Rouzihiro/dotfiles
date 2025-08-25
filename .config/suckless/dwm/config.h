@@ -75,6 +75,8 @@ static const Rule rules[] = {
          *      WM_NAME(STRING) = title
          */
    /* class      instance    title       tags mask     isfloating   monitor    scratch key */
+ 	 { "librewolf", NULL,       NULL,       1 << 1,       0,           -1 },
+ 	 { "brave-browser", NULL,   NULL,       1 << 2,       0,           -1 },
    { "Anime",     NULL,       NULL,       0,            1,           -1,        0  },
    { "Spotify",   NULL,       NULL,       0,            1,           -1,       's' },
    { "Cmus",      NULL,       NULL,       0,            1,           -1,        0  },
@@ -158,7 +160,9 @@ static const Key keys[] = {
     { MODKEY|Mod1Mask,              XK_p,     spawn,          SHCMD ("flameshot gui -p $HOME/Pictures/screenshot/")},
     { MODKEY,              					XK_p,     spawn,          SHCMD ("flameshot gui --clipboard")},
 		{ MODKEY,                       XK_b,     spawn,          SHCMD ("xdg-open https://")},
-    { MODKEY,                       XK_e,     spawn,          SHCMD ("xdg-open .")},
+		{ MODKEY|ShiftMask,             XK_b,     spawn,          SHCMD ("brave")},
+		{ MODKEY,                       XK_e,     spawn,          SHCMD ("yazi")},
+    // { MODKEY,                       XK_e,     spawn,          SHCMD ("xdg-open .")},
 		{ MODKEY|Mod1Mask, 							XK_w, 	  spawn, 				  SHCMD ("bash -c '$HOME/.local/bin/rofi/rofi-wall-x11'") },
     { MODKEY|ShiftMask,             XK_w,     spawn,          SHCMD ("feh --randomize --bg-fill ~/Pictures/wallpapers/*")},
 		{ MODKEY|Mod1Mask,           		XK_o,     spawn,          SHCMD ("$HOME/.local/bin/ocr2-x11")},
@@ -169,7 +173,7 @@ static const Key keys[] = {
 		{ 0, XF86XK_AudioRaiseVolume, spawn, SHCMD("$HOME/.local/bin/multimedia/volume.sh up")},
 		{ 0, XF86XK_AudioMute,        spawn, SHCMD("$HOME/.local/bin/multimedia/volume.sh mute")},
 
-    { MODKEY|ShiftMask,             XK_b,      togglebar,      {0} },
+    { MODKEY,             					XK_h,      togglebar,      {0} },
     { MODKEY,                       XK_o,      focusstack,     {.i = +1 } },
     // { MODKEY,                       XK_p,      focusstack,     {.i = -1 } },
     { MODKEY,                   XK_equal,      incnmaster,     {.i = +1 } },
