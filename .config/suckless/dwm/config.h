@@ -38,28 +38,8 @@ static const char *colors[][3]      = {
 	/*               fg         bg         border   */
    [SchemeNorm] = { normal_bar_foreground, normal_bar_background, normal_window_border },
    [SchemeSel]  = { selected_bar_foreground, selected_bar_background, selected_window_border  },
-   [SchemeScratchNorm] = { normal_bar_foreground, normal_bar_background, special_normal_window_border },
-   [SchemeScratchSel]  = { selected_bar_foreground, selected_bar_background, special_selected_window_border },
 };
 
-/* AutoStart */
-static const char *const autostart[] = {
-    		"xset", "s", "off", NULL,
-    		"xset", "s", "noblank", NULL,
-    		"xset", "-dpms", NULL,
-        "dunst", NULL,
-        // "picom", NULL,
-    		"picom", "-b", NULL,
-			  "flameshot", NULL,
-				"/home/rey/.local/bin/dwm/autolock.sh", NULL,
-       	"xfce4-power-manager", NULL,
-        "xsetroot", "-cursor_name", "left_ptr", NULL,
-        "sh", "-c", "$HOME/.local/bin/dwm/superbar.sh", NULL,
- 				"dbus-update-activation-environment", "--systemd", "--all", NULL,
-        "sh", "-c", "/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1", NULL,
-  			"sh", "-c", "feh --randomize --bg-fill ~/Pictures/wallpapers/*", NULL,
-        NULL /* terminate */
-};
 
 /* tagging */
 static const char *tags[] = {"", "󰈹", "", "", ""};
@@ -69,18 +49,28 @@ static const unsigned int ulinestroke	= 1;	/* thickness / height of the underlin
 static const unsigned int ulinevoffset	= 0;	/* how far above the bottom of the bar the line should appear */
 static const int ulineall 		= 0;	/* 1 to show underline on all tags, 0 for just the active ones */
 
+static const unsigned int baralpha = 0xd0;   // Example value for bar transparency
+static const unsigned int borderalpha = OPAQUE; // OPAQUE is typically 0xffU
+
+const unsigned int alphas[][3] = {
+    /*               fg      bg        border*/
+    [SchemeNorm] = { OPAQUE, baralpha, borderalpha },
+    [SchemeSel]  = { OPAQUE, baralpha, borderalpha },
+};
+
+// static const ClientOpacity opacity[] = {
+//     /* class      opacity */
+//     { "St",       0.90f   },
+// };
+//
 static const Rule rules[] = {
         /* xprop(1):
          *      WM_CLASS(STRING) = instance, class
          *      WM_NAME(STRING) = title
          */
-   /* class      instance    title       tags mask     isfloating   monitor    scratch key */
+   /* class      instance    title       tags mask     isfloating   monitor */
  	 { "librewolf", NULL,       NULL,       1 << 1,       0,           -1 },
  	 { "brave-browser", NULL,   NULL,       1 << 2,       0,           -1 },
-   { "Anime",     NULL,       NULL,       0,            1,           -1,        0  },
-   { "Spotify",   NULL,       NULL,       0,            1,           -1,       's' },
-   { "Cmus",      NULL,       NULL,       0,            1,           -1,        0  },
-   { NULL,        NULL,   "scratchpad",   0,            1,           -1,       'a' },
 };
 
 /* layout(s) */
@@ -114,7 +104,7 @@ static const Layout layouts[] = {
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 
- static const char *dmenucmd[] = {
+static const char *dmenucmd[] = {
      "dmenu_run",
      "-c",           // center
      "-l", "17",     // number of lines
@@ -138,11 +128,6 @@ static const char *applet[] = {"bash", "-c", ".config/rofi/applets/bin/apps.sh",
 static const char *quicklinks[] = {"bash", "-c", ".config/rofi/applets/bin/quicklinks.sh", NULL};
 
 /*First arg only serves to match against key in rules*/
-static const char *scratchpadcmd[] = {"s", "scratchpad", NULL};
-
-#include "movestack.c"
-#include "unfloat.c"
-
 
 static const Key keys[] = {
     /* modifier                     key        function        argument */
@@ -179,36 +164,21 @@ static const Key keys[] = {
     // { MODKEY,                    XK_p,      focusstack,     {.i = -1 } },
     { MODKEY,                   XK_equal,      incnmaster,     {.i = +1 } },
     { MODKEY,                   XK_minus,      incnmaster,     {.i = -1 } },
-    { MODKEY,             XK_bracketleft,      shiftview,      {.i = -1 } },
-    { MODKEY,            XK_bracketright,      shiftview,      {.i = +1 } },
     { MODKEY,                     XK_Tab,      view,           {0} }, /* ws repeat*/
 
     { MODKEY,                       XK_j,      setmfact,       {.f = -0.05} },
     { MODKEY,                       XK_k,      setmfact,       {.f = +0.05} },
-
-    { MODKEY|Mod1Mask,              XK_k,      setcfact,       {.f = -0.05} },
-    { MODKEY|Mod1Mask,              XK_j,      setcfact,       {.f = +0.05} },
-    { MODKEY,                       XK_l,      setcfact,       {.f = +0.00} },
 
     { MODKEY|Mod1Mask,              XK_0,      togglegaps,     {0} },
     { MODKEY|Mod1Mask|ShiftMask,    XK_0,      defaultgaps,    {0} },
     { MODKEY|Mod1Mask,          XK_equal,      incrgaps,       {.i = +1 } },
     { MODKEY|Mod1Mask,          XK_minus,      incrgaps,       {.i = -1 } },
 
-    { MODKEY|ShiftMask,             XK_o,      movestack,      {.i = +1 } },
-    { MODKEY|ShiftMask,             XK_p,      movestack,      {.i = -1 } },
-    { MODKEY|ShiftMask,   XK_bracketleft,      shifttag,       {.i = -1 } },
-    { MODKEY|ShiftMask,  XK_bracketright,      shifttag,       {.i = +1 } },
     { MODKEY|ShiftMask,             XK_0,      tag,            {.ui = ~0 } }, /* Sticky window */
     { MODKEY|ShiftMask,        XK_Return,      zoom,           {0} },
 
-    { MODKEY,                       XK_f,      togglefullscr,  {0} },
+    { MODKEY,                       XK_f,      togglefakefullscreen,  {0} },
     { MODKEY,                       XK_t,      togglefloating, {0} },
-    { MODKEY,                       XK_T,      unfloatvisible, {0} },
-
-    { MODKEY,                       XK_w,      togglescratch,  {.v = scratchpadcmd } },
-    { MODKEY,                       XK_q,      removescratch,  {.v = scratchpadcmd } },
-    { MODKEY|Mod1Mask,         XK_Return,      setscratch,     {.v = scratchpadcmd } },
 
     { MODKEY,                       XK_0,      view,           {.ui = ~0 } },
     TAGKEYS(                        XK_1,                      0)
@@ -216,9 +186,6 @@ static const Key keys[] = {
     TAGKEYS(                        XK_3,                      2)
     TAGKEYS(                        XK_4,                      3)
     TAGKEYS(                        XK_5,                      4)
-
-    { MODKEY|Mod1Mask,   XK_bracketleft,      cyclelayout,    {.i = -1 } },
-    { MODKEY|Mod1Mask,   XK_bracketright,     cyclelayout,    {.i = +1 } },
 
         { MODKEY|Mod1Mask,              XK_1,      setlayout,      {.v = &layouts[0]} },
         { MODKEY|Mod1Mask,              XK_2,      setlayout,      {.v = &layouts[1]} },
@@ -243,8 +210,6 @@ static const Button buttons[] = {
         { ClkClientWin,         MODKEY,         Button1,        movemouse,      {0} },
         { ClkClientWin,         MODKEY,         Button2,        togglefloating, {0} },
         { ClkClientWin,         MODKEY,         Button3,        resizemouse,    {0} },
-        { ClkClientWin,         MODKEY|Mod1Mask, Button3,       dragmfact,      {0} },
-        { ClkClientWin,         MODKEY|Mod1Mask, Button3,       dragcfact,      {0} },
         { ClkTagBar,            0,              Button1,        view,           {0} },
         { ClkTagBar,            0,              Button3,        toggleview,     {0} },
         { ClkTagBar,            MODKEY,         Button1,        tag,            {0} },
