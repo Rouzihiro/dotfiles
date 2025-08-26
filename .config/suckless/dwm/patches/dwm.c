@@ -745,20 +745,6 @@ drawbar(Monitor *m)
 	}
 	x = 0;
 	for (i = 0; i < LENGTH(tags); i++) {
-/* Check if tag is empty (has no windows) */
-		int is_tag_empty = 1;
-		Client *c;
-		for (c = m->clients; c; c = c->next) {
-			if (c->tags & (1 << i)) {
-				is_tag_empty = 0;
-				break;
-			}
-		}
-		
-		/* Skip empty tags unless they're selected */
-		if (is_tag_empty && !(m->tagset[m->seltags] & 1 << i))
-			continue;
-
 		w = TEXTW(tags[i]);
 		drw_setscheme(drw, scheme[m->tagset[m->seltags] & 1 << i ? SchemeSel : SchemeNorm]);
 		drw_text(drw, x, 0, w, bh, lrpad / 2, tags[i], urg & 1 << i);
