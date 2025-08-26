@@ -1,6 +1,7 @@
 # Core X11 system components
 xorg
 xorg-xinit
+xorg-xev
 xorg-server
 xorg-auth
 xorg-xrandr
