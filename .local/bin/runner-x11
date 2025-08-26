@@ -1,0 +1,18 @@
+#!/bin/bash
+#export DISPLAY=:0
+app=$(echo -e "neovim\nbrowser\nbluetooth\nreddit\nchatgpt\ngithub\nchat.deepseek\ntranslate.google\nyoutube\nrapidmovies\nnoodle\neporner\nfitgirl\ndodi\nfzmovies\nmoviesjoytv\nmaps" | dmenu -c -l 15 -p "🚀")
+[ -z "$app" ] && exit 0
+case "$app" in
+    neovim) st -e nvim -c 'lua require("telescope.builtin").oldfiles()' & ;;
+    browser) xdg-open "about:blank" & ;;
+    bluetooth) blueman-manager & ;;
+    moviesjoytv) xdg-open "https://moviesjoytv.to" & ;;
+    rapidmovies) xdg-open "https://rmz.cr" & ;;
+    fzmovies) xdg-open "https://fzmovies.net/movieslist.php?catID=2&by=latest" & ;;
+    dodi) xdg-open "https://dodi-repacks.site" & ;;
+    fitgirl) xdg-open "https://fitgirl-repacks.site" & ;;
+    noodle) xdg-open "https://noodlemagazine.com" & ;;
+    maps) xdg-open "https://www.google.de/maps" & ;;
+    *) xdg-open "https://www.${app}.com" & ;; # For most web apps
+esac
+

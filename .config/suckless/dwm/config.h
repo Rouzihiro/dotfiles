@@ -65,7 +65,7 @@ static const Rule rules[] = {
          */
    /* class      instance    title       tags mask     isfloating   monitor */
  	 { "librewolf", NULL,       NULL,       1 << 1,       0,           -1 },
- 	 { "brave-browser", NULL,   NULL,       1 << 2,       0,           -1 },
+ 	 { "brave-browser", NULL,   NULL,       1 << 1,       0,           -1 },
 };
 
 /* layout(s) */
@@ -128,11 +128,11 @@ static const Key keys[] = {
     /* modifier                     key        function        argument */
 
     {MODKEY, 						XK_Return,spawn, {.v = termcmd}},
-		{MODKEY, 						XK_space, spawn, {.v = rofi}},
+		{MODKEY, 						XK_d, spawn, {.v = rofi}},
     {MODKEY, 						XK_a, spawn, {.v = applet}},
 		{MODKEY|Mod1Mask,		XK_b, spawn, {.v = quicklinks}},
-		{MODKEY|Mod1Mask,		XK_d,	spawn, SHCMD("~/.local/bin/dwm/dmenu-desktop")},
-		{MODKEY, 						XK_d,	spawn, {.v = dmenucmd}},
+		{MODKEY|Mod1Mask,		XK_space,	spawn, SHCMD("~/.local/bin/dwm/dmenu-desktop")},
+		{MODKEY, 						XK_space,	spawn, {.v = dmenucmd}},
 
     {MODKEY|Mod1Mask,		XK_r, spawn, {.v = powermenu}},
 
@@ -141,13 +141,14 @@ static const Key keys[] = {
     { MODKEY,              					XK_p,     spawn,          SHCMD ("flameshot gui --clipboard")},
 		{ MODKEY,                       XK_b,     spawn,          SHCMD ("xdg-open https://")},
 		{ MODKEY,                       XK_Escape,spawn,          SHCMD ("st -e btop") },
-		{ MODKEY|ShiftMask,             XK_b,     spawn,          SHCMD ("brave")},
+		{ MODKEY|ShiftMask,             XK_b,     spawn,          SHCMD ("librewolf")},
 		{ MODKEY,                       XK_e,     spawn,          SHCMD ("st -e yazi")},
+		{ MODKEY,                       XK_r,     spawn,          SHCMD ("$HOME/.local/bin/runner-x11")},
     // { MODKEY,                    XK_e,     spawn,          SHCMD ("xdg-open .")},
 		{ MODKEY|Mod1Mask, 							XK_w, 	  spawn, 				  SHCMD ("bash -c '$HOME/.local/bin/rofi/rofi-wall-x11'") },
     { MODKEY|ShiftMask,             XK_w,     spawn,          SHCMD ("feh --randomize --bg-fill ~/Pictures/wallpapers/*")},
 		{ MODKEY|Mod1Mask,           		XK_o,     spawn,          SHCMD ("bash -c '$HOME/.local/bin/ocr/ocr-x11'")},
-		{ MODKEY|Mod1Mask,         		  XK_n,     spawn,          SHCMD ("bash -c '$HOME/.local/bin/rofi/rofi-notes'")},
+		{ MODKEY,         		  				XK_n,     spawn,          SHCMD ("bash -c '$HOME/.local/bin/rofi/rofi-notes-x11'")},
 		{ 0, XF86XK_MonBrightnessUp,  spawn, SHCMD("$HOME/.local/bin/multimedia/brightness.sh up")},
 		{ 0, XF86XK_MonBrightnessDown,spawn, SHCMD("$HOME/.local/bin/multimedia/brightness.sh down")},
 		{ 0, XF86XK_AudioLowerVolume, spawn, SHCMD("$HOME/.local/bin/multimedia/volume.sh down")},

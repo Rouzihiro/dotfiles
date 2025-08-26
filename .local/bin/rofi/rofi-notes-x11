@@ -1,0 +1,56 @@
+#!/usr/bin/env bash
+
+DIR="$HOME/Documents/Notes"
+mkdir -p "$DIR"
+
+# Choose terminal dynamically for X11
+term=""
+for t in st xterm urxvt kitty alacritty foot; do
+    if command -v "$t" >/dev/null 2>&1; then
+        term="$t"
+        break
+    fi
+done
+
+[ -z "$term" ] && echo "No terminal emulator found!" && exit 1
+
+# Get list of .md files with icon
+entries=$(find "$DIR" -maxdepth 1 -type f -name "*.md" -printf "📝 %f\n" | sort)
+
+# Add create and delete options
+options="📄 Create New Note\n🗑️ Delete Note\n$entries"
+
+# Launch rofi with X11-specific options
+selection=$(echo -e "$options" | rofi -dmenu -i -p "🗒 Notes")
+
+[ -z "$selection" ] && exit
+
+if [[ "$selection" == "📄 Create New Note" ]]; then
+    new_name=$(rofi -dmenu -p "New note name (no .md):")
+    [ -z "$new_name" ] && exit
+    file="$DIR/$new_name.md"
+    [ -e "$file" ] || touch "$file"
+    # X11 terminal execution
+    case "$term" in
+        st|xterm|urxvt) "$term" -e nvim "$file" ;;
+        kitty|alacritty|foot) "$term" nvim "$file" ;;
+        *) "$term" -e nvim "$file" ;;
+    esac &
+    exit
+fi
+
+if [[ "$selection" == "🗑️ Delete Note" ]]; then
+    delete_target=$(find "$DIR" -maxdepth 1 -type f -name "*.md" -printf "📝 %f\n" | sort | rofi -dmenu -i -p "🗑 Select note to delete:")
+    [ -z "$delete_target" ] && exit
+    filename="${delete_target#📝 }"
+    rm -f "$DIR/$filename"
+    exit
+fi
+
+filename="${selection#📝 }"
+# X11 terminal execution
+case "$term" in
+    st|xterm|urxvt) "$term" -e nvim "$DIR/$filename" ;;
+    kitty|alacritty|foot) "$term" nvim "$DIR/$filename" ;;
+    *) "$term" -e nvim "$DIR/$filename" ;;
+esac &
