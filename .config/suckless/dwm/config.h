@@ -58,11 +58,6 @@ const unsigned int alphas[][3] = {
     [SchemeSel]  = { OPAQUE, baralpha, borderalpha },
 };
 
-// static const ClientOpacity opacity[] = {
-//     /* class      opacity */
-//     { "St",       0.90f   },
-// };
-//
 static const Rule rules[] = {
         /* xprop(1):
          *      WM_CLASS(STRING) = instance, class
@@ -151,7 +146,7 @@ static const Key keys[] = {
     // { MODKEY,                    XK_e,     spawn,          SHCMD ("xdg-open .")},
 		{ MODKEY|Mod1Mask, 							XK_w, 	  spawn, 				  SHCMD ("bash -c '$HOME/.local/bin/rofi/rofi-wall-x11'") },
     { MODKEY|ShiftMask,             XK_w,     spawn,          SHCMD ("feh --randomize --bg-fill ~/Pictures/wallpapers/*")},
-		{ MODKEY|Mod1Mask,           		XK_o,     spawn,          SHCMD ("$HOME/.local/bin/ocr/ocr-x11")},
+		{ MODKEY|Mod1Mask,           		XK_o,     spawn,          SHCMD ("bash -c '$HOME/.local/bin/ocr/ocr-x11'")},
 		{ MODKEY|Mod1Mask,         		  XK_n,     spawn,          SHCMD ("bash -c '$HOME/.local/bin/rofi/rofi-notes'")},
 		{ 0, XF86XK_MonBrightnessUp,  spawn, SHCMD("$HOME/.local/bin/multimedia/brightness.sh up")},
 		{ 0, XF86XK_MonBrightnessDown,spawn, SHCMD("$HOME/.local/bin/multimedia/brightness.sh down")},
@@ -177,7 +172,7 @@ static const Key keys[] = {
     { MODKEY|ShiftMask,             XK_0,      tag,            {.ui = ~0 } }, /* Sticky window */
     { MODKEY|ShiftMask,        XK_Return,      zoom,           {0} },
 
-    { MODKEY,                       XK_f,      togglefakefullscreen,  {0} },
+    { MODKEY|Mod1Mask,              XK_f,      togglefakefullscreen,  {0} },
     { MODKEY,                       XK_t,      togglefloating, {0} },
 
     { MODKEY,                       XK_0,      view,           {.ui = ~0 } },
