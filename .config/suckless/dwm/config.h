@@ -172,7 +172,8 @@ static const Key keys[] = {
     { MODKEY|ShiftMask,             XK_0,      tag,            {.ui = ~0 } }, /* Sticky window */
     { MODKEY|ShiftMask,        XK_Return,      zoom,           {0} },
 
-    { MODKEY|Mod1Mask,              XK_f,      togglefakefullscreen,  {0} },
+    { MODKEY|ShiftMask,             XK_f,      togglefakefullscreen,  {0} },
+ 		{ MODKEY,             					XK_f,      togglefullscreen,  {0} },
     { MODKEY,                       XK_t,      togglefloating, {0} },
 
     { MODKEY,                       XK_0,      view,           {.ui = ~0 } },
