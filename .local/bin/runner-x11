@@ -1,6 +1,18 @@
 #!/bin/bash
 #export DISPLAY=:0
-app=$(echo -e "neovim\nbrowser\nbluetooth\nreddit\nchatgpt\ngithub\nchat.deepseek\ntranslate.google\nyoutube\nrapidmovies\nnoodle\neporner\nfitgirl\ndodi\nfzmovies\nmoviesjoytv\nmaps" | dmenu -c -l 15 -p "🚀")
+
+# Kanagawa colors
+normal_bg="#1f1f28"    # sumi ink #1
+normal_fg="#dcd7ba"    # old paper  
+selected_bg="#2f2f3f"  # sumi ink #2
+selected_fg="#c8c093"  # fuji gray
+
+app=$(echo -e "neovim\nbrowser\nbluetooth\nreddit\nchatgpt\ngithub\ndeepseek\ntranslate.google\nyoutube\nrapidmovies\nnoodle\neporner\nfitgirl\ndodi\nfzmovies\nmoviesjoytv\nmaps" | dmenu -c -l 15 \
+    -fn "JetBrainsMono Nerd Font:size=11" \
+    -nb "$normal_bg" -nf "$normal_fg" \
+    -sb "$selected_bg" -sf "$selected_fg" \
+    -p "🚀")
+
 [ -z "$app" ] && exit 0
 case "$app" in
     neovim) st -e nvim -c 'lua require("telescope.builtin").oldfiles()' & ;;
@@ -15,4 +27,3 @@ case "$app" in
     maps) xdg-open "https://www.google.de/maps" & ;;
     *) xdg-open "https://www.${app}.com" & ;; # For most web apps
 esac
-
