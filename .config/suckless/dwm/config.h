@@ -117,38 +117,41 @@ static const char *dmenucmd[] = {
 
 static const char *termcmd[]  = { "st", NULL };
 static const char *powermenu[] = {"bash", "-c", ".config/rofi/powermenu/type-4/powermenu.sh", NULL};
-// static const char *powermenu[] = {"bash", "-c", "~/.local/bin/rofi/rofi-power", NULL};
 static const char *rofi[] = {"bash", "-c", ".config/rofi/launchers/type-7/launcher.sh", NULL};
-static const char *applet[] = {"bash", "-c", ".config/rofi/applets/bin/apps.sh", NULL};
-static const char *quicklinks[] = {"bash", "-c", ".config/rofi/applets/bin/quicklinks.sh", NULL};
-
-/*First arg only serves to match against key in rules*/
 
 static const Key keys[] = {
-    /* modifier                     key        function        argument */
 
-    {MODKEY, 						XK_Return,spawn, {.v = termcmd}},
-		{MODKEY, 						XK_d, spawn, {.v = rofi}},
-    {MODKEY, 						XK_a, spawn, {.v = applet}},
-		{MODKEY|Mod1Mask,		XK_b, spawn, {.v = quicklinks}},
-		{MODKEY|Mod1Mask,		XK_space,	spawn, SHCMD("~/.local/bin/dwm/dmenu-desktop")},
-		{MODKEY, 						XK_space,	spawn, {.v = dmenucmd}},
+    {MODKEY, 					 XK_Return,spawn, {.v = termcmd}},
+		{MODKEY|ShiftMask, XK_Return,spawn, SHCMD ("$HOME/.local/bin/dmenu/dm-runner")},
+		{MODKEY, 					 XK_d, spawn, {.v = rofi}},
+		{MODKEY|Mod1Mask,	 XK_space,	spawn, SHCMD("~/.local/bin/dwm/dmenu-desktop")},
+		{MODKEY, 					 XK_space,	spawn, {.v = dmenucmd}},
+		{MODKEY,           XK_Escape,spawn,SHCMD ("st -e btop") },
 
-    {MODKEY|Mod1Mask,		XK_r, spawn, {.v = powermenu}},
+    {MODKEY|Mod1Mask,  XK_r, spawn, {.v = powermenu}},
 
-  	{ MODKEY|ShiftMask,             XK_p,     spawn,          SHCMD ("flameshot full -p $HOME/Pictures/screenshot/")},
-    { MODKEY|Mod1Mask,              XK_p,     spawn,          SHCMD ("flameshot gui -p $HOME/Pictures/screenshot/")},
-    { MODKEY,              					XK_p,     spawn,          SHCMD ("flameshot gui --clipboard")},
-		{ MODKEY,                       XK_b,     spawn,          SHCMD ("xdg-open https://")},
-		{ MODKEY,                       XK_Escape,spawn,          SHCMD ("st -e btop") },
-		{ MODKEY|ShiftMask,             XK_b,     spawn,          SHCMD ("librewolf")},
-		{ MODKEY,                       XK_e,     spawn,          SHCMD ("st -e yazi")},
-		{ MODKEY,                       XK_r,     spawn,          SHCMD ("$HOME/.local/bin/runner-x11")},
+ 		{MODKEY,           XK_b,spawn,SHCMD ("xdg-open https://")},
+		{MODKEY|ShiftMask, XK_b,spawn,SHCMD ("librewolf")},
+
+		{MODKEY,           XK_e,spawn,SHCMD ("st -e yazi")},
     // { MODKEY,                    XK_e,     spawn,          SHCMD ("xdg-open .")},
-		{ MODKEY|Mod1Mask, 							XK_w, 	  spawn, 				  SHCMD ("bash -c '$HOME/.local/bin/rofi/rofi-wall-x11'") },
-    { MODKEY|ShiftMask,             XK_w,     spawn,          SHCMD ("feh --randomize --bg-fill ~/Pictures/wallpapers/*")},
-		{ MODKEY|Mod1Mask,           		XK_o,     spawn,          SHCMD ("bash -c '$HOME/.local/bin/ocr/ocr-x11'")},
-		{ MODKEY,         		  				XK_n,     spawn,          SHCMD ("bash -c '$HOME/.local/bin/rofi/rofi-notes-x11'")},
+		
+	  {MODKEY, 					 XK_m,spawn,SHCMD ("$HOME/.local/bin/dmenu/dm-mount-usb")},
+
+		{MODKEY,         	 XK_n,spawn,SHCMD ("bash -c '$HOME/.local/bin/dmenu/dm-notes'")},
+
+		{MODKEY,  				 XK_o,spawn,SHCMD ("bash -c '$HOME/.local/bin/ocr/ocr-x11'")},
+		
+		{MODKEY|ShiftMask, XK_p,spawn,SHCMD ("flameshot full -p $HOME/Pictures/screenshot/")},
+    {MODKEY|Mod1Mask,  XK_p,spawn,SHCMD ("flameshot gui -p $HOME/Pictures/screenshot/")},
+    {MODKEY,           XK_p,spawn,SHCMD ("flameshot gui --clipboard")},
+		
+	  {MODKEY, 					 XK_v,spawn,SHCMD ("$HOME/.local/bin/dmenu/dm-video-tool")},
+
+		{MODKEY,           XK_w,spawn,SHCMD ("feh --randomize --bg-fill ~/Pictures/wallpapers/*")},
+		{MODKEY|Mod1Mask,	 XK_w,spawn,SHCMD ("bash -c '$HOME/.local/bin/rofi/rofi-wall-x11'")},
+    {MODKEY|ShiftMask, XK_w,spawn,SHCMD ("$HOME/.local/bin/dmenu/dm-wifi")},
+
 		{ 0, XF86XK_MonBrightnessUp,  spawn, SHCMD("$HOME/.local/bin/multimedia/brightness.sh up")},
 		{ 0, XF86XK_MonBrightnessDown,spawn, SHCMD("$HOME/.local/bin/multimedia/brightness.sh down")},
 		{ 0, XF86XK_AudioLowerVolume, spawn, SHCMD("$HOME/.local/bin/multimedia/volume.sh down")},
@@ -156,8 +159,8 @@ static const Key keys[] = {
 		{ 0, XF86XK_AudioMute,        spawn, SHCMD("$HOME/.local/bin/multimedia/volume.sh mute")},
 
     { MODKEY,             					XK_h,      togglebar,      {0} },
-    { MODKEY,                       XK_o,      focusstack,     {.i = +1 } },
-    // { MODKEY,                    XK_p,      focusstack,     {.i = -1 } },
+    { MODKEY,                       XK_Right,  focusstack,     {.i = +1 } },
+    { MODKEY,                    XK_Left,      focusstack,     {.i = -1 } },
     { MODKEY,                   XK_equal,      incnmaster,     {.i = +1 } },
     { MODKEY,                   XK_minus,      incnmaster,     {.i = -1 } },
     { MODKEY,                     XK_Tab,      view,           {0} }, /* ws repeat*/
@@ -171,7 +174,7 @@ static const Key keys[] = {
     { MODKEY|Mod1Mask,          XK_minus,      incrgaps,       {.i = -1 } },
 
     { MODKEY|ShiftMask,             XK_0,      tag,            {.ui = ~0 } }, /* Sticky window */
-    { MODKEY|ShiftMask,        XK_Return,      zoom,           {0} },
+    //{ MODKEY|ShiftMask,        XK_Return,      zoom,           {0} },
 
     { MODKEY|ShiftMask,             XK_f,      togglefakefullscreen,  {0} },
  		{ MODKEY,             					XK_f,      togglefullscreen,  {0} },
