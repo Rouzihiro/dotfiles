@@ -1,0 +1,265 @@
+#!/usr/bin/env bash
+#
+# Wabi-Sabi Bluetooth Manager for DWM
+# Minimalist Bluetooth control with dmenu
+#
+# Author: Nick Clyde (original)
+# Modified for DWM/wabi-sabi style
+
+# Colors (wabi-sabi inspired palette)
+BG="#0a0a0a"        # Dark background
+FG="#d8d8d8"        # Light foreground
+SELECT_BG="#262626" # Selection background
+SELECT_FG="#d8d8d8" # Selection foreground
+
+# Dmenu command
+DMENU="dmenu -i -nb '$BG' -nf '$FG' -sb '$SELECT_BG' -sf '$SELECT_FG'"
+
+# Checks if bluetooth controller is powered on
+power_on() {
+    if bluetoothctl show | grep -q "Powered: yes"; then
+        return 0
+    else
+        return 1
+    fi
+}
+
+# Checks if Bluetooth service is active
+service_active() {
+    if systemctl is-active bluetooth >/dev/null; then
+        return 0
+    else
+        return 1
+    fi
+}
+
+# Toggles power state
+toggle_power() {
+    if power_on; then
+        bluetoothctl power off
+    else
+        bluetoothctl power on
+    fi
+    show_menu
+}
+
+# Toggles Bluetooth service
+toggle_service() {
+    if service_active; then
+        systemctl stop bluetooth
+        systemctl disable bluetooth
+    else
+        systemctl enable bluetooth
+        systemctl start bluetooth
+        sleep 2
+    fi
+    show_menu
+}
+
+# Restarts Bluetooth service
+restart_service() {
+    systemctl restart bluetooth
+    sleep 2
+    show_menu
+}
+
+# Checks if controller is scanning for new devices
+scan_on() {
+    if bluetoothctl show | grep -q "Discovering: yes"; then
+        return 0
+    else
+        return 1
+    fi
+}
+
+# Toggles scanning state
+toggle_scan() {
+    if scan_on; then
+        kill $(pgrep -f "bluetoothctl scan on")
+        bluetoothctl scan off
+    else
+        bluetoothctl scan on &
+        sleep 3
+    fi
+    show_menu
+}
+
+# Checks if a device is connected
+device_connected() {
+    device_info=$(bluetoothctl info "$1")
+    if echo "$device_info" | grep -q "Connected: yes"; then
+        return 0
+    else
+        return 1
+    fi
+}
+
+# Toggles device connection
+toggle_connection() {
+    if device_connected "$1"; then
+        bluetoothctl disconnect "$1"
+    else
+        bluetoothctl connect "$1"
+    fi
+    sleep 2
+    show_menu
+}
+
+# Forgets a device
+forget_device() {
+    bluetoothctl remove "$1"
+    sleep 1
+    show_menu
+}
+
+# Prints status for status bars
+print_status() {
+    if service_active && power_on; then
+        printf ' ' # Bluetooth icon when active
+
+        # List connected devices
+        connected_devices=$(bluetoothctl devices | while read -r device; do
+            mac=$(echo "$device" | awk '{print $2}')
+            if device_connected "$mac"; then
+                echo "$device" | cut -d ' ' -f 3-
+            fi
+        done)
+
+        if [ -n "$connected_devices" ]; then
+            echo "$connected_devices" | head -2 | tr '\n' ' '
+        else
+            printf "No devices"
+        fi
+    else
+        printf " Off" # Bluetooth off icon
+    fi
+    printf "\n"
+}
+
+# Device submenu
+device_menu() {
+    device=$1
+    mac=$(echo "$device" | awk '{print $2}')
+    name=$(echo "$device" | cut -d ' ' -f 3-)
+
+    options="Connect/Disconnect"
+    options="$options\nForget Device"
+    options="$options\nBack to Main Menu"
+
+    choice=$(echo -e "$options" | eval "$DMENU -p \"Device: $name\"")
+
+    case "$choice" in
+        "Connect/Disconnect")
+            toggle_connection "$mac"
+            ;;
+        "Forget Device")
+            forget_device "$mac"
+            ;;
+        "Back to Main Menu")
+            show_menu
+            ;;
+    esac
+}
+
+# Main menu
+show_menu() {
+    # Service status
+    if service_active; then
+        service_status="Service: ON"
+        service_toggle="Stop Service"
+    else
+        service_status="Service: OFF"
+        service_toggle="Start Service"
+    fi
+
+    # Power status
+    if power_on; then
+        power_status="Power: ON"
+        power_toggle="Turn Off"
+        scan_toggle="Toggle Scanning"
+        
+        # Get devices list
+        devices=$(bluetoothctl devices | grep -v "^$" | sed 's/Device //')
+        devices_count=$(echo "$devices" | wc -l)
+        
+        if [ "$devices_count" -gt 0 ]; then
+            device_list="$devices"
+            device_options="Select Device"
+        else
+            device_list=""
+            device_options="No Devices Found"
+        fi
+    else
+        power_status="Power: OFF"
+        power_toggle="Turn On"
+        scan_toggle=""
+        device_options=""
+    fi
+
+    # Build menu options
+    options="$service_status\n$service_toggle\nRestart Service"
+    options="$options\n$power_status\n$power_toggle"
+    
+    if [ -n "$scan_toggle" ]; then
+        options="$options\n$scan_toggle"
+    fi
+    
+    if [ -n "$device_options" ]; then
+        options="$options\n$device_options"
+    fi
+    
+    options="$options\nExit"
+
+    # Show menu
+    choice=$(echo -e "$options" | eval "$DMENU -p \"Bluetooth\"")
+
+    # Handle choice
+    case "$choice" in
+        "$service_toggle")
+            toggle_service
+            ;;
+        "Restart Service")
+            restart_service
+            ;;
+        "$power_toggle")
+            toggle_power
+            ;;
+        "$scan_toggle")
+            toggle_scan
+            ;;
+        "Select Device")
+            device_choice=$(echo -e "$device_list" | eval "$DMENU -p \"Devices\"")
+            if [ -n "$device_choice" ]; then
+                device_menu "$device_choice"
+            else
+                show_menu
+            fi
+            ;;
+        "Exit")
+            exit 0
+            ;;
+        *)
+            show_menu
+            ;;
+    esac
+}
+
+# Handle CLI arguments
+case "${1:-}" in
+    "status")
+        print_status
+        ;;
+    "toggle")
+        toggle_power
+        ;;
+    "menu")
+        show_menu
+        ;;
+    "service")
+        toggle_service
+        ;;
+    *)
+        echo "Usage: $0 {status|toggle|menu|service}"
+        exit 1
+        ;;
+esac

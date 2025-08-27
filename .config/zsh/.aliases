@@ -5,11 +5,11 @@ alias mem='sudo ps_mem'
 alias df2='du -sh * 2>/dev/null | sort -hr'
 alias temps='sensors'
 
-alias sctl="systemctl"
+alias sctl="sudo systemctl"
 alias sctls="systemctl status"
-alias sctle="systemctl enable --now"
-alias sctld="systemctl disable --now"
-alias sctlr="systemctl restart"
+alias sctle="sudo systemctl enable --now"
+alias sctld="sudo systemctl disable --now"
+alias sctlr="sudo systemctl restart"
 alias se="sudoedit"
 
 # File and directory management
