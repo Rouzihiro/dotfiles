@@ -128,11 +128,14 @@ static const Key keys[] = {
 		{MODKEY, 					 XK_space, spawn, {.v = dmenucmd}},
 		{MODKEY,           XK_Escape,spawn, SHCMD ("st -e btop") },
 
+		{MODKEY, 					 XK_a,spawn,SHCMD ("$HOME/.local/bin/dmenu/dm-aria")},
+
  		{MODKEY,           XK_b,spawn,SHCMD ("xdg-open https://")},
 		{MODKEY|ShiftMask, XK_b,spawn,SHCMD ("librewolf")},
 
-	  {MODKEY, 					 XK_d,spawn,SHCMD ("$HOME/.local/bin/dmenu/dm-list-docs")},
-    {MODKEY|Mod1Mask,  XK_d,      spawn,          {.v = ncducmd}},
+		{MODKEY, 					 XK_d,spawn,SHCMD ("$HOME/.local/bin/dmenu/dm-aria2")},
+	  {MODKEY|Mod1Mask,  XK_d,spawn,SHCMD ("$HOME/.local/bin/dmenu/dm-list-docs")},
+    {MODKEY|ShiftMask, XK_d,spawn,      {.v = ncducmd}},
 
 		{MODKEY,           XK_e,spawn,SHCMD ("st -e yazi")},
     // { MODKEY,                    XK_e,     spawn,          SHCMD ("xdg-open .")},
