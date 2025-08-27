@@ -1,0 +1,97 @@
+#!/usr/bin/env bash
+
+#export DISPLAY=:0
+
+DMENU_CMD="dmenu"
+DMENU_OPTS="-i -l 15" 
+
+while true; do
+    # Get Wi-Fi status
+    status=$(nmcli -fields WIFI g | sed -n 2p)
+
+    if [[ "$status" =~ "enabled" ]]; then
+        toggle="󰖪  Disable Wi-Fi"
+        flag=1
+    else
+        toggle="󰖩  Enable Wi-Fi"
+        flag=0
+    fi
+
+    if [ "$flag" -eq 0 ]; then
+        # Wi-Fi disabled: only show toggle
+        choice=$(echo -e "$toggle" | $DMENU_CMD $DMENU_OPTS)
+        [ -z "$choice" ] && exit 0
+        if [[ "$choice" = "$toggle" ]]; then
+            nmcli radio wifi on
+            notify-send "Wi-Fi Enabled" -r 9991 -u normal -t 2000
+            sleep 1
+        fi
+        continue
+    fi
+
+    # Wi-Fi enabled: scan networks
+    current=$(nmcli -t -f active,ssid dev wifi | awk -F: '/^yes/ {print $2}')
+    wifi_list=$(nmcli --fields "SECURITY,SSID" device wifi list | sed 1d | sed 's/  */ /g' \
+        | sed -E "s/WPA*.?\S/ /g" \
+        | sed "s/^--/ /g" \
+        | sed "s/  //g" \
+        | sed "/--/d")
+
+    # Remove currently connected network and prepend it
+    if [ -n "$current" ]; then
+        wifi_list=$(echo "$wifi_list" | grep -v "$current")
+        wifi_list="󰖩  $current [Connected]\n$wifi_list"
+    fi
+
+    # Build menu with title and separator, one column
+    menu_items=$(printf "Wi-Fi\n---\n%s\n" "$wifi_list")
+
+    # Show menu
+    choice=$(echo -e "$menu_items" | $DMENU_CMD $DMENU_OPTS)
+    [ -z "$choice" ] && exit 0
+
+    # Handle toggle
+    if [[ "$choice" = "$toggle" ]]; then
+        if [ "$flag" -eq 1 ]; then
+            nmcli radio wifi off
+            notify-send "Wi-Fi Disabled" -r 9991 -u normal -t 2000
+        else
+            nmcli radio wifi on
+            notify-send "Wi-Fi Enabled" -r 9991 -u normal -t 2000
+        fi
+        sleep 1
+        continue
+    fi
+
+    # Extract SSID from selection
+    ssid=$(echo "$choice" | awk '{$1=""; print $0}' | sed 's/^ *//' | sed 's/ \[Connected\]//')
+
+    if [[ "$ssid" = "$current" ]]; then
+        notify-send "Already connected to $ssid" -r 9991 -u low -t 2000
+        sleep 1
+        continue
+    fi
+
+    # Connect to saved connection if exists
+    if nmcli -g NAME connection show | grep -qw "$ssid"; then
+        nmcli connection up id "$ssid" >/dev/null 2>&1
+        notify-send "Connected to $ssid" -r 9991 -u normal -t 2000
+        sleep 1
+        continue
+    fi
+
+    # If secured network, prompt for password
+    if [[ "$choice" =~ "" ]]; then
+        password=$(echo "" | $DMENU_CMD -p "Password for $ssid:")
+        [ -z "$password" ] && continue
+    fi
+
+    # Connect
+    if nmcli device wifi connect "$ssid" password "$password" >/dev/null 2>&1; then
+        notify-send "Connected to $ssid" -r 9991 -u normal -t 2000
+    else
+        notify-send "Failed to connect to $ssid" -r 9991 -u critical -t 2000
+    fi
+
+    sleep 1
+done
