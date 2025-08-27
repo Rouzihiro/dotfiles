@@ -7,8 +7,8 @@ alias temps='sensors'
 
 alias sctl="systemctl"
 alias sctls="systemctl status"
-alias sctle="systemctl enable"
-alias sctld="systemctl disable"
+alias sctle="systemctl enable --now"
+alias sctld="systemctl disable --now"
 alias sctlr="systemctl restart"
 alias se="sudoedit"
 
