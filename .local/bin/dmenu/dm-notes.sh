@@ -1,0 +1,45 @@
+#!/usr/bin/env bash
+
+DIR="$HOME/Documents/Notes"
+mkdir -p "$DIR"
+
+# Choose terminal dynamically
+term="${TERMINAL:-st}"
+if ! command -v "$term" >/dev/null 2>&1; then
+    term=$(command -v kitty || command -v alacritty || command -v wezterm || command -v xterm)
+fi
+
+# Dmenu configuration
+DMENU_CMD="dmenu"
+DMENU_OPTS="-i -l 15"
+
+# Get list of .md files
+entries=$(find "$DIR" -maxdepth 1 -type f -name "*.md" -printf "%f\n" | sort)
+
+# Add create and delete options
+options=$(echo -e "Create New Note\nDelete Note\n$entries")
+
+# Launch dmenu
+selection=$(echo -e "$options" | ${DMENU_CMD} ${DMENU_OPTS})
+
+[ -z "$selection" ] && exit
+
+if [[ "$selection" == "Create New Note" ]]; then
+    new_name=$(echo "" | ${DMENU_CMD} -p "New note name (no .md):")
+    [ -z "$new_name" ] && exit
+    file="$DIR/$new_name.md"
+    [ -e "$file" ] || touch "$file"
+    "$term" -e nvim "$file" &
+    exit
+fi
+
+if [[ "$selection" == "Delete Note" ]]; then
+    delete_target=$(find "$DIR" -maxdepth 1 -type f -name "*.md" -printf "%f\n" | sort | ${DMENU_CMD} ${DMENU_OPTS})
+    [ -z "$delete_target" ] && exit
+    rm -f "$DIR/$delete_target"
+    echo "Deleted: $delete_target" | ${DMENU_CMD} -i -l 2 -p "Success"
+    exit
+fi
+
+# Open selected note
+"$term" -e nvim "$DIR/$selection" &
