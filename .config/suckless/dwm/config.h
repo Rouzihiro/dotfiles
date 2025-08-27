@@ -133,7 +133,7 @@ static const Key keys[] = {
  		{MODKEY,           XK_b,spawn,SHCMD ("xdg-open https://")},
 		{MODKEY|ShiftMask, XK_b,spawn,SHCMD ("librewolf")},
 
-		{MODKEY, 					 XK_d,spawn,SHCMD ("$HOME/.local/bin/dmenu/dm-aria2")},
+		{MODKEY, 					 XK_d,spawn,SHCMD ("$HOME/.local/bin/dmenu/dm-aria")},
 	  {MODKEY|Mod1Mask,  XK_d,spawn,SHCMD ("$HOME/.local/bin/dmenu/dm-list-docs")},
     {MODKEY|ShiftMask, XK_d,spawn,      {.v = ncducmd}},
 

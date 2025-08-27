@@ -1,11 +1,20 @@
-#!/bin/sh
+#!/bin/bash
 
-CLIP=$(xclip -selection clipboard -o 2>/dev/null)
+# Ask for URL (clipboard pre-filled)
+URL=$(xclip -o -selection clipboard | dmenu -p "Enter URL (Ctrl+V to paste):")
 
-URL=$(printf "%s" "$CLIP" | dmenu -p "Enter URL:")
-
+# If nothing entered, quit
 [ -z "$URL" ] && exit 1
 
-aria2c --check-certificate=false -x 16 -s 16 -d "$HOME/Downloads" "$URL" &&
-notify-send "Download started" "$URL" ||
-notify-send "Download failed" "$URL"
+# Extract filename from URL
+FILENAME=$(basename "${URL%%\?*}")
+
+# Start aria2c in background, log output
+aria2c --check-certificate=false -x 16 -s 16 -d "$HOME/Downloads" "$URL" \
+  >> "$HOME/Downloads/aria2c.log" 2>&1 &
+
+# Disown so it survives after dmenu exits
+disown
+
+# Notify about filename
+notify-send "Download started" "$FILENAME"
