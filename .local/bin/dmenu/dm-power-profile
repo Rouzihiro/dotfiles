@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+# dm-power — Switch CPU power profiles via dmenu (one column with title)
+
+# Available governors
+GOVERNORS=$(cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_available_governors)
+
+# Current governor
+CURRENT=$(cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor)
+
+# Build dmenu list with title as first line
+MENU="CPU Power Profiles (current: $CURRENT)"
+for g in $GOVERNORS; do
+    if [ "$g" = "$CURRENT" ]; then
+        MENU+=$'\n'"$g [current]"
+    else
+        MENU+=$'\n'"$g"
+    fi
+done
+
+# Ask user (single column)
+CHOICE=$(echo "$MENU" | dmenu -i -l 9 | sed 's/ \[current\]//')
+
+# Exit if empty or if user selects the title line
+[ -z "$CHOICE" ] && exit 0
+[[ "$CHOICE" == CPU*Profiles* ]] && exit 0
+
+# Apply to all CPUs
+for cpu in /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor; do
+    echo "$CHOICE" | sudo tee "$cpu" >/dev/null
+done
+
+notify-send "CPU Power Profile" "Switched to: $CHOICE"
