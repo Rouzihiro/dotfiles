@@ -118,19 +118,21 @@ static const char *dmenucmd[] = {
 static const char *termcmd[]  = { "st", NULL };
 static const char *powermenu[] = {"bash", "-c", ".config/rofi/powermenu/type-4/powermenu.sh", NULL};
 static const char *rofi[] = {"bash", "-c", ".config/rofi/launchers/type-7/launcher.sh", NULL};
+static const char *ncducmd[] = { "st", "-e", "ncdu", NULL };
 
 static const Key keys[] = {
 
-    {MODKEY, 					 XK_Return,spawn, {.v = termcmd}},
+    {MODKEY,					 XK_Return,spawn, {.v = termcmd}},
 		{MODKEY|ShiftMask, XK_Return,spawn, SHCMD ("$HOME/.local/bin/dmenu/dm-runner")},
-		{MODKEY|Mod1Mask,	 XK_space,	spawn, SHCMD("~/.local/bin/dwm/dmenu-desktop")},
-		{MODKEY, 					 XK_space,	spawn, {.v = dmenucmd}},
-		{MODKEY,           XK_Escape,spawn,SHCMD ("st -e btop") },
+		{MODKEY|Mod1Mask,	 XK_space, spawn, SHCMD("~/.local/bin/dwm/dmenu-desktop")},
+		{MODKEY, 					 XK_space, spawn, {.v = dmenucmd}},
+		{MODKEY,           XK_Escape,spawn, SHCMD ("st -e btop") },
 
  		{MODKEY,           XK_b,spawn,SHCMD ("xdg-open https://")},
 		{MODKEY|ShiftMask, XK_b,spawn,SHCMD ("librewolf")},
 
 	  {MODKEY, 					 XK_d,spawn,SHCMD ("$HOME/.local/bin/dmenu/dm-list-docs")},
+    {MODKEY|Mod1Mask,  XK_d,      spawn,          {.v = ncducmd}},
 
 		{MODKEY,           XK_e,spawn,SHCMD ("st -e yazi")},
     // { MODKEY,                    XK_e,     spawn,          SHCMD ("xdg-open .")},
@@ -147,6 +149,8 @@ static const Key keys[] = {
 
 		{MODKEY,  				 XK_o,spawn,SHCMD ("bash -c '$HOME/.local/bin/ocr/ocr-x11'")},
 
+
+		{MODKEY,         	 XK_p,spawn,SHCMD ("$HOME/.local/bin/dmenu/dm-power-profile")},
     {MODKEY|Mod1Mask,  XK_p, spawn, {.v = powermenu}},
 
 		{MODKEY, 					 XK_r, spawn, SHCMD ("$HOME/.local/bin/dmenu/dm-runner")},
