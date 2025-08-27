@@ -123,62 +123,72 @@ static const Key keys[] = {
 
     {MODKEY, 					 XK_Return,spawn, {.v = termcmd}},
 		{MODKEY|ShiftMask, XK_Return,spawn, SHCMD ("$HOME/.local/bin/dmenu/dm-runner")},
-		{MODKEY, 					 XK_d, spawn, {.v = rofi}},
 		{MODKEY|Mod1Mask,	 XK_space,	spawn, SHCMD("~/.local/bin/dwm/dmenu-desktop")},
 		{MODKEY, 					 XK_space,	spawn, {.v = dmenucmd}},
 		{MODKEY,           XK_Escape,spawn,SHCMD ("st -e btop") },
 
-    {MODKEY|Mod1Mask,  XK_r, spawn, {.v = powermenu}},
-
  		{MODKEY,           XK_b,spawn,SHCMD ("xdg-open https://")},
 		{MODKEY|ShiftMask, XK_b,spawn,SHCMD ("librewolf")},
 
+	  {MODKEY, 					 XK_d,spawn,SHCMD ("$HOME/.local/bin/dmenu/dm-list-docs")},
+
 		{MODKEY,           XK_e,spawn,SHCMD ("st -e yazi")},
     // { MODKEY,                    XK_e,     spawn,          SHCMD ("xdg-open .")},
-		
+
+    {MODKEY,  				 XK_h,      togglebar,      {0} },
+
+ 		{MODKEY, 					 XK_i,spawn,SHCMD ("$HOME/.local/bin/dmenu/dm-wifi")},
+
+		{MODKEY, 					 XK_l,spawn,SHCMD ("i3lock -i ~/Pictures/lockscreen/lock_scaled.png")},
+
 	  {MODKEY, 					 XK_m,spawn,SHCMD ("$HOME/.local/bin/dmenu/dm-mount-usb")},
 
 		{MODKEY,         	 XK_n,spawn,SHCMD ("bash -c '$HOME/.local/bin/dmenu/dm-notes'")},
 
 		{MODKEY,  				 XK_o,spawn,SHCMD ("bash -c '$HOME/.local/bin/ocr/ocr-x11'")},
-		
-		{MODKEY|ShiftMask, XK_p,spawn,SHCMD ("flameshot full -p $HOME/Pictures/screenshot/")},
-    {MODKEY|Mod1Mask,  XK_p,spawn,SHCMD ("flameshot gui -p $HOME/Pictures/screenshot/")},
-    {MODKEY,           XK_p,spawn,SHCMD ("flameshot gui --clipboard")},
-		
-	  {MODKEY, 					 XK_v,spawn,SHCMD ("$HOME/.local/bin/dmenu/dm-video-tool")},
+
+    {MODKEY|Mod1Mask,  XK_p, spawn, {.v = powermenu}},
+
+		{MODKEY, 					 XK_r, spawn, SHCMD ("$HOME/.local/bin/dmenu/dm-runner")},
+		{MODKEY|ShiftMask, XK_r, spawn, {.v = rofi}},
+
+    {MODKEY,           XK_s,spawn,SHCMD ("flameshot gui --clipboard")},
+    {MODKEY|Mod1Mask,  XK_s,spawn,SHCMD ("flameshot gui -p $HOME/Pictures/screenshot/")},
+		{MODKEY|ShiftMask, XK_s,spawn,SHCMD ("flameshot full -p $HOME/Pictures/screenshot/")},
+
+	  {MODKEY, 					 XK_v,spawn,SHCMD ("$HOME/.local/bin/dmenu/dm-list-videos")},
+		{MODKEY|Mod1Mask,	 XK_v,spawn,SHCMD ("$HOME/.local/bin/dmenu/dm-video-tool")},
 
 		{MODKEY,           XK_w,spawn,SHCMD ("feh --randomize --bg-fill ~/Pictures/wallpapers/*")},
 		{MODKEY|Mod1Mask,	 XK_w,spawn,SHCMD ("bash -c '$HOME/.local/bin/rofi/rofi-wall-x11'")},
     {MODKEY|ShiftMask, XK_w,spawn,SHCMD ("$HOME/.local/bin/dmenu/dm-wifi")},
+
+    { MODKEY,          XK_Right, focusstack,     {.i = +1 } },
+    { MODKEY,          XK_Left,  focusstack,     {.i = -1 } },
+    { MODKEY,          XK_equal, incnmaster,     {.i = +1 } },
+    { MODKEY,          XK_minus, incnmaster,     {.i = -1 } },
+    { MODKEY,          XK_Tab,   view,           {0} }, /* ws repeat*/
+
+    { MODKEY,          XK_j,     setmfact,       {.f = -0.05} },
+    { MODKEY,          XK_k,     setmfact,       {.f = +0.05} },
+
+    {MODKEY|Mod1Mask,            XK_0,togglegaps,  {0} },
+    {MODKEY|Mod1Mask|ShiftMask,  XK_0,defaultgaps, {0} },
+    {MODKEY|Mod1Mask,  XK_equal, incrgaps,       {.i = +1 } },
+    {MODKEY|Mod1Mask,  XK_minus, incrgaps,       {.i = -1 } },
+
+    { MODKEY|ShiftMask, XK_0,      tag,            {.ui = ~0 } }, /* Sticky window */
+    //{ MODKEY|ShiftMask,        XK_Return,      zoom,           {0} },
+
+    { MODKEY|ShiftMask,             XK_f,      togglefakefullscreen,  {0} },
+ 		{ MODKEY,             					XK_f,      togglefullscreen,  {0} },
+    { MODKEY,                       XK_t,      togglefloating, {0} },
 
 		{ 0, XF86XK_MonBrightnessUp,  spawn, SHCMD("$HOME/.local/bin/multimedia/brightness.sh up")},
 		{ 0, XF86XK_MonBrightnessDown,spawn, SHCMD("$HOME/.local/bin/multimedia/brightness.sh down")},
 		{ 0, XF86XK_AudioLowerVolume, spawn, SHCMD("$HOME/.local/bin/multimedia/volume.sh down")},
 		{ 0, XF86XK_AudioRaiseVolume, spawn, SHCMD("$HOME/.local/bin/multimedia/volume.sh up")},
 		{ 0, XF86XK_AudioMute,        spawn, SHCMD("$HOME/.local/bin/multimedia/volume.sh mute")},
-
-    { MODKEY,             					XK_h,      togglebar,      {0} },
-    { MODKEY,                       XK_Right,  focusstack,     {.i = +1 } },
-    { MODKEY,                    XK_Left,      focusstack,     {.i = -1 } },
-    { MODKEY,                   XK_equal,      incnmaster,     {.i = +1 } },
-    { MODKEY,                   XK_minus,      incnmaster,     {.i = -1 } },
-    { MODKEY,                     XK_Tab,      view,           {0} }, /* ws repeat*/
-
-    { MODKEY,                       XK_j,      setmfact,       {.f = -0.05} },
-    { MODKEY,                       XK_k,      setmfact,       {.f = +0.05} },
-
-    { MODKEY|Mod1Mask,              XK_0,      togglegaps,     {0} },
-    { MODKEY|Mod1Mask|ShiftMask,    XK_0,      defaultgaps,    {0} },
-    { MODKEY|Mod1Mask,          XK_equal,      incrgaps,       {.i = +1 } },
-    { MODKEY|Mod1Mask,          XK_minus,      incrgaps,       {.i = -1 } },
-
-    { MODKEY|ShiftMask,             XK_0,      tag,            {.ui = ~0 } }, /* Sticky window */
-    //{ MODKEY|ShiftMask,        XK_Return,      zoom,           {0} },
-
-    { MODKEY|ShiftMask,             XK_f,      togglefakefullscreen,  {0} },
- 		{ MODKEY,             					XK_f,      togglefullscreen,  {0} },
-    { MODKEY,                       XK_t,      togglefloating, {0} },
 
     { MODKEY,                       XK_0,      view,           {.ui = ~0 } },
     TAGKEYS(                        XK_1,                      0)
