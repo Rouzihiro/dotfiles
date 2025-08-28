@@ -31,7 +31,7 @@ xfce4-power-manager &
 /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
 
 # Start your custom scripts
-$HOME/.local/bin/dwm/autolock.sh &
+#$HOME/.local/bin/dwm/autolock.sh &
 $HOME/.local/bin/dwm/superbar-lite.sh &
 $HOME/.local/bin/dwm/set-wallpaper.sh &
 
