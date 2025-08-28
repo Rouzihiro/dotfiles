@@ -159,9 +159,8 @@ static const Key keys[] = {
 		{MODKEY, 					 XK_r, spawn, SHCMD ("$HOME/.local/bin/dmenu/dm-runner")},
 		{MODKEY|ShiftMask, XK_r, spawn, {.v = rofi}},
 
-    {MODKEY,           XK_s,spawn,SHCMD ("flameshot gui --clipboard")},
-    {MODKEY|Mod1Mask,  XK_s,spawn,SHCMD ("flameshot gui -p $HOME/Pictures/screenshot/")},
-		{MODKEY|ShiftMask, XK_s,spawn,SHCMD ("flameshot full -p $HOME/Pictures/screenshot/")},
+{MODKEY, XK_s, spawn, SHCMD("maim ~/Pictures/screenshot/$(date +%Y%m%d-%H%M%S).png | tee >(xclip -selection clipboard -t image/png) >/dev/null")},
+{MODKEY|Mod1Mask, XK_s, spawn, SHCMD("maim --select ~/Pictures/screenshot/$(date +%Y%m%d-%H%M%S).png | tee >(xclip -selection clipboard -t image/png) >/dev/null")},
 
 	  {MODKEY, 					 XK_v,spawn,SHCMD ("$HOME/.local/bin/dmenu/dm-list-videos")},
 		{MODKEY|Mod1Mask,	 XK_v,spawn,SHCMD ("$HOME/.local/bin/dmenu/dm-video-tool")},
