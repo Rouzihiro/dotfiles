@@ -123,18 +123,18 @@ static const char *ncducmd[] = { "st", "-e", "ncdu", NULL };
 static const Key keys[] = {
 
     {MODKEY,					 XK_Return,spawn, {.v = termcmd}},
-		{MODKEY|ShiftMask, XK_Return,spawn, SHCMD ("$HOME/.local/bin/dmenu/dm-runner")},
-		{MODKEY|Mod1Mask,	 XK_space, spawn, SHCMD("~/.local/bin/dwm/dmenu-desktop")},
+		{MODKEY|ShiftMask, XK_Return,spawn, SHCMD ("dm-runner")},
+		{MODKEY|Mod1Mask,	 XK_space, spawn, SHCMD("dmenu-desktop")},
 		{MODKEY, 					 XK_space, spawn, {.v = dmenucmd}},
 		{MODKEY,           XK_Escape,spawn, SHCMD ("st -e btop") },
 
-		{MODKEY, 					 XK_a,spawn,SHCMD ("$HOME/.local/bin/dmenu/dm-aria")},
+		{MODKEY, 					 XK_a,spawn,SHCMD ("dm-aria")},
 
  		{MODKEY,           XK_b,spawn,SHCMD ("xdg-open https://")},
 		{MODKEY|ShiftMask, XK_b,spawn,SHCMD ("librewolf")},
 
-		{MODKEY, 					 XK_d,spawn,SHCMD ("$HOME/.local/bin/dmenu/dm-aria")},
-	  {MODKEY|Mod1Mask,  XK_d,spawn,SHCMD ("$HOME/.local/bin/dmenu/dm-list-docs")},
+		{MODKEY, 					 XK_d,spawn,SHCMD ("dm-aria")},
+	  {MODKEY|Mod1Mask,  XK_d,spawn,SHCMD ("dm-list-docs")},
     {MODKEY|ShiftMask, XK_d,spawn,      {.v = ncducmd}},
 
 		{MODKEY,           XK_e,spawn,SHCMD ("st -e yazi")},
@@ -142,32 +142,32 @@ static const Key keys[] = {
 
     {MODKEY,  				 XK_h,      togglebar,      {0} },
 
- 		{MODKEY, 					 XK_i,spawn,SHCMD ("$HOME/.local/bin/dmenu/dm-wifi")},
+ 		{MODKEY, 					 XK_i,spawn,SHCMD ("dm-wifi")},
 
 		{MODKEY, 					 XK_l,spawn,SHCMD ("i3lock -i ~/Pictures/lockscreen/lock_scaled.png")},
 
-	  {MODKEY, 					 XK_m,spawn,SHCMD ("$HOME/.local/bin/dmenu/dm-mount-usb")},
+	  {MODKEY, 					 XK_m,spawn,SHCMD ("dm-mount-usb")},
 
-		{MODKEY,         	 XK_n,spawn,SHCMD ("bash -c '$HOME/.local/bin/dmenu/dm-notes'")},
+		{MODKEY,         	 XK_n,spawn,SHCMD ("bash -c 'dm-notes'")},
 
-		{MODKEY,  				 XK_o,spawn,SHCMD ("bash -c '$HOME/.local/bin/ocr/ocr-x11'")},
+		{MODKEY,  				 XK_o,spawn,SHCMD ("bash -c 'ocr-x11'")},
 
 
-		{MODKEY,         	 XK_p,spawn,SHCMD ("$HOME/.local/bin/dmenu/dm-power-profile")},
+		{MODKEY,         	 XK_p,spawn,SHCMD ("dm-power-profile")},
     {MODKEY|Mod1Mask,  XK_p, spawn, {.v = powermenu}},
 
-		{MODKEY, 					 XK_r, spawn, SHCMD ("$HOME/.local/bin/dmenu/dm-runner")},
+		{MODKEY, 					 XK_r, spawn, SHCMD ("dm-runner")},
 		{MODKEY|ShiftMask, XK_r, spawn, {.v = rofi}},
 
 {MODKEY, XK_s, spawn, SHCMD("maim ~/Pictures/screenshot/$(date +%Y%m%d-%H%M%S).png | tee >(xclip -selection clipboard -t image/png) >/dev/null")},
 {MODKEY|Mod1Mask, XK_s, spawn, SHCMD("maim --select ~/Pictures/screenshot/$(date +%Y%m%d-%H%M%S).png | tee >(xclip -selection clipboard -t image/png) >/dev/null")},
 
-	  {MODKEY, 					 XK_v,spawn,SHCMD ("$HOME/.local/bin/dmenu/dm-list-videos")},
-		{MODKEY|Mod1Mask,	 XK_v,spawn,SHCMD ("$HOME/.local/bin/dmenu/dm-video-tool")},
+	  {MODKEY, 					 XK_v,spawn,SHCMD ("dm-list-videos")},
+		{MODKEY|Mod1Mask,	 XK_v,spawn,SHCMD ("dm-video-tool")},
 
 		{MODKEY,           XK_w,spawn,SHCMD ("feh --randomize --bg-fill ~/Pictures/wallpapers/*")},
-		{MODKEY|Mod1Mask,	 XK_w,spawn,SHCMD ("bash -c '$HOME/.local/bin/rofi/rofi-wall-x11'")},
-    {MODKEY|ShiftMask, XK_w,spawn,SHCMD ("$HOME/.local/bin/dmenu/dm-wifi")},
+		{MODKEY|Mod1Mask,	 XK_w,spawn,SHCMD ("bash -c 'rofi-wall-x11'")},
+    {MODKEY|ShiftMask, XK_w,spawn,SHCMD ("dm-wifi")},
 
     { MODKEY,          XK_Right, focusstack,     {.i = +1 } },
     { MODKEY,          XK_Left,  focusstack,     {.i = -1 } },
@@ -190,11 +190,11 @@ static const Key keys[] = {
  		{ MODKEY,             					XK_f,      togglefullscreen,  {0} },
     { MODKEY,                       XK_t,      togglefloating, {0} },
 
-		{ 0, XF86XK_MonBrightnessUp,  spawn, SHCMD("$HOME/.local/bin/multimedia/brightness.sh up")},
-		{ 0, XF86XK_MonBrightnessDown,spawn, SHCMD("$HOME/.local/bin/multimedia/brightness.sh down")},
-		{ 0, XF86XK_AudioLowerVolume, spawn, SHCMD("$HOME/.local/bin/multimedia/volume.sh down")},
-		{ 0, XF86XK_AudioRaiseVolume, spawn, SHCMD("$HOME/.local/bin/multimedia/volume.sh up")},
-		{ 0, XF86XK_AudioMute,        spawn, SHCMD("$HOME/.local/bin/multimedia/volume.sh mute")},
+		{ 0, XF86XK_MonBrightnessUp,  spawn, SHCMD("brightness.sh up")},
+		{ 0, XF86XK_MonBrightnessDown,spawn, SHCMD("brightness.sh down")},
+		{ 0, XF86XK_AudioLowerVolume, spawn, SHCMD("volume.sh down")},
+		{ 0, XF86XK_AudioRaiseVolume, spawn, SHCMD("volume.sh up")},
+		{ 0, XF86XK_AudioMute,        spawn, SHCMD("volume.sh mute")},
 
     { MODKEY,                       XK_0,      view,           {.ui = ~0 } },
     TAGKEYS(                        XK_1,                      0)
