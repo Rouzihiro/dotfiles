@@ -33,7 +33,7 @@ getTargetDirectory() {
     . "${XDG_CONFIG_HOME:-$HOME/.config}/user-dirs.dirs"
 
   # Create Screenshots directory if it doesn't exist
-  SCREENSHOTS_DIR="${XDG_PICTURES_DIR:-$HOME/Pictures}/Screenshots"
+  SCREENSHOTS_DIR="${XDG_PICTURES_DIR:-$HOME/Pictures}/screenshot"
   mkdir -p "$SCREENSHOTS_DIR"
   
   echo "$SCREENSHOTS_DIR"
