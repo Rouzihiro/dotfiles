@@ -1,13 +1,9 @@
+# ~/Pictures/lockscreen/lock_scaled.png
 #!/bin/sh
-# Autolock daemon script
-# Idle lock after 5 minutes
-
 while true; do
-    idle_time=$(xprintidle)  # milliseconds
+    idle_time=$(xprintidle)
     if [ "$idle_time" -gt 300000 ]; then
-        # This calls your simple lock command
-        i3lock --color 000000 --nofork
-				# i3lock --image ~/Pictures/lockscreen/lock_scaled.png --nofork
+        env XSECURELOCK_SAVER=saver_blank xsecurelock
     fi
     sleep 30
 done
