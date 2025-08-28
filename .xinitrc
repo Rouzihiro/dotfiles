@@ -1,5 +1,11 @@
 #!/bin/sh
 
+export DISPLAY=:0
+export XAUTHORITY=$HOME/.Xauthority
+# Allow local user connections to X
+# Install xorg-xhost if missing: sudo pacman -S xorg-xhost
+xhost +SI:localuser:$USER
+
 # Set DPI for high-resolution displays
 xrdb -merge <<< "Xft.dpi: 192"
 export XFT_DPI=192
@@ -31,7 +37,7 @@ xfce4-power-manager &
 /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
 
 # Start your custom scripts
-#$HOME/.local/bin/dwm/autolock.sh &
+$HOME/.local/bin/dwm/autolock.sh &
 $HOME/.local/bin/dwm/superbar-lite.sh &
 $HOME/.local/bin/dwm/set-wallpaper.sh &
 
