@@ -11,3 +11,17 @@ node_modules/
 *result*
 .config/nvim/lazy-lock.json
 sync_dots.sh
+
+# Build artifacts
+*.o
+dwm
+drw
+util
+
+# Backup / temporary files
+*~
+*.rej
+*.orig
+
+# Ignore compiled binaries, logs, etc.
+*.out
