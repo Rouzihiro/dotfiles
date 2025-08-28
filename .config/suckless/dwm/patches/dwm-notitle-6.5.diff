@@ -1,0 +1,82 @@
+From 7cab928170856474fabc30a62df50b4b79536fb9 Mon Sep 17 00:00:00 2001
+From: Jason Pena <jasonpena@awkless.com>
+Date: Wed, 4 Jun 2025 12:51:42 -0600
+Subject: [PATCH] Resolve patch conflicts for release 6.5
+
+Resolve patch conflict for `buttonpress` in release version 6.5 of DWM
+produced by `dwm-notitle-20210715-138b405.diff`.
+
+Signed-off-by: Jason Pena <jasonpena@awkless.com>
+---
+ config.def.h |  1 -
+ dwm.c        | 18 ++++--------------
+ 2 files changed, 4 insertions(+), 15 deletions(-)
+
+diff --git a/config.def.h b/config.def.h
+index 9efa774..4a415af 100644
+--- a/config.def.h
++++ b/config.def.h
+@@ -103,7 +103,6 @@ static const Button buttons[] = {
+ 	/* click                event mask      button          function        argument */
+ 	{ ClkLtSymbol,          0,              Button1,        setlayout,      {0} },
+ 	{ ClkLtSymbol,          0,              Button3,        setlayout,      {.v = &layouts[2]} },
+-	{ ClkWinTitle,          0,              Button2,        zoom,           {0} },
+ 	{ ClkStatusText,        0,              Button2,        spawn,          {.v = termcmd } },
+ 	{ ClkClientWin,         MODKEY,         Button1,        movemouse,      {0} },
+ 	{ ClkClientWin,         MODKEY,         Button2,        togglefloating, {0} },
+diff --git a/dwm.c b/dwm.c
+index 1443802..e3f0281 100644
+--- a/dwm.c
++++ b/dwm.c
+@@ -63,8 +63,8 @@ enum { NetSupported, NetWMName, NetWMState, NetWMCheck,
+        NetWMFullscreen, NetActiveWindow, NetWMWindowType,
+        NetWMWindowTypeDialog, NetClientList, NetLast }; /* EWMH atoms */
+ enum { WMProtocols, WMDelete, WMState, WMTakeFocus, WMLast }; /* default atoms */
+-enum { ClkTagBar, ClkLtSymbol, ClkStatusText, ClkWinTitle,
+-       ClkClientWin, ClkRootWin, ClkLast }; /* clicks */
++enum { ClkTagBar, ClkLtSymbol, ClkStatusText, ClkClientWin,
++       ClkRootWin, ClkLast }; /* clicks */
+ 
+ typedef union {
+ 	int i;
+@@ -443,7 +443,7 @@ buttonpress(XEvent *e)
+ 		else if (ev->x > selmon->ww - (int)TEXTW(stext))
+ 			click = ClkStatusText;
+ 		else
+-			click = ClkWinTitle;
++			click = ClkStatusText;
+ 	} else if ((c = wintoclient(ev->window))) {
+ 		focus(c);
+ 		restack(selmon);
+@@ -734,15 +734,8 @@ drawbar(Monitor *m)
+ 	x = drw_text(drw, x, 0, w, bh, lrpad / 2, m->ltsymbol, 0);
+ 
+ 	if ((w = m->ww - tw - x) > bh) {
+-		if (m->sel) {
+-			drw_setscheme(drw, scheme[m == selmon ? SchemeSel : SchemeNorm]);
+-			drw_text(drw, x, 0, w, bh, lrpad / 2, m->sel->name, 0);
+-			if (m->sel->isfloating)
+-				drw_rect(drw, x + boxs, boxs, boxw, boxw, m->sel->isfixed, 0);
+-		} else {
+ 			drw_setscheme(drw, scheme[SchemeNorm]);
+ 			drw_rect(drw, x, 0, w, bh, 1, 1);
+-		}
+ 	}
+ 	drw_map(drw, m->barwin, 0, 0, m->ww, bh);
+ }
+@@ -1244,11 +1237,8 @@ propertynotify(XEvent *e)
+ 			drawbars();
+ 			break;
+ 		}
+-		if (ev->atom == XA_WM_NAME || ev->atom == netatom[NetWMName]) {
++		if (ev->atom == XA_WM_NAME || ev->atom == netatom[NetWMName])
+ 			updatetitle(c);
+-			if (c == c->mon->sel)
+-				drawbar(c->mon);
+-		}
+ 		if (ev->atom == netatom[NetWMWindowType])
+ 			updatewindowtype(c);
+ 	}
+-- 
+2.49.0
+
