@@ -1,7 +1,4 @@
 # Ignore apps folder and all subfolders
-apps/
-home/secrets/
-# Other common files to ignore
 .mypy_cache/
 *.zip
 *.log
