@@ -8,14 +8,13 @@ xorg-xrandr
 xorg-xset
 xprintidle
 xorg-xhost
+xorg-xinput
 #xorg-xwayland
 #xorg-servere-xvfb
-#lightdm
-#lightdm-gtk-greeter
 polkit-gnome
 xdg-desktop-portal-gtk
-xsecurelock
-xss-lock
+#xsecurelock
+#xss-lock
 networkmanager
 xfce4-power-manager 
 upower 
