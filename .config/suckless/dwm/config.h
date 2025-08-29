@@ -159,8 +159,8 @@ static const Key keys[] = {
 		{MODKEY, 					 XK_r, spawn, SHCMD ("dm-runner")},
 		{MODKEY|ShiftMask, XK_r, spawn, {.v = rofi}},
 
-{MODKEY, XK_s, spawn, SHCMD("maim ~/Pictures/screenshot/$(date +%Y%m%d-%H%M%S).png | tee >(xclip -selection clipboard -t image/png) >/dev/null")},
-{MODKEY|Mod1Mask, XK_s, spawn, SHCMD("maim --select ~/Pictures/screenshot/$(date +%Y%m%d-%H%M%S).png | tee >(xclip -selection clipboard -t image/png) >/dev/null")},
+{MODKEY|Mod1Mask, XK_s, spawn, SHCMD("maim ~/Pictures/screenshot/$(date +%Y%m%d-%H%M%S).png | tee >(xclip -selection clipboard -t image/png) >/dev/null")},
+{MODKEY, XK_s, spawn, SHCMD("maim --select ~/Pictures/screenshot/$(date +%Y%m%d-%H%M%S).png | tee >(xclip -selection clipboard -t image/png) >/dev/null")},
 
 	  {MODKEY, 					 XK_v,spawn,SHCMD ("dm-list-videos")},
 		{MODKEY|Mod1Mask,	 XK_v,spawn,SHCMD ("dm-video-tool")},
