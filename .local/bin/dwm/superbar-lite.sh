@@ -19,8 +19,9 @@ while true; do
   Mem=" $mem_used"
 
   # CPU temperature (first core/package)
-  cpu_temp=$(sensors | awk '/Package id 0:/ {print $4; exit}')
-  Cpu=" $cpu_temp"
+	temps=$(sensors | awk '/Temp|Temperature|Hotspot/ {gsub(/\+|°C/,"",$3); print $3}')
+	max_temp=$(echo "$temps" | sort -nr | head -n1)
+	Cpu=" ${max_temp}°C"
 
   # Disk free space (/)
   disk_free=$(df -h / | awk 'NR==2 {print $4}')
