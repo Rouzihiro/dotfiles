@@ -1,25 +1,21 @@
 #!/bin/sh
 
 # Set permissions for the private key
-chmod 600 ~/.ssh/HP-Nixo
+chmod 600 ~/.ssh/id_github
 
 # Set permissions for the public key
-chmod 644 ~/.ssh/HP-Nixo.pub
+chmod 644 ~/.ssh/id_github.pub
 
 # Set permissions for the known_hosts file
 chmod 644 ~/.ssh/known_hosts
 
-# Set permissions for the environment file
-chmod 644 ~/.ssh/environment
-
-chmod 600 ~/.ftp_credentials
-
-chmod 600 ~/.ssh/openweather_api_key
+chmod 600 ~/.ssh/id_ftp
+chmod 600 ~/.ssh/environment
+chmod 600 ~/.ssh/id_openweather
 
 # Verify the permissions
 echo "Permissions set. Verifying:"
-ls -l ~/.ssh/HP-Nixo ~/.ssh/HP-Nixo.pub ~/.ssh/known_hosts ~/.ssh/environment ~/.ssh/openweather_api_key ~/.ssh/ftp_credentials ~/.ssh/email_secrets/
-
+ls -l ~/.ssh/id_github ~/.ssh/id_github.pub ~/.ssh/known_hosts ~/.ssh/id_openweather ~/.ssh/id_ftp ~/.ssh/environment
 
 # Ensure You're Using SSH for Git Operations
 # Your repository is currently using HTTPS for the remote URL. You need to switch it to SSH.
