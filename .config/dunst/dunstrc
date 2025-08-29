@@ -4,7 +4,7 @@
     monitor = 0                     # Primary monitor
     follow = mouse                  # Follow mouse position
     origin = top-right              # Notification placement
-    offset = (12, 10)               # Offset from screen edge
+    offset = (18, 40)               # Offset from screen edge
     layer = top
 
     # Notification Size and Dimensions
@@ -24,8 +24,8 @@
     frame_width = 2                  # Frame border thickness
 
     # Text Formatting
-    font = Sans Serif Medium 12.75   # Default font
-    format = "<span weight='bold' font='16'>%s</span>\n%b"  # Title and body format
+    font = Sans Serif Medium 12   # Default font
+    format = "<span weight='bold' font='12'>%s</span>\n%b"  # Title and body format
     alignment = left                 # Text alignment
     vertical_alignment = center      # Vertical text alignment
     line_height = 0                  # Line spacing
@@ -43,8 +43,8 @@
 
     # Icon Configuration
     icon_position = left             # Icon placement
-    min_icon_size = 48               # Minimum icon size
-    max_icon_size = 96               # Maximum icon size
+    min_icon_size = 28               # Minimum icon size
+    max_icon_size = 48               # Maximum icon size
     icon_path = $HOME/.local/share/icons/dunst  # Icon directory
 
     # History and Advanced Options
