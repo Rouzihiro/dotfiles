@@ -9,7 +9,7 @@ prev_rx=$(cat /sys/class/net/$NET_IF/statistics/rx_bytes)
 while true; do
   Vol=" $(pamixer --get-volume-human)"
   Bat=" $(cat /sys/class/power_supply/macsmc-battery/capacity)%"
-  Day=" $(date '+%a,%Y-%m-%d')"
+ # Day=" $(date '+%a,%Y-%m-%d')"
   Time=" $(date '+%I:%M %p')"
   Music=" $(playerctl metadata --format "{{ artist }} - {{ title }}" | awk '{print substr($0, 1, 32)}')"
   Bklit="󰃟 $(brightnessctl i | awk '/Current brightness/ {print $4}' | sed 's/[()]//g')"
@@ -33,6 +33,6 @@ while true; do
   Net="󰀂 ${rx_rate}MB/s"
   prev_rx=$rx_now
 
-  xsetroot -name "$Music | $Vol | $Mem | $Cpu | $Net | $Disk | $Bklit | $Day | $Time | $Bat"
+  xsetroot -name "$Music | $Vol | $Mem | $Cpu | $Net | $Disk | $Bklit | $Time | $Bat"
   sleep 1
 done
