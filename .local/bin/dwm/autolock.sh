@@ -1,23 +1,15 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
-IDLE_LIMIT=$((5*60*1000))  # 5 minutes in ms
-LOCK_CMD="i3lock -i ~/Pictures/lockscreen/lock_scaled.png"
-
-# Track last idle to avoid instant relock after suspend
-last_idle=0
+LOCK_TIMEOUT=600   # 10 minutes
 
 while true; do
-    idle_time=$(xprintidle)
+    idle=$(xprintidle)
+    idle_sec=$((idle / 1000))
 
-    # Only lock if idle AND not already locked
-    if [ "$idle_time" -gt "$IDLE_LIMIT" ] && ! pgrep -x i3lock >/dev/null; then
-        $LOCK_CMD
+    if [ "$idle_sec" -ge "$LOCK_TIMEOUT" ]; then
+        # Lock only if not already locked
+        pgrep -x i3lock >/dev/null || i3lock -i ~/Pictures/lockscreen/lock_scaled.png
     fi
 
-    # If idle time drops significantly (e.g., after suspend), reset last_idle
-    if [ "$idle_time" -lt $((IDLE_LIMIT / 10)) ]; then
-        last_idle=0
-    fi
-
-    sleep 10
-done &
+    sleep 5
+done
