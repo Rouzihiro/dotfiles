@@ -20,6 +20,13 @@ static const int sidepad            = 5;       /* horizontal padding of bar */
 static const int horizpadbar        = 5;        /* horizontal padding for statusbar */
 static const int vertpadbar         = 5;        /* vertical padding for statusbar */
 
+static const char slopspawnstyle[]  = "-t 0 -c 0.92,0.85,0.69,0.3 -o"; /* do NOT define -f (format) here */
+static const char slopresizestyle[] = "-t 0 -c 0.92,0.85,0.69,0.3"; /* do NOT define -f (format) here */
+static const int riodraw_borders    = 0; /* 0 or 1, indicates whether the area drawn using slop includes the window borders */
+static const int riodraw_matchpid   = 1; /* 0 or 1, indicates whether to match the PID of the client that was spawned with riospawn */
+static const int riodraw_spawnasync = 0; /* 0 means that the application is only spawned after a successful selection while
+                                          * 1 means that the application is being initialised in the background while the selection is made */
+
 #define ICONSIZE 20   /* icon size */
 #define ICONSPACING 3 /* space between icon and title */
 
@@ -157,6 +164,7 @@ static const Key keys[] = {
 		{MODKEY,         	 XK_p,spawn,SHCMD ("dm-power-profile")},
     {MODKEY|Mod1Mask,  XK_p, spawn, {.v = powermenu}},
 
+ 		{MODKEY|Mod1Mask,  XK_r, riospawn, {.v = termcmd } },
 		{MODKEY, 					 XK_r, spawn, SHCMD ("dm-runner")},
 		{MODKEY|ShiftMask, XK_r, spawn, {.v = rofi}},
 
