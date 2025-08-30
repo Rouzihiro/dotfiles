@@ -1,0 +1,59 @@
+From 0000000000000000000000000000000000000000 Mon Sep 30 00:00:00 2025
+From: Rey Z <rey@example.com>
+Date: Sat, 30 Aug 2025 14:00:00 +0000
+Subject: [PATCH] Add showhide/showhideclient to toggle window visibility
+
+---
+ config.h          |  1 +
+ dwm.c             | 68 ++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 69 insertions(+)
+ create mode 100644 dwm-showhide.patch
+
+diff --git a/config.h b/config.h
+index e69de29..abcdef0 100644
+--- a/config.h
++++ b/config.h
+@@
++/* 
++ * Optional keybinding hint for toggling hide/show of focused client:
++ *   { MODKEY, XK_h, showhideclient, {0} },
++ */
+
+diff --git a/dwm.c b/dwm.c
+index e69de29..1234567 100644
+--- a/dwm.c
++++ b/dwm.c
+@@
++/* Function to move a client offscreen to "hide" it, or back onscreen to show it */
++void
++showhide(Client *c)
++{
++    if (!c)
++        return;
++    if (ISVISIBLE(c)) {
++        XMoveWindow(dpy, c->win, -WIDTH(c), -HEIGHT(c)); // move offscreen
++    } else {
++        XMoveWindow(dpy, c->win, c->x, c->y);           // move back
++        focus(c);
++        restack(c->mon);
++    }
++}
++
++/* Toggle hiding/showing the currently selected client */
++void
++showhideclient(const Arg *arg)
++{
++    Client *c = selmon->sel;
++    if (!c)
++        return;
++    showhide(c);
++}
++
++/* Declare functions in the prototype section */
++static void showhide(Client *c);
++static void showhideclient(const Arg *arg);
++
++/* Note: no keybinding is included in this patch; see comment in config.h for hint */
++
+-- 
+2.50.1
