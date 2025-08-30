@@ -8,19 +8,19 @@
     layer = top
 
     # Notification Size and Dimensions
-    width = (0, 500)                # Min and max width
+    width = (0, 300)                # Min and max width
     progress_bar = true             # Enable progress bars
-    progress_bar_height = 8         # Progress bar height
-    progress_bar_min_width = 100    # Minimum progress bar width
-    progress_bar_max_width = 300    # Maximum progress bar width
-    progress_bar_corner_radius = 4  # Progress bar corner roundness
+    progress_bar_height = 4         # Progress bar height
+    progress_bar_min_width = 80    # Minimum progress bar width
+    progress_bar_max_width = 200    # Maximum progress bar width
+    progress_bar_corner_radius = 2  # Progress bar corner roundness
 
     # Visual Appearance
-    corner_radius = 12               # Notification corner roundness
+    corner_radius = 6               # Notification corner roundness
     separator_height = 2             # Separator line thickness
     separator_color = "#11111B"      # Separator color
-    padding = 15                     # Internal padding
-    horizontal_padding = 15          # Horizontal internal padding
+    padding = 8                     # Internal padding
+    horizontal_padding = 8          # Horizontal internal padding
     frame_width = 2                  # Frame border thickness
 
     # Text Formatting
@@ -44,7 +44,7 @@
     # Icon Configuration
     icon_position = left             # Icon placement
     min_icon_size = 28               # Minimum icon size
-    max_icon_size = 48               # Maximum icon size
+    max_icon_size = 36               # Maximum icon size
     icon_path = $HOME/.local/share/icons/dunst  # Icon directory
 
     # History and Advanced Options
