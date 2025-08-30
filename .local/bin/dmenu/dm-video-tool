@@ -162,13 +162,23 @@ make_gif() {
         echo "No file selected" | ${DMENU_CMD} -i -p "Error"
         return
     fi
-    
+
     local start=$(get_input "Start time (HH:MM:SS)" "00:00:00")
     local duration=$(get_input "Duration (seconds)" "5")
     local base=$(basename "$file")
+    local tmp_palette="/tmp/palette.png"
     local out="$GIF_OUT_DIR/${base%.*}_$(date +%H%M%S).gif"
-    
-    if ffmpeg -ss "$start" -t "$duration" -i "$file" -vf "fps=15,scale=480:-1:flags=lanczos" "$out" 2>/dev/null; then
+
+    # Generate palette for optimal colors
+    if ! ffmpeg -y -ss "$start" -t "$duration" -i "$file" \
+        -vf "fps=15,scale=480:-1:flags=lanczos,palettegen" "$tmp_palette" 2>/dev/null; then
+        echo "❌ Palette generation failed" | ${DMENU_CMD} -i -l 3 -p "Error"
+        return
+    fi
+
+    # Use palette to make GIF
+    if ffmpeg -ss "$start" -t "$duration" -i "$file" -i "$tmp_palette" \
+        -filter_complex "fps=15,scale=480:-1:flags=lanczos[x];[x][1:v]paletteuse" "$out" 2>/dev/null; then
         echo "✅ GIF saved: $out" | ${DMENU_CMD} -i -l 3 -p "Success"
     else
         echo "❌ GIF creation failed" | ${DMENU_CMD} -i -l 3 -p "Error"
