@@ -90,6 +90,7 @@ typedef struct Client Client;
 struct Client {
 	char name[256];
 	float mina, maxa;
+	int hidden;
 	int x, y, w, h;
 	int oldx, oldy, oldw, oldh;
 	int basew, baseh, incw, inch, maxw, maxh, minw, minh, hintsvalid;
@@ -219,6 +220,9 @@ static void setmfact(const Arg *arg);
 static void setup(void);
 static void seturgent(Client *c, int urg);
 static void showhide(Client *c);
+static void showhideclient(const Arg *arg);
+static void conceal(Client *c);
+static void reveal(Client *c);
 static void spawn(const Arg *arg);
 static void tag(const Arg *arg);
 static void tagmon(const Arg *arg);
@@ -817,6 +821,38 @@ expose(XEvent *e)
 	if (ev->count == 0 && (m = wintomon(ev->window)))
 		drawbar(m);
 }
+
+void
+conceal(Client *c) {
+    if (!c || c->hidden)
+        return;
+    XMoveWindow(dpy, c->win, -WIDTH(c), -HEIGHT(c)); // move offscreen
+    c->hidden = 1;
+}
+
+void
+reveal(Client *c) {
+    if (!c || !c->hidden)
+        return;
+    XMoveWindow(dpy, c->win, c->x, c->y);           // move back
+    c->hidden = 0;
+    focus(c);
+    restack(c->mon);
+}
+
+
+void
+showhideclient(const Arg *arg) {
+    Client *c = selmon->sel;
+    if (!c)
+        return;
+
+    if (c->hidden)
+        reveal(c);
+    else
+        conceal(c);
+}
+
 
 void
 focus(Client *c)

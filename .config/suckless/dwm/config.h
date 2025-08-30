@@ -140,7 +140,8 @@ static const Key keys[] = {
 		{MODKEY,           XK_e,spawn,SHCMD ("st -e yazi")},
     // { MODKEY,                    XK_e,     spawn,          SHCMD ("xdg-open .")},
 
-    {MODKEY,  				 XK_h,      togglebar,      {0} },
+		{MODKEY,           XK_h,      showhideclient, {0} },
+    {MODKEY|Mod1Mask,  XK_h,      togglebar,      {0} },
 
  		{MODKEY, 					 XK_i,spawn,SHCMD ("dm-wifi")},
 
