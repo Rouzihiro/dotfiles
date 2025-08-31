@@ -112,6 +112,7 @@ struct Client {
 	Client *snext;
 	Monitor *mon;
 	Window win;
+	double opacity;
 };
 
 typedef struct {
@@ -443,6 +444,27 @@ arrange(Monitor *m)
 		restack(m);
 	} else for (m = mons; m; m = m->next)
 		arrangemon(m);
+}
+
+void
+changeopacity(const Arg *arg)
+{
+    Client *c = selmon->sel;
+    if(!c)
+        return;
+
+    if(!c->opacity)
+        c->opacity = 1.0;
+
+    double new_opacity = c->opacity + arg->f;
+    if(new_opacity > 1.0) new_opacity = 1.0;
+    if(new_opacity < 0.0) new_opacity = 0.0;
+
+    c->opacity = new_opacity;
+    unsigned long o = (unsigned long)(0xffffffff * new_opacity);
+    XChangeProperty(dpy, c->win, XInternAtom(dpy, "_NET_WM_WINDOW_OPACITY", False),
+                    XA_CARDINAL, 32, PropModeReplace,
+                    (unsigned char *)&o, 1);
 }
 
 void
