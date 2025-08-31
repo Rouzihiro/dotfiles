@@ -26,6 +26,13 @@ static const int riodraw_borders    = 0; /* 0 or 1, indicates whether the area d
 static const int riodraw_matchpid   = 1; /* 0 or 1, indicates whether to match the PID of the client that was spawned with riospawn */
 static const int riodraw_spawnasync = 0; /* 0 means that the application is only spawned after a successful selection while
                                           * 1 means that the application is being initialised in the background while the selection is made */
+typedef struct {
+    const char *name;
+    const void *cmd;
+} Sp;
+
+const char *spcmd1[] = {"st", "-n", "spterm1", "-g", "120x34", NULL};
+const char *spcmd2[] = {"st", "-n", "spterm2", "-g", "120x34", NULL};
 
 #define ICONSIZE 20   /* icon size */
 #define ICONSPACING 3 /* space between icon and title */
@@ -66,13 +73,17 @@ const unsigned int alphas[][3] = {
 };
 
 static const Rule rules[] = {
-        /* xprop(1):
-         *      WM_CLASS(STRING) = instance, class
-         *      WM_NAME(STRING) = title
-         */
-   /* class      instance    title       tags mask     isfloating   monitor */
- 	 { "librewolf", NULL,       NULL,       1 << 1,       0,           -1 },
- 	 { "brave-browser", NULL,   NULL,       1 << 1,       0,           -1 },
+	 /* class      			instance     	title       tags mask       isfloating  monitor  scratchkey */
+ 	 {"librewolf", 			NULL,       	NULL,       1 << 1,       	0,          -1 },
+ 	 {"brave-browser", 	NULL,   			NULL,       1 << 1,       	0,       		-1 },
+	 {NULL,       			"spterm1",   	NULL,       SPTAG(0),       1,         	-1,      0 },
+	 {NULL,       			"spterm2",   	NULL,       SPTAG(1),       1,          -1,      0 },
+	 };
+
+static Sp scratchpads[] = {
+    /* name      cmd */
+    {"spterm1", spcmd1},
+    {"spterm2", spcmd2},
 };
 
 /* layout(s) */
@@ -160,9 +171,10 @@ static const Key keys[] = {
 
 		{MODKEY,  				 XK_o,spawn,SHCMD ("bash -c 'ocr-x11'")},
 
-
-		{MODKEY,         	 XK_p,spawn,SHCMD ("dm-power-profile")},
-    {MODKEY|Mod1Mask,  XK_p, spawn, {.v = powermenu}},
+		{MODKEY, 					 XK_p, togglescratch, {.ui = 0 } },
+		{MODKEY|Mod1Mask,  XK_p, togglescratch, {.ui = 1 } },
+		{MODKEY|ShiftMask, XK_p,spawn,SHCMD ("dm-power-profile")},
+    // {MODKEY|Mod1Mask,  XK_p, spawn, {.v = powermenu}},
 
  		{MODKEY|Mod1Mask,  XK_r, riospawn, {.v = termcmd } },
 		{MODKEY, 					 XK_r, spawn, SHCMD ("dm-runner")},
