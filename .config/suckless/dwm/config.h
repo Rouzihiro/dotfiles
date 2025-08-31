@@ -34,6 +34,8 @@ typedef struct {
 const char *spcmd1[] = {"st", "-n", "spterm1", "-g", "120x34", NULL};
 const char *spcmd2[] = {"st", "-n", "spterm2", "-g", "120x34", NULL};
 
+void changeopacity(const Arg *arg);
+
 #define ICONSIZE 20   /* icon size */
 #define ICONSPACING 3 /* space between icon and title */
 
@@ -190,14 +192,17 @@ static const Key keys[] = {
 		{MODKEY|Mod1Mask,	 XK_w,spawn,SHCMD ("bash -c 'rofi-wall-x11'")},
     {MODKEY|ShiftMask, XK_w,spawn,SHCMD ("dm-wifi")},
 
-    { MODKEY,          XK_Right, focusstack,     {.i = +1 } },
-    { MODKEY,          XK_Left,  focusstack,     {.i = -1 } },
-    { MODKEY,          XK_equal, incnmaster,     {.i = +1 } },
-    { MODKEY,          XK_minus, incnmaster,     {.i = -1 } },
-    { MODKEY,          XK_Tab,   view,           {0} }, /* ws repeat*/
+    {MODKEY,          XK_Right, focusstack,     {.i = +1 }},
+    {MODKEY,          XK_Left,  focusstack,     {.i = -1 }},
+    {MODKEY,          XK_equal, incnmaster,     {.i = +1 }},
+    {MODKEY,          XK_minus, incnmaster,     {.i = -1 }},
+    {MODKEY,          XK_Tab,   view,           {0} }, /* ws repeat*/
 
-    { MODKEY,          XK_j,     setmfact,       {.f = -0.05} },
-    { MODKEY,          XK_k,     setmfact,       {.f = +0.05} },
+    {MODKEY,          XK_j,     setmfact,       {.f = -0.05}},
+    {MODKEY,          XK_k,     setmfact,       {.f = +0.05}},
+
+		{MODKEY|ShiftMask, XK_equal,	changeopacity, {.f = +0.05 }}, // increase the client opacity (for compositors that support _NET_WM_OPACITY)
+		{MODKEY|ShiftMask, XK_minus,	changeopacity, {.f = -0.05 }}, // decrease the client opacity (for compositors that support _NET_WM_OPACITY)
 
     {MODKEY|Mod1Mask,            XK_0,togglegaps,  {0} },
     {MODKEY|Mod1Mask|ShiftMask,  XK_0,defaultgaps, {0} },
