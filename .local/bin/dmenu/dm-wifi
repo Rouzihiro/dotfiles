@@ -3,7 +3,7 @@
 #export DISPLAY=:0
 
 DMENU_CMD="dmenu"
-DMENU_OPTS="-i -l 15" 
+DMENU_OPTS="-c -i -l 15" 
 
 while true; do
     # Get Wi-Fi status

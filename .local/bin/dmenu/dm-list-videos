@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 DMENU_CMD="dmenu"
-DMENU_OPTS="-i -l 15"  # Case-insensitive, 15 lines shown
+DMENU_OPTS="-c -i -l 15"  # Case-insensitive, 15 lines shown
 
 # Collect video files (relative to $HOME)
 video_files=$(find ~/Videos ~/Downloads -type f \( -iname "*.avi" -o -iname "*.mp4" -o -iname "*.mkv" -o -iname "*.flv" -o -iname "*.webm" \) -print0 | xargs -0 -I{} basename "{}")

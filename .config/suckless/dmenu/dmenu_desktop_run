@@ -1,6 +1,6 @@
 #!/bin/sh
 export _JAVA_AWT_WM_NONREPARENTING=1
-dmenu_path | dmenu -H "${XDG_CACHE_HOME:-$HOME/.cache/}/dmenu_run.hist" "$@" |
+dmenu_desktop_path | dmenu -d "|" -H "${XDG_CACHE_HOME:-$HOME/.cache/}/dmenu_desktop_run.hist" "$@" |
 	while read -r cmd; do
 		echo "$cmd" | xargs setsid -f > /dev/null 2>&1
 	done

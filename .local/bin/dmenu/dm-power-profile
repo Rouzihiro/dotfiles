@@ -18,7 +18,7 @@ for g in $GOVERNORS; do
 done
 
 # Ask user (single column)
-CHOICE=$(echo "$MENU" | dmenu -i -l 9 | sed 's/ \[current\]//')
+CHOICE=$(echo "$MENU" | dmenu -c -i -l 9 | sed 's/ \[current\]//')
 
 # Exit if empty or if user selects the title line
 [ -z "$CHOICE" ] && exit 0
