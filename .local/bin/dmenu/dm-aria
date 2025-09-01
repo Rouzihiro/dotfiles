@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Ask for URL (clipboard pre-filled)
-URL=$(xclip -o -selection clipboard | dmenu -p "Enter URL (Ctrl+V to paste):")
+URL=$(xclip -o -selection clipboard | dmenu -c -p "Enter URL (Ctrl+V to paste):")
 
 # If nothing entered, quit
 [ -z "$URL" ] && exit 1

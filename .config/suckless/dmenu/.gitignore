@@ -1,0 +1,6 @@
+*.o
+*.txt
+*.sh
+patches.h
+dmenu
+stest

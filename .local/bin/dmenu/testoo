@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+# fzf PDF launcher using helper functions
+
+source fzf_selector.sh  # adjust path to your helper
+
+MAXLEN=40  # Max characters per line
+
+# Collect PDF files relative to $HOME
+pdfs=$(fd . -e pdf --base-directory "$HOME" -c never)
+
+# Build mapping: display name -> full path
+declare -A map
+display=()
+
+for file in $pdfs; do
+    short=$(basename "$(dirname "$file")")/$(basename "$file")
+    [ ${#short} -gt $MAXLEN ] && short="${short:0:$((MAXLEN-1))}…"
+    display+=("$short")
+    map["$short"]="$file"
+done
+
+# Add Quit option
+display=("Quit" "${display[@]}")
+
+# Launch fzf
+choice=$(select_with_fzf "Select PDF" "${display[@]}")
+
+# Exit if user chose Quit or nothing
+[ -z "$choice" ] || [ "$choice" = "Quit" ] && exit 0
+
+# Open selected PDF
+zathura "$HOME/${map[$choice]}"

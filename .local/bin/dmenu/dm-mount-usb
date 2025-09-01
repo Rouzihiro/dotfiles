@@ -23,7 +23,7 @@ select_partition() {
 
 # Select action via dmenu dropdown
 select_action() {
-    action=$(echo -e "mount\nunmount\nremove" | dmenu -i -l 3 -p "Choose action for /dev/$selected_partition:")
+    action=$(echo -e "mount\nunmount\nremove" | dmenu -c -i -l 3 -p "Choose action for /dev/$selected_partition:")
 }
 
 # Perform action

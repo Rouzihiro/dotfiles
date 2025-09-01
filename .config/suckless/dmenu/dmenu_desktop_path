@@ -1,0 +1,47 @@
+#!/bin/sh
+
+cachedir="${XDG_CACHE_HOME:-"$HOME/.cache"}"
+cache="$cachedir/dmenu_desktop_run"
+[ ! -e "$cachedir" ] && mkdir -p "$cachedir"
+
+IFS=:
+if [ ! -e "$cache" ] || stest -dqrx -n "$cache" \
+		~/.local/share/applications/ \
+		/usr/local/share/applications/ \
+		/usr/share/applications/; then
+	find \
+		~/.local/share/applications/ \
+		/usr/local/share/applications/ \
+		/usr/share/applications/ \
+		-name '*.desktop' \
+		-exec awk -F "=" '
+FILENAME != PREVFILENAME {
+	NAME=""
+	DESC=""
+	EXEC=""
+	ACTION=""
+	PREVFILENAME=FILENAME
+}
+
+$1 == "Name" {
+	if (NAME == "") {
+		NAME=$2;
+		DESC=$2;
+	} else {
+		DESC=NAME " " $2;
+	}
+}
+
+$1 == "Exec" {
+	EXEC=$2
+}
+
+EXEC != "" && DESC != "" {
+	print DESC "|" EXEC
+ 	EXEC=""
+	DESC=""
+}
+' {} \+ | sort -i --ignore-case -t "|" -k1 -u | tee "$cache"
+else
+	cat "$cache"
+fi
