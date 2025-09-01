@@ -15,8 +15,8 @@ vim.opt.undofile = true
 vim.opt.incsearch = true
 vim.opt.signcolumn = "yes"
 
-vim.o.spelllang = "en_us,de"
-vim.o.spellsuggest = "best,9"
+-- vim.o.spelllang = "en_us,de"
+-- vim.o.spellsuggest = "best,9"
 
 vim.pack.add({
   { src = "https://github.com/rebelot/kanagawa.nvim" },
@@ -68,8 +68,8 @@ require("mini.pick").setup()
 require("plugins.oil")
 
 -- Treesitter setup
-require('nvim-treesitter.configs').setup({ highlight = { enable = true } })
-
+-- require('nvim-treesitter.configs').setup({ highlight = { enable = true } })
+--
 -- Colorscheme
 require("kanagawa").setup({ transparent = true })
 vim.cmd("colorscheme kanagawa")
