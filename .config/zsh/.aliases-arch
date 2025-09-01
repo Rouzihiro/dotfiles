@@ -2,7 +2,7 @@
 
 alias update="yay && dunstify 'Arch Linux' 'System updated successfully ✨' -a System -u low"
 alias upgrade='yay -Syu'
-alias clean="yay -Rns $(pacman -Qtdq) && dunstify 'Arch Linux' 'Removed unused packages 🧹' -a System -u low"
+alias arch-clean="yay -Rns $(pacman -Qtdq) && dunstify 'Arch Linux' 'Removed unused packages 🧹' -a System -u low"
 
 # Pacman
 alias pm='sudo pacman -S'                          # Install package

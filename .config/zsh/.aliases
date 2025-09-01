@@ -1,3 +1,4 @@
+alias clean='rm -f st dwm dmenu *.o *.orig'
 alias disk='ncdu'
 alias df='duf -hide special'
 alias mem2='free -h'
