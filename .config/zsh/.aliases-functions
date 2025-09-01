@@ -1,3 +1,6 @@
+normalize() {
+  ffmpeg -i "$1" -af loudnorm=I=-14:TP=-1.0:LRA=11 -c:v copy -c:a aac -b:a 192k output.mp4
+}
 
 ali() {
   local filter="$1"
