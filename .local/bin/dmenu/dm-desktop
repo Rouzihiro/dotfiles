@@ -1,0 +1,7 @@
+#!/bin/sh
+
+APP_LIST=$(ls /usr/share/applications ~/.local/share/applications 2>/dev/null \
+           | grep '\.desktop$' | sed 's/\.desktop$//' | sort)
+
+CHOICE=$(echo "$APP_LIST" | dmenu -c -l 15 -p "")
+[ -n "$CHOICE" ] && gtk-launch "$CHOICE"

@@ -123,7 +123,8 @@ static const char *dmenucmd[] = {
      "dmenu_run",
      "-c",           // center
      "-l", "17",     // number of lines
-     "-fn", "JetBrainsMono Nerd Font:size=11",
+		 "-fn", "monospace:size=11",
+     // "-fn", "JetBrainsMono Nerd Font:size=11",
      "-nb", normal_bar_background,
      "-nf", normal_bar_foreground,
      "-sb", selected_bar_background,
@@ -144,7 +145,7 @@ static const Key keys[] = {
 
     {MODKEY,					 XK_Return,spawn, {.v = termcmd}},
 		{MODKEY|ShiftMask, XK_Return,spawn, SHCMD ("dm-runner")},
-		{MODKEY|Mod1Mask,	 XK_space, spawn, SHCMD("dmenu-desktop")},
+		{MODKEY|Mod1Mask,	 XK_space, spawn, SHCMD("dm-desktop")},
 		{MODKEY, 					 XK_space, spawn, {.v = dmenucmd}},
 		{MODKEY,           XK_Escape,spawn, SHCMD ("st -e btop") },
 

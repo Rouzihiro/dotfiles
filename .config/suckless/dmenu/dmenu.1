@@ -3,16 +3,54 @@
 dmenu \- dynamic menu
 .SH SYNOPSIS
 .B dmenu
-.RB [ \-bfiv ]
+.RB [ \-bcfiIjJkKnNrRsStuUvxyz ]
+.RB [ \-bw
+.IR width ]
+.RB [ \-d
+.IR delimiter ]
+.RB [ \-D
+.IR delimiter ]
+.RB [ \-dp ]
 .RB [ \-g
 .IR columns ]
+.RB [ \-gw
+.IR width ]
+.RB [ \-pwrl
+.IR int ]
+.RB [ \-pwrl_reduction
+.IR pixels ]
 .RB [ \-l
 .IR lines ]
-.RB [ \-m
-.IR monitor ]
 .RB [ \-p
 .IR prompt ]
+.RB [ \-dy
+.IR command ]
+.RB [ \-it
+.IR text ]
+.RB [ \-hp
+.IR items ]
+.RB [ \-H
+.IR histfile ]
+.RB [ \-h
+.IR height ]
+.RB [ \-ps
+.IR index ]
+.RB [ \-x
+.IR offset ]
+.RB [ \-y
+.IR offset ]
+.RB [ \-w
+.IR width ]
+.RB [ \-m
+.IR monitor ]
+.RB [ \-e
+.IR windowid ]
+.RB [ \-ea ]
 .RB [ \-fn
+.IR font ]
+.RB [ \-fns
+.IR font ]
+.RB [ \-fno
 .IR font ]
 .RB [ \-nb
 .IR color ]
@@ -22,6 +60,26 @@ dmenu \- dynamic menu
 .IR color ]
 .RB [ \-sf
 .IR color ]
+.RB [ \-ob
+.IR color ]
+.RB [ \-of
+.IR color ]
+.RB [ \-hb
+.IR color ]
+.RB [ \-hf
+.IR color ]
+.RB [ \-ab
+.IR color ]
+.RB [ \-af
+.IR color ]
+.RB [ \-bb
+.IR color ]
+.RB [ \-bf
+.IR color ]
+.RB [ \-pb
+.IR color ]
+.RB [ \-pf
+.IR color ]
 .RB [ \-nhb
 .IR color ]
 .RB [ \-nhf
@@ -30,8 +88,6 @@ dmenu \- dynamic menu
 .IR color ]
 .RB [ \-shf
 .IR color ]
-.RB [ \-w
-.IR windowid ]
 .P
 .BR dmenu_run " ..."
 .SH DESCRIPTION
@@ -45,45 +101,80 @@ matching the tokens in the input.
 is a script used by
 .IR dwm (1)
 which lists programs in the user's $PATH and runs the result in their $SHELL.
-.SH OPTIONS
+.SH PLACEMENT OPTIONS
+.TP
+.B \-t
+dmenu appears at the top of the screen.
 .TP
 .B \-b
 dmenu appears at the bottom of the screen.
 .TP
 .B \-c
-dmenu appears centered on the screen.
+dmenu appears in the center of the screen.
 .TP
-.B \-f
-dmenu grabs the keyboard before reading stdin if not reading from a tty. This
-is faster, but will lock up X until stdin reaches end\-of\-file.
+.BI \-e " windowid"
+embed into the given window ID.
 .TP
-.B \-i
-dmenu matches menu items case insensitively.
-.TP
-.BI \-g " columns"
-dmenu lists items in a grid with the given number of columns.
-.TP
-.BI \-l " lines"
-dmenu lists items in a grid with the given number of lines.
-.TP
-.BI \-h " height"
-dmenu uses a menu line of at least 'height' pixels tall, but no less than 8.
+.B \-ea
+embed into the currently focused (active) window.
 .TP
 .BI \-m " monitor"
 dmenu is displayed on the monitor number supplied. Monitor numbers are starting
 from 0.
 .TP
-.BI \-p " prompt"
+.BI \-x " offset"
+specifies the x position relative to monitor.
+.TP
+.BI \-y " offset"
+specifies the y position relative to monitor.
+.TP
+.BI \-w " width"
+specifies the width of dmenu.
+
+.SH APPEARANCE
+.TP
+.BI \-bw " width"
+specifies the border width.
+.TP
+.BI \-h " height"
+specifies the height of dmenu lines. If height is \-1 then the height will be 2.5 times that of the
+font height.
+.TP
+.BI \-p " text, -prompt text"
 defines the prompt to be displayed to the left of the input field.
+.TP
+.BI \-l " lines"
+dmenu lists items vertically, with the given number of lines (rows).
+.TP
+.BI \-g " columns"
+dmenu lists items in a grid, with the given number of columns.
+.TP
+.BI \-gw " width"
+defines the minimum width of columns, in pixels, and will override the number of columns specified
+wth the \-g argument if that would result in columns with a width less than the specified minimum
+width.
+
+If only the minimum width is specified then that is used to derive the number of columns shown.
+.TP
+.BI \-pwrl " int"
+specifies the powerline separator to use (values 0 through 4).
+.TP
+.BI \-pwrl_reduction " pixels"
+adjusts the angle and size of the powerline separator.
+
+.SH COLORS
 .TP
 .BI \-fn " font"
 defines the font or font set used.
 .TP
+.BI \-fns " font"
+defines the selected item font or font set used.
+.TP
+.BI \-fno " font"
+defines the output item font or font set used.
+.TP
 .BI \-nb " color"
 defines the normal background color.
-.IR #RGB ,
-.IR #RRGGBB ,
-and X color names are supported.
 .TP
 .BI \-nf " color"
 defines the normal foreground color.
@@ -93,6 +184,36 @@ defines the selected background color.
 .TP
 .BI \-sf " color"
 defines the selected foreground color.
+.TP
+.BI \-bb " color"
+defines the border background color.
+.TP
+.BI \-bf " color"
+defines the border foreground color.
+.TP
+.BI \-pb " color"
+defines the prompt background color.
+.TP
+.BI \-pf " color"
+defines the prompt  foreground color.
+.TP
+.BI \-ab " color"
+defines the adjacent background color.
+.TP
+.BI \-af " color"
+defines the adjacent foreground color.
+.TP
+.BI \-ob " color"
+defines the output background color.
+.TP
+.BI \-of " color"
+defines the  output foreground color.
+.TP
+.BI \-hb " color"
+defines the high priority background color.
+.TP
+.BI \-hf " color"
+defines the high priority foreground color.
 .TP
 .BI \-nhb " color"
 defines the normal highlight background color.
@@ -106,14 +227,168 @@ defines the selected highlight background color.
 .BI \-shf " color"
 defines the selected highlight foreground color.
 .TP
+For color settings #RGB, #RRGGBB, and X color names are supported.
+
+.SH FUNCTIONALITY
+.TP
+.BI \-d " delimiter"
+separate the input into two halves on the first occurrence of the given charcter.
+Display only the first half in dmenu and print the second half to stdout upon selection.
+Appending '|' to the separator reverses the display/printing order.
+.TP
+.BI \-D " delimiter"
+same as \-d but separate based on the last occurrence of the delimiter.
+.TP
+.B \-dp
+when using \-d or \-D\, display first and return original line (double print).
+.TP
+.BI \-dy " command"
+a command used to dynamically change the dmenu options.
+.TP
+.BI \-hp " items"
+comma separated list of high priority items.
+.TP
+.BI \-it " text"
+starts dmenu with initial text already typed in.
+.TP
+.BI \-ps " index"
+preselect the item with the given index.
+.TP
+.B \-f
+dmenu grabs the keyboard before reading stdin if not reading from a tty. This
+is faster, but will lock up X until stdin reaches end\-of\-file.
+.TP
+.BI \-H " histfile"
+specifies the history file to use.
+.TP
+.BI \-i, " -NoCaseSensitive"
+dmenu matches menu items case insensitively.
+.TP
+.BI \-I, " -CaseSensitive"
+dmenu matches menu items case sensitively.
+.TP
+.BI \-j, " -RejectNoMatch"
+makes dmenu reject input if it would result in no matching item.
+.TP
+.BI \-J, " -NoRejectNoMatch"
+input can be entered into dmenu freely.
+.TP
+.BI \-k, " -PrintIndex"
+makes dmenu print out the 0-based index instead of the matched text.
+.TP
+.BI \-K, " -NoPrintIndex"
+makes dmenu print out matched text itself.
+.TP
+.BI \-n, " -InstantReturn"
+makes dmenu select an item immediately if there is only one matching option left.
+.TP
+.BI \-N, " -NoInstantReturn"
+user must press enter to select an item (disables auto-select).
+.TP
+.BI \-u, " -PasswordInput"
+indicates that the input is a password and should be masked.
+.TP
+.BI \-U, " -NoPasswordInput"
+indicates that the input is not a password.
+.TP
+.BI \-s, " -Sort"
+enables sorting of menu items after matching.
+.TP
+.BI \-S, " -NoSort"
+disables sorting of menu items after matching.
+.TP
+.BI \-r, " -RestrictReturn"
+disables Shift-Return and Ctrl-Return to restrict dmenu to only output one item.
+.TP
+.BI \-R, " -NoRestrictReturn"
+enables Shift-Return and Ctrl-Return to allow dmenu to output more than one item.
+.TP
 .B \-v
 prints version information to stdout, then exits.
 .TP
-.BI \-w " windowid"
-embed into windowid.
+.BI \-xpad " offset"
+sets the horizontal padding value for dmenu.
+.TP
+.BI \-ypad " offset"
+sets the vertical padding value for dmenu.
+.TP
+.B \-Alpha
+enables transparency.
+.TP
+.B \-NoAlpha
+disables transparency.
+.TP
+.B \-ColorEmoji
+enables color emoji in dmenu (requires libxft-bgra).
+.TP
+.B \-NoColorEmoji
+disables color emoji.
+.TP
+.B \-ContinuousOutput
+makes dmenu print out selected items immediately rather than at the end.
+.TP
+.B \-NoContinuousOutput
+dmenu prints out the selected items when enter is pressed.
+.TP
+.B \-FuzzyMatch
+allows fuzzy-matching of items in dmenu.
+.TP
+.B \-NoFuzzyMatch
+enables exact matching of items in dmenu.
+.TP
+.B \-HighlightAdjacent
+makes dmenu highlight items adjacent to the selected item.
+.TP
+.B \-NoHighlightAdjacent
+only the selected item is highlighted.
+.TP
+.B \-Incremental
+makes dmenu print out the current text each time a key is pressed.
+.TP
+.B \-NoIncremental
+dmenu will not print out the current text each time a key is pressed.
+.TP
+.B \-Input
+enables input field allowing the user to search through the options.
+.TP
+.B \-NoInput
+disables the input field forcing the user to select options using mouse or keyboard.
+.TP
+.B \-Managed
+allows dmenu to be managed by a window manager.
+.TP
+.B \-NoManaged
+dmenu manages itself, window manager not to interfere.
+.TP
+.B \-PrintInputText
+makes dmenu print the input text instead of the selected item.
+.TP
+.B \-NoPrintInputText
+dmenu to print the text of the selected item.
+.TP
+.B \-PromptIndent
+makes dmenu indent items at the same level as the prompt on multi-line views.
+.TP
+.B \-NoPromptIndent
+items on multi-line views are not indented.
+.TP
+.B \-ShowNumbers
+makes dmenu display the number of matched and total items in the top right corner.
+.TP
+.B \-NoShowNumbers
+dmenu will not show item count.
+.TP
+.B \-Xresources
+makes dmenu read X resources at startup.
+.TP
+.B \-NoXresources
+dmenu will not read X resources.
+
 .SH USAGE
-dmenu is completely controlled by the keyboard.  Items are selected using the
-arrow keys, page up, page down, home, and end.
+dmenu is controlled by the keyboard and optionally the mouse can be used to select items.
+Items are selected using the arrow keys, page up, page down, home, and end.
+
+Keybindings can be changed in the configuration file if needed.
 .TP
 .B Tab
 Copy the selected item to the input field.
@@ -191,10 +466,10 @@ Delete line left
 .B C\-w
 Delete word left
 .TP
-.B C\-y
+.BI C\-y " or C-v"
 Paste from primary X selection
 .TP
-.B C\-Y
+.BI C\-Y " or C-V"
 Paste from X clipboard
 .TP
 .B M\-b
@@ -220,6 +495,12 @@ Page up
 .TP
 .B M\-l
 Down
+.TP
+.B M\-p
+Navigate to the previous item in the history file.
+.TP
+.B M\-n
+Navigate to the next item in the history file.
 .SH SEE ALSO
 .IR dwm (1),
 .IR stest (1)

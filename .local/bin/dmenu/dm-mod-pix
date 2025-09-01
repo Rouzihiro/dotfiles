@@ -9,7 +9,7 @@ else
     IM_COMMAND="convert"
 fi
 GS_COMMAND="gs"
-DMENU="dmenu -i -l 15 -p"
+DMENU="dmenu -c -i -l 15 -p"
 
 # Get all images in current directory
 get_images() {

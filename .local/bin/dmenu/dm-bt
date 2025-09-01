@@ -13,7 +13,7 @@ SELECT_BG="#262626" # Selection background
 SELECT_FG="#d8d8d8" # Selection foreground
 
 # Dmenu command
-DMENU="dmenu -i -nb '$BG' -nf '$FG' -sb '$SELECT_BG' -sf '$SELECT_FG'"
+DMENU="dmenu -c -i -nb '$BG' -nf '$FG' -sb '$SELECT_BG' -sf '$SELECT_FG'"
 
 # Checks if bluetooth controller is powered on
 power_on() {

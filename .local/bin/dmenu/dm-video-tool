@@ -13,8 +13,8 @@ mkdir -p "$MERGE_OUT_DIR" "$SPLIT_OUT_DIR" "$GIF_OUT_DIR" "$THUMB_OUT_DIR" "$CON
 
 # Dmenu configuration
 DMENU_CMD="dmenu"
-DMENU_OPTS="-i -l 15"
-DMENU_SINGLE_OPTS="-i -l 10"
+DMENU_OPTS="-c -i -l 15"
+DMENU_SINGLE_OPTS="-c -i -l 10"
 
 # --- Select single file with dmenu ---
 select_single_with_dmenu() {

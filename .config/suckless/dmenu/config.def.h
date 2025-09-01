@@ -4,7 +4,7 @@
 /* -fn option overrides fonts[0]; default X11 font or font set */
 static char *fonts[] =
 {
-	"JetBrainsMono Nerd Font:size=12",
+	"monospace:size=10"
 };
 
 /* Optionally specify separate font sets for selected and output menu items */
