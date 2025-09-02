@@ -1,33 +1,28 @@
 #!/bin/bash
 
+# Ask user for type
+TYPE=$(echo -e "Direct link\nEmbedded video" | dmenu -c -l 2 -p "Select download type:")
+
+# Quit if nothing selected
+[ -z "$TYPE" ] && exit 1
+
 # Ask for URL (clipboard pre-filled)
 URL=$(xclip -o -selection clipboard | dmenu -c -p "Enter URL (Ctrl+V to paste):")
-
-# If nothing entered, quit
 [ -z "$URL" ] && exit 1
 
-# Try to get direct URL using yt-dlp
-DIRECT_URL=$(yt-dlp -g "$URL" 2>/dev/null)
-
-# If yt-dlp fails, fall back to original URL
-[ -z "$DIRECT_URL" ] && DIRECT_URL="$URL"
-
-# Extract filename from URL or from yt-dlp info
-if [ -n "$DIRECT_URL" ]; then
-    # Get filename from yt-dlp if possible
-    FILENAME=$(yt-dlp --get-filename -o "%(title)s.%(ext)s" "$URL" 2>/dev/null)
-    # Fallback to basename if yt-dlp fails
-    [ -z "$FILENAME" ] && FILENAME=$(basename "${DIRECT_URL%%\?*}")
+if [ "$TYPE" = "Embedded video" ]; then
+    # Video: use yt-dlp + aria2c
+    yt-dlp --external-downloader aria2c \
+           --external-downloader-args 'aria2c:-x2 -s2' \
+           -o "$HOME/Downloads/%(title)s.%(ext)s" \
+           "$URL" >> "$HOME/Downloads/yt-dlp.log" 2>&1 &
+    notify-send "Download started (video)" "$URL"
 else
-    FILENAME=$(basename "${URL%%\?*}")
+    # Direct link: use aria2c directly with basename
+    BASENAME=$(basename "${URL%%\?*}")
+    aria2c --check-certificate=false -x2 -s2 -d "$HOME/Downloads" -o "$BASENAME" "$URL" \
+           >> "$HOME/Downloads/yt-dlp.log" 2>&1 &
+    notify-send "Download started (direct file)" "$BASENAME"
 fi
 
-# Start aria2c in background, log output
-aria2c --check-certificate=false -x 16 -s 16 -d "$HOME/Downloads" "$DIRECT_URL" \
-  >> "$HOME/Downloads/aria2c.log" 2>&1 &
-
-# Disown so it survives after dmenu exits
 disown
-
-# Notify about filename
-notify-send "Download started" "$FILENAME"

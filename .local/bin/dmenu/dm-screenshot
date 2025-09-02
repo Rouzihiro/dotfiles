@@ -1,30 +1,48 @@
-#!/usr/bin/env bash
-# DWM screenshot mode-like helper
+#!/bin/bash
 
+# Ensure screenshot folder exists
 DIR="$HOME/Pictures/screenshot"
 mkdir -p "$DIR"
-TIMESTAMP=$(date +%Y-%m-%d_%H-%M-%S)
-FILE="$DIR/screenshot_$TIMESTAMP.png"
 
-echo "Screenshot mode: press r (region), f (fullscreen), w (window). Timeout in 5s."
+# Prompt user for screenshot type
+MODE=$(echo -e "Fullscreen now\nFullscreen 3sec\nSnippet now\nSnippet 3sec" | dmenu -c -l 4 -p "Select screenshot type:")
 
-# Wait for a single key for 5 seconds
-read -n 1 -t 5 key
-case "$key" in
-    r)
-        REGION=$(slop -f "%x,%y %wx%h") || exit
-        maim -s "$REGION" | tee "$FILE" | xclip -selection clipboard -t image/png
-        ;;
-    f)
-        maim | tee "$FILE" | xclip -selection clipboard -t image/png
-        ;;
-    w)
-        WIN=$(xdotool getactivewindow) || exit
-        GEOM=$(xwininfo -id "$WIN" | awk '/Absolute upper-left X/ {x=$NF} /Absolute upper-left Y/ {y=$NF} /Width/ {w=$NF} /Height/ {h=$NF} END {print x","y" "w"x"h}')
-        maim -g "$GEOM" | tee "$FILE" | xclip -selection clipboard -t image/png
-        ;;
+[ -z "$MODE" ] && exit 1
+
+# Filename with timestamp
+FILE="$DIR/screenshot_$(date +%Y%m%d_%H%M%S).png"
+
+# Determine delay and type
+DELAY=0
+TYPE=""
+
+case "$MODE" in
+    "Fullscreen now")
+        TYPE="fullscreen" ;;
+    "Fullscreen 3sec")
+        TYPE="fullscreen"
+        DELAY=3 ;;
+    "Snippet now")
+        TYPE="snippet" ;;
+    "Snippet 3sec")
+        TYPE="snippet"
+        DELAY=3 ;;
     *)
-        echo "No valid key pressed. Exiting."
-        exit 1
-        ;;
+        exit 1 ;;
 esac
+
+# Optional delay
+[ "$DELAY" -gt 0 ] && sleep "$DELAY"
+
+# Take screenshot
+if [ "$TYPE" = "fullscreen" ]; then
+    maim "$FILE"
+else
+    maim -s "$FILE"
+fi
+
+# Copy to clipboard
+xclip -selection clipboard -t image/png -i "$FILE"
+
+# Notify
+notify-send "Screenshot saved" "$FILE"
