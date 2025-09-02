@@ -6,16 +6,16 @@
   <property name="pressureMultiplier" value="1"/>
   <property name="zoomGesturesEnabled" value="true"/>
   <property name="selectedToolbar" value="Portrait"/>
-  <property name="lastSavePath" value="/home/rey/Documents/plus500"/>
-  <property name="lastOpenPath" value=""/>
-  <property name="lastImagePath" value=""/>
+  <property name="lastSavePath" value="/home/rey/Documents/wedding"/>
+  <property name="lastOpenPath" value="/home/rey/Documents/wedding"/>
+  <property name="lastImagePath" value="/home/rey/Documents/boberg/working-hours"/>
   <property name="edgePanSpeed" value="20"/>
   <property name="edgePanMaxMult" value="5"/>
   <property name="zoomStep" value="10"/>
   <property name="zoomStepScroll" value="2"/>
   <property name="displayDpi" value="72"/>
-  <property name="mainWndWidth" value="626"/>
-  <property name="mainWndHeight" value="759"/>
+  <property name="mainWndWidth" value="1320"/>
+  <property name="mainWndHeight" value="1545"/>
   <property name="maximized" value="false"/>
   <property name="showToolbar" value="true"/>
   <property name="showSidebar" value="true"/>
@@ -134,7 +134,7 @@
   <property name="latexSettings.sourceViewAutoIndent" value="true"/>
   <property name="latexSettings.sourceViewSyntaxHighlight" value="true"/>
   <property name="latexSettings.sourceViewShowLineNumbers" value="false"/>
-  <property name="font" font="Sans" size="12"/>
+  <property name="font" font="Sans" size="10"/>
   <data name="buttonConfig">
     <data name="default">
       <attribute name="color" type="hex" value="ff000000"/>
@@ -166,6 +166,10 @@
     </data>
   </data>
   <data name="deviceClasses">
+    <data name="Apple SPI Trackpad">
+      <attribute name="deviceClass" type="int" value="1"/>
+      <attribute name="deviceSource" type="int" value="6"/>
+    </data>
     <data name="Wayland Finger Scrolling">
       <attribute name="deviceClass" type="int" value="1"/>
       <attribute name="deviceSource" type="int" value="6"/>
@@ -176,7 +180,7 @@
     </data>
   </data>
   <data name="tools">
-    <attribute name="current" type="string" value="eraser"/>
+    <attribute name="current" type="string" value="hand"/>
     <data name="drawArrow">
       <attribute name="drawingType" type="string" value="default"/>
     </data>

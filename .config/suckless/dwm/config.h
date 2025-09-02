@@ -119,33 +119,17 @@ static const Layout layouts[] = {
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 
-static const char *dmenucmd[] = {
-     "dmenu_run",
-     "-c",           // center
-     "-l", "17",     // number of lines
-		 "-fn", "monospace:size=11",
-     // "-fn", "JetBrainsMono Nerd Font:size=11",
-     "-nb", normal_bar_background,
-     "-nf", normal_bar_foreground,
-     "-sb", selected_bar_background,
-     "-sf", selected_bar_foreground,
-     "-nhb", normal_bar_background,
-     "-nhf", normal_bar_foreground,
-     "-shb", selected_bar_background,
-     "-shf", selected_bar_foreground,
-     NULL
- };
-
 static const char *termcmd[]  = { "st", NULL };
 static const char *powermenu[] = {"bash", "-c", ".config/rofi/powermenu/type-4/powermenu.sh", NULL};
 static const char *rofi[] = {"bash", "-c", ".config/rofi/launchers/type-7/launcher.sh", NULL};
 static const char *ncducmd[] = { "st", "-e", "ncdu", NULL };
+static const char *dmenucmd[] = { "dmenu_run", "-l", "17", NULL };
 
 static const Key keys[] = {
 
     {MODKEY,					 XK_Return,spawn, {.v = termcmd}},
 		{MODKEY|ShiftMask, XK_Return,spawn, SHCMD ("dm-runner")},
-		{MODKEY|Mod1Mask,	 XK_space, spawn, SHCMD("dm-desktop")},
+		{MODKEY|Mod1Mask,	 XK_space, spawn, SHCMD("dmenu_desktop_run")},
 		{MODKEY, 					 XK_space, spawn, {.v = dmenucmd}},
 		{MODKEY,           XK_Escape,spawn, SHCMD ("st -e btop") },
 
@@ -183,8 +167,8 @@ static const Key keys[] = {
 		{MODKEY, 					 XK_r, spawn, SHCMD ("dm-runner")},
 		{MODKEY|ShiftMask, XK_r, spawn, {.v = rofi}},
 
-{MODKEY|Mod1Mask, XK_s, spawn, SHCMD("maim ~/Pictures/screenshot/$(date +%Y%m%d-%H%M%S).png | tee >(xclip -selection clipboard -t image/png) >/dev/null")},
-{MODKEY, XK_s, spawn, SHCMD("maim --select ~/Pictures/screenshot/$(date +%Y%m%d-%H%M%S).png | tee >(xclip -selection clipboard -t image/png) >/dev/null")},
+ 		{MODKEY, 					 XK_s,spawn,SHCMD ("dm-screenshot")},
+		// {MODKEY|Mod1Mask,	 XK_s,spawn,SHCMD ("")},
 
 	  {MODKEY, 					 XK_v,spawn,SHCMD ("dm-list-videos")},
 		{MODKEY|Mod1Mask,	 XK_v,spawn,SHCMD ("dm-video-tool")},
