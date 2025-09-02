@@ -7,13 +7,3 @@ node_modules/
 .DS_Store
 *result*
 .config/nvim/lazy-lock.json
-
-# Build artifacts
-*.o
-# Backup / temporary files
-*~
-*.rej
-*.orig
-
-# Ignore compiled binaries, logs, etc.
-*.out
