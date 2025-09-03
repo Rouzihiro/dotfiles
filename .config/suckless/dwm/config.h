@@ -168,7 +168,7 @@ static const Key keys[] = {
 		{MODKEY|ShiftMask, XK_r, spawn, {.v = rofi}},
 
  		{MODKEY, 					 XK_s,spawn,SHCMD ("dm-screenshot")},
-		// {MODKEY|Mod1Mask,	 XK_s,spawn,SHCMD ("")},
+		// {MODKEY|Mod1Mask,	 XK_s,spawn,SHCMD ("flameshot")},
 
 	  {MODKEY, 					 XK_v,spawn,SHCMD ("dm-list-videos")},
 		{MODKEY|Mod1Mask,	 XK_v,spawn,SHCMD ("dm-video-tool")},

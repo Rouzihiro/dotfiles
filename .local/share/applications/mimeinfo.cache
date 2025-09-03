@@ -1,5 +1,13 @@
 [MIME Cache]
 application/xhtml+xml=Brave.desktop;
+image/bmp=imagemagick-display.desktop;
+image/gif=imagemagick-display.desktop;
+image/jpeg=imagemagick-display.desktop;
+image/png=imagemagick-display.desktop;
+image/tiff=imagemagick-display.desktop;
+image/webp=imagemagick-display.desktop;
+image/x-xbitmap=imagemagick-display.desktop;
+image/x-xpixmap=imagemagick-display.desktop;
 text/html=Brave.desktop;
 text/plain=nvim.desktop;
 text/xml=Brave.desktop;

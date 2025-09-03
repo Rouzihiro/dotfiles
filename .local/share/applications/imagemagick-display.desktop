@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=ImageMagick Display
+Comment=View and edit images with ImageMagick
+Exec=display %f
+Terminal=false
+Type=Application
+Categories=Graphics;Viewer;
+MimeType=image/png;image/jpeg;image/gif;image/bmp;image/webp;image/tiff;image/x-xbitmap;image/x-xpixmap;
