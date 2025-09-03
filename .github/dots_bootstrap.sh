@@ -21,7 +21,7 @@ fi
 sleep 1 && clear
 
 echo "Downloading dotfiles repository..."
-git clone https://github.com/Rouzihiro/dotfiles.git "$HOME/dotfiles"
+git clone --recursive https://github.com/Rouzihiro/dotfiles.git "$HOME/dotfiles"
 
 cd "$HOME/dotfiles/"
 ./install.sh
