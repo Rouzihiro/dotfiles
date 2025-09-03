@@ -1,3 +1,6 @@
 [submodule ".config/suckless/st"]
 	path = .config/suckless/st
 	url = git@github.com:Rouzihiro/suckless-st.git
+[submodule ".config/suckless/dmenu"]
+	path = .config/suckless/dmenu
+	url = git@github.com:Rouzihiro/suckless-dmenu.git
