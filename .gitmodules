@@ -1,0 +1,3 @@
+[submodule ".config/suckless/st"]
+	path = .config/suckless/st
+	url = git@github.com:Rouzihiro/suckless-st.git
