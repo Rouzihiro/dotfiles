@@ -1,28 +1,136 @@
 #!/bin/bash
 
-# Ask user for type
-TYPE=$(echo -e "Direct link\nEmbedded video" | dmenu -c -l 2 -p "Select download type:")
+# Configuration
+LOG_FILE="$HOME/Downloads/yt-dlp.log"
+DOWNLOAD_DIR="$HOME/Downloads"
+LINK_FILE="$HOME/Documents/Notes/downloads.md"
+DMENU_OPTS="-c -l 10"
 
-# Quit if nothing selected
-[ -z "$TYPE" ] && exit 1
+# Create directories if they don't exist
+mkdir -p "$DOWNLOAD_DIR"
+mkdir -p "$(dirname "$LINK_FILE")"
 
-# Ask for URL (clipboard pre-filled)
-URL=$(xclip -o -selection clipboard | dmenu -c -p "Enter URL (Ctrl+V to paste):")
-[ -z "$URL" ] && exit 1
+# Function to show error notification
+notify_error() {
+    notify-send -u critical "Download Error" "$1"
+}
 
-if [ "$TYPE" = "Embedded video" ]; then
-    # Video: use yt-dlp + aria2c
-    yt-dlp --external-downloader aria2c \
-           --external-downloader-args 'aria2c:-x2 -s2' \
-           -o "$HOME/Downloads/%(title)s.%(ext)s" \
-           "$URL" >> "$HOME/Downloads/yt-dlp.log" 2>&1 &
-    notify-send "Download started (video)" "$URL"
-else
-    # Direct link: use aria2c directly with basename
-    BASENAME=$(basename "${URL%%\?*}")
-    aria2c --check-certificate=false -x2 -s2 -d "$HOME/Downloads" -o "$BASENAME" "$URL" \
-           >> "$HOME/Downloads/yt-dlp.log" 2>&1 &
-    notify-send "Download started (direct file)" "$BASENAME"
+# Function to extract URLs from markdown file
+extract_urls() {
+    [ -f "$LINK_FILE" ] && \
+    grep -oE 'https?://[^[:space:]]*' "$LINK_FILE" | \
+    sort | uniq
+}
+
+# Function to monitor downloads
+monitor_downloads() {
+    if [ ! -f "$LOG_FILE" ]; then
+        echo "No download log file found."
+        return
+    fi
+    
+    local active_downloads=$(grep -E "\[#.*ETA:[0-9m]+s\]" "$LOG_FILE" | tail -20 | grep -v "100%" | head -10)
+    
+    if [ -z "$active_downloads" ]; then
+        echo "No active downloads found."
+        return
+    fi
+    
+    local formatted=$(echo "$active_downloads" | \
+        sed -E 's/.*\[#([a-f0-9]+) ([0-9.]+[A-Za-z]+)\/([0-9.]+[A-Za-z]+)\(([0-9]+)%\) CN:([0-9]+) DL:([0-9.]+[A-Za-z]+) ETA:([0-9m]+s)\].*/\2\/\3 (\4%) @ \6 - ETA: \7/' | \
+        nl -w 2 -s ': ')
+    
+    echo "$formatted"
+}
+
+# Function to handle downloads
+handle_download() {
+    local type="$1"
+    local url="$2"
+    
+    if [ "$type" = "Embedded video" ]; then
+        if yt-dlp --external-downloader aria2c \
+                  --external-downloader-args 'aria2c:-x2 -s2' \
+                  -o "$DOWNLOAD_DIR/%(title)s.%(ext)s" \
+                  "$url" >> "$LOG_FILE" 2>&1; then
+            notify-send "Download completed" "Successfully downloaded: $url"
+        else
+            notify_error "Failed to download: $url"
+        fi
+    else
+        local basename=$(basename "${url%%\?*}")
+        if aria2c --check-certificate=false \
+                  -x2 -s2 \
+                  -d "$DOWNLOAD_DIR" \
+                  -o "$basename" \
+                  "$url" >> "$LOG_FILE" 2>&1; then
+            notify-send "Download completed" "Successfully downloaded: $basename"
+        else
+            notify_error "Failed to download: $basename"
+        fi
+    fi
+}
+
+# Main download function
+process_download() {
+    local type="$1"
+    local urls="$2"
+    
+    for URL in $urls; do
+        if [[ ! $URL =~ ^https?:// ]]; then
+            notify_error "Invalid URL: $URL"
+            continue
+        fi
+        handle_download "$type" "$URL" &
+    done
+
+    disown
+    notify-send "Download(s) started" "Processing $(echo "$urls" | wc -w) download(s) in background"
+}
+
+# main menu
+CHOICE=$(echo -e "Clipboard\nSingle from file\nAll from file\nMonitor Downloads" | dmenu $DMENU_OPTS -p "Select action:")
+[ -z "$CHOICE" ] && exit 1
+
+if [ "$CHOICE" = "Monitor Downloads" ]; then
+    MONITOR_OUTPUT=$(monitor_downloads)
+    echo "$MONITOR_OUTPUT" | dmenu $DMENU_OPTS -p "Active Downloads:"
+    exit 0
 fi
 
-disown
+# Otherwise, ask download type
+TYPE=$(echo -e "Direct link\nEmbedded video" | dmenu $DMENU_OPTS -p "Select download type:")
+[ -z "$TYPE" ] && exit 1
+
+case "$CHOICE" in
+    "Clipboard")
+        URL=$(xclip -o -selection clipboard | dmenu $DMENU_OPTS -p "Edit URL (Ctrl+V to paste):")
+        [ -z "$URL" ] && exit 1
+        process_download "$TYPE" "$URL"
+        ;;
+        
+    "Single from file")
+        URLS=$(extract_urls)
+        if [ -z "$URLS" ]; then
+            notify_error "No URLs found in $LINK_FILE"
+            exit 1
+        fi
+        URL=$(echo "$URLS" | dmenu $DMENU_OPTS -p "Select URL:")
+        [ -z "$URL" ] && exit 1
+        process_download "$TYPE" "$URL"
+        ;;
+        
+"All from file")
+    URLS=$(extract_urls)
+    if [ -z "$URLS" ]; then
+        notify_error "No URLs found in $LINK_FILE"
+        exit 1
+    fi
+    
+    COUNT=$(echo "$URLS" | wc -w)
+    CONFIRM=$(echo -e "Yes\nNo" | dmenu $DMENU_OPTS -p "Download all $COUNT URLs?")
+    [ "$CONFIRM" != "Yes" ] && exit 1
+
+    process_download "$TYPE" "$URLS"
+    ;;
+esac
