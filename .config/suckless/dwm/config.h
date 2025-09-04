@@ -152,7 +152,8 @@ static const Key keys[] = {
 
 		{MODKEY, 					 XK_l,spawn,SHCMD ("i3lock -i ~/Pictures/lockscreen/lock_scaled.png")},
 
-	  {MODKEY, 					 XK_m,spawn,SHCMD ("dm-mount-usb")},
+		{MODKEY,	 				 XK_m,spawn,SHCMD ("dm-music-downloader")},
+	  {MODKEY|Mod1Mask,	 XK_m,spawn,SHCMD ("dm-mount-usb")},
 
 		{MODKEY,         	 XK_n,spawn,SHCMD ("bash -c 'dm-notes'")},
 
