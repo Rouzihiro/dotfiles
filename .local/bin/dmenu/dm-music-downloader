@@ -3,6 +3,10 @@
 DOCUMENTS="$HOME/Documents"
 NOTES="$DOCUMENTS/Notes"
 
+LOG_DIR="$HOME/.logs"
+LOG_FILE="$LOG_DIR/.music.log"
+mkdir -p "$LOG_DIR"
+
 # Colors for output
 RED='\033[0;31m'
 GREEN='\033[0;32m'
@@ -24,7 +28,7 @@ cleanup() {
 
 # Check dependencies
 check_deps() {
-    local deps=("yt-dlp" "dmenu" "mpv" "md5sum" "jq" "ffmpeg" "curl" "exiftool")
+    local deps=("yt-dlp" "dmenu" "mpv" "md5sum" "jq" "ffmpeg" "curl" "exiftool" "notify-send")
     local missing=()
 
     for dep in "${deps[@]}"; do
@@ -53,22 +57,24 @@ generate_filename() {
     local title=$(jq -r '.title // "Unknown Title"' "$metadata_file")
     local artist=$(jq -r '.artist // .album_artist // .uploader // "Unknown Artist"' "$metadata_file")
 
+    # Filenames keep spaces
     title=$(sanitize_filename "$title")
     artist=$(sanitize_filename "$artist")
 
+    # USB-friendly folder
+    local folder_artist=$(echo "$artist" | tr ' ' '.')
+
     # Avoid duplicate artist-title
+    local filename
     if [[ "$title" == "$artist"* ]]; then
-        local filename="$title.$format"
+        filename="$title.$format"
     else
-        local filename="$artist - $title.$format"
+        filename="$artist - $title.$format"
     fi
 
-    # Create per-artist folder
-    mkdir -p "$TARGET_DIR/$artist"
-
-    echo "$TARGET_DIR/$artist/$filename"
+    mkdir -p "$TARGET_DIR/$folder_artist"
+    echo "$TARGET_DIR/$folder_artist/$filename"
 }
-
 # Embed metadata using ffmpeg
 embed_metadata() {
     local input_file="$1"
@@ -89,12 +95,13 @@ embed_metadata() {
 
     ffmpeg_cmd+=("-y" "$output_file")
 
-    if "${ffmpeg_cmd[@]}" 2>/dev/null; then
+    if "${ffmpeg_cmd[@]}" 2>>"$LOG_FILE"; then
         mv "$output_file" "$input_file"
         echo -e "${GREEN}✓ Metadata embedded${NC}"
         return 0
     else
         echo -e "${YELLOW}⚠ Could not embed metadata${NC}"
+        echo "Metadata embedding failed for $input_file" >>"$LOG_FILE"
         rm -f "$output_file"
         return 1
     fi
@@ -109,7 +116,11 @@ download_and_process() {
 
     local metadata_file="$TEMP_DIR/metadata.json"
 
-    yt-dlp --write-info-json --skip-download -o "$TEMP_DIR/%(id)s.%(ext)s" "$url"
+    if ! yt-dlp --write-info-json --skip-download -o "$TEMP_DIR/%(id)s.%(ext)s" "$url" 2>>"$LOG_FILE"; then
+        echo "Failed to fetch metadata for $url" >>"$LOG_FILE"
+        notify-send "Music Download Error" "Failed to fetch metadata for $url"
+        return
+    fi
     mv "$TEMP_DIR/"*.info.json "$metadata_file"
 
     local output_file
@@ -120,7 +131,11 @@ download_and_process() {
         return
     fi
 
-    yt-dlp -x --audio-format "$format" -o "$TEMP_DIR/%(title)s.%(ext)s" "$url"
+    if ! yt-dlp -x --audio-format "$format" -o "$TEMP_DIR/%(title)s.%(ext)s" "$url" 2>>"$LOG_FILE"; then
+        echo "Failed to download $url" >>"$LOG_FILE"
+        notify-send "Music Download Error" "Failed to download $url"
+        return
+    fi
 
     local downloaded_file
     downloaded_file=$(ls "$TEMP_DIR"/*."$format" | head -n 1)
@@ -129,6 +144,7 @@ download_and_process() {
 
     mv "$downloaded_file" "$output_file"
     echo -e "${GREEN}Saved:${NC} $output_file"
+    notify-send "Music Download Complete" "$(basename "$output_file")"
 }
 
 # Download playlists
@@ -159,6 +175,7 @@ rename_existing_files() {
         [ -z "$title" ] && title="Unknown Title"
         [ -z "$artist" ] && artist="Unknown Artist"
 
+        # Keep filename with spaces
         title=$(sanitize_filename "$title")
         artist=$(sanitize_filename "$artist")
 
@@ -169,14 +186,15 @@ rename_existing_files() {
             new_filename="$artist - $title.$extension"
         fi
 
-        mkdir -p "$TARGET_DIR/$artist"
-        local new_path="$TARGET_DIR/$artist/$new_filename"
+        # Folder with dots
+        local folder_artist=$(echo "$artist" | tr ' ' '.')
+        mkdir -p "$TARGET_DIR/$folder_artist"
+        local new_path="$TARGET_DIR/$folder_artist/$new_filename"
 
         [ "$file" != "$new_path" ] && mv -n "$file" "$new_path" && echo -e "${GREEN}Renamed:${NC} $file → $new_path"
     done
     shopt -u nullglob
 }
-
 # Move files
 move_files() {
     local target="$1"
@@ -188,9 +206,6 @@ move_files() {
 update_mpd() {
     command -v mpc >/dev/null && mpc update || echo -e "${YELLOW}MPD client not found, skipping.${NC}"
 }
-
-# Cleanup
-cleanup_command() { cleanup; }
 
 # Interactive mode using dmenu
 interactive_mode() {
@@ -207,7 +222,6 @@ interactive_mode() {
         )
 
         local selection=$(printf '%s\n' "${options[@]}" | dmenu -i -l 10 -p "Select action:")
-
         [ -z "$selection" ] && exit 0
         local action=$(echo "$selection" | cut -d':' -f1)
 
@@ -223,12 +237,10 @@ interactive_mode() {
             dedup-hash) remove_duplicates_interactive "hash" ;;
             move) move_files "$TARGET_DIR" ;;
             update) update_mpd ;;
-            cleanup) cleanup_command ;;
+            cleanup) cleanup ;;
             quit) exit 0 ;;
             *) echo -e "${RED}Invalid option!${NC}" ;;
         esac
-
-        read -p "Press Enter to continue..."
     done
 }
 
@@ -243,7 +255,7 @@ main() {
         rename) rename_existing_files ;;
         move) move_files "$TARGET_DIR" ;;
         update) update_mpd ;;
-        cleanup) cleanup_command ;;
+        cleanup) cleanup ;;
         help|--help|-h) echo "Usage: $0 [command]"; exit 0 ;;
         *) echo -e "${RED}Unknown command: $1${NC}" ; exit 1 ;;
     esac
