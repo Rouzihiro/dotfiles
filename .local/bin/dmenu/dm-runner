@@ -1,7 +1,7 @@
 #!/bin/bash
 #export DISPLAY=:0
 
-app=$(echo -e "neovim\nbrowser\nbluetooth\nreddit\nchatgpt\ngithub\ndeepseek\nrarefilmm\ntranslate.google\nyoutube\nrapidmovies\nnoodle\neporner\nfitgirl\ndodi\nfzmovies\ntorrent-1337x\nmoviesjoytv\nmaps" | dmenu -c -l 15 -p "")
+app=$(echo -e "neovim\nbrowser\nbluetooth\nreddit\nchatgpt\ngithub\ndeepseek\nrarefilmm\n456-movie\ntranslate.google\nyoutube\nrapidmovies\nnoodle\neporner\nfitgirl\ndodi\nfzmovies\ntorrent-1337x\nmoviesjoytv\nmaps" | dmenu -c -l 15 -p "")
 
 [ -z "$app" ] && exit 0
 case "$app" in
@@ -11,6 +11,7 @@ case "$app" in
     moviesjoytv) xdg-open "https://moviesjoytv.to" & ;;
     rapidmovies) xdg-open "https://rmz.cr" & ;;
     fzmovies) xdg-open "https://fzmovies.net/movieslist.php?catID=2&by=latest" & ;;
+		456-movie) xdg-open "https://456movie.net" & ;;
 		torrent-1337x) xdg-open "https://1337x.pro/top-100" & ;;
     dodi) xdg-open "https://dodi-repacks.site" & ;;
     fitgirl) xdg-open "https://fitgirl-repacks.site" & ;;
