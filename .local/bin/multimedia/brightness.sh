@@ -21,9 +21,9 @@ if [[ $# -ne 1 ]] || [[ "$1" != "up" && "$1" != "down" ]]; then
 fi
 
 if [[ "$1" == "up" ]]; then
-    brightnessctl -e4 set +1%
+    brightnessctl -e4 set +5%
 else
-    brightnessctl -e4 set 1%-
+    brightnessctl -e4 set 5%-
 fi
 
 current=$(brightnessctl get)

@@ -1,76 +1,100 @@
 #!/bin/sh
 
-# Function to list all partitions
+# Function to send notifications
+notify() {
+    title="$1"
+    message="$2"
+    icon="$3"
+    notify-send -u normal -i "$icon" "$title" "$message"
+}
+
+# Function to list all disks and partitions
 list_partitions() {
-  echo "Available partitions:"
-  lsblk -o NAME,SIZE,FSTYPE,MOUNTPOINT -l | grep -E 'sd[a-z][0-9]|nvme[0-9]n[0-9]p[0-9]' | awk '{print NR") "$0}'
+    echo "Available disks/partitions:"
+    lsblk -o NAME,SIZE,FSTYPE,MOUNTPOINT -l | grep -E 'sd[a-z]([0-9])?|nvme[0-9]n[0-9]p[0-9]' | awk '{print NR") "$0}'
 }
 
-# Function to select a partition
+# Function to select a disk/partition
 select_partition() {
-  list_partitions
-  printf "Enter the number of the partition you want to work on (e.g., 1, 2, etc.): "
-  read -r partition_num
-  selected_partition=$(lsblk -o NAME -l | grep -E 'sd[a-z][0-9]|nvme[0-9]n[0-9]p[0-9]' | sed -n "${partition_num}p" | awk '{print $1}')
-  if [ -z "$selected_partition" ]; then
-    echo "Invalid selection. Exiting."
-    exit 1
-  fi
-  echo "Selected partition: /dev/$selected_partition"
+    list_partitions
+    printf "Enter the number of the disk/partition you want to work on (e.g., 1, 2, etc.): "
+    read -r partition_num
+    selected_partition=$(lsblk -o NAME -l | grep -E 'sd[a-z]([0-9])?|nvme[0-9]n[0-9]p[0-9]' | sed -n "${partition_num}p" | awk '{print $1}')
+    if [ -z "$selected_partition" ]; then
+        echo "Invalid selection. Exiting."
+        notify "Partition Script" "Invalid selection" "dialog-error"
+        exit 1
+    fi
+    echo "Selected: /dev/$selected_partition"
 }
 
-# Function to handle mount/unmount/remove for partitions
+# Function to handle mount/unmount/remove
 partition_action() {
-  select_partition
-  printf "Choose action: (m)ount, (u)nmount, (r)emove: "
-  read -r action
-  case "$action" in
-    m|M)
-      mount_point="$HOME/mount/usb"
-      echo "Creating mount point at $mount_point..."
-      mkdir -p "$mount_point"
+    select_partition
+    printf "Choose action: (m)ount, (u)nmount, (r)emove: "
+    read -r action
+    mount_point="$HOME/mount/usb"
+    mkdir -p "$mount_point"
 
-      # Get the filesystem type
-      fs_type=$(lsblk -o FSTYPE -n "/dev/$selected_partition")
+    case "$action" in
+        m|M)
+            # Get filesystem type
+            fs_type=$(lsblk -o FSTYPE -n "/dev/$selected_partition")
+            echo "Mounting /dev/$selected_partition ($fs_type) to $mount_point..."
 
-      echo "Mounting /dev/$selected_partition to $mount_point..."
-      if [ "$fs_type" = "ntfs" ]; then
-        if sudo ntfs-3g "/dev/$selected_partition" "$mount_point" -o "uid=$(id -u),gid=$(id -g)"; then
-          echo "NTFS partition mounted successfully at $mount_point."
-        else
-          echo "Failed to mount NTFS partition."
-        fi
-      else
-        if sudo mount "/dev/$selected_partition" "$mount_point" -o "uid=$(id -u),gid=$(id -g)"; then
-          echo "Partition mounted successfully at $mount_point."
-        else
-          echo "Failed to mount partition."
-        fi
-      fi
-      ;;
-    u|U)
-      echo "Unmounting /dev/$selected_partition..."
-      if sync && sudo umount "/dev/$selected_partition"; then
-        echo "Partition unmounted successfully."
-      else
-        echo "Failed to unmount partition."
-      fi
-      ;;
-    r|R)
-      echo "Removing /dev/$selected_partition..."
-      if udisksctl power-off -b "/dev/$selected_partition"; then
-        echo "Partition removed successfully."
-      else
-        echo "Failed to remove partition."
-      fi
-      ;;
-    *)
-      echo "Invalid action. Exiting."
-      exit 1
-      ;;
-  esac
+            if [ "$fs_type" = "ntfs" ]; then
+                if sudo mount -t ntfs-3g "/dev/$selected_partition" "$mount_point" -o "uid=$(id -u),gid=$(id -g)"; then
+                    echo "NTFS partition mounted successfully."
+                    notify "Mount Success" "/dev/$selected_partition mounted at $mount_point" "drive-harddisk"
+                else
+                    echo "Failed to mount NTFS."
+                    notify "Mount Failed" "/dev/$selected_partition failed to mount" "dialog-error"
+                fi
+            elif [ "$fs_type" = "btrfs" ]; then
+								if sudo mount -t btrfs "/dev/$selected_partition" "$mount_point" -o "noatime,compress=zstd:3,space_cache=v2"; then
+                    echo "Btrfs partition mounted successfully."
+                    notify "Mount Success" "/dev/$selected_partition mounted at $mount_point" "drive-harddisk"
+                else
+                    echo "Failed to mount Btrfs."
+                    notify "Mount Failed" "/dev/$selected_partition failed to mount" "dialog-error"
+                fi
+            else
+                if sudo mount "/dev/$selected_partition" "$mount_point" -o "uid=$(id -u),gid=$(id -g)"; then
+                    echo "Partition mounted successfully."
+                    notify "Mount Success" "/dev/$selected_partition mounted at $mount_point" "drive-harddisk"
+                else
+                    echo "Failed to mount partition."
+                    notify "Mount Failed" "/dev/$selected_partition failed to mount" "dialog-error"
+                fi
+            fi
+            ;;
+        u|U)
+            echo "Unmounting /dev/$selected_partition..."
+            if sync && sudo umount "/dev/$selected_partition"; then
+                echo "Partition unmounted successfully."
+                notify "Unmount Success" "/dev/$selected_partition unmounted" "drive-harddisk"
+            else
+                echo "Failed to unmount partition."
+                notify "Unmount Failed" "/dev/$selected_partition failed to unmount" "dialog-error"
+            fi
+            ;;
+        r|R)
+            echo "Removing /dev/$selected_partition..."
+            if udisksctl power-off -b "/dev/$selected_partition"; then
+                echo "Partition removed successfully."
+                notify "Remove Success" "/dev/$selected_partition powered off" "media-eject"
+            else
+                echo "Failed to remove partition."
+                notify "Remove Failed" "/dev/$selected_partition failed to power off" "dialog-error"
+            fi
+            ;;
+        *)
+            echo "Invalid action. Exiting."
+            notify "Partition Script" "Invalid action selected" "dialog-error"
+            exit 1
+            ;;
+    esac
 }
 
-# Main script
+# Main
 partition_action
-
