@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+choice=$(printf "Lock\nReboot\nShutdown\nLogout" | dmenu -i -l 5 -p "Power:")
+[ -z "$choice" ] && exit
+
+case "$choice" in
+    Lock) i3lock -i $HOME/Pictures/lockscreen/lock_scaled.png ;;
+    Reboot) systemctl reboot ;;
+    Shutdown) systemctl poweroff ;;
+    Logout) killall dwm ;;
+esac
