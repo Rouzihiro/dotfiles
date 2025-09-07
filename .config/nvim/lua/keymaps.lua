@@ -19,6 +19,14 @@ map("n", "<esc>", "<cmd>noh<CR>")
 map('n', '<leader>p', ":Pick files<CR>")
 map('n', '<leader>h', ":Pick help<CR>")
 map('n', '<leader>lf', vim.lsp.buf.format)
+map('n', '<leader>t', ':Open .<CR>')
+map('n', '<leader>nc', ':e $MYVIMRC<CR>')
+map('n', '<leader>nn', ':e ~/.config/nvim/lua/keymaps.lua<CR>')
+map('n', '<leader>zz', ':e ~/.config/zsh/.aliases<CR>')
+map('n', '<leader>zc', ':e ~/.config/zsh/.zshrc<CR>')
+map('n', '<leader>zf', ':e ~/.config/zsh/.aliases-functions<CR>')
+map('n', '<leader>l', ':e #<CR>')
+map('n', '<leader>L', ':bot sf #<CR>')
 map("n", "}", "}zz")
 map("n", "{", "{zz")
 
@@ -26,6 +34,7 @@ map("n", "{", "{zz")
 map({ "n", "v" }, "d", "\"_d")
 map({ "n", "v" }, "D", "\"_D")
 map({ "n", "v" }, "X", "dd")
+map( "n", "<leader>y", "yt#", { noremap = true, silent = true })
 
 map({ "n" }, "<leader>R", ":display<CR>", { desc = "Show registers" })
 
@@ -33,13 +42,16 @@ for i = 0, 9 do
   map('n', '<leader>r' .. i, '"' .. i .. 'p', opts)
 end
 
-map({ "n" }, "<space>a", "mzA<space><esc>p`z", { desc = "paste to the end of line" })
+map({ "n" }, "<leader>a", "mzA<space><esc>p`z", { desc = "paste to the end of line" })
 map("n", "<leader>za", 'ggVG"+y', { desc = "Yank entire buffer" })
 
 -- Search/replace
 map({ "n", "v" }, "<leader>C", ":%s/<C-r><C-w>//g<Left><Left>", { desc = "Replace word under cursor" })
 
 map({ "n", "v" }, "<leader>c", ":%s/<C-r><C-w>//gc<Left><Left><Left>", { desc = "Replace word under cursor with confirmation" })
+
+
+-- map({ 'n', 'v' }, '<leader>c', '1z=', { desc = "Correct last misspelled word" })
 
 -- Formatting
 map("n", "<leader>al", "<cmd>lua vim.lsp.buf.format()<CR>", { desc = "Format with LSP" })

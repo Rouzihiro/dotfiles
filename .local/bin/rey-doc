@@ -21,7 +21,7 @@ tmux has-session -t $SESSION_NAME 2>/dev/null || {
   #tmux send-keys -t $SESSION_NAME:2.1 "nvim -c 'lua require(\"mini.pick\").builtin.files()'" C-m
 
   # Right pane (split horizontally)
-	tmux split-window -h -t $SESSION_NAME:2 -c "$HOME/dotfiles"
+	tmux split-window -h -t $SESSION_NAME:2 -c "$HOME/dotfiles/.config/"
   tmux send-keys -t $SESSION_NAME:2.2 "nvim -c 'lua require(\"mini.pick\").builtin.files()'" C-m
 	#tmux send-keys -t $SESSION_NAME:2.2 "nvim -c 'Oil'" C-m
 

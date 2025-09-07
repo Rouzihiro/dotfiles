@@ -1,0 +1,28 @@
+#!/bin/bash
+
+# Device to format
+DEVICE="/dev/sda"
+MOUNT_POINT="$HOME/mount/usb"
+LABEL="media"
+
+# Confirm with user
+echo "⚠️  WARNING: This will wipe all data on $DEVICE!"
+read -rp "Type 'yes' to continue: " CONFIRM
+if [ "$CONFIRM" != "yes" ]; then
+    echo "Aborted."
+    exit 1
+fi
+
+# Wipe existing filesystem signatures
+sudo wipefs -a "$DEVICE" || { echo "Failed to wipe $DEVICE"; exit 1; }
+
+# Format as ext4 with bad-block check
+sudo mkfs.ext4 -c -L "$LABEL" "$DEVICE" || { echo "Failed to format $DEVICE"; exit 1; }
+
+# Create mount point if it doesn't exist
+mkdir -p "$MOUNT_POINT"
+
+# Mount the drive
+sudo mount "$DEVICE" "$MOUNT_POINT" || { echo "Failed to mount $DEVICE"; exit 1; }
+
+echo "✅ $DEVICE formatted as ext4, scanned for bad blocks, and mounted at $MOUNT_POINT"

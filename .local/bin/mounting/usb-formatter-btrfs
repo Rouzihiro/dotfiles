@@ -1,0 +1,27 @@
+#!/bin/bash
+# Safe wipe + Btrfs format + mount script for /dev/sdb
+
+DISK="/dev/sdc"
+MOUNTPOINT="$HOME/mount/usb"
+LABEL="media"
+
+# 2️⃣ Wipe filesystem signatures (does not touch entire disk, safe for failing drives)
+echo "=== Removing old filesystem signatures ==="
+sudo wipefs -a "$DISK"
+
+# 3️⃣ Create new Btrfs filesystem
+echo "=== Formatting $DISK as Btrfs ==="
+sudo mkfs.btrfs -f -L "$LABEL" "$DISK" || { echo "Failed to format $DISK"; exit 1; }
+
+# 4️⃣ Create mountpoint
+mkdir -p "$MOUNTPOINT"
+
+# 5️⃣ Mount the disk
+echo "=== Mounting $DISK to $MOUNTPOINT ==="
+sudo mount "$DISK" "$MOUNTPOINT" || { echo "Failed to mount $DISK"; exit 1; }
+
+# 6️⃣ Fix ownership to current user
+sudo chown -R $(id -u):$(id -g) "$MOUNTPOINT"
+
+# 7️⃣ Notify success
+echo "✅ $DISK is now formatted as Btrfs and mounted at $MOUNTPOINT"

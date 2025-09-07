@@ -26,6 +26,7 @@ alias md='mkdir -pv'
 alias mv='mv -iv'
 alias cp='cp -vr'
 alias crp='rsync -ah --progress'
+alias crpe='rsync -avh --progress --inplace --ignore-errors --partial --timeout=10'
 
 alias rm='rm -rf'
 
