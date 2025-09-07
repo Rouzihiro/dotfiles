@@ -20,6 +20,7 @@ vim.opt.signcolumn = "yes"
 
 vim.pack.add({
   { src = "https://github.com/rebelot/kanagawa.nvim" },
+	{ src = "https://github.com/neanias/everforest-nvim" },
   { src = "https://github.com/neovim/nvim-lspconfig" },
   { src = "https://github.com/hrsh7th/nvim-cmp" },
   { src = "https://github.com/hrsh7th/cmp-path" },
@@ -71,8 +72,13 @@ require("plugins.oil")
 -- require('nvim-treesitter.configs').setup({ highlight = { enable = true } })
 --
 -- Colorscheme
-require("kanagawa").setup({ transparent = true })
-vim.cmd("colorscheme kanagawa")
+-- require("kanagawa").setup({ transparent = true })
+require("everforest").setup({ 
+	transparent_background_level = 1,
+ 	background = "hard",
+})
+-- vim.cmd("colorscheme kanagawa")
+vim.cmd("colorscheme everforest")
 vim.cmd(":hi statusline guibg=NONE")
 
 -- Snippets
