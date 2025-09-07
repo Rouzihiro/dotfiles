@@ -11,7 +11,7 @@ notify() {
 # Function to list all disks and partitions
 list_partitions() {
     echo "Available disks/partitions:"
-    lsblk -o NAME,SIZE,FSTYPE,MOUNTPOINT -l | grep -E 'sd[a-z]([0-9])?|nvme[0-9]n[0-9]p[0-9]' | awk '{print NR") "$0}'
+    lsblk -o NAME,SIZE,FSTYPE,MOUNTPOINT -l | grep -E '^(sd[a-z]|nvme[0-9]n[0-9])' | awk '{print NR") "$0}'
 }
 
 # Function to select a disk/partition
@@ -19,7 +19,7 @@ select_partition() {
     list_partitions
     printf "Enter the number of the disk/partition you want to work on (e.g., 1, 2, etc.): "
     read -r partition_num
-    selected_partition=$(lsblk -o NAME -l | grep -E 'sd[a-z]([0-9])?|nvme[0-9]n[0-9]p[0-9]' | sed -n "${partition_num}p" | awk '{print $1}')
+    selected_partition=$(lsblk -o NAME -l | grep -E '^(sd[a-z]|nvme[0-9]n[0-9])' | sed -n "${partition_num}p" | awk '{print $1}')
     if [ -z "$selected_partition" ]; then
         echo "Invalid selection. Exiting."
         notify "Partition Script" "Invalid selection" "dialog-error"
@@ -38,11 +38,19 @@ partition_action() {
 
     case "$action" in
         m|M)
-            # Get filesystem type
-            fs_type=$(lsblk -o FSTYPE -n "/dev/$selected_partition")
+            fs_type=$(lsblk -no FSTYPE "/dev/$selected_partition")
             echo "Mounting /dev/$selected_partition ($fs_type) to $mount_point..."
 
-            if [ "$fs_type" = "ntfs" ]; then
+            if [ -z "$fs_type" ]; then
+                echo "No filesystem detected. Attempting auto-detect mount..."
+                if sudo mount "/dev/$selected_partition" "$mount_point" -o "uid=$(id -u),gid=$(id -g)"; then
+                    echo "Disk mounted successfully."
+                    notify "Mount Success" "/dev/$selected_partition mounted at $mount_point" "drive-harddisk"
+                else
+                    echo "Failed to mount disk."
+                    notify "Mount Failed" "/dev/$selected_partition failed to mount" "dialog-error"
+                fi
+            elif [ "$fs_type" = "ntfs" ]; then
                 if sudo mount -t ntfs-3g "/dev/$selected_partition" "$mount_point" -o "uid=$(id -u),gid=$(id -g)"; then
                     echo "NTFS partition mounted successfully."
                     notify "Mount Success" "/dev/$selected_partition mounted at $mount_point" "drive-harddisk"
@@ -51,7 +59,7 @@ partition_action() {
                     notify "Mount Failed" "/dev/$selected_partition failed to mount" "dialog-error"
                 fi
             elif [ "$fs_type" = "btrfs" ]; then
-								if sudo mount -t btrfs "/dev/$selected_partition" "$mount_point" -o "noatime,compress=zstd:3,space_cache=v2"; then
+                if sudo mount -t btrfs "/dev/$selected_partition" "$mount_point" -o "noatime,compress=zstd:3,space_cache=v2"; then
                     echo "Btrfs partition mounted successfully."
                     notify "Mount Success" "/dev/$selected_partition mounted at $mount_point" "drive-harddisk"
                 else

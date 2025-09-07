@@ -1,0 +1,9 @@
+#!/bin/sh
+perc=$(cat /sys/class/power_supply/macsmc-battery/capacity)
+if [ "$perc" -ge 90 ]; then icon=""
+elif [ "$perc" -ge 70 ]; then icon=""
+elif [ "$perc" -ge 50 ]; then icon=""
+elif [ "$perc" -ge 20 ]; then icon=""
+else icon=""
+fi
+echo "$icon $perc%"
