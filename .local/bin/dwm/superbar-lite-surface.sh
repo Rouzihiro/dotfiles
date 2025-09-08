@@ -6,12 +6,23 @@ NET_IF="wlp1s0"
 # initial rx bytes
 prev_rx=$(cat /sys/class/net/$NET_IF/statistics/rx_bytes)
 
+# battery icon function
+battery_status() {
+  perc=$(cat /sys/class/power_supply/macsmc-battery/capacity)
+  if   [ "$perc" -ge 90 ]; then icon=""
+  elif [ "$perc" -ge 70 ]; then icon=""
+  elif [ "$perc" -ge 50 ]; then icon=""
+  elif [ "$perc" -ge 20 ]; then icon=""
+  else icon=""
+  fi
+  echo "$icon $perc%"
+}
+
 while true; do
   Vol=" $(pamixer --get-volume-human)"
-  Bat=" $(cat /sys/class/power_supply/BAT1/capacity)%"
-  Day=" $(date '+%a,%Y-%m-%d')"
+  Bat="$(battery_status)"
   Time=" $(date '+%I:%M %p')"
-#  Music=" $(playerctl metadata --format "{{ artist }} - {{ title }}" | awk '{print substr($0, 1, 32)}')"
+  Music=" $(playerctl metadata --format "{{ artist }} - {{ title }}" | awk '{print substr($0, 1, 32)}')"
   Bklit="󰃟 $(brightnessctl i | awk '/Current brightness/ {print $4}' | sed 's/[()]//g')"
 
   # Memory usage (MiB)
@@ -19,8 +30,9 @@ while true; do
   Mem=" $mem_used"
 
   # CPU temperature (first core/package)
-  cpu_temp=$(sensors | awk '/Package id 0:/ {print $4; exit}')
-  Cpu=" $cpu_temp"
+  temps=$(sensors | awk '/Temp|Temperature|Hotspot/ {gsub(/\+|°C/,"",$3); print $3}')
+  max_temp=$(echo "$temps" | sort -nr | head -n1)
+  Cpu=" ${max_temp}°C"
 
   # Disk free space (/)
   disk_free=$(df -h / | awk 'NR==2 {print $4}')
@@ -32,7 +44,6 @@ while true; do
   Net="󰀂 ${rx_rate}MB/s"
   prev_rx=$rx_now
 
- # xsetroot -name "$Music | $Vol | $Mem | $Cpu | $Net | $Disk | $Bklit | $Day | $Time | $Bat"
-  xsetroot -name "$Vol | $Mem | $Cpu | $Net | $Disk | $Bklit | $Day | $Time | $Bat"
-	sleep 1
+  xsetroot -name "$Music | $Vol | $Mem | $Cpu | $Net | $Disk | $Bklit | $Time | $Bat"
+  sleep 1
 done

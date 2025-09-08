@@ -1,0 +1,28 @@
+#!/bin/sh
+
+ARCHIVE="DWM
+ST
+DMENU
+ZSH
+ZSH-aliases
+ZSH-functions
+NVIM
+NVIM-keys
+PACKER
+PICOM"
+DMENUCHOICE=$(printf "$ARCHIVE" | dmenu -l 10 -p "EDIT:")
+
+case $DMENUCHOICE in
+     DWM) st -e nvim $HOME/.config/suckless/dwm/config.h ;;
+ 		 ST) st -e nvim $HOME/suckless/st/config.h ;;
+     # ST) st -e nvim $HOME/.config/suckless/st/config.def.h ;;
+     DMENU) st -e nvim $HOME/suckless/dmenu/config.h ;;
+ 		 # DMENU) st -e nvim $HOME/.config/suckless/dmenu/config.def.h ;;
+     # DWMBLOCKS) st -e nvim $HOME/.config/suckless/dwmblocks-async/config.c ;;
+     NVIM) st -e nvim $HOME/.config/nvim/init.lua ;;
+     NVIM-keys) st -e nvim $HOME/.config/nvim/lua/keymaps.lua ;;
+     ZSH) st -e nvim $HOME/.config/zsh/.zshrc ;;
+ 		 ZSH-aliases) st -e nvim $HOME/.config/zsh/.aliases ;;
+		 ZSH-functions) st -e nvim $HOME/.config/zsh/.aliases-functions ;;
+     PICOM) st -e nvim $HOME/.config/picom.conf ;;
+esac

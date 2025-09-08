@@ -1,6 +1,6 @@
 #!/bin/bash
 
-LOCK_TIMEOUT=600   # 10 minutes
+LOCK_TIMEOUT=2400   # 40 minutes
 
 while true; do
     idle=$(xprintidle)
