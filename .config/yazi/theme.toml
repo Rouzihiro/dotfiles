@@ -10,5 +10,8 @@
 # : Flavor {{{
 
 [flavor]
-dark  = "kanagawa-dragon"
-light = "kanagawa-dragon"
+# dark  = "kanagawa-dragon"
+# light = "kanagawa-dragon"
+dark  = "everforest-medium"
+light  = "everforest-medium"
+
