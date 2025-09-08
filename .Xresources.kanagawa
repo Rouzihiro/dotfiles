@@ -10,26 +10,26 @@ Xft.lcdfilter:  lcddefault
 *.cursorColor:  #DCA561
 *.cursorBlink:  true
 
-! ────────── Everforest Soft Colors ──────────
+! ────────── Kanagawa Terminal Colors ──────────
 *.foreground:   #DCD7BA
-*.background:   #2D3330
+*.background:   #1F1F28
 
 ! Normal colors
-*.color0:  #2D3330
-*.color1:  #EC5F67
-*.color2:  #A7C080
-*.color3:  #EBCB8B
-*.color4:  #7FB4CA
-*.color5:  #D699B6
-*.color6:  #5FB3B3
-*.color7:  #DCD7BA
+*.color0:  #16161D
+*.color1:  #C34043
+*.color2:  #76946A
+*.color3:  #C0A36E
+*.color4:  #7E9CD8
+*.color5:  #957FB8
+*.color6:  #6A9589
+*.color7:  #C8C093
 
 ! Bright colors
-*.color8:  #3C4750
-*.color9:  #EC5F67
-*.color10: #A7C080
-*.color11: #EBCB8B
+*.color8:  #727169
+*.color9:  #E82424
+*.color10: #98BB6C
+*.color11: #E6C384
 *.color12: #7FB4CA
-*.color13: #D699B6
-*.color14: #5FB3B3
+*.color13: #938AA9
+*.color14: #7AA89F
 *.color15: #DCD7BA

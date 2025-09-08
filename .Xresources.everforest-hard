@@ -7,15 +7,15 @@ Xft.rgba:       rgb
 Xft.lcdfilter:  lcddefault
 
 ! ────────── Cursor ──────────
-*.cursorColor:  #DCA561
+*.cursorColor:  #EC5F67
 *.cursorBlink:  true
 
-! ────────── Everforest Soft Colors ──────────
+! ────────── Everforest Hard Colors ──────────
 *.foreground:   #DCD7BA
-*.background:   #2D3330
+*.background:   #2B3339
 
 ! Normal colors
-*.color0:  #2D3330
+*.color0:  #2B3339
 *.color1:  #EC5F67
 *.color2:  #A7C080
 *.color3:  #EBCB8B
@@ -25,7 +25,7 @@ Xft.lcdfilter:  lcddefault
 *.color7:  #DCD7BA
 
 ! Bright colors
-*.color8:  #3C4750
+*.color8:  #3A4750
 *.color9:  #EC5F67
 *.color10: #A7C080
 *.color11: #EBCB8B
