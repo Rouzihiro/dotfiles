@@ -25,8 +25,9 @@ map('n', '<leader>nn', ':e ~/.config/nvim/lua/keymaps.lua<CR>')
 map('n', '<leader>zz', ':e ~/.config/zsh/.aliases<CR>')
 map('n', '<leader>zc', ':e ~/.config/zsh/.zshrc<CR>')
 map('n', '<leader>zf', ':e ~/.config/zsh/.aliases-functions<CR>')
-map('n', '<leader>l', ':e #<CR>')
-map('n', '<leader>L', ':bot sf #<CR>')
+map('n', '<leader>b', ':e #<CR>') -- Edit the alternate file (#)
+map('n', '<leader>hs', ':bot sf #<CR>', { desc = "Horizontal split with alternate file" })
+map('n', '<leader>vs', ':vert belowright sf #<CR>', { desc = "Vertical split with alternate file" })
 map("n", "}", "}zz")
 map("n", "{", "{zz")
 
@@ -34,12 +35,12 @@ map("n", "{", "{zz")
 map({ "n", "v" }, "d", "\"_d")
 map({ "n", "v" }, "D", "\"_D")
 map({ "n", "v" }, "X", "dd")
-map( "n", "<leader>y", "yt#", { noremap = true, silent = true })
+map("n", "<leader>y", "yt#", { noremap = true, silent = true })
 
 map({ "n" }, "<leader>R", ":display<CR>", { desc = "Show registers" })
 
 for i = 0, 9 do
-  map('n', '<leader>r' .. i, '"' .. i .. 'p', opts)
+	map('n', '<leader>r' .. i, '"' .. i .. 'p', opts)
 end
 
 map({ "n" }, "<leader>a", "mzA<space><esc>p`z", { desc = "paste to the end of line" })
@@ -48,7 +49,8 @@ map("n", "<leader>za", 'ggVG"+y', { desc = "Yank entire buffer" })
 -- Search/replace
 map({ "n", "v" }, "<leader>C", ":%s/<C-r><C-w>//g<Left><Left>", { desc = "Replace word under cursor" })
 
-map({ "n", "v" }, "<leader>c", ":%s/<C-r><C-w>//gc<Left><Left><Left>", { desc = "Replace word under cursor with confirmation" })
+map({ "n", "v" }, "<leader>c", ":%s/<C-r><C-w>//gc<Left><Left><Left>",
+	{ desc = "Replace word under cursor with confirmation" })
 
 
 -- map({ 'n', 'v' }, '<leader>c', '1z=', { desc = "Correct last misspelled word" })
@@ -70,14 +72,14 @@ map('n', '<leader><', ':vertical resize -5<CR>', { desc = 'Decrease split width'
 map('n', '<leader>+', ':resize +5<CR>', { desc = 'Increase split height' })
 map('n', '<leader>-', ':resize -5<CR>', { desc = 'Decrease split height' })
 
-map('n', '<leader>vs', ':vsplit<CR>', { desc = 'Vertical split' })
-map('n', '<leader>hs', ':split<CR>', { desc = 'Horizontal split' })
+-- map('n', '<leader>vs', ':vsplit<CR>', { desc = 'Vertical split' })
+-- map('n', '<leader>hs', ':split<CR>', { desc = 'Horizontal split' })
 
 -- Telescope
 local builtin = require("telescope.builtin")
 map("n", "<leader>o", builtin.oldfiles, { desc = "Recent files" })
 map("n", "<leader>f", builtin.find_files, { desc = "Find files" })
-map("n", "<leader>b", builtin.buffers, { desc = "Buffers" })
+map("n", "<leader>B", builtin.buffers, { desc = "Buffers" })
 map("n", "<leader>H", builtin.help_tags, { desc = "Help tags" })
 
 map('n', '<leader>g', builtin.live_grep, { desc = '[F]ind by [G]rep (search content)' })
@@ -93,9 +95,17 @@ map('n', '<leader>v', ':vsplit<CR>:Telescope find_files<CR>', { desc = 'Find fil
 -- Open file in horizontal split
 map('n', '<leader>V', ':split<CR>:Telescope find_files<CR>', { desc = 'Find file (horizontal split)' })
 
--- Enhanced Nvim-tree Keymaps
--- map('n', '<leader>e', ':NvimTreeToggle<CR>', { desc = 'Toggle Explorer' })
--- map('n', '<leader>E', ':NvimTreeFindFile<CR>', { desc = 'Reveal Current File' })
+-- Error navigation and analysis
+map('n', '<leader>le', function() vim.diagnostic.open_float({ on_jump = function() end }) end,
+	{ desc = "Show error under cursor" })
+map('n', '<leader>lq', function() vim.diagnostic.setqflist() end, { desc = "Show all errors in quickfix" })
+map('n', ']]', function() vim.diagnostic.jump({ forward = true }) end, { desc = "Next diagnostic" })
+map('n', '[[', function() vim.diagnostic.jump({ forward = false }) end, { desc = "Previous diagnostic" })
 
-
--- vim.api.nvim_set_keymap('i', '<C-Space>', "cmp.complete()", { noremap = true, expr = true, silent = true })
+-- LSP actions
+map('n', '<leader>lr', vim.lsp.buf.rename, { desc = "Rename symbol" })
+map('n', '<leader>la', vim.lsp.buf.code_action, { desc = "Code actions" })
+map('n', '<leader>ld', vim.lsp.buf.definition, { desc = "Go to definition" })
+map('n', '<leader>lt', vim.lsp.buf.type_definition, { desc = "Go to type definition" })
+map('n', '<leader>li', vim.lsp.buf.implementation, { desc = "Go to implementation" })
+map('n', '<leader>lR', vim.lsp.buf.references, { desc = "Show references" })
