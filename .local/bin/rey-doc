@@ -6,27 +6,21 @@ tmux has-session -t $SESSION_NAME 2>/dev/null || {
   # Create session and first window
   tmux new-session -d -s $SESSION_NAME -n "Main Window"
 
-  # Run lf in the first (full) pane
+  # Run yazi in the first (full) pane
   tmux send-keys -t $SESSION_NAME:1.1 'yazi' C-m
 
   # Split off a bottom pane (20%) for shell
   tmux split-window -v -t $SESSION_NAME:1 -p 20
 
-  # Focus back on the top pane (lf)
+  # Focus back on the top pane (yazi)
   tmux select-pane -t $SESSION_NAME:1.1
 
-  # Window 2: Neovim in ~/.config with file picker
+  # Window 2:
   tmux new-window -t $SESSION_NAME:2 -n "nvim" -c "$HOME/dotfiles/.config"
+  
 	tmux send-keys -t $SESSION_NAME:2.1 "nvim -c 'lua require(\"telescope.builtin\").oldfiles()'" C-m
-  #tmux send-keys -t $SESSION_NAME:2.1 "nvim -c 'lua require(\"mini.pick\").builtin.files()'" C-m
 
-  # Right pane (split horizontally)
-	tmux split-window -h -t $SESSION_NAME:2 -c "$HOME/dotfiles/.config/"
-  tmux send-keys -t $SESSION_NAME:2.2 "nvim -c 'lua require(\"mini.pick\").builtin.files()'" C-m
-	#tmux send-keys -t $SESSION_NAME:2.2 "nvim -c 'Oil'" C-m
-
-  # Focus back on Window 1
-	tmux select-window -t $SESSION_NAME:2
+  # Focus on the picker tab (Tab 1)
   tmux select-pane -t $SESSION_NAME:2.1
 }
 
