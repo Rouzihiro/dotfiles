@@ -1,0 +1,88 @@
+#!/bin/bash
+
+# Timewarrior dmenu interface
+OPTIONS=("▶ Start tracking" \
+         "⏹ Stop tracking" \
+         "⏸ Continue last" \
+         "📊 Today's summary" \
+         "📈 Weekly report" \
+         "📤 Export today to Notes" \
+         "🏷 Add tag" \
+         "📝 Add annotation" \
+         "🗑 Delete last entry" \
+         "🔄 Sync" \
+         "🚪 Exit")
+
+# Show dmenu and get selection
+CHOICE=$(printf "%s\n" "${OPTIONS[@]}" | dmenu -i -l 12 -p "⏰ Timewarrior:")
+
+# Execute based on choice
+case "$CHOICE" in
+    "▶ Start tracking")
+        PROJECT=$(echo "" | dmenu -p "Project name:")
+        TAGS=$(echo "" | dmenu -p "Tags (+tag1 +tag2):")
+        timew start "$PROJECT" $TAGS
+        notify-send "Timewarrior" "Started: $PROJECT $TAGS"
+        ;;
+    "⏹ Stop tracking")
+        timew stop
+        notify-send "Timewarrior" "Tracking stopped"
+        ;;
+    "⏸ Continue last")
+        timew continue
+        notify-send "Timewarrior" "Continued last task"
+        ;;
+    "📊 Today's summary")
+        SUMMARY=$(timew summary today)
+        echo "$SUMMARY" | dmenu -l 20 -p "Today's time:"
+        ;;
+    "📈 Weekly report")
+        SUMMARY=$(timew summary this week)
+        echo "$SUMMARY" | dmenu -l 20 -p "This week:"
+        ;;
+    "📤 Export today to Notes")
+        # Create Notes directory if it doesn't exist
+        mkdir -p "$HOME/Notes"
+        
+        # Generate filename with date
+        FILENAME="$HOME/Notes/time-tracking-$(date +%Y-%m-%d).md"
+        
+        # Export today's summary to markdown file
+        {
+            echo "# Time Tracking - $(date +%Y-%m-%d)"
+            echo ""
+            echo "## Summary"
+            echo '```'
+            timew summary today
+            echo '```'
+            echo ""
+            echo "## Detailed Export"
+            echo '```'
+            timew export today
+            echo '```'
+        } > "$FILENAME"
+        
+        notify-send "Timewarrior" "Exported to: $FILENAME"
+        ;;
+    "🏷 Add tag")
+        TAG=$(echo "" | dmenu -p "Add tag (+tag):")
+        timew tag @1 "$TAG"
+        notify-send "Timewarrior" "Added tag: $TAG"
+        ;;
+    "📝 Add annotation")
+        NOTE=$(echo "" | dmenu -p "Add note:")
+        timew annotate @1 "$NOTE"
+        notify-send "Timewarrior" "Added note"
+        ;;
+    "🗑 Delete last entry")
+        timew delete @1
+        notify-send "Timewarrior" "Deleted last entry"
+        ;;
+    "🔄 Sync")
+        # Add your sync command here if you use timewarrior sync
+        notify-send "Timewarrior" "Sync complete"
+        ;;
+    "🚪 Exit")
+        exit 0
+        ;;
+esac
