@@ -74,6 +74,16 @@ require('nightfox').setup({
 vim.cmd("colorscheme nightfox")
 vim.cmd(":hi statusline guibg=NONE")
 
+vim.lsp.enable(
+	{
+		"lua_ls",
+		"tinymist",
+		"clangd",
+		"bashls",
+	}
+)
+
+
 -- Snippets
 require("luasnip").setup({ enable_autosnippets = true })
 require("luasnip.loaders.from_lua").load({ paths = "~/.config/nvim/snippets/" })
