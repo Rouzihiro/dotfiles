@@ -7,6 +7,8 @@ typst
 jdk-openjdk
 nodejs
 npm
+clang
+timew
 python-gobject #used for power-profile
 #n8n
 #texlive-latexextra
