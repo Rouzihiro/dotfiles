@@ -155,7 +155,6 @@ static const Key keys[] = {
 		{MODKEY, 					 XK_p, togglescratch, {.ui = 0 } },
 		{MODKEY|Mod1Mask,  XK_p, togglescratch, {.ui = 1 } },
 		{MODKEY|ShiftMask, XK_p,spawn,SHCMD ("dm-power-profile")},
-    // {MODKEY|Mod1Mask,  XK_p, spawn, {.v = powermenu}},
 
  		{MODKEY|Mod1Mask,  XK_r, riospawn, {.v = termcmd } },
 		{MODKEY, 					 XK_r, spawn, SHCMD ("dm-runner")},
@@ -163,6 +162,8 @@ static const Key keys[] = {
 
  		{MODKEY, 					 XK_s,spawn,SHCMD ("dm-screenshot")},
 		// {MODKEY|Mod1Mask,	 XK_s,spawn,SHCMD ("flameshot")},
+
+		{MODKEY, 					 XK_t,spawn,SHCMD ("dm-timewarrior")},
 
 	  {MODKEY, 					 XK_v,spawn,SHCMD ("dm-list-videos")},
 		{MODKEY|Mod1Mask,	 XK_v,spawn,SHCMD ("dm-video-tool")},
@@ -218,8 +219,9 @@ static const Key keys[] = {
         { MODKEY|Mod1Mask,              XK_8,      setlayout,      {.v = &layouts[7]} },
         { MODKEY|Mod1Mask,              XK_9,      setlayout,      {.v = &layouts[8]} },
 
-        { MODKEY,                       XK_q,      killclient,     {0} },
-        { MODKEY|Mod1Mask,              XK_q,      quit,           {0} },
+        {MODKEY,              XK_q, killclient,     {0}},
+        {MODKEY|Mod1Mask,     XK_q, quit,           {0}},
+     		{MODKEY|ShiftMask,  	XK_p, spawn, {.v = powermenu}},
 };
 /* button definitions */
 /* click can be ClkTagBar, ClkLtSymbol, ClkStatusText, ClkWinTitle, ClkClientWin, or ClkRootWin */
