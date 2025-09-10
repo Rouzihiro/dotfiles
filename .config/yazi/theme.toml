@@ -12,6 +12,8 @@
 [flavor]
 # dark  = "kanagawa-dragon"
 # light = "kanagawa-dragon"
-dark  = "everforest-medium"
-light  = "everforest-medium"
+dark = "nightfox"
+light = "nightfox"
+# dark  = "everforest-medium"
+# light  = "everforest-medium"
 

@@ -1,0 +1,58 @@
+# Nightfox dircolors - 24-bit
+
+RESET 0
+
+# Directories
+DIR 38;2;113;156;214   # Nightfox blue (#719cd6)
+
+# Symlinks
+LINK 38;2;99;205;207    # Nightfox cyan (#63cdcf)
+
+# Sockets
+SOCK 01;38;2;157;121;214  # Nightfox magenta (#9d79d6, bold)
+
+# Pipes
+FIFO 38;2;244;162;97     # Nightfox orange (#f4a261)
+
+# Executables
+EXEC 01;38;2;201;79;109  # Nightfox red (#c94f6d, bold)
+
+# Block devices
+BLK 38;2;244;162;97       # Nightfox orange (#f4a261)
+
+# Char devices
+CHR 38;2;127;178;179      # Nightfox green-cyan (#7fb4ca)
+
+# Orphan symlinks & missing
+ORPH 01;38;2;201;79;109
+MISSING 01;38;2;201;79;109
+
+# Archives & compressed
+.tar 01;38;2;244;162;97
+.tgz 01;38;2;244;162;97
+.zip 01;38;2;244;162;97
+.rar 01;38;2;244;162;97
+.7z  01;38;2;244;162;97
+.gz  01;38;2;244;162;97
+
+# Images
+.jpg  38;2;113;156;214
+.jpeg 38;2;113;156;214
+.png  38;2;113;156;214
+.gif  38;2;113;156;214
+.svg  38;2;113;156;214
+
+# Media
+.mp3  38;2;99;205;207
+.flac 38;2;99;205;207
+.mp4  38;2;99;205;207
+.mkv  38;2;99;205;207
+.webm 38;2;99;205;207
+
+# Documents
+.pdf  38;2;219;192;116   # Nightfox yellow (#dbc074)
+.doc  38;2;219;192;116
+.docx 38;2;219;192;116
+.odt  38;2;219;192;116
+.txt  38;2;205;206;207   # Nightfox fg (#cdcecf)
+.md   38;2;205;206;207

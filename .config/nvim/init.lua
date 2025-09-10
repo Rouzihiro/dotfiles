@@ -21,6 +21,7 @@ vim.opt.signcolumn = "yes"
 vim.pack.add({
   { src = "https://github.com/rebelot/kanagawa.nvim" },
 	{ src = "https://github.com/neanias/everforest-nvim" },
+	{ src = "https://github.com/EdenEast/nightfox.nvim" },
   { src = "https://github.com/neovim/nvim-lspconfig" },
   { src = "https://github.com/hrsh7th/nvim-cmp" },
   { src = "https://github.com/hrsh7th/cmp-path" },
@@ -73,12 +74,19 @@ require("plugins.oil")
 --
 -- Colorscheme
 -- require("kanagawa").setup({ transparent = true })
-require("everforest").setup({ 
-	transparent_background_level = 1,
- 	background = "hard",
-})
+require('nightfox').setup({
+  options = {
+    transparent = true,
+    terminal_colors = true,
+    dim_inactive = false,
+      }
+    })
+-- require("everforest").setup({ 
+-- 	transparent_background_level = 1,
+--  	background = "hard",
+-- })
 -- vim.cmd("colorscheme kanagawa")
-vim.cmd("colorscheme everforest")
+vim.cmd("colorscheme nightfox")
 vim.cmd(":hi statusline guibg=NONE")
 
 -- Snippets
