@@ -1,0 +1,3 @@
+! ────────── ST terminal ──────────
+st.font: JetBrainsMono Nerd Font:size=12
+st.borderpx: 12
