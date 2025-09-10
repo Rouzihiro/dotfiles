@@ -36,10 +36,10 @@ case "$CHOICE" in
         SUMMARY=$(timew summary today)
         echo "$SUMMARY" | dmenu -l 20 -p "Today's time:"
         ;;
-    "📈 Weekly report")
-        SUMMARY=$(timew summary this week)
-        echo "$SUMMARY" | dmenu -l 20 -p "This week:"
-        ;;
+	"📈 Weekly report")
+    SUMMARY=$(timew summary :week)
+    echo "$SUMMARY" | dmenu -l 20 -p "This week:"
+    ;;
     "📤 Export today to Notes")
         # Create Notes directory if it doesn't exist
         mkdir -p "$HOME/Notes"
