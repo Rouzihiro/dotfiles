@@ -40,7 +40,8 @@ void changeopacity(const Arg *arg);
 #define ICONSPACING 3 /* space between icon and title */
 
 /* Pick your theme */
-#include "themes/everforest-hard.h"
+#include "themes/nightfox.h"
+// #include "themes/everforest-hard.h"
 // #include "themes/everforest-soft.h"
 // #include "themes/kanagawa.h"
 
