@@ -2,6 +2,7 @@
 # Language & Paths
 # ─────────────────────────────
 export LANG="en_US.UTF-8"
+#export LC_ALL="en_US.UTF-8"
 
 export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_CACHE_HOME="$HOME/.cache"
@@ -12,7 +13,7 @@ export ZSH_COMPDUMP="${ZSH_CACHE_DIR}/.zcompdump-${(%):-%m}-${ZSH_VERSION}"
 # ─────────────────────────────
 # Editors / Apps
 # ─────────────────────────────
-export BROWSER="librewolf"
+export BROWSER="brave"
 export EDITOR="nvim"
 export SUDO_EDITOR="$EDITOR"
 export VISUAL="$EDITOR"
@@ -20,9 +21,9 @@ export VISUAL="$EDITOR"
 # ─────────────────────────────
 # Theming
 # ─────────────────────────────
-export GTK_THEME="Kanagawa-Dark"
-export GTK2_RC_FILES="$HOME/.themes/Kanagawa-Dark/gtk-2.0/gtkrc"
-export BAT_THEME="Kanagawa-Dark"
+export GTK_THEME="Nightfox-Dark"
+export GTK2_RC_FILES="$HOME/.themes/Nightfox-Dark/gtk-2.0/gtkrc"
+export BAT_THEME="Nightfox-Dark"
 
 # ─────────────────────────────
 # Manpages with bat
@@ -34,5 +35,5 @@ export MANROFFOPT="-c"
 # Development / Debug
 # ─────────────────────────────
 export DOTNET_CLI_TELEMETRY_OPTOUT=1
-export SHADER_CACHE_DIR="${XDG_CACHE_HOME:-$HOME/.cache}/mesa_shader_cache"
+export SHADER_CACHE_DIR="${XDG_CACHE_HOME:-$HOME/.cache}/shader_cache"  # custom shader cache
 export ANV_DEBUG="video-decode,video-encode"

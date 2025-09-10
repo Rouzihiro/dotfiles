@@ -1,35 +1,5 @@
-! ────────── Font & DPI ──────────
-Xft.dpi:        192
-Xft.antialias:  true
-Xft.hinting:    true
-Xft.hintstyle:  hintslight
-Xft.rgba:       rgb
-Xft.lcdfilter:  lcddefault
+! ────────── Master Xresources ──────────
+! Load modular files from ~/.Xresources.d/
 
-! ────────── Cursor ──────────
-*.cursorColor:  #DCA561
-*.cursorBlink:  true
-
-! ────────── Everforest Soft Colors ──────────
-*.foreground:   #DCD7BA
-*.background:   #2D3330
-
-! Normal colors
-*.color0:  #2D3330
-*.color1:  #EC5F67
-*.color2:  #A7C080
-*.color3:  #EBCB8B
-*.color4:  #7FB4CA
-*.color5:  #D699B6
-*.color6:  #5FB3B3
-*.color7:  #DCD7BA
-
-! Bright colors
-*.color8:  #3C4750
-*.color9:  #EC5F67
-*.color10: #A7C080
-*.color11: #EBCB8B
-*.color12: #7FB4CA
-*.color13: #D699B6
-*.color14: #5FB3B3
-*.color15: #DCD7BA
+#include ".Xresources.d/fonts"
+#include ".Xresources.d/theme-nightfox"
