@@ -1,4 +1,3 @@
--- Basic Neovim options
 vim.opt.winborder = "rounded"
 vim.opt.clipboard = "unnamedplus"
 vim.opt.tabstop = 2
@@ -54,26 +53,12 @@ cmp.setup({
   }
 })
 
--- Load your keymaps (make sure this file exists and is correct)
 require("keymaps")
-
--- Setup Mason (optional)
 require("mason").setup()
-
--- Showkeys setup (optional)
 require("showkeys").setup({ position = "top-right" })
-
--- Mini pick
 require("mini.pick").setup()
-
--- Oil plugin
 require("plugins.oil")
 
--- Treesitter setup
--- require('nvim-treesitter.configs').setup({ highlight = { enable = true } })
---
--- Colorscheme
--- require("kanagawa").setup({ transparent = true })
 require('nightfox').setup({
   options = {
     transparent = true,
@@ -94,9 +79,6 @@ require("luasnip").setup({ enable_autosnippets = true })
 require("luasnip.loaders.from_lua").load({ paths = "~/.config/nvim/snippets/" })
 local ls = require("luasnip")
 vim.keymap.set("i", "<C-e>", function() ls.expand_or_jump(1) end, { silent = true })
--- Optional snippet navigation keys (uncomment if you want)
--- vim.keymap.set({ "i", "s" }, "<C-j>", function() ls.jump(1) end, { silent = true })
--- vim.keymap.set({ "i", "s" }, "<C-k>", function() ls.jump(-1) end, { silent = true })
 
 -- Set filetype for typst files
 vim.filetype.add({
@@ -148,6 +130,62 @@ lspconfig.tinymist.setup({
   },
 })
 
--- You can add other LSP setups below, like lua_ls, svelte, emmetls, etc.
+-- Lua LS
+lspconfig.lua_ls.setup({
+  settings = {
+    Lua = {
+      runtime = { version = 'LuaJIT' },
+      diagnostics = { globals = { 'vim' } },
+      workspace = { library = vim.api.nvim_get_runtime_file("", true) },
+      telemetry = { enable = false },
+    }
+  }
+})
 
+-- Clangd for C
+lspconfig.clangd.setup({
+  cmd = {
+    "clangd",
+    "--background-index",
+    "--clang-tidy",
+    "--header-insertion=never",
+    "--completion-style=detailed",
+    "--function-arg-placeholders=false"
+  },
+  filetypes = { "c", "cpp", "objc", "objcpp" }
+})
 
+-- Bash LS for shell scripts
+lspconfig.bashls.setup({})
+
+require 'nvim-treesitter.configs'.setup {
+	textobjects = {
+		select = {
+			enable = true,
+			lookahead = true,
+			keymaps = {
+				-- Function text objects
+				["if"] = "@function.inner",    -- Inside function (without {})
+				["af"] = "@function.outer",    -- Around function (including {})
+				-- Math text objects  
+				["im"] = "@math.inner",        -- Inside math expression
+				["am"] = "@math.outer",        -- Around math expression
+				-- Return statement text objects
+				["ar"] = "@return.outer",      -- Around return statement
+				["ir"] = "@return.inner",      -- Inside return statement
+				-- Class text objects
+				["ac"] = "@class.outer",       -- Around class (entire class)
+				["ic"] = "@class.inner",       -- Inside class (methods only)
+				-- Block text objects
+				["ib"] = "@block.inner",       -- Inside code block
+				["ab"] = "@block.outer",       -- Around code block
+				-- Parameter text objects
+				["ip"] = "@parameter.inner",   -- Inside parameter
+				["ap"] = "@parameter.outer",   -- Around parameter
+				-- Comment text objects
+				["ic"] = "@comment.outer",     -- Inside comment
+				["ac"] = "@comment.outer",     -- Around comment
+			},
+		},
+	},
+}
