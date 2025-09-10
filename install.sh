@@ -138,20 +138,23 @@ link_configs() {
         log "No .config directory in repo; skipping."
     fi
 
-    log "Linking .local/bin as ONE symlink..."
+    log "Linking .local/bin as symlink..."
     backup_and_link "$SCRIPT_DIR/.local/bin" "$HOME/.local/bin"
 
-    log "Linking .local/share/applications as ONE symlink..."
+	 	log "Linking .Xresources, xinitrc & zshenv as symlink..."
+    backup_and_link "$SCRIPT_DIR/.Xresources.d" "$HOME/.Xresources.d"
+ 		backup_and_link "$SCRIPT_DIR/.Xresources" "$HOME/.Xresources"
+		backup_and_link "$SCRIPT_DIR/.xinitrc" "$HOME/.xinitrc"
+		backup_and_link "$SCRIPT_DIR/.zshenv" "$HOME/.zshenv"
+
+    log "Linking .local/share/applications as symlink..."
     backup_and_link "$SCRIPT_DIR/.local/share/applications" "$HOME/.local/share/applications"
 
-    log "Linking .local/share/icons as ONE symlink..."
+    log "Linking .local/share/icons as symlink..."
     backup_and_link "$SCRIPT_DIR/.local/share/icons" "$HOME/.local/share/icons"
 }
 
 setup_zsh() {
-    log "Linking .zshenv (symlink + backup)..."
-    backup_and_link "$SCRIPT_DIR/.zshenv" "$HOME/.zshenv"
-
     log "Installing Oh My Zsh..."
     if [[ ! -d "$HOME/.oh-my-zsh" ]]; then
         git clone https://github.com/ohmyzsh/ohmyzsh.git "$HOME/.oh-my-zsh" &>> "$LOG_FILE"
