@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+# fzv.sh — Fuzzy file finder with preview, for integration with noice
+
+# Ensure dependencies
+for cmd in fzf bat nvim; do
+  command -v $cmd >/dev/null 2>&1 || { 
+    echo "$cmd not found, please install it."; exit 1; 
+  }
+done
+
+# Main loop
+while file=$(fzf --ansi \
+                 --preview 'bat --color=always --style=numbers --line-range=:500 {}' \
+                 --preview-window=up:60%) 
+do
+  [ -z "$file" ] && break  # Exit if nothing selected
+  nvim "$file"
+done
