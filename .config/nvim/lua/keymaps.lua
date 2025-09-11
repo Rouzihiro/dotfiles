@@ -111,16 +111,20 @@ map('n', '<leader>li', vim.lsp.buf.implementation, { desc = "Go to implementatio
 map('n', '<leader>lR', vim.lsp.buf.references, { desc = "Show references" })
 
 map("n", "<leader>X", function()
-  vim.cmd("!chmod +x %")
-  print("Made " .. vim.fn.expand("%:t") .. " executable")
+    local file = vim.fn.expand("%")
+    if vim.fn.getfsize(file) > 0 then
+        vim.fn.system({ "chmod", "+x", file })
+        print("Made " .. vim.fn.expand("%:t") .. " executable")
+    end
 end, { desc = "Make current file executable" })
 
+-- automatically make .sh files executable on save
 vim.api.nvim_create_autocmd("BufWritePost", {
-  pattern = "*.sh",
-  callback = function()
-    if vim.fn.getfsize(vim.fn.expand("%")) > 0 then
-      vim.fn.system({ "chmod", "+x", vim.fn.expand("%") })
-      print("Set executable bit for " .. vim.fn.expand("%:t"))
-    end
-  end,
+    pattern = "*.sh",
+    callback = function()
+        local file = vim.fn.expand("%")
+        if vim.fn.getfsize(file) > 0 then
+            vim.fn.system({ "chmod", "+x", file })
+        end
+    end,
 })
