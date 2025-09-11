@@ -4,3 +4,6 @@
 [submodule ".config/suckless/dmenu"]
 	path = .config/suckless/dmenu
 	url = git@github.com:Rouzihiro/suckless-dmenu.git
+[submodule ".config/suckless/noice"]
+	path = .config/suckless/noice
+	url = git@github.com:Rouzihiro/suckless-noice.git
