@@ -1,0 +1,3 @@
+#!/bin/sh
+# viewimg - open image in folder
+sxiv -a "$(dirname "$1")"/*

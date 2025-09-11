@@ -1,7 +1,7 @@
 #!/bin/bash
 #export DISPLAY=:0
 
-app=$(echo -e "neovim\nbrowser\nbluetooth\nreddit\nchatgpt\ngithub\ndeepseek\nrarefilmm\n456-movie\ntranslate.google\nyoutube\nrapidmovies\nnoodle\neporner\nfitgirl\ndodi\ntorrent-1337x\nmaps" | dmenu -c -l 15 -p "")
+app=$(echo -e "neovim\nbrowser\nbluetooth\nreddit\nchatgpt\ngithub\ndeepseek\nrarefilmm\n456-movie\ntranslate.google\nyoutube\nrapidmovies\nnoodle\neporner\nfitgirl\ndodi\ntorrent-1337x\nmaps\nporn4fans" | dmenu -c -l 15 -p "")
 
 [ -z "$app" ] && exit 0
 case "$app" in

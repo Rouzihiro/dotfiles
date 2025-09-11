@@ -42,7 +42,7 @@ case "$CHOICE" in
     ;;
     "📤 Export today to Notes")
         # Create Notes directory if it doesn't exist
-        mkdir -p "$HOME/Notes"
+        mkdir -p "$HOME/Documents/Notes/"
         
         # Generate filename with date
         FILENAME="$HOME/Notes/time-tracking-$(date +%Y-%m-%d).md"

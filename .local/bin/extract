@@ -1,0 +1,30 @@
+#!/bin/sh
+# extract - Extract any archive type
+
+if [ -z "$1" ]; then
+    echo "Usage: extract <file>"
+    exit 1
+fi
+
+FILE="$1"
+
+if [ ! -f "$FILE" ]; then
+    echo "'$FILE' is not a valid file"
+    exit 1
+fi
+
+case "$FILE" in
+    *.tar.bz2)   tar xjf "$FILE"     ;;
+    *.tar.gz)    tar xzf "$FILE"     ;;
+    *.bz2)       bunzip2 "$FILE"     ;;
+    *.rar)       unrar e "$FILE"     ;;
+    *.gz)        gunzip "$FILE"      ;;
+    *.tar)       tar xf "$FILE"      ;;
+    *.tbz2)      tar xjf "$FILE"     ;;
+    *.tgz)       tar xzf "$FILE"     ;;
+    *.zip)       unzip "$FILE"       ;;
+    *.Z)         uncompress "$FILE"  ;;
+    *.7z)        7z x "$FILE"        ;;
+    *.xz)        unxz "$FILE"        ;;
+    *)           echo "'$FILE' cannot be extracted via extract" ;;
+esac
