@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+
+# List all tmux sessions
+sessions=($(tmux list-sessions -F '#S' 2>/dev/null))
+if [[ ${#sessions[@]} -eq 0 ]]; then
+    echo "No tmux sessions found."
+    exit 0
+fi
+
+# Pick a session to kill
+selected=$(printf "%s\n" "${sessions[@]}" | fzf --height 40% --border --prompt='Kill session: ')
+[[ -n "$selected" ]] || exit 0
+
+# Confirm before killing
+read -p "Are you sure you want to kill session '$selected'? [y/N] " confirm
+if [[ "$confirm" =~ ^[Yy]$ ]]; then
+    tmux kill-session -t "$selected"
+    echo "Killed session: $selected"
+else
+    echo "Aborted."
+fi

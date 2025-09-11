@@ -1,0 +1,55 @@
+#!/usr/bin/env bash
+
+# Directory to store last folder per session
+session_dir="$HOME/.tmux_sessions"
+mkdir -p "$session_dir"
+
+# Hot folders
+dirs=(
+    "$HOME/Documents/Notes"
+    "$HOME/Documents"
+    "$HOME/Downloads"
+    "$HOME/Games"
+    "$HOME/assets"
+    "$HOME/Videos"
+    "$HOME/suckless"
+    "$HOME/dotfiles"
+    "$HOME/Hamburg-Events"
+    "$HOME/mount"
+    "$HOME/.local"
+    "$HOME"
+)
+
+# Select folder: first argument or fzf from top-level hot folders
+if [[ $# -eq 1 ]]; then
+    selected="$1"
+else
+    # Only show top-level folders to avoid clutter
+    selected=$(printf "%s\n" "${dirs[@]}" | fzf --height=40% --border --prompt='Select folder: ')
+fi
+
+# Exit if nothing selected
+[[ -z "$selected" ]] && exit 0
+
+# Session name (folder basename, dots replaced with underscores)
+session=$(basename "$selected" | tr . _)
+last_file="$session_dir/$session"
+
+# Restore last folder if exists
+[[ -f "$last_file" ]] && selected=$(cat "$last_file")
+
+# Create tmux session if it doesn't exist
+if ! tmux has-session -t "$session" 2>/dev/null; then
+    tmux new-session -ds "$session" -c "$selected"
+    tmux select-window -t "$session:1"
+fi
+
+# Attach or switch session
+if [[ -z "$TMUX" ]]; then
+    tmux attach-session -t "$session"
+else
+    tmux switch-client -t "$session"
+fi
+
+# Save last folder for this session
+echo "$selected" > "$last_file"
