@@ -13,6 +13,8 @@ return {
     s("email", t("ryossj@gmail.com")),
     s("uvm", t("@uvm.edu")),
     s("gh", t("github.com/Rouzihiro")),
+		s("regards", t("Kind regards, [Rey Z.](https://github.com/Rouzihiro/dotfiles)")),
+		s("ciao", t("Kind regards, [Rey Z.](https://github.com/Rouzihiro/dotfiles)")),
 
     -- Brackets / delimiters with placeholders
     s("(", { t("("), i(1), t(")") }),

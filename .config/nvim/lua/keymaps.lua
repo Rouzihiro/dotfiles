@@ -109,3 +109,18 @@ map('n', '<leader>ld', vim.lsp.buf.definition, { desc = "Go to definition" })
 map('n', '<leader>lt', vim.lsp.buf.type_definition, { desc = "Go to type definition" })
 map('n', '<leader>li', vim.lsp.buf.implementation, { desc = "Go to implementation" })
 map('n', '<leader>lR', vim.lsp.buf.references, { desc = "Show references" })
+
+map("n", "<leader>X", function()
+  vim.cmd("!chmod +x %")
+  print("Made " .. vim.fn.expand("%:t") .. " executable")
+end, { desc = "Make current file executable" })
+
+vim.api.nvim_create_autocmd("BufWritePost", {
+  pattern = "*.sh",
+  callback = function()
+    if vim.fn.getfsize(vim.fn.expand("%")) > 0 then
+      vim.fn.system({ "chmod", "+x", vim.fn.expand("%") })
+      print("Set executable bit for " .. vim.fn.expand("%:t"))
+    end
+  end,
+})
