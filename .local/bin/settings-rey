@@ -3,6 +3,7 @@ sudo hostnamectl hostname YOUR_HOSTNAME
 
 flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
 
+bat cache --build
 fc-cache -fv
 
 IPTV:
