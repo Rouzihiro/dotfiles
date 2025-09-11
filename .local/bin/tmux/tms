@@ -4,44 +4,78 @@
 session_dir="$HOME/.tmux_sessions"
 mkdir -p "$session_dir"
 
-# Hot folders
-dirs=(
-    "$HOME/Documents/Notes"
-    "$HOME/Documents"
-    "$HOME/Downloads"
-    "$HOME/Games"
-    "$HOME/assets"
-    "$HOME/Videos"
-    "$HOME/suckless"
-    "$HOME/dotfiles"
-    "$HOME/Hamburg-Events"
-    "$HOME/mount"
-    "$HOME/.local"
-    "$HOME"
+# Hot folders → Timewarrior categories
+declare -A dirs=(
+    ["$HOME/Documents/Notes"]="OSTEOLOGY"
+    ["$HOME/Documents"]="ORTHOGERIATRIC"
+    ["$HOME/Downloads"]="BROWSING"
+    ["$HOME/Games"]="WASTED"
+    ["$HOME/assets"]="PROGRAMMING"
+    ["$HOME/Videos"]="VIDEO/SERIES"
+    ["$HOME/suckless"]="PROGRAMMING"
+    ["$HOME/dotfiles"]="PROGRAMMING"
+    ["$HOME/Hamburg-Events"]="BROWSING"
+    ["$HOME/mount"]="VIDEO/SERIES"
+    ["$HOME/.local"]="PROGRAMMING"
+    ["$HOME"]="PROGRAMMING"
 )
 
-# Select folder: first argument or fzf from top-level hot folders
+# Add STOP option
+menu_options=("STOP" "${!dirs[@]}")
+
+# Select folder/category
 if [[ $# -eq 1 ]]; then
     selected="$1"
 else
-    # Only show top-level folders to avoid clutter
-    selected=$(printf "%s\n" "${dirs[@]}" | fzf --height=40% --border --prompt='Select folder: ')
+    selected=$(printf "%s\n" "${menu_options[@]}" | fzf --height=40% --border --prompt='Select: ')
 fi
-
-# Exit if nothing selected
 [[ -z "$selected" ]] && exit 0
 
-# Session name (folder basename, dots replaced with underscores)
+# Function: update all sessions' status-right
+update_status() {
+    local path="$1"
+
+    # Get currently tracked category from Timewarrior
+    local active_cat
+    active_cat=$(timew | awk '/Tracking/ {print $2; exit}')
+    [[ -z "$active_cat" ]] && active_cat="IDLE"
+
+    # Get total tracked time in minutes only
+    local total_sec
+    total_sec=$(timew | awk '/^ *Total/ {split($NF,t,":"); print t[1]*60 + t[2]}')
+    local total_min=$((total_sec / 60))
+
+    tmux list-sessions -F "#{session_name}" | while read s; do
+        tmux set-option -t "$s" status-right "\
+#[fg=#719cd6,bg=default]\
+#[fg=#192330,bg=#719cd6]  $(basename "$path") \
+#[fg=#719cd6,bg=#9d79d6]#[fg=#192330,bg=#9d79d6] $active_cat ${total_min} min \
+#[fg=#9d79d6,bg=default]"
+    done
+}
+
+# Handle STOP option
+if [[ "$selected" == "STOP" ]]; then
+    timew stop >/dev/null 2>&1
+    update_status "$PWD"
+    exit 0
+fi
+
+# Session name (basename, dots → underscores)
 session=$(basename "$selected" | tr . _)
 last_file="$session_dir/$session"
-
-# Restore last folder if exists
 [[ -f "$last_file" ]] && selected=$(cat "$last_file")
+category="${dirs[$selected]}"
 
-# Create tmux session if it doesn't exist
+# Stop previous tracking, start new category
+if [[ -n "$category" ]]; then
+    timew stop >/dev/null 2>&1
+    timew start "$category"
+fi
+
+# Create tmux session if missing
 if ! tmux has-session -t "$session" 2>/dev/null; then
     tmux new-session -ds "$session" -c "$selected"
-    tmux select-window -t "$session:1"
 fi
 
 # Attach or switch session
@@ -53,3 +87,17 @@ fi
 
 # Save last folder for this session
 echo "$selected" > "$last_file"
+
+# Initial status update (works for first session too)
+update_status "$selected"
+
+# --- Event-driven hooks ---
+
+# Stop Timewarrior on session close
+tmux set-hook -t "$session" session-closed "run-shell 'timew stop >/dev/null 2>&1; $(declare -f update_status); update_status \"$PWD\"'"
+
+# Update status on session switch
+tmux set-hook -g client-session-changed "run-shell '$(declare -f update_status); update_status \"$selected\"'"
+
+# Update status on session creation
+tmux set-hook -g session-created "run-shell '$(declare -f update_status); update_status \"$selected\"'"

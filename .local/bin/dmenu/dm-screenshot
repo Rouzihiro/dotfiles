@@ -5,7 +5,7 @@ DIR="$HOME/Pictures/screenshot"
 mkdir -p "$DIR"
 
 # Prompt user for screenshot type
-MODE=$(echo -e "Fullscreen now\nFullscreen 3sec\nSnippet now\nSnippet 3sec" | dmenu -c -l 4 -p "Select screenshot type:")
+MODE=$(echo -e "Fullscreen now\nFullscreen 3sec\nFullscreen custom\nSnippet now\nSnippet 3sec\nSnippet custom" | dmenu -c -l 6 -p "Select screenshot type:")
 
 [ -z "$MODE" ] && exit 1
 
@@ -22,14 +22,25 @@ case "$MODE" in
     "Fullscreen 3sec")
         TYPE="fullscreen"
         DELAY=3 ;;
+    "Fullscreen custom")
+        TYPE="fullscreen"
+        DELAY=$(echo "" | dmenu -p "Delay in seconds:") ;;
     "Snippet now")
         TYPE="snippet" ;;
     "Snippet 3sec")
         TYPE="snippet"
         DELAY=3 ;;
+    "Snippet custom")
+        TYPE="snippet"
+        DELAY=$(echo "" | dmenu -p "Delay in seconds:") ;;
     *)
         exit 1 ;;
 esac
+
+# Validate delay (default to 0 if invalid)
+if ! [[ "$DELAY" =~ ^[0-9]+$ ]]; then
+    DELAY=0
+fi
 
 # Optional delay
 [ "$DELAY" -gt 0 ] && sleep "$DELAY"
