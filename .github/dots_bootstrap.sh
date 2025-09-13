@@ -21,7 +21,12 @@ fi
 sleep 1 && clear
 
 echo "Downloading dotfiles repository..."
-git clone --recursive https://github.com/Rouzihiro/dotfiles.git "$HOME/dotfiles"
+git clone https://github.com/Rouzihiro/dotfiles.git "$HOME/dotfiles"
+
+cd "$HOME/dotfiles" || exit 
+
+echo "Downloading submodules repository..."
+git submodule update --init --recursive --remote
 
 cd "$HOME/dotfiles/"
 ./install.sh
