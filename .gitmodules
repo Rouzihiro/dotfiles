@@ -1,9 +1,12 @@
-[submodule ".config/suckless/st"]
-	path = .config/suckless/st
-	url = git@github.com:Rouzihiro/suckless-st.git
 [submodule ".config/suckless/dmenu"]
 	path = .config/suckless/dmenu
 	url = git@github.com:Rouzihiro/suckless-dmenu.git
+	branch = fork
+[submodule ".config/suckless/st"]
+	path = .config/suckless/st
+	url = git@github.com:Rouzihiro/suckless-st.git
+	branch = rey
 [submodule ".config/suckless/noice"]
 	path = .config/suckless/noice
 	url = git@github.com:Rouzihiro/suckless-noice.git
+	branch = rey-jump
