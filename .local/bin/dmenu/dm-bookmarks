@@ -21,7 +21,7 @@ DMENU_OPTS="-l 30 -p 'links:'"
 # Browser fallback
 # --------------------------
 BRAVE="$(command -v brave || command -v brave-browser || true)"
-FALLBACK="$(command -v xdg-open || echo firefox)"
+FALLBACK="$(command -v xdg-open || echo librewolf)"
 
 # --------------------------
 # Emit bookmark lines
