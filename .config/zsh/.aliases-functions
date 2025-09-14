@@ -67,11 +67,11 @@ note() {
 
 # View notes
 notes() {
-    if [ -f ~/Documents/notes ]; then
+    if [ -f ~/Documents/Notes/notes.md ]; then
         if command -v bat >/dev/null 2>&1; then
-            bat ~/Documents/notes
+            bat ~/Documents/Notes/notes.md
         else
-            cat ~/Documents/notes
+            cat ~/Documents/Notes/notes.md
         fi
     else
         echo "No notes file found"
@@ -79,7 +79,7 @@ notes() {
 }
 
 noter() {
-    local file=~/Documents/notes
+    local file=~/Documents/Notes/notes.md
     [[ -f $file ]] || { echo "No notes file found"; return 1; }
 
     if command -v bat >/dev/null 2>&1; then
@@ -136,6 +136,7 @@ fzv() {
     nvim "$file"
   done
 }
+bindkey -s '^F' 'fzv\n'
 
 open() {
   xdg-open "$@" >/dev/null 2>&1 &
