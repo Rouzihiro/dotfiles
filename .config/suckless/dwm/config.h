@@ -126,7 +126,8 @@ static const Key keys[] = {
 
 		{MODKEY, 					 XK_a,spawn,SHCMD ("dm-aria")},
 
- 		{MODKEY,           XK_b,spawn,SHCMD ("xdg-open https://")},
+ 		{MODKEY,           XK_b,spawn,SHCMD ("dm-bookmarks")},
+		{MODKEY|Mod1Mask,  XK_b,spawn,SHCMD ("xdg-open https://")},
 		{MODKEY|ShiftMask, XK_b,spawn,SHCMD ("librewolf")},
 
 		{MODKEY, 					 XK_c,spawn,SHCMD ("dm-cfg-files")},
@@ -221,7 +222,7 @@ static const Key keys[] = {
 
         {MODKEY,              XK_q, killclient,     {0}},
         {MODKEY|Mod1Mask,     XK_q, quit,           {0}},
-     		{MODKEY|ShiftMask,  	XK_p, spawn, {.v = powermenu}},
+     		{MODKEY|ShiftMask,  	XK_q, spawn, {.v = powermenu}},
 };
 /* button definitions */
 /* click can be ClkTagBar, ClkLtSymbol, ClkStatusText, ClkWinTitle, ClkClientWin, or ClkRootWin */

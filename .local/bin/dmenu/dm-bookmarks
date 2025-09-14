@@ -1,0 +1,103 @@
+#!/bin/sh
+set -eu
+
+# --------------------------
+# Bookmark files (adjust paths as needed)
+# --------------------------
+BOOKMARK_FILES="
+$HOME/Documents/Notes/gaming.md
+$HOME/Documents/Notes/xxx.md
+$HOME/Documents/Notes/coding.md
+$HOME/Documents/Notes/movies.md
+$HOME/Documents/Notes/work.md
+"
+
+# --------------------------
+# dmenu appearance
+# --------------------------
+DMENU_OPTS="-l 30 -p 'links:'"
+
+# --------------------------
+# Browser fallback
+# --------------------------
+BRAVE="$(command -v brave || command -v brave-browser || true)"
+FALLBACK="$(command -v xdg-open || echo firefox)"
+
+# --------------------------
+# Emit bookmark lines
+# --------------------------
+emit() {
+    tag="$1"
+    file="$2"
+    [ -f "$file" ] || return 0
+
+    grep -vE '^\s*(#|$)' "$file" | while IFS= read -r line; do
+        case "$line" in
+            *"::"*)
+                # explicit title :: URL
+                title="${line%%::*}"
+                url="${line#*::}"
+                title="$(printf '%s' "$title" | sed 's/^[[:space:]]*//; s/[[:space:]]*$//')"
+                url="$(printf '%s' "$url" | sed 's/^[[:space:]]*//; s/[[:space:]]*$//')"
+                ;;
+            *)
+                url="$line"
+                # derive title from URL
+                title="$(printf '%s' "$url" | sed -E 's#https?://##; s#^www\.##; s#/.*$##; s/\.(com|org|net|de|io|co)$//')"
+                ;;
+        esac
+
+        # Format: "[tag] title :: url"
+        printf '[%s] %s :: %s\n' "$tag" "$title" "$url"
+    done
+}
+
+# --------------------------
+# Build combined list and show dmenu
+# --------------------------
+choice="$({
+    for f in $BOOKMARK_FILES; do
+        tag="$(basename "$f" .md)"
+        tag="$(basename "$tag" .txt)"  # just in case
+        emit "$tag" "$f"
+    done
+} | sort | dmenu $DMENU_OPTS || true)"
+
+[ -n "$choice" ] || exit 0
+
+# --------------------------
+# Parse tag and URL
+# --------------------------
+tag="${choice%%]*}"
+tag="${tag#\[}"
+url="${choice##* :: }"
+
+# Strip comments/whitespace
+url="$(printf '%s' "$url" \
+    | sed -e 's/[[:space:]]\+#.*$//' -e 's/[[:space:]]\/\/.*$//' \
+          -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//')"
+
+# Ensure URL scheme
+case "$url" in
+    http://*|https://*|file://*|about:*|chrome:*) ;;
+    *) url="https://$url" ;;
+esac
+
+# --------------------------
+# Open in browser
+# --------------------------
+open_with() {
+    cmd="$1"
+    if [ -n "$cmd" ]; then
+        nohup "$cmd" --new-tab "$url" >/dev/null 2>&1 &
+        exit 0
+    fi
+}
+
+case "$tag" in
+    work) open_with "$BRAVE" ;;
+    *)    open_with "$BRAVE" ;;
+esac
+
+# fallback
+nohup $FALLBACK "$url" >/dev/null 2>&1 &
