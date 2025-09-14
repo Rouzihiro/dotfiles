@@ -56,6 +56,8 @@ alias v='nvim'
 alias vi='nvim -c "lua require[[mini.pick]].builtin.files()"'
 alias vim='nvim -c "lua require[[oil]].open()"'
 alias nv='nvim -c "lua require[[oil]].open()"'
+alias vimdiff="nvim -d"
+alias vid="nvim -d"
 alias sv='sudo nvim'
 
 # Git
