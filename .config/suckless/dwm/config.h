@@ -122,32 +122,37 @@ static const Key keys[] = {
 		{MODKEY|ShiftMask, XK_Return,spawn, SHCMD ("dm-runner")},
 		{MODKEY|Mod1Mask,	 XK_space, spawn, SHCMD("dmenu_desktop_run")},
 		{MODKEY, 					 XK_space, spawn, {.v = dmenucmd}},
-		{MODKEY,           XK_Escape,spawn, SHCMD ("st -e btop") },
+		{MODKEY,           XK_Escape,spawn, SHCMD("dm-power")},
+	//	{MODKEY|Mod1Mask,  XK_Escape,spawn, SHCMD("dm-power")},
 
-		{MODKEY, 					 XK_a,spawn,SHCMD ("dm-aria")},
+		{MODKEY,           XK_a,spawn, SHCMD("st -e btop")},
+ 		{MODKEY|Mod1Mask,  XK_a,spawn,      {.v = ncducmd}},
 
  		{MODKEY,           XK_b,spawn,SHCMD ("dm-bookmarks")},
 		{MODKEY|Mod1Mask,  XK_b,spawn,SHCMD ("xdg-open https://")},
 		{MODKEY|ShiftMask, XK_b,spawn,SHCMD ("librewolf")},
 
-		{MODKEY, 					 XK_c,spawn,SHCMD ("dm-cfg-files")},
+		{MODKEY, 					 XK_c,spawn,SHCMD ("dm-projects")},
+		{MODKEY|Mod1Mask,  XK_c,spawn,SHCMD ("dm-cfg-files")},
 
 		{MODKEY, 					 XK_d,spawn,SHCMD ("dm-aria")},
-	  {MODKEY|Mod1Mask,  XK_d,spawn,SHCMD ("dm-list-docs")},
-    {MODKEY|ShiftMask, XK_d,spawn,      {.v = ncducmd}},
+		{MODKEY|Mod1Mask,	 XK_d,spawn,SHCMD ("dm-music-downloader")},
+	  {MODKEY|ShiftMask, XK_d,spawn,SHCMD ("dm-list-docs")},
 
-		{MODKEY,           XK_e,spawn,SHCMD ("st -e yazi")},
+		{MODKEY,  				 XK_e,spawn,SHCMD ("st -e yazi")},
+		{MODKEY|Mod1Mask,	 XK_e,spawn,SHCMD ("st -e noice")},
     // { MODKEY,                    XK_e,     spawn,          SHCMD ("xdg-open .")},
 
 		{MODKEY,           XK_h,      showhideclient, {0} },
     {MODKEY|Mod1Mask,  XK_h,      togglebar,      {0} },
 
  		{MODKEY, 					 XK_i,spawn,SHCMD ("dm-wifi")},
+		{MODKEY|Mod1Mask,  XK_i,spawn,SHCMD ("dm-bt")},
 
 		{MODKEY, 					 XK_l,spawn,SHCMD ("i3lock -i ~/Pictures/lockscreen/lock_scaled.png")},
 
-		{MODKEY,	 				 XK_m,spawn,SHCMD ("dm-music-downloader")},
-	  {MODKEY|Mod1Mask,	 XK_m,spawn,SHCMD ("dm-mount-usb")},
+		{MODKEY,	 				 XK_m,spawn,SHCMD ("dm-mount-usb")},
+	  {MODKEY|Mod1Mask,	 XK_m,spawn,SHCMD ("dm-mod-pix")},
 
 		{MODKEY,         	 XK_n,spawn,SHCMD ("bash -c 'dm-notes'")},
 
@@ -157,8 +162,8 @@ static const Key keys[] = {
 		{MODKEY|Mod1Mask,  XK_p, togglescratch, {.ui = 1 } },
 		{MODKEY|ShiftMask, XK_p,spawn,SHCMD ("dm-power-profile")},
 
- 		{MODKEY|Mod1Mask,  XK_r, riospawn, {.v = termcmd } },
 		{MODKEY, 					 XK_r, spawn, SHCMD ("dm-runner")},
+ 		{MODKEY|Mod1Mask,  XK_r, riospawn, {.v = termcmd } },
 		{MODKEY|ShiftMask, XK_r, spawn, {.v = rofi}},
 
  		{MODKEY, 					 XK_s,spawn,SHCMD ("dm-screenshot")},
@@ -222,7 +227,7 @@ static const Key keys[] = {
 
         {MODKEY,              XK_q, killclient,     {0}},
         {MODKEY|Mod1Mask,     XK_q, quit,           {0}},
-     		{MODKEY|ShiftMask,  	XK_q, spawn, {.v = powermenu}},
+     	//	{MODKEY|ShiftMask,  	XK_q, spawn, SHCMD("dm-power")},
 };
 /* button definitions */
 /* click can be ClkTagBar, ClkLtSymbol, ClkStatusText, ClkWinTitle, ClkClientWin, or ClkRootWin */
