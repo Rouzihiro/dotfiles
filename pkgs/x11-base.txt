@@ -16,7 +16,7 @@ xdg-desktop-portal-gtk
 #xsecurelock
 #xss-lock
 networkmanager
-xfce4-power-manager 
+#xfce4-power-manager 
 upower 
 acpid
 
