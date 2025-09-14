@@ -60,18 +60,18 @@ ex() {
 
 # Quick note taking
 note() {
-    echo "$*" >> ~/Documents/Notes/notes.md
+    echo "$*" >> ~/Documents/Notes/coding.md
     echo "Note added: $*"
 }
 
 
 # View notes
 notes() {
-    if [ -f ~/Documents/Notes/notes.md ]; then
+    if [ -f ~/Documents/Notes/coding.md ]; then
         if command -v bat >/dev/null 2>&1; then
-            bat ~/Documents/Notes/notes.md
+            bat ~/Documents/Notes/coding.md
         else
-            cat ~/Documents/Notes/notes.md
+            cat ~/Documents/Notes/coding.md
         fi
     else
         echo "No notes file found"
@@ -79,7 +79,7 @@ notes() {
 }
 
 noter() {
-    local file=~/Documents/Notes/notes.md
+    local file=~/Documents/Notes/coding.md
     [[ -f $file ]] || { echo "No notes file found"; return 1; }
 
     if command -v bat >/dev/null 2>&1; then
