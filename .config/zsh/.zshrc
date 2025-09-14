@@ -61,7 +61,13 @@ done
 # -------------------------------
 if command -v fzf >/dev/null 2>&1; then
     source <(fzf --zsh)
-fi
+    bindkey -r '^[c'         # remove Alt+c
+    bindkey '^G' fzf-cd-widget # new binding: Ctrl+g
+    # fzf default keybindings:
+    # Ctrl+t → fzf-file-widget   (insert selected files)
+    # Ctrl+r → fzf-history-widget (search command history)
+    # Alt+c  → fzf-cd-widget     (cd into selected dir)  [DISABLED]
+	fi
 
 # ─────────────────────────────
 # Autostart sway on tty1

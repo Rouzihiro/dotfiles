@@ -10,9 +10,7 @@ brightnessctl
 pamixer
 blueman
 
-# Description: File managers for X11
 thunar
 
-# Description: System monitoring/power tools
 btop
 power-profiles-daemon

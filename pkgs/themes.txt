@@ -2,5 +2,5 @@
 gtk-engine-murrine
 gtk-engines
 darkman
-yaru-icon-theme
-bibata-cursor-theme
+#yaru-icon-theme
+#bibata-cursor-theme
