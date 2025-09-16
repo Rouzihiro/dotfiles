@@ -27,7 +27,7 @@ vim.pack.add({
   { src = "https://github.com/hrsh7th/cmp-buffer" },
   { src = "https://github.com/hrsh7th/cmp-nvim-lsp" },
   { src = "https://github.com/stevearc/oil.nvim", version = "master", opt = false },
-  { src = "https://github.com/echasnovski/mini.pick" },
+  { src = "https://github.com/echasnovski/mini.nvim" },
   { src = "https://github.com/nvim-treesitter/nvim-treesitter" },
   { src = "https://github.com/chomosuke/typst-preview.nvim" },
   { src = "https://github.com/mason-org/mason.nvim" },
@@ -53,10 +53,13 @@ cmp.setup({
   }
 })
 
+vim.cmd [[set completeopt+=menuone,noselect,popup]]
+
 require("keymaps")
 require("mason").setup()
 require("showkeys").setup({ position = "top-right" })
 require("mini.pick").setup()
+require "mini.bufremove".setup()
 require("plugins.oil")
 
 require('nightfox').setup({
@@ -168,34 +171,3 @@ lspconfig.clangd.setup({
 -- Bash LS for shell scripts
 lspconfig.bashls.setup({})
 
-require 'nvim-treesitter.configs'.setup {
-	textobjects = {
-		select = {
-			enable = true,
-			lookahead = true,
-			keymaps = {
-				-- Function text objects
-				["if"] = "@function.inner",    -- Inside function (without {})
-				["af"] = "@function.outer",    -- Around function (including {})
-				-- Math text objects  
-				["im"] = "@math.inner",        -- Inside math expression
-				["am"] = "@math.outer",        -- Around math expression
-				-- Return statement text objects
-				["ar"] = "@return.outer",      -- Around return statement
-				["ir"] = "@return.inner",      -- Inside return statement
-				-- Class text objects
-				["ac"] = "@class.outer",       -- Around class (entire class)
-				["ic"] = "@class.inner",       -- Inside class (methods only)
-				-- Block text objects
-				["ib"] = "@block.inner",       -- Inside code block
-				["ab"] = "@block.outer",       -- Around code block
-				-- Parameter text objects
-				["ip"] = "@parameter.inner",   -- Inside parameter
-				["ap"] = "@parameter.outer",   -- Around parameter
-				-- Comment text objects
-				["ic"] = "@comment.outer",     -- Inside comment
-				["ac"] = "@comment.outer",     -- Around comment
-			},
-		},
-	},
-}
