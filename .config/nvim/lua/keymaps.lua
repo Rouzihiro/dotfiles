@@ -6,30 +6,30 @@ map("n", "<leader>e", function()
 	vim.cmd("Oil --float " .. vim.loop.cwd())
 end, { desc = "Open Oil floating file manager" })
 
-map('n', '<leader>u', ':update<CR> :source<CR>')
-map('n', '<leader>s', ':write<CR>')
--- map({ 'n', 'v', 'x' }, '<leader>s', ':e #<CR>')
-map('n', '<leader>q', ':bd<CR>', { desc = "Close buffer" })
+map('n', '<leader>u', '<Cmd>update<CR> <Cmd>source<CR>')
+map('n', '<leader>s', '<Cmd>write<CR>')
+-- map({ 'n', 'v', 'x' }, '<leader>s', '<Cmd>e #<CR>')
+map('n', '<leader>q', '<Cmd>bd<CR>', { desc = "Close buffer" })
 map("n", "K", vim.lsp.buf.hover, { desc = "LSP Hover" })
 
-map('n', '<leader>x', ':quit<CR>')
+map('n', '<leader>x', '<Cmd>quit<CR>')
 map('n', '<C-q>', '<Cmd>bd!<CR>', { desc = "Force close buffer" })
 
 map("n", "<esc>", "<cmd>noh<CR>")
-map('n', '<leader>p', ":Pick files<CR>")
-map('n', '<leader>h', ":Pick help<CR>")
+map('n', '<leader>p', "<Cmd>Pick files<CR>")
+map('n', '<leader>h', "<Cmd>Pick help<CR>")
 map('n', '<leader>b', "<Cmd>Pick buffers<CR>")
 map('n', '<leader>lf', vim.lsp.buf.format)
 map('i', '<c-Space>', function() vim.lsp.completion.get() end)
-map('n', '<leader>t', ':Open .<CR>')
-map('n', '<leader>nc', ':e $MYVIMRC<CR>')
-map('n', '<leader>nn', ':e ~/.config/nvim/lua/keymaps.lua<CR>')
-map('n', '<leader>zz', ':e ~/.config/zsh/.aliases<CR>')
-map('n', '<leader>zc', ':e ~/.config/zsh/.zshrc<CR>')
-map('n', '<leader>zf', ':e ~/.config/zsh/.aliases-functions<CR>')
-map('n', '<leader>B', ':e #<CR>') -- Edit the alternate file (#)
-map('n', '<leader>hs', ':bot sf #<CR>', { desc = "Horizontal split with alternate file" })
-map('n', '<leader>vs', ':vert belowright sf #<CR>', { desc = "Vertical split with alternate file" })
+map('n', '<leader>t', '<Cmd>Open .<CR>')
+map('n', '<leader>nc', '<Cmd>e $MYVIMRC<CR>')
+map('n', '<leader>nn', '<Cmd>e ~/.config/nvim/lua/keymaps.lua<CR>')
+map('n', '<leader>zz', '<Cmd>e ~/.config/zsh/.aliases<CR>')
+map('n', '<leader>zc', '<Cmd>e ~/.config/zsh/.zshrc<CR>')
+map('n', '<leader>zf', '<Cmd>e ~/.config/zsh/.aliases-functions<CR>')
+map('n', '<leader>B', '<Cmd>e #<CR>') -- Edit the alternate file (#)
+map('n', '<leader>hs', '<Cmd>bot sf #<CR>', { desc = "Horizontal split with alternate file" })
+map('n', '<leader>vs', '<Cmd>vert belowright sf #<CR>', { desc = "Vertical split with alternate file" })
 map("n", "}", "}zz")
 map("n", "{", "{zz")
 
@@ -39,7 +39,7 @@ map({ "n", "v" }, "D", "\"_D")
 map({ "n", "v" }, "X", "dd")
 map("n", "<leader>y", "yt#", { noremap = true, silent = true })
 
-map({ "n" }, "<leader>R", ":display<CR>", { desc = "Show registers" })
+map({ "n" }, "<leader>R", "<Cmd>display<CR>", { desc = "Show registers" })
 
 for i = 0, 9 do
 	map('n', '<leader>r' .. i, '"' .. i .. 'p', opts)
@@ -49,9 +49,9 @@ map({ "n" }, "<leader>a", "mzA<space><esc>p`z", { desc = "paste to the end of li
 map("n", "<leader>za", 'ggVG"+y', { desc = "Yank entire buffer" })
 
 -- Search/replace
-map({ "n", "v" }, "<leader>C", ":%s/<C-r><C-w>//g<Left><Left>", { desc = "Replace word under cursor" })
+map({ "n", "v" }, "<leader>C", "<Cmd>%s/<C-r><C-w>//g<Left><Left>", { desc = "Replace word under cursor" })
 
-map({ "n", "v" }, "<leader>c", ":%s/<C-r><C-w>//gc<Left><Left><Left>",
+map({ "n", "v" }, "<leader>c", "<Cmd>%s/<C-r><C-w>//gc<Left><Left><Left>",
 	{ desc = "Replace word under cursor with confirmation" })
 
 
@@ -69,13 +69,13 @@ map("n", "<leader>al", "<cmd>lua vim.lsp.buf.format()<CR>", { desc = "Format wit
 -- map("n", "z=", "z=1<CR>", { silent = true, desc = "Accept 1st suggestion" })
 
 
-map('n', '<leader>>', ':vertical resize +5<CR>', { desc = 'Increase split width' })
-map('n', '<leader><', ':vertical resize -5<CR>', { desc = 'Decrease split width' })
-map('n', '<leader>+', ':resize +5<CR>', { desc = 'Increase split height' })
-map('n', '<leader>-', ':resize -5<CR>', { desc = 'Decrease split height' })
+map('n', '<leader>>', '<Cmd>vertical resize +5<CR>', { desc = 'Increase split width' })
+map('n', '<leader><', '<Cmd>vertical resize -5<CR>', { desc = 'Decrease split width' })
+map('n', '<leader>+', '<Cmd>resize +5<CR>', { desc = 'Increase split height' })
+map('n', '<leader>-', '<Cmd>resize -5<CR>', { desc = 'Decrease split height' })
 
--- map('n', '<leader>vs', ':vsplit<CR>', { desc = 'Vertical split' })
--- map('n', '<leader>hs', ':split<CR>', { desc = 'Horizontal split' })
+-- map('n', '<leader>vs', '<Cmd>vsplit<CR>', { desc = 'Vertical split' })
+-- map('n', '<leader>hs', '<Cmd>split<CR>', { desc = 'Horizontal split' })
 
 -- Telescope
 local builtin = require("telescope.builtin")
@@ -93,9 +93,9 @@ map('n', '<leader>W', function()
 end, { desc = '[F]ind in [D]irectory' })
 
 -- Open file in vertical split
-map('n', '<leader>v', ':vsplit<CR>:Telescope find_files<CR>', { desc = 'Find file (vertical split)' })
+map('n', '<leader>v', '<Cmd>vsplit<CR><Cmd>Telescope find_files<CR>', { desc = 'Find file (vertical split)' })
 -- Open file in horizontal split
-map('n', '<leader>V', ':split<CR>:Telescope find_files<CR>', { desc = 'Find file (horizontal split)' })
+map('n', '<leader>V', '<Cmd>split<CR><Cmd>Telescope find_files<CR>', { desc = 'Find file (horizontal split)' })
 
 -- Error navigation and analysis
 map('n', '<leader>le', function() vim.diagnostic.open_float({ on_jump = function() end }) end,
