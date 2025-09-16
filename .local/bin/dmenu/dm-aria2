@@ -48,43 +48,29 @@ handle_download() {
     local type="$1"
     local url="$2"
     
-    # Predict filename depending on type
-    local predicted=""
-    if [ "$type" = "Embedded video" ]; then
-        predicted=$(yt-dlp --get-filename -o "%(title)s.%(ext)s" "$url" 2>/dev/null | head -1)
-        [ -z "$predicted" ] && predicted="unknown.ext"
-    else
-        predicted=$(basename "${url%%\?*}")
-        [ -z "$predicted" ] && predicted="download"
-    fi
-
-    # Ask user for name (editable)
-    local newname=$(echo "$predicted" | dmenu -p "Filename (edit if you want):" -l 1 -c)
-    [ -z "$newname" ] && newname="$predicted"
-
-    # Download depending on type
     if [ "$type" = "Embedded video" ]; then
         if yt-dlp --external-downloader aria2c \
                   --external-downloader-args 'aria2c:-x2 -s2' \
-                  --no-check-formats \
-                 -o "$DOWNLOAD_DIR/$newname" \
+                  -o "$DOWNLOAD_DIR/%(title)s.%(ext)s" \
                   "$url" >> "$LOG_FILE" 2>&1; then
-            notify-send "Download completed" "Successfully downloaded: $newname"
+            notify-send "Download completed" "Successfully downloaded: $url"
         else
             notify_error "Failed to download: $url"
         fi
     else
+        local basename=$(basename "${url%%\?*}")
         if aria2c --check-certificate=false \
                   -x2 -s2 \
                   -d "$DOWNLOAD_DIR" \
-                  -o "$newname" \
+                  -o "$basename" \
                   "$url" >> "$LOG_FILE" 2>&1; then
-            notify-send "Download completed" "Successfully downloaded: $newname"
+            notify-send "Download completed" "Successfully downloaded: $basename"
         else
-            notify_error "Failed to download: $newname"
+            notify_error "Failed to download: $basename"
         fi
     fi
 }
+
 # Main download function
 process_download() {
     local type="$1"
