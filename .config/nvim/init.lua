@@ -59,7 +59,7 @@ require("keymaps")
 require("mason").setup()
 require("showkeys").setup({ position = "top-right" })
 require("mini.pick").setup()
-require "mini.bufremove".setup()
+-- require "mini.bufremove".setup()
 require("plugins.oil")
 
 require('nightfox').setup({
