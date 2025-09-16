@@ -18,14 +18,16 @@ map('n', '<C-q>', '<Cmd>bd!<CR>', { desc = "Force close buffer" })
 map("n", "<esc>", "<cmd>noh<CR>")
 map('n', '<leader>p', ":Pick files<CR>")
 map('n', '<leader>h', ":Pick help<CR>")
+map('n', '<leader>b', "<Cmd>Pick buffers<CR>")
 map('n', '<leader>lf', vim.lsp.buf.format)
+map('i', '<c-Space>', function() vim.lsp.completion.get() end)
 map('n', '<leader>t', ':Open .<CR>')
 map('n', '<leader>nc', ':e $MYVIMRC<CR>')
 map('n', '<leader>nn', ':e ~/.config/nvim/lua/keymaps.lua<CR>')
 map('n', '<leader>zz', ':e ~/.config/zsh/.aliases<CR>')
 map('n', '<leader>zc', ':e ~/.config/zsh/.zshrc<CR>')
 map('n', '<leader>zf', ':e ~/.config/zsh/.aliases-functions<CR>')
-map('n', '<leader>b', ':e #<CR>') -- Edit the alternate file (#)
+map('n', '<leader>B', ':e #<CR>') -- Edit the alternate file (#)
 map('n', '<leader>hs', ':bot sf #<CR>', { desc = "Horizontal split with alternate file" })
 map('n', '<leader>vs', ':vert belowright sf #<CR>', { desc = "Vertical split with alternate file" })
 map("n", "}", "}zz")
@@ -79,7 +81,7 @@ map('n', '<leader>-', ':resize -5<CR>', { desc = 'Decrease split height' })
 local builtin = require("telescope.builtin")
 map("n", "<leader>o", builtin.oldfiles, { desc = "Recent files" })
 map("n", "<leader>f", builtin.find_files, { desc = "Find files" })
-map("n", "<leader>B", builtin.buffers, { desc = "Buffers" })
+-- map("n", "<leader>B", builtin.buffers, { desc = "Buffers" })
 map("n", "<leader>H", builtin.help_tags, { desc = "Help tags" })
 
 map('n', '<leader>g', builtin.live_grep, { desc = '[F]ind by [G]rep (search content)' })
@@ -111,20 +113,20 @@ map('n', '<leader>li', vim.lsp.buf.implementation, { desc = "Go to implementatio
 map('n', '<leader>lR', vim.lsp.buf.references, { desc = "Show references" })
 
 map("n", "<leader>X", function()
-    local file = vim.fn.expand("%")
-    if vim.fn.getfsize(file) > 0 then
-        vim.fn.system({ "chmod", "+x", file })
-        print("Made " .. vim.fn.expand("%:t") .. " executable")
-    end
+	local file = vim.fn.expand("%")
+	if vim.fn.getfsize(file) > 0 then
+		vim.fn.system({ "chmod", "+x", file })
+		print("Made " .. vim.fn.expand("%:t") .. " executable")
+	end
 end, { desc = "Make current file executable" })
 
 -- automatically make .sh files executable on save
 vim.api.nvim_create_autocmd("BufWritePost", {
-    pattern = "*.sh",
-    callback = function()
-        local file = vim.fn.expand("%")
-        if vim.fn.getfsize(file) > 0 then
-            vim.fn.system({ "chmod", "+x", file })
-        end
-    end,
+	pattern = "*.sh",
+	callback = function()
+		local file = vim.fn.expand("%")
+		if vim.fn.getfsize(file) > 0 then
+			vim.fn.system({ "chmod", "+x", file })
+		end
+	end,
 })
