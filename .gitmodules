@@ -10,3 +10,7 @@
 	path = .config/suckless/noice
 	url = git@github.com:Rouzihiro/suckless-noice.git
 	branch = rey-jump
+[submodule ".config/suckless/slstatus"]
+	path = .config/suckless/slstatus
+	url = git@github.com:Rouzihiro/suckless-slstatus.git
+	branch = rey
