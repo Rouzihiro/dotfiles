@@ -1,87 +1,104 @@
-#!/usr/bin/env bash
+#!/bin/bash
+# Auto-download from file with queue, 3 concurrent downloads, and yt-dlp support
 
 # Paths
+URL_FILE="$HOME/Documents/Notes/downloads.md"
 DOWNLOAD_DIR="$HOME/Downloads/"
 DOWNLOADED_FILE="$HOME/Downloads/downloaded_links.txt"
 LOG_FILE="$HOME/Downloads/download.log"
 
-# Ensure folders exist
-mkdir -p "$DOWNLOAD_DIR"
-mkdir -p "$(dirname "$DOWNLOADED_FILE")"
-touch "$DOWNLOADED_FILE"
-touch "$LOG_FILE"
+MAX_CONCURRENT=3   # max parallel downloads
 
-# Check if link already downloaded
-is_link_downloaded() {
+mkdir -p "$DOWNLOAD_DIR"
+touch "$URL_FILE" "$DOWNLOADED_FILE" "$LOG_FILE"
+
+# Function: safe filename if file exists
+safe_name() {
+    local dir="$1"
+    local base="$2"
+    local ext="${base##*.}"
+    local name="${base%.*}"
+    local i=1
+    local new="$base"
+    while [ -e "$dir/$new" ]; do
+        new="${name}_$i.$ext"
+        i=$((i+1))
+    done
+    echo "$new"
+}
+
+# Check if already downloaded
+is_downloaded() {
     grep -qxF "$1" "$DOWNLOADED_FILE"
 }
 
-# Notify helper
-notify_success() { notify-send --expire-time=5000 "Download completed" "$1"; }
-notify_error() { notify-send --expire-time=5000 "Download failed" "$1"; }
-
-# Function to download a link
-download_link() {
+# Download one link
+download_one() {
     url="$1"
+    echo "$(date '+%Y-%m-%d %H:%M:%S') - Starting: $url" | tee -a "$LOG_FILE"
 
-    if is_link_downloaded "$url"; then
-        notify-send --expire-time=5000 "Already downloaded" "$url"
-        return
-    fi
-
-    # Detect type
+    # Determine type
     if echo "$url" | grep -qE 'youtube\.com|youtu\.be|vimeo\.com|dailymotion\.com'; then
-        type="Embedded video"
+        type="video"
     else
-        type="File"
+        type="file"
     fi
 
-    # Predict filename
-    if [ "$type" = "Embedded video" ]; then
+    if [ "$type" = "video" ]; then
+        # Predict name
         filename=$(yt-dlp --get-filename -o "%(title)s.%(ext)s" "$url" 2>/dev/null | head -1)
-        [ -z "$filename" ] && filename="unknown.mp4"
+        [ -z "$filename" ] && filename="video.mp4"
+        filename=$(safe_name "$DOWNLOAD_DIR" "$filename")
+
+        if yt-dlp -f 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/mp4' \
+                  --merge-output-format mp4 \
+                  -o "$DOWNLOAD_DIR/$filename" \
+                  "$url" >>"$LOG_FILE" 2>&1; then
+            echo "$url" >> "$DOWNLOADED_FILE"
+            sed -i "\\|$url|d" "$URL_FILE"
+            echo "$(date '+%Y-%m-%d %H:%M:%S') - Finished video: $filename" | tee -a "$LOG_FILE"
+            notify-send "Download complete" "$filename"
+        else
+            echo "$(date '+%Y-%m-%d %H:%M:%S') - Failed video: $url" | tee -a "$LOG_FILE"
+            notify-send "Download failed" "$url"
+        fi
     else
         filename=$(basename "${url%%\?*}")
-        [ -z "$filename" ] && filename="download"
+        [ -z "$filename" ] && filename="file"
+        filename=$(safe_name "$DOWNLOAD_DIR" "$filename")
+
+        if aria2c -c -x16 -s16 -d "$DOWNLOAD_DIR" -o "$filename" "$url" >>"$LOG_FILE" 2>&1; then
+            echo "$url" >> "$DOWNLOADED_FILE"
+            sed -i "\\|$url|d" "$URL_FILE"
+            echo "$(date '+%Y-%m-%d %H:%M:%S') - Finished file: $filename" | tee -a "$LOG_FILE"
+            notify-send "Download complete" "$filename"
+        else
+            echo "$(date '+%Y-%m-%d %H:%M:%S') - Failed file: $url" | tee -a "$LOG_FILE"
+            notify-send "Download failed" "$url"
+        fi
     fi
-
-    # Download depending on type
-    case "$type" in
-        "Embedded video")
-            if yt-dlp -f 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/mp4' \
-                      --merge-output-format mp4 \
-                      --external-downloader aria2c \
-                      --external-downloader-args 'aria2c:-x5 -s5' \
-                      -o "$DOWNLOAD_DIR/$filename" \
-                      "$url" >> "$LOG_FILE" 2>&1; then
-                notify_success "$filename"
-            else
-                notify_error "$url"
-            fi
-            ;;
-        *)
-            if aria2c --check-certificate=false -x2 -s2 -d "$DOWNLOAD_DIR" -o "$filename" "$url" >> "$LOG_FILE" 2>&1; then
-                notify_success "$filename"
-            else
-                notify_error "$filename"
-            fi
-            ;;
-    esac
-
-    # Record as downloaded
-    echo "$url" >> "$DOWNLOADED_FILE"
 }
 
-# Clipboard watcher (X11)
-old_clipboard=""
+# Extract URLs not yet downloaded
+get_urls() {
+    grep -Eo '(http|https|ftp)://[^ ]+' "$URL_FILE" | grep -v -F -f "$DOWNLOADED_FILE" || true
+}
+
+# Main loop
 while true; do
-    new_clipboard=$(xclip -o -selection clipboard 2>/dev/null)
-    if [ "$new_clipboard" != "$old_clipboard" ]; then
-        # Extract URLs (HTTP/HTTPS only)
-        for url in $(echo "$new_clipboard" | grep -Eo 'https?://[^ ]+'); do
-            download_link "$url"
-        done
-        old_clipboard="$new_clipboard"
+    URLS=$(get_urls)
+    if [ -z "$URLS" ]; then
+        echo "$(date '+%Y-%m-%d %H:%M:%S') - No new URLs. Sleeping 30s..." | tee -a "$LOG_FILE"
+        sleep 30
+        continue
     fi
-    sleep 1
+
+    for url in $URLS; do
+        while [ "$(jobs -rp | wc -l)" -ge "$MAX_CONCURRENT" ]; do
+            sleep 1
+        done
+        download_one "$url" &
+    done
+
+    wait
 done
