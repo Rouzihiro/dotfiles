@@ -167,7 +167,7 @@ static const Key keys[] = {
 		{MODKEY|ShiftMask, XK_r, spawn, {.v = rofi}},
 
  		{MODKEY, 					 XK_s,spawn,SHCMD ("dm-screenshot")},
-		{MODKEY|Mod1Mask,	 XK_s,spawn.SHCMD ("flameshot gui -c -p $HOME/Pictures/screenshot/")},
+		{MODKEY|Mod1Mask,	 XK_s,spawn,SHCMD ("flameshot gui -c -p $HOME/Pictures/screenshot/")},
 		{MODKEY|ShiftMask, XK_s,spawn,SHCMD ("dm-screenshot-fs")},
 
 		{MODKEY, 					 XK_t,spawn,SHCMD ("dm-timewarrior")},
