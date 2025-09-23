@@ -1,0 +1,50 @@
+#!/bin/sh
+
+if [ -z "$1" ]; then
+  printf "search query: "
+  read -r query
+else
+  query="$1"
+fi
+
+query=$(echo "$query" | sed 's/ /+/g')
+
+# yt_api_key location
+home="$HOME"
+yt_api_key="$(cat "${home}/.ssh/id_youtube")"
+urlstring="https://www.googleapis.com/youtube/v3/search?part=snippet&q=${query}&type=video&maxResults=20&key=${yt_api_key}"
+
+# Using a temporary file to hold the output
+tempfile=$(mktemp) || exit 1
+
+# Fetching data and processing it
+curl -s "${urlstring}" | \
+  jq -r '.items[] | select(.id.videoId != null) | "\(.snippet.channelTitle) => \(.snippet.title) https://youtu.be/\(.id.videoId)"' > "$tempfile"
+
+# Using fzf to select a video
+selected_video=$(fzf --with-nth='1..-2' +m < "$tempfile")
+
+# Clean up temporary file
+rm -f "$tempfile"
+
+# Extracting the last field for the URL
+if [ -n "$selected_video" ]; then
+  video_url=$(echo "$selected_video" | awk '{print $NF}' | sed 's/[[:space:]]*//g')
+
+  # Copy URL to clipboard (supports Linux/macOS)
+  if command -v xclip >/dev/null 2>&1; then
+    printf "%s" "$video_url" | xclip -selection clipboard
+  elif command -v wl-copy >/dev/null 2>&1; then
+    printf "%s" "$video_url" | wl-copy
+  elif command -v pbcopy >/dev/null 2>&1; then
+    printf "%s" "$video_url" | pbcopy
+  else
+    echo "No clipboard utility found (xclip, wl-copy, pbcopy)." >&2
+  fi
+
+  # Play video
+  mpv "$video_url"
+  echo "URL copied to clipboard: $video_url"
+else
+  echo "No video selected."
+fi
