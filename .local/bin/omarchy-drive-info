@@ -1,0 +1,48 @@
+#!/bin/bash
+
+# Show drive info including size, model, and remaining free space
+
+if (($# == 0)); then
+  echo "Usage: omarchy-drive-info [/dev/drive]"
+  exit 1
+else
+  drive="$1"
+fi
+
+# Find the root drive in case we are looking at partitions
+root_drive=$(lsblk -no PKNAME "$drive" 2>/dev/null | tail -n1)
+if [[ -n "$root_drive" ]]; then
+  root_drive="/dev/$root_drive"
+else
+  root_drive="$drive"
+fi
+
+# Get basic info
+size=$(lsblk -dno SIZE "$drive" 2>/dev/null)
+model=$(lsblk -dno MODEL "$root_drive" 2>/dev/null)
+
+# Find all partitions of this drive
+partitions=$(lsblk -lnpo NAME "$root_drive" | tail -n +2)
+
+# Sum free space from all mounted partitions
+free_bytes=0
+for part in $partitions; do
+  mountpoint=$(lsblk -npo MOUNTPOINT "$part" 2>/dev/null | head -n1)
+  if [[ -n "$mountpoint" ]]; then
+    avail=$(df -B1 --output=avail "$mountpoint" 2>/dev/null | tail -n1)
+    free_bytes=$((free_bytes + avail))
+  fi
+done
+
+# Convert free space to human-readable form
+if ((free_bytes > 0)); then
+  free_space=$(numfmt --to=iec --suffix=B $free_bytes)
+fi
+
+# Format display string
+display="$drive"
+[[ -n "$size" ]] && display="$display ($size)"
+[[ -n "$model" ]] && display="$display - $model"
+[[ -n "$free_space" ]] && display="$display - Free: $free_space"
+
+echo "$display"

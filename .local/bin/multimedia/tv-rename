@@ -1,0 +1,37 @@
+#!/bin/bash
+# Usage: ./rename_dharma.sh "Dharma & Greg" 1
+# Example: ./rename_dharma.sh "Dharma & Greg" 1
+
+SHOW_NAME="$1"
+SEASON="$2"
+
+if [ -z "$SHOW_NAME" ] || [ -z "$SEASON" ]; then
+  echo "Usage: $0 \"Show Name\" season_number"
+  exit 1
+fi
+
+# Make season number two digits (01, 02, etc.)
+SEASON_PADDED=$(printf "%02d" "$SEASON")
+
+# Create season folder if not exists
+SEASON_FOLDER="Season ${SEASON_PADDED}"
+mkdir -p "$SEASON_FOLDER"
+
+EPISODE=1
+
+# Process all video files (common extensions)
+shopt -s nullglob
+for file in *.{mp4,mkv,avi,mpg,mpeg,mov}; do
+  # Skip directories
+  [ -d "$file" ] && continue
+  
+  EXT="${file##*.}" # file extension
+  EPISODE_PADDED=$(printf "%02d" "$EPISODE")
+  
+  NEW_NAME="${SHOW_NAME} - S${SEASON_PADDED}E${EPISODE_PADDED}.${EXT}"
+  
+  echo "Renaming and moving: $file → ${SEASON_FOLDER}/${NEW_NAME}"
+  mv -n "$file" "${SEASON_FOLDER}/${NEW_NAME}"  # -n = don’t overwrite
+  EPISODE=$((EPISODE+1))
+done
+shopt -u nullglob
