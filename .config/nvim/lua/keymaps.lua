@@ -103,16 +103,29 @@ map('n', '<leader>V', '<Cmd>split<CR><Cmd>Telescope find_files<CR>', { desc = 'F
 map('n', '<leader>le', function() vim.diagnostic.open_float({ on_jump = function() end }) end,
 	{ desc = "Show error under cursor" })
 map('n', '<leader>lq', function() vim.diagnostic.setqflist() end, { desc = "Show all errors in quickfix" })
-map('n', ']]', function() vim.diagnostic.jump({ forward = true }) end, { desc = "Next diagnostic" })
-map('n', '[[', function() vim.diagnostic.jump({ forward = false }) end, { desc = "Previous diagnostic" })
+
+map('n', ']]', function()
+  vim.diagnostic.jump({ count = 1, on_jump = function() end })
+end, { desc = "Next diagnostic" })
+
+map('n', '[[', function()
+  vim.diagnostic.jump({ count = -1, on_jump = function() end })
+end, { desc = "Prev diagnostic" })
 
 -- LSP actions
-map('n', '<leader>lr', vim.lsp.buf.rename, { desc = "Rename symbol" })
-map('n', '<leader>la', vim.lsp.buf.code_action, { desc = "Code actions" })
-map('n', '<leader>ld', vim.lsp.buf.definition, { desc = "Go to definition" })
+map('n', '<leader>lr', vim.lsp.buf.rename,         { desc = "Rename symbol" })
+map('n', '<leader>la', vim.lsp.buf.code_action,    { desc = "Code actions" })
+map('n', '<leader>lf', function() vim.lsp.buf.format({ async = true }) end, { desc = "Format buffer" })
+map('n', '<leader>ld', vim.lsp.buf.definition,      { desc = "Go to definition" })
 map('n', '<leader>lt', vim.lsp.buf.type_definition, { desc = "Go to type definition" })
-map('n', '<leader>li', vim.lsp.buf.implementation, { desc = "Go to implementation" })
-map('n', '<leader>lR', vim.lsp.buf.references, { desc = "Show references" })
+map('n', '<leader>li', vim.lsp.buf.implementation,  { desc = "Go to implementation" })
+map('n', '<leader>lR', vim.lsp.buf.references,      { desc = "Show references" })
+map('n', '<leader>ls', vim.lsp.buf.document_symbol, { desc = "Document symbols" })
+map('n', '<leader>lS', vim.lsp.buf.workspace_symbol,{ desc = "Workspace symbols" })
+map('n', '<leader>lh', vim.lsp.buf.hover,        { desc = "Hover docs" })
+map('n', '<leader>lH', vim.lsp.buf.signature_help, { desc = "Signature help" })
+map('n', '<leader>lE', vim.diagnostic.open_float, { desc = "Show error under cursor" })
+map('n', '<leader>lq', vim.diagnostic.setloclist, { desc = "Quickfix diagnostics" })
 
 map("n", "<leader>X", function()
 	local file = vim.fn.expand("%")
