@@ -58,7 +58,7 @@ for i = 0, 9 do
 	map('n', '<leader>r' .. i, '"' .. i .. 'p', opts)
 end
 
-map({ "n" }, "<leader>a", "mzA<space><esc>p`z", { desc = "paste to the end of line" })
+map({ "n" }, "<leader>A", "mzA<space><esc>p`z", { desc = "paste to the end of line" })
 map("n", "<leader>za", 'ggVG"+y', { desc = "Yank entire buffer" })
 
 map({ "n", "v" }, "<leader>rw",
@@ -73,7 +73,6 @@ map({ 'n', 'v' }, '<leader>c', '1z=', { desc = "Correct last misspelled word" })
 
 -- Formatting
 map("n", "<leader>al", "<cmd>lua vim.lsp.buf.format()<CR>", { desc = "Format with LSP" })
-
 map('n', '<leader>>', '<Cmd>vertical resize +5<CR>', { desc = 'Increase split width' })
 map('n', '<leader><', '<Cmd>vertical resize -5<CR>', { desc = 'Decrease split width' })
 map('n', '<leader>+', '<Cmd>resize +5<CR>', { desc = 'Increase split height' })
@@ -142,6 +141,32 @@ vim.api.nvim_create_autocmd("BufWritePost", {
 		local file = vim.fn.expand("%")
 		if vim.fn.getfsize(file) > 0 then
 			vim.fn.system({ "chmod", "+x", file })
+		end
+	end,
+})
+
+map("n", "<leader>ll", ":copen<CR>", { silent = true })
+
+for i = 1, 9 do
+	map('n', '<leader>' .. i, ':cc ' .. i .. '<CR>', { noremap = true, silent = true })
+end
+
+map("n", "<leader>a",
+	function() vim.fn.setqflist({ { filename = vim.fn.expand("%"), lnum = 1, col = 1, text = vim.fn.expand("%"), } }, "a") end,
+	{ desc = "Add current file to QuickFix" })
+
+vim.api.nvim_create_autocmd("BufWinEnter", {
+	pattern = "*",
+	group = vim.api.nvim_create_augroup("qf", { clear = true }),
+	callback = function()
+		if vim.bo.buftype == "quickfix" then
+			map("n", "<leader>ll", ":ccl<cr>", { buffer = true, silent = true })
+			map("n", "dd", function()
+				local idx = vim.fn.line('.')
+				local qflist = vim.fn.getqflist()
+				table.remove(qflist, idx)
+				vim.fn.setqflist(qflist, 'r')
+			end, { buffer = true })
 		end
 	end,
 })

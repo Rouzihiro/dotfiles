@@ -31,7 +31,7 @@ vim.pack.add({
   { src = "https://github.com/nvim-treesitter/nvim-treesitter" },
   { src = "https://github.com/chomosuke/typst-preview.nvim" },
   { src = "https://github.com/mason-org/mason.nvim" },
-  { src = 'https://github.com/NvChad/showkeys', opt = true },
+  { src = 'https://github.com/NvChad/showkeys', opt = false },
   { src = "https://github.com/L3MON4D3/LuaSnip" },
   { src = "https://github.com/nvim-lua/plenary.nvim" },
   { src = "https://github.com/nvim-telescope/telescope.nvim" },
@@ -54,10 +54,16 @@ cmp.setup({
 })
 
 vim.cmd [[set completeopt+=menuone,noselect,popup]]
+vim.cmd('packadd showkeys')
+
+require("showkeys").setup({
+  position = "bottom",
+  delay = 50,      -- optional: ms before popup appears
+  timeout = 3000,   -- optional: how long it stays visible
+})
 
 require("keymaps")
 require("mason").setup()
-require("showkeys").setup({ position = "top-right" })
 require("mini.pick").setup()
 -- require "mini.bufremove".setup()
 -- require("plugins.oil")
