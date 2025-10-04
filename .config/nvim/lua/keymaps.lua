@@ -6,7 +6,7 @@ vim.g.mapleader = " "
 -- map("n", "<leader>sh", "<C-w>s", { desc = "Split window horizontally" })
 map("n", "<leader>se", "<C-w>=", { desc = "Make splits equal size" })
 map("n", "<leader>sx", "<cmd>close<CR>", { desc = "Close current split" })
-map('n', '<leader>B', '<Cmd>e #<CR>') -- Edit the alternate file (#)
+map('n', '<leader>B', '<Cmd>e #<CR>', { desc = "Edit the alternate file" })
 map('n', '<leader>sh', '<Cmd>bot sf #<CR>', { desc = "Horizontal split with alternate file" })
 map('n', '<leader>sv', '<Cmd>vert belowright sf #<CR>', { desc = "Vertical split with alternate file" })
 
@@ -58,7 +58,8 @@ for i = 0, 9 do
 	map('n', '<leader>r' .. i, '"' .. i .. 'p', opts)
 end
 
-map({ "n" }, "<leader>A", "mzA<space><esc>p`z", { desc = "paste to the end of line" })
+map({ "n" }, "<leader>A", require("actions-preview").code_actions)
+-- map({ "n" }, "<leader>A", "mzA<space><esc>p`z", { desc = "paste to the end of line" })
 map("n", "<leader>za", 'ggVG"+y', { desc = "Yank entire buffer" })
 
 map({ "n", "v" }, "<leader>rw",
