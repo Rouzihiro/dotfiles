@@ -1,3 +1,4 @@
+vim.cmd [[set completeopt+="menuone,noselect,popup"]]
 vim.opt.winborder = "rounded"
 vim.opt.clipboard = "unnamedplus"
 vim.opt.tabstop = 2
@@ -21,6 +22,8 @@ vim.pack.add({
   { src = "https://github.com/rebelot/kanagawa.nvim" },
 	{ src = "https://github.com/neanias/everforest-nvim" },
 	{ src = "https://github.com/EdenEast/nightfox.nvim" },
+	{ src = "https://github.com/folke/which-key.nvim" },
+	{ src = "https://github.com/chentoast/marks.nvim" },
   { src = "https://github.com/neovim/nvim-lspconfig" },
   { src = "https://github.com/hrsh7th/nvim-cmp" },
   { src = "https://github.com/hrsh7th/cmp-path" },
@@ -36,7 +39,17 @@ vim.pack.add({
   { src = "https://github.com/nvim-lua/plenary.nvim" },
   { src = "https://github.com/nvim-telescope/telescope.nvim" },
   { src = "https://github.com/nvim-telescope/telescope-fzf-native.nvim", build = "make" },
+	{ src = "https://github.com/aznhe21/actions-preview.nvim" },
 })
+
+require "marks".setup {
+	builtin_marks = { "<", ">", "^" },
+	refresh_interval = 250,
+	sign_priority = { lower = 10, upper = 15, builtin = 8, bookmark = 20 },
+	excluded_filetypes = {},
+	excluded_buftypes = {},
+	mappings = {}
+}
 
 -- Completion setup
 local cmp = require("cmp")
@@ -53,33 +66,27 @@ cmp.setup({
   }
 })
 
-vim.cmd [[set completeopt+=menuone,noselect,popup]]
-vim.cmd('packadd showkeys')
-
-require("showkeys").setup({
-  position = "bottom",
-  delay = 50,      -- optional: ms before popup appears
-  timeout = 3000,   -- optional: how long it stays visible
-})
-
 require("keymaps")
 require("mason").setup()
-require("mini.pick").setup()
--- require "mini.bufremove".setup()
--- require("plugins.oil")
 
-require("oil").setup({
-	lsp_file_methods = {
-		enabled = true,
-		timeout_ms = 1000,
-		autosave_changes = true,
-	},
-	float = {
-		max_width = 0.7,
-		max_height = 0.6,
-		border = "rounded",
-	},
+require "telescope".setup({
+	defaults = {
+		color_devicons = true,
+		sorting_strategy = "ascending",
+		borderchars = { "", "", "", "", "", "", "", "" },
+		path_displays = "smart",
+		layout_strategy = "horizontal",
+		layout_config = {
+			height = 100,
+			width = 400,
+			prompt_position = "top",
+			preview_cutoff = 40,
+		}
+	}
 })
+
+require("mini.pick").setup()
+require("plugins.oil")
 
 require('nightfox').setup({
   options = {
@@ -95,6 +102,15 @@ require('nightfox').setup({
 -- vim.cmd("colorscheme kanagawa")
 vim.cmd("colorscheme nightfox")
 vim.cmd(":hi statusline guibg=NONE")
+
+require("actions-preview").setup {
+	backend = { "telescope" },
+	telescope = vim.tbl_extend(
+		"force",
+		require("telescope.themes").get_dropdown(), {}
+	)
+}
+
 
 vim.lsp.enable(
 	{
