@@ -1,9 +1,49 @@
 #!/usr/bin/env bash
-perc=$(cat /sys/class/power_supply/macsmc-battery/capacity)
-if   [ "$perc" -ge 90 ]; then icon=""
-elif [ "$perc" -ge 70 ]; then icon=""
-elif [ "$perc" -ge 50 ]; then icon=""
-elif [ "$perc" -ge 20 ]; then icon=""
-else icon=""
+
+get_icon() {
+  local perc=$1
+  if   (( perc >= 90 )); then echo ""
+  elif (( perc >= 70 )); then echo ""
+  elif (( perc >= 50 )); then echo ""
+  elif (( perc >= 20 )); then echo ""
+  else echo ""
+  fi
+}
+
+output=""
+found=0
+
+for bat in /sys/class/power_supply/*; do
+  [[ -r "$bat/capacity" ]] || continue  # skip non-battery devices
+  read -r perc   <"$bat/capacity"
+  read -r status <"$bat/status"
+
+  icon=$(get_icon "$perc")
+
+  case $status in
+    Charging)    sign="+" ;;
+    Discharging) sign="-" ;;
+    *)            sign="" ;;
+  esac
+
+  output+="$icon ${sign}${perc}% "
+  found=1
+done
+
+# fallback for macsmc-battery (Asahi)
+if (( !found )) && [[ -r /sys/class/power_supply/macsmc-battery/capacity ]]; then
+  read -r perc   </sys/class/power_supply/macsmc-battery/capacity
+  read -r status </sys/class/power_supply/macsmc-battery/status
+
+  icon=$(get_icon "$perc")
+
+  case $status in
+    Charging)    sign="+" ;;
+    Discharging) sign="-" ;;
+    *)            sign="" ;;
+  esac
+
+  output="$icon ${sign}${perc}%"
 fi
-echo "$icon $perc%"
+
+echo "${output:-b: N/A}"
