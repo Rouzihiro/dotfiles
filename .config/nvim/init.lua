@@ -1,45 +1,45 @@
-vim.cmd [[set completeopt+="menuone,noselect,popup"]]
+vim.cmd([[set noswapfile]])
 vim.opt.winborder = "rounded"
 vim.opt.clipboard = "unnamedplus"
 vim.opt.tabstop = 2
+vim.opt.shiftwidth = 2
+vim.opt.showtabline = 2
+vim.opt.signcolumn = "yes"
+vim.opt.wrap = false
 vim.opt.cursorcolumn = false
 vim.opt.ignorecase = true
-vim.opt.shiftwidth = 2
 vim.opt.smartindent = true
-vim.opt.wrap = false
-vim.opt.number = true
-vim.opt.relativenumber = true
-vim.opt.swapfile = false
 vim.opt.termguicolors = true
 vim.opt.undofile = true
-vim.opt.incsearch = true
-vim.opt.signcolumn = "yes"
+vim.opt.number = true
+
+-- vim.opt.incsearch = true
 
 -- vim.o.spelllang = "en_us,de"
 -- vim.o.spellsuggest = "best,9"
 
 vim.pack.add({
-  { src = "https://github.com/rebelot/kanagawa.nvim" },
-	{ src = "https://github.com/neanias/everforest-nvim" },
 	{ src = "https://github.com/EdenEast/nightfox.nvim" },
-	{ src = "https://github.com/folke/which-key.nvim" },
 	{ src = "https://github.com/chentoast/marks.nvim" },
-  { src = "https://github.com/neovim/nvim-lspconfig" },
+	{ src = "https://github.com/stevearc/oil.nvim" },
+	{ src = "https://github.com/nvim-tree/nvim-web-devicons" },
+	{ src = "https://github.com/aznhe21/actions-preview.nvim" },
+	{ src = "https://github.com/nvim-treesitter/nvim-treesitter",        version = "main" },
+	{ src = "https://github.com/nvim-telescope/telescope.nvim",          version = "0.1.8" },
+	{ src = "https://github.com/nvim-telescope/telescope-ui-select.nvim" },
+	{ src = "https://github.com/nvim-lua/plenary.nvim" },
+	{ src = "https://github.com/chomosuke/typst-preview.nvim" },
+	{ src = "https://github.com/neovim/nvim-lspconfig" },
+	{ src = "https://github.com/mason-org/mason.nvim" },
+	{ src = "https://github.com/L3MON4D3/LuaSnip" },
+	{ src = "https://github.com/LinArcX/telescope-env.nvim" },
+	{ src = "https://github.com/folke/which-key.nvim" },
   { src = "https://github.com/hrsh7th/nvim-cmp" },
   { src = "https://github.com/hrsh7th/cmp-path" },
   { src = "https://github.com/hrsh7th/cmp-buffer" },
   { src = "https://github.com/hrsh7th/cmp-nvim-lsp" },
-  { src = "https://github.com/stevearc/oil.nvim", version = "master", opt = false },
   { src = "https://github.com/echasnovski/mini.nvim" },
-  { src = "https://github.com/nvim-treesitter/nvim-treesitter" },
-  { src = "https://github.com/chomosuke/typst-preview.nvim" },
-  { src = "https://github.com/mason-org/mason.nvim" },
   { src = 'https://github.com/NvChad/showkeys', opt = false },
-  { src = "https://github.com/L3MON4D3/LuaSnip" },
-  { src = "https://github.com/nvim-lua/plenary.nvim" },
-  { src = "https://github.com/nvim-telescope/telescope.nvim" },
-  { src = "https://github.com/nvim-telescope/telescope-fzf-native.nvim", build = "make" },
-	{ src = "https://github.com/aznhe21/actions-preview.nvim" },
 })
 
 require "marks".setup {
@@ -49,6 +49,46 @@ require "marks".setup {
 	excluded_filetypes = {},
 	excluded_buftypes = {},
 	mappings = {}
+}
+
+local default_color = "nightfox"
+
+require("mason").setup()
+
+local telescope = require("telescope")
+telescope.setup({
+	defaults = {
+		preview = { treesitter = false },
+		color_devicons = true,
+		sorting_strategy = "ascending",
+		borderchars = {
+			"─", -- top
+			"│", -- right
+			"─", -- bottom
+			"│", -- left
+			"┌", -- top-left
+			"┐", -- top-right
+			"┘", -- bottom-right
+			"└", -- bottom-left
+		},
+		path_displays = { "smart" },
+		layout_config = {
+			height = 100,
+			width = 400,
+			prompt_position = "top",
+			preview_cutoff = 40,
+		}
+	}
+})
+telescope.load_extension("ui-select")
+
+require("actions-preview").setup {
+	backend = { "telescope" },
+	extensions = { "env" },
+	telescope = vim.tbl_extend(
+		"force",
+		require("telescope.themes").get_dropdown(), {}
+	)
 }
 
 -- Completion setup
@@ -67,23 +107,6 @@ cmp.setup({
 })
 
 require("keymaps")
-require("mason").setup()
-
-require "telescope".setup({
-	defaults = {
-		color_devicons = true,
-		sorting_strategy = "ascending",
-		borderchars = { "", "", "", "", "", "", "", "" },
-		path_displays = "smart",
-		layout_strategy = "horizontal",
-		layout_config = {
-			height = 100,
-			width = 400,
-			prompt_position = "top",
-			preview_cutoff = 40,
-		}
-	}
-})
 
 require("mini.pick").setup()
 require("plugins.oil")
@@ -103,15 +126,6 @@ require('nightfox').setup({
 vim.cmd("colorscheme nightfox")
 vim.cmd(":hi statusline guibg=NONE")
 
-require("actions-preview").setup {
-	backend = { "telescope" },
-	telescope = vim.tbl_extend(
-		"force",
-		require("telescope.themes").get_dropdown(), {}
-	)
-}
-
-
 vim.lsp.enable(
 	{
 		"lua_ls",
@@ -120,7 +134,6 @@ vim.lsp.enable(
 		"bashls",
 	}
 )
-
 
 -- Snippets
 require("luasnip").setup({ enable_autosnippets = true })
@@ -134,6 +147,36 @@ vim.filetype.add({
     typ = "typst",
   },
 })
+
+local function pack_clean()
+	local active_plugins = {}
+	local unused_plugins = {}
+
+	for _, plugin in ipairs(vim.pack.get()) do
+		active_plugins[plugin.spec.name] = plugin.active
+	end
+
+	for _, plugin in ipairs(vim.pack.get()) do
+		if not active_plugins[plugin.spec.name] then
+			table.insert(unused_plugins, plugin.spec.name)
+		end
+	end
+
+	if #unused_plugins == 0 then
+		print("No unused plugins.")
+		return
+	end
+
+	local choice = vim.fn.confirm("Remove unused plugins?", "&Yes\n&No", 2)
+	if choice == 1 then
+		vim.pack.del(unused_plugins)
+	end
+end
+
+vim.keymap.set("n", "<leader>pc", pack_clean)
+
+local color_group = vim.api.nvim_create_augroup("colors", { clear = true })
+
 
 -- LSP config for tinymist and others
 local lspconfig = require("lspconfig")
