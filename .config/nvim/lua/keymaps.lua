@@ -1,14 +1,19 @@
 local map = vim.keymap.set
 vim.g.mapleader = " "
 
+map({ "n", "v", "x" }, ";", ":", { desc = "Self explanatory" })
+map({ "n", "v", "x" }, ":", ";", { desc = "Self explanatory" })
+map("n", "n", "nzzzv")
+map("n", "N", "Nzzzv")
+
 -- window management
 -- map("n", "<leader>sv", "<C-w>v", { desc = "Split window vertically" })
 -- map("n", "<leader>sh", "<C-w>s", { desc = "Split window horizontally" })
-map("n", "<leader>se", "<C-w>=", { desc = "Make splits equal size" })
-map("n", "<leader>sx", "<cmd>close<CR>", { desc = "Close current split" })
+map("n", "<leader>fe", "<C-w>=", { desc = "Make splits equal size" })
+map("n", "<leader>fx", "<cmd>close<CR>", { desc = "Close current split" })
 map('n', '<leader>B', '<Cmd>e #<CR>', { desc = "Edit the alternate file" })
-map('n', '<leader>sh', '<Cmd>bot sf #<CR>', { desc = "Horizontal split with alternate file" })
-map('n', '<leader>sv', '<Cmd>vert belowright sf #<CR>', { desc = "Vertical split with alternate file" })
+map('n', '<leader>fh', '<Cmd>bot sf #<CR>', { desc = "Horizontal split with alternate file" })
+map('n', '<leader>fv', '<Cmd>vert belowright sf #<CR>', { desc = "Vertical split with alternate file" })
 
 -- tabs
 map("n", "<leader>to", "<cmd>tabnew<CR>", { desc = "Open new tab" })
@@ -22,10 +27,14 @@ map("n", "<leader>e", function()
 	vim.cmd("Oil --float " .. vim.loop.cwd())
 end, { desc = "Open Oil floating file manager" })
 
-map('n', '<leader>u', '<Cmd>update<CR> <Cmd>source<CR>')
+map({ "n", "v", "x" }, "<leader>u", "<Cmd>source %<CR>", { desc = "Source " .. vim.fn.expand("$MYVIMRC") })
+map({ "n", "v", "x" }, "<leader>U", "<Cmd>restart<CR>", { desc = "Restart vim." })
+map({ "n", "v", "x" }, "<C-s>", [[:s/\V]], { desc = "Enter substitue mode in selection" })
+map({ "v", "x", "n" }, "<C-y>", '"+y', { desc = "System clipboard yank." })
+
 map('n', '<leader>w', '<Cmd>write<CR>')
-map('n', '<leader>s', '<Cmd>write<CR>')
-map('n', '<leader>q', '<Cmd>bd<CR>', { desc = "Close buffer" })
+map({ "n" }, "<leader>q", "<Cmd>:quit<CR>", { desc = "Quit the current buffer." })
+map({ "n" }, "<leader>Q", "<Cmd>:wqa<CR>", { desc = "Quit all buffers and write." })
 map("n", "K", vim.lsp.buf.hover, { desc = "LSP Hover" })
 
 map('n', '<leader>x', '<Cmd>quit<CR>')
@@ -34,8 +43,8 @@ map('n', '<C-q>', '<Cmd>bd!<CR>', { desc = "Force close buffer" })
 map("n", "<esc>", "<cmd>noh<CR>")
 map('n', '<leader>p', "<Cmd>Pick files<CR>")
 map('n', '<leader>h', "<Cmd>Pick help<CR>")
-map('n', '<leader>b', "<Cmd>Pick buffers<CR>")
-map('n', '<leader>lf', vim.lsp.buf.format)
+-- map('n', '<leader>b', "<Cmd>Pick buffers<CR>")
+map({ "n", "v", "x" }, "<leader>lf", vim.lsp.buf.format, { desc = "Format current buffer" })
 map('i', '<c-Space>', function() vim.lsp.completion.get() end)
 map('n', '<leader>tt', '<Cmd>Open .<CR>')
 map('n', '<leader>nc', '<Cmd>e $MYVIMRC<CR>')
@@ -58,7 +67,6 @@ for i = 0, 9 do
 	map('n', '<leader>r' .. i, '"' .. i .. 'p', opts)
 end
 
-map({ "n" }, "<leader>A", require("actions-preview").code_actions)
 -- map({ "n" }, "<leader>A", "mzA<space><esc>p`z", { desc = "paste to the end of line" })
 map("n", "<leader>za", 'ggVG"+y', { desc = "Yank entire buffer" })
 
@@ -82,17 +90,19 @@ map('n', '<leader>-', '<Cmd>resize -5<CR>', { desc = 'Decrease split height' })
 -- Telescope
 local builtin = require("telescope.builtin")
 map("n", "<leader>o", builtin.oldfiles, { desc = "Recent files" })
-map("n", "<leader>ff", builtin.find_files, { desc = "Find files" })
--- map("n", "<leader>B", builtin.buffers, { desc = "Buffers" })
-map("n", "<leader>fh", builtin.help_tags, { desc = "Help tags" })
-
-map('n', '<leader>fg', builtin.live_grep, { desc = '[F]ind by [G]rep (search content)' })
-map('n', '<leader>fw', function()
-	builtin.grep_string({ search = vim.fn.expand('<cword>') })
-end, { desc = '[F]ind current [W]ord' })
-map('n', '<leader>fd', function()
-	builtin.live_grep({ search_dirs = { vim.fn.input('Directory: ') } })
-end, { desc = '[F]ind in [D]irectory' })
+map({ "n" }, "<leader>f", builtin.find_files, { desc = "Telescope live grep" })
+map({ "n" }, "<leader>g", builtin.live_grep, { desc = "Telescope live grep" })
+map({ "n" }, "<leader>b", builtin.buffers, { desc = "Telescope buffers" })
+map({ "n" }, "<leader>si", builtin.grep_string, { desc = "Telescope live string" })
+map({ "n" }, "<leader>so", builtin.oldfiles, { desc = "Recent files" })
+map({ "n" }, "<leader>sh", builtin.help_tags, { desc = "Telescope help tags" })
+map({ "n" }, "<leader>sm", builtin.man_pages, { desc = "Telescope man pages" })
+map({ "n" }, "<leader>sr", builtin.lsp_references, { desc = "Telescope tags" })
+map({ "n" }, "<leader>st", builtin.builtin, { desc = "Telescope tags" })
+map({ "n" }, "<leader>sd", builtin.registers, { desc = "Telescope tags" })
+map({ "n" }, "<leader>sc", builtin.git_bcommits, { desc = "Telescope tags" })
+map({ "n" }, "<leader>se", "<cmd>Telescope env<cr>", { desc = "Telescope tags" })
+map({ "n" }, "<leader>sa", require("actions-preview").code_actions)
 
 -- Open file in vertical split
 map('n', '<leader>v', '<Cmd>vsplit<CR><Cmd>Telescope find_files<CR>', { desc = 'Find file (vertical split)' })
@@ -105,24 +115,24 @@ map('n', '<leader>le', function() vim.diagnostic.open_float({ on_jump = function
 map('n', '<leader>lq', function() vim.diagnostic.setqflist() end, { desc = "Show all errors in quickfix" })
 
 map('n', ']]', function()
-  vim.diagnostic.jump({ count = 1, on_jump = function() end })
+	vim.diagnostic.jump({ count = 1, on_jump = function() end })
 end, { desc = "Next diagnostic" })
 
 map('n', '[[', function()
-  vim.diagnostic.jump({ count = -1, on_jump = function() end })
+	vim.diagnostic.jump({ count = -1, on_jump = function() end })
 end, { desc = "Prev diagnostic" })
 
 -- LSP actions
-map('n', '<leader>lr', vim.lsp.buf.rename,         { desc = "Rename symbol" })
-map('n', '<leader>la', vim.lsp.buf.code_action,    { desc = "Code actions" })
+map('n', '<leader>lr', vim.lsp.buf.rename, { desc = "Rename symbol" })
+map('n', '<leader>la', vim.lsp.buf.code_action, { desc = "Code actions" })
 map('n', '<leader>lf', function() vim.lsp.buf.format({ async = true }) end, { desc = "Format buffer" })
-map('n', '<leader>ld', vim.lsp.buf.definition,      { desc = "Go to definition" })
+map('n', '<leader>ld', vim.lsp.buf.definition, { desc = "Go to definition" })
 map('n', '<leader>lt', vim.lsp.buf.type_definition, { desc = "Go to type definition" })
-map('n', '<leader>li', vim.lsp.buf.implementation,  { desc = "Go to implementation" })
-map('n', '<leader>lR', vim.lsp.buf.references,      { desc = "Show references" })
+map('n', '<leader>li', vim.lsp.buf.implementation, { desc = "Go to implementation" })
+map('n', '<leader>lR', vim.lsp.buf.references, { desc = "Show references" })
 map('n', '<leader>ls', vim.lsp.buf.document_symbol, { desc = "Document symbols" })
-map('n', '<leader>lS', vim.lsp.buf.workspace_symbol,{ desc = "Workspace symbols" })
-map('n', '<leader>lh', vim.lsp.buf.hover,        { desc = "Hover docs" })
+map('n', '<leader>lS', vim.lsp.buf.workspace_symbol, { desc = "Workspace symbols" })
+map('n', '<leader>lh', vim.lsp.buf.hover, { desc = "Hover docs" })
 map('n', '<leader>lH', vim.lsp.buf.signature_help, { desc = "Signature help" })
 map('n', '<leader>lE', vim.diagnostic.open_float, { desc = "Show error under cursor" })
 map('n', '<leader>lq', vim.diagnostic.setloclist, { desc = "Quickfix diagnostics" })
@@ -151,10 +161,6 @@ map("n", "<leader>ll", ":copen<CR>", { silent = true })
 for i = 1, 9 do
 	map('n', '<leader>' .. i, ':cc ' .. i .. '<CR>', { noremap = true, silent = true })
 end
-
-map("n", "<leader>a",
-	function() vim.fn.setqflist({ { filename = vim.fn.expand("%"), lnum = 1, col = 1, text = vim.fn.expand("%"), } }, "a") end,
-	{ desc = "Add current file to QuickFix" })
 
 vim.api.nvim_create_autocmd("BufWinEnter", {
 	pattern = "*",
