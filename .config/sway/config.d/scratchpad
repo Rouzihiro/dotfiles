@@ -1,4 +1,4 @@
 # Scratchpad
-bindsym $mod+space scratchpad show
-bindsym $mod+Shift+space floating enable, resize set width 1800 height 1000, move scratchpad
+bindsym $mod+p scratchpad show
+bindsym $mod+Shift+p floating enable, resize set width 1800 height 1000, move scratchpad
 

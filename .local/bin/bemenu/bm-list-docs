@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+
+bemenu_CMD="bemenu"
+bemenu_OPTS="-i -l 20 -c"  # centered, 20 lines
+MAXLEN=40  # Max characters to display per line
+
+while true; do
+    # Collect PDF files relative to $HOME
+    pdfs=$(fd . -e pdf --base-directory "$HOME" -c never)
+
+    # Build mapping: display name -> full path
+    declare -A map
+    display="Quit"$'\n'  # Add Quit as first option
+    while IFS= read -r file; do
+        short=$(basename "$(dirname "$file")")/$(basename "$file")
+        [ ${#short} -gt $MAXLEN ] && short="${short:0:$((MAXLEN-1))}…"
+        display+="$short"$'\n'
+        map["$short"]="$file"
+    done <<< "$pdfs"
+
+    # Show menu with title line
+    choice=$(printf "Books\n---\n%s\n" "$display" | ${bemenu_CMD} ${bemenu_OPTS} 2>/dev/null)
+
+    # Exit if user picked Quit, ESC, or closed bemenu
+    if [[ "$choice" == "Quit" || "$choice" == "Books" || "$choice" == "---" || -z "$choice" ]]; then
+        exit 0
+    fi
+
+    # Open the selected PDF
+    zathura "$HOME/${map[$choice]}"
+done
+
