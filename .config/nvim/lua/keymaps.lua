@@ -33,7 +33,7 @@ map({ "n", "v", "x" }, "<C-s>", [[:s/\V]], { desc = "Enter substitue mode in sel
 map({ "v", "x", "n" }, "<C-y>", '"+y', { desc = "System clipboard yank." })
 
 map('n', '<leader>w', '<Cmd>write<CR>')
-map({ "n" }, "<leader>q", "<Cmd>:quit<CR>", { desc = "Quit the current buffer." })
+map({ "n" }, "<leader>q", "<Cmd>bd<CR>", { desc = "Close buffer" })
 map({ "n" }, "<leader>Q", "<Cmd>:wqa<CR>", { desc = "Quit all buffers and write." })
 map("n", "K", vim.lsp.buf.hover, { desc = "LSP Hover" })
 
@@ -41,9 +41,9 @@ map('n', '<leader>x', '<Cmd>quit<CR>')
 map('n', '<C-q>', '<Cmd>bd!<CR>', { desc = "Force close buffer" })
 
 map("n", "<esc>", "<cmd>noh<CR>")
-map('n', '<leader>p', "<Cmd>Pick files<CR>")
-map('n', '<leader>h', "<Cmd>Pick help<CR>")
--- map('n', '<leader>b', "<Cmd>Pick buffers<CR>")
+map('n', '<leader>pp', "<Cmd>Pick files<CR>")
+map('n', '<leader>ph', "<Cmd>Pick help<CR>")
+map('n', '<leader>pb', "<Cmd>Pick buffers<CR>")
 map({ "n", "v", "x" }, "<leader>lf", vim.lsp.buf.format, { desc = "Format current buffer" })
 map('i', '<c-Space>', function() vim.lsp.completion.get() end)
 map('n', '<leader>tt', '<Cmd>Open .<CR>')
