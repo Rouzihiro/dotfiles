@@ -5,6 +5,6 @@ set $term foot
 set $launcher rofi -show drun
 set $browser librewolf
 set $fileManager thunar
-set $TfileManager $term -e vifm
+set $TfileManager $term -e yazi
 set $editor $term -e nvim
 

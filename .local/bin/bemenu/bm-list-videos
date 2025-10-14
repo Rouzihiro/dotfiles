@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+
+bemenu_CMD="bemenu"
+bemenu_OPTS="-c -i -l 15"  # Case-insensitive, 15 lines shown
+
+# Collect video files (relative to $HOME)
+video_files=$(find ~/Videos ~/Downloads -type f \( -iname "*.avi" -o -iname "*.mp4" -o -iname "*.mkv" -o -iname "*.flv" -o -iname "*.webm" \) -print0 | xargs -0 -I{} basename "{}")
+
+# If no videos found, exit
+if [ -z "$video_files" ]; then
+    notify-send "No video files found in ~/Videos or ~/Downloads."
+    exit 1
+fi
+
+# Show bemenu (single column) with optional title/separator
+choice=$(printf "Videos\n---\n%s\n" "$video_files" | ${bemenu_CMD} ${bemenu_OPTS} 2>/dev/null)
+
+# Ignore title/separator selections
+if [ "$choice" = "Videos" ] || [ "$choice" = "---" ] || [ -z "$choice" ]; then
+    exit 0
+fi
+
+# Find the full path of the selected file
+video_path=$(find ~/Videos ~/Downloads -type f -name "$choice" -print -quit)
+
+# Open with mpv if found
+if [ -n "$video_path" ]; then
+    mpv "$video_path"
+else
+    notify-send "Error" "File not found."
+fi

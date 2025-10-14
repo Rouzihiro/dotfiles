@@ -1,0 +1,41 @@
+#!/bin/sh
+set -eu
+
+terminal="foot"
+bemenu_flags="-i -l 10 -p 'Projects:'"
+
+# Build list: "repo_name → full_path"
+configs=""
+
+# Add suckless repos
+for d in "$HOME"/suckless/*/; do
+    [ -d "$d" ] || continue
+    repo_name=$(basename "$d")
+    configs="$configs$repo_name → $d"$'\n'
+done
+
+# Add additional folders
+for extra in "Hamburg-Events" "dotfiles"; do
+    dir="$HOME/$extra"
+    [ -d "$dir" ] || continue
+    configs="$configs$extra → $dir"$'\n'
+done
+
+[ -n "$configs" ] || exit 0
+
+# Pick a line
+chosen_line="$(printf '%s' "$configs" | bemenu $bemenu_flags)"
+[ -n "$chosen_line" ] || exit 0
+
+# Extract repo name and full path
+repo_name="${chosen_line%% →*}"
+dir="${chosen_line#* → }"
+
+# Check if we are inside tmux
+if [ -n "${TMUX-}" ]; then
+    # Inside tmux: create a new window
+    tmux new-window -c "$dir" -n "$repo_name"
+else
+    # Not in tmux: open a new terminal with a new or attached session
+    exec "$terminal" -e tmux new-session -As "$repo_name" -c "$dir"
+fi

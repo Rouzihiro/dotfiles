@@ -13,7 +13,7 @@ input type:touchpad {
 }
 
 input type:mouse {
-    pointer_accel 0.4
+    pointer_accel 1.0
     accel_profile flat
 }
 
