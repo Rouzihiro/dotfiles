@@ -1,0 +1,264 @@
+#!/bin/bash
+
+DOCUMENTS="$HOME/Documents"
+NOTES="$DOCUMENTS/Notes"
+
+LOG_DIR="$HOME/.logs"
+LOG_FILE="$LOG_DIR/.music.log"
+mkdir -p "$LOG_DIR"
+
+# Colors for output
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+BLUE='\033[0;34m'
+CYAN='\033[0;36m'
+NC='\033[0m' # No Color
+
+# Configuration
+LIST_FILE="${NOTES}/download-music.md"
+TARGET_DIR="${HOME}/Music"
+TEMP_DIR="/tmp/music_metadata"
+
+# Cleanup function
+cleanup() {
+    rm -rf "$TEMP_DIR"
+    echo -e "${GREEN}Cleanup complete.${NC}"
+}
+
+# Check dependencies
+check_deps() {
+    local deps=("yt-dlp" "bemenu" "mpv" "md5sum" "jq" "ffmpeg" "curl" "exiftool" "notify-send")
+    local missing=()
+
+    for dep in "${deps[@]}"; do
+        if ! command -v "$dep" &>/dev/null; then
+            missing+=("$dep")
+        fi
+    done
+
+    if [ ${#missing[@]} -ne 0 ]; then
+        echo -e "${RED}Missing dependencies:${NC} ${missing[*]}"
+        echo "Please install them before running this script."
+        exit 1
+    fi
+}
+
+# Sanitize filename
+sanitize_filename() {
+    echo "$1" | sed -e 's/[<>:"/\\|?*]//g' -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//' | tr -s ' '
+}
+
+# Generate filename
+generate_filename() {
+    local metadata_file="$1"
+    local format="$2"
+
+    local title=$(jq -r '.title // "Unknown Title"' "$metadata_file")
+    local artist=$(jq -r '.artist // .album_artist // .uploader // "Unknown Artist"' "$metadata_file")
+
+    # Filenames keep spaces
+    title=$(sanitize_filename "$title")
+    artist=$(sanitize_filename "$artist")
+
+    # USB-friendly folder
+    local folder_artist=$(echo "$artist" | tr ' ' '.')
+
+    # Avoid duplicate artist-title
+    local filename
+    if [[ "$title" == "$artist"* ]]; then
+        filename="$title.$format"
+    else
+        filename="$artist - $title.$format"
+    fi
+
+    mkdir -p "$TARGET_DIR/$folder_artist"
+    echo "$TARGET_DIR/$folder_artist/$filename"
+}
+# Embed metadata using ffmpeg
+embed_metadata() {
+    local input_file="$1"
+    local metadata_file="$2"
+    local output_file="${TEMP_DIR}/temp_embed.${input_file##*.}"
+
+    local title=$(jq -r '.title // empty' "$metadata_file")
+    local artist=$(jq -r '.uploader // empty' "$metadata_file")
+    local album=$(jq -r '.playlist_title // "YouTube Downloads"' "$metadata_file")
+    local date=$(jq -r '.upload_date // empty' "$metadata_file" | sed 's/\(....\)\(..\)\(..\)/\1-\2-\3/')
+
+    local ffmpeg_cmd=("ffmpeg" "-i" "$input_file" "-c" "copy")
+
+    [ -n "$title" ] && ffmpeg_cmd+=("-metadata" "title=$title")
+    [ -n "$artist" ] && ffmpeg_cmd+=("-metadata" "artist=$artist")
+    [ -n "$album" ] && ffmpeg_cmd+=("-metadata" "album=$album")
+    [ -n "$date" ] && ffmpeg_cmd+=("-metadata" "date=$date")
+
+    ffmpeg_cmd+=("-y" "$output_file")
+
+    if "${ffmpeg_cmd[@]}" 2>>"$LOG_FILE"; then
+        mv "$output_file" "$input_file"
+        echo -e "${GREEN}✓ Metadata embedded${NC}"
+        return 0
+    else
+        echo -e "${YELLOW}⚠ Could not embed metadata${NC}"
+        echo "Metadata embedding failed for $input_file" >>"$LOG_FILE"
+        rm -f "$output_file"
+        return 1
+    fi
+}
+
+# Download and process single URL
+download_and_process() {
+    local url="$1"
+    local format="flac"
+
+    mkdir -p "$TEMP_DIR" "$TARGET_DIR"
+
+    local metadata_file="$TEMP_DIR/metadata.json"
+
+    if ! yt-dlp --write-info-json --skip-download -o "$TEMP_DIR/%(id)s.%(ext)s" "$url" 2>>"$LOG_FILE"; then
+        echo "Failed to fetch metadata for $url" >>"$LOG_FILE"
+        notify-send "Music Download Error" "Failed to fetch metadata for $url"
+        return
+    fi
+    mv "$TEMP_DIR/"*.info.json "$metadata_file"
+
+    local output_file
+    output_file=$(generate_filename "$metadata_file" "$format")
+
+    if [ -f "$output_file" ]; then
+        echo -e "${YELLOW}Skipping (already exists):${NC} $output_file"
+        return
+    fi
+
+    if ! yt-dlp -x --audio-format "$format" -o "$TEMP_DIR/%(title)s.%(ext)s" "$url" 2>>"$LOG_FILE"; then
+        echo "Failed to download $url" >>"$LOG_FILE"
+        notify-send "Music Download Error" "Failed to download $url"
+        return
+    fi
+
+    local downloaded_file
+    downloaded_file=$(ls "$TEMP_DIR"/*."$format" | head -n 1)
+
+    embed_metadata "$downloaded_file" "$metadata_file"
+
+    mv "$downloaded_file" "$output_file"
+    echo -e "${GREEN}Saved:${NC} $output_file"
+    notify-send "Music Download Complete" "$(basename "$output_file")"
+}
+
+# Download playlists
+download_playlists() {
+    local format=$1
+
+    [ ! -f "$LIST_FILE" ] && { echo -e "${RED}Error:${NC} ${LIST_FILE} not found!"; return 1; }
+
+    mkdir -p "$TEMP_DIR"
+
+    while IFS= read -r url; do
+        [ -n "$url" ] && download_and_process "$url" "$format"
+    done < "$LIST_FILE"
+
+    rm -rf "$TEMP_DIR"
+}
+
+# Rename existing files
+rename_existing_files() {
+    shopt -s nullglob
+    for file in "$TARGET_DIR"/*; do
+        [ -f "$file" ] || continue
+
+        local extension="${file##*.}"
+        local title=$(exiftool -Title -s -s -s "$file")
+        local artist=$(exiftool -Artist -s -s -s "$file")
+
+        [ -z "$title" ] && title="Unknown Title"
+        [ -z "$artist" ] && artist="Unknown Artist"
+
+        # Keep filename with spaces
+        title=$(sanitize_filename "$title")
+        artist=$(sanitize_filename "$artist")
+
+        local new_filename
+        if [[ "$title" == "$artist"* ]]; then
+            new_filename="$title.$extension"
+        else
+            new_filename="$artist - $title.$extension"
+        fi
+
+        # Folder with dots
+        local folder_artist=$(echo "$artist" | tr ' ' '.')
+        mkdir -p "$TARGET_DIR/$folder_artist"
+        local new_path="$TARGET_DIR/$folder_artist/$new_filename"
+
+        [ "$file" != "$new_path" ] && mv -n "$file" "$new_path" && echo -e "${GREEN}Renamed:${NC} $file → $new_path"
+    done
+    shopt -u nullglob
+}
+# Move files
+move_files() {
+    local target="$1"
+    [ ! -d "$target" ] && mkdir -p "$target"
+    find . -maxdepth 1 -type f \( -name "*.flac" -o -name "*.mp3" \) -exec mv -v {} "$target/" \;
+}
+
+# Update MPD
+update_mpd() {
+    command -v mpc >/dev/null && mpc update || echo -e "${YELLOW}MPD client not found, skipping.${NC}"
+}
+
+# Interactive mode using bemenu
+interactive_mode() {
+    while true; do
+        local options=(
+            "download:📥 Download playlists"
+            "rename:🔄 Rename existing files"
+            "dedup-title:🔍 Find duplicates by title"
+            "dedup-hash:🔍 Find duplicates by hash"
+            "move:📦 Move files to music directory"
+            "update:🔄 Update MPD database"
+            "cleanup:🧹 Clean temporary files"
+            "quit:❌ Quit"
+        )
+
+        local selection=$(printf '%s\n' "${options[@]}" | bemenu -i -l 10 -p "Select action:")
+        [ -z "$selection" ] && exit 0
+        local action=$(echo "$selection" | cut -d':' -f1)
+
+        case "$action" in
+            download)
+                local format_options=("flac:FLAC (lossless)" "mp3:MP3 (320kbps)")
+                local format_sel=$(printf '%s\n' "${format_options[@]}" | bemenu -i -l 2 -p "Select format:")
+                local format=$(echo "$format_sel" | cut -d':' -f1)
+                [ -n "$format" ] && download_playlists "$format"
+                ;;
+            rename) rename_existing_files ;;
+            dedup-title) remove_duplicates_interactive "title" ;;
+            dedup-hash) remove_duplicates_interactive "hash" ;;
+            move) move_files "$TARGET_DIR" ;;
+            update) update_mpd ;;
+            cleanup) cleanup ;;
+            quit) exit 0 ;;
+            *) echo -e "${RED}Invalid option!${NC}" ;;
+        esac
+    done
+}
+
+# Main
+main() {
+    check_deps
+    trap cleanup EXIT
+
+    case "${1:-interactive}" in
+        interactive) interactive_mode ;;
+        download) download_playlists "${2:-flac}" ;;
+        rename) rename_existing_files ;;
+        move) move_files "$TARGET_DIR" ;;
+        update) update_mpd ;;
+        cleanup) cleanup ;;
+        help|--help|-h) echo "Usage: $0 [command]"; exit 0 ;;
+        *) echo -e "${RED}Unknown command: $1${NC}" ; exit 1 ;;
+    esac
+}
+
+main "$@"

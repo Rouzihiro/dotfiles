@@ -1,0 +1,139 @@
+#!/usr/bin/env bash
+# dm-mod-pix — Wabi-sabi image manipulator for X11/bemenu
+# Dependencies: imagemagick (magick/convert), ghostscript (gs), bemenu
+
+# Commands
+if command -v magick &>/dev/null; then
+    IM_COMMAND="magick"
+else
+    IM_COMMAND="convert"
+fi
+GS_COMMAND="gs"
+bemenu="bemenu -c -i -l 15 -p"
+
+# Get all images in current directory
+get_images() {
+    find . -maxdepth 1 -type f \( -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.png" \) | sort -V
+}
+
+# Main menu with single/all options
+main_menu() {
+    echo -e "Rotate single\nRotate all\nFlip single\nFlip all\nBlack & White single\nBlack & White all\nCrop single\nCrop all\nConvert to PDF single\nConvert to PDF all\nMerge all to PDF\nExit" | $bemenu "Select action:"
+}
+
+# Rotate menu
+rotate_menu() {
+    echo -e "90° Right\n180° Flip\n270° Left" | $bemenu "Rotate:"
+}
+
+# Flip menu
+flip_menu() {
+    echo -e "Horizontal\nVertical\nBoth" | $bemenu "Flip:"
+}
+
+# Crop geometry
+get_crop_geometry() {
+    echo "" | $bemenu "Enter crop geometry (WxH+X+Y):"
+}
+
+# Quality
+get_quality() {
+    echo "90" | $bemenu "Quality (1-100):"
+}
+
+# Apply transformations to a file
+apply_transform() {
+    local file="$1"
+    local output="$2"
+    local rotate="$3"
+    local flip_h="$4"
+    local flip_v="$5"
+    local bw="$6"
+    local crop="$7"
+    local quality="$8"
+
+    local cmd="$IM_COMMAND \"$file\""
+
+    [ -n "$crop" ] && cmd+=" -crop $crop"
+    [ -n "$rotate" ] && cmd+=" -rotate $rotate"
+    [ "$flip_h" = true ] && cmd+=" -flip"
+    [ "$flip_v" = true ] && cmd+=" -flop"
+    [ "$bw" = true ] && cmd+=" -colorspace Gray"
+    cmd+=" -quality $quality \"$output\""
+
+    eval "$cmd" && echo "Saved: $output" | $bemenu "Success"
+}
+
+# Merge all images in current folder to PDF
+merge_all_to_pdf() {
+    local files=($(get_images))
+    [ ${#files[@]} -eq 0 ] && { echo "No images found" | $bemenu "Error"; return; }
+    local output=$(echo "merged.pdf" | $bemenu "Output PDF filename:")
+    [ -z "$output" ] && output="merged.pdf"
+    local quality=$(get_quality)
+
+    local temp_pdfs=()
+    for f in "${files[@]}"; do
+        tmp="${f%.*}.tmp.pdf"
+        $IM_COMMAND "$f" -quality "$quality" "$tmp"
+        temp_pdfs+=("$tmp")
+    done
+
+    $GS_COMMAND -q -dNOPAUSE -dBATCH -sDEVICE=pdfwrite -sOutputFile="$output" "${temp_pdfs[@]}" && \
+        echo "Merged PDF saved: $output" | $bemenu "Success"
+
+    rm -f "${temp_pdfs[@]}"
+}
+
+# Main loop
+while true; do
+    action=$(main_menu)
+    [ -z "$action" ] || [[ "$action" == "Exit" ]] && exit 0
+
+    # Determine files to process
+    if [[ "$action" =~ "all" ]]; then
+        files=($(get_images))
+    else
+        file=$(get_images | xargs -n1 basename | $bemenu "Select file:")
+        [ -z "$file" ] && continue
+        files=("$file")
+    fi
+
+    # Get common settings
+    rotate=""
+    flip_h=false
+    flip_v=false
+    bw=false
+    crop=""
+    quality=$(get_quality)
+
+    # Determine operation type
+    case "$action" in
+        "Rotate"* ) r=$(rotate_menu)
+                     case "$r" in
+                        "90° Right") rotate="90" ;;
+                        "180° Flip") rotate="180" ;;
+                        "270° Left") rotate="270" ;;
+                     esac
+                     ;;
+        "Flip"* ) f=$(flip_menu)
+                   case "$f" in
+                       "Horizontal") flip_h=true ;;
+                       "Vertical") flip_v=true ;;
+                       "Both") flip_h=true; flip_v=true ;;
+                   esac
+                   ;;
+        "Black & White"*) bw=true ;;
+        "Crop"*) crop=$(get_crop_geometry) ;;
+        "Convert to PDF"*) ;;
+        "Merge all to PDF") merge_all_to_pdf; continue ;;
+    esac
+
+    # Apply transformations to selected files
+    for file in "${files[@]}"; do
+        output="$file"
+        [[ "$action" =~ "Convert to PDF" ]] && output="${file%.*}.pdf"
+        [[ ! "$action" =~ "Convert to PDF" ]] && output="${file%.*}_mod.${file##*.}"
+        apply_transform "$file" "$output" "$rotate" "$flip_h" "$flip_v" "$bw" "$crop" "$quality"
+    done
+done
