@@ -2,6 +2,9 @@
 require("oil").setup({
   default_file_explorer = true,
   columns = {
+	  -- "permissions",
+		"size",
+    -- "mtime",
     "icon",
   },
   buf_options = {
@@ -25,7 +28,7 @@ require("oil").setup({
   lsp_file_methods = {
     enabled = true,
     timeout_ms = 1000,
-    autosave_changes = false,
+    autosave_changes = true,
   },
   constrain_cursor = "editable",
   watch_for_changes = false,
@@ -67,8 +70,8 @@ require("oil").setup({
   },
   float = {
     padding = 2,
-    max_width = 0,
-    max_height = 0,
+    max_width = 0.7,
+    max_height = 0.6,
     border = "rounded",
     win_options = {
       winblend = 0,

@@ -33,13 +33,11 @@ vim.pack.add({
 	{ src = "https://github.com/mason-org/mason.nvim" },
 	{ src = "https://github.com/L3MON4D3/LuaSnip" },
 	{ src = "https://github.com/LinArcX/telescope-env.nvim" },
-	{ src = "https://github.com/folke/which-key.nvim" },
   { src = "https://github.com/hrsh7th/nvim-cmp" },
   { src = "https://github.com/hrsh7th/cmp-path" },
   { src = "https://github.com/hrsh7th/cmp-buffer" },
   { src = "https://github.com/hrsh7th/cmp-nvim-lsp" },
-  { src = "https://github.com/echasnovski/mini.nvim" },
-  { src = 'https://github.com/NvChad/showkeys', opt = false },
+	{ src = "https://github.com/nvim-mini/mini.clue" },
 })
 
 require "marks".setup {
@@ -107,8 +105,6 @@ cmp.setup({
 })
 
 require("keymaps")
-
-require("mini.pick").setup()
 require("plugins.oil")
 
 require('nightfox').setup({
@@ -122,7 +118,7 @@ require('nightfox').setup({
 -- 	transparent_background_level = 1,
 --  	background = "hard",
 -- })
--- vim.cmd("colorscheme kanagawa")
+
 vim.cmd("colorscheme nightfox")
 vim.cmd(":hi statusline guibg=NONE")
 
@@ -249,3 +245,47 @@ lspconfig.clangd.setup({
 -- Bash LS for shell scripts
 lspconfig.bashls.setup({})
 
+local miniclue = require('mini.clue')
+miniclue.setup({
+  triggers = {
+    -- Leader triggers
+    { mode = 'n', keys = '<Leader>' },
+    { mode = 'x', keys = '<Leader>' },
+
+    -- Built-in completion
+    { mode = 'i', keys = '<C-x>' },
+
+    -- `g` key
+    { mode = 'n', keys = 'g' },
+    { mode = 'x', keys = 'g' },
+
+    -- Marks
+    { mode = 'n', keys = "'" },
+    { mode = 'n', keys = '`' },
+    { mode = 'x', keys = "'" },
+    { mode = 'x', keys = '`' },
+
+    -- Registers
+    { mode = 'n', keys = '"' },
+    { mode = 'x', keys = '"' },
+    { mode = 'i', keys = '<C-r>' },
+    { mode = 'c', keys = '<C-r>' },
+
+    -- Window commands
+    { mode = 'n', keys = '<C-w>' },
+
+    -- `z` key
+    { mode = 'n', keys = 'z' },
+    { mode = 'x', keys = 'z' },
+  },
+
+  clues = {
+    -- Enhance this by adding descriptions for <Leader> mapping groups
+    miniclue.gen_clues.builtin_completion(),
+    miniclue.gen_clues.g(),
+    miniclue.gen_clues.marks(),
+    miniclue.gen_clues.registers(),
+    miniclue.gen_clues.windows(),
+    miniclue.gen_clues.z(),
+  },
+})
