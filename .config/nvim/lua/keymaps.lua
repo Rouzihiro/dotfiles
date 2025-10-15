@@ -23,10 +23,12 @@ map("n", "<leader>tp", "<cmd>tabp<CR>", { desc = "Go to previous tab" })
 map("n", "<leader>tf", "<cmd>tabnew %<CR>", { desc = "Open current buffer in new tab" })
 map("n", "<leader>ta", "<cmd>tab all<CR>", { desc = "Open all current NVIM files in their own tab" })
 
-map("n", "<leader>e", function()
-	vim.cmd("Oil --float " .. vim.loop.cwd())
-end, { desc = "Open Oil floating file manager" })
+-- map({ "n" }, "<leader>e", "<cmd>Oil<CR>", { desc = "Open Oil file manager" })
 
+ map("n", "<leader>e", function()
+	vim.cmd("Oil --float " .. vim.loop.cwd())
+  end, { desc = "Open Oil floating file manager" })
+ 
 map({ "n", "v", "x" }, "<leader>u", "<Cmd>source %<CR>", { desc = "Source " .. vim.fn.expand("$MYVIMRC") })
 map({ "n", "v", "x" }, "<leader>U", "<Cmd>restart<CR>", { desc = "Restart vim." })
 map({ "n", "v", "x" }, "<C-s>", [[:s/\V]], { desc = "Enter substitue mode in selection" })
@@ -41,10 +43,7 @@ map('n', '<leader>x', '<Cmd>quit<CR>')
 map('n', '<C-q>', '<Cmd>bd!<CR>', { desc = "Force close buffer" })
 
 map("n", "<esc>", "<cmd>noh<CR>")
-map('n', '<leader>pp', "<Cmd>Pick files<CR>")
-map('n', '<leader>ph', "<Cmd>Pick help<CR>")
-map('n', '<leader>pb', "<Cmd>Pick buffers<CR>")
-map({ "n", "v", "x" }, "<leader>lf", vim.lsp.buf.format, { desc = "Format current buffer" })
+map({ "n", "v", "x" }, "<Leader>lf", vim.lsp.buf.format, { desc = "Format current buffer" })
 map('i', '<c-Space>', function() vim.lsp.completion.get() end)
 map('n', '<leader>tt', '<Cmd>Open .<CR>')
 map('n', '<leader>nc', '<Cmd>e $MYVIMRC<CR>')
@@ -67,7 +66,8 @@ for i = 0, 9 do
 	map('n', '<leader>r' .. i, '"' .. i .. 'p', opts)
 end
 
--- map({ "n" }, "<leader>A", "mzA<space><esc>p`z", { desc = "paste to the end of line" })
+map({ "n" }, "P", "mzA<space><esc>p`z", { desc = "paste to the end of line" })
+map({"n"}, "A", "mzI<space><esc>P`z", { desc = "Paste at start of line" })
 map("n", "<leader>za", 'ggVG"+y', { desc = "Yank entire buffer" })
 
 map({ "n", "v" }, "<leader>rw",
