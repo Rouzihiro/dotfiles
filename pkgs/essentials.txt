@@ -62,5 +62,6 @@ zathura-pdf-mupdf
 xournalpp
 # neovim
 swww
-thunderbird
+claws
+# thunderbird
 ca-certificates
