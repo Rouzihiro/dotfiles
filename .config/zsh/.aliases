@@ -1,9 +1,19 @@
+# Search running processes
+alias p="ps aux | grep "
+alias topcpu="/bin/ps -eo pcpu,pid,user,args | sort -k 1 -r | head -10"
+
+# Search files in the current folder
+alias f="find . | grep "
+
+# To see if a command is aliased, a file, or a built-in command
+alias checkcommand="type -t"
+
 alias clean-suck='rm -f st dwm dmenu *.o *.orig'
 alias disk='ncdu'
-alias df='duf -hide special'
+alias df2='duf -hide special'
 alias mem2='free -h'
 alias mem='sudo ps_mem'
-alias df2='du -sh * 2>/dev/null | sort -hr'
+alias df='du -sh * 2>/dev/null | sort -hr'
 alias temps='sensors'
 
 alias sctl="sudo systemctl"
