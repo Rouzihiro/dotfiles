@@ -30,32 +30,41 @@ xset -dpms
 xsetroot -cursor_name left_ptr
 
 # Start compositor for transparency and effects
-picom -b >"$HOME/.picom.log" 2>&1 &
+picom --backend xrender -b >"$HOME/.logs/.picom.log" 2>&1 &
 
 # Start notification daemon
-dunst >"$HOME/.dunst.log" 2>&1 &
+dunst >"$HOME/.logs/.dunst.log" 2>&1 &
 
 # Start power manager
-xfce4-power-manager >"$HOME/.xfce4-power-manager.log" 2>&1 &
+# xfce4-power-manager >"$HOME/.logs/.xfce4-power-manager.log" 2>&1 &
 
 # Start authentication agent
-/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 >"$HOME/.polkit.log" 2>&1 &
+/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 >"$HOME/.logs/.polkit.log" 2>&1 &
 
 # Start your custom scripts
-# $HOME/.local/bin/dwm/autolock.sh &
+$HOME/.local/bin/dwm/autolock.sh &
 # $HOME/.local/bin/dwm/superbar-lite-surface.sh &
-$HOME/.local/bin/dwm/superbar-lite.sh &
+# $HOME/.local/bin/dwm/superbar-lite.sh &
+slstatus &
 $HOME/.local/bin/dwm/set-wallpaper.sh &
+$HOME/.local/bin/dwm/power-watch-dim.sh &
 
 # Set up D-Bus environment
 dbus-update-activation-environment --systemd --all
 
 
 # Example: enable natural scroll for all touchpads
-for id in $(xinput list --id-only | xargs -n1 xinput list-props | grep -B1 "Touchpad" | grep 'id=' | awk '{print $2}' | tr -d ','); do
+# for id in $(xinput list --id-only | xargs -n1 xinput list-props | grep -B1 "Touchpad" | grep 'id=' | awk '{print $2}' | tr -d ','); do
+#     xinput set-prop $id "libinput Natural Scrolling Enabled" 1
+# done
+
+
+for id in $(xinput list | awk '/Touchpad/ {print $6}' | cut -d= -f2); do
     xinput set-prop $id "libinput Natural Scrolling Enabled" 1
 done
 
+
 [ -f ~/.Xresources ] && xrdb -merge ~/.Xresources
-# Finally, start dwm (this should be the last line with exec)
-exec dwm >"$HOME/.dwm.log" 2>&1
+
+exec dwm >"$HOME/.logs/.dwm.log" 2>&1
+#exec dusk >"$HOME/.logs/.dusk.log" 2>&1
