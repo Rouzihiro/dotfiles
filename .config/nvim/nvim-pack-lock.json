@@ -1,0 +1,27 @@
+{
+  "plugins": {
+    "LuaSnip": [],
+    "actions-preview.nvim": [],
+    "cmp-buffer": [],
+    "cmp-nvim-lsp": [],
+    "cmp-path": [],
+    "marks.nvim": [],
+    "mason.nvim": [],
+    "mini.clue": [],
+    "nightfox.nvim": [],
+    "nvim-cmp": [],
+    "nvim-lspconfig": [],
+    "nvim-treesitter": {
+      "version": "'main'"
+    },
+    "nvim-web-devicons": [],
+    "oil.nvim": [],
+    "plenary.nvim": [],
+    "telescope-env.nvim": [],
+    "telescope-ui-select.nvim": [],
+    "telescope.nvim": {
+      "version": "'0.1.8'"
+    },
+    "typst-preview.nvim": []
+  }
+}
