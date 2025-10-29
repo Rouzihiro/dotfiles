@@ -12,26 +12,21 @@ fonts=(
   jetbrains-mono-fonts
 )
 
-# Get the absolute path of the script's directory
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+## WARNING: DO NOT EDIT BEYOND THIS LINE IF YOU DON'T KNOW WHAT YOU ARE DOING! ##
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
-# Change to parent directory of the script
+# Change the working directory to the parent directory of the script
 PARENT_DIR="$SCRIPT_DIR/.."
-if ! cd "$PARENT_DIR"; then
-    echo "ERROR: Failed to change directory to $PARENT_DIR" >&2
-    exit 1
-fi
+cd "$PARENT_DIR" || { echo "${ERROR} Failed to change directory to $PARENT_DIR"; exit 1; }
 
-# Source global functions from ~/bin
-GLOBAL_FUNCTIONS="$HOME/.local/bin/fzf/fzf_selector.sh"
-if [[ -f "$GLOBAL_FUNCTIONS" ]]; then
-    if ! source "$GLOBAL_FUNCTIONS"; then
-        echo "ERROR: Failed to source $GLOBAL_FUNCTIONS" >&2
+
+# Try sourcing from PATH first
+if ! source Global_functions.sh 2>/dev/null; then
+    # Fallback: relative to the script
+    if ! source "$(dirname "$(readlink -f "$0")")/Global_functions.sh"; then
+        echo "Failed to source Global_functions.sh"
         exit 1
     fi
-else
-    echo "ERROR: fzf_selector not found in ~/.local/bin/fzf/" >&2
-    exit 1
 fi
 
 # Set the name of the log file to include the current date and time
