@@ -13,13 +13,8 @@ vim.opt.termguicolors = true
 vim.opt.undofile = true
 vim.opt.number = true
 
--- vim.opt.incsearch = true
-
--- vim.o.spelllang = "en_us,de"
--- vim.o.spellsuggest = "best,9"
-
 vim.pack.add({
-	{ src = "https://github.com/EdenEast/nightfox.nvim" },
+	{ src = "https://github.com/vague2k/vague.nvim" },
 	{ src = "https://github.com/chentoast/marks.nvim" },
 	{ src = "https://github.com/stevearc/oil.nvim" },
 	{ src = "https://github.com/nvim-tree/nvim-web-devicons" },
@@ -49,9 +44,14 @@ require "marks".setup {
 	mappings = {}
 }
 
-local default_color = "nightfox"
 
-require("mason").setup()
+local default_color = "vague"
+
+require "mason".setup()
+require("keymaps")
+require("plugins.cmp")
+require("plugins.oil")
+require("plugins.mini-clue")
 
 local telescope = require("telescope")
 telescope.setup({
@@ -89,60 +89,36 @@ require("actions-preview").setup {
 	)
 }
 
--- Completion setup
-local cmp = require("cmp")
-cmp.setup({
-  mapping = cmp.mapping.preset.insert({
-    ['<CR>'] = cmp.mapping.confirm({ select = true }),
-    ['<Tab>'] = cmp.mapping.select_next_item(),
-    ['<S-Tab>'] = cmp.mapping.select_prev_item(),
-  }),
-  sources = {
-    { name = 'path' },
-    { name = 'buffer' },
-    { name = 'nvim_lsp' },
-  }
+
+
+vim.api.nvim_create_autocmd('LspAttach', {
+	group = vim.api.nvim_create_augroup('my.lsp', {}),
+	callback = function(args)
+		local client = assert(vim.lsp.get_client_by_id(args.data.client_id))
+		if client:supports_method('textDocument/completion') then
+			-- Optional: trigger autocompletion on EVERY keypress. May be slow!
+			local chars = {}; for i = 32, 126 do table.insert(chars, string.char(i)) end
+			client.server_capabilities.completionProvider.triggerCharacters = chars
+			vim.lsp.completion.enable(true, client.id, args.buf, { autotrigger = true })
+		end
+	end,
 })
 
-require("keymaps")
-require("plugins.oil")
+vim.cmd [[set completeopt+=menuone,noselect,popup]]
 
-require('nightfox').setup({
-  options = {
-    transparent = true,
-    terminal_colors = true,
-    dim_inactive = false,
-      }
-    })
--- require("everforest").setup({ 
--- 	transparent_background_level = 1,
---  	background = "hard",
--- })
+vim.lsp.enable({
+	"lua_ls", "cssls", "svelte", "tinymist", "svelteserver",
+	"rust_analyzer", "clangd", "ruff",
+	"glsl_analyzer", "haskell-language-server", "hlint",
+	"intelephense", "biome", "tailwindcss",
+	"ts_ls", "emmet_language_server", "emmet_ls", "solargraph"
+})
 
-vim.cmd("colorscheme nightfox")
-vim.cmd(":hi statusline guibg=NONE")
-
-vim.lsp.enable(
-	{
-		"lua_ls",
-		"tinymist",
-		"clangd",
-		"bashls",
-	}
-)
-
--- Snippets
+require "vague".setup({ transparent = true })
 require("luasnip").setup({ enable_autosnippets = true })
 require("luasnip.loaders.from_lua").load({ paths = "~/.config/nvim/snippets/" })
-local ls = require("luasnip")
-vim.keymap.set("i", "<C-e>", function() ls.expand_or_jump(1) end, { silent = true })
 
--- Set filetype for typst files
-vim.filetype.add({
-  extension = {
-    typ = "typst",
-  },
-})
+-- ~/.config/nvim/init.lua
 
 local function pack_clean()
 	local active_plugins = {}
@@ -169,123 +145,139 @@ local function pack_clean()
 	end
 end
 
-vim.keymap.set("n", "<leader>pc", pack_clean)
+vim.keymap.set("n", "<leader>sC", pack_clean)
 
 local color_group = vim.api.nvim_create_augroup("colors", { clear = true })
 
-
--- LSP config for tinymist and others
-local lspconfig = require("lspconfig")
-
--- tinymist setup
-lspconfig.tinymist.setup({
-  on_attach = function(client, bufnr)
-    local function create_tinymist_command(command_name)
-      local cmd_display = command_name:match("tinymist%.export(%w+)")
-      return function()
-        client:exec_cmd({
-          title = "Export " .. cmd_display,
-          command = command_name,
-          arguments = { vim.api.nvim_buf_get_name(bufnr) },
-        }, { bufnr = bufnr })
-      end
-    end
-
-    local commands = {
-      "tinymist.exportSvg",
-      "tinymist.exportPng",
-      "tinymist.exportPdf",
-      "tinymist.exportHtml",
-      "tinymist.exportMarkdown",
-    }
-
-    for _, command in ipairs(commands) do
-      local cmd_name = "Export" .. command:match("tinymist%.export(%w+)")
-      vim.api.nvim_buf_create_user_command(bufnr, cmd_name, create_tinymist_command(command), {
-        nargs = 0,
-        desc = "Export to " .. cmd_name:sub(7),
-      })
-    end
-
-    -- Keymap for quick PDF export
-    vim.api.nvim_buf_set_keymap(bufnr, "n", "<leader>t", ":ExportPdf<CR>", { noremap = true, silent = true })
-  end,
-  filetypes = { "typst" },
-  root_dir = lspconfig.util.root_pattern(".git"),
-  settings = {
-    formatterMode = "typstyle",
-  },
+vim.api.nvim_create_autocmd("ColorScheme", {
+	group = color_group,
+	callback = function(args)
+		if vim.t.color then
+			vim.cmd("colorscheme " .. vim.t.color)
+		else
+			vim.cmd("colorscheme " .. default_color)
+		end
+	end,
 })
 
--- Lua LS
-lspconfig.lua_ls.setup({
-  settings = {
-    Lua = {
-      runtime = { version = 'LuaJIT' },
-      diagnostics = { globals = { 'vim' } },
-      workspace = { library = vim.api.nvim_get_runtime_file("", true) },
-      telemetry = { enable = false },
-    }
-  }
+vim.api.nvim_create_autocmd("TabEnter", {
+	group = color_group,
+	callback = function(args)
+		if vim.t.color then
+			vim.cmd("colorscheme " .. vim.t.color)
+		else
+			vim.cmd("colorscheme " .. default_color)
+		end
+	end,
 })
 
--- Clangd for C
-lspconfig.clangd.setup({
-  cmd = {
-    "clangd",
-    "--background-index",
-    "--clang-tidy",
-    "--header-insertion=never",
-    "--completion-style=detailed",
-    "--function-arg-placeholders=false"
-  },
-  filetypes = { "c", "cpp", "objc", "objcpp" }
+local colors = {}
+vim.api.nvim_create_autocmd("ColorScheme", {
+	group = color_group,
+	callback = function(args)
+		-- vim.cmd("hi statusline guibg=NONE")
+		-- vim.cmd("hi TabLineFill guibg=NONE")
+	end,
 })
 
--- Bash LS for shell scripts
-lspconfig.bashls.setup({})
+local ls = require("luasnip")
+local builtin = require("telescope.builtin")
+local map = vim.keymap.set
+local current = 1
 
-local miniclue = require('mini.clue')
-miniclue.setup({
-  triggers = {
-    -- Leader triggers
-    { mode = 'n', keys = '<Leader>' },
-    { mode = 'x', keys = '<Leader>' },
+vim.g.mapleader = " "
 
-    -- Built-in completion
-    { mode = 'i', keys = '<C-x>' },
+map({ "n", "x" }, "<leader>y", '"+y')
+map({ "n", "x" }, "<leader>d", '"+d')
+map({ "i", "s" }, "<C-e>", function() ls.expand_or_jump(1) end, { silent = true })
+map({ "i", "s" }, "<C-J>", function() ls.jump(1) end, { silent = true })
+map({ "i", "s" }, "<C-K>", function() ls.jump(-1) end, { silent = true })
+map({ "n", "t" }, "<Leader>t", "<Cmd>tabnew<CR>")
+map({ "n", "t" }, "<Leader>x", "<Cmd>tabclose<CR>")
 
-    -- `g` key
-    { mode = 'n', keys = 'g' },
-    { mode = 'x', keys = 'g' },
+vim.cmd([[
+	nnoremap g= g+| " g=g=g= is less awkward than g+g+g+
+	nnoremap gK @='ddkPJ'<cr>| " join lines but reversed. `@=` so [count] works
+	xnoremap gK <esc><cmd>keeppatterns '<,'>-global/$/normal! ddpkJ<cr>
+	noremap! <c-r><c-d> <c-r>=strftime('%F')<cr>
+	noremap! <c-r><c-t> <c-r>=strftime('%T')<cr>
+	noremap! <c-r><c-f> <c-r>=expand('%:t')<cr>
+	noremap! <c-r><c-p> <c-r>=expand('%:p')<cr>
+	xnoremap <expr> . "<esc><cmd>'<,'>normal! ".v:count1.'.<cr>'
+]])
 
-    -- Marks
-    { mode = 'n', keys = "'" },
-    { mode = 'n', keys = '`' },
-    { mode = 'x', keys = "'" },
-    { mode = 'x', keys = '`' },
+for i = 1, 8 do
+	map({ "n", "t" }, "<Leader>" .. i, "<Cmd>tabnext " .. i .. "<CR>")
+end
+map({ "n", "v", "x" }, ";", ":", { desc = "Self explanatory" })
+map({ "n", "v", "x" }, ":", ";", { desc = "Self explanatory" })
+map({ "n", "v", "x" }, "<leader>vv", "<Cmd>edit $MYVIMRC<CR>", { desc = "Edit " .. vim.fn.expand("$MYVIMRC") })
+map({ "n", "v", "x" }, "<leader>zz", "<Cmd>e ~/.config/zsh/.zshrc<CR>", { desc = "Edit .zshrc" })
+map({ "n", "v", "x" }, "<leader>n", ":norm ", { desc = "ENTER NORM COMMAND." })
+map({ "n", "v", "x" }, "<leader>o", "<Cmd>source %<CR>", { desc = "Source " .. vim.fn.expand("$MYVIMRC") })
+map({ "n", "v", "x" }, "<leader>O", "<Cmd>restart<CR>", { desc = "Restart vim." })
+map({ "n", "v", "x" }, "<C-s>", [[:s/\V]], { desc = "Enter substitue mode in selection" })
+map({ "n", "v", "x" }, "<leader>lf", vim.lsp.buf.format, { desc = "Format current buffer" })
+map({ "v", "x", "n" }, "<C-y>", '"+y', { desc = "System clipboard yank." })
+map({ "n" }, "<leader>f", builtin.find_files, { desc = "Telescope live grep" })
 
-    -- Registers
-    { mode = 'n', keys = '"' },
-    { mode = 'x', keys = '"' },
-    { mode = 'i', keys = '<C-r>' },
-    { mode = 'c', keys = '<C-r>' },
+function git_files() builtin.find_files({ no_ignore = true }) end
 
-    -- Window commands
-    { mode = 'n', keys = '<C-w>' },
+map({ "n" }, "<leader>g", builtin.live_grep, { desc = "Live grep (search files)" })
+map({ "n" }, "<leader>sg", git_files, { desc = "Search Git-tracked files" })
+map({ "n" }, "<leader>sb", builtin.buffers, { desc = "List open buffers" })
+map({ "n" }, "<leader>si", builtin.grep_string, { desc = "Search for word under cursor" })
+map({ "n" }, "<leader>so", builtin.oldfiles, { desc = "Recently opened files" })
+map({ "n" }, "<leader>sh", builtin.help_tags, { desc = "Search help tags" })
+map({ "n" }, "<leader>sm", builtin.man_pages, { desc = "Search man pages" })
+map({ "n" }, "<leader>sr", builtin.lsp_references, { desc = "LSP references" })
+map({ "n" }, "<leader>sd", builtin.diagnostics, { desc = "Show diagnostics" })
+map({ "n" }, "<leader>si", builtin.lsp_implementations, { desc = "LSP implementations" })
+map({ "n" }, "<leader>sT", builtin.lsp_type_definitions, { desc = "LSP type definitions" })
+map({ "n" }, "<leader>ss", builtin.current_buffer_fuzzy_find, { desc = "Search in current buffer" })
+map({ "n" }, "<leader>st", builtin.builtin, { desc = "Telescope built-ins" })
+map({ "n" }, "<leader>sc", builtin.git_bcommits, { desc = "Git commits (buffer)" })
+map({ "n" }, "<leader>sk", builtin.keymaps, { desc = "Show keymaps" })
+map({ "n" }, "<leader>se", "<cmd>Telescope env<CR>", { desc = "Search environment variables" })
+map({ "n" }, "<leader>sa", require("actions-preview").code_actions, { desc = "Show code actions" })
+map({ "n" }, "<M-n>", "<cmd>resize +2<CR>")
+map({ "n" }, "<M-e>", "<cmd>resize -2<CR>")
+map({ "n" }, "<M-i>", "<cmd>vertical resize +5<CR>")
+map({ "n" }, "<M-m>", "<cmd>vertical resize -5<CR>")
+map({ "n" }, "<leader>c", "1z=")
+map({ "n" }, "<C-q>", ":copen<CR>", { silent = true })
+map({ "n" }, "<leader>w", "<Cmd>update<CR>", { desc = "Write the current buffer." })
+map({ "n" }, "<leader>q", "<Cmd>:quit<CR>", { desc = "Quit the current buffer." })
+map({ "n" }, "<leader>Q", "<Cmd>:wqa<CR>", { desc = "Quit all buffers and write." })
+map({ "n" }, "<C-f>", "<Cmd>Open .<CR>", { desc = "Open current directory in Finder." })
+map({ "n" }, "<leader>a", ":edit #<CR>", { desc = "Edit alternate buffer" })
 
-    -- `z` key
-    { mode = 'n', keys = 'z' },
-    { mode = 'x', keys = 'z' },
-  },
+vim.keymap.set("n", "<C-d>", "<C-d>zz")
+vim.keymap.set("n", "<C-u>", "<C-u>zz")
+vim.keymap.set("n", "n", "nzzzv")
+vim.keymap.set("n", "N", "Nzzzv")
 
-  clues = {
-    -- Enhance this by adding descriptions for <Leader> mapping groups
-    miniclue.gen_clues.builtin_completion(),
-    miniclue.gen_clues.g(),
-    miniclue.gen_clues.marks(),
-    miniclue.gen_clues.registers(),
-    miniclue.gen_clues.windows(),
-    miniclue.gen_clues.z(),
-  },
+vim.api.nvim_create_autocmd("BufWinEnter", {
+	pattern = "*.jsx,*.tsx",
+	group = vim.api.nvim_create_augroup("TS", { clear = true }),
+	callback = function()
+		vim.cmd([[set filetype=typescriptreact]])
+	end
+})
+vim.cmd('colorscheme ' .. default_color)
+
+-- Run gg-repo-sync automatically after saving a PHP file
+vim.api.nvim_create_autocmd("BufWritePost", {
+	pattern = "*.php",
+	callback = function()
+		vim.fn.jobstart("gg-repo-sync", {
+			on_exit = function(_, exit_code, _)
+				if exit_code == 0 then
+					vim.notify("gg-repo-sync successful", vim.log.levels.INFO)
+				else
+					vim.notify("gg-repo-sync failed", vim.log.levels.ERROR)
+				end
+			end,
+		})
+	end,
 })

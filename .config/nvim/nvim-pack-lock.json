@@ -1,82 +1,25 @@
 {
   "plugins": {
-    "LuaSnip": {
-      "rev": "ccf25a5",
-      "src": "https://github.com/L3MON4D3/LuaSnip"
-    },
-    "actions-preview.nvim": {
-      "rev": "cb938c2",
-      "src": "https://github.com/aznhe21/actions-preview.nvim"
-    },
-    "cmp-buffer": {
-      "rev": "b74fab3",
-      "src": "https://github.com/hrsh7th/cmp-buffer"
-    },
-    "cmp-nvim-lsp": {
-      "rev": "bd5a7d6",
-      "src": "https://github.com/hrsh7th/cmp-nvim-lsp"
-    },
-    "cmp-path": {
-      "rev": "c642487",
-      "src": "https://github.com/hrsh7th/cmp-path"
-    },
-    "marks.nvim": {
-      "rev": "f353e8c",
-      "src": "https://github.com/chentoast/marks.nvim"
-    },
-    "mason.nvim": {
-      "rev": "ad7146a",
-      "src": "https://github.com/mason-org/mason.nvim"
-    },
-    "mini.clue": {
-      "rev": "6a42206",
-      "src": "https://github.com/nvim-mini/mini.clue"
-    },
-    "nightfox.nvim": {
-      "rev": "ba47d4b",
-      "src": "https://github.com/EdenEast/nightfox.nvim"
-    },
-    "nvim-cmp": {
-      "rev": "a7bcf1d",
-      "src": "https://github.com/hrsh7th/nvim-cmp"
-    },
-    "nvim-lspconfig": {
-      "rev": "513fc3e",
-      "src": "https://github.com/neovim/nvim-lspconfig"
-    },
+    "LuaSnip": [],
+    "actions-preview.nvim": [],
+    "marks.nvim": [],
+    "mason.nvim": [],
+    "nvim-lspconfig": [],
     "nvim-treesitter": {
-      "rev": "645f42e8",
-      "src": "https://github.com/nvim-treesitter/nvim-treesitter",
       "version": "'main'"
     },
-    "nvim-web-devicons": {
-      "rev": "8dcb311",
-      "src": "https://github.com/nvim-tree/nvim-web-devicons"
-    },
-    "oil.nvim": {
-      "rev": "7e1cd77",
-      "src": "https://github.com/stevearc/oil.nvim"
-    },
-    "plenary.nvim": {
-      "rev": "b9fd522",
-      "src": "https://github.com/nvim-lua/plenary.nvim"
-    },
-    "telescope-env.nvim": {
-      "rev": "00a703c",
-      "src": "https://github.com/LinArcX/telescope-env.nvim"
-    },
-    "telescope-ui-select.nvim": {
-      "rev": "6e51d7d",
-      "src": "https://github.com/nvim-telescope/telescope-ui-select.nvim"
-    },
+    "nvim-web-devicons": [],
+    "oil.nvim": [],
+    "plenary.nvim": [],
+    "telescope-env.nvim": [],
+    "telescope-ui-select.nvim": [],
     "telescope.nvim": {
-      "rev": "a0bbec2",
-      "src": "https://github.com/nvim-telescope/telescope.nvim",
       "version": "'0.1.8'"
     },
-    "typst-preview.nvim": {
-      "rev": "285d040",
-      "src": "https://github.com/chomosuke/typst-preview.nvim"
+    "typst-preview.nvim": [],
+    "vague.nvim": {
+      "rev": "5689afd",
+      "src": "https://github.com/vague2k/vague.nvim"
     }
   }
 }

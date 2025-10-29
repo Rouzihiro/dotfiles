@@ -197,6 +197,10 @@ fi
 
 # Add the remaining static options
 options_command+=(
+    "copr" "Add COPR repos?" "OFF"
+    "deps" "Install necessary dependencies?" "OFF"
+    "fonts" "Install fonts?" "OFF"
+    "sway_main" "Install Sway?" "OFF"
     "gtk_themes" "Install GTK themes (required for Dark/Light function)" "OFF"
     "bluetooth" "Do you want script to configure Bluetooth?" "OFF"
     "thunar" "Do you want Thunar file manager to be installed?" "OFF"
@@ -275,22 +279,6 @@ done
 
 printf "\n%.0s" {1..1}
 
-echo "${INFO} Adding ${SKY_BLUE}some COPR repos...${RESET}" | tee -a "$LOG"
-sleep 1
-execute_script "copr.sh"
-
-echo "${INFO} Installing ${SKY_BLUE}necessary dependencies...${RESET}" | tee -a "$LOG"
-sleep 1
-execute_script "00-sway-pkgs.sh"
-
-echo "${INFO} Installing ${SKY_BLUE}necessary fonts...${RESET}" | tee -a "$LOG"
-sleep 1
-execute_script "fonts.sh"
-
-echo "${INFO} Installing ${SKY_BLUE}Sway...${RESET}" | tee -a "$LOG"
-sleep 1
-execute_script "sway.sh"
-
 # Clean up the selected options (remove quotes and trim spaces)
 selected_options=$(echo "$selected_options" | tr -d '"' | tr -s ' ')
 
@@ -359,6 +347,22 @@ for option in "${options[@]}"; do
             echo "${INFO} Installing pre-configured ${SKY_BLUE}Rey Sway dotfiles...${RESET}" | tee -a "$LOG"
             execute_script "dotfiles-main.sh"
             ;;
+    copr)
+        echo "${INFO} Adding ${SKY_BLUE}COPR repos...${RESET}" | tee -a "$LOG"
+        execute_script "copr.sh"
+        ;;
+    deps)
+        echo "${INFO} Installing ${SKY_BLUE}necessary dependencies...${RESET}" | tee -a "$LOG"
+        execute_script "00-sway-pkgs.sh"
+        ;;
+    fonts)
+        echo "${INFO} Installing ${SKY_BLUE}fonts...${RESET}" | tee -a "$LOG"
+        execute_script "fonts.sh"
+        ;;
+    sway_main)
+        echo "${INFO} Installing ${SKY_BLUE}Sway...${RESET}" | tee -a "$LOG"
+        execute_script "sway.sh"
+        ;;
         *)
             echo "Unknown option: $option" | tee -a "$LOG"
             ;;
