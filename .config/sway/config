@@ -12,8 +12,8 @@ output * bg ~/dotfiles/.wall/Wallpapers/konoha1.jpg fill
 
 ### Keybindings
 bindsym $mod+Return exec $term
-# bindsym $mod+d exec $launcher
-bindsym $mod+n exec $editor
+bindsym $mod+Space exec $launcher
+bindsym $mod+Shift+n exec $editor
 bindsym $mod+e exec $TfileManager
 # bindsym $mod+b exec $browser
 bindsym $mod+Shift+r reload

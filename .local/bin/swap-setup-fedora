@@ -1,0 +1,48 @@
+#!/usr/bin/env bash
+# setup-swap-fedora-arm.sh — optimized zram + swapfile setup for Fedora ARM (Asahi, 8 GB RAM)
+
+set -euo pipefail
+
+echo ">>> Installing zram-generator (if not already installed)..."
+sudo dnf install -y zram-generator
+
+echo ">>> Configuring zram..."
+sudo tee /etc/systemd/zram-generator.conf >/dev/null <<'EOF'
+[zram0]
+zram-size = ram / 2
+compression-algorithm = zstd
+swap-priority = 100
+EOF
+
+echo ">>> Enabling zram service..."
+sudo systemctl daemon-reload
+sudo systemctl enable --now systemd-zram-setup@zram0.service || true
+
+echo ">>> Creating 8 GB swapfile..."
+if [ ! -f /swapfile ]; then
+  echo "Creating swapfile with dd..."
+  sudo dd if=/dev/zero of=/swapfile bs=1M count=8192 status=progress
+  sudo chmod 600 /swapfile
+  sudo mkswap /swapfile
+  sudo swapon /swapfile
+  echo '/swapfile none swap sw 0 0' | sudo tee -a /etc/fstab
+else
+  echo "Swapfile already exists — skipping creation."
+fi
+
+echo ">>> Applying memory tuning..."
+sudo tee -a /etc/sysctl.conf >/dev/null <<'EOF'
+vm.swappiness=10
+vm.vfs_cache_pressure=50
+EOF
+sudo sysctl -p >/dev/null
+
+echo ">>> All done!"
+echo
+echo "Current swap setup:"
+swapon --show
+echo
+echo "Current zram status:"
+zramctl || true
+echo
+echo "✅ Swap + zram successfully configured. Reboot to fully apply all settings."

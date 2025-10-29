@@ -1,0 +1,26 @@
+# ===== Fedora =====
+
+# System update
+alias update="sudo dnf upgrade --refresh && dunstify 'Fedora' 'System updated successfully ✨' -a System -u low"
+
+# Full system upgrade (same as above)
+alias upgrade="sudo dnf upgrade --refresh"
+
+# Clean up unused packages (orphans) & notify
+alias fedora-clean="sudo dnf autoremove && dunstify 'Fedora' 'Removed unused packages 🧹' -a System -u low"
+
+# DNF shorthand aliases
+alias pm="sudo dnf install"                              # Install package
+alias pmr="sudo dnf remove"                              # Remove package
+alias pms="sudo dnf search"                              # Search package in repositories
+alias pmi="sudo dnf info"                                # Package info
+alias pmq="sudo dnf list installed"                      # List installed packages
+alias pmc="sudo dnf clean all"                           # Clean cache
+
+# Troubleshooting & Maintenance
+alias fixkeys="sudo rpm --import /etc/pki/rpm-gpg/* && sudo dnf update"  
+alias unlock="sudo rm -f /var/lib/dnf/.rpm-lock"         # Remove lock file if DNF stuck
+alias mirrors="sudo dnf install -y dnf-plugin-fastestmirror && sudo dnf fastestmirror"  
+
+# System fetch summary
+alias fetch='clear && fastfetch && echo "Install Date: $(lsblk -o MOUNTPOINT,UUID | grep "/ " | cut -d " " -f 2)"'

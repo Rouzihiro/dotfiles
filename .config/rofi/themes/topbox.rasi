@@ -1,0 +1,105 @@
+configuration {
+  modi:                 "drun,run,filebrowser,window";
+  dpi:                  90;
+  show-icons:           true;
+  icon-theme:           "Papirus";
+  terminal:             "footclient";
+  window-format:        "{w} · {c} · {t}";
+  drun-display-format:  "{name}";
+  disable-history:      false;
+  max-history-size:     50;
+
+  display-drun:         " Apps"; // 󰀻
+  display-run:          " Runs";
+  display-nerdy:        "󰱨 Nerdy";
+  display-emoji:        "󰱨 Emoji";
+	display-window:       " Windows";
+  display-filebrowser:  " Files";
+	display-ssh:          "󰣀 SSH";
+	display-keys:         " Keys";
+}
+
+@import "colors"
+
+* {
+  spacing:       0.1em;
+  padding:       0.2em;
+  margin:        0px;
+  border-radius: 1em;
+}
+
+window {
+  /*Removing height make the window height equal to num of opts*/
+  /*height: 40%;*/
+  width: 40%;
+  orientation: vertical;
+  location: center;
+  anchor: center;
+  x-offset: 0px;
+  y-offset: 0px;
+  margin: @margin;
+  padding: @padding;
+  border: 2px;
+  border-radius: @border-radius;
+  spacing: @spacing;
+  children: [ mainbox ];
+}
+
+mainbox {
+  spacing: @spacing;
+  children: [ inputbar, mode-switcher, listview ];
+}
+
+inputbar {
+  spacing: @spacing;
+  padding: @padding;
+  children: [ textbox-prompt-colon, entry ];
+}
+
+prompt {
+  padding: @padding;
+  border-radius: @border-radius;
+}
+
+textbox-prompt-colon {
+  expand: false;
+  padding: @padding;
+  border-radius: @border-radius;
+  str: " "; /* */
+}
+
+entry {
+  placeholder:  " Search...";
+  padding: @padding;
+  border-radius: @border-radius;
+}
+
+mode-switcher {
+  spacing: @spacing;
+  orientation: horizontal;
+}
+
+button {
+  padding: @padding;
+  border-radius: @border-radius;
+}
+
+listview {
+  lines: 8;
+  columns: 2;
+  spacing: @spacing;
+  scrollbar: false;
+  cycle: false;
+  dynamic: false;
+  fixed-height: false;
+  margin: @margin;
+  padding: @padding;
+  border: 1px;
+  border-radius: @border-radius;
+}
+
+element {
+  border: 0px;
+  border-radius: @border-radius;
+  padding: @padding;
+}
