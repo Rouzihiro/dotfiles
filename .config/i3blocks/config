@@ -83,13 +83,13 @@ label=
 command=cpu-usage
 interval=2
 
-[separator]
-full_text="⟨"
-color=#585b70
+# [separator]
+# full_text="⟨"
+# color=#585b70
 
-[CPU-temperature]
-command=cpu-temp
-interval=30
+# [CPU-temperature]
+# command=cpu-temp
+# interval=30
 
 [separator]
 full_text="⟨"

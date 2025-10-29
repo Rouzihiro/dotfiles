@@ -1,28 +1,27 @@
 gui:
   theme:
     activeBorderColor:
-      - '#cba6f7'
+      - '#9d79d6'   # Nightfox purple accent
       - bold
     inactiveBorderColor:
-      - '#a6adc8'
+      - '#6c7086'   # Nightfox overlay0
     optionsTextColor:
-      - '#89b4fa'
+      - '#89b4fa'   # Nightfox blue
     selectedLineBgColor:
-      - '#313244'
+      - '#1e1e2e'   # Nightfox base
     cherryPickedCommitBgColor:
-      - '#45475a'
+      - '#2d2d2d'   # Slightly darker than base
     cherryPickedCommitFgColor:
-      - '#cba6f7'
+      - '#cba6f7'   # Nightfox mauve
     unstagedChangesColor:
-      - '#f38ba8'
+      - '#f38ba8'   # Nightfox red/pink
     defaultFgColor:
-      - '#cdd6f4'
+      - '#cdd6f4'   # Nightfox foreground
     searchingActiveBorderColor:
-      - '#f9e2af'
+      - '#f9e2af'   # Nightfox yellow
 
   authorColors:
-    '*': '#b4befe'
-
+    '*': '#b4befe'  # Nightfox lavender
 
   nerdFontsVersion: "3"
   showFileTree: true
@@ -43,4 +42,4 @@ gui:
   log:
     showGraph: true
 
-notARepository: "quit" # exit lazygit when not in a repo
+notARepository: "quit"  # exit lazygit when not in a repo
