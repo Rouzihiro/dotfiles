@@ -1,34 +1,47 @@
 * {
     font-family: Iosevka Nerd Font, sans-serif;
     font-size: 20px;
-		font-weight: 500;
+    font-weight: 500;
 }
 
-
+/* Main window */
 #window {
     margin: 0px;
     border: 1px solid;
-    border-color: #F1F1F1;
-    background-color: #1A1B26;
-    color: #F1F1F1;
+    border-color: #7f849c;       /* Nightfox overlay1 */
+    background-color: #1e1e2e;   /* Nightfox base */
+    color: #cdd6f4;              /* Nightfox foreground */
 }
 
+/* Input field */
 #input {
     margin: 15px;
-    background-color: #1A1B26;
-    border: 2px solid rgb(52, 64, 76);
-		color: white
+    background-color: #1e1e2e;   /* Nightfox base */
+    border: 2px solid #585b70;   /* Nightfox surface2 */
+    color: #cdd6f4;              /* Nightfox foreground */
 }
 
+/* Selected entry */
 #entry:selected {
-    background-color: #7AA2F7;
+    background-color: #89b4fa;   /* Nightfox blue accent */
     border: none;
     outline: none;
-		color: black;
+    color: #1e1e2e;              /* base background for contrast */
 }
 
-#entry { margin: 1px 15px; }
-#scroll { margin-bottom: 15px; }
-#entry > box { margin-left: 20px; }
-#entry image { padding-right: 10px; }
-#entry:selected #text { color: #1A1B26; }
+/* Entry styling */
+#entry { 
+    margin: 1px 15px; 
+}
+#scroll { 
+    margin-bottom: 15px; 
+}
+#entry > box { 
+    margin-left: 20px; 
+}
+#entry image { 
+    padding-right: 10px; 
+}
+#entry:selected #text { 
+    color: #1e1e2e;              /* base background for contrast */
+}

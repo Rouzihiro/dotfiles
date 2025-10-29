@@ -1,0 +1,28 @@
+# ===== Arch =====
+
+alias update="yay && dunstify 'Arch Linux' 'System updated successfully ✨' -a System -u low"
+alias upgrade='yay -Syu'
+alias arch-clean="yay -Rns $(pacman -Qtdq) && dunstify 'Arch Linux' 'Removed unused packages 🧹' -a System -u low"
+
+# Pacman
+alias pm='sudo pacman -S'                          # Install package
+alias pmr='sudo pacman -Rns'                       # Remove package with unused deps
+alias pmu2='sudo pacman -Syu --overwrite "/usr/lib/firmware/nvidia/*" linux-firmware-nvidia' # Pacman Update with Nvidia Firmware Override (for Surface devices) 
+alias pms='f() { pacman -Ss "$1" | GREP_COLORS="mt=01;96" grep --color=auto -i "$1"; }; f'
+alias pms2="yay -Slq | fzf --multi --preview 'yay -Sii {1}' --preview-window=down:75% | xargs -ro yay -S"
+alias pmo='pacman -Qdtq'                           # List orphans
+alias pmc='pacman -Qdtq | xargs -r sudo pacman -Rns' #Remove orphans safely
+alias pmc2='sudo pacman -Rns $(pacman -Qdtq)'       # Remove orphans
+
+# Yay (AUR Helper)
+alias ya='yay -S'                                  # Install AUR package
+alias yar='yay -Rns'                               # Remove AUR package
+alias yas='yay -Ss'                                # Search AUR
+alias yai='yay -Qi'                                # AUR package info
+
+# Troubleshooting & Maintenance
+alias fixkeys='sudo pacman-key --init && sudo pacman-key --populate archlinux'
+alias unlock='sudo rm /var/lib/pacman/db.lck'
+alias mirrors='sudo reflector --latest 10 --sort rate --save /etc/pacman.d/mirrorlist'
+
+alias fetch='clear && fastfetch && echo "Install Date: $(head -n 1 /var/log/pacman.log | cut -d"[" -f2 | cut -d"]" -f1 | xargs -I{} date -d "{}" "+%b %d %Y %H:%M")"'
