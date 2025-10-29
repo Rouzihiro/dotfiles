@@ -12,7 +12,7 @@ set -o pipefail
 SCRIPT_DIR=$(pwd)
 BACKUP_DIR="$HOME/.bkp_config_$(date +%Y%m%d_%H%M%S)"
 LOG_FILE="$HOME/Documents/installer-log.txt"
-PKGS_DIR="$SCRIPT_DIR/pkgs"
+PKGS_DIR="$SCRIPT_DIR/pkgs/fedora"
 
 mkdir -p "$BACKUP_DIR"
 mkdir -p "$(dirname "$LOG_FILE")"

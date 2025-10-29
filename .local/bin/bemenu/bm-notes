@@ -10,7 +10,7 @@ if ! command -v "$term" >/dev/null 2>&1; then
 fi
 
 # bemenu configuration
-bemenu_CMD="bemenu"
+bemenu_CMD="${HOME}/.local/bin/bemenu/bm-run"
 bemenu_OPTS="-c -i -l 15"
 
 # Get list of .md files

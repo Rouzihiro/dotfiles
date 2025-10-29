@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-bemenu_CMD="bemenu"
+bemenu_CMD="${HOME}/.local/bin/bemenu/bm-run"
 bemenu_OPTS="-c -i -l 15"  # Case-insensitive, 15 lines shown
 
 # Collect video files (relative to $HOME)

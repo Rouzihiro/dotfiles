@@ -42,7 +42,7 @@ setopt promptsubst         # allow variables/commands in your prompt
 # PATH Setup (prioritize ~/.local/bin)
 # -------------------------------
 eval "$(dircolors -b $HOME/.config/zsh/.dircolors-nightfox)"
-export PATH="$HOME/.local/bin:$HOME/.local/share/bob/nvim-bin:/usr/local/bin:$PATH:$HOME/.dotnet/tools"
+export PATH="$HOME/.local/bin:$HOME/.local/share/bob/nightly/bin:/usr/local/bin:$PATH:$HOME/.dotnet/tools"
 
 # Add subfolders inside ~/.local/bin (priority preserved)
 for dir in "$HOME/.local/bin/"*/; do

@@ -37,3 +37,11 @@ export MANROFFOPT="-c"
 export DOTNET_CLI_TELEMETRY_OPTOUT=1
 export SHADER_CACHE_DIR="${XDG_CACHE_HOME:-$HOME/.cache}/shader_cache"  # custom shader cache
 export ANV_DEBUG="video-decode,video-encode"
+
+export BEMENU_OPTS="--fn 'JetBrainsMono Nerd Font 12' \
+  --center --line-height 22 --margin 8 --width-factor 0.5 \
+  --nb '#2e3440' --nf '#cdcecf' \
+  --hb '#81b29a' --hf '#192330' \
+  --tb '#2e3440' --tf '#f6c177' \
+  --fb '#2e3440' --ff '#cdcecf' \
+  --list 20 --prompt '>'"
