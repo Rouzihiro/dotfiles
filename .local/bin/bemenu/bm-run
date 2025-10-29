@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+# -----------------------------------------------
+# bemenu-wrapper — Nightfox-themed bemenu launcher
+# For both app launcher and custom scripts
+# -----------------------------------------------
+
+set -euo pipefail
+
+# Get focused monitor index for sway (optional, safe fallback)
+focused_monitor="$(swaymsg -t get_outputs -r | jq -r '.[] | select(.focused) | .name' 2>/dev/null || true)"
+monitor_args=()
+[ -n "$focused_monitor" ] && monitor_args=( -m "$focused_monitor" )
+
+
+BEMENU_ARGS=(
+  --center
+  --list 15
+  --line-height 28
+  --margin 8
+  --width-factor 0.5
+  --tb "#2e3440" --tf "#f6c177"
+  --nb "#2e3440" --nf "#cdcecf"
+  --fb "#81b29a" --ff "#192330"
+  --hb "#394b58" --hf "#e0def4"
+  --ab "#2e3440"
+)
+
+# Run mode: "dmenu" → application launcher, otherwise → read from stdin
+if [[ "${1:-}" == "dmenu" ]]; then
+  bemenu-run "${BEMENU_ARGS[@]}"
+else
+  bemenu "${BEMENU_ARGS[@]}"
+fi

@@ -12,8 +12,8 @@
      status_command i3blocks -c ~/.config/i3blocks/config
      separator_symbol ""
 
-     #font pango:DroidSansM Nerd Font 10
-		 font pango:DejaVu Sans Mono 10
+     font pango:DroidSansM Nerd Font 10
+		 #font pango:DejaVu Sans Mono 10
 		 #font pango:Noto Color Emoji 10
      
 		  colors {

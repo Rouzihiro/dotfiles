@@ -1,0 +1,101 @@
+configuration {
+  modi:                 "drun,run,filebrowser,window";
+  dpi:                  90;
+  show-icons:           true;
+  icon-theme:           "Papirus";
+	terminal:             "footclient";
+  window-format:        "{w} · {c} · {t}";
+  disable-history:      false;
+  max-history-size:     50;
+
+  display-drun:         " Apps"; // 󰀻
+  display-run:          " Runs";
+  display-nerdy:        "󰱨 Nerdy";
+  display-emoji:        "󰱨 Emoji";
+	display-window:       " Windows";
+  display-filebrowser:  " Files";
+	display-ssh:          "󰣀 SSH";
+	display-keys:         " Keys";
+}
+
+@import "colors"
+
+* {
+  spacing:       0.1em;
+  padding:       0.2em;
+  margin:        0px;
+  border-radius: 1em;
+}
+
+window {
+  /*             If you change this, change padding on inputbar(Messed ratios) */
+  width:         25%;
+  height:        100%;
+  location:      west;
+  anchor:        west;
+  margin:        @margin;
+  padding:       @padding;
+  border:        2px;
+  border-radius: @border-radius;
+  spacing:       @spacing;
+  children:      [  mainbox ];
+}
+
+mainbox {
+  spacing:  @spacing;
+  children: [ inputbar, listview, mode-switcher];
+}
+
+inputbar {
+  padding:          10em 0.4em   0.4em;
+  spacing:          @spacing;
+  background-image: url("~/.config/wall.png", height);
+  children:         [ prompt, entry ];
+}
+
+entry {
+  placeholder:   "Search...";
+  padding:       @padding;
+  border-radius: @border-radius;
+}
+
+prompt {
+  padding:       @padding;
+  border-radius: @border-radius;
+}
+
+textbox-prompt-colon {
+  expand:        false;
+  padding:       @padding;
+  border-radius: @border-radius;
+  str:           " "; /* */
+}
+
+listview {
+  lines:         12;
+  spacing:       @spacing;
+  scrollbar:     false;
+  cycle:         false;
+  fixed-height:  false;
+  dynamic:       false; // Shrinks windows to  occupy search result
+  margin:        @margin;
+  padding:       @padding;
+  border:        0px;   // List    view    has the    dash   border, Remove it here
+  border-radius: @border-radius;
+}
+
+element {
+  border:        0px;
+  border-radius: @border-radius;
+  padding:       @padding;
+}
+
+mode-switcher {
+  spacing:     @spacing;
+  orientation: horizontal;
+}
+
+button {
+  padding:       @padding;
+  border-radius: @border-radius;
+}

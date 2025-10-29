@@ -1,0 +1,38 @@
+/**
+ * rofi theme
+ * User: void
+ */
+
+* {
+    background-color:      Black;
+    border-color:          White;
+    text-color:           White;
+    font:            "AvantGarde Medium 12";
+}
+window {
+    anchor:     north;
+    location:   northeast;
+    width:      76%;
+    padding:    3px;
+    children:   [ horibox ];
+}
+horibox {
+    orientation: horizontal;
+    children:   [ listview ];
+}
+listview {
+    layout:     horizontal;
+    spacing:    45px;
+    lines:      100;
+}
+element {
+    padding: 0px 2px;
+}
+element selected {
+    background-color: #41426b;
+}
+
+element-text, element-icon {
+  background-color: inherit;
+  text-color: inherit;
+}

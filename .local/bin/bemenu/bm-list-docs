@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-bemenu_CMD="bemenu"
+bemenu_CMD="${HOME}/.local/bin/bemenu/bm-run"
 bemenu_OPTS="-i -l 20 -c"  # centered, 20 lines
 MAXLEN=40  # Max characters to display per line
 

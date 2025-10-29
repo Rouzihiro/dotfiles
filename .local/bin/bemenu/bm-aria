@@ -5,6 +5,7 @@ LOG_FILE="$HOME/Downloads/yt-dlp.log"
 DOWNLOAD_DIR="$HOME/Downloads"
 LINK_FILE="$HOME/Documents/Notes/downloads.md"
 DMENU_OPTS="-c -l 10"
+BEMENU="${HOME}/.local/bin/bemenu/bm-run"
 
 # Create directories if they don't exist
 mkdir -p "$DOWNLOAD_DIR"
@@ -59,7 +60,7 @@ handle_download() {
     fi
 
     # Ask user for name (editable)
-    local newname=$(echo "$predicted" | bemenu -p "Filename (edit if you want):" -l 1 -c)
+    local newname=$(echo "$predicted" | $BEMENU -p "Filename (edit if you want):" -l 1 -c)
     [ -z "$newname" ] && newname="$predicted"
 
     # Download depending on type
@@ -103,22 +104,22 @@ process_download() {
 }
 
 # main menu
-CHOICE=$(echo -e "Clipboard\nSingle from file\nAll from file\nMonitor Downloads" | bemenu $DMENU_OPTS -p "Select action:")
+CHOICE=$(echo -e "Clipboard\nSingle from file\nAll from file\nMonitor Downloads" | $BEMENU $DMENU_OPTS -p "Select action:")
 [ -z "$CHOICE" ] && exit 1
 
 if [ "$CHOICE" = "Monitor Downloads" ]; then
     MONITOR_OUTPUT=$(monitor_downloads)
-    echo "$MONITOR_OUTPUT" | bemenu $DMENU_OPTS -p "Active Downloads:"
+    echo "$MONITOR_OUTPUT" | $BEMENU $DMENU_OPTS -p "Active Downloads:"
     exit 0
 fi
 
 # Otherwise, ask download type
-TYPE=$(echo -e "Direct link\nEmbedded video" | bemenu $DMENU_OPTS -p "Select download type:")
+TYPE=$(echo -e "Direct link\nEmbedded video" | $BEMENU $DMENU_OPTS -p "Select download type:")
 [ -z "$TYPE" ] && exit 1
 
 case "$CHOICE" in
     "Clipboard")
-        URL=$(xclip -o -selection clipboard | bemenu $DMENU_OPTS -p "Edit URL (Ctrl+V to paste):")
+        URL=$(xclip -o -selection clipboard | $BEMENU $DMENU_OPTS -p "Edit URL (Ctrl+V to paste):")
         [ -z "$URL" ] && exit 1
         process_download "$TYPE" "$URL"
         ;;
@@ -129,7 +130,7 @@ case "$CHOICE" in
             notify_error "No URLs found in $LINK_FILE"
             exit 1
         fi
-        URL=$(echo "$URLS" | bemenu $DMENU_OPTS -p "Select URL:")
+        URL=$(echo "$URLS" | $BEMENU $DMENU_OPTS -p "Select URL:")
         [ -z "$URL" ] && exit 1
         process_download "$TYPE" "$URL"
         ;;
@@ -142,7 +143,7 @@ case "$CHOICE" in
     fi
     
     COUNT=$(echo "$URLS" | wc -w)
-    CONFIRM=$(echo -e "Yes\nNo" | bemenu $DMENU_OPTS -p "Download all $COUNT URLs?")
+    CONFIRM=$(echo -e "Yes\nNo" | $BEMENU $DMENU_OPTS -p "Download all $COUNT URLs?")
     [ "$CONFIRM" != "Yes" ] && exit 1
 
     process_download "$TYPE" "$URLS"

@@ -1,0 +1,64 @@
+#!/bin/bash
+
+# Ensure screenshot folder exists
+DIR="$HOME/Pictures/screenshot"
+mkdir -p "$DIR"
+
+# Nightfox-styled bemenu wrapper
+bemenu="${HOME}/.local/bin/bemenu/bm-run"
+DMENU_OPTS="-l 6 -c -p 'Select screenshot type:'"
+
+# Prompt user for screenshot type
+MODE=$(echo -e "Fullscreen now\nFullscreen 3sec\nFullscreen custom\nSnippet now\nSnippet 3sec\nSnippet custom" \
+      | "$bemenu" $DMENU_OPTS)
+
+[ -z "$MODE" ] && exit 1
+
+# Filename with timestamp
+FILE="$DIR/screenshot_$(date +%Y%m%d_%H%M%S).png"
+
+# Determine delay and type
+DELAY=0
+TYPE=""
+
+case "$MODE" in
+    "Fullscreen now")
+        TYPE="fullscreen" ;;
+    "Fullscreen 3sec")
+        TYPE="fullscreen"
+        DELAY=3 ;;
+    "Fullscreen custom")
+        TYPE="fullscreen"
+        DELAY=$(echo "" | "$bemenu" -p "Delay in seconds:") ;;
+    "Snippet now")
+        TYPE="snippet" ;;
+    "Snippet 3sec")
+        TYPE="snippet"
+        DELAY=3 ;;
+    "Snippet custom")
+        TYPE="snippet"
+        DELAY=$(echo "" | "$bemenu" -p "Delay in seconds:") ;;
+    *)
+        exit 1 ;;
+esac
+
+# Validate delay (default to 0 if invalid)
+if ! [[ "$DELAY" =~ ^[0-9]+$ ]]; then
+    DELAY=0
+fi
+
+# Optional delay
+[ "$DELAY" -gt 0 ] && sleep "$DELAY"
+
+# Take screenshot using grim
+if [ "$TYPE" = "fullscreen" ]; then
+    grim "$FILE"
+else
+    grim -g "$(slurp)" "$FILE"
+fi
+
+# Copy to clipboard using wl-copy
+wl-copy < "$FILE"
+
+# Notify
+notify-send "Screenshot saved" "$FILE"

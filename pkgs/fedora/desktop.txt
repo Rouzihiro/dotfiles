@@ -1,0 +1,60 @@
+# System and desktop environment
+waybar
+power-profiles-daemon
+fuzzel
+rofi-wayland
+wayland-utils
+btop
+ps_mem
+NetworkManager
+NetworkManager-tui
+wlr-randr
+
+# Language support
+hunspell-de
+tesseract
+tesseract-langpack-eng
+tesseract-langpack-deu
+
+# Multimedia
+ffmpegthumbs
+ImageMagick
+imv
+vlc
+mpv
+yt-dlp
+pamixer
+
+# Development tools
+lazygit
+git-delta
+nodejs
+java-latest-openjdk
+zstd
+
+# LaTeX
+texmaker
+texlive-scheme-basic
+
+# Graphics/GPU
+vulkan-tools
+
+# Fonts
+jetbrains-mono-fonts-all
+cascadia-code-fonts
+google-noto-fonts-common
+google-noto-emoji-fonts
+fontawesome-fonts-all
+dejavu-fonts-all
+fira-code-fonts
+google-droid-fonts-all
+google-droid-sans-fonts
+
+# Applications
+zathura
+zathura-cb
+zathura-pdf-mupdf
+xournalpp
+neovim
+foliate
+thunderbird

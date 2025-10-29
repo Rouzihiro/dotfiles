@@ -4,7 +4,7 @@
 set -e  # Exit on error
 
 # Config
-INSTALL_DIR="$HOME/bin"
+INSTALL_DIR="$HOME/.local/bin/"
 REPO_URL="https://github.com/ammgws/autotiling-rs.git"
 
 # Install build dependencies
@@ -29,7 +29,7 @@ fi
 
 # Build for Sway
 echo "Building for Sway (release mode)..."
-cargo build --release --features sway
+cargo build --release
 
 # Install binary
 echo "Installing to $INSTALL_DIR..."
@@ -43,5 +43,5 @@ echo "Installation complete. Binary info:"
 # Check PATH
 if [[ ":$PATH:" != *":$INSTALL_DIR:"* ]]; then
     echo "Note: ~/bin is not in your PATH. Add this to your shell config:"
-    echo 'export PATH="$HOME/bin:$PATH"'
+    echo 'export PATH="$HOME/.local/bin:$PATH"'
 fi

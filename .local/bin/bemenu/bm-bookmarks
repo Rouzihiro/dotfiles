@@ -63,7 +63,7 @@ choice="$({
         tag="$(basename "$tag" .txt)"  # just in case
         emit "$tag" "$f"
     done
-} | sort | cut -f1 | bemenu $DMENU_OPTS || true)"
+	} | sort | cut -f1 | ~/.local/bin/bemenu/bm-run || true)"
 
 [ -n "$choice" ] || exit 0
 

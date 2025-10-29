@@ -23,14 +23,14 @@ if ! cd "$PARENT_DIR"; then
 fi
 
 # Source global functions from ~/bin
-GLOBAL_FUNCTIONS="$HOME/bin/Global_functions.sh"
+GLOBAL_FUNCTIONS="$HOME/.local/bin/fzf/fzf_selector.sh"
 if [[ -f "$GLOBAL_FUNCTIONS" ]]; then
     if ! source "$GLOBAL_FUNCTIONS"; then
         echo "ERROR: Failed to source $GLOBAL_FUNCTIONS" >&2
         exit 1
     fi
 else
-    echo "ERROR: Global_functions.sh not found in ~/bin" >&2
+    echo "ERROR: fzf_selector not found in ~/.local/bin/fzf/" >&2
     exit 1
 fi
 

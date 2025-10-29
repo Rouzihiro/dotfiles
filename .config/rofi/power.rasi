@@ -1,0 +1,70 @@
+configuration {
+  dpi:             90;
+  show-icons:      false;
+  disable-history: true;
+}
+
+@import "colors.rasi"
+
+* {
+  spacing:       0.1em;
+  padding:       0.2em;
+  margin:        0;
+  border-radius: 1em;
+  font:          "JetBrainsMono Nerd Font 12";
+}
+
+window {
+  width:         15%;
+  orientation:   vertical;
+  location:      center;
+  anchor:        center;
+  margin:        @margin;
+  padding:       @padding;
+  border:        2px;
+  border-radius: @border-radius;
+  spacing:       @spacing;
+  children:      [ mainbox ];
+}
+
+mainbox {
+  spacing:  @spacing;
+  children: [ listview ];
+}
+inputbar {
+  spacing:   @spacing;
+  padding:   @padding;
+  children:  [   "textbox-prompt-colon", entry  ];
+}
+
+textbox-prompt-colon {
+  expand:        false;
+  padding:       @padding;
+  border-radius: @border-radius;
+  str:           " "; /* */
+}
+
+entry {
+  placeholder:   "Search...";
+  padding:       @padding;
+  border-radius: @border-radius;
+}
+
+listview {
+  lines:         5;
+  spacing:       @spacing;
+  scrollbar:     false;
+  cycle:         false;
+  fixed-height:  true;
+  dynamic:       false; // Shrinks windows to  occupy search result
+  padding:       @padding;
+  margin:        @margin;
+  border:        0px;   // List    view    has the    dash   border, Remove it here
+  border-radius: @border-radius;
+}
+
+element {
+  border-radius: @border-radius;
+  padding:       @padding;
+  margin:        @margin;
+}

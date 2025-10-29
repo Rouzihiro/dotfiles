@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
-choice=$(printf "Lock\nReboot\nShutdown\nLogout" | bemenu -i -l 5 -p "Power:")
+bemenu="${HOME}/.local/bin/bemenu/bm-run"
+
+choice=$(printf "Lock\nReboot\nShutdown\nLogout" | $bemenu -i -l 5 -p "Power:")
 [ -z "$choice" ] && exit
 
 case "$choice" in

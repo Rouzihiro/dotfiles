@@ -2,6 +2,7 @@
 
 DOCUMENTS="$HOME/Documents"
 NOTES="$DOCUMENTS/Notes"
+BEMENU="${HOME}/.local/bin/bemenu/bm-run"
 
 LOG_DIR="$HOME/.logs"
 LOG_FILE="$LOG_DIR/.music.log"
@@ -207,7 +208,7 @@ update_mpd() {
     command -v mpc >/dev/null && mpc update || echo -e "${YELLOW}MPD client not found, skipping.${NC}"
 }
 
-# Interactive mode using bemenu
+# Interactive mode using $BEMENU
 interactive_mode() {
     while true; do
         local options=(
@@ -221,14 +222,14 @@ interactive_mode() {
             "quit:❌ Quit"
         )
 
-        local selection=$(printf '%s\n' "${options[@]}" | bemenu -i -l 10 -p "Select action:")
+        local selection=$(printf '%s\n' "${options[@]}" | $BEMENU -i -l 10 -p "Select action:")
         [ -z "$selection" ] && exit 0
         local action=$(echo "$selection" | cut -d':' -f1)
 
         case "$action" in
             download)
                 local format_options=("flac:FLAC (lossless)" "mp3:MP3 (320kbps)")
-                local format_sel=$(printf '%s\n' "${format_options[@]}" | bemenu -i -l 2 -p "Select format:")
+                local format_sel=$(printf '%s\n' "${format_options[@]}" | $BEMENU -i -l 2 -p "Select format:")
                 local format=$(echo "$format_sel" | cut -d':' -f1)
                 [ -n "$format" ] && download_playlists "$format"
                 ;;
