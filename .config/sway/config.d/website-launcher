@@ -1,6 +1,6 @@
 
 # Launch Website Mode with info displayed after mode is activated
-bindsym $mod+w mode "Website Launch" 
+# bindsym $mod+w mode "Website Launch" 
 
 mode "Website Launch" {
     

@@ -6,9 +6,7 @@ exec dunst
 exec swayidle -w \
 		before-sleep "swaylock -fF -i ~/Pictures/lockscreen/VIM.png" \
     timeout 90 'if ! pgrep -x "motrix"; then brightnessctl -s set 0; fi' \
-      resume 'brightnessctl -r' \
-    timeout 900 'if ! pgrep -x "motrix"; then systemctl suspend; fi' \
-    timeout 1800 'if ! pgrep -x "motrix"; then systemctl poweroff; fi'
+      resume 'brightnessctl -r'
 
 exec_always systemctl --user start sway-session.target
 
