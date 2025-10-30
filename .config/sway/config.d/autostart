@@ -5,7 +5,7 @@ exec wl-paste -t text --watch clipman store --no-persist
 exec dunst
 exec swayidle -w \
 		before-sleep "swaylock -fF -i ~/Pictures/lockscreen/VIM.png" \
-    timeout 90 'if ! pgrep -x "motrix"; then brightnessctl -s set 0; fi' \
+    timeout 300 'if ! pgrep -x "motrix"; then brightnessctl -s set 0; fi' \
       resume 'brightnessctl -r'
 
 exec_always systemctl --user start sway-session.target
