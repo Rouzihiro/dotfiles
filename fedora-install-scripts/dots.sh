@@ -38,7 +38,6 @@ sxiv
 ffmpegthumbnailer
 blueman
 curlftpfs
-vifm
 thunar
 xdg-user-dirs
 yad
