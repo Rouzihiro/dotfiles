@@ -1,0 +1,20 @@
+#!/bin/bash
+PROTON_DIR="$HOME/.steam/root/steamapps/common/Proton 10.0"
+STEAM_DIR="$HOME/.steam/root"
+GAME_EXE="$1"
+
+GAME_NAME=$(basename "$GAME_EXE" .exe)
+COMPAT_DATA_PATH="$HOME/Games/${GAME_NAME}_prefix"
+
+mkdir -p "$COMPAT_DATA_PATH"
+
+export STEAM_COMPAT_CLIENT_INSTALL_PATH="$STEAM_DIR"
+export STEAM_COMPAT_DATA_PATH="$COMPAT_DATA_PATH"
+
+"$PROTON_DIR/proton" run "$GAME_EXE"
+
+
+# How-to
+# muvm -ti FEXBash
+# ./run-game.sh Maelstorm
+# ./run-game.sh SomeOtherGame
