@@ -6,6 +6,9 @@ map({ "n", "v", "x" }, ":", ";", { desc = "Self explanatory" })
 map("n", "n", "nzzzv")
 map("n", "N", "Nzzzv")
 
+local builtin = require("telescope.builtin")
+map("n", "<leader>o", builtin.oldfiles, { desc = "Recent files" })
+
 -- window management
 -- map("n", "<leader>sv", "<C-w>v", { desc = "Split window vertically" })
 -- map("n", "<leader>sh", "<C-w>s", { desc = "Split window horizontally" })
