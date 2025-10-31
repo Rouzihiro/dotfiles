@@ -10,4 +10,4 @@ mode $printscreen_mode {
     bindsym Return mode "default"
     bindsym Escape mode "default"
 }
-bindsym $mod+s mode $printscreen_mode
+bindsym $mod+shift+s mode $printscreen_mode

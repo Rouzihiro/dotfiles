@@ -36,6 +36,9 @@ bindsym $mod+mod1+o exec sh -c "text-picker"
 
 bindsym $mod+mod1+p exec "bm-power"
 
+bindsym $mod+s exec "bm-screenshot"
+bindsym $mod+mod1+s exec "bm-screenshot-fs"
+
 bindsym $mod+Escape exec "bm-power"
 
 bindsym $mod+r exec $term --app-id=runner_floating -e runner
