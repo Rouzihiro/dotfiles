@@ -19,12 +19,13 @@ bindsym $mod+Shift+d exec bm-list-docs
 
 bindsym $mod+mod1+h exec $term -T 'floaty-small' -e bash -c 'cd / && sudo ncdu'
 
-bindsym $mod+i exec bm-wifi
+bindsym $mod+i exec "bm-wifi"
 bindsym $mod+mod1+i exec "rofi-wifi"
 
 set $lockscreen swaylock -i ~/Pictures/lockscreen/VIM.png
 bindsym $mod+mod1+l exec $lockscreen
 
+bindsym $mod+m exec "bm-mount-usb"
 bindsym $mod+mod1+m exec $term -T 'floaty-small' -e bash -c 'sudo ps_mem; echo ""; read -rp "Press Enter to close..."'
 
 bindsym $mod+n exec "bm-notes"
