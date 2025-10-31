@@ -5,4 +5,9 @@
 used=$(free -h | awk '/^Mem:/ {print $3}')
 total=$(free -h | awk '/^Mem:/ {print $2}')
 
-echo "$used/$total"
+# Swap usage
+swap_used=$(free -h | awk '/^Swap:/ {print $3}')
+swap_total=$(free -h | awk '/^Swap:/ {print $2}')
+
+echo "$used/$total | swap $swap_used"
+# echo "$used/$total"
