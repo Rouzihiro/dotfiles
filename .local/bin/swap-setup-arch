@@ -1,0 +1,58 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+echo ">>> Removing any existing ZRAM devices (if present)..."
+if grep -q zram /proc/swaps; then
+    echo "Turning off ZRAM swap..."
+    for z in $(awk '/zram/ {print $1}' /proc/swaps); do
+        sudo swapoff "$z"
+    done
+fi
+
+if lsmod | grep -q zram; then
+    echo "Removing zram module..."
+    sudo rmmod zram || true
+fi
+
+echo ">>> Removing ZRAM config (zram-generator) if it exists..."
+sudo rm -f /etc/systemd/zram-generator.conf || true
+
+echo ">>> Checking/creating 8 GB swapfile..."
+SWAPFILE="/swapfile"
+if [ ! -f "$SWAPFILE" ]; then
+    echo "Creating swapfile with dd..."
+    sudo dd if=/dev/zero of="$SWAPFILE" bs=1M count=8192 status=progress
+    sudo chmod 600 "$SWAPFILE"
+    sudo mkswap "$SWAPFILE"
+    sudo swapon "$SWAPFILE"
+    echo "$SWAPFILE none swap sw 0 0" | sudo tee -a /etc/fstab
+else
+    echo "Swapfile already exists — skipping creation."
+fi
+
+echo ">>> Applying sysctl tuning for swap usage..."
+sudo tee /etc/sysctl.d/99-swap.conf >/dev/null <<'EOF'
+# Lower swappiness to avoid swapping too aggressively
+vm.swappiness=10
+# Reduce VFS cache pressure slightly (keep file caches longer)
+vm.vfs_cache_pressure=50
+EOF
+sudo sysctl --system >/dev/null
+
+echo
+echo ">>> Current swap setup:"
+swapon --show
+echo
+free -h
+echo
+
+echo ">>> Optional: Enable zswap at runtime (safe, no kernel changes)"
+echo "This enables compressed swap caching in RAM for pages going to your swapfile."
+echo "Run these commands if you want to enable it immediately:"
+echo "  sudo sh -c 'echo 1 > /sys/module/zswap/parameters/enabled'"
+echo "  sudo sh -c 'echo zstd > /sys/module/zswap/parameters/compressor'"
+echo "  sudo sh -c 'echo 20 > /sys/module/zswap/parameters/max_pool_percent'"
+echo "  sudo sh -c 'echo z3fold > /sys/module/zswap/parameters/zpool'"
+echo
+echo "✅ Swapfile setup complete. System is running purely on disk swap."

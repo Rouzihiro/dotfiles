@@ -1,5 +1,5 @@
 #!/bin/bash
-PROTON_DIR="$HOME/.steam/root/steamapps/common/Proton 10.0"
+PROTON_DIR="$HOME/.steam/root/steamapps/common/GE-Proton10-24/"
 STEAM_DIR="$HOME/.steam/root"
 GAME_EXE="$1"
 
