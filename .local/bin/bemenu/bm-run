@@ -18,11 +18,16 @@ BEMENU_ARGS=(
   --line-height 28
   --margin 8
   --width-factor 0.5
-  --tb "#2e3440" --tf "#f6c177"
-  --nb "#2e3440" --nf "#cdcecf"
-  --fb "#81b29a" --ff "#192330"
-  --hb "#394b58" --hf "#e0def4"
-  --ab "#2e3440"
+  # Normal items
+  --nb "#2e3440cc" --nf "#cdcecf"
+  # Selected / focused item
+  --sb "#81b29acc" --sf "#192330"
+  # Hovered item
+  --hb "#394b58cc" --hf "#e0def4"
+  # Filter/input bar (top line)
+  --fb "#2e3440cc" --ff "#cdcecf"
+  # Alternating items
+  --ab "#2e3440cc" --af "#cdcecf"
 )
 
 # Run mode: "dmenu" → application launcher, otherwise → read from stdin
