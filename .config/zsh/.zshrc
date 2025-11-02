@@ -53,7 +53,9 @@ done
 # Load aliases
 # -------------------------------
 for file in "$ZDOTDIR"/.aliases*; do
-    [ -f "$file" ] && source "$file"
+    [ -f "$file" ] || continue          
+    [[ "$(basename "$file")" == ".aliases-arch" ]] && continue  # skip this one
+    source "$file"
 done
 
 # -------------------------------

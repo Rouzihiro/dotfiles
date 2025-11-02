@@ -131,12 +131,20 @@ fs() {
   find . -type f -exec grep --color=always --binary-files=without-match "$1" {} +
 }
 
+# fzv function
 fzv() {
-  while file=$(fzf --preview 'bat --color=always --style=numbers --line-range=:500 {}'); do
-    nvim "$file"
-  done
+    while file=$(fzf --preview 'bat --color=always --style=numbers --line-range=:500 {}'); do
+        [ -n "$file" ] && nvim "$file"
+    done
 }
-bindkey -s '^F' 'fzv\n'
+if [[ $- == *i* ]]; then
+    if [ -n "$BASH_VERSION" ]; then
+        # Ctrl+F → fzv
+        bind -x '"\C-f": fzv'
+    elif [ -n "$ZSH_VERSION" ]; then
+        bindkey -s '^F' 'fzv\n'
+    fi
+fi
 
 open() {
   xdg-open "$@" >/dev/null 2>&1 &

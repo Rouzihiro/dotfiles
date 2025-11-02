@@ -1,0 +1,87 @@
+#!/usr/bin/env bash
+# gamer-warframe — Launch Warframe using Proton 10.0 with correct prefix & logging
+# --------------------------------------------------------------
+# Usage:
+#   gamer-warframe          -> Launch launcher (default)
+#   gamer-warframe --update -> Force update only (launcher)
+#   gamer-warframe --debug  -> Verbose Proton output
+
+set -euo pipefail
+
+# -----------------------------
+# Configuration
+# -----------------------------
+PROTON_DIR="$HOME/.steam/root/steamapps/common/Proton 10.0"
+STEAM_GAME_DIR="$HOME/.local/share/Steam/steamapps/common/Warframe"
+PREFIX_DIR="$HOME/.local/share/Steam/steamapps/compatdata/230410"
+LOG_DIR="$HOME/Games/logs"
+mkdir -p "$LOG_DIR"
+LOG_FILE="$LOG_DIR/warframe-$(date +%Y%m%d-%H%M%S).log"
+
+# Prefix path for Program Files
+PREFIX_GAME_DIR="$PREFIX_DIR/pfx/drive_c/Program Files/Warframe"
+
+# Launcher path inside prefix
+LAUNCHER_EXE="$PREFIX_GAME_DIR/Tools/Launcher.exe"
+
+# -----------------------------
+# Determine launch mode
+# -----------------------------
+MODE="${1:-run}"
+case "$MODE" in
+  --update) ACTION="update" ;;
+  --debug) ACTION="debug" ;;
+  *) ACTION="run" ;;
+esac
+
+# -----------------------------
+# Logging header
+# -----------------------------
+echo "=============================================================" | tee "$LOG_FILE"
+echo "🎮 Launching Warframe (Proton 10.0)" | tee -a "$LOG_FILE"
+echo "📁 Proton:  $PROTON_DIR" | tee -a "$LOG_FILE"
+echo "📦 Prefix:  $PREFIX_DIR" | tee -a "$LOG_FILE"
+echo "🎯 Game:    $STEAM_GAME_DIR" | tee -a "$LOG_FILE"
+echo "📝 Log:     $LOG_FILE" | tee -a "$LOG_FILE"
+echo "🔧 Mode:    $ACTION" | tee -a "$LOG_FILE"
+echo "=============================================================" | tee -a "$LOG_FILE"
+
+# -----------------------------
+# Proton environment
+# -----------------------------
+export STEAM_COMPAT_CLIENT_INSTALL_PATH="$HOME/.steam/root"
+export STEAM_COMPAT_DATA_PATH="$PREFIX_DIR"
+
+# -----------------------------
+# Safety checks
+# -----------------------------
+if [ ! -x "$PROTON_DIR/proton" ]; then
+  echo "❌ Proton not found at $PROTON_DIR/proton" | tee -a "$LOG_FILE"
+  exit 1
+fi
+
+if [ ! -d "$PREFIX_GAME_DIR" ]; then
+  echo "⚠️  Warframe folder not found in prefix. Creating symlink..." | tee -a "$LOG_FILE"
+  mkdir -p "$PREFIX_GAME_DIR"
+  ln -s "$STEAM_GAME_DIR/Tools" "$PREFIX_GAME_DIR/Tools"
+  echo "✅ Symlink created: $PREFIX_GAME_DIR/Tools -> $STEAM_GAME_DIR/Tools" | tee -a "$LOG_FILE"
+fi
+
+if [ ! -f "$LAUNCHER_EXE" ]; then
+  echo "❌ Launcher.exe not found at $LAUNCHER_EXE" | tee -a "$LOG_FILE"
+  exit 1
+fi
+
+# -----------------------------
+# Launch Warframe
+# -----------------------------
+echo "🚀 Starting Warframe launcher..." | tee -a "$LOG_FILE"
+
+if [ "$ACTION" = "debug" ]; then
+  "$PROTON_DIR/proton" run "$LAUNCHER_EXE" -log 2>&1 | tee -a "$LOG_FILE"
+else
+  "$PROTON_DIR/proton" run "$LAUNCHER_EXE" 2>&1 | tee -a "$LOG_FILE"
+fi
+
+echo "=============================================================" | tee -a "$LOG_FILE"
+echo "✅ Done! (Check log for details)" | tee -a "$LOG_FILE"
