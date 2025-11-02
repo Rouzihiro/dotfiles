@@ -1,0 +1,112 @@
+#!/usr/bin/env bash
+# gamer-cfg — install/check Winetricks components or open Wine configuration in Proton 10.0
+# Logs all output to ~/Games/logs/gamer-cfg-YYYYMMDD-HHMMSS.log
+# Automatically verifies installed components and prints a summary
+
+set -euo pipefail
+
+PROTON_DIR="$HOME/.steam/root/steamapps/common/Proton 10.0"
+PREFIX_DIR="$HOME/Games/proton/winecfg"
+LOG_DIR="$HOME/Games/logs"
+mkdir -p "$LOG_DIR"
+
+TIMESTAMP=$(date +"%Y%m%d-%H%M%S")
+LOG_FILE="$LOG_DIR/gamer-cfg-$TIMESTAMP.log"
+
+declare -A COMPONENT_STATUS
+ALL_COMPONENTS=("corefonts" "d3dx9" "vcrun2015")
+
+echo "============================================================="
+echo "📝 Logging to $LOG_FILE"
+echo "============================================================="
+echo "⚙️  Running gamer-cfg"
+echo "📁 Proton: $PROTON_DIR"
+echo "📦 Prefix: $PREFIX_DIR"
+echo "============================================================="
+
+# Function to check installed components
+check_component() {
+    local component="$1"
+    case "$component" in
+        corefonts)
+            local fonts_dir="$PREFIX_DIR/pfx/drive_c/windows/Fonts"
+            if ls "$fonts_dir/arial.ttf" "$fonts_dir/tahoma.ttf" &>/dev/null; then
+                COMPONENT_STATUS["corefonts"]="✅ Installed"
+            else
+                COMPONENT_STATUS["corefonts"]="❌ Not found"
+            fi
+            ;;
+        d3dx9)
+            local dll_dir="$PREFIX_DIR/pfx/drive_c/windows/system32"
+            if ls "$dll_dir"/d3dx9_*.dll &>/dev/null; then
+                COMPONENT_STATUS["d3dx9"]="✅ Installed"
+            else
+                COMPONENT_STATUS["d3dx9"]="❌ Not found"
+            fi
+            ;;
+        vcrun2015)
+            local dll_dir="$PREFIX_DIR/pfx/drive_c/windows/system32"
+            if [[ -f "$dll_dir/msvcp140.dll" && -f "$dll_dir/vcruntime140.dll" ]]; then
+                COMPONENT_STATUS["vcrun2015"]="✅ Installed"
+            else
+                COMPONENT_STATUS["vcrun2015"]="❌ Not found"
+            fi
+            ;;
+    esac
+}
+
+# Check-only mode
+if [[ $# -eq 1 && "$1" == "--check" ]]; then
+    echo "🔎 Check-only mode: verifying installed components..." | tee -a "$LOG_FILE"
+    for comp in "${ALL_COMPONENTS[@]}"; do
+        check_component "$comp"
+    done
+else
+    # No arguments → launch winecfg
+    if [ $# -eq 0 ]; then
+        echo "🔧 No extra command specified. Launching Wine configuration..." | tee -a "$LOG_FILE"
+        STEAM_COMPAT_CLIENT_INSTALL_PATH="$HOME/.steam/root" \
+        STEAM_COMPAT_DATA_PATH="$PREFIX_DIR" \
+        "$PROTON_DIR/proton" run winecfg 2>&1 | tee -a "$LOG_FILE"
+
+        # Verify default components
+        for comp in "${ALL_COMPONENTS[@]}"; do
+            check_component "$comp"
+        done
+    else
+        # Run commands with logging
+        for cmd in "$@"; do
+            case $cmd in
+                winecfg)
+                    echo "🔧 Launching Wine configuration..." | tee -a "$LOG_FILE"
+                    STEAM_COMPAT_CLIENT_INSTALL_PATH="$HOME/.steam/root" \
+                    STEAM_COMPAT_DATA_PATH="$PREFIX_DIR" \
+                    "$PROTON_DIR/proton" run winecfg 2>&1 | tee -a "$LOG_FILE"
+                    ;;
+                corefonts|d3dx9|vcrun2015)
+                    echo "⬇️ Installing $cmd via winetricks..." | tee -a "$LOG_FILE"
+                    STEAM_COMPAT_CLIENT_INSTALL_PATH="$HOME/.steam/root" \
+                    STEAM_COMPAT_DATA_PATH="$PREFIX_DIR" \
+                    "$PROTON_DIR/proton" run winetricks -q "$cmd" 2>&1 | tee -a "$LOG_FILE"
+                    ;;
+                *)
+                    echo "❌ Unknown command: $cmd" | tee -a "$LOG_FILE"
+                    ;;
+            esac
+            # Check status after each command
+            check_component "$cmd"
+        done
+    fi
+fi
+
+# Summary table
+echo "============================================================="
+echo "📊 Component Status"
+printf "%-15s | %s\n" "Component" "Status"
+echo "---------------|----------------"
+for comp in "${ALL_COMPONENTS[@]}"; do
+    status="${COMPONENT_STATUS[$comp]:-Not checked}"
+    printf "%-15s | %s\n" "$comp" "$status"
+done
+echo "============================================================="
+echo "✅ Done! Logs saved to $LOG_FILE"
