@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+# proton-winecfg.sh — open Wine configuration using Proton 10.0
+
+set -euo pipefail
+
+PROTON_DIR="$HOME/.steam/root/steamapps/common/Proton 10.0"
+PREFIX_DIR="$HOME/Games/proton/winecfg"
+
+echo "============================================================="
+echo "⚙️  Opening Proton Wine Configuration"
+echo "📁 Proton: $PROTON_DIR"
+echo "📦 Prefix: $PREFIX_DIR"
+echo "============================================================="
+
+STEAM_COMPAT_CLIENT_INSTALL_PATH="$HOME/.steam/root" \
+STEAM_COMPAT_DATA_PATH="$PREFIX_DIR" \
+"$PROTON_DIR/proton" run winecfg
