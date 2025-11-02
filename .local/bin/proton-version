@@ -1,0 +1,45 @@
+#!/usr/bin/env bash
+# gamer-version — check Proton 10.0 bundled Wine version in table format
+
+set -euo pipefail
+
+PROTON_DIR="$HOME/.steam/root/steamapps/common/Proton 10.0"
+PREFIX_DIR="$HOME/Games/proton/winecfg"
+LOG_DIR="$HOME/Games/logs"
+mkdir -p "$LOG_DIR"
+LOG_FILE="$LOG_DIR/proton-wine-version-$(date +%Y%m%d-%H%M%S).log"
+
+echo "=============================================================" | tee -a "$LOG_FILE"
+echo "📝 Logging to $LOG_FILE" | tee -a "$LOG_FILE"
+echo "=============================================================" | tee -a "$LOG_FILE"
+
+echo "⚙️  Running Proton's bundled Wine to get version..." | tee -a "$LOG_FILE"
+echo "📁 Proton: $PROTON_DIR" | tee -a "$LOG_FILE"
+echo "📦 Prefix: $PREFIX_DIR" | tee -a "$LOG_FILE"
+echo "=============================================================" | tee -a "$LOG_FILE"
+
+declare -A WINE_VERSIONS
+
+# Get 64-bit Wine version
+if [[ -x "$PROTON_DIR/files/bin/wine64" ]]; then
+    WINE_VERSIONS["64-bit"]=$("$PROTON_DIR/files/bin/wine64" --version 2>/dev/null)
+else
+    WINE_VERSIONS["64-bit"]="❌ Not found"
+fi
+
+# Get 32-bit Wine version
+if [[ -x "$PROTON_DIR/files/bin/wine" ]]; then
+    WINE_VERSIONS["32-bit"]=$("$PROTON_DIR/files/bin/wine" --version 2>/dev/null)
+else
+    WINE_VERSIONS["32-bit"]="❌ Not found"
+fi
+
+# Print table
+echo -e "\n📊 Proton Wine Versions" | tee -a "$LOG_FILE"
+printf "%-12s | %-10s\n" "Architecture" "Version" | tee -a "$LOG_FILE"
+echo "-------------|------------" | tee -a "$LOG_FILE"
+for arch in "64-bit" "32-bit"; do
+    printf "%-12s | %-10s\n" "$arch" "${WINE_VERSIONS[$arch]}" | tee -a "$LOG_FILE"
+done
+
+echo -e "\n✅ Done!" | tee -a "$LOG_FILE"
