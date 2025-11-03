@@ -34,7 +34,7 @@ EXTRA_ARGS="$@"
 
 # Derive prefix from EXE name
 BASENAME=$(basename "${GAME_EXE%.*}")
-PREFIX="$HOME/Games/${BASENAME}_prefix"
+PREFIX="$HOME/Games/proton/${BASENAME}_prefix"
 mkdir -p "$PREFIX"
 
 # ----[ ENVIRONMENT ]--------------------------------------------
