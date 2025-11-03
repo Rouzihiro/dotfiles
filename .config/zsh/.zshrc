@@ -64,12 +64,21 @@ done
 if command -v fzf >/dev/null 2>&1; then
     source <(fzf --zsh)
     bindkey -r '^[c'         # remove Alt+c
-    bindkey '^G' fzf-cd-widget # new binding: Ctrl+g
+    bindkey '^O' fzf-cd-widget # new binding: Ctrl+g
     # fzf default keybindings:
     # Ctrl+t → fzf-file-widget   (insert selected files)
     # Ctrl+r → fzf-history-widget (search command history)
     # Alt+c  → fzf-cd-widget     (cd into selected dir)  [DISABLED]
 	fi
+
+git_commit_with_message() {
+  local msg=$BUFFER
+  BUFFER="git commit --all --message \"${msg}\""
+  zle accept-line
+}
+zle -N git_commit_with_message
+# Bind Ctrl+Enter to run the widget
+bindkey "^G" git_commit_with_message
 
 # ─────────────────────────────
 # Autostart sway on tty1
