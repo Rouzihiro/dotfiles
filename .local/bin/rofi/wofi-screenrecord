@@ -1,0 +1,63 @@
+#!/usr/bin/env bash
+
+VIDEO_DIR="$HOME/Videos"
+LOG_FILE="$VIDEO_DIR/screenrecordings.log"
+mkdir -p "$VIDEO_DIR"
+
+screenrecording_active() {
+    pgrep -x wf-recorder >/dev/null
+}
+
+toggle_indicator() {
+    pkill -RTMIN+8 waybar
+}
+
+start_recording() {
+    local scope="$1"
+    local filename="$VIDEO_DIR/screenrecording-$(date +'%Y-%m-%d_%H-%M-%S').mp4"
+
+    if [[ "$scope" == "output" ]]; then
+        wf-recorder -f "$filename" -o "$(slurp -o)" &>/dev/null &
+    else
+        wf-recorder -f "$filename" -g "$(slurp)" &>/dev/null &
+    fi
+
+    local pid=$!
+    sleep 0.5
+    if ps -p $pid > /dev/null; then
+        echo "$filename" >> "$LOG_FILE"
+        notify-send "Recording started" "$filename"
+        toggle_indicator
+    else
+        notify-send -u critical "Recording failed"
+        exit 1
+    fi
+}
+
+stop_recording() {
+    pkill -x wf-recorder
+    notify-send "Recording stopped" "Saved in $VIDEO_DIR"
+    toggle_indicator
+}
+
+CHOICE=$(echo -e "Start Fullscreen\nStart Region\nStop Recording" | \
+    wofi --dmenu --prompt "Screen Record" --lines 5)
+
+case "$CHOICE" in
+    "Start Fullscreen")
+        start_recording "output"
+        ;;
+    "Start Region")
+        start_recording "region"
+        ;;
+    "Stop Recording")
+        if screenrecording_active; then
+            stop_recording
+        else
+            notify-send "No recording active"
+        fi
+        ;;
+    *)
+        exit 0
+        ;;
+esac

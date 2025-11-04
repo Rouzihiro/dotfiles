@@ -31,6 +31,9 @@ ln -snf ~/.config/zorro/current/theme/dircolors ~/.config/zsh/.dircolors
 
 mkdir -p ~/.config/tmux
 
+mkdir -p ~/.config/yazi/flavors/theme.yazi
+ln -snf ~/.config/zorro/current/theme/yazi.toml ~/.config/yazi/flavors/theme.yazi/flavor.toml
+
 mkdir -p ~/.config/lazygit
 ln -snf ~/.config/zorro/current/theme/lazygit.yml ~/.config/lazygit/config.yml
 
