@@ -1,0 +1,84 @@
+#!/usr/bin/env bash
+# ==============================================================
+# gamer.sh — Proton/FEX Game Launcher (Asahi ARM optimized)
+# --------------------------------------------------------------
+# Usage:
+#   gamer.sh /path/to/Game.exe [optional args...]
+# Example:
+#   gamer.sh ~/Games/Red\ Dead\ Redemption/RDR.exe
+#   gamer.sh ~/Games/Red\ Dead\ Redemption/_Redist/vc_redist.x64.exe /quiet /norestart
+#
+# Features:
+#   ✅ Always uses ~/Games/proton/RDR_prefix
+#   ✅ Proton + logging + ARM-friendly setup
+# ==============================================================
+
+set -euo pipefail
+
+# ----[ USER CONFIGURATION ]------------------------------------
+PROTON_DIR="$HOME/.steam/root/steamapps/common/Proton 10.0"
+STEAM_PATH="$HOME/.steam/root"
+LOG_DIR="$HOME/Games/logs"
+PREFIX="$HOME/Games/proton/RDR_prefix"
+mkdir -p "$LOG_DIR" "$PREFIX"
+
+PROTON_BIN="$PROTON_DIR/proton"
+
+# ----[ INPUT VALIDATION ]--------------------------------------
+if [[ $# -lt 1 ]]; then
+    echo "Usage: $0 /path/to/Game.exe [args...]" >&2
+    exit 1
+fi
+
+GAME_EXE="$1"
+shift || true
+EXTRA_ARGS="$@"
+BASENAME=$(basename "${GAME_EXE%.*}")
+
+# ----[ ENVIRONMENT ]--------------------------------------------
+export STEAM_COMPAT_CLIENT_INSTALL_PATH="$STEAM_PATH"
+export STEAM_COMPAT_DATA_PATH="$PREFIX"
+
+# General Proton/Mesa tuning
+export DXVK_LOG_LEVEL=none
+export DXVK_STATE_CACHE=1
+export DXVK_HUD=0
+export VKD3D_DEBUG=none
+export __GL_SHADER_DISK_CACHE=1
+export __GL_SHADER_DISK_CACHE_PATH="$HOME/.cache/dxvk-cache"
+export mesa_glthread=true
+export MESA_SHADER_CACHE_DIR="$HOME/.cache/mesa"
+export PROTON_LOG=1
+export PROTON_LOG_DIR="$LOG_DIR"
+
+# FEX (ARM emulator)
+export FEX_INTERPRETER=0
+export FEX_JIT_WORKINGSET_MB=1024
+export FEX_APP_FILENAME="$GAME_EXE"
+
+export SDL_VIDEODRIVER=x11
+export GALLIUM_HUD=""
+
+# ----[ LOGGING ]------------------------------------------------
+TIMESTAMP=$(date +"%Y-%m-%d_%H-%M-%S")
+LOGFILE="$LOG_DIR/RDR_${BASENAME}_${TIMESTAMP}.log"
+
+echo "=============================================================" | tee "$LOGFILE"
+echo "🎮 Launching $BASENAME" | tee -a "$LOGFILE"
+echo "📁 Proton: $PROTON_BIN" | tee -a "$LOGFILE"
+echo "📦 Prefix: $PREFIX" | tee -a "$LOGFILE"
+echo "🕹️  Executable: $GAME_EXE $EXTRA_ARGS" | tee -a "$LOGFILE"
+echo "🧠 Kernel: $(uname -r)" | tee -a "$LOGFILE"
+echo "🧩 Mesa: $(glxinfo -B 2>/dev/null | grep 'OpenGL version' || echo 'Mesa info N/A')" | tee -a "$LOGFILE"
+echo "=============================================================" | tee -a "$LOGFILE"
+
+# ----[ RUN EXECUTABLE ]----------------------------------------
+"$PROTON_BIN" run "$GAME_EXE" $EXTRA_ARGS 2>&1 | tee -a "$LOGFILE"
+EXIT_CODE=${PIPESTATUS[0]}
+
+echo "=============================================================" | tee -a "$LOGFILE"
+echo "🏁 Exited with code $EXIT_CODE" | tee -a "$LOGFILE"
+echo "📜 Log: $LOGFILE"
+echo "=============================================================" | tee -a "$LOGFILE"
+
+exit $EXIT_CODE
