@@ -77,7 +77,6 @@ git_commit_with_message() {
   zle accept-line
 }
 zle -N git_commit_with_message
-# Bind Ctrl+Enter to run the widget
 bindkey "^G" git_commit_with_message
 
 # ─────────────────────────────
