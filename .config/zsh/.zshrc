@@ -73,7 +73,7 @@ if command -v fzf >/dev/null 2>&1; then
 
 git_commit_with_message() {
   local msg=$BUFFER
-  BUFFER="git commit --all --message \"${msg}\""
+	BUFFER="git add --all && git commit --message \"${msg}\""
   zle accept-line
 }
 zle -N git_commit_with_message
