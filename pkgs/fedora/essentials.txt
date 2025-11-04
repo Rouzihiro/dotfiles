@@ -1,0 +1,87 @@
+# Terminal and shell
+bat
+brightnessctl
+duf
+fd
+fastfetch
+foot
+fzf
+gum
+highlight
+ncdu
+starship
+tmux
+tree
+zsh
+
+# File management
+exfatprogs
+gdisk
+ntfs-3g
+parted
+thunar
+xdg-user-dirs
+# vifm
+
+# Utilities
+aria2
+antimicrox
+blueman
+cargo
+clang
+curlftpfs
+ffmpegthumbnailer
+grim
+jq
+mediainfo
+poppler-utils
+ps_mem
+rofi-wayland
+rsync
+slurp
+swappy
+sxiv
+trash-cli
+unzip
+yazi
+wf-recorder
+waybar
+wayland-utils
+wlr-randr
+yad
+btop
+NetworkManager
+NetworkManager-tui
+power-profiles-daemon
+fuzzel
+
+# Language support
+hunspell-de
+tesseract
+tesseract-langpack-deu
+tesseract-langpack-eng
+
+# Multimedia
+ffmpegthumbs
+ImageMagick
+imv
+mpv
+pamixer
+vlc
+yt-dlp
+
+# Development tools
+git-delta
+java-latest-openjdk
+lazygit
+nodejs
+zstd
+
+# Graphics/GPU
+vulkan-tools
+
+# Applications
+claws-mail
+evince
+foliate
+xournalpp
