@@ -1,47 +1,74 @@
+/* Colors are defined by theme file and can be referenced via @base, @text, @selected-text, and @border */
+
 * {
-    font-family: Iosevka Nerd Font, sans-serif;
-    font-size: 20px;
-    font-weight: 500;
+  font-family: monospace;
+  font-size: 16px;
 }
 
-/* Main window */
-#window {
-    margin: 0px;
-    border: 1px solid;
-    border-color: #7f849c;       /* Nightfox overlay1 */
-    background-color: #1e1e2e;   /* Nightfox base */
-    color: #cdd6f4;              /* Nightfox foreground */
+window {
+  margin: 0;
+  padding: 0;
+  background-color: @base;
+  opacity: 0.95;
 }
 
-/* Input field */
+#inner-box {
+  margin: 0;
+  padding: 0;
+  border: none;
+  background-color: @base;
+}
+
+#outer-box {
+  margin: 0;
+  padding: 10px 20px;
+  border: none;
+  background-color: @base;
+  border: 1px solid @border;
+}
+
+#scroll {
+  margin: 0;
+  padding: 0;
+  border: none;
+  background-color: @base;
+}
+
 #input {
-    margin: 15px;
-    background-color: #1e1e2e;   /* Nightfox base */
-    border: 2px solid #585b70;   /* Nightfox surface2 */
-    color: #cdd6f4;              /* Nightfox foreground */
+  margin: 0;
+  padding: 3px;
+  border: none;
+  background-color: @base;
+  color: @text;
 }
 
-/* Selected entry */
+#input:focus {
+  outline: none;
+  box-shadow: none;
+  border: none;
+}
+
+#text {
+  margin: 3px;
+  border: none;
+  color: @text;
+}
+
+#entry {
+  background-color: @base;
+}
+
 #entry:selected {
-    background-color: #89b4fa;   /* Nightfox blue accent */
-    border: none;
-    outline: none;
-    color: #1e1e2e;              /* base background for contrast */
+  outline: none;
+  border: none;
 }
 
-/* Entry styling */
-#entry { 
-    margin: 1px 15px; 
+#entry:selected #text {
+  color: @selected-text;
 }
-#scroll { 
-    margin-bottom: 15px; 
+
+#entry image {
+  -gtk-icon-transform: scale(0.6);
 }
-#entry > box { 
-    margin-left: 20px; 
-}
-#entry image { 
-    padding-right: 10px; 
-}
-#entry:selected #text { 
-    color: #1e1e2e;              /* base background for contrast */
-}
+
+@import ".config/zorro/current/theme/walker.css";

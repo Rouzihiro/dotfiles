@@ -4,7 +4,7 @@ working_directory = "None"
 
 # Themes --
 import = [ 
-  "~/.config/alacritty/nordic.toml",
+  "~/.config/zorro/current/theme/alacritty.toml",
   "~/.config/alacritty/keybinds.toml"
 ]
 

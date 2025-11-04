@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+
+DIR="$HOME/Documents/Notes"
+mkdir -p "$DIR"
+
+term="${TERMINAL:-foot}"
+if ! command -v "$term" >/dev/null 2>&1; then
+    term=$(command -v kitty || command -v alacritty || command -v wezterm || command -v xterm)
+fi
+
+entries=$(find "$DIR" -maxdepth 1 -type f -name "*.md" -printf "📝 %f\n" | sort)
+
+options="📄 Create New Note\n🗑️ Delete Note\n$entries"
+
+selection=$(echo -e "$options" | wofi --dmenu --prompt "🗒 Notes" --lines 15)
+
+[ -z "$selection" ] && exit
+
+if [[ "$selection" == "📄 Create New Note" ]]; then
+    new_name=$(wofi --dmenu --prompt "New note name (no .md):")
+    [ -z "$new_name" ] && exit
+    file="$DIR/$new_name.md"
+    [ -e "$file" ] || touch "$file"
+    "$term" -e nvim "$file" &
+    exit
+fi
+
+if [[ "$selection" == "🗑️ Delete Note" ]]; then
+    delete_target=$(find "$DIR" -maxdepth 1 -type f -name "*.md" -printf "📝 %f\n" | sort | wofi --dmenu --prompt "🗑 Select note to delete:" --lines 15)
+    [ -z "$delete_target" ] && exit
+    filename="${delete_target#📝 }"
+    rm -f "$DIR/$filename"
+    exit
+fi
+
+filename="${selection#📝 }"
+"$term" -e nvim "$DIR/$filename" &
