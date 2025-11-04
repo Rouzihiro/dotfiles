@@ -1,0 +1,122 @@
+
+"$schema" = 'https://starship.rs/config-schema.json'
+
+format = """
+[░▒▓](color_wave_blue)\
+$os\
+[](bg:color_user fg:color_wave_blue)\
+$username\
+[](bg:color_folder fg:color_user)\
+$directory\
+[](bg:color_wave_blue fg:color_folder)\
+[ ](color_wave_blue)\
+"""
+
+right_format = """
+[](bg:color_wave_blue fg:color_bg1)\
+[█](color_wave_blue)\
+$cmd_duration\
+$git_branch\
+$git_status\
+$docker_context\
+$nodejs\
+$php\
+$rust\
+$time\
+[▓▒░](color_wave_blue)\
+"""
+
+palette = 'kanagawa_wave'
+
+[palettes.kanagawa_wave]
+color_bg0       = '#16161D'
+color_bg1       = '#1F1F28'
+color_bg2       = '#2A2A37'
+color_bg3       = '#54546D'
+
+color_fg0       = '#DCD7BA'
+color_fg1       = '#C8C093'
+color_comment   = '#727169'
+
+color_wave_blue = '#2D4F67'
+color_user      = '#957FB8'
+color_folder    = '#C0A36E'
+
+color_red       = '#C34043'
+color_green     = '#76946A'
+color_yellow    = '#C0A36E'
+color_blue      = '#7E9CD8'
+color_purple    = '#957FB8'
+color_cyan      = '#6A9589'
+color_orange    = '#FFA066'
+
+color_bright_red     = '#E82424'
+color_bright_green   = '#98BB6C'
+color_bright_yellow  = '#E6C384'
+color_bright_blue    = '#7FB4CA'
+color_bright_purple  = '#938AA9'
+color_bright_cyan    = '#7AA89F'
+
+color_git_add        = '#76946A'
+color_git_change     = '#DCA561'
+color_git_delete     = '#C34043'
+
+[os]
+disabled = false
+format = '[ $symbol ]($style)'
+style = 'bg:color_wave_blue fg:color_fg0'
+
+[os.symbols]
+Arch = "󰣇"
+
+[username]
+show_always = true
+format = '[ $user ]($style)'
+style_user = 'bg:color_user fg:color_bg0'
+style_root = 'bg:color_cyan fg:color_bg0 bold'
+
+[directory]
+format = '[ $path ]($style)[$read_only]($read_only_style)'
+style = 'bg:color_folder fg:color_bg0'
+read_only = '󰌾 '
+read_only_style = 'bg:color_folder fg:color_red dimmed'
+
+[time]
+disabled = false
+format = '[ $time ]($style)'
+time_format = '%R'
+style = 'bg:color_wave_blue fg:color_fg0'
+
+[cmd_duration]
+format = '[  $duration ]($style)'
+style = 'bg:color_bg3 fg:color_fg0'
+
+[git_branch]
+format = '[ $symbol$branch(:$remote_branch)]($style)'
+style = 'bg:color_yellow fg:color_bg0'
+symbol = '󰘬 '
+truncation_length = 12
+
+[git_status]
+format = '[ $all_status$ahead_behind ]($style)'
+style = 'bg:color_yellow fg:color_bg0'
+
+[nodejs]
+format = '[ $symbol($version) ]($style)'
+style = 'bg:color_green fg:color_bg0'
+not_capable_style = 'bg:color_red fg:color_bg0'
+
+[php]
+format = '[ $symbol ($version) ]($style)'
+style = 'bg:color_purple fg:color_bg0'
+symbol = ''
+
+[rust]
+format = '[ $symbol ($version) ]($style)'
+style = 'bg:color_orange fg:color_bg0'
+symbol = '󱘗'
+
+[docker_context]
+format = '[ $symbol $context ]($style)'
+style = 'bg:color_cyan fg:color_bg0'
+symbol = '󰡨'

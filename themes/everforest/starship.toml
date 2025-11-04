@@ -33,8 +33,8 @@ $time\
 # palette = 'everforest_soft'
 # palette = 'everforest_medium'
 # palette = 'everforest_hard'
-# palette = 'everforest_rey'
-palette = 'nightfox'
+palette = 'everforest_rey'
+# palette = 'nightfox'
 
 [palettes.nightfox]
 # Core UI
