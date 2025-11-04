@@ -1,0 +1,23 @@
+
+#!/usr/bin/env bash
+
+# Directory to save recordings
+VIDEO_DIR="$HOME/Videos"
+mkdir -p "$VIDEO_DIR"
+
+# Filename with timestamp
+FILENAME="$VIDEO_DIR/screenrecording-$(date +'%Y-%m-%d_%H-%M-%S').mp4"
+
+# Start recording fullscreen
+wf-recorder -f "$FILENAME" &
+
+# Get PID so you can stop it
+PID=$!
+
+echo "Recording started. PID=$PID"
+echo "Press ENTER to stop recording..."
+read -r
+
+# Stop recording
+kill $PID
+echo "Recording saved to $FILENAME"
