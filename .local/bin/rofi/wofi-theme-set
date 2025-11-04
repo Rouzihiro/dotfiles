@@ -35,10 +35,6 @@ pkill -SIGUSR2 btop
 # makoctl reload
 
 # Change gnome, terminal, etc. themes
+zorro-theme-bat
 # zorro-theme-set-terminal
 # zorro-theme-set-gnome
-
-# Reload yazi
-if command -v yazi >/dev/null; then
-    yazi --reload
-fi
