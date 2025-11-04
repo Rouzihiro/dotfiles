@@ -42,8 +42,10 @@ bindsym $mod+mod1+s exec "bm-screenshot-fs"
 bindsym $mod+Escape exec "bm-power"
 
 bindsym $mod+r exec $term --app-id=runner_floating -e runner
+bindsym $mod+mod1+r exec "wofi-screenrecord"
 
-bindsym $mod+t exec bm-timewarrior
+bindsym $mod+t exec "wofi-theme-set"
+bindsym $mod+mod1+t exec bm-timewarrior
 #bindsym $mod+Shift+t exec ocr-prompt
 #bindsym $mod+t exec ocr-translate
 
