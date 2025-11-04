@@ -1,60 +1,26 @@
-# terminal theme config — Nightfox variant
-
-theme = Nightfox
-window-theme = ghostty
-#window-height = 35
-#window-width = 100
-#window-maximize = true
-background-opacity = 0.95
-
 # Fonts
-font-family = DejaVu Sans Mono
-font-family-bold = DejaVu Sans Mono
-font-family-italic = DejaVu Sans Mono
-font-family-bold-italic = DejaVu Sans Mono
-font-size = 14
+font-family               = "Cascadia Mono NF"
+font-family-bold          = "Cascadia Mono NF"
+font-family-italic        = "Cascadia Mono NF"
+font-family-bold-italic   = "Cascadia Mono NF"
+font-feature = -calt, -liga, -dlig
+font-size = 9
 
-# Window / GTK
-gtk-titlebar = false
+# Theme
+config-file = ?../zorro/current/theme/ghostty.conf
+
+# Mouse
+mouse-hide-while-typing = true
+
+# Window
+window-theme = ghostty
+window-padding-x = 12
+window-padding-y = 12
+
+# Other
+gtk-wide-tabs = false
 confirm-close-surface = false
+resize-overlay = never
 
-# Behavior
-copy-on-select = true
-
-# Keybindings
-#keybind = ctrl+up=scroll_page_lines:5
-#keybind = ctrl+down=scroll_page_lines:-5 
-#keybind = ctrl+l=new_split:right
-keybind = ctrl+up=scroll_page_up
-keybind = ctrl+down=scroll_page_down
-
-[colors]
-# Nightfox Dark Variant
-foreground = #cdcecf
-background = #192330
-cursor = #c8c093
-
-selection-foreground = #cdcecf
-selection-background = #2b3b51
-
-regular0 = #192330
-regular1 = #c94f6d
-regular2 = #81b29a
-regular3 = #dbc074
-regular4 = #719cd6
-regular5 = #9d79d6
-regular6 = #63cdcf
-regular7 = #dfdfdf
-
-bright0  = #575860
-bright1  = #d6616b
-bright2  = #58cd8b
-bright3  = #ffe37e
-bright4  = #84cee4
-bright5  = #b8a1e3
-bright6  = #59f0ff
-bright7  = #f2f2f2
-
-# Extended / special colors
-color16 = #f4a261
-color17 = #ff5d62
+# Keybinds
+keybind = f11=toggle_fullscreen
