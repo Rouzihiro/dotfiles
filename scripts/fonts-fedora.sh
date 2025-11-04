@@ -2,14 +2,21 @@
 # FONTS #
 
 fonts=(
-  adobe-source-code-pro-fonts
-  fira-code-fonts
-  fontawesome-fonts-all
-  google-droid-sans-fonts
-  google-noto-sans-cjk-fonts
-  google-noto-color-emoji-fonts
-  google-noto-emoji-fonts
-  jetbrains-mono-fonts
+adobe-source-code-pro-fonts
+cascadia-code-fonts
+cascadia-code-nf-fonts
+cascadia-mono-nf-fonts
+dejavu-fonts-all
+fira-code-fonts
+fontawesome-fonts-all
+google-droid-fonts-all
+google-droid-sans-fonts
+google-noto-color-emoji-fonts
+google-noto-emoji-fonts
+google-noto-fonts-common
+google-noto-sans-cjk-fonts
+jetbrains-mono-fonts
+jetbrains-mono-fonts-all
 )
 
 ## WARNING: DO NOT EDIT BEYOND THIS LINE IF YOU DON'T KNOW WHAT YOU ARE DOING! ##

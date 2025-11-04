@@ -1,2 +1,0 @@
-niri
-xwayland-satellite

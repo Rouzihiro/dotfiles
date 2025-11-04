@@ -79,11 +79,6 @@ git_commit_with_message() {
 zle -N git_commit_with_message
 bindkey "^G" git_commit_with_message
 
-# ─────────────────────────────
-# Autostart sway on tty1
-# ─────────────────────────────
-# [ "$(tty)" = "/dev/tty1" ] && exec sway
-
 
 # ─────────────────────────────
 # SSH Agent Setup (only once per login)
@@ -110,3 +105,11 @@ fi
 if command -v starship >/dev/null 2>&1; then
     eval "$(starship init zsh)"
 fi
+
+
+# ─────────────────────────────
+# Autostart sway on tty1
+# ─────────────────────────────
+[ "$(tty)" = "/dev/tty1" ] && exec sway
+
+

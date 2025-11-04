@@ -1,3 +1,0 @@
-# Niri Window Manager and essentials
-niri
-xwayland-satellite
