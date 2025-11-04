@@ -23,7 +23,7 @@ export VISUAL="$EDITOR"
 # ─────────────────────────────
 export GTK_THEME="Nightfox-Dark"
 export GTK2_RC_FILES="$HOME/.themes/Nightfox-Dark/gtk-2.0/gtkrc"
-export BAT_THEME="Nightfox-Dark"
+# export BAT_THEME="Nightfox-Dark"
 
 # ─────────────────────────────
 # Manpages with bat
