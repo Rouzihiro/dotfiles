@@ -14,7 +14,7 @@ for f in ~/dotfiles/themes/*; do ln -nfs "$f" ~/.config/zorro/themes/; done
 
 # Set initial theme
 mkdir -p ~/.config/zorro/current
-ln -snf ~/.config/zorro/themes/rose-pine-darker ~/.config/zorro/current/theme
+ln -snf ~/.config/zorro/themes/everforest ~/.config/zorro/current/theme
 ln -snf ~/.config/zorro/current/theme/backgrounds/01_background.png ~/.config/zorro/current/background
 
 # Set specific app links for current theme
@@ -25,6 +25,9 @@ ln -snf ~/.config/zorro/current/theme/btop.theme ~/.config/btop/themes/current.t
 
 mkdir -p ~/.config/foot
 ln -snf ~/.config/zorro/current/theme/foot.ini ~/.config/foot/current-theme.ini
+
+mkdir -p ~/.config/zsh
+ln -snf ~/.config/zorro/current/theme/dircolors ~/.config/zsh/.dircolors
 
 mkdir -p ~/.config/lazygit
 ln -snf ~/.config/zorro/current/theme/lazygit.yml ~/.config/lazygit/config.yml
