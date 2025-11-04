@@ -1,7 +1,7 @@
 ### Set variables
 set $mod Mod4
 set $opacity 0.9
-set $term foot
+set $term footclient
 set $browser librewolf
 set $fileManager thunar
 set $TfileManager $term -e yazi
