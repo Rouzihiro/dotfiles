@@ -2,13 +2,13 @@
 set $mod Mod4
 set $opacity 0.9
 set $term foot
-set $launcher rofi -show drun
+set $launcher wofi ---show drun
 set $browser librewolf
 set $fileManager thunar
 set $TfileManager $term -e yazi
 set $editor $term -e nvim
 
-output * bg ~/dotfiles/.wall/Wallpapers/konoha1.jpg fill
+# output * bg ~/dotfiles/.wall/Wallpapers/konoha1.jpg fill
 
 ### Keybindings
 bindsym $mod+Return exec $term

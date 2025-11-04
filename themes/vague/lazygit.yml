@@ -2,27 +2,27 @@
 gui:
   theme:
     activeBorderColor:
-      - '#81a1c1'
+      - '#ff79c6'
       - bold
     inactiveBorderColor:
-      - '#4c566a'
+      - '#303030'
     optionsTextColor:
-      - '#88c0d0'
+      - '#8be9fd'
     selectedLineBgColor:
-      - '#2e3440'
+      - '#202020'
     cherryPickedCommitBgColor:
-      - '#3b4252'
+      - '#101010'
     cherryPickedCommitFgColor:
-      - '#81a1c1'
+      - '#ff79c6'
     unstagedChangesColor:
-      - '#bf616a'
+      - '#ff6f61'
     defaultFgColor:
-      - '#d8dee9'
+      - '#d4d4d4'
     searchingActiveBorderColor:
-      - '#ebcb8b'
+      - '#f9e2af'
 
   authorColors:
-    '*': '#8fbcbb'
+    '*': '#8be9fd'
 
   nerdFontsVersion: "3"
   showFileTree: true
@@ -35,12 +35,4 @@ gui:
   git:
   paging:
     colorArg: always
-    pager: delta --dark --paging=never
-  merging:
-    manualCommit: false
-  commit:
-    signOff: false
-  log:
-    showGraph: true
-
-notARepository: "quit"
+    pager: delta --dark --

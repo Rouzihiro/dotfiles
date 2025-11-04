@@ -1,0 +1,14 @@
+# Changes require a relaunch of Hyprland to take effect.
+
+# Ensure zorro bins are in the path
+export ZORRO_PATH=$HOME/dotfiles/
+export PATH=$ZORRO_PATH/.local/share/bin/:$PATH
+
+# Set default terminal and editor
+source ~/.config/uwsm/default
+
+# Update user dirs
+zorro-cmd-present xdg-user-dirs-update && xdg-user-dirs-update --quiet
+
+# Activate mise if present on the system
+zorro-cmd-present mise && eval "$(mise activate zsh)"

@@ -24,6 +24,7 @@ ln -nsf "$THEME_PATH" "$CURRENT_THEME_DIR"
 zorro-theme-bg-next
 
 # Restart components to apply new theme
+tmux source-file ~/.config/tmux/tmux.conf  
 # zorro-restart-waybar
 # zorro-restart-swayosd
 # hyprctl reload
