@@ -44,7 +44,6 @@ require "marks".setup {
 	mappings = {}
 }
 
-
 local default_color = "vague"
 
 require "mason".setup()
