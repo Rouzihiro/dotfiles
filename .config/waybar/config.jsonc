@@ -12,7 +12,7 @@
 
   // Choose the order of the modules
 
-  "modules-left": ["hyprland/workspaces", "niri/workspaces", "sway/workspaces", "tray"],
+  "modules-left": ["hyprland/workspaces", "sway/workspaces", "tray"],
 
   "modules-center": ["clock"],
 
@@ -122,8 +122,8 @@
 	"on-click-middle": "",
 	"on-click-right": "",
 	"on-update": "",
-	"on-scroll-up": "$HOME/.config/niri/scripts/Brightness.sh --inc",
-	"on-scroll-down": "$HOME/.config/niri/scripts/Brightness.sh --dec",
+	"on-scroll-up": "brightness.sh up",
+	"on-scroll-down": "brightness.sh down",
 	"smooth-scrolling-threshold": 1,
   },
 
@@ -218,7 +218,7 @@
     "format": "{icon}",
     "format-icons": "", //  
     "exec-on-event": "true",
-    "on-click": "$HOME/.config/niri/scripts/logout.sh",
+    "on-click": "bm-power",
     "tooltip-format": "Power Menu",
   },
 
@@ -226,7 +226,7 @@
     "format": "{icon}",
     "format-icons": "",
     "exec-on-event": "true",
-	"on-click": "foot -T 'floaty-small' -e $HOME/bin/connect-bt",
+		"on-click": "wofi-bluetooth",
     "tooltip-format": "Bluetooth Menu",
   },
 
@@ -239,7 +239,7 @@
     "format": "{icon}",
     "format-icons": "",
     "exec-on-event": "true",
-	"on-click": "foot -T 'floaty-small' -e nmtui",
+		"on-click": "foot -T 'floaty-small' -e nmtui",
     "tooltip-format": "Wifi Menu",
   },
 
