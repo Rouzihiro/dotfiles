@@ -2,6 +2,10 @@
   "plugins": {
     "LuaSnip": [],
     "actions-preview.nvim": [],
+    "bamboo.nvim": {
+      "rev": "6ec224a",
+      "src": "https://github.com/ribru17/bamboo.nvim"
+    },
     "cmp-buffer": [],
     "cmp-nvim-lsp": [],
     "cmp-path": [],
@@ -28,6 +32,19 @@
       "src": "https://github.com/tahayvr/matteblack.nvim"
     },
     "mini.clue": [],
+    "monokai-pro.nvim": {
+      "rev": "5b06ae0",
+      "src": "https://github.com/gthelding/monokai-pro.nvim"
+    },
+    "neovim": {
+      "rev": "eb3ff49",
+      "src": "https://github.com/rose-pine/neovim"
+    },
+    "nightfox.nvim": [],
+    "nord.nvim": {
+      "rev": "80c1e53",
+      "src": "https://github.com/shaunsingh/nord.nvim"
+    },
     "nvim": {
       "rev": "234fc04",
       "src": "https://github.com/catppuccin/nvim"
