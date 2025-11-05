@@ -45,8 +45,8 @@ unset rc
 # -------------------------------
 # Dircolors (Nightfox theme)
 # -------------------------------
-if [ -f "$ZSH_CONFIG/.dircolors-nightfox" ]; then
-    eval "$(dircolors -b "$ZSH_CONFIG/.dircolors-nightfox")"
+if [ -f "$ZSH_CONFIG/.dircolors" ]; then
+    eval "$(dircolors -b "$ZSH_CONFIG/.dircolors")"
 fi
 
 
@@ -134,4 +134,4 @@ export HISTIGNORE="ls:ls -a:cd:clear:pwd:exit:cd -:cd .."
 # -------------------------------
 # Optional: Autostart Sway on tty1
 # -------------------------------
-# [[ $(tty) == /dev/tty1 ]] && exec sway
+[[ $(tty) == /dev/tty1 ]] && exec sway
