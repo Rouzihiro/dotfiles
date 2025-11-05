@@ -28,7 +28,6 @@ setopt SHARE_HISTORY
 setopt autocd              # change directory just by typing its name
 setopt auto_pushd          # push old dir onto stack when changing dirs
 setopt pushd_ignore_dups   # no duplicate entries in directory stack
-setopt correctall 
 setopt interactivecomments # allow # comments in interactive shell
 setopt magicequalsubst     # expand filenames in foo=*.txt style arguments
 setopt extended_glob       # advanced globbing (regex-like patterns)
