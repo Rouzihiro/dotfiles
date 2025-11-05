@@ -9,13 +9,29 @@
       "rev": "557bce9",
       "src": "https://github.com/neanias/everforest-nvim"
     },
+    "flexoki-neovim": {
+      "rev": "c3e2251",
+      "src": "https://github.com/kepano/flexoki-neovim"
+    },
     "gruvbox.nvim": {
       "rev": "5e0a460",
       "src": "https://github.com/ellisonleao/gruvbox.nvim"
     },
+    "kanagawa.nvim": {
+      "rev": "aef7f5c",
+      "src": "https://github.com/rebelot/kanagawa.nvim"
+    },
     "marks.nvim": [],
     "mason.nvim": [],
+    "matteblack.nvim": {
+      "rev": "a8a039f",
+      "src": "https://github.com/tahayvr/matteblack.nvim"
+    },
     "mini.clue": [],
+    "nvim": {
+      "rev": "234fc04",
+      "src": "https://github.com/catppuccin/nvim"
+    },
     "nvim-cmp": [],
     "nvim-lspconfig": [],
     "nvim-treesitter": {
