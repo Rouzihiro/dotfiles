@@ -39,6 +39,12 @@ vim.pack.add({
 	{ src = "https://github.com/kepano/flexoki-neovim" 	}, 
 	{ src = "https://github.com/rebelot/kanagawa.nvim" 	}, 
 	{ src = "https://github.com/tahayvr/matteblack.nvim" 	}, 
+	{ src = "https://github.com/EdenEast/nightfox.nvim" 	}, 
+	{ src = "https://github.com/shaunsingh/nord.nvim" 	}, 
+	{ src = "https://github.com/ribru17/bamboo.nvim" 	}, 
+	{ src = "https://github.com/gthelding/monokai-pro.nvim" 	}, 
+	{ src = "https://github.com/rose-pine/neovim" 	}, 
+
 })
 
 require "marks".setup {
