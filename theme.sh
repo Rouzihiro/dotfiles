@@ -18,7 +18,7 @@ ln -snf ~/.config/zorro/themes/everforest ~/.config/zorro/current/theme
 ln -snf ~/.config/zorro/current/theme/backgrounds/01_background.png ~/.config/zorro/current/background
 
 # Set specific app links for current theme
-# ln -snf ~/.config/zorro/current/theme/neovim.lua ~/.config/nvim/lua/plugins/theme.lua
+ln -snf ~/.config/zorro/current/theme/nvim.lua ~/.config/nvim/lua/theme.lua
 
 mkdir -p ~/.config/btop/themes
 ln -snf ~/.config/zorro/current/theme/btop.theme ~/.config/btop/themes/current.theme

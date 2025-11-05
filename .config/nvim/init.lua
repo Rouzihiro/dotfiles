@@ -33,6 +33,8 @@ vim.pack.add({
   { src = "https://github.com/hrsh7th/cmp-buffer" },
   { src = "https://github.com/hrsh7th/cmp-nvim-lsp" },
 	{ src = "https://github.com/nvim-mini/mini.clue" },
+	{ src = "https://github.com/ellisonleao/gruvbox.nvim" },
+	{ src = "https://github.com/neanias/everforest-nvim" },
 })
 
 require "marks".setup {
@@ -44,7 +46,7 @@ require "marks".setup {
 	mappings = {}
 }
 
-local default_color = "vague"
+_G.default_color = require("theme").default_color
 
 require "mason".setup()
 require("keymaps")
