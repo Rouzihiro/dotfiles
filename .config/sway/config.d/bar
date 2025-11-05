@@ -15,17 +15,6 @@
      font pango:DroidSansM Nerd Font 10
 		 #font pango:DejaVu Sans Mono 10
 		 #font pango:Noto Color Emoji 10
-     
-		  colors {
-				 		separator           #585b70
-		        background 					#1F1F28
-						#focused_workspace  #1F1F28 #DCA561 #DCD7BA 
-						#active_workspace   #1F1F28 #938AA9 #DCD7BA 
-						#urgent_workspace   #1F1F28 #E46876 #DCD7BA 
-					 	focused_workspace      #1F1F28 #7E9CD8 #DCD7BA 
-					 	active_workspace       #1F1F28 #98BB6C #DCD7BA 
-					 	urgent_workspace       #1F1F28 #E46876 #DCD7BA
-						 }
  }
 
  #  bar {
