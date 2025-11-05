@@ -1,0 +1,42 @@
+
+# ==========================================
+# Catppuccin-Latte
+# ==========================================
+# (similar to Catppuccin but brighter)
+set $fujiWhite      #DCBDFB
+set $oldWhite       #DDB6F2
+set $sumiInk0       #EFF1F5
+set $sumiInk1       #E6E6EA
+set $sumiInk2       #DCE0E8
+set $sumiInk3       #CAD0E3
+set $sumiInk4       #ABA0C0
+set $waveBlue1      #A6ADC8
+set $waveBlue2      #9092B0
+set $winterGreen    #ABE9B3
+set $winterYellow   #F4DB99
+set $winterRed      #F38BA8
+set $winterBlue     #89DCEB
+set $autumnGreen    #ABE9B3
+set $autumnRed      #F38BA8
+set $autumnYellow   #F4DB99
+set $samuraiRed     #F38BA8
+set $roninYellow    #F4DB99
+set $waveAqua1      #89DCEB
+set $dragonBlue     #89DCEB
+set $fujiGray       #C1C1C1
+set $springViolet1  #B4BEAD
+set $oniViolet      #F5C2E7
+set $crystalBlue    #96CDFB
+set $springViolet2  #B5BFE2
+set $springBlue     #96CDFB
+set $waveAqua2      #B5E8E0
+set $springGreen    #ABE9B3
+set $boatYellow2    #F4DB99
+set $carpYellow     #F9E2AF
+set $sakuraPink     #F38BA8
+set $waveRed        #F38BA8
+set $peachRed       #F38BA8
+set $surimiOrange   #F5A97F
+set $katanaGray     #ABA0C0
+
+

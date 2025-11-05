@@ -37,6 +37,9 @@ ln -snf ~/.config/zorro/current/theme/yazi.toml ~/.config/yazi/flavors/theme.yaz
 mkdir -p ~/.config/lazygit
 ln -snf ~/.config/zorro/current/theme/lazygit.yml ~/.config/lazygit/config.yml
 
+mkdir -p ~/.config/sway
+ln -snf ~/.config/zorro/current/theme/sway ~/.config/sway/config.d/theme
+
 ln -sf ~/.config/zorro/current/theme/starship.toml ~/.config/starship.toml
 
 mkdir -p ~/.config/mako

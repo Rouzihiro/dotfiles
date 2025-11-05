@@ -1,0 +1,109 @@
+
+# Default foreground
+set $fujiWhite      #C0CAF5
+
+# Dark foreground (statuslines)
+set $oldWhite       #A9B1D6
+
+# Dark background (statuslines and floating windows)
+set $sumiInk0       #1A1B26
+
+# Default background
+set $sumiInk1       #1F2335
+
+# Lighter background (colorcolumn, folds)
+set $sumiInk2       #24283B
+
+# Lighter background (cursorline)
+set $sumiInk3       #292E42
+
+# Darker foreground (line numbers, fold column, non-text characters), float borders
+set $sumiInk4       #565F89
+
+# Popup background, visual selection background
+set $waveBlue1      #7AA2F7
+
+# Popup selection background, search background
+set $waveBlue2      #3FC5FF
+
+# Diff Add (background)
+set $winterGreen    #9ECE6A
+
+# Diff Change (background)
+set $winterYellow   #E0AF68
+
+# Diff Deleted (background)
+set $winterRed      #F7768E
+
+# Diff Line (background)
+set $winterBlue     #7AA2F7
+
+# Git Add
+set $autumnGreen    #9ECE6A
+
+# Git Delete
+set $autumnRed      #F7768E
+
+# Git Change
+set $autumnYellow   #E0AF68
+
+# Diagnostic Error
+set $samuraiRed     #F7768E
+
+# Diagnostic Warning
+set $roninYellow    #E0AF68
+
+# Diagnostic Info
+set $waveAqua1      #3FC5FF
+
+# Diagnostic Hint
+set $dragonBlue     #7AA2F7
+
+# Comments
+set $fujiGray       #565F89
+
+# Light foreground
+set $springViolet1  #B9B9FF
+
+# Statements and Keywords
+set $oniViolet      #BB9AF7
+
+# Functions and Titles
+set $crystalBlue    #7AA2F7
+
+# Brackets and punctuation
+set $springViolet2  #565F89
+
+# Specials and builtin functions
+set $springBlue     #7AA2F7
+
+# Not used (assigned Nightfox-consistent shades)
+set $lightBlue      #7DCFFF
+set $boatYellow1    #E0AF68
+
+# Types
+set $waveAqua2      #7DCFFF
+
+# Strings
+set $springGreen    #9ECE6A
+
+# Operators, RegEx
+set $boatYellow2    #E0AF68
+
+# Identifiers
+set $carpYellow     #E0AF68
+
+# Numbers
+set $sakuraPink     #F7768E
+
+# Standout specials 1 (builtin variables)
+set $waveRed        #F7768E
+
+# Standout specials 2 (exception handling, return)
+set $peachRed       #F7768E
+
+# Constants, imports, booleans
+set $surimiOrange   #FF9E64
+
+# Deprecated
+set $katanaGray     #565F89
