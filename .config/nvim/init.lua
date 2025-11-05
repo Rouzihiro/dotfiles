@@ -35,6 +35,10 @@ vim.pack.add({
 	{ src = "https://github.com/nvim-mini/mini.clue" },
 	{ src = "https://github.com/ellisonleao/gruvbox.nvim" },
 	{ src = "https://github.com/neanias/everforest-nvim" },
+	{ src = "https://github.com/catppuccin/nvim" 	},
+	{ src = "https://github.com/kepano/flexoki-neovim" 	}, 
+	{ src = "https://github.com/rebelot/kanagawa.nvim" 	}, 
+	{ src = "https://github.com/tahayvr/matteblack.nvim" 	}, 
 })
 
 require "marks".setup {
