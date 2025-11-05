@@ -62,6 +62,10 @@
     "telescope.nvim": {
       "version": "'0.1.8'"
     },
+    "tokyonight.nvim": {
+      "rev": "5da1b76",
+      "src": "https://github.com/folke/tokyonight.nvim"
+    },
     "typst-preview.nvim": [],
     "vague.nvim": {
       "rev": "5689afd",
