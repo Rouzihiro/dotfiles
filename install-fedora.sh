@@ -167,6 +167,8 @@ link_configs() {
     backup_and_link "$SCRIPT_DIR/.Xresources" "$HOME/.Xresources"
     backup_and_link "$SCRIPT_DIR/.xinitrc" "$HOME/.xinitrc"
     backup_and_link "$SCRIPT_DIR/.zshenv" "$HOME/.zshenv"
+		backup_and_link "$SCRIPT_DIR/.config/mimeapps.list" "$HOME/.config/mimeapps.list"
+		backup_and_link "$SCRIPT_DIR/.config/picom" "$HOME/.config/picom.conf"
 
     log "Linking .local/share/applications..."
     backup_and_link "$SCRIPT_DIR/.local/share/applications" "$HOME/.local/share/applications"
