@@ -2,8 +2,21 @@
   "plugins": {
     "LuaSnip": [],
     "actions-preview.nvim": [],
+    "cmp-buffer": [],
+    "cmp-nvim-lsp": [],
+    "cmp-path": [],
+    "everforest-nvim": {
+      "rev": "557bce9",
+      "src": "https://github.com/neanias/everforest-nvim"
+    },
+    "gruvbox.nvim": {
+      "rev": "5e0a460",
+      "src": "https://github.com/ellisonleao/gruvbox.nvim"
+    },
     "marks.nvim": [],
     "mason.nvim": [],
+    "mini.clue": [],
+    "nvim-cmp": [],
     "nvim-lspconfig": [],
     "nvim-treesitter": {
       "version": "'main'"
