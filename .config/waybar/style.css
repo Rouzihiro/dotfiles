@@ -1,16 +1,10 @@
+@import "../zorro/current/theme/waybar.css";
+
 * {
   min-height: 0;
   font-family: "JetBrainsMono Nerd Font", Roboto, Helvetica, Arial, sans-serif;
   font-size: 12px;
 }
-
-@import "themes/nightfox";
-/* @import "themes/kanagawa.css"; */
-/* @import "themes/nord.css"; */
-/* @import "themes/solarized.css"; */
-/* @import "themes/mocha.css"; */
-/* @import "themes/gruvbox.css"; */
-/* @import "themes/rey.css"; */
 
 window#waybar {
   color: @fg;

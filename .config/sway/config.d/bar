@@ -1,21 +1,21 @@
 ### Status bar
 
-# bar {
-# 	swaybar_command waybar
-# 	position top
-# 	mode dock
-# }
-#
  bar {
-     position top
-     tray_padding 0
-     status_command i3blocks -c ~/.config/i3blocks/config
-     separator_symbol ""
-
-     font pango:DroidSansM Nerd Font 10
-		 #font pango:DejaVu Sans Mono 10
-		 #font pango:Noto Color Emoji 10
+ 	swaybar_command waybar
+ 	position top
+ 	mode dock
  }
+#
+ # bar {
+ #     position top
+ #     tray_padding 0
+ #     status_command i3blocks -c ~/.config/i3blocks/config
+ #     separator_symbol ""
+ #
+ #     font pango:DroidSansM Nerd Font 10
+ # 	 #font pango:DejaVu Sans Mono 10
+ # 	 #font pango:Noto Color Emoji 10
+ # }
 
  #  bar {
  #     position bottom
