@@ -1,2 +1,18 @@
-@define-color foreground #dcd7ba;
-@define-color background #1f1f28;
+/* Kanagawa theme for Waybar */
+
+/* Backgrounds */
+@define-color bg           #1f1f28;  /* dark background */
+@define-color background   #1f1f28;  /* panel background */
+
+/* Foreground / text */
+@define-color fg           #dcd7ba;  /* main text */
+@define-color foreground   #dcd7ba;  /* modules that use 'foreground' */
+
+/* Borders and separators */
+@define-color bordercolor  #727169;  /* subtle borders */
+
+/* Accents / highlights */
+@define-color highlight    #c8c093;  /* active/focused items */
+@define-color alert        #f07178;  /* errors / warnings */
+@define-color activegreen  #99bb66;  /* success / active indicators */
+@define-color disabled     #5c5a72;  /* inactive/dimmed text */
