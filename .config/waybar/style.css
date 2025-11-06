@@ -38,7 +38,7 @@ window {
 #sway_language {
     border-radius: 10px;
     margin: 0 4px;
-    padding: 0px 6px;
+    padding: 3px 0px;
     background-color: @bordercolor_opacity;
     color: @fg;
     font-size: 12px;

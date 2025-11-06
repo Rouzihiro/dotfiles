@@ -160,7 +160,7 @@
   },
 
   "sway/language": {
-    "format": "  {short}",
+    "format": "  {short}",
     "on-click": "swaymsg 'input * xkb_switch_layout next'"
   }
 }
