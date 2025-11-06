@@ -1,8 +1,8 @@
-
-#waybar {
-  background: #2E3440;
-  color: #D8DEE9;
-}
-#waybar .module {
-  border-color: #88C0D0;
-}
+@define-color bg           #202020;
+@define-color fg           #d0d0d0;
+@define-color foreground   #d0d0d0;
+@define-color bordercolor  #505050;
+@define-color highlight    #a0a0ff;
+@define-color alert        #ff8080;
+@define-color activegreen  #80ff80;
+@define-color disabled     #707070;

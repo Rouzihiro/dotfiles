@@ -36,5 +36,7 @@ pkill -SIGUSR2 btop
 
 # Change gnome, terminal, etc. themes
 zorro-theme-bat
+pkill waybar
+waybar
 # zorro-theme-set-terminal
 # zorro-theme-set-gnome

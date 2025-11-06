@@ -1,2 +1,9 @@
-@define-color foreground #e6d8ba;
-@define-color background #11221C;
+
+@define-color bg           #1f2428;
+@define-color fg           #d9e6f2;
+@define-color foreground   #d9e6f2;
+@define-color bordercolor  #2e3c44;
+@define-color highlight    #78c7a3;
+@define-color alert        #e06c75;
+@define-color activegreen  #98c379;
+@define-color disabled     #586069;
