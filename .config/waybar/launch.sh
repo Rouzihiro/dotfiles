@@ -7,7 +7,7 @@
 killall -q waybar
 
 # Launch bar1 and bar2
-waybar 2>&1 | tee -a /tmp/waybar.log &
+waybar 2>&1 | tee -a $HOME/.logs/waybar.log &
 disown
 
 echo "Bars launched..."
