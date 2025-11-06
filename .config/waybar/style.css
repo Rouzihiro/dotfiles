@@ -1,15 +1,27 @@
 
 @import "../zorro/current/theme/waybar.css";
 
-/* -------------------- Semi-transparent variable -------------------- */
-@define-color bordercolor_opacity rgba(40, 40, 40, 0.6);
+/* -------------------- Global opacity control -------------------- */
+
+/* GTK limitation: @define-color cannot store numeric values,
+   so we’ll use the literal number directly below. */
+
+/* -------------------- Opacity variants for theme colors -------------------- */
+@define-color bg_opacity          alpha(@bg, 0.8);
+@define-color fg_opacity          alpha(@fg, 0.8);
+@define-color foreground_opacity  alpha(@foreground, 0.8);
+@define-color bordercolor_opacity alpha(@bordercolor, 0.8);
+@define-color highlight_opacity   alpha(@highlight, 0.8);
+@define-color alert_opacity       alpha(@alert, 0.8);
+@define-color activegreen_opacity alpha(@activegreen, 0.8);
+@define-color disabled_opacity    alpha(@disabled, 0.8);
 
 /* -------------------- Window styling -------------------- */
 window {
-    background: transparent;  /* important for transparency */
+    background: transparent;
     font-family: JetBrains Mono;
     font-weight: 500;
-    padding: 0px;             /* remove excessive padding */
+    padding: 0px;
 }
 
 /* -------------------- General module styling -------------------- */
@@ -37,14 +49,13 @@ window {
 #custom_notification,
 #sway_language {
     border-radius: 10px;
-    margin: 0 4px;
-    padding: 3px 0px;
-    background-color: @bordercolor_opacity;
+    margin: 2 4px;
+    padding: 0px 1px;
+		background-color: alpha(@bg, 0.6);
     color: @fg;
     font-size: 12px;
-    font-weight: 500;
+    font-weight: 300;
 }
-
 
 /* -------------------- Tray specific spacing -------------------- */
 #tray {
@@ -85,8 +96,7 @@ window {
 /* -------------------- Active/focused workspace buttons -------------------- */
 #workspaces button.active,
 #workspaces button.focused {
- 		background-color: @highlight;
-		opacity: 0.6;
+    background-color: @highlight_opacity;
     font-weight: bold;
     padding: 0px 12px;
 }
