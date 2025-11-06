@@ -1,158 +1,89 @@
+
 @import "../zorro/current/theme/waybar.css";
 
-/* Base styling */
-* {
-  min-height: 0;
-  font-family: "JetBrainsMono Nerd Font", Roboto, Helvetica, Arial, sans-serif;
-  font-size: 12px;
+/* -------------------- Semi-transparent variable -------------------- */
+@define-color bordercolor_opacity rgba(40, 40, 40, 0.6);
+
+/* -------------------- Window styling -------------------- */
+window {
+    background: transparent;  /* important for transparency */
+    font-family: JetBrains Mono;
+    font-weight: 500;
+    padding: 0px;             /* remove excessive padding */
 }
 
-window#waybar {
-  color: @fg;                  /* main text color */
-  background: @bg;             /* main background */
-  transition-property: background-color;
-  transition-duration: 0.5s;
-  border: 2px solid @bordercolor;
-  border-radius: 10px;
-}
-
-button {
-  box-shadow: inset 0 -3px transparent;
-  border: none;
-  border-radius: 0px;
-  padding: 0px 5px;
-  margin: 5px 0px;
-}
-
-button:hover {
-  background: inherit;
-  box-shadow: inset 0 -3px transparent;
-}
-
-#workspaces button {
-  color: @fg;
-}
-#workspaces button.urgent {
-  color: @alert;
-}
-#workspaces button.empty {
-  color: @disabled;
-}
-#workspaces button.active {
-  color: @highlight;
-}
-
-/* River Tags/Workspaces */
-#tags {
-  background-color: transparent;
-  border-radius: 0px;
-  padding: 0px 5px;
-}
-#tags button {
-  color: @fg;
-  background: @bg;
-  border-radius: 0px;
-  padding: 0px;
-  margin: 5px 0px;
-}
-#tags button.occupied {
-  color: @fg;
-}
-#tags button.focused {
-  color: @highlight;
-}
-#tags button.urgent {
-  color: @alert;
-}
-
-/* All main modules inherit theme color */
-#clock,
-#cava,
+/* -------------------- General module styling -------------------- */
+#pulseaudio,
+#temperature,
+#backlight,
 #battery,
+#clock,
 #cpu,
 #memory,
 #disk,
-#temperature,
-#language {
-  min-width: 40px;   /* ensure text fits */
-  padding-left: 2px;
-  padding-right: 2px;
-  color: #ffffff;    /* text color */
-}
-#backlight,
-#backlight-slider,
+#custom_cpu,
+#custom_ram,
+#custom_read,
+#custom_write,
 #network,
-#pulseaudio,
 #wireplumber,
-#custom-media,
-#taskbar,
-#tray,
-#tray menu,
-#tray > .needs-attention,
-#tray > .passive,
-#tray > .active,
-#mode,
-#scratchpad,
-#custom-notification,
-#custom-wifi,
-#custom-kdeconnect,
-#custom-bluetooth,
-#custom-power,
-#custom-separator,
+#power-profiles-daemon,
 #idle_inhibitor,
-#window,
-#mpd {
-  padding: 0px 5px;
-  margin: 0px 5px;
-  color: @fg;   /* enforce main text color */
+#custom-bluetooth,
+#custom-wifi,
+#custom-power,
+#custom_apps,
+#custom_separator,
+#custom_notification,
+#sway_language {
+    border-radius: 10px;
+    margin: 0 4px;
+    padding: 0px 6px;
+    background-color: @bordercolor_opacity;
+    color: @fg;
+    font-size: 12px;
+    font-weight: 500;
 }
 
-/* Alerts and highlights override main color */
-#network.disconnected,
-#pulseaudio.muted,
-#wireplumber.muted {
-  color: @alert;
-}
-#battery.charging,
-#battery.plugged {
-  color: @activegreen;
-}
-#battery.critical:not(.charging) {
-  background-color: @alert;
-  color: @fg;
-  animation-name: blink;
-  animation-duration: 0.5s;
-  animation-timing-function: linear;
-  animation-iteration-count: infinite;
-  animation-direction: alternate;
-}
-
-/* Custom module backgrounds */
-#clock,
-#custom-group {
-  background-color: @bordercolor;
-  color: @fg;
-  margin: 5px;
-  padding: 0px 5px;
-  border-radius: 5px;
-}
-
-/* Tray styling */
+/* -------------------- Tray specific spacing -------------------- */
 #tray {
-  border: 1px solid @bordercolor;
-  margin: 5px;
-  padding: 0px 15px;
-  border-radius: 5px;
+    margin-left: 5px;
+    margin-right: 8px;
 }
 
-/* Separator styling */
-#custom-separator {
-  padding: 0px;
-  margin: 0px;
-  color: @disabled;
+/* -------------------- Divider styling -------------------- */
+#custom-divider {
+    font-size: 14px;
+    font-weight: bold;
+    color: @bg;
 }
 
-/* Labels */
-label:focus {
-  background-color: @bg;
+/* -------------------- Clock styling -------------------- */
+#clock {
+    font-size: 12px;
+    padding: 0px 6px;
+}
+
+/* -------------------- Workspaces container -------------------- */
+#workspaces {
+    border-radius: 18px;
+    padding: 3px 1px;
+}
+
+/* -------------------- Workspaces buttons -------------------- */
+#workspaces button {
+    background-color: @bordercolor_opacity;
+    border-radius: 12px;
+    padding: 0px 4px;
+    margin: 0 2px;
+    color: @fg;
+    font-weight: bold;
+    font-size: 9px;
+}
+
+/* -------------------- Active/focused workspace buttons -------------------- */
+#workspaces button.active,
+#workspaces button.focused {
+    font-weight: bold;
+    padding: 0px 12px;
 }
