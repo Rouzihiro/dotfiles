@@ -85,6 +85,8 @@ window {
 /* -------------------- Active/focused workspace buttons -------------------- */
 #workspaces button.active,
 #workspaces button.focused {
+ 		background-color: @highlight;
+		opacity: 0.6;
     font-weight: bold;
     padding: 0px 12px;
 }
