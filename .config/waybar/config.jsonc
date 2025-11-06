@@ -29,6 +29,7 @@
     "battery",
     "sway/language",
     "custom/separator",
+		"idle_inhibitor", 
     "custom/bluetooth",
     "custom/wifi",
     "custom/power"
