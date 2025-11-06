@@ -43,12 +43,14 @@
 
   // Modules configuration
 
-"niri/workspaces": {
+"sway/workspaces": {
 	"format": "{icon}",
 	"format-icons": {
-		"browser": "",
-		"discord": "",
-		"chat": "<b></b>",
+    "1": "",      // tmux
+   	"2": "",      // Browser
+    "3": "",      // Terminal
+    "4": "",      // Mail
+    "5": "",      // Steam
 		// Icons by state
 		"active": "",
 		"default": ""
@@ -230,8 +232,8 @@
     "tooltip-format": "Bluetooth Menu",
   },
 
- "sway/language": {
-  "format": " ",
+"sway/language": {
+  "format": "  {short}",
   "on-click": "swaymsg 'input * xkb_switch_layout next'",
 },
 
