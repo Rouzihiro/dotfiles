@@ -1,10 +1,10 @@
 ### Status bar
 
- bar {
- 	swaybar_command waybar
- 	position top
- 	mode dock
- }
+ # bar {
+ # 	swaybar_command waybar
+ # 	position top
+ # 	mode dock
+ # }
 #
  # bar {
  #     position top

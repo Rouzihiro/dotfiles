@@ -15,7 +15,7 @@ for f in ~/dotfiles/themes/*; do ln -nfs "$f" ~/.config/zorro/themes/; done
 # Set initial theme
 mkdir -p ~/.config/zorro/current
 ln -snf ~/.config/zorro/themes/vague ~/.config/zorro/current/theme
-ln -snf ~/.config/zorro/current/theme/backgrounds/01_background.png ~/.config/zorro/current/background
+ln -snf "$(find ~/.config/zorro/current/theme/backgrounds -type f -o -type l | shuf -n1)" ~/.config/zorro/current/background
 
 # Set specific app links for current theme
 ln -snf ~/.config/zorro/current/theme/nvim.lua ~/.config/nvim/lua/theme.lua
