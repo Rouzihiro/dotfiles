@@ -12,6 +12,12 @@ bash <(curl -sSL https://kutt.it/ReyDot)
 ```
 ![Theme Switcher Demo](https://github.com/user-attachments/assets/6226b72f-8cdd-4708-a280-9a173e91e3a1)
 
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/6226b72f-8cdd-4708-a280-9a173e91e3a1" alt="Theme Switcher Demo">
+</p>
+
+
 ## 🚀 Great performance for x86 and Apple Silicon M1
   
 This setup with Sway WM idles at ~600MB RAM with our ultra-efficient stack:  
