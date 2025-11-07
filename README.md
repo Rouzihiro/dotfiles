@@ -73,6 +73,8 @@ This setup with Sway WM idles at ~600MB RAM with our ultra-efficient stack:
 | [Swayidle](https://github.com/swaywm/swayidle) | Idle management | ![C][c] |
 | [i3blocks](https://github.com/vivien/i3blocks) | Status Bar for Sway/i3 | ![C][c] |
 
+<video src="./assets/theme-switcher.mp4" controls autoplay loop muted style="max-width: 100%; border-radius: 8px;"></video>
+
 ![Sway Home Screenshot 9](./assets/bar1.png)
 ![Sway Home Screenshot 10](./assets/bar2.png)
 
@@ -122,15 +124,17 @@ This setup with Sway WM idles at ~600MB RAM with our ultra-efficient stack:
 ```bash
 git clone https://github.com/Rouzihiro/dotfiles.git
 cd dotfiles
-chmod +x installer.sh
-./installer.sh
+chmod +x install-arch.sh
+chmod +x install-fedora.sh
+./installer-arch.sh
+./install-fedora.sh
 ```
 
 ![Installer Script](./assets/installer.png)
 
 ### 🌈 Customization
 
-    Edit package lists in /install directory
+    Edit package lists in /pkgs directory
 
     Add your fixes to /fixes (see existing examples)
 
