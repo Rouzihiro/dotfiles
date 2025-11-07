@@ -10,6 +10,7 @@ ArchLinux Universal Installer for a Lightweight & Beautiful Setup
 ```bash
 bash <(curl -sSL https://kutt.it/ReyDot)
 ```
+![Theme Switcher Demo] (https://github.com/user-attachments/assets/6226b72f-8cdd-4708-a280-9a173e91e3a1)
 
 ## 🚀 Great performance for x86 and Apple Silicon M1
   
@@ -72,8 +73,6 @@ This setup with Sway WM idles at ~600MB RAM with our ultra-efficient stack:
 | [Swaylock](https://github.com/swaywm/swaylock) | Screen locker | ![C][c] |
 | [Swayidle](https://github.com/swaywm/swayidle) | Idle management | ![C][c] |
 | [i3blocks](https://github.com/vivien/i3blocks) | Status Bar for Sway/i3 | ![C][c] |
-
-<video src="./assets/theme-switcher.mp4" controls autoplay loop muted style="max-width: 100%; border-radius: 8px;"></video>
 
 ![Sway Home Screenshot 9](./assets/bar1.png)
 ![Sway Home Screenshot 10](./assets/bar2.png)
