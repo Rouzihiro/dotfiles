@@ -1,9 +1,8 @@
 <h1 align="center" style="display: flex; justify-content: center; align-items: center;">
 <img src="./assets/arch-logo.png" width="100px" alt="Arch Logo" style="margin-right: 30px;" />
 <br>
-ArchLinux Universal Installer for a Lightweight & Beautiful Setup
+ArchLinux & Fedora Universal Installer for a Lightweight & Beautiful Setup
 <br>
-<img src="./assets/kanagawa.png" width="100px" alt="kanagawa Theme" />
 </h1>
 
 ### 🖥️ Automatic Installation:
@@ -11,15 +10,7 @@ ArchLinux Universal Installer for a Lightweight & Beautiful Setup
 bash <(curl -sSL https://kutt.it/ReyDot)
 ```
 
-
 ![Theme Switcher Demo](./assets/theme-switcher.gif)
-![Theme Switcher Demo](https://github.com/user-attachments/assets/6226b72f-8cdd-4708-a280-9a173e91e3a1)
-
-
-<p align="center">
-  <img src="https://github.com/user-attachments/assets/6226b72f-8cdd-4708-a280-9a173e91e3a1" alt="Theme Switcher Demo">
-</p>
-
 
 ## 🚀 Great performance for x86 and Apple Silicon M1
   
