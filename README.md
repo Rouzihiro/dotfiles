@@ -10,6 +10,9 @@ ArchLinux Universal Installer for a Lightweight & Beautiful Setup
 ```bash
 bash <(curl -sSL https://kutt.it/ReyDot)
 ```
+
+
+![Theme Switcher Demo](./assets/theme-switcher.gif)
 ![Theme Switcher Demo](https://github.com/user-attachments/assets/6226b72f-8cdd-4708-a280-9a173e91e3a1)
 
 
