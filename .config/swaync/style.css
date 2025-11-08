@@ -9,9 +9,9 @@
 
 /* swaync-specific variables */
 @define-color noti-border-color @bordercolor;
-@define-color noti-bg rgba(0, 0, 0, 0.8); /* @bg with alpha */
-@define-color noti-bg-alt rgba(0, 0, 0, 0.8);
-@define-color noti-bg-hover rgba(0, 0, 0, 0.8);
+@define-color noti-bg rgba(255, 255, 255, 0.9); /* @bg with alpha */
+@define-color noti-bg-alt rgba(255, 255, 255, 0.9);
+@define-color noti-bg-hover rgba(255, 255, 255, 0.9);
 @define-color text-color @fg;
 
 * {
