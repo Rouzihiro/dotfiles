@@ -1,5 +1,17 @@
-@define-color bg           #2e3440;
-@define-color fg           #d8dee9;
+@define-color bg          #2E3440;
+@define-color bg_alt      #3B4252;
+@define-color fg          #ECEFF4;
+@define-color border      #4C566A;
+
+@define-color red         #BF616A;
+@define-color green       #A3BE8C;
+@define-color yellow      #EBCB8B;
+@define-color blue        #81A1C1;
+@define-color purple      #B48EAD;
+@define-color aqua        #88C0D0;
+@define-color orange      #D08770;
+@define-color gray        #616E88;
+
 @define-color foreground   #d8dee9;
 @define-color bordercolor  #4c566a;
 @define-color highlight    #88c0d0;
