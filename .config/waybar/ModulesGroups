@@ -40,6 +40,7 @@
 		"backlight",
 		"temperature",		
 		"cpu",
+		"bluetooth",
 		"power-profiles-daemon",	
 		"disk",
 	]
