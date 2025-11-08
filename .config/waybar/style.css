@@ -1,5 +1,26 @@
 @import "../zorro/current/theme/waybar.css";
 
+@define-color bg_op          alpha(@bg, 0.8);
+@define-color bg_alt_op      alpha(@bg_alt, 0.8);
+@define-color fg_op          alpha(@fg, 0.8);
+@define-color border_op      alpha(@border, 0.8);
+
+@define-color red_op         alpha(@red, 0.8);
+@define-color green_op       alpha(@green, 0.8);
+@define-color yellow_op      alpha(@yellow, 0.8);
+@define-color blue_op        alpha(@blue, 0.8);
+@define-color purple_op      alpha(@purple, 0.8);
+@define-color aqua_op        alpha(@aqua, 0.8);
+@define-color orange_op      alpha(@orange, 0.8);
+@define-color gray_op        alpha(@gray, 0.8);
+
+@define-color activegreen_op alpha(@activegreen, 0.8);
+@define-color highlight_op   alpha(@highlight, 0.8);
+@define-color alert_op       alpha(@alert, 0.8);
+@define-color disabled_op    alpha(@disabled, 0.8);
+@define-color foreground_op  alpha(@fg, 0.8);
+
+
 /* ---------- Global Styles ---------- */
 * {
     font-family: "JetBrainsMono Nerd Font";
@@ -32,7 +53,8 @@ tooltip {
 .modules-left,
 .modules-center,
 .modules-right {
-    background-color: @bg_alt;
+ 		background-color:	alpha(@bg, 0.6);
+    /* background-color: @bg_alt; */
     border-radius: 15px;
     border-bottom: 2px solid @border;
     padding-top: 2px;
