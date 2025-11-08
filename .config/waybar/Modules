@@ -1,7 +1,7 @@
 {
 
  "sway/language": {
-    "format": "  {short}",
+    "format": "{short}",
     "on-click": "swaymsg 'input * xkb_switch_layout next'"
   },
 
@@ -175,11 +175,6 @@
 	"tooltip-format": "{used} used out of {total} on {path} ({percentage_used}%)",
   "on-click": "foot -T 'floaty-small' -e bash -c 'cd ~ && sudo ncdu'",
   "on-click-right": "foot -T 'floaty-small' -e bash -c 'cd / && sudo ncdu'"
-},
-
-"sway/language": {
-    "format": "  {short}",
-    "on-click": "swaymsg 'input * xkb_switch_layout next'"
 },
 
 "sway/submap": {

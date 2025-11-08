@@ -1,8 +1,3 @@
-//* ---- 💫 https://github.com/JaKooLit 💫 ---- *//
-/* Waybar Modules - Groups Modules */
-/* Basically created to reduce the lines in Waybar Modules bank */
-/* NOTE: This is only for Groups */
-
 {
 // GROUPS
 "group/app_drawer": {
@@ -42,17 +37,17 @@
         },
 	"modules": [
 		"sway/language",
+		"backlight",
 		"temperature",		
 		"cpu",
 		"power-profiles-daemon",	
-		"memory",
 		"disk",
 	]
 },
 "group/laptop": {
 	"orientation": "inherit",
 	"modules": [
-		"backlight",
+		"memory",
 		"battery",
 	]
 },
