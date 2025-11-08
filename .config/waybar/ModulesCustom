@@ -1,9 +1,3 @@
-//* ---- 💫 https://github.com/JaKooLit 💫 ---- *//
-/* Waybar Modules - Custom Modules */
-/* Basically created to reduce the lines in Waybar Modules bank */
-/* NOTE: This is only for Custom Modules */
-/* Custom Modules like weather browser, tty, file manager at the beginning */
-
 {
 
 "custom/hyprpicker": {
@@ -15,14 +9,15 @@
 
 "custom/file_manager": {
 	"format": " ",
-	"on-click": "$HOME/.config/hypr/scripts/WaybarScripts.sh --files",
+	"on-click": "$HOME/.local/bin/bar/WaybarScripts --files",
+	"on-click-right": "$HOME/.local/bin/bar/WaybarScripts --yazi",
 	"tooltip": true,
 	"tooltip-format": "File Manager",
 },
 
 "custom/tty": {
 	"format": " ",
-	"on-click": "$HOME/.config/hypr/scripts/WaybarScripts.sh --term",
+	"on-click":  "$HOME/.local/bin/bar/WaybarScripts --term",
 	"tooltip": true,
 	"tooltip-format": "Launch Terminal",
 },
@@ -36,9 +31,9 @@
 
 "custom/settings": {
 	"format": " ",
-	"on-click": "$HOME/.config/hypr/scripts/Kool_Quick_Settings.sh",
+	"on-click": "$HOME/.local/bin/bar/WaybarScripts --superb",
 	"tooltip": true,
-	"tooltip-format": "Launch KooL Hyprland Settings Menu",
+	"tooltip-format": "Zorro Laucher",
 },
 
 "custom/cycle_wall": {
@@ -58,34 +53,6 @@
 	"tooltip-format": "Left Click: Quick Tips\nRight Click: Keybinds",
 },
 
-"custom/dot_update": {
-	"format": " 󰁈 ",
-	"on-click": "$HOME/.config/hypr/scripts/KooLsDotsUpdate.sh",
-	"tooltip": true,
-	"tooltip-format": "Check KooL Dots update\nIf available",
-},
-
-// Hypridle inhibitor
-"custom/hypridle": {
-	"format": "󱫗 ",
-	"return-type": "json",
-	"escape": true,
-	"exec-on-event": true,
-	"interval": 60,
-	"exec": "$HOME/.config/hypr/scripts/Hypridle.sh status",
-	"on-click": "$HOME/.config/hypr/scripts/Hypridle.sh toggle",
-	"on-click-right": "hyprlock"
-},
-
-"custom/light_dark": {
-	"format": "󰔎 ",
-	"on-click": "$HOME/.config/hypr/scripts/DarkLight.sh",
-	"on-click-right": "$HOME/.config/hypr/scripts/WaybarStyles.sh",
-	"on-click-middle": "$HOME/.config/hypr/UserScripts/WallpaperSelect.sh",
-	"tooltip": true,
-	"tooltip-format": "Left Click: Switch Dark-Light Themes\nMiddle Click: Wallpaper Menu\nRight Click: Waybar Styles Menu",
-},
-
 // Night light (Hyprsunset)
 "custom/nightlight": {
 	"return-type": "json",
@@ -97,20 +64,10 @@
 	"escape": false
 },
 
-"custom/lock": {
-	"format": "󰌾",
-	"on-click": "$HOME/.config/hypr/scripts/LockScreen.sh",
-	"tooltip": true,
-	"tooltip-format": "󰷛 Screen Lock",
-},
-
 "custom/menu": {
 	"format": "  ",
-	"on-click": "pkill rofi || rofi -show drun -modi run,drun,filebrowser,window",
-	"on-click-middle": "$HOME/.config/hypr/UserScripts/WallpaperSelect.sh",
-	"on-click-right": "$HOME/.config/hypr/scripts/WaybarLayout.sh",
+	"on-click": "pkill wofi || wofi -show drun -modi run,drun,filebrowser,window",
 	"tooltip": true,
-	"tooltip-format": "Left Click: Rofi Menu\nMiddle Click: Wallpaper Menu\nRight Click: Waybar Layout Menu",
 },
 
 "custom/playerctl": {
@@ -129,10 +86,8 @@
     
 "custom/power": {
 	"format": " ⏻ ",
-	"on-click": "$HOME/.config/hypr/scripts/Wlogout.sh",
-	"on-click-right": "$HOME/.config/hypr/scripts/ChangeBlur.sh",
+	"on-click": "bm-power",
 	"tooltip": true,
-	"tooltip-format": "Left Click: Logout Menu\nRight Click: Change Blur",
 },
 
 "custom/reboot": {
