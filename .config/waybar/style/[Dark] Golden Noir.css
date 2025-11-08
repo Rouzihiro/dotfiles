@@ -1,20 +1,6 @@
-@define-color white      	#F2F2F2;
-@define-color black      	#000000;
-@define-color text       	#FFFFFF;
-@define-color lightgray  	#686868;
-@define-color darkgray   	#353535;
-
-@define-color transparent	rgba(1, 1, 1, 0.5);
-@define-color teal-trans	rgba(1, 117, 84, 0.5);
-@define-color cyan			rgba(53, 140, 169, 1);
-
-@define-color background-module     @transparent;
-@define-color border-color          @color12;
-@define-color button-color          @color11;
-@define-color button-hover          @color13;
-
-@import '../../.config/waybar/wallust/colors-waybar.css';
-@import "../waybar/style/catppuccin-themes/latte.css";
+/* ----------- 💫 https://github.com/JaKooLit 💫 -------- */
+/* ...............Golden Noir................ */
+/* --- 👍 designed by https://github.com/Krautt  👍 --- */
 
 * {
     font-family: "JetBrainsMono Nerd Font";
@@ -26,53 +12,52 @@
 }
 
 window#waybar {
-    background: transparent;
-    border-radius: 0px;
+    background: #040406;
+    border-radius: 30px;
     color: #cba6f7;
+
 }
 
 window#waybar.hidden {
-    opacity: 0;
+    opacity: 0.5;
 }
 
 tooltip {
     background: #1e1e2e;
-    border-radius: 12px;
-    border-width: 1px;
+    border-radius: 10px;
+    border-width: 2px;
     border-style: solid;
-    border-color: @border-color;
-    color: #ffffff;
+    border-color: #11111b;
+    color: #ffd700;
 }
 
 /*-----module groups----*/
 .modules-left,
-.modules-center,
 .modules-right {
-    background-color: @background-module;
-    border-radius:15px;
-    border-bottom:2px solid @border-color;
 	padding-top: 2px;
-	padding-bottom: 0px;
+	padding-bottom: 2px;
+	padding-right: 4px;
+	padding-left: 4px;
+
+}
+
+.modules-center {
+    border-left: 1px solid #ffd700;
+    border-right: 1px solid #ffd700;
+    border-radius: 20px;
+	padding-top: 2px;
+	padding-bottom: 2px;
 	padding-right: 4px;
 	padding-left: 4px;
 }
 
-#workspaces {
-    padding: 0px 1px;
-    border-radius: 15px;
-    border:2px solid @border-color;
-    font-weight: bold;
-    font-style: normal;
-    opacity:0.8;
-    color:#FFFFFF;
-}
-
-#taskbar button,   
+#taskbar button,
 #workspaces button {
     color: #6E6A86;
     box-shadow: none;
 	text-shadow: none;
-    border-radius: 30px;
+    padding: 0px;
+    border-radius: 9px;
     padding-left: 4px;
     padding-right: 4px;
     animation: gradient_f 20s ease-in infinite;
@@ -103,7 +88,7 @@ tooltip {
 #taskbar button:hover,
 #workspaces button:hover {
     color: #ffd700;
-    border-radius: 10px;
+    border-radius: 15px;
  	padding-left: 2px;
     padding-right: 2px;
     animation: gradient_f 20s ease-in infinite;
@@ -168,8 +153,10 @@ tooltip {
 #custom-weather.snowyIcyNight,
 #custom-weather.sunnyDay {
     color: #e5d9f5;
+	padding-top: 5px;
+	padding-bottom: 5px;
 	padding-right: 6px;
-	padding-left: 6px;;
+	padding-left: 6px;
 }
 
 #temperature.critical {
@@ -180,6 +167,21 @@ tooltip {
     to {
         color: #000000;
     }
+}
+
+/*-----Indicators----*/
+#custom-hypridle.notactive,
+#idle_inhibitor.activated {
+	color: #39FF14;
+}
+
+#battery.critical:not(.charging) {
+	color: #f53c3c;
+	animation-name: blink;
+	animation-duration: 3.0s;
+	animation-timing-function: steps(12);
+	animation-iteration-count: infinite;
+	animation-direction: alternate;
 }
 
 #backlight-slider slider,
@@ -206,69 +208,3 @@ tooltip {
     border-radius: 5px;
     background-color: #ba5663;
 }
-
-#pulseaudio-slider,
-#pulseaudio {
-	color: @color13;
-}
-
-#pulseaudio.muted {
-    color: red;
-}
-
-#memory {
-	color: @sapphire;
-}
-
-#cpu {
-	color: @mauve;
-}
-
-#battery {
-	color: @rosewater;
-}
-
-#disk {
-	color: @sky;
-}
-
-#temperature.critical {
-    background-color: @red;
-}
-
-#battery.critical:not(.charging) {
-	color: #f53c3c;
-	animation-name: blink;
-	animation-duration: 3.0s;
-	animation-timing-function: steps(12);
-	animation-iteration-count: infinite;
-	animation-direction: alternate;
-}
-
-#custom-hypridle,
-#custom-lock,
-#idle_inhibitor {
-    color: @teal;
-}
-
-/*-----Indicators----*/
-#custom-hypridle.notactive,
-#idle_inhibitor.activated {
-	color: #39FF14;
-}
-
-
-#clock#2 {
-    color: #efe8f7;
-}
-
-#clock {
-	color: @sapphire;
-    border-radius: 15px;
-    border:2px solid @border-color;
-}
-#custom-updates {
-    color: @yellow;
-}
-#swaync{
-    color: #ffd700;}

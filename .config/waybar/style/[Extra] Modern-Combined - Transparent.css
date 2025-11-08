@@ -1,3 +1,8 @@
+/* ---- 💫 https://github.com/JaKooLit 💫 ---- */
+/* Extra - Combined Modern - transparent */
+
+/* NOTE: This style is NOT vertical layout friendly! */
+
 @define-color white      	#F2F2F2;
 @define-color black      	#000000;
 @define-color text       	#FFFFFF;
@@ -8,10 +13,21 @@
 @define-color teal-trans	rgba(1, 117, 84, 0.5);
 @define-color cyan			rgba(53, 140, 169, 1);
 
-@define-color background-module     @transparent;
+@define-color background-module     @color1;
+@define-color background-module2	@color11;
 @define-color border-color          @color12;
-@define-color button-color          @color11;
+@define-color button-color          @color10;
 @define-color button-hover          @color13;
+
+@define-color backgroundlight @color12;
+@define-color backgrounddark #FFFFFF;
+@define-color workspacesbackground1 @color12;
+@define-color workspacesbackground2 #FFFFFF;
+@define-color bordercolor @color11;
+@define-color textcolor1 @color12;
+@define-color textcolor2 #FFFFFF;
+@define-color textcolor3 #FFFFFF;
+@define-color iconcolor #FFFFFF;
 
 @import '../../.config/waybar/wallust/colors-waybar.css';
 @import "../waybar/style/catppuccin-themes/latte.css";
@@ -26,13 +42,12 @@
 }
 
 window#waybar {
-    background: transparent;
-    border-radius: 0px;
-    color: #cba6f7;
-}
-
-window#waybar.hidden {
-    opacity: 0;
+    background-color: transparent;
+    border-radius: 6px;
+	padding-top: 2px;
+	padding-bottom: 0px;
+	padding-right: 4px;
+	padding-left: 4px;
 }
 
 tooltip {
@@ -44,49 +59,34 @@ tooltip {
     color: #ffffff;
 }
 
-/*-----module groups----*/
-.modules-left,
-.modules-center,
-.modules-right {
-    background-color: @background-module;
-    border-radius:15px;
-    border-bottom:2px solid @border-color;
-	padding-top: 2px;
-	padding-bottom: 0px;
-	padding-right: 4px;
-	padding-left: 4px;
-}
-
-#workspaces {
-    padding: 0px 1px;
-    border-radius: 15px;
-    border:2px solid @border-color;
-    font-weight: bold;
-    font-style: normal;
-    opacity:0.8;
-    color:#FFFFFF;
-}
-
-#taskbar button,   
+#taskbar button,
 #workspaces button {
-    color: #6E6A86;
-    box-shadow: none;
-	text-shadow: none;
-    border-radius: 30px;
-    padding-left: 4px;
-    padding-right: 4px;
-    animation: gradient_f 20s ease-in infinite;
-    transition: all 0.5s cubic-bezier(.55,-0.68,.48,1.682);
+    padding: 0px 3px;
+    margin: 3px 2px;
+    border-radius: 4px;
+    color: @textcolor1;
+    background-color: @workspacesbackground2;
+    transition: all 0.1s linear;
+    opacity: 0.4;
 }
 
 #taskbar button.active,
 #workspaces button.active {
-    color: #ffd700;
-    border-radius: 50%;
-    background-color: black;
-    border-radius: 15px 15px 15px 15px;
-    padding-left: 8px;
-    padding-right: 8px;
+    color: @textcolor1;
+    background: @workspacesbackground2;
+    border-radius: 4px;
+    min-width: 30px;
+    animation: gradient_f 20s ease-in infinite;
+    transition: all 0.3s cubic-bezier(.55,-0.68,.48,1.682);
+    opacity: 1.0;
+}
+
+#taskbar button:hover,
+#workspaces button:hover {
+    color: @red;
+    background: @workspacesbackground2;
+    border-radius: 3px;
+    opacity:0.6;
     animation: gradient_f 20s ease-in infinite;
     transition: all 0.3s cubic-bezier(.55,-0.68,.48,1.682);
 }
@@ -100,14 +100,19 @@ tooltip {
     border-radius: 10px;
 }
 
-#taskbar button:hover,
-#workspaces button:hover {
-    color: #ffd700;
-    border-radius: 10px;
- 	padding-left: 2px;
-    padding-right: 2px;
-    animation: gradient_f 20s ease-in infinite;
-    transition: all 0.3s cubic-bezier(.55,-0.68,.48,1.682);
+/*-----module groups----*/
+.modules-left,
+.modules-right {
+    background-color: transparent;
+}
+
+.modules-center {
+    background-color: @background-module;
+    border-radius: 0px 0px 45px 45px;
+	padding-top: 8px;
+	padding-bottom: 8px;
+	padding-left: 10px;
+	padding-right: 6px;
 }
 
 #backlight,
@@ -126,6 +131,7 @@ tooltip {
 #power-profiles-daemon,
 #pulseaudio,
 #pulseaudio-slider,
+#taskbar button,
 #taskbar,
 #temperature,
 #tray,
@@ -167,9 +173,9 @@ tooltip {
 #custom-weather.showyIcyDay,
 #custom-weather.snowyIcyNight,
 #custom-weather.sunnyDay {
-    color: #e5d9f5;
+    color: white;
 	padding-right: 6px;
-	padding-left: 6px;;
+	padding-left: 6px;
 }
 
 #temperature.critical {
@@ -182,54 +188,14 @@ tooltip {
     }
 }
 
-#backlight-slider slider,
-#pulseaudio-slider slider {
-    min-width: 0px;
-    min-height: 0px;
-    opacity: 0;
-    background-image: none;
-    border: none;
-    box-shadow: none;
-}
-
-#backlight-slider trough,
-#pulseaudio-slider trough {
-    min-width: 80px;
-    min-height: 5px;
-    border-radius: 5px;
-    background-color: #22252a;
-}
-
-#backlight-slider highlight,
-#pulseaudio-slider highlight {
-    min-height: 10px;
-    border-radius: 5px;
-    background-color: #ba5663;
-}
-
-#pulseaudio-slider,
-#pulseaudio {
-	color: @color13;
+#custom-hint {
+	color: @peach;
+	padding-right: 6px;
+	padding-left: 6px;
 }
 
 #pulseaudio.muted {
     color: red;
-}
-
-#memory {
-	color: @sapphire;
-}
-
-#cpu {
-	color: @mauve;
-}
-
-#battery {
-	color: @rosewater;
-}
-
-#disk {
-	color: @sky;
 }
 
 #temperature.critical {
@@ -245,10 +211,54 @@ tooltip {
 	animation-direction: alternate;
 }
 
+#pulseaudio-slider,
+#pulseaudio {
+	color: @foreground;
+}
+
+#backlight-slider slider,
+#pulseaudio-slider slider {
+	min-width: 0px;
+	min-height: 0px;
+	opacity: 0;
+	background-image: none;
+	border: none;
+	box-shadow: none;
+}
+
+#backlight-slider trough,
+#pulseaudio-slider trough {
+	min-width: 80px;
+	min-height: 5px;
+	border-radius: 5px;
+}
+
+#backlight-slider highlight,
+#pulseaudio-slider highlight {
+	min-height: 10px;
+	border-radius: 5px;
+}
+
 #custom-hypridle,
 #custom-lock,
 #idle_inhibitor {
     color: @teal;
+}
+
+#custom-weather,
+#custom-weather.clearNight,
+#custom-weather.cloudyFoggyDay,
+#custom-weather.cloudyFoggyNight,
+#custom-weather.default, 
+#custom-weather.rainyDay,
+#custom-weather.rainyNight,
+#custom-weather.severe,
+#custom-weather.showyIcyDay,
+#custom-weather.snowyIcyNight,
+#custom-weather.sunnyDay {
+	color: @lavender;
+	padding-right: 6px;
+	padding-left: 6px;
 }
 
 /*-----Indicators----*/
@@ -257,18 +267,14 @@ tooltip {
 	color: #39FF14;
 }
 
-
-#clock#2 {
-    color: #efe8f7;
-}
-
 #clock {
 	color: @sapphire;
     border-radius: 15px;
-    border:2px solid @border-color;
 }
+
 #custom-updates {
     color: @yellow;
 }
-#swaync{
+
+#custom-swaync{
     color: #ffd700;}

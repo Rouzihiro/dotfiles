@@ -1,3 +1,6 @@
+/* ---- 💫 https://github.com/JaKooLit 💫 ---- */
+/* Catppuccin Latte - Wallust - v2 */
+
 @define-color white      	#F2F2F2;
 @define-color black      	#000000;
 @define-color text       	#FFFFFF;
@@ -8,9 +11,10 @@
 @define-color teal-trans	rgba(1, 117, 84, 0.5);
 @define-color cyan			rgba(53, 140, 169, 1);
 
-@define-color background-module     @transparent;
+@define-color background-module     @background;
+@define-color background-module2	@color11;
 @define-color border-color          @color12;
-@define-color button-color          @color11;
+@define-color button-color          @color10;
 @define-color button-hover          @color13;
 
 @import '../../.config/waybar/wallust/colors-waybar.css';
@@ -26,13 +30,12 @@
 }
 
 window#waybar {
-    background: transparent;
-    border-radius: 0px;
-    color: #cba6f7;
-}
-
-window#waybar.hidden {
-    opacity: 0;
+    background: @background;
+    border-radius:15px;
+	padding-top: 2px;
+	padding-bottom: 0px;
+	padding-right: 4px;
+	padding-left: 4px;
 }
 
 tooltip {
@@ -44,32 +47,18 @@ tooltip {
     color: #ffffff;
 }
 
-/*-----module groups----*/
-.modules-left,
-.modules-center,
-.modules-right {
-    background-color: @background-module;
-    border-radius:15px;
-    border-bottom:2px solid @border-color;
-	padding-top: 2px;
-	padding-bottom: 0px;
-	padding-right: 4px;
-	padding-left: 4px;
-}
-
 #workspaces {
     padding: 0px 1px;
     border-radius: 15px;
-    border:2px solid @border-color;
+    border-bottom: 2px solid @border-color;
     font-weight: bold;
     font-style: normal;
-    opacity:0.8;
-    color:#FFFFFF;
+    opacity: 0.8;
 }
 
 #taskbar button,   
 #workspaces button {
-    color: #6E6A86;
+    color: @foreground;
     box-shadow: none;
 	text-shadow: none;
     border-radius: 30px;
@@ -84,7 +73,7 @@ tooltip {
     color: #ffd700;
     border-radius: 50%;
     background-color: black;
-    border-radius: 15px 15px 15px 15px;
+    border-radius: 15px;
     padding-left: 8px;
     padding-right: 8px;
     animation: gradient_f 20s ease-in infinite;
@@ -108,6 +97,16 @@ tooltip {
     padding-right: 2px;
     animation: gradient_f 20s ease-in infinite;
     transition: all 0.3s cubic-bezier(.55,-0.68,.48,1.682);
+}
+
+/*-----module groups----*/
+.modules-center {
+    background-color: @background-module2;
+    border-radius: 10px;
+    padding: 4px;
+	border-bottom: 2px solid @border-color;
+	border-right: 1px solid @button-hover;
+	border-left: 1px solid @button-hover;
 }
 
 #backlight,
@@ -167,7 +166,7 @@ tooltip {
 #custom-weather.showyIcyDay,
 #custom-weather.snowyIcyNight,
 #custom-weather.sunnyDay {
-    color: #e5d9f5;
+    color: @foreground;
 	padding-right: 6px;
 	padding-left: 6px;;
 }
@@ -257,16 +256,11 @@ tooltip {
 	color: #39FF14;
 }
 
-
-#clock#2 {
-    color: #efe8f7;
-}
-
 #clock {
-	color: @sapphire;
+	color: @foreground;
     border-radius: 15px;
-    border:2px solid @border-color;
 }
+
 #custom-updates {
     color: @yellow;
 }

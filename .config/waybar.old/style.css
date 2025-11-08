@@ -1,0 +1,101 @@
+@import "../zorro/current/theme/waybar.css";
+
+/* -------------------- Global opacity control -------------------- */
+
+/* GTK limitation: @define-color cannot store numeric values,
+   so we’ll use the literal number directly below. */
+
+/* -------------------- Opacity variants for theme colors -------------------- */
+@define-color bg_opacity          alpha(@bg, 0.8);
+@define-color fg_opacity          alpha(@fg, 0.8);
+@define-color foreground_opacity  alpha(@foreground, 0.8);
+@define-color bordercolor_opacity alpha(@bordercolor, 0.8);
+@define-color highlight_opacity   alpha(@highlight, 0.8);
+@define-color alert_opacity       alpha(@alert, 0.8);
+@define-color activegreen_opacity alpha(@activegreen, 0.8);
+@define-color disabled_opacity    alpha(@disabled, 0.8);
+
+/* -------------------- Window styling -------------------- */
+window {
+    background: transparent;
+    font-family: JetBrains Mono;
+    font-weight: 500;
+    padding: 0px;
+}
+
+/* -------------------- General module styling -------------------- */
+#pulseaudio,
+#temperature,
+#backlight,
+#battery,
+#clock,
+#cpu,
+#memory,
+#disk,
+#custom_cpu,
+#custom_ram,
+#custom_read,
+#custom_write,
+#network,
+#wireplumber,
+#power-profiles-daemon,
+#idle_inhibitor,
+#custom-bluetooth,
+#custom-wifi,
+#custom-power,
+#custom_apps,
+#custom_separator,
+#custom_notification,
+#sway_language {
+    border-radius: 10px;
+    margin: 2px 4px;
+    padding: 0px 1px;
+		background-color: alpha(@bg, 0.6);
+    color: @fg;
+    font-size: 12px;
+    font-weight: 300;
+}
+
+/* -------------------- Tray specific spacing -------------------- */
+#tray {
+    margin-left: 5px;
+    margin-right: 8px;
+}
+
+/* -------------------- Divider styling -------------------- */
+#custom-divider {
+    font-size: 14px;
+    font-weight: bold;
+    color: @bg;
+}
+
+/* -------------------- Clock styling -------------------- */
+#clock {
+    font-size: 12px;
+    padding: 0px 6px;
+}
+
+/* -------------------- Workspaces container -------------------- */
+#workspaces {
+    border-radius: 18px;
+    padding: 3px 1px;
+}
+
+/* -------------------- Workspaces buttons -------------------- */
+#workspaces button {
+    background-color: @bordercolor_opacity;
+    border-radius: 12px;
+    padding: 0px 4px;
+    margin: 0px 2px;
+    color: @fg;
+    font-weight: bold;
+    font-size: 9px;
+}
+
+/* -------------------- Active/focused workspace buttons -------------------- */
+#workspaces button.active,
+#workspaces button.focused {
+    background-color: @highlight_opacity;
+    font-weight: bold;
+    padding: 0px 12px;
+}
