@@ -77,12 +77,6 @@
 	"on-click-right": "hyprlock"
 },
 
-"custom/keyboard": {
-	"interval": 1,
-	"format": " {}",
-	"on-click": "$HOME/.config/hypr/scripts/SwitchKeyboardLayout.sh",
-},
-
 "custom/light_dark": {
 	"format": "󰔎 ",
 	"on-click": "$HOME/.config/hypr/scripts/DarkLight.sh",

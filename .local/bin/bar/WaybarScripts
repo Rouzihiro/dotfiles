@@ -1,0 +1,69 @@
+#!/bin/bash
+
+CONFIG_FILE="$HOME/.config/sway/config"
+
+# Check if config exists
+if [[ ! -f "$CONFIG_FILE" ]]; then
+    echo "Error: Configuration file not found!"
+    exit 1
+fi
+
+# Load Sway 'set $var value' lines as Bash variables
+while IFS= read -r line; do
+    # Match lines like: set $var value
+    if [[ $line =~ ^set[[:space:]]+\$([a-zA-Z0-9_]+)[[:space:]]+(.+) ]]; then
+        var="${BASH_REMATCH[1]}"
+        val="${BASH_REMATCH[2]}"
+        # Remove surrounding quotes if any
+        val="${val#\"}"; val="${val%\"}"
+        # Export as variable
+        declare "$var=$val"
+    fi
+done < "$CONFIG_FILE"
+
+# Ensure mandatory variables exist
+for req in term files tfiles editor; do
+    if [[ -z "${!req}" ]]; then
+        echo "Error: \$$req is not set in Sway config!"
+        exit 1
+    fi
+done
+
+# Launch based on argument
+case "$1" in
+    --btop)
+        $term --title btop sh -c 'btop'
+        ;;
+    --nvtop)
+        $term --title nvtop sh -c 'nvtop'
+        ;;
+    --nmtui)
+        $term nmtui
+        ;;
+    --term)
+        $term &
+        ;;
+    --files)
+        $files &
+        ;;
+    --tfiles)
+        $tfiles &
+        ;;
+    --editor)
+        $editor &
+        ;;
+    *)
+        cat <<EOF
+Usage: $0 [option]
+
+Options:
+  --btop      Launch btop in a new terminal
+  --nvtop     Launch nvtop in a new terminal
+  --nmtui     Launch nmtui in a new terminal
+  --term      Launch a terminal
+  --files     Launch your file manager
+  --tfiles    Launch terminal file manager
+  --editor    Launch editor
+EOF
+        ;;
+esac

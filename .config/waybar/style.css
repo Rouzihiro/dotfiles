@@ -87,6 +87,7 @@ tooltip {
 #taskbar button.active,
 #workspaces button.active {
     color: @yellow;
+ 		background-color: @highlight_op;
     border-radius: 15px;
     background-color: @bg;
     padding-left: 8px;
@@ -95,6 +96,7 @@ tooltip {
 }
 
 #workspaces button.focused {
+    background-color: @highlight_op;
     color: @fg;
 }
 
