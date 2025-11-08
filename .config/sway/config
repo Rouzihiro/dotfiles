@@ -4,6 +4,8 @@ set $opacity 0.9
 set $term foot
 set $launcher wofi ---show drun
 set $browser librewolf
+set $files thunar
+set $tfiles thunar
 set $fileManager thunar
 set $TfileManager $term -e yazi
 set $editor $term -e nvim

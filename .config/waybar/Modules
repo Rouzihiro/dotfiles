@@ -1,5 +1,10 @@
 {
 
+ "sway/language": {
+    "format": "  {short}",
+    "on-click": "swaymsg 'input * xkb_switch_layout next'"
+  },
+
 "temperature": {
 	"interval": 10,
 	"tooltip": true,
@@ -39,8 +44,8 @@
 	"on-click-middle": "",
 	"on-click-right": "",
 	"on-update": "",
-	"on-scroll-up": "$HOME/.config/hypr/scripts/Brightness.sh --inc",
-	"on-scroll-down": "$HOME/.config/hypr/scripts/Brightness.sh --dec",
+ 	"on-scroll-up": "brightness.sh up",
+  "on-scroll-down": "brightness.sh down",
 	"smooth-scrolling-threshold": 1,
 },
 
@@ -156,6 +161,7 @@
 	"format-icons": [
 		"▁", "▂", "▃", "▄", "▅", "▆", "▇", "█"
 	],
+  "on-click": "foot -T 'floaty-medium' -e bash -c 'btop'",
 	"on-click-right": "gnome-system-monitor",
 },
 
@@ -167,14 +173,13 @@
 	"format": "{percentage_used}% 󰋊",
 	//"tooltip": true,
 	"tooltip-format": "{used} used out of {total} on {path} ({percentage_used}%)",
+  "on-click": "foot -T 'floaty-small' -e bash -c 'cd ~ && sudo ncdu'",
+  "on-click-right": "foot -T 'floaty-small' -e bash -c 'cd / && sudo ncdu'"
 },
 
 "sway/language": {
-	"format": "Lang: {}",
-	"format-en": "US",
-	"format-tr": "Korea",
-	"keyboard-name": "at-translated-set-2-keyboard",
-	"on-click": "hyprctl switchxkblayout $SET_KB next"
+    "format": "  {short}",
+    "on-click": "swaymsg 'input * xkb_switch_layout next'"
 },
 
 "sway/submap": {
@@ -223,11 +228,12 @@
 "memory": {
 	"interval": 10,
 	"format": "{used:0.1f}G 󰾆",
-	"format-alt": "{percentage}% 󰾆",
+"format-alt": "{percentage}% 󰾆",
 	"format-alt-click": "click",
 	"tooltip": true,
 	"tooltip-format": "{used:0.1f}GB/{total:0.1f}G",
-	"on-click-right": "$HOME/.config/hypr/scripts/WaybarScripts.sh --btop"
+ 	"on-click": "foot -T 'floaty-small' -e bash -c 'sudo ps_mem; read -rp \"Press Enter to exit...\"'",
+	"on-click-right": "foot -T 'floaty-small' -e bash -c 'sudo ps_mem; read -rp \"Press Enter to exit...\"'"
 },
 
 "mpris": {
@@ -276,7 +282,7 @@
 	"format-icons": [
 		"󰤯", "󰤟", "󰤢", "󰤥", "󰤨"
 	],
-	"on-click-right": "$HOME/.config/hypr/scripts/WaybarScripts.sh --nmtui"
+	"on-click-right": "WaybarScripts --nmtui"
 },
 
 "network#speed": {

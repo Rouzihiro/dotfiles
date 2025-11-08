@@ -28,6 +28,7 @@
 		"power-profiles-daemon",
 		"memory",
 		"temperature",
+		"sway/language",
 		"disk",
 	]
 },
@@ -40,6 +41,7 @@
 		"transition-left-to-right": true
         },
 	"modules": [
+		"sway/language",
 		"temperature",		
 		"cpu",
 		"power-profiles-daemon",	
