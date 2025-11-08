@@ -19,7 +19,7 @@
 	"format-icons": [
 		"󰈸"
 	],
-	"on-click-right": "$HOME/.config/hypr/scripts/WaybarScripts.sh --nvtop"
+	"on-click-right": "$HOME/.local/bin/bar/WaybarScripts --btop"
 },
 
 "backlight": {
@@ -80,8 +80,7 @@
 	"format-time": "{H}h {M}min",
 	"tooltip": true,
 	"tooltip-format": "{timeTo} {power}w",
-	"on-click-middle": "$HOME/.config/hypr/scripts/ChangeBlur.sh",
-	"on-click-right": "$HOME/.config/hypr/scripts/Wlogout.sh",
+	"on-click-right": "$HOME/.local/bin/bar/powermenu",
 },
 
 "bluetooth": {
@@ -277,7 +276,7 @@
 	"format-icons": [
 		"󰤯", "󰤟", "󰤢", "󰤥", "󰤨"
 	],
-	"on-click-right": "WaybarScripts --nmtui"
+	"on-click-right": "$HOME/.local/bin/bemenu/bm-wifi"
 },
 
 "network#speed": {
@@ -295,7 +294,8 @@
 	"max-length": 24,
 	"format-icons": [
 		"󰤯", "󰤟", "󰤢", "󰤥", "󰤨"
-	]
+	],
+	"on-click-right": "$HOME/.local/bin/bemenu/bm-wifi",
 },
 
 "power-profiles-daemon": {

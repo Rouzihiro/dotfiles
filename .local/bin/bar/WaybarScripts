@@ -31,6 +31,9 @@ done
 
 # Launch based on argument
 case "$1" in
+    --superb)
+        $term --title superb sh -c 'superb'
+        ;;
     --btop)
         $term --title btop sh -c 'btop'
         ;;
@@ -46,23 +49,24 @@ case "$1" in
     --files)
         $files &
         ;;
-    --tfiles)
-        $tfiles &
+    --yazi)
+        $term --title yazi sh -c 'yazi'
         ;;
     --editor)
-        $editor &
+        $term --title nvim sh -c 'nvim'
         ;;
     *)
         cat <<EOF
 Usage: $0 [option]
 
 Options:
+  --superb    Launch Zorro Launcher
   --btop      Launch btop in a new terminal
   --nvtop     Launch nvtop in a new terminal
   --nmtui     Launch nmtui in a new terminal
   --term      Launch a terminal
   --files     Launch your file manager
-  --tfiles    Launch terminal file manager
+  --yazi    	Launch terminal file manager
   --editor    Launch editor
 EOF
         ;;
