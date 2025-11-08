@@ -7,3 +7,16 @@
 @define-color alert        #f7768e;
 @define-color activegreen  #9ece6a;
 @define-color disabled     #565f89;
+
+
+@define-color bg_alt      #24283b;
+@define-color border      #292e42;
+
+@define-color red         #f7768e;
+@define-color green       #9ece6a;
+@define-color yellow      #e0af68;
+@define-color blue        #7aa2f7;
+@define-color purple      #bb9af7;
+@define-color aqua        #7dcfff;
+@define-color orange      #ff9e64;
+@define-color gray        #565f89;
