@@ -1,26 +1,10 @@
-@define-color white      	#F2F2F2;
-@define-color black      	#000000;
-@define-color text       	#FFFFFF;
-@define-color lightgray  	#686868;
-@define-color darkgray   	#353535;
+@import "../zorro/current/theme/waybar.css";
 
-@define-color transparent	rgba(1, 1, 1, 0.5);
-@define-color teal-trans	rgba(1, 117, 84, 0.5);
-@define-color cyan			rgba(53, 140, 169, 1);
-
-@define-color background-module     @transparent;
-@define-color border-color          @color12;
-@define-color button-color          @color11;
-@define-color button-hover          @color13;
-
-@import '../../.config/waybar/wallust/colors-waybar.css';
-@import "../waybar/style/catppuccin-themes/latte.css";
-
+/* ---------- Global Styles ---------- */
 * {
     font-family: "JetBrainsMono Nerd Font";
     font-weight: bold;
-	min-height: 0;  
-    /* set font-size to 100% if font scaling is set to 1.00 using nwg-look */
+    min-height: 0;
     font-size: 97%;
     font-feature-settings: '"zero", "ss01", "ss02", "ss03", "ss04", "ss05", "cv31"';
 }
@@ -28,7 +12,7 @@
 window#waybar {
     background: transparent;
     border-radius: 0px;
-    color: #cba6f7;
+    color: @fg;
 }
 
 window#waybar.hidden {
@@ -36,80 +20,77 @@ window#waybar.hidden {
 }
 
 tooltip {
-    background: #1e1e2e;
+    background: @bg_alt;
     border-radius: 12px;
     border-width: 1px;
     border-style: solid;
-    border-color: @border-color;
-    color: #ffffff;
+    border-color: @border;
+    color: @fg;
 }
 
-/*-----module groups----*/
+/* ---------- Module Groups ---------- */
 .modules-left,
 .modules-center,
 .modules-right {
-    background-color: @background-module;
-    border-radius:15px;
-    border-bottom:2px solid @border-color;
-	padding-top: 2px;
-	padding-bottom: 0px;
-	padding-right: 4px;
-	padding-left: 4px;
+    background-color: @bg_alt;
+    border-radius: 15px;
+    border-bottom: 2px solid @border;
+    padding-top: 2px;
+    padding-bottom: 0px;
+    padding-right: 4px;
+    padding-left: 4px;
 }
 
+/* ---------- Workspaces ---------- */
 #workspaces {
     padding: 0px 1px;
     border-radius: 15px;
-    border:2px solid @border-color;
+    border: 2px solid @border;
     font-weight: bold;
-    font-style: normal;
-    opacity:0.8;
-    color:#FFFFFF;
+    opacity: 0.8;
+    color: @fg;
 }
 
-#taskbar button,   
+#taskbar button,
 #workspaces button {
-    color: #6E6A86;
+    color: @gray;
     box-shadow: none;
-	text-shadow: none;
+    text-shadow: none;
     border-radius: 30px;
     padding-left: 4px;
     padding-right: 4px;
-    animation: gradient_f 20s ease-in infinite;
     transition: all 0.5s cubic-bezier(.55,-0.68,.48,1.682);
 }
 
 #taskbar button.active,
 #workspaces button.active {
-    color: #ffd700;
-    border-radius: 50%;
-    background-color: black;
-    border-radius: 15px 15px 15px 15px;
+    color: @yellow;
+    border-radius: 15px;
+    background-color: @bg;
     padding-left: 8px;
     padding-right: 8px;
-    animation: gradient_f 20s ease-in infinite;
     transition: all 0.3s cubic-bezier(.55,-0.68,.48,1.682);
 }
 
 #workspaces button.focused {
-    color: #d8dee9;
+    color: @fg;
 }
 
 #workspaces button.urgent {
-    color: #11111b;
+    color: @bg;
     border-radius: 10px;
 }
 
 #taskbar button:hover,
 #workspaces button:hover {
-    color: #ffd700;
+    color: @yellow;
     border-radius: 10px;
- 	padding-left: 2px;
+    padding-left: 2px;
     padding-right: 2px;
-    animation: gradient_f 20s ease-in infinite;
     transition: all 0.3s cubic-bezier(.55,-0.68,.48,1.682);
 }
 
+/* ---------- Modules ---------- */
 #backlight,
 #backlight-slider,
 #battery,
@@ -160,28 +141,24 @@ tooltip {
 #custom-weather.clearNight,
 #custom-weather.cloudyFoggyDay,
 #custom-weather.cloudyFoggyNight,
-#custom-weather.default, 
+#custom-weather.default,
 #custom-weather.rainyDay,
 #custom-weather.rainyNight,
 #custom-weather.severe,
 #custom-weather.showyIcyDay,
 #custom-weather.snowyIcyNight,
 #custom-weather.sunnyDay {
-    color: #e5d9f5;
-	padding-right: 6px;
-	padding-left: 6px;;
+    color: @fg;
+    padding-right: 6px;
+    padding-left: 6px;
 }
 
+/* ---------- Temperature ---------- */
 #temperature.critical {
-    background-color: #ff0000;
+    background-color: @red;
 }
 
-@keyframes blink {
-    to {
-        color: #000000;
-    }
-}
-
+/* ---------- Sliders ---------- */
 #backlight-slider slider,
 #pulseaudio-slider slider {
     min-width: 0px;
@@ -197,78 +174,84 @@ tooltip {
     min-width: 80px;
     min-height: 5px;
     border-radius: 5px;
-    background-color: #22252a;
+    background-color: @bg_alt;
 }
 
 #backlight-slider highlight,
 #pulseaudio-slider highlight {
     min-height: 10px;
     border-radius: 5px;
-    background-color: #ba5663;
+    background-color: @purple;
 }
 
+/* ---------- Audio ---------- */
 #pulseaudio-slider,
 #pulseaudio {
-	color: @color13;
+    color: @purple;
 }
 
 #pulseaudio.muted {
-    color: red;
+    color: @red;
 }
 
+/* ---------- System Info ---------- */
 #memory {
-	color: @sapphire;
+    color: @blue;
 }
 
 #cpu {
-	color: @mauve;
+    color: @purple;
 }
 
 #battery {
-	color: @rosewater;
+    color: @green;
 }
 
 #disk {
-	color: @sky;
-}
-
-#temperature.critical {
-    background-color: @red;
+    color: @blue;
 }
 
 #battery.critical:not(.charging) {
-	color: #f53c3c;
-	animation-name: blink;
-	animation-duration: 3.0s;
-	animation-timing-function: steps(12);
-	animation-iteration-count: infinite;
-	animation-direction: alternate;
+    color: @red;
+    animation-name: blink;
+    animation-duration: 3.0s;
+    animation-timing-function: steps(12);
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
 }
 
+/* ---------- Idle Inhibitor ---------- */
 #custom-hypridle,
 #custom-lock,
 #idle_inhibitor {
-    color: @teal;
+    color: @aqua;
 }
 
-/*-----Indicators----*/
 #custom-hypridle.notactive,
 #idle_inhibitor.activated {
-	color: #39FF14;
+    color: @green;
 }
 
-
-#clock#2 {
-    color: #efe8f7;
-}
-
+/* ---------- Clock ---------- */
 #clock {
-	color: @sapphire;
+    color: @blue;
     border-radius: 15px;
-    border:2px solid @border-color;
+    border: 2px solid @border;
 }
+
+/* ---------- Updates ---------- */
 #custom-updates {
     color: @yellow;
 }
-#swaync{
-    color: #ffd700;}
+
+/* ---------- Notifications ---------- */
+#swaync {
+    color: @yellow;
+}
+
+/* ---------- Animations ---------- */
+@keyframes blink {
+    to {
+        color: @bg;
+    }
+}
