@@ -12,6 +12,49 @@ bash <(curl -sSL https://kutt.it/ReyDot)
 
 ![Theme Switcher Demo](./assets/theme-switcher.gif)
 
+
+# Blazing Fast Theme Switcher
+
+A simple, efficient, and centralized theme management system for your dotfiles and applications.
+
+---
+
+## Overview
+
+With this setup, you define all your themes **once** inside your dotfiles. Then, using a small script, you can switch themes across all your applications **instantly**.
+
+The magic? **Symlinks.** Instead of moving files or copying themes around, the script updates a single symlink pointing to the currently active theme folder. All your apps source their color schemes from that symlink, making theme switching:
+
+- **Blazing fast**
+- **Safe** (no file duplication or accidental overwrites)
+- **Centralized** (one place to manage all themes)
+
+---
+
+## Features
+
+- Centralized theme definitions in your dotfiles
+- Instant theme switching across all apps
+- Minimal disk operations (symlink only)
+- Compatible with Nvim, Wofi, multiple Terminals, Tmux, Starship and other tools that read theme files
+
+---
+
+## Installation
+
+Clone your dotfiles and make sure the scripts and themes are in place:
+
+```bash
+# Example directory structure
+~/.dotfiles/
+├── install-themes.sh
+├── themes/
+│   ├── theme1/
+│   ├── theme2/
+│   └── ...
+└── .local/bin/rofi/wofi-theme-switcher
+
+
 ## 🚀 Great performance for x86 and Apple Silicon M1
   
 This setup with Sway WM idles at ~600MB RAM with our ultra-efficient stack:  
