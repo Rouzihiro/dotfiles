@@ -44,7 +44,6 @@ The magic? **Symlinks.** Instead of moving files or copying themes around, the s
 
 Clone your dotfiles and make sure the scripts and themes are in place:
 
-```bash
 # Example directory structure
 ~/.dotfiles/
 ├── install-themes.sh
