@@ -32,7 +32,7 @@ menu() {
         fi
     fi
 
-    echo -e "$options" | rofi -dmenu -p "$prompt…" "${args[@]}"
+    echo -e "$options" | wofi --dmenu -p "$prompt…" "${args[@]}"
 }
 
 terminal() {
@@ -481,7 +481,7 @@ show_main_menu() {
 
 go_to_menu() {
   case "${1,,}" in
-	*apps*) rofi -show drun -p "Launch…" ;;
+	*apps*) wofi --show drun -p "Launch…" ;;
   *learn*) show_learn_menu ;;
   *trigger*) show_trigger_menu ;;
   *share*) show_share_menu ;;
