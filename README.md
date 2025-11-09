@@ -168,12 +168,11 @@ git clone https://github.com/Rouzihiro/dotfiles.git
 cd dotfiles
 chmod +x install-arch.sh
 chmod +x install-fedora.sh
+chmod +x install-themes.sh
 ./installer-arch.sh
 ./install-fedora.sh
+./install-themes.sh
 ```
-
-![Installer Script](./assets/installer.png)
-
 ### 🌈 Customization
 
     Edit package lists in /pkgs directory
