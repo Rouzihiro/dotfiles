@@ -21,7 +21,7 @@ fi
 ln -nsf "$THEME_PATH" "$CURRENT_THEME_DIR"
 
 # Change background with theme
-zorro-theme-bg-next
+z-theme-bg-next
 
 # Restart components to apply new theme
 tmux source-file ~/.config/tmux/tmux.conf  

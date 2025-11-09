@@ -1,0 +1,135 @@
+#!/bin/bash
+# zorro menu launcher
+# Fully themed wofi, TUI support, floating TUIs, and all submenus
+
+export PATH="$HOME/.local/share/bin:$PATH"
+export XDG_CONFIG_HOME="$HOME/.config"
+# export GTK_THEME="YourThemeName:dark"  # optional
+
+BACK_TO_EXIT=false
+
+### Utility functions
+
+back_to() {
+    local parent_menu="$1"
+    if [[ "$BACK_TO_EXIT" == "true" ]]; then
+        exit 0
+    elif [[ -n "$parent_menu" ]]; then
+        "$parent_menu"
+    else
+        show_main_menu
+    fi
+}
+
+menu() {
+    local prompt="$1"
+    local options="$2"
+    local extra="$3"
+    local preselect="$4"
+    read -r -a args <<<"$extra"
+
+    if [[ -n "$preselect" ]]; then
+        local index
+        index=$(echo -e "$options" | grep -nxF "$preselect" | cut -d: -f1)
+        if [[ -n "$index" ]]; then
+            args+=("-a" "$index")
+        fi
+    fi
+
+    echo -e "$options" | rofi -dmenu -p "$prompt…" "${args[@]}"
+}
+
+# Launch terminal
+terminal() {
+    alacritty --class=zorro -e "$@"
+}
+
+# Launch a floating TUI app in foot
+z_run_tui() {
+    if [[ -z "$1" ]]; then
+        echo "Usage: z_run_tui <command> [args...]"
+        return 1
+    fi
+
+    CMD="$1"
+    shift
+
+    # Use app_id so Sway applies your floaty-medium rules
+    FOOT_APP_ID="runner_floating" setsid foot -e "$CMD" "$@" >/dev/null 2>&1 &
+}
+
+# Launch wofi fully themed
+launch_wofi() {
+    cd "$HOME" || exit
+    rofi -show drun -p "Launch…"
+}
+
+# Open file in editor
+open_in_editor() {
+    notify-send "Editing config file" "$1"
+    zorro-launch-editor "$1"
+}
+
+# Present terminal helper
+present_terminal() {
+    zorro-launch-floating-terminal-with-presentation "$1"
+}
+
+### Submenus
+
+show_main_menu() {
+    go_to_menu "$(menu "Go" "󰀻  Apps\n󰧑  Learn\n󱓞  Trigger\n  Style\n  Setup\n󰉉  Install\n󰭌  Remove\n  Update\n  About\n  System")"
+}
+
+go_to_menu() {
+    case "${1,,}" in
+    *apps*) launch_wofi ;;
+    *learn*) show_learn_menu ;;
+    *trigger*) show_trigger_menu ;;
+    *style*) show_style_menu ;;
+    *theme*) show_theme_menu ;;
+    *screenshot*) show_screenshot_menu ;;
+    *screenrecord*) show_screenrecord_menu ;;
+    *setup*) show_setup_menu ;;
+    *power*) show_setup_power_menu ;;
+    *install*) show_install_menu ;;
+    *remove*) show_remove_menu ;;
+    *update*) show_update_menu ;;
+    *about*) zorro-launch-about ;;
+    *system*) show_system_menu ;;
+    esac
+}
+
+### Example submenu (expand as needed)
+show_learn_menu() {
+    case $(menu "Learn" "  Keybindings\n  zorro\n  Omarchy\n  Hyprland\n  Fedora\n󰣇  Arch\n  Neovim\n󱆃  Bash") in
+    *Keybindings*) z-menu-keybindings ;;
+    *zorro*) z-launch-webapp "https://github.com/elpritchos/zorro" ;;
+    *Omarchy*) z-launch-webapp "https://learn.omacom.io/2/the-omarchy-manual" ;;
+    *Hyprland*) z-launch-webapp "https://wiki.hypr.land" ;;
+    *Fedora*) z-launch-webapp "https://docs.fedoraproject.org" ;;
+    *Arch*) zo-launch-webapp "https://wiki.archlinux.org" ;;
+    *Neovim*) z-launch-webapp "https://neovim.io/doc/user/quickref.html" ;;
+    *Bash*) z-launch-webapp "https://devhints.io/bash" ;;
+    *) show_main_menu ;;
+    esac
+}
+
+### Example TUI launcher integration
+# You can now run TUIs floating via menu
+launch_tui_menu() {
+    case $(menu "TUI Apps" "NMTUI\nWiremix\nBluetui") in
+    *NMTUI*) z_run_tui nmtui ;;
+    *Wiremix*) z_run_tui wiremix ;;
+    *Bluetui*) z_run_tui bluetui ;;
+    *) show_main_menu ;;
+    esac
+}
+
+### Start menu
+if [[ -n "$1" ]]; then
+    BACK_TO_EXIT=true
+    pkill rofi || go_to_menu "$1"
+else
+    pkill rofi || show_main_menu
+fi
