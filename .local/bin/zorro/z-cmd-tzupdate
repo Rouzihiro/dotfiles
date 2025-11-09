@@ -5,7 +5,7 @@ new_timezone=$(timedatectl list-timezones | fzf)
 if [[ -n "$new_timezone" ]]; then
   echo "Setting timezone to $new_timezone"
   if sudo timedatectl set-timezone "$new_timezone"; then
-    omadora-restart-waybar
+    z-restart-waybar
     notify-send "   Time updated and timezone set to $new_timezone"
   else
     notify-send "Failed to set timezone to $new_timezone"

@@ -1,0 +1,4 @@
+#!/bin/bash
+
+# Run wiremix in foot terminal with the proper class, detached from terminal
+setsid foot --class=Wiremix -e wiremix "$@" >/dev/null 2>&1 &
