@@ -5,9 +5,22 @@ if [ $# -eq 0 ]; then
   exit 1
 fi
 
+# Define per-app sleep times (in seconds)
+declare -A SLEEP_RULES=(
+  # [waybar]=0.3
+  [swaync]=0.2
+  [telegram-desktop]=0.5
+)
+
 for APP in "$@"; do
   echo "Restarting $APP..."
   pkill -x "$APP"
-  sleep 0.3
+
+  # Apply rule if it exists
+  if [[ -n "${SLEEP_RULES[$APP]}" ]]; then
+    echo "Sleeping ${SLEEP_RULES[$APP]}s for $APP..."
+    sleep "${SLEEP_RULES[$APP]}"
+  fi
+
   setsid "$APP" >/dev/null 2>&1 &
 done
