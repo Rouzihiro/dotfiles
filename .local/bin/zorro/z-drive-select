@@ -11,7 +11,7 @@ fi
 drives_with_info=""
 while IFS= read -r drive; do
   [[ -n "$drive" ]] || continue
-  drives_with_info+="$(omarchy-drive-info "$drive")"$'\n'
+  drives_with_info+="$(zorro-drive-info "$drive")"$'\n'
 done <<<"$drives"
 
 selected_drive="$(printf "%s" "$drives_with_info" | gum choose --header "Select drive")" || exit 1

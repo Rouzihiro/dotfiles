@@ -3,7 +3,7 @@
 # Designed to be run by systemd timer every 30 seconds and alerts if battery is low
 
 BATTERY_THRESHOLD=10
-NOTIFICATION_FLAG="/run/user/$UID/omadora_battery_notified"
+NOTIFICATION_FLAG="/run/user/$UID/z_battery_notified"
 
 get_battery_percentage() {
   upower -i "$(upower -e | grep 'BAT')" \

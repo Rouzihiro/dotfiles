@@ -1,0 +1,14 @@
+#!/bin/bash
+# ~/bin/restart-app
+
+if [ $# -eq 0 ]; then
+  echo "Usage: $0 <app1> [app2 ...]"
+  exit 1
+fi
+
+for APP in "$@"; do
+  echo "Restarting $APP..."
+  pkill -x "$APP"
+  sleep 0.3
+  setsid "$APP" >/dev/null 2>&1 &
+done
