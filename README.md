@@ -44,6 +44,7 @@ The magic? **Symlinks.** Instead of moving files or copying themes around, the s
 
 Clone your dotfiles and make sure the scripts and themes are in place:
 
+```bash
 # Example directory structure
 ~/.dotfiles/
 ├── install-themes.sh
@@ -52,7 +53,7 @@ Clone your dotfiles and make sure the scripts and themes are in place:
 │   ├── theme2/
 │   └── ...
 └── .local/bin/rofi/wofi-theme-switcher
-
+```
 
 ## 🚀 Great performance for x86 and Apple Silicon M1
   
