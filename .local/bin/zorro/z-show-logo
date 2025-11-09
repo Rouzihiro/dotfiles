@@ -2,6 +2,6 @@
 
 clear
 echo -e "\033[32m"
-cat <~/.local/share/omadora/logo.txt
+cat <~/dotfiles/assets/zorro.txt
 echo -e "\033[0m"
 echo
