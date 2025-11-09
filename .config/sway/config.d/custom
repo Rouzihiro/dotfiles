@@ -25,8 +25,9 @@ bindsym $mod+mod1+i exec "wofi-wifi"
 set $lockscreen swaylock -i ~/Pictures/lockscreen/VIM.png
 bindsym $mod+mod1+l exec $lockscreen
 
-bindsym $mod+m exec "bm-mount-usb"
-bindsym $mod+mod1+m exec $term -T 'floaty-small' -e bash -c 'sudo ps_mem; echo ""; read -rp "Press Enter to close..."'
+bindsym $mod+m exec "z-menu"
+bindsym $mod+mod1+m exec "bm-mount-usb"
+bindsym $mod+Shift+m exec $term -T 'floaty-small' -e bash -c 'sudo ps_mem; echo ""; read -rp "Press Enter to close..."'
 
 #bindsym $mod+n exec "bm-notes"
 bindsym $mod+n exec "$HOME/.local/bin/rofi/wofi-notes"
