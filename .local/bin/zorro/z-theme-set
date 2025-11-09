@@ -1,7 +1,7 @@
 #!/bin/bash
 
 if [[ -z "$1" && "$1" != "CNCLD" ]]; then
-  echo "Usage: zorro-theme-set <theme-name>" >&2
+  echo "Usage: z-theme-set <theme-name>" >&2
   exit 1
 fi
 
