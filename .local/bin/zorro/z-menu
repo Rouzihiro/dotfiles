@@ -481,7 +481,7 @@ show_main_menu() {
 
 go_to_menu() {
   case "${1,,}" in
-  *apps*) walker -p "Launch…" ;;
+	*apps*) rofi -show drun -p "Launch…" ;;
   *learn*) show_learn_menu ;;
   *trigger*) show_trigger_menu ;;
   *share*) show_share_menu ;;
