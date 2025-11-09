@@ -24,7 +24,7 @@ fi
 ln -nsf "$THEME_PATH" "$CURRENT_THEME_DIR"
 
 # Change background
-zorro-theme-bg-next
+z-theme-bg-next
 
 # Restart components
 tmux source-file ~/.config/tmux/tmux.conf  
@@ -35,7 +35,7 @@ pkill -SIGUSR2 btop
 # makoctl reload
 
 # Change gnome, terminal, etc. themes
-zorro-theme-bat
+z-theme-bat
 pkill waybar
 waybar
 # zorro-theme-set-terminal
