@@ -1,0 +1,3 @@
+#!/bin/bash
+cmd="$*"
+setsid foot --app-id="runner_floating" -e bash -c "omarchy-show-logo; $*; omarchy-show-done" >/dev/null 2>&1 &
