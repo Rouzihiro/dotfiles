@@ -1,5 +1,5 @@
 <h1 align="center" style="display: flex; justify-content: center; align-items: center;">
-<img src="./assets/arch-logo.png" width="100px" alt="Arch Logo" style="margin-right: 30px;" />
+<img src="./assets/Zorro-OS.png" width="500px" style="center" />
 <br>
 ArchLinux & Fedora Universal Installer for a Lightweight & Beautiful Setup
 <br>

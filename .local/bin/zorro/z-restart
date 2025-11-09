@@ -1,5 +1,4 @@
 #!/bin/bash
-# ~/bin/restart-app
 
 if [ $# -eq 0 ]; then
   echo "Usage: $0 <app1> [app2 ...]"
