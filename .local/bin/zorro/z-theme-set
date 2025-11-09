@@ -32,5 +32,8 @@ pkill -SIGUSR2 btop
 # makoctl reload
 
 # Change gnome, terminal, etc. themes
-#zorro-theme-set-terminal
-#zorro-theme-set-gnome
+z-theme-bat
+pkill waybar
+waybar
+#z-theme-set-terminal
+#z-theme-set-gnome
