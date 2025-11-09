@@ -1,6 +1,6 @@
 #!/bin/bash
 
-export PATH="$HOME/.local/share/omadora/bin:$PATH"
+export PATH="$HOME/.local/share/zorro/bin:$PATH"
 
 # Set to true when going directly to a submenu, so we can exit directly
 BACK_TO_EXIT=false
@@ -33,21 +33,20 @@ menu() {
     fi
   fi
 
-  #echo -e "$options" | walker --dmenu --theme dmenu_250 -p "$prompt…" "${args[@]}"
   echo -e "$options" | wofi --dmenu -p "$prompt…" "${args[@]}"
 }
 
 terminal() {
-  alacritty --class=Omadora -e "$@"
+  alacritty --class=zorro -e "$@"
 }
 
 present_terminal() {
-  omadora-launch-floating-terminal-with-presentation "$1"
+  zorro-launch-floating-terminal-with-presentation "$1"
 }
 
 open_in_editor() {
   notify-send "Editing config file" "$1"
-  omadora-launch-editor "$1"
+  zorro-launch-editor "$1"
 }
 
 install() {
@@ -59,19 +58,19 @@ install_and_launch() {
 }
 
 install_font() {
-  present_terminal "echo 'Installing $1...'; sudo dnf install -y $2 && sleep 2 && omadora-font-set '$3'"
+  present_terminal "echo 'Installing $1...'; sudo dnf install -y $2 && sleep 2 && zorro-font-set '$3'"
 }
 
 show_learn_menu() {
-  case $(menu "Learn" "  Keybindings\n  Omadora\n  Omarchy\n  Hyprland\n  Fedora\n󰣇  Arch\n  Neovim\n󱆃  Bash") in
-  *Keybindings*) omadora-menu-keybindings ;;
-  *Omadora*) omadora-launch-webapp "https://github.com/elpritchos/omadora" ;;
-  *Omarchy*) omadora-launch-webapp "https://learn.omacom.io/2/the-omarchy-manual" ;;
-  *Hyprland*) omadora-launch-webapp "https://wiki.hypr.land" ;;
-  *Fedora*) omadora-launch-webapp "https://docs.fedoraproject.org" ;;
-  *Arch*) omadora-launch-webapp "https://wiki.archlinux.org" ;;
-  *Neovim*) omadora-launch-webapp "https://neovim.io/doc/user/quickref.html" ;;
-  *Bash*) omadora-launch-webapp "https://devhints.io/bash" ;;
+  case $(menu "Learn" "  Keybindings\n  zorro\n  Omarchy\n  Hyprland\n  Fedora\n󰣇  Arch\n  Neovim\n󱆃  Bash") in
+  *Keybindings*) zorro-menu-keybindings ;;
+  *zorro*) zorro-launch-webapp "https://github.com/elpritchos/zorro" ;;
+  *Omarchy*) zorro-launch-webapp "https://learn.omacom.io/2/the-omarchy-manual" ;;
+  *Hyprland*) zorro-launch-webapp "https://wiki.hypr.land" ;;
+  *Fedora*) zorro-launch-webapp "https://docs.fedoraproject.org" ;;
+  *Arch*) zorro-launch-webapp "https://wiki.archlinux.org" ;;
+  *Neovim*) zorro-launch-webapp "https://neovim.io/doc/user/quickref.html" ;;
+  *Bash*) zorro-launch-webapp "https://devhints.io/bash" ;;
   *) show_main_menu ;;
   esac
 }
@@ -95,29 +94,29 @@ show_capture_menu() {
 
 show_screenshot_menu() {
   case $(menu "Screenshot" "  Region\n  Window\n  Display") in
-  *Region*) omadora-cmd-screenshot ;;
-  *Window*) omadora-cmd-screenshot window ;;
-  *Display*) omadora-cmd-screenshot output ;;
+  *Region*) zorro-cmd-screenshot ;;
+  *Window*) zorro-cmd-screenshot window ;;
+  *Display*) zorro-cmd-screenshot output ;;
   *) show_capture_menu ;;
   esac
 }
 
 show_screenrecord_menu() {
   case $(menu "Screenrecord" "  Region\n  Region + Audio\n  Display\n  Display + Audio") in
-  *"Region + Audio"*) omadora-cmd-screenrecord region audio ;;
-  *Region*) omadora-cmd-screenrecord ;;
-  *"Display + Audio"*) omadora-cmd-screenrecord output audio ;;
-  *Display*) omadora-cmd-screenrecord output ;;
+  *"Region + Audio"*) zorro-cmd-screenrecord region audio ;;
+  *Region*) zorro-cmd-screenrecord ;;
+  *"Display + Audio"*) zorro-cmd-screenrecord output audio ;;
+  *Display*) zorro-cmd-screenrecord output ;;
   *) show_capture_menu ;;
   esac
 }
 
 show_toggle_menu() {
   case $(menu "Toggle" "󱄄  Screensaver\n󰔎  Nightlight\n󱫖  Idle Lock\n󰍜  Top Bar") in
-  *Screensaver*) omadora-toggle-screensaver ;;
-  *Nightlight*) omadora-toggle-nightlight ;;
-  *Idle*) omadora-toggle-idle ;;
-  *Bar*) omadora-toggle-waybar ;;
+  *Screensaver*) zorro-toggle-screensaver ;;
+  *Nightlight*) zorro-toggle-nightlight ;;
+  *Idle*) zorro-toggle-idle ;;
+  *Bar*) zorro-toggle-waybar ;;
   *) show_trigger_menu ;;
   esac
 }
@@ -126,29 +125,29 @@ show_style_menu() {
   case $(menu "Style" "󰸌  Theme\n  Font\n  Background\n  Hyprland\n󱄄  Screensaver\n  About") in
   *Theme*) show_theme_menu ;;
   *Font*) show_font_menu ;;
-  *Background*) omadora-theme-bg-next ;;
+  *Background*) zorro-theme-bg-next ;;
   *Hyprland*) open_in_editor ~/.config/hypr/looknfeel.conf ;;
-  *Screensaver*) open_in_editor ~/.config/omadora/branding/screensaver.txt ;;
-  *About*) open_in_editor ~/.config/omadora/branding/about.txt ;;
+  *Screensaver*) open_in_editor ~/.config/zorro/branding/screensaver.txt ;;
+  *About*) open_in_editor ~/.config/zorro/branding/about.txt ;;
   *) show_main_menu ;;
   esac
 }
 
 show_theme_menu() {
-  theme=$(menu "Theme" "$(omadora-theme-list)" "" "$(omadora-theme-current)")
+  theme=$(menu "Theme" "$(zorro-theme-list)" "" "$(zorro-theme-current)")
   if [[ "$theme" == "CNCLD" || -z "$theme" ]]; then
     back_to show_style_menu
   else
-    omadora-theme-set "$theme"
+    zorro-theme-set "$theme"
   fi
 }
 
 show_font_menu() {
-  theme=$(menu "Font" "$(omadora-font-list)" "-w 350" "$(omadora-font-current)")
+  theme=$(menu "Font" "$(zorro-font-list)" "-w 350" "$(zorro-font-current)")
   if [[ "$theme" == "CNCLD" || -z "$theme" ]]; then
     back_to show_style_menu
   else
-    omadora-font-set "$theme"
+    zorro-font-set "$theme"
   fi
 }
 
@@ -159,33 +158,33 @@ show_setup_menu() {
   options="$options\n  Defaults\n󰱔  DNS\n  Config"
 
   case $(menu "Setup" "$options") in
-  *Audio*) omadora-launch-audio ;;
+  *Audio*) zorro-launch-audio ;;
   *Wifi*)
     rfkill unblock wifi
-    omadora-launch-wifi
+    zorro-launch-wifi
     ;;
   *Bluetooth*)
     rfkill unblock bluetooth
-    omadora-launch-bluetooth 
+    zorro-launch-bluetooth 
     ;;
   *Power*) show_setup_power_menu ;;
   *Monitors*) open_in_editor ~/.config/hypr/monitors.conf ;;
   *Keybindings*) open_in_editor ~/.config/hypr/bindings.conf ;;
   *Input*) open_in_editor ~/.config/hypr/input.conf ;;
   *Defaults*) open_in_editor ~/.config/uwsm/default ;;
-  *DNS*) present_terminal omadora-setup-dns ;;
+  *DNS*) present_terminal zorro-setup-dns ;;
   *Config*) show_setup_config_menu ;;
   *) show_main_menu ;;
   esac
 }
 
 show_setup_power_menu() {
-  profile=$(menu "Power Profile" "$(omadora-powerprofiles-list)" "" "$(powerprofilesctl get)")
+  profile=$(menu "Power Profile" "$(zorro-powerprofiles-list)" "" "$(powerprofilesctl get)")
 
   if [[ "$profile" == "CNCLD" || -z "$profile" ]]; then
     back_to show_setup_menu
   else
-    omadora-powerprofiles-set "$profile"
+    zorro-powerprofiles-set "$profile"
   fi
 }
 
@@ -193,23 +192,22 @@ show_setup_config_menu() {
   #case $(menu "Setup" "  Hyprland\n  Hypridle\n  Hyprlock\n  Hyprsunset\n  Swayosd\n󰌧  Walker\n󰍜  Waybar\n󰞅  XCompose") in
   case $(menu "Setup" "  Hyprland\n  Hypridle\n  Hyprlock\n  Hyprsunset\n󰌧  Wofi\n󰍜  Waybar\n󰞅  XCompose") in
   *Hyprland*) open_in_editor ~/.config/hypr/hyprland.conf ;;
-  *Hypridle*) open_in_editor ~/.config/hypr/hypridle.conf && omadora-restart-hypridle ;;
+  *Hypridle*) open_in_editor ~/.config/hypr/hypridle.conf && zorro-restart-hypridle ;;
   *Hyprlock*) open_in_editor ~/.config/hypr/hyprlock.conf ;;
-  *Hyprsunset*) open_in_editor ~/.config/hypr/hyprsunset.conf && omadora-restart-hyprsunset ;;
-  #*Swayosd*) open_in_editor ~/.config/swayosd/config.toml && omadora-restart-swayosd ;;
-  #*Walker*) open_in_editor ~/.config/walker/config.toml && omadora-restart-walker ;;
-  *Wofi*) open_in_editor ~/.config/wofi/config && omadora-restart-wofi ;;
-  *Waybar*) open_in_editor ~/.config/waybar/config.jsonc && omadora-restart-waybar ;;
-  *XCompose*) open_in_editor ~/.XCompose && omadora-restart-xcompose ;;
+  *Hyprsunset*) open_in_editor ~/.config/hypr/hyprsunset.conf && zorro-restart-hyprsunset ;;
+  #*Swayosd*) open_in_editor ~/.config/swayosd/config.toml && zorro-restart-swayosd ;;
+  *Wofi*) open_in_editor ~/.config/wofi/config && zorro-restart-wofi ;;
+  *Waybar*) open_in_editor ~/.config/waybar/config.jsonc && zorro-restart-waybar ;;
+  *XCompose*) open_in_editor ~/.XCompose && zorro-restart-xcompose ;;
   *) show_main_menu ;;
   esac
 }
 
 show_install_menu() {
   case $(menu "Install" "  Package\n  Web App\n  TUI\n  Style") in
-  *Package*) terminal omadora-pkg-install ;;
-  *Web*) present_terminal omadora-webapp-install ;;
-  *TUI*) present_terminal omadora-tui-install ;;
+  *Package*) terminal zorro-pkg-install ;;
+  *Web*) present_terminal zorro-webapp-install ;;
+  *TUI*) present_terminal zorro-tui-install ;;
   *Style*) show_install_style_menu ;;
   *) show_main_menu ;;
   esac
@@ -217,30 +215,30 @@ show_install_menu() {
 
 show_install_style_menu() {
   case $(menu "Install" "󰸌  Theme\n  Background") in
-  *Theme*) present_terminal omadora-theme-install ;;
-  *Background*) nautilus ~/.config/omadora/current/theme/backgrounds ;;
+  *Theme*) present_terminal zorro-theme-install ;;
+  *Background*) nautilus ~/.config/zorro/current/theme/backgrounds ;;
   *) show_install_menu ;;
   esac
 }
 
 show_remove_menu() {
   case $(menu "Remove" "  Package\n  Web App\n  TUI\n󰸌  Theme") in
-  *Package*) terminal omadora-pkg-remove ;;
-  *Web*) present_terminal omadora-webapp-remove ;;
-  *TUI*) present_terminal omadora-tui-remove ;;
-  *Theme*) present_terminal omadora-theme-remove ;;
+  *Package*) terminal zorro-pkg-remove ;;
+  *Web*) present_terminal zorro-webapp-remove ;;
+  *TUI*) present_terminal zorro-tui-remove ;;
+  *Theme*) present_terminal zorro-theme-remove ;;
   *) show_main_menu ;;
   esac
 }
 
 show_update_menu() {
-  case $(menu "Update" "  Omadora\n  Config\n󰸌  Themes\n  Process\n󰇅  Hardware\n  Password\n  Timezone") in
-  *Omadora*) present_terminal omadora-update ;;
+  case $(menu "Update" "  zorro\n  Config\n󰸌  Themes\n  Process\n󰇅  Hardware\n  Password\n  Timezone") in
+  *zorro*) present_terminal zorro-update ;;
   *Config*) show_update_config_menu ;;
-  *Themes*) present_terminal omadora-theme-update ;;
+  *Themes*) present_terminal zorro-theme-update ;;
   *Process*) show_update_process_menu ;;
   *Hardware*) show_update_hardware_menu ;;
-  *Timezone*) present_terminal omadora-cmd-tzupdate ;;
+  *Timezone*) present_terminal zorro-cmd-tzupdate ;;
   *Password*) show_update_password_menu ;;
   *) show_main_menu ;;
   esac
@@ -249,12 +247,12 @@ show_update_menu() {
 show_update_process_menu() {
   #case $(menu "Restart" "  Hypridle\n  Hyprsunset\n  Swayosd\n󰌧  Walker\n󰍜  Waybar") in
   case $(menu "Restart" "  Hypridle\n  Hyprsunset\n󰌧  Wofi\n󰍜  Waybar") in
-  *Hypridle*) omadora-restart-hypridle ;;
-  *Hyprsunset*) omadora-restart-hyprsunset ;;
-  #*Swayosd*) omadora-restart-swayosd ;;
-  #*Walker*) omadora-restart-walker ;;
-  *Wofi*) omadora-restart-wofi ;;
-  *Waybar*) omadora-restart-waybar ;;
+  *Hypridle*) zorro-restart-hypridle ;;
+  *Hyprsunset*) zorro-restart-hyprsunset ;;
+  #*Swayosd*) zorro-restart-swayosd ;;
+  #*Walker*) zorro-restart-walker ;;
+  *Wofi*) zorro-restart-wofi ;;
+  *Waybar*) zorro-restart-waybar ;;
   *) show_update_menu ;;
   esac
 }
@@ -262,31 +260,31 @@ show_update_process_menu() {
 show_update_config_menu() {
   #case $(menu "Use default config" "  Hyprland\n  Hypridle\n  Hyprlock\n  Hyprsunset\n󱣴  Plymouth\n  Swayosd\n󰌧  Walker\n󰍜  Waybar") in
   case $(menu "Use default config" "  Hyprland\n  Hypridle\n  Hyprlock\n  Hyprsunset\n󱣴  Plymouth\n󰌧  Wofi\n󰍜  Waybar") in
-  *Hyprland*) present_terminal omadora-refresh-hyprland ;;
-  *Hypridle*) present_terminal omadora-refresh-hypridle ;;
-  *Hyprlock*) present_terminal omadora-refresh-hyprlock ;;
-  *Hyprsunset*) present_terminal omadora-refresh-hyprsunset ;;
-  *Plymouth*) present_terminal omadora-refresh-plymouth ;;
-  #*Swayosd*) present_terminal omadora-refresh-swayosd ;;
-  #*Walker*) present_terminal omadora-refresh-walker ;;
-  *Wofi*) present_terminal omadora-refresh-wofi ;;
-  *Waybar*) present_terminal omadora-refresh-waybar ;;
+  *Hyprland*) present_terminal zorro-refresh-hyprland ;;
+  *Hypridle*) present_terminal zorro-refresh-hypridle ;;
+  *Hyprlock*) present_terminal zorro-refresh-hyprlock ;;
+  *Hyprsunset*) present_terminal zorro-refresh-hyprsunset ;;
+  *Plymouth*) present_terminal zorro-refresh-plymouth ;;
+  #*Swayosd*) present_terminal zorro-refresh-swayosd ;;
+  #*Walker*) present_terminal zorro-refresh-walker ;;
+  *Wofi*) present_terminal zorro-refresh-wofi ;;
+  *Waybar*) present_terminal zorro-refresh-waybar ;;
   *) show_update_menu ;;
   esac
 }
 
 show_update_hardware_menu() {
   case $(menu "Restart" "  Audio\n󱚾  Wi-Fi\n󰂯  Bluetooth") in
-  *Audio*) present_terminal omadora-restart-pipewire ;;
-  *Wi-Fi*) present_terminal omadora-restart-wifi ;;
-  *Bluetooth*) present_terminal omadora-restart-bluetooth ;;
+  *Audio*) present_terminal zorro-restart-pipewire ;;
+  *Wi-Fi*) present_terminal zorro-restart-wifi ;;
+  *Bluetooth*) present_terminal zorro-restart-bluetooth ;;
   *) show_update_menu ;;
   esac
 }
 
 show_update_password_menu() {
   case $(menu "Update Password" "  Drive Encryption\n  User") in
-  *Drive*) present_terminal omadora-drive-set-password ;;
+  *Drive*) present_terminal zorro-drive-set-password ;;
   *User*) present_terminal passwd ;;
   *) show_update_menu ;;
   esac
@@ -294,12 +292,12 @@ show_update_password_menu() {
 
 show_system_menu() {
   case $(menu "System" "  Lock\n󱄄  Screensaver\n󰤄  Suspend\n  Stop\n󰜉  Reboot\n󰐥  Shutdown") in
-  *Lock*) omadora-lock-screen ;;
-  *Screensaver*) omadora-launch-screensaver force ;;
+  *Lock*) zorro-lock-screen ;;
+  *Screensaver*) zorro-launch-screensaver force ;;
   *Suspend*) systemctl suspend ;;
-  *Stop*) omadora-state clear relaunch-required && uwsm stop ;;
-  *Reboot*) omadora-state clear re*-required && systemctl reboot ;;
-  *Shutdown*) omadora-state clear re*-required && systemctl poweroff ;;
+  *Stop*) zorro-state clear relaunch-required && uwsm stop ;;
+  *Reboot*) zorro-state clear re*-required && systemctl reboot ;;
+  *Shutdown*) zorro-state clear re*-required && systemctl poweroff ;;
   *) back_to show_main_menu ;;
   esac
 }
@@ -323,7 +321,7 @@ go_to_menu() {
   *install*) show_install_menu ;;
   *remove*) show_remove_menu ;;
   *update*) show_update_menu ;;
-  *about*) omadora-launch-about ;;
+  *about*) zorro-launch-about ;;
   *system*) show_system_menu ;;
   esac
 }
