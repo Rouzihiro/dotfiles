@@ -1,52 +1,53 @@
-bindsym $mod+mod1+space exec "z-menu"
+bindsym $mod+mod1+space exec z-menu
 
 bindsym $mod+a exec $term -e btop
 bindsym $mod+Mod1+a exec $term -e ncdu
 
 bindsym $mod+b exec bm-bookmarks
 bindsym $mod+Mod1+b exec xdg-open https://
-bindsym $mod+Shift+b exec "wofi-bluetooth"
+bindsym $mod+Shift+b exec wofi-bluetooth
 
 bindsym $mod+d exec bm-aria
 bindsym $mod+Mod1+d exec bm-music-downloader
-bindsym $mod+Shift+d exec "wofi-docs"
+bindsym $mod+Shift+d exec wofi-docs
 
 bindsym $mod+mod1+h exec $term -T 'floaty-small' -e bash -c 'cd / && sudo ncdu'
 
-bindsym $mod+i exec "bm-wifi"
-bindsym $mod+mod1+i exec "wofi-wifi"
+bindsym $mod+i exec bm-wifi
+bindsym $mod+mod1+i exec wofi-wifi
 
-set $lockscreen swaylock -i ~/Pictures/lockscreen/VIM.png
 bindsym $mod+mod1+l exec $lockscreen
 
-bindsym $mod+m exec "bm-mount-usb"
+bindsym $mod+m exec bm-mount-usb
 bindsym $mod+mod1+m exec $term -T 'floaty-small' -e bash -c 'sudo ps_mem; echo ""; read -rp "Press Enter to close..."'
 
-bindsym $mod+n exec "$HOME/.local/bin/rofi/wofi-notes"
-bindsym $mod+mod1+n exec "bm-notes"
+bindsym $mod+n exec $HOME/.local/bin/rofi/wofi-notes
+bindsym $mod+mod1+n exec bm-notes
 
 bindsym $mod+o exec ocr
-bindsym $mod+mod1+o exec sh -c "text-picker"
+bindsym $mod+mod1+o exec sh -c text-picker
 
-bindsym $mod+mod1+p exec "bm-power"
+bindsym $mod+p scratchpad show
+bindsym $mod+mod1+p exec bm-power
+bindsym $mod+Shift+p floating enable, resize set width 1800 height 1000, move scratchpad
 
-bindsym $mod+s exec "bm-screenshot"
-bindsym $mod+mod1+s exec "bm-screenshot-fs"
+bindsym $mod+s exec bm-screenshot
+bindsym $mod+mod1+s exec bm-screenshot-fs
 
-bindsym $mod+Escape exec "bm-power"
+bindsym $mod+Escape exec bm-power
 
 bindsym $mod+r exec $term --app-id=runner_floating -e runner
-bindsym $mod+mod1+r exec "wofi-screenrecord"
+bindsym $mod+mod1+r exec wofi-screenrecord
 
-bindsym $mod+t exec "wofi-theme-set"
+bindsym $mod+t exec wofi-theme-set
 bindsym $mod+mod1+t exec bm-timewarrior
 
 bindsym $mod+v exec bm-list-videos
 bindsym $mod+Mod1+v exec bm-video-tool
-#bindsym $mod+z exec keybinds-list-shell
-#bindsym $mod+Shift+z exec keybinds-list-sway
 
-bindsym $mod+mod1+w exec "rofi-wall"
-bindsym $mod+w exec "wall-random"
+bindsym $mod+mod1+w exec rofi-wall
+bindsym $mod+w exec wall-random
 
-bindsym $mod+grave exec "list-sway-window"
+bindsym $mod+z exec z-menu-keybindings-sway-soft
+
+bindsym $mod+grave exec list-sway-window
