@@ -1,0 +1,75 @@
+#!/bin/bash
+# Quick reference for your Sway keybinds using YAD
+# Adjust BACKEND if YAD fails to render properly
+BACKEND=wayland
+
+# Kill existing rofi/yad instances to avoid duplicates
+pkill -x rofi 2>/dev/null
+pkill -x yad 2>/dev/null
+
+# Run YAD window with your Sway keybinds
+GDK_BACKEND=$BACKEND yad \
+  --center \
+  --width=950 \
+  --height=700 \
+  --title="Sway Quick Keybinds Cheat Sheet" \
+  --no-buttons \
+  --list \
+  --column="Key" \
+  --column="Description" \
+  --column="Command" \
+  --timeout-indicator=bottom \
+"ESC" "Close this window" "bm-power" \
+"" "" "" \
+" + A" "System monitor" "btop" \
+" + ALT + A" "Disk usage viewer" "ncdu" \
+"" "" "" \
+" + B" "Bookmarks" "bm-bookmarks" \
+" + ALT + B" "Open browser (xdg-open)" "xdg-open https://" \
+" + SHIFT + B" "Bluetooth menu" "wofi-bluetooth" \
+"" "" "" \
+" + D" "Download manager" "bm-aria" \
+" + ALT + D" "Music downloader" "bm-music-downloader" \
+" + SHIFT + D" "Docs menu" "wofi-docs" \
+"" "" "" \
+" + ALT + H" "Root ncdu (system size check)" "sudo ncdu" \
+"" "" "" \
+" + I" "Wi-Fi menu (bm)" "bm-wifi" \
+" + ALT + I" "Wi-Fi menu (wofi)" "wofi-wifi" \
+"" "" "" \
+" + ALT + L" "Lock screen" "swaylock -i ~/Pictures/lockscreen/VIM.png" \
+"" "" "" \
+" + M" "Mount USB devices" "bm-mount-usb" \
+" + ALT + M" "Show memory usage" "sudo ps_mem" \
+"" "" "" \
+" + N" "Quick notes" "~/.local/bin/rofi/wofi-notes" \
+" + ALT + N" "Notes (bm)" "bm-notes" \
+"" "" "" \
+" + O" "OCR tool" "ocr" \
+" + ALT + O" "Text picker" "text-picker" \
+"" "" "" \
+" + ALT + P" "Power menu" "bm-power" \
+" + ESC" "Power menu (alt shortcut)" "bm-power" \
+"" "" "" \
+" + S" "Screenshot (region/window)" "bm-screenshot" \
+" + ALT + S" "Fullscreen screenshot" "bm-screenshot-fs" \
+"" "" "" \
+" + R" "App runner (floating)" "runner" \
+" + ALT + R" "Screen recorder" "wofi-screenrecord" \
+"" "" "" \
+" + T" "Theme selector" "wofi-theme-set" \
+" + ALT + T" "Timewarrior menu" "bm-timewarrior" \
+"" "" "" \
+" + V" "List videos" "bm-list-videos" \
+" + ALT + V" "Video tools" "bm-video-tool" \
+"" "" "" \
+" + W" "Random wallpaper" "wall-random" \
+" + ALT + W" "Wallpaper selector" "rofi-wall" \
+"" "" "" \
+" + GRAVE " "List open windows" "list-sway-window" \
+"" "" "" \
+" + ALT + SPACE" "Launch Z-Menu" "z-menu" \
+"" "" "" \
+" + ALT + H" "Root file size inspector" "sudo ncdu" \
+"" "" "" \
+" + ALT + E" "Exit sway" "swaymsg exit"

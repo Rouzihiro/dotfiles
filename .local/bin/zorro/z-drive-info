@@ -3,7 +3,7 @@
 # Show drive info including size, model, and remaining free space
 
 if (($# == 0)); then
-  echo "Usage: zorro-drive-info [/dev/drive]"
+  echo "Usage: z-drive-info [/dev/drive]"
   exit 1
 else
   drive="$1"

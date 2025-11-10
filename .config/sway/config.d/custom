@@ -1,9 +1,5 @@
-# Custom scripts
+bindsym $mod+mod1+space exec "z-menu"
 
-# bindsym $mod+space exec /usr/bin/bemenu -l 17
-# bindsym $mod+mod1+space exec /usr/bin/bemenu-desktop
-
-# System monitoring
 bindsym $mod+a exec $term -e btop
 bindsym $mod+Mod1+a exec $term -e ncdu
 
@@ -11,10 +7,8 @@ bindsym $mod+b exec bm-bookmarks
 bindsym $mod+Mod1+b exec xdg-open https://
 bindsym $mod+Shift+b exec "wofi-bluetooth"
 
-# Downloads / documents
 bindsym $mod+d exec bm-aria
 bindsym $mod+Mod1+d exec bm-music-downloader
-#bindsym $mod+Shift+d exec bm-list-docs
 bindsym $mod+Shift+d exec "wofi-docs"
 
 bindsym $mod+mod1+h exec $term -T 'floaty-small' -e bash -c 'cd / && sudo ncdu'
@@ -25,12 +19,11 @@ bindsym $mod+mod1+i exec "wofi-wifi"
 set $lockscreen swaylock -i ~/Pictures/lockscreen/VIM.png
 bindsym $mod+mod1+l exec $lockscreen
 
-bindsym $mod+m exec "z-menu"
-bindsym $mod+mod1+m exec "bm-mount-usb"
-bindsym $mod+Shift+m exec $term -T 'floaty-small' -e bash -c 'sudo ps_mem; echo ""; read -rp "Press Enter to close..."'
+bindsym $mod+m exec "bm-mount-usb"
+bindsym $mod+mod1+m exec $term -T 'floaty-small' -e bash -c 'sudo ps_mem; echo ""; read -rp "Press Enter to close..."'
 
-#bindsym $mod+n exec "bm-notes"
 bindsym $mod+n exec "$HOME/.local/bin/rofi/wofi-notes"
+bindsym $mod+mod1+n exec "bm-notes"
 
 bindsym $mod+o exec ocr
 bindsym $mod+mod1+o exec sh -c "text-picker"
@@ -47,18 +40,12 @@ bindsym $mod+mod1+r exec "wofi-screenrecord"
 
 bindsym $mod+t exec "wofi-theme-set"
 bindsym $mod+mod1+t exec bm-timewarrior
-#bindsym $mod+Shift+t exec ocr-prompt
-#bindsym $mod+t exec ocr-translate
 
-# Videos / media
 bindsym $mod+v exec bm-list-videos
 bindsym $mod+Mod1+v exec bm-video-tool
 #bindsym $mod+z exec keybinds-list-shell
 #bindsym $mod+Shift+z exec keybinds-list-sway
 
-# bindsym $mod+mod1+v exec "rofi-clipboard"
-
-# bindsym $mod+c exec "$HOME/scripts/colorpicker"
 bindsym $mod+mod1+w exec "rofi-wall"
 bindsym $mod+w exec "wall-random"
 

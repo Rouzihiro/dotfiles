@@ -1,0 +1,43 @@
+#!/bin/bash
+# Display custom Sway keybinds in YAD with keys and commands in separate columns
+
+CONFIG="$HOME/.config/sway/config.d/custom"
+TITLE="🎩 Custom Sway Keybinds"
+MSG="💡 Press ESC or click to close. Entries are non-interactive."
+
+# Kill existing YAD
+pkill -x yad 2>/dev/null || true
+
+# Check file exists
+if [[ ! -f "$CONFIG" ]]; then
+    yad --center --title="$TITLE" --text="No config found at $CONFIG" --button=gtk-ok
+    exit 1
+fi
+
+# Process content: replace $mod with penguin, then split at first space and remove "exec"
+content=$(sed -E 's/^bindsym \$mod//' "$CONFIG" | while IFS= read -r line; do
+    if [[ "$line" =~ ^ ]]; then
+        # Split at first space - key is first part, command is the rest
+        key_part=$(echo "$line" | cut -d' ' -f1)
+        command_part=$(echo "$line" | cut -d' ' -f2-)
+        # Remove "exec " from the beginning of command part
+        command_part=$(echo "$command_part" | sed 's/^exec //')
+        printf "%-25s\t%s\n" "$key_part" "$command_part"
+    else
+        # For non-keybind lines, just show them as-is in first column
+        printf "%-25s\t\n" "$line"
+    fi
+done)
+
+# Show in YAD with column formatting
+formatted_content=$(echo "$content" | column -t -s $'\t')
+
+GDK_BACKEND=wayland yad \
+    --center \
+    --title="$TITLE" \
+    --width=1200 \
+    --height=800 \
+    --text-info \
+    --fontname="Monospace 10" \
+    --text="$MSG" \
+    <<< "$formatted_content"
