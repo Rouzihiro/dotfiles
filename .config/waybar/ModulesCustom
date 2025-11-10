@@ -47,8 +47,8 @@
 
 "custom/hint": {
 	"format": "󰺁 HINT!",
-	"on-click": "$HOME/.local/bin/zorro/z-menu-keybindings-sway-hard",
-	"on-click-right": "$HOME/.config/hypr/scripts/KeyBinds.sh",
+	"on-click": "$HOME/.local/bin/zorro/z-menu-keybindings-sway-soft",
+	"on-click-right": "$HOME/.local/bin/zorro/z-menu-keybindings-sway-hard",
 	"tooltip": true,
 	"tooltip-format": "Left Click: Quick Tips\nRight Click: Keybinds",
 },
