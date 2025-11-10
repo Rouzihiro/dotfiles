@@ -10,6 +10,7 @@ set $fileManager thunar
 set $TfileManager $term -e yazi
 set $editor $term -e nvim
 
+set $lockscreen swaylock -i ~/Pictures/lockscreen/VIM.png
 # output * bg ~/dotfiles/.wall/Wallpapers/konoha1.jpg fill
 
 ### Keybindings
