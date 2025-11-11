@@ -39,4 +39,21 @@ z-theme-bat
 # pkill waybar
 # waybar
 # zorro-theme-set-terminal
+
+
+# Rename the single symlink folder in .themes to THEMENAME-Dark
+if [[ -d "$HOME/.themes" ]]; then
+    # Find the first symlink in .themes directory
+    SYMLINK_PATH=$(find "$HOME/.themes" -maxdepth 1 -type l | head -n 1)
+    
+    if [[ -n "$SYMLINK_PATH" ]]; then
+        # Convert theme name to capitalized format (e.g., "gruvbox" -> "Gruvbox")
+        CAPITALIZED_THEME=$(echo "$THEME_NAME" | sed -E 's/(^|-)([a-z])/\1\u\2/g; s/-//g')
+        NEW_NAME="$HOME/.themes/${CAPITALIZED_THEME}-Dark"
+        
+        mv "$SYMLINK_PATH" "$NEW_NAME"
+    fi
+fi
+
+
 zorro-theme-set-gtk
