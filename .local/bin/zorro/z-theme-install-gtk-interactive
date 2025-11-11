@@ -1,0 +1,117 @@
+#!/bin/bash
+
+# Interactive GTK Theme Installer
+
+THEMES=(
+    "colloid" "mactahoe" "mojave" "catppuccin" "everforest" "gruvbox" 
+    "kanagawa" "material" "nightfox" "osaka" "rose-pine" "tokyonight" 
+    "jasper" "graphite" "matrix" "adw-gtk3" "whitesur" "magnetic"
+)
+
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+BLUE='\033[0;34m'
+NC='\033[0m'
+
+print_status() { echo -e "${BLUE}[INFO]${NC} $1"; }
+print_success() { echo -e "${GREEN}[SUCCESS]${NC} $1"; }
+print_error() { echo -e "${RED}[ERROR]${NC} $1"; }
+
+install_theme() {
+    local theme="$1"
+    local repo_url="https://github.com/Fausto-Korpsvart/${theme}-gtk-theme"
+    
+    case "$theme" in
+        "adw-gtk3") repo_url="https://github.com/Fausto-Korpsvart/adw-gtk3" ;;
+        "catppuccin") repo_url="https://github.com/Fausto-Korpsvart/Catppuccin-GTK-Theme" ;;
+        "everforest") repo_url="https://github.com/Fausto-Korpsvart/Everforest-GTK-Theme" ;;
+        "gruvbox") repo_url="https://github.com/Fausto-Korpsvart/Gruvbox-GTK-Theme" ;;
+        "kanagawa") repo_url="https://github.com/Fausto-Korpsvart/Kanagawa-GKT-Theme" ;;
+        "material") repo_url="https://github.com/Fausto-Korpsvart/Material-GTK-Themes" ;;
+        "nightfox") repo_url="https://github.com/Fausto-Korpsvart/Nightfox-GTK-Theme" ;;
+        "osaka") repo_url="https://github.com/Fausto-Korpsvart/Osaka-GTK-Theme" ;;
+        "rose-pine") repo_url="https://github.com/Fausto-Korpsvart/Rose-Pine-GTK-Theme" ;;
+        "tokyonight") repo_url="https://github.com/Fausto-Korpsvart/Tokyonight-GTK-Theme" ;;
+        "matrix") repo_url="https://github.com/Fausto-Korpsvart/Matrix-GTK-Theme" ;;
+        *) repo_url="https://github.com/Fausto-Korpsvart/${theme}-gtk-theme" ;;
+    esac
+
+    print_status "Installing ${theme} theme..."
+    
+    mkdir -p ~/.themes
+    local temp_dir="/tmp/gtk-theme-${theme}"
+    mkdir -p "$temp_dir"
+    cd "$temp_dir"
+    
+    if ! git clone --depth 1 "$repo_url" . 2>/dev/null; then
+        print_error "Failed to download theme"
+        cd /
+        rm -rf "$temp_dir"
+        return 1
+    fi
+    
+    if [[ -d "themes" ]]; then
+        cp -r themes/* ~/.themes/
+    elif [[ -d "src" ]]; then
+        cp -r src/* ~/.themes/
+    elif [[ -d "gtk" ]]; then
+        cp -r gtk/* ~/.themes/
+    else
+        cp -r . ~/.themes/
+    fi
+    
+    cd /
+    rm -rf "$temp_dir"
+    print_success "${theme} theme installed!"
+}
+
+show_menu() {
+    echo "========================================"
+    echo "        GTK Theme Installer"
+    echo "========================================"
+    
+    local sorted_themes=($(printf "%s\n" "${THEMES[@]}" | sort))
+    local count=1
+    
+    for theme in "${sorted_themes[@]}"; do
+        printf "%2d) %s\n" "$count" "$theme"
+        ((count++))
+    done
+    
+    echo "========================================"
+    echo -n "Select theme (1-${#THEMES[@]}), or 'q' to quit: "
+}
+
+main() {
+    while true; do
+        show_menu
+        read -r choice
+        
+        case "$choice" in
+            [qQ])
+                echo "Goodbye!"
+                exit 0
+                ;;
+            [0-9]*)
+                local sorted_themes=($(printf "%s\n" "${THEMES[@]}" | sort))
+                local index=$((choice - 1))
+                
+                if (( index >= 0 && index < ${#sorted_themes[@]} )); then
+                    local theme="${sorted_themes[$index]}"
+                    echo
+                    install_theme "$theme"
+                    echo
+                    read -p "Press Enter to continue..."
+                else
+                    print_error "Invalid selection"
+                fi
+                ;;
+            *)
+                print_error "Invalid input"
+                ;;
+        esac
+        echo
+    done
+}
+
+main

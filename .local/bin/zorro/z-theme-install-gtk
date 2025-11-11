@@ -1,0 +1,146 @@
+#!/bin/bash
+
+# Quick GTK Theme Installer - Command Line Version
+# Usage: z-theme-install-gtk [theme-name]
+
+THEMES=(
+    "adw-gtk3" "catppuccin" "colloid" "everforest" "graphite" "gruvbox" 
+    "jasper" "kanagawa" "mactahoe" "magnetic" "material" "matrix" 
+    "mojave" "nightfox" "osaka" "rose-pine" "tokyonight" "whitesur"
+)
+
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+BLUE='\033[0;34m'
+NC='\033[0m'
+
+print_status() { echo -e "${BLUE}[INFO]${NC} $1"; }
+print_success() { echo -e "${GREEN}[SUCCESS]${NC} $1"; }
+print_warning() { echo -e "${YELLOW}[WARNING]${NC} $1"; }
+print_error() { echo -e "${RED}[ERROR]${NC} $1"; }
+
+install_theme() {
+    local theme="$1"
+    local repo_url="https://github.com/Fausto-Korpsvart/${theme}-gtk-theme"
+    
+    case "$theme" in
+        "adw-gtk3") repo_url="https://github.com/Fausto-Korpsvart/adw-gtk3" ;;
+        "catppuccin") repo_url="https://github.com/Fausto-Korpsvart/Catppuccin-GTK-Theme" ;;
+        "everforest") repo_url="https://github.com/Fausto-Korpsvart/Everforest-GTK-Theme" ;;
+        "gruvbox") repo_url="https://github.com/Fausto-Korpsvart/Gruvbox-GTK-Theme" ;;
+        "kanagawa") repo_url="https://github.com/Fausto-Korpsvart/Kanagawa-GKT-Theme" ;;
+        "material") repo_url="https://github.com/Fausto-Korpsvart/Material-GTK-Themes" ;;
+        "nightfox") repo_url="https://github.com/Fausto-Korpsvart/Nightfox-GTK-Theme" ;;
+        "osaka") repo_url="https://github.com/Fausto-Korpsvart/Osaka-GTK-Theme" ;;
+        "rose-pine") repo_url="https://github.com/Fausto-Korpsvart/Rose-Pine-GTK-Theme" ;;
+        "tokyonight") repo_url="https://github.com/Fausto-Korpsvart/Tokyonight-GTK-Theme" ;;
+        "matrix") repo_url="https://github.com/Fausto-Korpsvart/Matrix-GTK-Theme" ;;
+        *) repo_url="https://github.com/Fausto-Korpsvart/${theme}-gtk-theme" ;;
+    esac
+
+    print_status "Installing ${theme} theme..."
+    
+theme_dir=~/.themes-${theme}
+mkdir -p "$theme_dir"
+cd "$theme_dir" || return 1
+
+if ! git clone --depth 1 "$repo_url" . 2>/dev/null; then
+    print_error "Failed to download theme from: $repo_url"
+    cd - >/dev/null
+    return 1
+fi
+
+# Search for install.sh in subdirectories
+install_script=$(find . -name "install.sh" -type f | head -n 1)
+
+if [[ -n "$install_script" && -f "$install_script" ]]; then
+    print_status "Found install.sh at: $install_script"
+    print_status "Running install.sh for ${theme}..."
+    
+    # Get the directory containing install.sh
+    script_dir=$(dirname "$install_script")
+    
+    # Run from the script's directory
+    if (cd "$script_dir" && chmod +x ./install.sh && ./install.sh); then
+        print_success "install.sh completed successfully for ${theme}"
+        cd - >/dev/null
+        return 0
+    else
+        print_warning "install.sh failed or didn't complete installation, falling back to manual copy"
+    fi
+else
+    print_status "No install.sh found, proceeding with manual installation"
+fi   
+    # Manual installation if no install.sh or it failed
+    print_status "Manually copying theme files..."
+    if [[ -d "themes" ]]; then
+        cp -r themes/* ~/.themes/
+    elif [[ -d "src" ]]; then
+        cp -r src/* ~/.themes/
+    elif [[ -d "gtk" ]]; then
+        cp -r gtk/* ~/.themes/
+    else
+        # Copy any theme directories directly
+        find . -type d -name "*theme*" -maxdepth 2 | head -1 | while read theme_dir; do
+            if [[ -n "$theme_dir" ]]; then
+                cp -r "$theme_dir"/* ~/.themes/ 2>/dev/null || true
+            fi
+        done
+        
+        # If no theme directories found, copy everything
+        if ! ls ~/.themes/* &>/dev/null; then
+            cp -r . ~/.themes/
+        fi
+    fi
+    
+    cd /
+    rm -rf "$temp_dir"
+    print_success "${theme} theme installed to ~/.themes/"
+}
+
+# Show usage
+show_usage() {
+    echo "Usage: z-theme-install-gtk [theme-name]"
+    echo "       z-theme-install-gtk --interactive"
+    echo ""
+    echo "Available themes:"
+    printf "  %s\n" "${THEMES[@]}" | sort | pr -t -3
+    echo ""
+    echo "Examples:"
+    echo "  z-theme-install-gtk everforest"
+    echo "  z-theme-install-gtk gruvbox"
+    echo "  z-theme-install-gtk catppuccin"
+}
+
+# Main script
+if [[ $# -eq 0 ]]; then
+    show_usage
+    exit 1
+fi
+
+case "$1" in
+    "-h"|"--help")
+        show_usage
+        ;;
+    "-i"|"--interactive")
+        # Launch interactive version
+        exec z-theme-install-gtk-interactive
+        ;;
+    *)
+        THEME="$1"
+        if [[ ! " ${THEMES[@]} " =~ " ${THEME} " ]]; then
+            print_error "Unknown theme: $THEME"
+            echo ""
+            show_usage
+            exit 1
+        fi
+        
+        if ! command -v git &> /dev/null; then
+            print_error "git is required but not installed."
+            exit 1
+        fi
+        
+        install_theme "$THEME"
+        ;;
+esac
