@@ -21,8 +21,8 @@ export VISUAL="$EDITOR"
 # ─────────────────────────────
 # Theming
 # ─────────────────────────────
-export GTK_THEME="Nightfox-Dark"
-export GTK2_RC_FILES="$HOME/.themes/Nightfox-Dark/gtk-2.0/gtkrc"
+#export GTK_THEME="Nightfox-Dark"
+#export GTK2_RC_FILES="$HOME/.themes/Nightfox-Dark/gtk-2.0/gtkrc"
 # export BAT_THEME="Nightfox-Dark"
 
 # ─────────────────────────────

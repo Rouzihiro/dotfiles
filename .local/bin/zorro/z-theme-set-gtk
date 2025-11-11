@@ -1,0 +1,18 @@
+#!/bin/bash
+
+sleep 2  # Wait for D-Bus to be ready
+
+# Execute the theme gtk.sh if it exists
+if [ -f "$HOME/.config/zorro/current/theme/gtk.sh" ]; then
+    # Make sure it's executable then run it
+    chmod +x "$HOME/.config/zorro/current/theme/gtk.sh" 2>/dev/null
+    "$HOME/.config/zorro/current/theme/gtk.sh"
+fi
+
+# Change gnome icon theme color
+GNOME_ICONS_THEME="$HOME/.config/zorro/current/theme/icons.theme"
+if [ -f "$GNOME_ICONS_THEME" ]; then
+    gsettings set org.gnome.desktop.interface icon-theme "$(cat "$GNOME_ICONS_THEME")"
+else
+    gsettings set org.gnome.desktop.interface icon-theme "Yaru-blue"
+fi

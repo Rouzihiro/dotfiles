@@ -21,3 +21,5 @@ exec --no-startup-id dbus-update-activation-environment --systemd XDG_CURRENT_DE
 exec --no-startup-id waybar
 
 exec --no-startup-id swaybg -o "*" -i ~/.config/zorro/current/background -m fill
+
+# exec_always ~/.config/zorro/current/theme/gtk.sh
