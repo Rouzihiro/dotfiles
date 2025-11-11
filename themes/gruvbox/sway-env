@@ -2,7 +2,7 @@
 set $gnome_schema org.gnome.desktop.interface
 
 exec_always {
-  gsettings set $gnome_schema gtk-theme Kanagawa‑Dark
+  gsettings set $gnome_schema gtk-theme Gruvbox‑Dark
   gsettings set $gnome_schema gtk-application-prefer-dark-theme true
   gsettings set $gnome_schema icon-theme Yaru-blue
   gsettings set $gnome_schema cursor-theme Adwaita
@@ -10,5 +10,5 @@ exec_always {
 }
 
 # Optionally export variables
-exec_always { setenv GTK_THEME Kanagawa‑Dark }
-exec_always { setenv GTK2_RC_FILES $HOME/.themes/Kanagawa-Dark/gtk-2.0/gtkrc }
+# exec_always { setenv GTK_THEME Kanagawa‑Dark }
+# exec_always { setenv GTK2_RC_FILES $HOME/.themes/Kanagawa-Dark/gtk-2.0/gtkrc }

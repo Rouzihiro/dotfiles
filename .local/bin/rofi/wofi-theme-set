@@ -39,4 +39,4 @@ z-theme-bat
 # pkill waybar
 # waybar
 # zorro-theme-set-terminal
-# zorro-theme-set-gnome
+zorro-theme-set-gtk
