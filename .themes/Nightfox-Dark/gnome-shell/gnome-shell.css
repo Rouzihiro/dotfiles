@@ -347,7 +347,7 @@
 }
 
 .headline {
-  font-size: 13pt;
+  font-size: 12ptpt;
 }
 
 .modal-dialog {
@@ -445,7 +445,7 @@
 
 .dialog-list .dialog-list-box .dialog-list-item .dialog-list-item-description {
   color: rgba(246, 242, 238, 0.7);
-  font-size: 11pt;
+  font-size: 10ptpt;
 }
 
 .run-dialog .modal-dialog-content-box {
@@ -460,7 +460,7 @@
 .run-dialog .run-dialog-description {
   text-align: center;
   color: rgba(246, 242, 238, 0.7);
-  font-size: 11pt;
+  font-size: 10ptpt;
 }
 
 .prompt-dialog {
@@ -500,7 +500,7 @@
 .prompt-dialog-info-label,
 .prompt-dialog-null-label {
   text-align: center;
-  font-size: 11pt;
+  font-size: 10ptpt;
   margin: 6px;
 }
 
@@ -748,7 +748,7 @@ StEntry StLabel.hint-text,
 }
 
 .keyboard-key {
-  font-size: 17pt;
+  font-size: 16ptpt;
   font-weight: bold;
   min-height: 1.2em;
   min-width: 1.2em;
@@ -1096,7 +1096,7 @@ StEntry StLabel.hint-text,
 }
 
 .user-widget.horizontal .user-widget-label {
-  font-size: 14pt;
+  font-size: 13ptpt;
   font-weight: bold;
   padding-left: 15px;
 }
@@ -1112,7 +1112,7 @@ StEntry StLabel.hint-text,
 }
 
 .user-widget.vertical .user-widget-label {
-  font-size: 17pt;
+  font-size: 16ptpt;
   text-align: center;
   font-weight: normal;
   padding-top: 16px;
@@ -1131,7 +1131,7 @@ StEntry StLabel.hint-text,
 
 .login-dialog-prompt-label {
   color: rgba(246, 242, 238, 0.7);
-  font-size: 13pt;
+  font-size: 12ptpt;
   padding-top: 1em;
 }
 
@@ -1381,7 +1381,7 @@ StEntry StLabel.hint-text,
 .caps-lock-warning-label {
   text-align: center;
   padding-bottom: 8px;
-  font-size: 11pt;
+  font-size: 10ptpt;
   color: #ac5402;
 }
 
@@ -1434,7 +1434,7 @@ StEntry StLabel.hint-text,
 }
 
 .nm-dialog-item {
-  font-size: 12pt;
+  font-size: 11ptpt;
   border-bottom: none;
   padding: 12px;
   spacing: 0px;
@@ -1557,7 +1557,7 @@ StEntry StLabel.hint-text,
   color: rgba(246, 242, 238, 0.7);
   font-weight: bold;
   font-feature-settings: 'tnum';
-  font-size: 12pt;
+  font-size: 11ptpt;
   transition-duration: 250ms;
   box-shadow: none;
   border: none;
@@ -1578,7 +1578,7 @@ StEntry StLabel.hint-text,
   -natural-hpadding: 12px;
   -minimum-hpadding: 12px;
   font-weight: bold;
-  color: #f6f2ee;
+  color: rgba(246, 242, 238, 0.7);
   transition-duration: 150ms;
   border-radius: 12px;
   text-shadow: none;
@@ -1750,22 +1750,18 @@ StEntry StLabel.hint-text,
   min-width: 12em;
   color: rgba(246, 242, 238, 0.7) !important;
   padding: 0;
-  font-weight: normal;
-  border-radius: 18px;
-  box-shadow: none;
+  border-radius: 30px;
+  box-shadow: 0 3px 5px -2px rgba(0, 0, 0, 0.18);
   margin: 6px 6px 8px;
-  font-size: 11pt;
 }
 
 .popup-menu .popup-menu-content {
   padding: 6px;
-  /* background-color: $popover; */
   background-color: #192330;
   border-radius: 12px;
-  margin: 0 2px;
-  box-shadow: 0 6px 15px -6px rgba(0, 0, 0, 0.25);
-  border: none;
-  font-weight: normal;
+  margin: 0;
+  border: 1px solid rgba(25, 35, 48, 0.75);
+  box-shadow: inset 0 0 0 1px rgba(246, 242, 238, 0.1);
 }
 
 .popup-menu .popup-menu-item {
@@ -1773,14 +1769,12 @@ StEntry StLabel.hint-text,
   color: rgba(246, 242, 238, 0.7) !important;
   text-shadow: none;
   border-radius: 12px;
-  margin: 0 2px;
+  margin: 0;
   transition-duration: 100ms;
-  font-weight: normal;
   background-color: transparent;
 }
 
 .popup-menu .popup-menu-item:checked {
-  font-weight: normal;
   border: none;
   box-shadow: none;
   color: #f6f2ee !important;
@@ -1803,13 +1797,13 @@ StEntry StLabel.hint-text,
 }
 
 .popup-menu .popup-menu-item:focus, .popup-menu .popup-menu-item:hover, .popup-menu .popup-menu-item.selected {
-  color: #719cd6 !important;
+  color: #f6f2ee !important;
   background-color: rgba(246, 242, 238, 0.12) !important;
   transition-duration: 0;
 }
 
 .popup-menu .popup-menu-item:active, .popup-menu .popup-menu-item.selected:active {
-  color: #719cd6 !important;
+  color: #f6f2ee !important;
   background-color: rgba(246, 242, 238, 0.3) !important;
 }
 
@@ -1862,12 +1856,16 @@ StEntry StLabel.hint-text,
   icon-size: 16px;
 }
 
-.popup-ornamented-menu-item:ltr {
-  padding-left: 6px;
+.popup-menu-ornament {
+  width: 1.2em;
 }
 
-.popup-ornamented-menu-item:rtl {
-  padding-right: 6px;
+.popup-menu-ornament:ltr {
+  text-align: right;
+}
+
+.popup-menu-ornament:rtl {
+  text-align: left;
 }
 
 .background-menu {
@@ -2249,7 +2247,7 @@ StScrollBar StButton#hhandle:active {
 .overview-tile, .grid-search-result {
   color: rgba(246, 242, 238, 0.7);
   border-radius: 30px;
-  padding: 15px;
+  padding: 6px;
   border: none;
   transition-duration: 100ms;
   text-align: center;
@@ -2258,19 +2256,19 @@ StScrollBar StButton#hhandle:active {
 
 .overview-tile:hover, .grid-search-result:hover, .overview-tile:focus, .grid-search-result:focus, .overview-tile:selected, .grid-search-result:selected {
   color: #f6f2ee;
-  background-color: rgba(113, 156, 214, 0.3);
+  background-color: rgba(246, 242, 238, 0.12);
   border-image: none;
   background-image: none;
 }
 
 .overview-tile:active, .grid-search-result:active, .overview-tile:checked, .grid-search-result:checked {
   color: #f6f2ee;
-  background-color: rgba(113, 156, 214, 0.6);
+  background-color: rgba(246, 242, 238, 0.3);
   box-shadow: none;
 }
 
 .app-folder {
-  background-color: rgba(113, 156, 214, 0.3);
+  background-color: rgba(246, 242, 238, 0.12);
   border-radius: 30px;
   color: rgba(246, 242, 238, 0.7);
 }
@@ -2281,7 +2279,7 @@ StScrollBar StButton#hhandle:active {
 }
 
 .app-folder:hover {
-  background-color: rgba(113, 156, 214, 0.6);
+  background-color: rgba(246, 242, 238, 0.2);
   color: #f6f2ee;
 }
 
@@ -2312,9 +2310,9 @@ StWidget.focused .app-grid-running-dot {
   height: 720px;
   border-radius: 54px;
   padding: 12px;
-  box-shadow: none;
-  border: none;
   background-color: #192330;
+  border: 1px solid black;
+  box-shadow: inset 0 0 0 1px rgba(246, 242, 238, 0.1);
 }
 
 .app-folder-dialog .folder-name-container {
@@ -2535,12 +2533,12 @@ StWidget.focused .app-grid-running-dot {
 }
 
 .datemenu-today-button .day-label {
-  font-size: 13pt;
+  font-size: 12ptpt;
   font-weight: bold;
 }
 
 .datemenu-today-button .date-label {
-  font-size: 19pt;
+  font-size: 18ptpt;
   font-weight: normal;
 }
 
@@ -2597,7 +2595,7 @@ StWidget.focused .app-grid-running-dot {
 }
 
 .calendar .calendar-day {
-  font-size: 11pt;
+  font-size: 10ptpt;
   text-align: center;
   width: 34px !important;
   height: 34px !important;
@@ -2738,7 +2736,7 @@ StWidget.focused .app-grid-running-dot {
 
 .events-button .event-time {
   font-feature-settings: 'tnum';
-  font-size: 11pt;
+  font-size: 10ptpt;
   color: rgba(246, 242, 238, 0.5);
 }
 
@@ -2753,13 +2751,13 @@ StWidget.focused .app-grid-running-dot {
 
 .world-clocks-button .world-clocks-city {
   font-weight: bold;
-  font-size: 12pt;
+  font-size: 11ptpt;
   color: rgba(246, 242, 238, 0.7);
 }
 
 .world-clocks-button .world-clocks-time {
   font-feature-settings: 'tnum';
-  font-size: 12pt;
+  font-size: 11ptpt;
   color: #f6f2ee;
 }
 
@@ -2773,7 +2771,7 @@ StWidget.focused .app-grid-running-dot {
 
 .world-clocks-button .world-clocks-timezone {
   font-feature-settings: 'tnum';
-  font-size: 11pt;
+  font-size: 10ptpt;
   color: rgba(246, 242, 238, 0.5);
 }
 
@@ -2798,7 +2796,7 @@ StWidget.focused .app-grid-running-dot {
 
 .weather-button .weather-header.location {
   font-weight: normal;
-  font-size: 11pt;
+  font-size: 10ptpt;
   color: rgba(246, 242, 238, 0.5);
 }
 
@@ -2809,7 +2807,7 @@ StWidget.focused .app-grid-running-dot {
 
 .weather-button .weather-forecast-time {
   font-feature-settings: 'tnum';
-  font-size: 10pt;
+  font-size: 9ptpt;
   font-weight: normal;
   padding-top: 0.2em;
   padding-bottom: 0.4em;
@@ -2977,6 +2975,8 @@ StWidget.focused .app-grid-running-dot {
   border-radius: 18px;
   border: none;
   box-shadow: inset 0 0.5px rgba(246, 242, 238, 0.1);
+  border: 1px solid rgba(25, 35, 48, 0.75);
+  box-shadow: inset 0 0 0 1px rgba(246, 242, 238, 0.1);
 }
 
 .modal-dialog-button:last-child, .modal-dialog-linked-button:last-child {
@@ -3000,12 +3000,13 @@ StWidget.focused .app-grid-running-dot {
 }
 
 .headline {
-  font-size: 13pt;
+  font-size: 12ptpt;
 }
 
 .modal-dialog {
   color: rgba(246, 242, 238, 0.7);
   padding: 12px;
+  margin: 0;
 }
 
 .modal-dialog-button, .modal-dialog-linked-button {
@@ -3213,6 +3214,8 @@ StWidget.focused .app-grid-running-dot {
   border-radius: 18px;
   border: none;
   box-shadow: inset 0 0.5px rgba(246, 242, 238, 0.1);
+  border: 1px solid rgba(25, 35, 48, 0.75);
+  box-shadow: inset 0 0 0 1px rgba(246, 242, 238, 0.1);
 }
 
 .modal-dialog-linked-button:last-child, .modal-dialog-button:last-child {
@@ -3236,7 +3239,7 @@ StWidget.focused .app-grid-running-dot {
 }
 
 .headline {
-  font-size: 13pt;
+  font-size: 12ptpt;
 }
 
 .modal-dialog {
@@ -3714,7 +3717,7 @@ StWidget.focused .app-grid-running-dot {
 }
 
 .message-list:ltr {
-  margin-left: 0;
+  margin-left: 2px;
   margin-right: 8px;
   padding-right: 10px;
   border-right-width: 0;
@@ -3738,23 +3741,20 @@ StWidget.focused .app-grid-running-dot {
   -st-icon-style: symbolic;
 }
 
-.message-list-sections {
-  margin: 0;
-  padding-bottom: 6px;
+.message-view {
+  -st-vfade-offset: 24px;
 }
 
-.message-list-sections:ltr {
-  margin-right: 0;
+.message-view:ltr {
+  margin-right: 12px;
 }
 
-.message-list-sections:rtl {
-  margin-left: 0;
+.message-view:rtl {
+  margin-left: 12px;
 }
 
-.message-list-section,
-.message-list-sections,
-.message-list-section-list {
-  spacing: 6px;
+.message-view .message {
+  margin-bottom: 12px !important;
 }
 
 .message-list-controls {
@@ -3774,6 +3774,33 @@ StWidget.focused .app-grid-running-dot {
   border-color: rgba(113, 156, 214, 0.6);
 }
 
+.message-notification-group {
+  spacing: 12px;
+}
+
+.message-notification-group .message-group-header {
+  padding: 6px;
+}
+
+.message-notification-group .message-group-header .message-group-title {
+  margin: 0 4px;
+}
+
+.message-notification-group .message-collapse-button {
+  color: #f6f2ee;
+  background-color: rgba(246, 242, 238, 0.2);
+  padding: 4px !important;
+  border: 4px transparent solid;
+}
+
+.message-notification-group .message-collapse-button:hover {
+  background-color: rgba(246, 242, 238, 0.3);
+}
+
+.message-notification-group .message-collapse-button:active {
+  background-color: rgba(246, 242, 238, 0.2);
+}
+
 .message {
   padding: 0;
   margin: 3px;
@@ -3782,6 +3809,35 @@ StWidget.focused .app-grid-running-dot {
 
 .popup-menu .message {
   border-radius: 12px;
+  color: rgba(246, 242, 238, 0.5);
+  background-color: #202d3d;
+  border: 1px solid rgba(25, 35, 48, 0.75);
+  box-shadow: inset 0 0 0 1px rgba(246, 242, 238, 0.1);
+  /* &:insensitive {
+			color: $text-disabled;
+			background-color: lighten($background, 4%);
+			box-shadow: none !important;
+		} */
+}
+
+.popup-menu .message:hover, .popup-menu .message:focus {
+  color: rgba(113, 156, 214, 0.5);
+  background-color: #222f41;
+}
+
+.popup-menu .message:active {
+  color: #f6f2ee;
+  background-color: #202d3d;
+  box-shadow: none !important;
+}
+
+.message:second-in-stack {
+  background-color: #233244;
+}
+
+.message:lower-in-stack {
+  background-color: #27374b;
+  border: 1px solid rgba(246, 242, 238, 0);
 }
 
 .message .message-header {
@@ -3790,6 +3846,18 @@ StWidget.focused .app-grid-running-dot {
   margin-bottom: 0;
   spacing: 6px;
   color: rgba(246, 242, 238, 0.5);
+  /* .message-close-button {
+			margin-left: $base_padding * 0.5;
+			padding: 4px;
+		} */
+}
+
+.message .message-header:ltr {
+  padding-right: 0;
+}
+
+.message .message-header:rtl {
+  padding-left: 0;
 }
 
 .message .message-header .message-source-icon {
@@ -4047,12 +4115,10 @@ StWidget.focused .app-grid-running-dot {
 
 .popup-menu .message {
   border-radius: 12px;
-  /* padding: $base_padding; */
-  /* margin: $base_margin; */
   color: rgba(246, 242, 238, 0.5);
   background-color: #202d3d;
-  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.04);
-  border: 1px solid rgba(246, 242, 238, 0.04);
+  border: 1px solid rgba(25, 35, 48, 0.75);
+  box-shadow: inset 0 0 0 1px rgba(246, 242, 238, 0.1);
   /* &:insensitive {
 			color: $text-disabled;
 			background-color: lighten($background, 4%);
@@ -4063,8 +4129,6 @@ StWidget.focused .app-grid-running-dot {
 .popup-menu .message:hover, .popup-menu .message:focus {
   color: rgba(113, 156, 214, 0.5);
   background-color: #222f41;
-  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.05) !important;
-  border: 1px solid rgba(246, 242, 238, 0.06);
 }
 
 .popup-menu .message:active {
@@ -4074,15 +4138,12 @@ StWidget.focused .app-grid-running-dot {
 }
 
 .message:second-in-stack {
-  background-color: #202d3d;
-  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.04);
-  border: 1px solid rgba(246, 242, 238, 0.03);
+  background-color: #233244;
 }
 
 .message:lower-in-stack {
-  background-color: #202d3d;
-  box-shadow: none;
-  border-color: transparent;
+  background-color: #27374b;
+  border: 1px solid rgba(246, 242, 238, 0);
 }
 
 .message .message-header {
@@ -4356,19 +4417,76 @@ StWidget.focused .app-grid-running-dot {
 .notification-banner {
   min-height: 64px;
   width: 34em;
+  padding: 0;
   margin: 12px 8px 8px;
-  border-radius: 12px;
   color: rgba(246, 242, 238, 0.7);
-  background-color: #212e3f;
+  background-color: #0e131b;
   text-shadow: none;
   border-radius: 18px;
   border: none;
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(25, 35, 48, 0.75);
+  box-shadow: inset 0 0 0 1px rgba(246, 242, 238, 0.1);
 }
 
 .notification-banner:hover, .notification-banner:active, .notification-banner:focus {
+  color: #719cd6;
+  background-color: #171f2c;
+  border: 1px solid rgba(25, 35, 48, 0.75);
+  box-shadow: inset 0 0 0 1px rgba(246, 242, 238, 0.1);
+}
+
+.notification-buttons-bin {
+  spacing: 0;
+}
+
+.notification-button {
+  min-height: 6px;
+  padding: 12px 0;
+  margin: 0;
+  background-color: transparent;
+  color: rgba(246, 242, 238, 0.7);
+  font-weight: 500;
+  border: none;
+  border-radius: 12px;
+}
+
+.notification-button:focus {
+  background-color: transparent;
   color: #f6f2ee;
-  background-color: #212e3f;
+  box-shadow: inset 0 0 0 2px rgba(246, 242, 238, 0.12);
+}
+
+.notification-button:hover, .notification-button:focus:hover {
+  background-color: rgba(246, 242, 238, 0.12);
+  color: #f6f2ee;
+  box-shadow: none;
+}
+
+.notification-button:active {
+  background-color: rgba(246, 242, 238, 0.3);
+  color: #f6f2ee;
+}
+
+/* Notifications & Message Tray */
+.notification-banner {
+  min-height: 64px;
+  width: 34em;
+  padding: 0;
+  margin: 12px 8px 8px;
+  color: rgba(246, 242, 238, 0.7);
+  background-color: #0e131b;
+  text-shadow: none;
+  border-radius: 18px;
+  border: none;
+  border: 1px solid rgba(25, 35, 48, 0.75);
+  box-shadow: inset 0 0 0 1px rgba(246, 242, 238, 0.1);
+}
+
+.notification-banner:hover, .notification-banner:active, .notification-banner:focus {
+  color: #719cd6;
+  background-color: #171f2c;
+  border: 1px solid rgba(25, 35, 48, 0.75);
+  box-shadow: inset 0 0 0 1px rgba(246, 242, 238, 0.1);
 }
 
 .notification-buttons-bin {
