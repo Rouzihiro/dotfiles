@@ -41,61 +41,66 @@ install_theme() {
 
     print_status "Installing ${theme} theme..."
     
-theme_dir=~/.themes-${theme}
-mkdir -p "$theme_dir"
-cd "$theme_dir" || return 1
-
-if ! git clone --depth 1 "$repo_url" . 2>/dev/null; then
-    print_error "Failed to download theme from: $repo_url"
-    cd - >/dev/null
-    return 1
-fi
-
-# Search for install.sh in subdirectories
-install_script=$(find . -name "install.sh" -type f | head -n 1)
-
-if [[ -n "$install_script" && -f "$install_script" ]]; then
-    print_status "Found install.sh at: $install_script"
-    print_status "Running install.sh for ${theme}..."
+    local theme_dir=~/.themes-${theme}
+    local original_dir="$PWD"
     
-    # Get the directory containing install.sh
-    script_dir=$(dirname "$install_script")
-    
-    # Run from the script's directory
-    if (cd "$script_dir" && chmod +x ./install.sh && ./install.sh); then
-        print_success "install.sh completed successfully for ${theme}"
-        cd - >/dev/null
-        return 0
-    else
-        print_warning "install.sh failed or didn't complete installation, falling back to manual copy"
+    mkdir -p "$theme_dir"
+    cd "$theme_dir" || return 1
+
+    if ! git clone --depth 1 "$repo_url" . 2>/dev/null; then
+        print_error "Failed to download theme from: $repo_url"
+        cd "$original_dir"
+        rm -rf "$theme_dir"
+        return 1
     fi
-else
-    print_status "No install.sh found, proceeding with manual installation"
-fi   
+
+    # Search for install.sh in subdirectories
+    install_script=$(find . -name "install.sh" -type f | head -n 1)
+
+    if [[ -n "$install_script" && -f "$install_script" ]]; then
+        print_status "Found install.sh at: $install_script"
+        print_status "Running install.sh for ${theme}..."
+        
+        # Get the directory containing install.sh
+        script_dir=$(dirname "$install_script")
+        
+        # Run from the script's directory
+        if (cd "$script_dir" && chmod +x ./install.sh && ./install.sh); then
+            print_success "install.sh completed successfully for ${theme}"
+            cd "$original_dir"
+            rm -rf "$theme_dir"
+            return 0
+        else
+            print_warning "install.sh failed or didn't complete installation, falling back to manual copy"
+        fi
+    else
+        print_status "No install.sh found, proceeding with manual installation"
+    fi   
+    
     # Manual installation if no install.sh or it failed
     print_status "Manually copying theme files..."
     if [[ -d "themes" ]]; then
-        cp -r themes/* ~/.themes/
+        cp -r themes/* ~/.themes/ 2>/dev/null
     elif [[ -d "src" ]]; then
-        cp -r src/* ~/.themes/
+        cp -r src/* ~/.themes/ 2>/dev/null
     elif [[ -d "gtk" ]]; then
-        cp -r gtk/* ~/.themes/
+        cp -r gtk/* ~/.themes/ 2>/dev/null
     else
         # Copy any theme directories directly
-        find . -type d -name "*theme*" -maxdepth 2 | head -1 | while read theme_dir; do
-            if [[ -n "$theme_dir" ]]; then
-                cp -r "$theme_dir"/* ~/.themes/ 2>/dev/null || true
+        find . -type d -name "*theme*" -maxdepth 2 | head -1 | while read -r found_theme_dir; do
+            if [[ -n "$found_theme_dir" ]]; then
+                cp -r "$found_theme_dir"/* ~/.themes/ 2>/dev/null || true
             fi
         done
         
         # If no theme directories found, copy everything
         if ! ls ~/.themes/* &>/dev/null; then
-            cp -r . ~/.themes/
+            cp -r ./* ~/.themes/ 2>/dev/null
         fi
     fi
     
-    cd /
-    rm -rf "$temp_dir"
+    cd "$original_dir"
+    rm -rf "$theme_dir"
     print_success "${theme} theme installed to ~/.themes/"
 }
 

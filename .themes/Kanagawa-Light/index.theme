@@ -1,0 +1,12 @@
+Type=X-GNOME-Metatheme
+[Desktop Entry]
+Name=Kanagawa-Light
+Comment=An Flat Gtk+ theme based on Elegant Design
+Encoding=UTF-8
+
+[X-GNOME-Metatheme]
+GtkTheme=Kanagawa-Light
+MetacityTheme=Kanagawa-Light
+IconTheme=Tela-circle
+CursorTheme=Kanagawa-cursors
+ButtonLayout=close,minimize,maximize:menu

@@ -1,0 +1,12 @@
+Type=X-GNOME-Metatheme
+[Desktop Entry]
+Name=Osaka-Light
+Comment=An Flat Gtk+ theme based on Elegant Design
+Encoding=UTF-8
+
+[X-GNOME-Metatheme]
+GtkTheme=Osaka-Light
+MetacityTheme=Osaka-Light
+IconTheme=Tela-circle
+CursorTheme=Osaka-cursors
+ButtonLayout=close,minimize,maximize:menu

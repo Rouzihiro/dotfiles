@@ -1,0 +1,12 @@
+Type=X-GNOME-Metatheme
+[Desktop Entry]
+Name=Catppuccin-Light
+Comment=An Flat Gtk+ theme based on Elegant Design
+Encoding=UTF-8
+
+[X-GNOME-Metatheme]
+GtkTheme=Catppuccin-Light
+MetacityTheme=Catppuccin-Light
+IconTheme=Tela-circle
+CursorTheme=Catppuccin-cursors
+ButtonLayout=close,minimize,maximize:menu
