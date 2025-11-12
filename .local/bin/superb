@@ -1,4 +1,37 @@
 #!/usr/bin/env bash
-SCRIPT_DIR="$HOME/.local/bin"
-cd "$SCRIPT_DIR"
-source $HOME/.local/bin/fzf/fuzzy-x
+
+# Define search paths
+PATHS=(
+  "$HOME/.local/bin"
+  "$HOME"
+  "$HOME/Downloads"
+  "$HOME/Documents"
+  "$HOME/Videos"
+  "$HOME/Pictures"
+  "$HOME/dotfiles"
+  "$HOME/.config"
+)
+
+# Pretty directory selection with fuzzy filtering
+echo "📁 Select directory to search:"
+selected_dir=$(printf "%s\n" "${PATHS[@]}" | fzf \
+  --height=40% \
+  --layout=reverse \
+  --border=rounded \
+  --prompt="🔍 Search directories > " \
+  --pointer="→" \
+  --marker="⭐" \
+  --header="Select a directory to browse" \
+  --preview='ls -la {} | head -20' \
+  --preview-window=right:60%:border-left)
+
+if [[ -z "$selected_dir" ]]; then
+  echo "No directory selected. Exiting."
+  exit 1
+fi
+
+echo "🎯 Selected: $selected_dir"
+cd "$selected_dir"
+
+# Source the fuzzy script
+source "$HOME/.local/bin/fzf/fuzzy-x"
