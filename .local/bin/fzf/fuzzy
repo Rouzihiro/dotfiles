@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# fzv.sh — Fuzzy file finder with preview, for integration with noice
+# fzv.sh — Fuzzy file finder with preview
 
 # Ensure dependencies
 for cmd in fzf bat nvim; do
