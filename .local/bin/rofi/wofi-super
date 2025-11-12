@@ -1,0 +1,105 @@
+#!/bin/bash
+
+# Advanced wofi script launcher with clean display - ESC navigation added
+SCRIPT_DIR="$HOME/.local/bin"
+
+build_menu() {
+    local current_dir="$1"
+    
+    # Show "main" folder when at root level
+    if [[ -z "$current_dir" ]]; then
+        # Check if there are any scripts in root
+        if find "$SCRIPT_DIR" -maxdepth 1 -type f -executable | read; then
+            echo "📁 main"
+        fi
+    fi
+    
+    # Get directories first
+    find "$SCRIPT_DIR/$current_dir" -mindepth 1 -maxdepth 1 -type d | \
+    while read -r dir; do
+        dir_name=$(basename "$dir")
+        echo "📁 $dir_name"
+    done
+    
+    # Get executable files (only show files for non-main directories)
+    if [[ -n "$current_dir" && "$current_dir" != "main" ]]; then
+        find "$SCRIPT_DIR/$current_dir" -maxdepth 1 -type f -executable | \
+        while read -r script; do
+            script_name=$(basename "$script")
+            echo "🚀 $script_name"
+        done
+    fi
+}
+
+# Special function to handle the "main" virtual folder
+show_main_folder() {
+    find "$SCRIPT_DIR" -maxdepth 1 -type f -executable | \
+    while read -r script; do
+        script_name=$(basename "$script")
+        echo "🚀 $script_name"
+    done
+}
+
+current_path=""
+while true; do
+    if [[ -z "$current_path" ]]; then
+        prompt="Scripts: /"
+        selection=$(build_menu "$current_path" | sort)
+    elif [[ "$current_path" == "main" ]]; then
+        prompt="Scripts: /main/"
+        selection=$(show_main_folder | sort)
+    else
+        prompt="Scripts: /$current_path/"
+        selection=$(build_menu "$current_path" | sort)
+    fi
+    
+    chosen=$(echo "$selection" | wofi --dmenu --prompt "$prompt" \
+             --height 400 --width 700 \
+             --location center --insensitive)
+    
+    # Handle ESC key
+    if [[ -z "$chosen" ]]; then
+        # If we're not at root, go back to root instead of exiting
+        if [[ -n "$current_path" ]]; then
+            current_path=""
+            continue  # Go back to the start of the loop (root menu)
+        else
+            # If we're already at root, exit
+            break
+        fi
+    fi
+    
+    # Extract just the display name without icons
+    clean_chosen=$(echo "$chosen" | sed 's/^[^ ]* //')
+    
+    # Determine type based on icon
+    if [[ "$chosen" == 📁* ]]; then
+        # It's a directory
+        if [[ "$clean_chosen" == "main" ]]; then
+            current_path="main"
+        else
+            if [[ -z "$current_path" ]]; then
+                current_path="$clean_chosen"
+            else
+                current_path="$current_path/$clean_chosen"
+            fi
+        fi
+    elif [[ "$chosen" == 🚀* ]]; then
+        # It's a script - construct the full path
+        if [[ "$current_path" == "main" ]]; then
+            script_path="$SCRIPT_DIR/$clean_chosen"
+        else
+            script_path="$SCRIPT_DIR/$current_path/$clean_chosen"
+        fi
+        
+        if [[ -x "$script_path" ]]; then
+            # Check if script might need terminal
+            if grep -q -E "(read |dialog|whiptail|fzf|menu)" "$script_path" 2>/dev/null; then
+                foot -e "$script_path"
+            else
+                "$script_path"
+            fi
+        fi
+        break
+    fi
+done

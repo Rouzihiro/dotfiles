@@ -1,4 +1,5 @@
-bindsym $mod+mod1+space exec z-menu
+bindsym $mod+mod1+space exec wofi-super
+bindsym $mod+mod1+Shift+space exec z-menu
 
 bindsym $mod+a exec $term -e btop
 bindsym $mod+Mod1+a exec $term -e ncdu
