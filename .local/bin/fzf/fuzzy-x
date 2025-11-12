@@ -30,7 +30,7 @@ done
 
 while true; do
   # Run find excluding blacklisted dirs
-  file=$(find . "${FIND_EXCLUDES[@]}" -type f -print 2>/dev/null | fzf --ansi \
+file=$(find . "${FIND_EXCLUDES[@]}" \( -type f -o -type l \) -print 2>/dev/null | fzf --ansi \
     --preview "$FZF_PREVIEW_CMD" \
     --preview-window="$FZF_PREVIEW_WINDOW")
 
