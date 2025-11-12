@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# fzv.sh — Fuzzy file finder with preview
+# Fuzzy file finder with preview, including edit and execute function
 
 for cmd in fzf bat nvim; do
   command -v $cmd >/dev/null 2>&1 || { 
