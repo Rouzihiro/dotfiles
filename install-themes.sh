@@ -22,7 +22,7 @@ ln -snf ~/.config/zorro/current/theme/nvim.lua ~/.config/nvim/lua/theme.lua
 
 mkdir -p ~/.themes
 ln -snf ~/.config/zorro/current/theme/gtk ~/.themes/gtk
-ln -snf ~/.config/zorro/current/theme/Dark/gtk-4.0 ~/.config/
+ln -snf ~/.config/zorro/current/theme/gtk/gtk-4.0 ~/.config/gtk-4.0
 
 mkdir -p ~/.config/btop/themes
 ln -snf ~/.config/zorro/current/theme/btop.theme ~/.config/btop/themes/current.theme
