@@ -1,0 +1,43 @@
+#!/usr/bin/env bash
+# fzv.sh — Fuzzy file finder with preview
+
+for cmd in fzf bat nvim; do
+  command -v $cmd >/dev/null 2>&1 || { 
+    echo "$cmd not found, please install it."; exit 1; 
+  }
+done
+
+while true; do
+  file=$(fzf --ansi \
+             --preview 'bat --color=always --style=numbers --line-range=:500 {}' \
+             --preview-window=up:60%)
+  
+  [ -z "$file" ] && break
+  
+  # Show prompt for action selection
+  echo "Selected: $file"
+  echo "1) Execute (Enter or 1)"
+  echo "2) Edit with nvim (2 or e)"
+  echo "3) Cancel (3, c, or Esc)"
+  read -p "Choice: " -n1 choice
+  echo "" # new line after single char input
+  
+  case $choice in
+    ""|1)  # Enter or 1 - Execute
+      script_dir=$(dirname "$file")
+      (cd "$script_dir" && ./$(basename "$file"))
+      echo "Press any key to continue..."
+      read -n1
+      ;;
+    2|e|E)  # 2 or e - Edit
+      nvim "$file"
+      ;;
+    3|c|C|$'\e')  # 3, c, or Esc - Cancel
+      continue
+      ;;
+    *)
+      echo "Invalid choice, cancelling..."
+      continue
+      ;;
+  esac
+done
