@@ -34,4 +34,5 @@ echo "🎯 Selected: $selected_dir"
 cd "$selected_dir"
 
 # Source the fuzzy script
-source "$HOME/.local/bin/fzf/fuzzy-x"
+source "$HOME/.local/bin/fzf/fuzzy-x-gum"
+# source "$HOME/.local/bin/fzf/fuzzy-x"
