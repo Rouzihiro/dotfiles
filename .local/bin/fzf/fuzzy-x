@@ -1,43 +1,92 @@
 #!/usr/bin/env bash
 # Fuzzy file finder with preview, including edit and execute function
 
+# Pre-check all required commands
 for cmd in fzf bat nvim; do
-  command -v $cmd >/dev/null 2>&1 || { 
-    echo "$cmd not found, please install it."; exit 1; 
+  command -v "$cmd" >/dev/null 2>&1 || { 
+    echo >&2 "$cmd not found, please install it."; exit 1; 
   }
 done
 
+# Configuration variables
+FZF_PREVIEW_CMD='bat --color=always --style=numbers --line-range=:500 {}'
+FZF_PREVIEW_WINDOW='up:60%'
+
 while true; do
   file=$(fzf --ansi \
-             --preview 'bat --color=always --style=numbers --line-range=:500 {}' \
-             --preview-window=up:60%)
+             --preview "$FZF_PREVIEW_CMD" \
+             --preview-window="$FZF_PREVIEW_WINDOW")
   
-  [ -z "$file" ] && break
+  [[ -z "$file" ]] && break
   
   # Show prompt for action selection
   echo "Selected: $file"
-  echo "1) Execute (Enter or 1)"
+  echo "1) Open with xdg-open (1, Enter or o)"
   echo "2) Edit with nvim (2 or e)"
-  echo "3) Cancel (3, c, or Esc)"
-  read -p "Choice: " -n1 choice
+  echo "3) Execute (3 or x)"
+  echo "4) Open path in terminal (4 or t)"
+  echo "5) Cancel (5, c, or Esc)"
+  read -r -p "Choice: " -n1 choice
   echo "" # new line after single char input
   
-  case $choice in
-    ""|1)  # Enter or 1 - Execute
-      script_dir=$(dirname "$file")
-      (cd "$script_dir" && ./$(basename "$file"))
-      echo "Press any key to continue..."
-      read -n1
+  case "${choice,,}" in  # Convert to lowercase for simpler matching
+    ""|1|o)  # Enter, 1 or o - Open with xdg-open
+      if xdg-open "$file" 2>/dev/null; then
+        echo "Opened: $file"
+      else
+        echo "Failed to open with xdg-open"
+      fi
       ;;
-    2|e|E)  # 2 or e - Edit
+      
+    2|e)  # 2 or e - Edit
       nvim "$file"
       ;;
-    3|c|C|$'\e')  # 3, c, or Esc - Cancel
+      
+    3|x)  # 3 or x - Execute
+      if [[ -x "$file" ]]; then
+        script_dir=$(dirname "$file")
+        (cd "$script_dir" && ./"$(basename "$file")")
+      else
+        echo "File is not executable: $file"
+      fi
+      ;;
+    
+    4|t)  # 4 or t - Open path in terminal
+      terminal_cmd=""
+      # Try to detect available terminal
+      for term in x-terminal-emulator gnome-terminal kitty alacritty termite; do
+        if command -v "$term" >/dev/null 2>&1; then
+          terminal_cmd="$term"
+          break
+        fi
+      done
+      
+      if [[ -n "$terminal_cmd" ]]; then
+        case "$terminal_cmd" in
+          gnome-terminal)
+            "$terminal_cmd" --working-directory="$(dirname "$file")" &
+            ;;
+          *)
+            "$terminal_cmd" -e bash -c "cd '$(dirname "$file")'; exec bash" &
+            ;;
+        esac
+      else
+        echo "No terminal emulator found"
+      fi
+      ;;
+      
+    5|c|$'\e')  # 5, c, or Esc - Cancel
       continue
       ;;
+      
     *)
-      echo "Invalid choice, cancelling..."
+      echo "Invalid choice '$choice', cancelling..."
+      sleep 1
       continue
       ;;
   esac
+  
+  # Unified pause with timeout
+  read -r -p "Press any key to continue..." -n1 -t 5  # 5 second timeout
+  echo
 done
