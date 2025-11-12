@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
-# Fuzzy file finder with preview, including edit and execute function
+TERMINAL="foot"   # Preferred terminal
+FM_TUI="yazi"     # TUI file manager
+FM_GUI="thunar"   # GUI file manager
 
 # Pre-check all required commands
 for cmd in fzf bat nvim; do
@@ -12,81 +14,90 @@ done
 FZF_PREVIEW_CMD='bat --color=always --style=numbers --line-range=:500 {}'
 FZF_PREVIEW_WINDOW='up:60%'
 
+# Add folders to blacklist here
+BLACKLIST_DIRS=(
+  "$HOME/.config/BraveSoftware/"
+	"$HOME/.config/BraveSoftware/Brave-Browser/"
+)
+
+# Build the find exclusion expression
+FIND_EXCLUDES=()
+for dir in "${BLACKLIST_DIRS[@]}"; do
+  # Use -name pattern matching instead of -path for simplicity
+  dir_name=$(basename "$dir")
+  FIND_EXCLUDES+=(-name "$dir_name" -prune -o)
+done
+
 while true; do
-  file=$(fzf --ansi \
-             --preview "$FZF_PREVIEW_CMD" \
-             --preview-window="$FZF_PREVIEW_WINDOW")
-  
+  # Run find excluding blacklisted dirs
+  file=$(find . "${FIND_EXCLUDES[@]}" -type f -print 2>/dev/null | fzf --ansi \
+    --preview "$FZF_PREVIEW_CMD" \
+    --preview-window="$FZF_PREVIEW_WINDOW")
+
   [[ -z "$file" ]] && break
-  
-  # Show prompt for action selection
+
   echo "Selected: $file"
   echo "1) Open with xdg-open (1, Enter or o)"
   echo "2) Edit with nvim (2 or e)"
   echo "3) Execute (3 or x)"
-  echo "4) Open path in terminal (4 or t)"
-  echo "5) Cancel (5, c, or Esc)"
+  echo "4) Open path in terminal (4 or s)"
+  echo "5) Open path in TUI file manager (5 or t)"
+  echo "6) Open path in GUI file manager (6 or g)"
+  echo "7) Cancel (7, c, or Esc)"
   read -r -p "Choice: " -n1 choice
-  echo "" # new line after single char input
-  
-  case "${choice,,}" in  # Convert to lowercase for simpler matching
-    ""|1|o)  # Enter, 1 or o - Open with xdg-open
-      if xdg-open "$file" 2>/dev/null; then
-        echo "Opened: $file"
-      else
-        echo "Failed to open with xdg-open"
-      fi
+  echo ""
+
+  case "${choice,,}" in
+    ""|1|o)
+      xdg-open "$file" 2>/dev/null || echo "Failed to open with xdg-open"
       ;;
-      
-    2|e)  # 2 or e - Edit
+    2|e)
       nvim "$file"
       ;;
-      
-    3|x)  # 3 or x - Execute
+    3|x)
       if [[ -x "$file" ]]; then
-        script_dir=$(dirname "$file")
-        (cd "$script_dir" && ./"$(basename "$file")")
+        (cd "$(dirname "$file")" && "./$(basename "$file")")
       else
         echo "File is not executable: $file"
       fi
       ;;
-    
-    4|t)  # 4 or t - Open path in terminal
-      terminal_cmd=""
-      # Try to detect available terminal
-      for term in x-terminal-emulator gnome-terminal kitty alacritty termite; do
-        if command -v "$term" >/dev/null 2>&1; then
-          terminal_cmd="$term"
-          break
-        fi
-      done
-      
-      if [[ -n "$terminal_cmd" ]]; then
-        case "$terminal_cmd" in
-          gnome-terminal)
-            "$terminal_cmd" --working-directory="$(dirname "$file")" &
-            ;;
-          *)
-            "$terminal_cmd" -e bash -c "cd '$(dirname "$file")'; exec bash" &
-            ;;
+    4|s)
+      if command -v "$TERMINAL" >/dev/null 2>&1; then
+        dir_path=$(dirname "$file")
+        case "$TERMINAL" in
+          gnome-terminal) "$TERMINAL" --working-directory="$dir_path" & ;;
+          kitty) "$TERMINAL" --directory="$dir_path" & ;;
+          *) "$TERMINAL" -e bash -c "cd '$dir_path'; exec bash" & ;;
         esac
-      else
-        echo "No terminal emulator found"
+        echo "Opened $TERMINAL in: $dir_path"
       fi
       ;;
-      
-    5|c|$'\e')  # 5, c, or Esc - Cancel
+    5|t)
+      if command -v "$FM_TUI" >/dev/null 2>&1 && command -v "$TERMINAL" >/dev/null 2>&1; then
+        dir_path=$(dirname "$file")
+        case "$TERMINAL" in
+          gnome-terminal) "$TERMINAL" --working-directory="$dir_path" -- "$FM_TUI" & ;;
+          kitty) "$TERMINAL" --directory="$dir_path" -- "$FM_TUI" & ;;
+          *) "$TERMINAL" -e "$FM_TUI" "$dir_path" & ;;
+        esac
+      fi
+      ;;
+    6|g)
+      if command -v "$FM_GUI" >/dev/null 2>&1; then
+        dir_path=$(dirname "$file")
+        "$FM_GUI" "$dir_path" &
+      fi
+      ;;
+    7|c|$'\e')
       continue
       ;;
-      
     *)
-      echo "Invalid choice '$choice', cancelling..."
+      echo "Invalid choice '$choice'"
       sleep 1
       continue
       ;;
   esac
-  
-  # Unified pause with timeout
-  read -r -p "Press any key to continue..." -n1 -t 5  # 5 second timeout
+
+  read -r -p "Press any key to continue..." -n1 -t 5
   echo
 done
