@@ -55,5 +55,6 @@ if [[ -d "$HOME/.themes" ]]; then
     fi
 fi
 
+# bash $HOME/.config/zorro/current/theme/gtk.sh --> buggy, causes crash on some themes like everforest
 
 zorro-theme-set-gtk
