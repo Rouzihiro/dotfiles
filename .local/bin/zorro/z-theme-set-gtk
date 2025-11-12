@@ -1,18 +1,50 @@
 #!/bin/bash
 
-sleep 2  # Wait for D-Bus to be ready
+# Get the actual theme directory name
+THEME_PATH=$(readlink -f "$HOME/.config/zorro/current/theme")
+ACTUAL_THEME_NAME=$(basename "$THEME_PATH")
 
-# Execute the theme gtk.sh if it exists
-if [ -f "$HOME/.config/zorro/current/theme/gtk.sh" ]; then
-    # Make sure it's executable then run it
-    chmod +x "$HOME/.config/zorro/current/theme/gtk.sh" 2>/dev/null
-    "$HOME/.config/zorro/current/theme/gtk.sh"
-fi
+# Use the same capitalization logic as the main script
+CAPITALIZED_THEME=$(echo "$ACTUAL_THEME_NAME" | sed -E 's/(^|-)([a-z])/\1\u\2/g; s/-//g')
+GTK_THEME_NAME="${CAPITALIZED_THEME}-Dark"
 
-# Change gnome icon theme color
-GNOME_ICONS_THEME="$HOME/.config/zorro/current/theme/icons.theme"
-if [ -f "$GNOME_ICONS_THEME" ]; then
-    gsettings set org.gnome.desktop.interface icon-theme "$(cat "$GNOME_ICONS_THEME")"
-else
+echo "Setting up GTK theme: $GTK_THEME_NAME"
+
+# Wait for D-Bus but don't block too long
+for i in {1..10}; do
+    gsettings get org.gnome.desktop.interface gtk-theme &>/dev/null && break
+    sleep 0.5
+done
+
+# Safety: Verify theme exists
+if [[ ! -d "$HOME/.themes/$GTK_THEME_NAME" ]]; then
+    echo "Warning: GTK theme '$GTK_THEME_NAME' not found, using fallback" >&2
+    gsettings set org.gnome.desktop.interface gtk-theme "Adwaita-dark"
+    gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
     gsettings set org.gnome.desktop.interface icon-theme "Yaru-blue"
+    exit 0
 fi
+
+# Update cache
+gtk-update-icon-cache -f "$HOME/.themes/$GTK_THEME_NAME" 2>/dev/null || true
+
+# Execute theme script if exists (with timeout safety)
+if [[ -f "$HOME/.config/zorro/current/theme/gtk.sh" ]]; then
+    echo "Running theme GTK script"
+    timeout 10s bash "$HOME/.config/zorro/current/theme/gtk.sh" 2>/dev/null || \
+        echo "Theme script timed out or failed" >&2
+else
+    # Direct theme application
+    gsettings set org.gnome.desktop.interface gtk-theme "$GTK_THEME_NAME"
+    gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
+    
+    # Icon theme fallback
+    GNOME_ICONS_THEME="$HOME/.config/zorro/current/theme/icons.theme"
+    if [[ -f "$GNOME_ICONS_THEME" ]]; then
+        gsettings set org.gnome.desktop.interface icon-theme "$(cat "$GNOME_ICONS_THEME")"
+    else
+        gsettings set org.gnome.desktop.interface icon-theme "Yaru-blue"
+    fi
+fi
+
+echo "GTK theme applied: $GTK_THEME_NAME"

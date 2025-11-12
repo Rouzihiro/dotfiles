@@ -12,49 +12,37 @@ THEME_NAME=$(find "$THEMES_DIR" -mindepth 1 -maxdepth 1 \( -type d -o -type l \)
 [ -z "$THEME_NAME" ] && exit
 
 # Normalize to directory name
-THEME_NAME=$(echo "$THEME_NAME" | tr '[:upper:]' '[:lower:]' | tr ' ' '-')
-THEME_PATH="$THEMES_DIR/$THEME_NAME"
+THEME_NAME_NORMALIZED=$(echo "$THEME_NAME" | tr '[:upper:]' '[:lower:]' | tr ' ' '-')
+THEME_PATH="$THEMES_DIR/$THEME_NAME_NORMALIZED"
 
 if [[ ! -d "$THEME_PATH" ]]; then
-  echo "Theme '$THEME_NAME' does not exist in $THEMES_DIR" >&2
+  echo "Theme '$THEME_NAME_NORMALIZED' does not exist in $THEMES_DIR" >&2
   exit 2
 fi
 
-# Update symlink
+echo "Switching to theme: $THEME_NAME"
+
+# Core theme setup only
 ln -nsf "$THEME_PATH" "$CURRENT_THEME_DIR"
 
-# Change background
-z-theme-bg-next
-
-# Restart components
-tmux source-file ~/.config/tmux/tmux.conf  
-z-restart waybar
-# zorro-restart-swayosd
-# hyprctl reload
-pkill -SIGUSR2 btop
-# makoctl reload
-
-# Change gnome, terminal, etc. themes
-z-theme-bat
-# pkill waybar
-# waybar
-# zorro-theme-set-terminal
-
-
-# Rename the single symlink folder in .themes to THEMENAME-Dark
+# Rename .themes symlink
 if [[ -d "$HOME/.themes" ]]; then
-    # Find the first symlink in .themes directory
     SYMLINK_PATH=$(find "$HOME/.themes" -maxdepth 1 -type l | head -n 1)
     
     if [[ -n "$SYMLINK_PATH" ]]; then
-        # Convert theme name to capitalized format (e.g., "gruvbox" -> "Gruvbox")
-        CAPITALIZED_THEME=$(echo "$THEME_NAME" | sed -E 's/(^|-)([a-z])/\1\u\2/g; s/-//g')
+        ACTUAL_THEME_NAME=$(basename "$THEME_PATH")
+        CAPITALIZED_THEME=$(echo "$ACTUAL_THEME_NAME" | sed -E 's/(^|-)([a-z])/\1\u\2/g; s/-//g')
         NEW_NAME="$HOME/.themes/${CAPITALIZED_THEME}-Dark"
-        
         mv "$SYMLINK_PATH" "$NEW_NAME"
     fi
 fi
 
-# bash $HOME/.config/zorro/current/theme/gtk.sh --> buggy, causes crash on some themes like everforest
+# Quick restarts (non-blocking)
+z-theme-bg-next &
+z-theme-bat &
+tmux source-file ~/.config/tmux/tmux.conf &
+z-restart waybar &
+pkill -SIGUSR2 btop &
 
-zorro-theme-set-gtk
+echo "Theme base setup completed: $THEME_NAME"
+echo "Run 'zorro-theme-set-gtk' to apply GTK settings"
