@@ -12,6 +12,8 @@ vim.opt.smartindent = true
 vim.opt.termguicolors = true
 vim.opt.undofile = true
 vim.opt.number = true
+vim.o.showmode = true
+vim.o.cursorline = true
 local map = vim.keymap.set
 vim.g.mapleader = " "
 -- =====================

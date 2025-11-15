@@ -88,7 +88,7 @@ map("n", "<leader>lS", function() fzf.lsp_workspace_symbols() end, { desc = "Wor
 -- MISC
 -- =====================
 map("n", "<leader>mm", function() fzf.marks() end, { desc = "Show marks" })
-map("n", "<leader>qr", function() fzf.quickfix() end, { desc = "Quickfix list" })
+map("n", "<leader>lq", function() fzf.quickfix() end, { desc = "Quickfix list" })
 map("n", "<leader>jj", function() fzf.jumps() end, { desc = "Jumps history" })
 
 return fzf

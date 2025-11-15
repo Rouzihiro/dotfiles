@@ -4,6 +4,7 @@ vim.g.mapleader = " "
 -- =====================
 -- General
 -- =====================
+map("n", "<esc>", "<cmd>noh<CR>")
 map({ "n", "v", "x" }, ";", ":", { desc = "Swap ; and :" })
 map({ "n", "v", "x" }, ":", ";", { desc = "Swap : and ;" })
 map("n", "n", "nzzzv", { desc = "Next search result centered" })
@@ -72,6 +73,8 @@ end
 -- =====================
 -- Buffer management
 -- =====================
+
+map('n', '<leader>w', '<Cmd>write<CR>', { desc = "Save buffer" })
 map({ "n" }, "<leader>q", "<Cmd>bd<CR>", { desc = "Close buffer" })
 map({ "n" }, "<leader>Q", "<Cmd>:wqa<CR>", { desc = "Write & quit all buffers" })
 map('n', '<C-q>', '<Cmd>bd!<CR>', { desc = "Force close buffer" })
@@ -83,7 +86,7 @@ map("n", "K", vim.lsp.buf.hover, { desc = "LSP hover" })
 map({ "n", "v", "x" }, "<Leader>lf", vim.lsp.buf.format, { desc = "Format buffer" })
 
 map('n', '<leader>le', function() vim.diagnostic.open_float({ on_jump = function() end }) end, { desc = "Show error under cursor" })
-map('n', '<leader>lq', function() vim.diagnostic.setqflist() end, { desc = "Show all errors in quickfix" })
+map('n', '<leader>la', function() vim.diagnostic.setqflist() end, { desc = "Show all errors in quickfix" })
 map('n', ']]', function() vim.diagnostic.jump({ count = 1, on_jump = function() end }) end, { desc = "Next diagnostic" })
 map('n', '[[', function() vim.diagnostic.jump({ count = -1, on_jump = function() end }) end, { desc = "Previous diagnostic" })
 
@@ -105,13 +108,6 @@ map("n", "{", "{zz", { desc = "Scroll line up centered" })
 -- =====================
 map({ "n", "v", "x" }, "<C-s>", [[:s/\V]], { desc = "Enter substitute mode" })
 map({ "v", "x", "n" }, "<C-y>", '"+y', { desc = "Yank to system clipboard" })
-
--- =====================
--- Buffer / Write
--- =====================
-map('n', '<leader>w', '<Cmd>write<CR>', { desc = "Save buffer" })
-map({ "n" }, "<leader>q", "<Cmd>bd<CR>", { desc = "Close buffer" })
-map({ "n" }, "<leader>Q", "<Cmd>:wqa<CR>", { desc = "Write & quit all buffers" })
 
 -- =====================
 -- File exec
