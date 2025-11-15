@@ -17,10 +17,6 @@
       "rev": "c3e2251",
       "src": "https://github.com/kepano/flexoki-neovim"
     },
-    "fzf-lua": {
-      "rev": "8337813",
-      "src": "https://github.com/ibhagwan/fzf-lua"
-    },
     "gruvbox.nvim": {
       "rev": "5e0a460",
       "src": "https://github.com/ellisonleao/gruvbox.nvim"
