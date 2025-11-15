@@ -12,27 +12,101 @@ PATHS=(
   "$HOME/.config"
 )
 
-# Pretty directory selection with fuzzy filtering
-echo "📁 Select directory to search:"
-selected_dir=$(printf "%s\n" "${PATHS[@]}" | fzf \
+# Read recent files from markdown file
+RECENT_FILES=()
+RECENT_FILE_PATH="$HOME/Downloads/recent-opened-xdg.md"
+
+if [[ -f "$RECENT_FILE_PATH" ]]; then
+  # Read file paths, filter out empty lines and non-existent files
+  while IFS= read -r line || [[ -n "$line" ]]; do
+    # Remove any markdown formatting and trim whitespace
+    clean_line=$(echo "$line" | sed 's/^* \[.*\]*(//' | sed 's/)$//' | sed 's/^[[:space:]]*//' | sed 's/[[:space:]]*$//')
+    if [[ -n "$clean_line" && -e "$clean_line" ]]; then
+      RECENT_FILES+=("$clean_line")
+    fi
+  done < "$RECENT_FILE_PATH"
+fi
+
+# Create selection menu with directories first, then recent files
+echo "📁 Select directory or recent file:"
+
+# Prepare options: first show directories, then recent files
+OPTIONS=()
+
+# Add directories first
+OPTIONS+=("--- Directories ---")
+for path in "${PATHS[@]}"; do
+  if [[ -d "$path" ]]; then
+    OPTIONS+=("📁 $path")
+  fi
+done
+
+# Add recent files section if we have any
+if [[ ${#RECENT_FILES[@]} -gt 0 ]]; then
+  OPTIONS+=("--- Recent Files ---")
+  for file in "${RECENT_FILES[@]}"; do
+    OPTIONS+=("📄 $file")
+  done
+fi
+
+# Show selection menu
+selected=$(printf "%s\n" "${OPTIONS[@]}" | fzf \
   --height=40% \
   --layout=reverse \
   --border=rounded \
-  --prompt="🔍 Search directories > " \
+  --prompt="🔍 Search directories/recent files > " \
   --pointer="→" \
   --marker="⭐" \
-  --header="Select a directory to browse" \
-  --preview='ls -la {} | head -20' \
+  --header="Select a directory to browse or file to open" \
+  --preview='
+    if [[ {} == "📄 "* ]]; then
+      # For files, show file info
+      file_path={}
+      file_path="${file_path#📄 }"
+      if [[ -f "$file_path" ]]; then
+        file "$file_path"
+        echo -e "\n📊 Size: $(du -h "$file_path" | cut -f1)"
+        echo -e "📅 Modified: $(stat -c %y "$file_path" 2>/dev/null | cut -d. -f1 || ls -la "$file_path")"
+      fi
+    elif [[ {} == "📁 "* ]]; then
+      # For directories, show directory contents
+      dir_path={}
+      dir_path="${dir_path#📁 }"
+      ls -la "$dir_path" | head -20
+    else
+      echo "Select an item to see preview"
+    fi' \
   --preview-window=right:60%:border-left)
 
-if [[ -z "$selected_dir" ]]; then
-  echo "No directory selected. Exiting."
+if [[ -z "$selected" ]]; then
+  echo "No selection made. Exiting."
   exit 1
 fi
 
-echo "🎯 Selected: $selected_dir"
-cd "$selected_dir"
+# Handle the selection
+if [[ "$selected" == "📄 "* ]]; then
+  # It's a file - open with xdg-open
+  file_path="${selected#📄 }"
+  if [[ -f "$file_path" ]]; then
+    echo "🚀 Opening file: $file_path"
+    xdg-open "$file_path"
+    # Exit after opening file since we don't want to continue to fuzzy script
+    exit 0
+  else
+    echo "❌ File no longer exists: $file_path"
+    exit 1
+  fi
+elif [[ "$selected" == "📁 "* ]]; then
+  # It's a directory - navigate to it
+  selected_dir="${selected#📁 }"
+  echo "🎯 Selected directory: $selected_dir"
+  cd "$selected_dir"
+else
+  # Section header or other - exit
+  echo "Invalid selection. Exiting."
+  exit 1
+fi
 
-# Source the fuzzy script
+# Source the fuzzy script (only reached when directory is selected)
 source "$HOME/.local/bin/fzf/fuzzy-x-gum"
 # source "$HOME/.local/bin/fzf/fuzzy-x"
