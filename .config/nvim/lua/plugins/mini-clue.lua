@@ -8,6 +8,7 @@
 local miniclue = require("mini.clue")
 
 miniclue.setup({
+ 	delay = 1,
   -- Key prefixes that trigger the popup
   triggers = {
     -- Leader mappings
