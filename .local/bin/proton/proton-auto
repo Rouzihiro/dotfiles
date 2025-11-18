@@ -84,3 +84,8 @@ echo "Log saved to $LOGFILE"
 echo "=============================================================" | tee -a "$LOGFILE"
 
 exit $EXIT_CODE
+
+# How-to
+# muvm -ti FEXBash
+# ./proton-auto Maelstorm
+# ./proton-auto SomeOtherGame
