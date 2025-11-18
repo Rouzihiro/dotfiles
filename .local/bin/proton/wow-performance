@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+# wow-performance
+
+export WINEPREFIX="$HOME/.wine-wow" 
+export WINEARCH=win64
+
+# Performance optimizations
+export DXVK_ASYNC=1
+export DXVK_STATE_CACHE=1
+export DXVK_HUD=0
+export __GL_THREADED_OPTIMIZATIONS=1
+export mesa_glthread=true
+export MESA_SHADER_CACHE_DIR="$HOME/.cache/mesa"
+export __GL_SHADER_DISK_CACHE=1
+export __GL_SHADER_DISK_CACHE_PATH="$HOME/.cache/dxvk"
+
+# Fix the OpenGL polygon offset errors
+export MESA_GL_VERSION_OVERRIDE=4.1
+export MESA_GLSL_VERSION_OVERRIDE=410
+
+# Mouse input fix
+export SDL_VIDEO_X11_DGAMOUSE=0
+
+# Wine performance tweaks
+export WINEDEBUG=-all  # Suppress debug messages for better performance
+export WINEDLLOVERRIDES="mscoree,mshtml="
+
+echo "🎮 Launching WoW with performance optimizations..."
+
+# Use OpenGL backend for better compatibility
+wine "$HOME/Games/Frostmourne/Wow.exe" -opengl -windowed $@

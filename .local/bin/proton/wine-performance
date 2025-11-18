@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+
+GAME_EXE="$1"
+export WINEPREFIX="$HOME/.wine-wow" 
+export WINEARCH=win64
+export DXVK_ASYNC=1
+export DXVK_STATE_CACHE=1
+export DXVK_HUD=0
+export __GL_THREADED_OPTIMIZATIONS=1
+export mesa_glthread=true
+export MESA_SHADER_CACHE_DIR="$HOME/.cache/mesa"
+export __GL_SHADER_DISK_CACHE=1
+export __GL_SHADER_DISK_CACHE_PATH="$HOME/.cache/dxvk"
+export MESA_GL_VERSION_OVERRIDE=4.1
+export MESA_GLSL_VERSION_OVERRIDE=410
+export SDL_VIDEO_X11_DGAMOUSE=0
+export WINEDEBUG=-all
+export WINEDLLOVERRIDES="mscoree,mshtml="
+
+echo "🎮 Launching $GAME_EXE with performance optimizations..."
+
+# Skyrim-specific fullscreen command
+wine "$GAME_EXE" -fullscreen "${@:2}"
