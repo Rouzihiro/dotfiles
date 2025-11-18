@@ -1,20 +1,91 @@
-#!/bin/bash
-PROTON_DIR="$HOME/.steam/root/steamapps/common/GE-Proton10-24/"
-STEAM_DIR="$HOME/.steam/root"
+#!/usr/bin/env bash
+# ==============================================================
+# gamer.sh — Proton/FEX Game Launcher (Asahi ARM optimized)
+# --------------------------------------------------------------
+# Usage:
+#   gamer.sh /path/to/Game.exe [optional args...]
+# Example:
+#   gamer.sh ~/Games/Wow/Wow-64.exe --launcher-skip -novid
+#
+# Features:
+#   ✅ Automatic Proton + Prefix setup
+#   ✅ Works inside muvm/FEX or native shell
+#   ✅ Steam-style launch args support
+#   ✅ DXVK, VKD3D, FEX, and Mesa environment tuning
+#   ✅ Auto per-game logging in ~/Games/logs/
+# ==============================================================
+
+set -euo pipefail
+
+# ----[ USER CONFIGURATION ]------------------------------------
+PROTON_DIR="$HOME/.steam/root/steamapps/common/GE-Proton10-25"
+STEAM_PATH="$HOME/.steam/root"
+LOG_DIR="$HOME/Games/logs"
+mkdir -p "$LOG_DIR"
+
+# Optional: Uncomment to use a specific Proton build
+# PROTON_DIR="$HOME/.steam/root/steamapps/common/Proton-GE-Proton"
+# ---------------------------------------------------------------
+
+PROTON_BIN="$PROTON_DIR/proton"
 GAME_EXE="$1"
+shift || true
+EXTRA_ARGS="$@"
 
-GAME_NAME=$(basename "$GAME_EXE" .exe)
-COMPAT_DATA_PATH="$HOME/Games/proton/${GAME_NAME}_prefix"
+# Derive prefix from EXE name
+BASENAME=$(basename "${GAME_EXE%.*}")
+PREFIX="$HOME/Games/proton/${BASENAME}_prefix"
+mkdir -p "$PREFIX"
 
-mkdir -p "$COMPAT_DATA_PATH"
+# ----[ ENVIRONMENT ]--------------------------------------------
+export STEAM_COMPAT_CLIENT_INSTALL_PATH="$STEAM_PATH"
+export STEAM_COMPAT_DATA_PATH="$PREFIX"
 
-export STEAM_COMPAT_CLIENT_INSTALL_PATH="$STEAM_DIR"
-export STEAM_COMPAT_DATA_PATH="$COMPAT_DATA_PATH"
+# General Proton and Mesa performance tweaks
+export DXVK_LOG_LEVEL=none
+export DXVK_STATE_CACHE=1
+export DXVK_HUD=0
+export VKD3D_DEBUG=none
+export __GL_SHADER_DISK_CACHE=1
+export __GL_SHADER_DISK_CACHE_PATH="$HOME/.cache/dxvk-cache"
+export mesa_glthread=true
+export MESA_SHADER_CACHE_DIR="$HOME/.cache/mesa"
+export PROTON_LOG=1
+export PROTON_LOG_DIR="$LOG_DIR"
 
-"$PROTON_DIR/proton" run "$GAME_EXE"
+# FEX (ARM emulator) options — helps with 32/64-bit Wine bridge stability
+export FEX_INTERPRETER=0
+export FEX_JIT_WORKINGSET_MB=1024
+export FEX_APP_FILENAME="$GAME_EXE"
 
+export SDL_VIDEODRIVER=x11
+export GALLIUM_HUD=""
+
+# ----[ LOGGING ]------------------------------------------------
+TIMESTAMP=$(date +"%Y-%m-%d_%H-%M-%S")
+LOGFILE="$LOG_DIR/${BASENAME}_${TIMESTAMP}.log"
+
+echo "=============================================================" | tee "$LOGFILE"
+echo "🎮 Launching $BASENAME" | tee -a "$LOGFILE"
+echo "📁 Proton: $PROTON_BIN" | tee -a "$LOGFILE"
+echo "📦 Prefix: $PREFIX" | tee -a "$LOGFILE"
+echo "🕹️  Game: $GAME_EXE $EXTRA_ARGS" | tee -a "$LOGFILE"
+echo "🧠 Kernel: $(uname -r)" | tee -a "$LOGFILE"
+echo "🧩 Mesa: $(glxinfo -B 2>/dev/null | grep 'OpenGL version' || echo 'Mesa info N/A')" | tee -a "$LOGFILE"
+echo "=============================================================" | tee -a "$LOGFILE"
+
+# ----[ RUN GAME ]----------------------------------------------
+"$PROTON_BIN" run "$GAME_EXE" $EXTRA_ARGS 2>&1 | tee -a "$LOGFILE"
+EXIT_CODE=${PIPESTATUS[0]}
+
+echo "=============================================================" | tee -a "$LOGFILE"
+echo "🏁 Game exited with code $EXIT_CODE" | tee -a "$LOGFILE"
+echo "Log saved to $LOGFILE"
+echo "=============================================================" | tee -a "$LOGFILE"
+
+exit $EXIT_CODE
 
 # How-to
 # muvm -ti FEXBash
-# ./gamer Maelstorm
-# ./gamer SomeOtherGame
+# ./proton-auto Maelstorm
+# ./proton-auto SomeOtherGame

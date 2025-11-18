@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+# proton-legacy-wow32.sh
+
+# Try Proton 7 or earlier for better 32-bit support
+PROTON_DIR="$HOME/.steam/root/steamapps/common/Proton 10.0"
+# or
+# PROTON_DIR="$HOME/.steam/root/steamapps/common/Proton 6.3"
+
+STEAM_PATH="$HOME/.steam/root"
+GAME_EXE="$1"
+shift
+EXTRA_ARGS="$@"
+
+PREFIX="$HOME/Games/proton/wow32_legacy_prefix"
+mkdir -p "$PREFIX"
+
+export STEAM_COMPAT_CLIENT_INSTALL_PATH="$STEAM_PATH"
+export STEAM_COMPAT_DATA_PATH="$PREFIX"
+export WINEARCH=win32
+
+# Minimal settings for maximum compatibility
+export PROTON_USE_WINED3D=1
+export PROTON_NO_ESYNC=1
+export PROTON_NO_FSYNC=1
+export WINEDLLOVERRIDES="mscoree=;mshtml=;d3d11=;dxgi="
+
+echo "🕰️ Using legacy Proton for 32-bit compatibility..."
+"$PROTON_DIR/proton" run "$GAME_EXE" -opengl -windowed $EXTRA_ARGS
