@@ -30,6 +30,9 @@ ln -snf ~/.config/zorro/current/theme/btop.theme ~/.config/btop/themes/current.t
 mkdir -p ~/.config/foot
 ln -snf ~/.config/zorro/current/theme/foot.ini ~/.config/foot/current-theme.ini
 
+mkdir -p ~/.config/kitty
+ln -snf ~/.config/zorro/current/theme/kitty.conf ~/.config/kitty/colors.conf
+
 mkdir -p ~/.config/zsh
 ln -snf ~/.config/zorro/current/theme/dircolors ~/.config/zsh/.dircolors
 
