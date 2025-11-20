@@ -1,37 +1,144 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
-# Configuration
-walldir="$HOME/Pictures/wallpapers/"
-lines=5
-columns=10
-icons_size=128
-width=$((columns * icons_size / 8))
-swaybg_pid_file="$XDG_RUNTIME_DIR/swaybg.pid"  # For PID tracking
+WALLPAPER_DIR="$HOME/Pictures/wallpapers"
+CACHE_DIR="$HOME/.cache/wallpaper-thumbnails"
+THUMBNAIL_DIR="$HOME/Videos/thumbnails/"
 
-# Rofi theme
-theme="window { width: ${width}ch; }
-      listview { lines: ${lines}; columns: ${columns}; cycle:true; spacing:5px;}
-      element { padding:0px; margin:0px; }
-      element-icon { size: ${icons_size}px; }
-      element-text { text-color: rgba(0,0,0,0%); }"
+# Create directories if they don't exist
+mkdir -p "$CACHE_DIR"
+mkdir -p "$THUMBNAIL_DIR"
 
-# Wallpaper selection
-selected=$(find -L "$walldir" -type f |
-  while read -r A; do echo -en "$A\x00icon\x1f$A\n"; done |
-  rofi -dmenu \
-    -show-icons \
-    -p "Wallpaper" \
-    -theme-str "${theme}")
+# Generate thumbnails for all wallpapers (static images)
+generate_thumbnails() {
+    # Added -L to follow symlinks
+    find -L "$WALLPAPER_DIR" -type f \( -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.png" -o -iname "*.gif" -o -iname "*.webp" -o -iname "*.webm" \) | while read -r img; do
+        filename=$(basename "$img")
+        thumbnail="$CACHE_DIR/${filename%.*}.png"
 
-# Set wallpaper if selected
-if [[ -n "$selected" ]]; then
-    # Kill previous swaybg instance if exists
-    if [[ -f "$swaybg_pid_file" ]]; then
-        old_pid=$(cat "$swaybg_pid_file")
-        kill "$old_pid" 2>/dev/null
+        # Only generate if thumbnail doesn't exist or is older than original
+        if [ ! -f "$thumbnail" ] || [ "$img" -nt "$thumbnail" ]; then
+            # Use magick instead of convert for ImageMagick v7
+            if command -v magick &> /dev/null; then
+                # Use [0] to explicitly get the first frame for GIFs
+                magick "$img[0]" -resize 200x200^ -gravity center -extent 200x200 +adjoin "$thumbnail" 2>/dev/null
+            elif command -v convert &> /dev/null; then
+                # Fallback to convert for ImageMagick v6
+                convert "$img[0]" -resize 200x200^ -gravity center -extent 200x200 +adjoin "$thumbnail" 2>/dev/null
+            fi
+        fi
+    done
+}
+
+# Generate thumbnails for mp4 files
+generate_video_thumbnails() {
+    # Added -L to follow symlinks
+    find -L "$WALLPAPER_DIR" -type f -iname "*.mp4" | while read -r video; do
+        filename=$(basename "$video")
+        # Full-size thumbnail for previews
+        full_thumbnail="$THUMBNAIL_DIR/${filename%.*}.jpg"
+        # Small thumbnail for rofi preview in cache
+        small_thumbnail="$CACHE_DIR/${filename%.*}.png"
+
+        # Generate full-size thumbnail if it doesn't exist or is older than original
+        if [ ! -f "$full_thumbnail" ] || [ "$video" -nt "$full_thumbnail" ]; then
+            ffmpeg -i "$video" -vframes 1 -q:v 2 "$full_thumbnail" -y 2>/dev/null
+        fi
+
+        # Generate small thumbnail for rofi if full thumbnail exists
+        if [ -f "$full_thumbnail" ]; then
+            if [ ! -f "$small_thumbnail" ] || [ "$full_thumbnail" -nt "$small_thumbnail" ]; then
+                if command -v magick &> /dev/null; then
+                    magick "$full_thumbnail" -resize 200x200^ -gravity center -extent 200x200 "$small_thumbnail" 2>/dev/null
+                elif command -v convert &> /dev/null; then
+                    convert "$full_thumbnail" -resize 200x200^ -gravity center -extent 200x200 "$small_thumbnail" 2>/dev/null
+                fi
+            fi
+        fi
+    done
+}
+
+# Check if ImageMagick is installed and generate thumbnails
+if command -v magick &> /dev/null || command -v convert &> /dev/null; then
+    generate_thumbnails &
+fi
+
+# Check if ffmpeg is installed and generate video thumbnails
+if command -v ffmpeg &> /dev/null; then
+    generate_video_thumbnails &
+fi
+
+# Build rofi entries with image previews
+build_menu() {
+    # Added -L to follow symlinks and use full path for better handling
+    find -L "$WALLPAPER_DIR" -type f \( -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.png" -o -iname "*.gif" -o -iname "*.webp" -o -iname "*.mp4" \) -printf "%P\n" | sort | while read -r wallpaper; do
+        # Extract just the filename for thumbnail lookup
+        filename=$(basename "$wallpaper")
+        thumbnail="$CACHE_DIR/${filename%.*}.png"
+        if [ -f "$thumbnail" ]; then
+            printf "%s\0icon\x1f%s\n" "$wallpaper" "$thumbnail"
+        else
+            echo "$wallpaper"
+        fi
+    done
+}
+
+# Get list of valid wallpapers
+get_wallpapers() {
+    # Added -L to follow symlinks and use relative paths
+    find -L "$WALLPAPER_DIR" -type f \( -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.png" -o -iname "*.gif" -o -iname "*.webp" -o -iname "*.mp4" \) -printf "%P\n"
+}
+
+# Handle random wallpaper selection
+if [ "$1" = "random" ]; then
+    # Select a random wallpaper from the list
+    wallpapers=($(get_wallpapers))
+    if [ ${#wallpapers[@]} -eq 0 ]; then
+        notify-send "Error" "No wallpapers found in $WALLPAPER_DIR"
+        exit 1
     fi
+    selected="${wallpapers[$RANDOM % ${#wallpapers[@]}]}"
+else
+    # Show rofi menu with image previews using grid theme
+    selected=$(build_menu | rofi -dmenu -i -p "Wallpaper" -show-icons -theme ~/.config/rofi/grid.rasi -theme-str 'element-icon { size: 6em; }' -me-select-entry '' -me-accept-entry MousePrimary 2>/dev/null)
+fi
 
-    # Set new wallpaper and store PID
-    swaybg -i "$selected" -m fill &
-    echo $! > "$swaybg_pid_file"
+# If user selected something, set it as wallpaper
+if [ -n "$selected" ]; then
+    # Clean up the selection (remove any null bytes or extra data)
+    selected=$(echo "$selected" | tr -d '\0')
+    # Use the full path from WALLPAPER_DIR since we used %P in find
+    wallpaper_path="$WALLPAPER_DIR/$selected"
+
+    # Check if file exists or is a valid symlink
+    if [ -f "$wallpaper_path" ] || [ -L "$wallpaper_path" ]; then
+        # Get the real path in case it's a symlink
+        real_path=$(readlink -f "$wallpaper_path")
+        
+        # Save the real wallpaper path for restoration on next boot
+        echo "$real_path" > "$HOME/.cache/last_wallpaper"
+
+        # Get file extension from the actual file
+        extension="${real_path##*.}"
+
+        # Kill any existing swaybg processes
+        killall swaybg 2>/dev/null
+
+        if [ "${extension,,}" = "mp4" ]; then
+            # Handle MP4 animated wallpaper
+            filename=$(basename "$real_path")
+            thumbnail_path="$THUMBNAIL_DIR/${filename%.*}.jpg"
+
+            # For videos, we can't use swaybg directly
+            # You might want to use a different tool for video wallpapers in Sway
+            notify-send -a "Wallpaper" "Video Wallpaper" "Video wallpapers not supported with swaybg. Use: $selected"
+        else
+            # Handle static image wallpaper with swaybg
+            swaybg -i "$real_path" -m fill &
+            
+            # Send notification
+            notify-send -a "Wallpaper" "Wallpaper Applied" "$(basename "$selected")" -i "$real_path"
+        fi
+    else
+        notify-send -a "Wallpaper" "Error" "Wallpaper file not found: $wallpaper_path"
+    fi
 fi

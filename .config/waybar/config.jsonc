@@ -33,7 +33,7 @@
         "exec": "ls ~/Pictures/wallpapers | wc -l",
         "format": "󰸉",
         "tooltip-format": "Pick from {} wallpapers!",
-        "on-click": "~/.config/waybar/scripts/wallpaper-selector.sh"
+        "on-click": "rofi-wall"
     },
 
 
@@ -153,7 +153,7 @@
     "format": "{icon}",
     "format-icons": "",
     "exec-on-event": "true",
-    "on-click": "wofi-bluetooth",
+    "on-click": "rofi-bluetooth",
     "tooltip-format": "Bluetooth Menu"
   },
    
@@ -161,7 +161,7 @@
         "format-wifi": "󰤨 {signalStrength}%",
         "format-disconnected": "󰤭 Disconnected",
         "tooltip-format": "Wifi: {essid} ({signalStrength}%)",
-        "on-click": "~/.config/waybar/scripts/wifi-menu.sh"
+        "on-click": "rofi-wifi"
     },
 
   "custom/separator": {
@@ -187,6 +187,6 @@
 
   "sway/language": {
     "format": "  {short}",
-    "on-click": "swaymsg 'input * xkb_switch_layout next'",
+    "on-click": "swaymsg 'input * xkb_switch_layout next'"
   }
 }

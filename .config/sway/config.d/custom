@@ -6,7 +6,7 @@ bindsym $mod+Mod1+a exec $term -e ncdu
 
 bindsym $mod+b exec bm-bookmarks
 bindsym $mod+Mod1+b exec xdg-open https://
-bindsym $mod+Shift+b exec wofi-bluetooth
+bindsym $mod+Shift+b exec rofi-bluetooth
 
 bindsym $mod+d exec bm-aria
 bindsym $mod+Mod1+d exec bm-music-downloader
@@ -14,8 +14,8 @@ bindsym $mod+Shift+d exec wofi-docs
 
 bindsym $mod+mod1+h exec $term -T 'floaty-small' -e bash -c 'cd / && sudo ncdu'
 
-bindsym $mod+i exec bm-wifi
-bindsym $mod+mod1+i exec wofi-wifi
+bindsym $mod+i exec rofi-wifi
+bindsym $mod+mod1+i exec bm-wifi
 
 bindsym $mod+mod1+l exec $lockscreen
 
