@@ -1,10 +1,40 @@
-#! /usr/bin/env bash
+#!/usr/bin/env bash
 
-# Open Books/pdfs in zathura with rofi
-choice=$(fd . -e pdf --base-directory "$HOME" -c never |
-  rofi -dmenu -i -l 20 -p "Books" -config "$HOME/.config/rofi/regular.rasi")
+# Open Books/PDFs in zathura with rofi
+menu=()
+file_paths=()
 
-# Prepend choice with $HOME, since fd will output relative path from $HOME
-if [[ -n $choice ]]; then
-  zathura "$HOME/$choice"
+# Build menu with PDF files and icons, storing paths
+while IFS= read -r pdf; do
+    # Extract filename for display
+    filename=$(basename "$pdf" .pdf)
+    # Format filename for better readability
+    display_name=$(echo "$filename" | sed -E 's/(^|-|_)([a-z])/\1\u\2/g; s/[-_]/ /g')
+    menu+=("󰈖 $display_name")
+    file_paths+=("$HOME/$pdf")
+done < <(fd . -e pdf --base-directory "$HOME" -c never | sort)
+
+# Show rofi menu
+selected=$(printf '%s\n' "${menu[@]}" | rofi -dmenu -i -l 20 -p "Books" -config "$HOME/.config/rofi/list.rasi")
+
+
+# Handle selection
+if [[ -n "$selected" ]]; then
+    # Extract the display name
+    display_name=$(echo "$selected" | sed 's/^󰈖 //')
+    
+    # Find the index of the selected item
+    for i in "${!menu[@]}"; do
+        if [[ "${menu[$i]}" == "$selected" ]]; then
+            selected_path="${file_paths[$i]}"
+            break
+        fi
+    done
+    
+    if [[ -n "$selected_path" && -f "$selected_path" ]]; then
+        evince "$selected_path" &
+        notify-send -a "Books" "Opening PDF" "$display_name" -i application-pdf
+    else
+        notify-send -a "Books" "Error" "Could not open file: $display_name" -i dialog-error
+    fi
 fi

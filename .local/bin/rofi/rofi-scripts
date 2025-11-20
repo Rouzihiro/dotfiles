@@ -53,9 +53,9 @@ while true; do
         selection=$(build_menu "$current_path" | sort)
     fi
     
-    chosen=$(echo "$selection" | wofi --dmenu --prompt "$prompt" \
-             --height 400 --width 700 \
-             --location center --insensitive)
+chosen=$(echo "$selection" | rofi -dmenu -p "$prompt" \
+         -height 400 -width 700 \
+         -location 2 -i)
     
     # Handle ESC key
     if [[ -z "$chosen" ]]; then
