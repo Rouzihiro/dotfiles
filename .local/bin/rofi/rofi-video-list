@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+
+# Rofi configuration
+ROFI_OPTS="-dmenu -lines 15 -location 2 -i -config $HOME/.config/rofi/list.rasi"
+
+# Collect video files (relative to $HOME)
+video_files=$(find ~/Videos ~/Downloads -type f \( -iname "*.avi" -o -iname "*.mp4" -o -iname "*.mkv" -o -iname "*.flv" -o -iname "*.webm" \) -print0 | xargs -0 -I{} basename "{}")
+
+# If no videos found, exit
+if [ -z "$video_files" ]; then
+    notify-send "No video files found in ~/Videos or ~/Downloads."
+    exit 1
+fi
+
+# Show rofi with icons
+choice=$(echo "$video_files" | while read -r file; do
+    echo "󰎁 $file"
+done | rofi $ROFI_OPTS -p "󰑫 Select video to play" | sed 's/^[^ ]* //')
+
+# Exit if no selection
+if [ -z "$choice" ]; then
+    exit 0
+fi
+
+# Find the full path of the selected file
+video_path=$(find ~/Videos ~/Downloads -type f -name "$choice" -print -quit)
+
+# Open with mpv if found
+if [ -n "$video_path" ]; then
+    mpv "$video_path"
+    notify-send "Video Player" "Playing: $choice" -i video-x-generic
+else
+    notify-send "Error" "File not found: $choice" -i dialog-error
+fi

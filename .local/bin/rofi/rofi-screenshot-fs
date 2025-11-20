@@ -1,0 +1,80 @@
+#!/usr/bin/env bash
+
+# Rofi configuration
+ROFI_OPTS="-lines 7 -location 2 -i -config $HOME/.config/rofi/list.rasi"
+
+# Screenshot directory & filename
+dir="$HOME/Pictures/screenshot"
+mkdir -p "$dir"
+timestamp=$(date +%Y-%m-%d-%H-%M-%S)
+file="$dir/Screenshot_${timestamp}.png"
+
+# Options with icons
+options=(
+  " Capture Desktop"
+  "󰩭 Capture Area" 
+  " Capture Window"
+  "󰔠 Capture in 5s"
+  "󰔠 Capture in 10s"
+)
+
+# Notify function
+notify_view() {
+  if [[ -f "$file" ]]; then
+    notify-send -u low -i camera-photo "Screenshot saved" "Screenshot saved and copied to clipboard"
+    wl-copy < "$file"
+    # optional: open with image viewer, e.g. `sxiv` or `grim` preview
+    # sxiv "$file"  # uncomment if you want
+  else
+    notify-send -u low -i dialog-error "Screenshot failed" "Failed to capture screenshot"
+  fi
+}
+
+# Countdown
+countdown() {
+  for sec in $(seq "$1" -1 1); do
+    notify-send -t 1000 -i timer "Taking shot in: $sec"
+    sleep 1
+  done
+}
+
+# Screenshot functions
+shotnow() {
+  flameshot full -p "$file" -c
+  notify_view
+}
+
+shot5() {
+  countdown 5
+  flameshot full -p "$file" -c
+  notify_view
+}
+
+shot10() {
+  countdown 10
+  flameshot full -p "$file" -c
+  notify_view
+}
+
+shotwin() {
+  flameshot gui -p "$file" -c
+  notify_view
+}
+
+shotarea() {
+  flameshot gui -p "$file" -c
+  notify_view
+}
+
+# Show rofi menu
+chosen=$(printf '%s\n' "${options[@]}" | rofi -dmenu $ROFI_OPTS -p "󰍹 Screenshot which area?")
+
+# Handle selection
+case "$chosen" in
+  "${options[0]}") shotnow ;;
+  "${options[1]}") shotarea ;;
+  "${options[2]}") shotwin ;;
+  "${options[3]}") shot5 ;;
+  "${options[4]}") shot10 ;;
+  *) exit 1 ;;
+esac

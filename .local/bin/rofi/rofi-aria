@@ -1,0 +1,162 @@
+#!/bin/bash
+
+# Configuration
+LOG_FILE="$HOME/Downloads/yt-dlp.log"
+DOWNLOAD_DIR="$HOME/Downloads"
+LINK_FILE="$HOME/Documents/Notes/downloads.md"
+ROFI_OPTS="-lines 10 -location 2 -i -config $HOME/.config/rofi/list.rasi"
+BEMENU="${HOME}/.local/bin/bemenu/bm-run"
+
+# Create directories if they don't exist
+mkdir -p "$DOWNLOAD_DIR"
+mkdir -p "$(dirname "$LINK_FILE")"
+
+# Function to show error notification
+notify_error() {
+    notify-send -u critical "Download Error" "$1"
+}
+
+# Function to extract URLs from markdown file
+extract_urls() {
+    [ -f "$LINK_FILE" ] && \
+    grep -oE 'https?://[^[:space:]]*' "$LINK_FILE" | \
+    sort | uniq
+}
+
+# Function to monitor downloads
+monitor_downloads() {
+    if [ ! -f "$LOG_FILE" ]; then
+        echo "󰅛 No download log file found."
+        return
+    fi
+    
+    local active_downloads=$(grep -E "\[#.*ETA:[0-9m]+s\]" "$LOG_FILE" | tail -20 | grep -v "100%" | head -10)
+    
+    if [ -z "$active_downloads" ]; then
+        echo "󰄲 No active downloads found."
+        return
+    fi
+    
+    local formatted=$(echo "$active_downloads" | \
+        sed -E 's/.*\[#([a-f0-9]+) ([0-9.]+[A-Za-z]+)\/([0-9.]+[A-Za-z]+)\(([0-9]+)%\) CN:([0-9]+) DL:([0-9.]+[A-Za-z]+) ETA:([0-9m]+s)\].*/\2\/\3 (\4%) @ \6 - ETA: \7/' | \
+        nl -w 2 -s ': ')
+    
+    echo "$formatted"
+}
+
+# Function to handle downloads
+handle_download() {
+    local type="$1"
+    local url="$2"
+    
+    # Predict filename depending on type
+    local predicted=""
+    if [ "$type" = "󰎁 Embedded video" ]; then
+        predicted=$(yt-dlp --get-filename -o "%(title)s.%(ext)s" "$url" 2>/dev/null | head -1)
+        [ -z "$predicted" ] && predicted="unknown.ext"
+    else
+        predicted=$(basename "${url%%\?*}")
+        [ -z "$predicted" ] && predicted="download"
+    fi
+
+    # Ask user for name (editable)
+    local newname=$(echo "$predicted" | rofi -dmenu -p "󰏖 Filename (edit if you want):" -lines 1 $ROFI_OPTS)
+    [ -z "$newname" ] && newname="$predicted"
+
+    # Download depending on type
+    if [ "$type" = "󰎁 Embedded video" ]; then
+        if yt-dlp --external-downloader aria2c \
+                  --external-downloader-args 'aria2c:-x2 -s2' \
+                  --no-check-formats \
+                 -o "$DOWNLOAD_DIR/$newname" \
+                  "$url" >> "$LOG_FILE" 2>&1; then
+            notify-send "󰄴 Download completed" "Successfully downloaded: $newname"
+        else
+            notify_error "󰅙 Failed to download: $url"
+        fi
+    else
+        if aria2c --check-certificate=false \
+                  -x2 -s2 \
+                  -d "$DOWNLOAD_DIR" \
+                  -o "$newname" \
+                  "$url" >> "$LOG_FILE" 2>&1; then
+            notify-send "󰄴 Download completed" "Successfully downloaded: $newname"
+        else
+            notify_error "󰅙 Failed to download: $newname"
+        fi
+    fi
+}
+
+# Main download function
+process_download() {
+    local type="$1"
+    local urls="$2"
+    
+    for URL in $urls; do
+        if [[ ! $URL =~ ^https?:// ]]; then
+            notify_error "󰅙 Invalid URL: $URL"
+            continue
+        fi
+        handle_download "$type" "$URL" &
+    done
+
+    disown
+    notify-send "󰏖 Download(s) started" "Processing $(echo "$urls" | wc -w) download(s) in background"
+}
+
+# Main menu
+CHOICE=$(echo -e "󰆋 Clipboard\n󰈙 Single from file\n󰈬 All from file\n󰎞 Monitor Downloads" | rofi -dmenu $ROFI_OPTS -p "󰏖 Select action:")
+[ -z "$CHOICE" ] && exit 1
+
+if [ "$CHOICE" = "󰎞 Monitor Downloads" ]; then
+    MONITOR_OUTPUT=$(monitor_downloads)
+    echo "$MONITOR_OUTPUT" | rofi -dmenu $ROFI_OPTS -p "󰎞 Active Downloads:"
+    exit 0
+fi
+
+# Otherwise, ask download type
+TYPE=$(echo -e "󰇧 Direct link\n󰎁 Embedded video" | rofi -dmenu $ROFI_OPTS -p "󰏖 Select download type:")
+[ -z "$TYPE" ] && exit 1
+
+case "$CHOICE" in
+    "󰆋 Clipboard")
+        URL=$(xclip -o -selection clipboard | rofi -dmenu $ROFI_OPTS -p "󰆋 Edit URL (Ctrl+V to paste):")
+        [ -z "$URL" ] && exit 1
+        process_download "$TYPE" "$URL"
+        ;;
+        
+    "󰈙 Single from file")
+        URLS=$(extract_urls)
+        if [ -z "$URLS" ]; then
+            notify_error "󰅙 No URLs found in $LINK_FILE"
+            exit 1
+        fi
+        
+        # Format URLs for display with icons
+        FORMATTED_URLS=$(echo "$URLS" | while read -r url; do
+            domain=$(echo "$url" | sed -E 's#https?://##; s#/.*##')
+            echo "󰖯 $domain - $url"
+        done)
+        
+        SELECTED=$(echo "$FORMATTED_URLS" | rofi -dmenu $ROFI_OPTS -p "󰈙 Select URL:")
+        [ -z "$SELECTED" ] && exit 1
+        
+        # Extract actual URL from selection
+        URL=$(echo "$SELECTED" | sed 's/^[^ ]* [^ ]* - //')
+        process_download "$TYPE" "$URL"
+        ;;
+        
+    "󰈬 All from file")
+        URLS=$(extract_urls)
+        if [ -z "$URLS" ]; then
+            notify_error "󰅙 No URLs found in $LINK_FILE"
+            exit 1
+        fi
+        
+        COUNT=$(echo "$URLS" | wc -w)
+        CONFIRM=$(echo -e "󰄴 Yes\n󰅙 No" | rofi -dmenu $ROFI_OPTS -p "󰈬 Download all $COUNT URLs?")
+        [ "$CONFIRM" != "󰄴 Yes" ] && exit 1
+
+        process_download "$TYPE" "$URLS"
+        ;;
+esac

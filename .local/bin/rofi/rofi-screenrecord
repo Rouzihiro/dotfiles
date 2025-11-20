@@ -41,7 +41,7 @@ stop_recording() {
 }
 
 CHOICE=$(echo -e "Start Fullscreen\nStart Region\nStop Recording" | \
-    wofi --dmenu --prompt "Screen Record" --lines 5)
+		rofi -dmenu -i -p "Screen Record")
 
 case "$CHOICE" in
     "Start Fullscreen")

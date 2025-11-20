@@ -1,9 +1,0 @@
-#!/usr/bin/env bash
-
-# Open PDFs in default PDF viewer with wofi
-choice=$(fd . -e pdf --base-directory "$HOME" -c never |
-  wofi --dmenu --prompt "Books" --lines 20)
-
-if [[ -n $choice ]]; then
-  xdg-open "$HOME/$choice"
-fi

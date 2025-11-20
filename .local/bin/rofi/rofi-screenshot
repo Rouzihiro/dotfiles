@@ -1,0 +1,63 @@
+#!/bin/bash
+
+# Ensure screenshot folder exists
+DIR="$HOME/Pictures/screenshot"
+mkdir -p "$DIR"
+
+# Rofi configuration
+ROFI_OPTS="-lines 6 -location 2 -i -config $HOME/.config/rofi/list.rasi"
+
+# Prompt user for screenshot type
+MODE=$(echo -e "󰍹 Fullscreen now\n󰍹 Fullscreen 3sec\n󰍹 Fullscreen custom\n󰹑 Snippet now\n󰹑 Snippet 3sec\n󰹑 Snippet custom" \
+      | rofi -dmenu $ROFI_OPTS -p "󰍹 Select screenshot type:")
+
+[ -z "$MODE" ] && exit 1
+
+# Filename with timestamp
+FILE="$DIR/screenshot_$(date +%Y%m%d_%H%M%S).png"
+
+# Determine delay and type
+DELAY=0
+TYPE=""
+
+case "$MODE" in
+    "󰍹 Fullscreen now")
+        TYPE="fullscreen" ;;
+    "󰍹 Fullscreen 3sec")
+        TYPE="fullscreen"
+        DELAY=3 ;;
+    "󰍹 Fullscreen custom")
+        TYPE="fullscreen"
+        DELAY=$(echo "" | rofi -dmenu -p "󰔟 Delay in seconds:" -lines 1 $ROFI_OPTS) ;;
+    "󰹑 Snippet now")
+        TYPE="snippet" ;;
+    "󰹑 Snippet 3sec")
+        TYPE="snippet"
+        DELAY=3 ;;
+    "󰹑 Snippet custom")
+        TYPE="snippet"
+        DELAY=$(echo "" | rofi -dmenu -p "󰔟 Delay in seconds:" -lines 1 $ROFI_OPTS) ;;
+    *)
+        exit 1 ;;
+esac
+
+# Validate delay (default to 0 if invalid)
+if ! [[ "$DELAY" =~ ^[0-9]+$ ]]; then
+    DELAY=0
+fi
+
+# Optional delay
+[ "$DELAY" -gt 0 ] && sleep "$DELAY"
+
+# Take screenshot using grim
+if [ "$TYPE" = "fullscreen" ]; then
+    grim "$FILE"
+else
+    grim -g "$(slurp)" "$FILE"
+fi
+
+# Copy to clipboard using wl-copy
+wl-copy < "$FILE"
+
+# Notify
+notify-send "󰍹 Screenshot saved" "$FILE" -i camera-photo

@@ -1,0 +1,130 @@
+#!/bin/bash
+
+# Rofi configuration
+ROFI_OPTS="-dmenu -location 2 -i -config $HOME/.config/rofi/list.rasi"
+
+# Main categories
+CATEGORIES=(
+    "󰘦 PROGRAMMING"
+    "󰚌 OSTEOLOGY"
+    "󰒋 TRAUMA-GERIATRIC(BG)"
+    "󰒋 TRAUMA-GERIATRIC(UKE)"
+    "󰎁 VIDEO/SERIES"
+    "󰗃 YOUTUBE"
+    "󰖟 BROWSING"
+    "󰚡 WASTED"
+    "󰛑 STOP"
+    "󰔟 Timewarrior Menu"   # extra menu entry
+)
+
+# Select main category
+selected=$(printf "%s\n" "${CATEGORIES[@]}" | rofi $ROFI_OPTS -lines 12 -p "󰔟 Select category:")
+status=$?
+
+if [[ $status -ne 0 || -z "$selected" ]]; then
+    exit 0
+fi
+
+tmux set -g status-interval 5
+
+# Handle Timewarrior submenu separately
+if [[ "$selected" == "󰔟 Timewarrior Menu" ]]; then
+    OPTIONS=(
+        "󰐊 Start tracking"
+        "󰓛 Stop tracking" 
+        "󰏦 Continue last"
+        "󰭻 Today's summary"
+        "󰭻 Weekly report"
+        "󰏃 Export today to Notes"
+        "󰓢 Add tag"
+        "󰈬 Add annotation"
+        "󰆴 Delete last entry"
+        "󰑐 Sync"
+        "󰩛 Exit"
+    )
+
+    CHOICE=$(printf "%s\n" "${OPTIONS[@]}" | rofi $ROFI_OPTS -lines 12 -p "󰔟 Timewarrior:")
+
+    case "$CHOICE" in
+        "󰐊 Start tracking")
+            PROJECT=$(echo "" | rofi $ROFI_OPTS -p "󰔟 Project name:")
+            TAGS=$(echo "" | rofi $ROFI_OPTS -p "󰓢 Tags (+tag1 +tag2):")
+            timew start "$PROJECT" $TAGS
+            notify-send "Timewarrior" "Started: $PROJECT $TAGS" -i timer
+            ;;
+        "󰓛 Stop tracking")
+            timew stop
+            notify-send "Timewarrior" "Tracking stopped" -i timer
+            ;;
+        "󰏦 Continue last")
+            timew continue
+            notify-send "Timewarrior" "Continued last task" -i timer
+            ;;
+        "󰭻 Today's summary")
+            SUMMARY=$(timew summary today)
+            echo "$SUMMARY" | rofi $ROFI_OPTS -lines 20 -p "󰭻 Today's time:"
+            ;;
+        "󰭻 Weekly report")
+            SUMMARY=$(timew summary :week)
+            echo "$SUMMARY" | rofi $ROFI_OPTS -lines 20 -p "󰭻 This week:"
+            ;;
+        "󰏃 Export today to Notes")
+            mkdir -p "$HOME/Documents/Notes/"
+            FILENAME="$HOME/Documents/Notes/time-tracking-$(date +%Y-%m-%d).md"
+            {
+                echo "# Time Tracking - $(date +%Y-%m-%d)"
+                echo ""
+                echo "## Summary"
+                echo '```'
+                timew summary today
+                echo '```'
+                echo ""
+                echo "## Detailed Export"
+                echo '```'
+                timew export today
+                echo '```'
+            } > "$FILENAME"
+            notify-send "Timewarrior" "Exported to: $FILENAME" -i document-save
+            ;;
+        "󰓢 Add tag")
+            TAG=$(echo "" | rofi $ROFI_OPTS -p "󰓢 Add tag (+tag):")
+            timew tag @1 "$TAG"
+            notify-send "Timewarrior" "Added tag: $TAG" -i tag
+            ;;
+        "󰈬 Add annotation")
+            NOTE=$(echo "" | rofi $ROFI_OPTS -p "󰈬 Add note:")
+            timew annotate @1 "$NOTE"
+            notify-send "Timewarrior" "Added note" -i document-edit
+            ;;
+        "󰆴 Delete last entry")
+            timew delete @1
+            notify-send "Timewarrior" "Deleted last entry" -i user-trash
+            ;;
+        "󰑐 Sync")
+            notify-send "Timewarrior" "Sync complete" -i emblems-synchronizing
+            ;;
+        "󰩛 Exit")
+            exit 0
+            ;;
+    esac
+else
+    # Strip icon for timew command
+    selected_clean=$(echo "$selected" | sed 's/^[^ ]* //')
+    
+    # Handle normal categories tracking
+    if [[ "$selected_clean" == "STOP" ]]; then
+        timew stop
+        tmux set -g status-right "\
+#[fg=#719cd6,bg=default]\
+#[fg=#192330,bg=#719cd6]  #(echo \"#{pane_current_path}\" | awk -F/ '{ if (NF<=2) print \$NF; else print \$(NF-1)\"/\"\$NF; }') \
+#[fg=#719cd6,bg=#9d79d6]#[fg=#192330,bg=#9d79d6]  \
+#[fg=#9d79d6,bg=default]"
+    else
+        timew start "$selected_clean"
+        tmux set -g status-right "\
+#[fg=#719cd6,bg=default]\
+#[fg=#192330,bg=#719cd6]  #(echo \"#{pane_current_path}\" | awk -F/ '{ if (NF<=2) print \$NF; else print \$(NF-1)\"/\"\$NF; }') \
+#[fg=#719cd6,bg=#9d79d6]#[fg=#192330,bg=#9d79d6] $selected_clean #(timew | awk '/^ *Total/ {split(\$NF,t,\":\"); print t[1]*60+t[2]\" min\"}') \
+#[fg=#9d79d6,bg=default]"
+    fi
+fi

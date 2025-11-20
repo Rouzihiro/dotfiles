@@ -1,16 +1,16 @@
-bindsym $mod+mod1+space exec wofi-super
+bindsym $mod+mod1+space exec rofi-scripts
 bindsym $mod+mod1+Shift+space exec z-menu
 
 bindsym $mod+a exec $term -e btop
 bindsym $mod+Mod1+a exec $term -e ncdu
 
-bindsym $mod+b exec bm-bookmarks
+bindsym $mod+b exec rofi-bookmarks
 bindsym $mod+Mod1+b exec xdg-open https://
 bindsym $mod+Shift+b exec rofi-bluetooth
 
-bindsym $mod+d exec bm-aria
-bindsym $mod+Mod1+d exec bm-music-downloader
-bindsym $mod+Shift+d exec wofi-docs
+bindsym $mod+d exec rofi-aria
+bindsym $mod+Mod1+d exec rofi-docs
+bindsym $mod+Shift+d exec bm-music-downloader
 
 bindsym $mod+mod1+h exec $term -T 'floaty-small' -e bash -c 'cd / && sudo ncdu'
 
@@ -22,32 +22,32 @@ bindsym $mod+mod1+l exec $lockscreen
 bindsym $mod+m exec bm-mount-usb
 bindsym $mod+mod1+m exec $term -T 'floaty-small' -e bash -c 'sudo ps_mem; echo ""; read -rp "Press Enter to close..."'
 
-bindsym $mod+n exec $HOME/.local/bin/rofi/wofi-notes
+bindsym $mod+n exec rofi-notes
 bindsym $mod+mod1+n exec bm-notes
 
 bindsym $mod+o exec ocr
 bindsym $mod+mod1+o exec sh -c text-picker
 
 bindsym $mod+p scratchpad show
-bindsym $mod+mod1+p exec bm-power
+bindsym $mod+mod1+p exec rofi-power-profile
 bindsym $mod+Shift+p floating enable, resize set width 1800 height 1000, move scratchpad
 
-bindsym $mod+s exec bm-screenshot
-bindsym $mod+mod1+s exec bm-screenshot-fs
+bindsym $mod+s exec rofi-screenshot
+bindsym $mod+mod1+s exec rofi-screenshot-fs
 
-bindsym $mod+Escape exec bm-power
+bindsym $mod+Escape exec rofi-power
 
 bindsym $mod+r exec $term --app-id=runner_floating -e runner
-bindsym $mod+mod1+r exec wofi-screenrecord
+bindsym $mod+mod1+r exec rofi-screenrecord
 
-bindsym $mod+t exec wofi-theme-set
-bindsym $mod+mod1+t exec bm-timewarrior
+bindsym $mod+t exec rofi-theme-set
+bindsym $mod+mod1+t exec rofi-timewarrior
 
-bindsym $mod+v exec bm-list-videos
-bindsym $mod+Mod1+v exec bm-video-tool
+bindsym $mod+v exec rofi-videos-list
+bindsym $mod+Mod1+v exec rofi-video-tool
 
-bindsym $mod+mod1+w exec rofi-wall
-bindsym $mod+w exec wall-random
+bindsym $mod+w exec rofi-wall
+bindsym $mod+mod1+w exec wall-random
 
 bindsym $mod+z exec z-menu-keybindings-sway-soft
 

@@ -1,0 +1,116 @@
+#!/bin/sh
+set -eu
+
+# --------------------------
+# Bookmark files (adjust paths as needed)
+# --------------------------
+BOOKMARK_FILES="
+$HOME/Documents/Notes/gaming.md
+$HOME/Documents/Notes/xxx.md
+$HOME/Documents/Notes/coding.md
+$HOME/Documents/Notes/movies.md
+$HOME/Documents/Notes/work.md
+$HOME/Documents/Notes/torrent.md
+"
+
+# --------------------------
+# Rofi appearance
+# --------------------------
+ROFI_OPTS="-lines 30 -p 'links:' -location 2 -i -config $HOME/.config/rofi/list.rasi"
+
+# --------------------------
+# Browser fallback
+# --------------------------
+BRAVE="$(command -v brave || command -v brave-browser || true)"
+FALLBACK="$(command -v xdg-open || echo librewolf)"
+
+# --------------------------
+# Emit bookmark lines (hide URLs, skip comments)
+# --------------------------
+emit() {
+    tag="$1"
+    file="$2"
+    [ -f "$file" ] || return 0
+
+    # skip lines starting with # or empty lines
+    grep -vE '^\s*(#|$)' "$file" | while IFS= read -r line; do
+        case "$line" in
+            *"::"*)
+                # explicit title :: URL
+                title="${line%%::*}"
+                url="${line#*::}"
+                title="$(printf '%s' "$title" | sed 's/^[[:space:]]*//; s/[[:space:]]*$//')"
+                url="$(printf '%s' "$url" | sed 's/^[[:space:]]*//; s/[[:space:]]*$//')"
+                ;;
+            *)
+                url="$line"
+                # derive title from URL
+                title="$(printf '%s' "$url" | sed -E 's#https?://##; s#^www\.##; s#/.*$##; s/\.(com|org|net|de|io|co)$//')"
+                ;;
+        esac
+
+        # Format: "󰖯 [tag] title" (URL hidden)
+        printf '󰖯 [%s] %s\t%s\n' "$tag" "$title" "$url"
+    done
+}
+
+# --------------------------
+# Build combined list and show rofi (only show tag+title)
+# --------------------------
+choice="$({
+    for f in $BOOKMARK_FILES; do
+        tag="$(basename "$f" .md)"
+        tag="$(basename "$tag" .txt)"  # just in case
+        emit "$tag" "$f"
+    done
+	} | sort | cut -f1 | rofi -dmenu $ROFI_OPTS)"
+
+[ -n "$choice" ] || exit 0
+
+# --------------------------
+# Find full line with URL for chosen tag+title
+full_line="$({
+    for f in $BOOKMARK_FILES; do
+        tag="$(basename "$f" .md)"
+        tag="$(basename "$tag" .txt)"
+        emit "$tag" "$f"
+    done
+} | sort | grep -F "$(echo "$choice" | sed 's/^󰖯 //')" || true)"
+
+[ -n "$full_line" ] || exit 1
+
+# Extract URL (3rd tab-separated field)
+url="$(printf '%s' "$full_line" | cut -f2-)"
+
+# Clean URL: strip comments, trailing spaces
+url="$(printf '%s' "$url" \
+    | sed -e 's/[[:space:]]\+#.*$//' -e 's/[[:space:]]\/\/.*$//' \
+          -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//')"
+
+# Extract tag (from [tag] title)
+tag="$(printf '%s' "$choice" | sed -n 's/^󰖯 \[\([^]]*\)\].*/\1/p')"
+
+# Ensure URL scheme
+case "$url" in
+    http://*|https://*|file://*|about:*|chrome:*) ;;
+    *) url="https://$url" ;;
+esac
+
+# --------------------------
+# Open in browser
+# --------------------------
+open_with() {
+    cmd="$1"
+    if [ -n "$cmd" ]; then
+        nohup "$cmd" "$url" >/dev/null 2>&1 &
+        exit 0
+    fi
+}
+
+case "$tag" in
+    work) open_with "$BRAVE" ;;
+    *)    open_with "$BRAVE" ;;
+esac
+
+# fallback if browser failed to open
+nohup $FALLBACK "$url" >/dev/null 2>&1 &

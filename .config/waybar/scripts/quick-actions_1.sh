@@ -3,17 +3,18 @@
 main_menu() {
     menu=(
         " Keybinds"
+        " Calculator"
+        "󰹑 Screenshot"
         "󰅇 Clipboard"
-        " Coding"
+        " Code"
         "󰒓 Theme"
         "󰍛 Hardware"
+        " VPN"
         " Packages"
         "󰈙 Documents"
         "󰇧 Internet"
         "󰎁 Multimedia"
         "󰘚 Utilities"
- 				" Calculator"
-				" VPN"
         "󰩛 Exit"
     )
 
@@ -25,11 +26,14 @@ main_menu() {
         exit 0  # ESC from main menu exits completely
     elif [ -n "$selected" ]; then
         case "$selected" in
+            "󰹑 Screenshot")
+                ~/.config/waybar/scripts/take-screenshot.sh
+                ;;
             "󰅇 Clipboard")
                 clipse-gui
                 ;;
-            " Coding")
-                coding_menu
+            " Code")
+                ~/.config/waybar/scripts/code-launcher.sh
                 ;;
             "󰒓 Theme")
                 theme_menu
@@ -72,35 +76,6 @@ main_menu() {
         fi
     fi
 }
-
-coding_menu() {
-    coding_menu=(
-			" Shell Scripts (PATH)"
-			" Zorro File Manager"
-        "󰁍 Back to Main"
-    )
-    
-    coding_selected=$(printf '%s\n' "${coding_menu[@]}" | rofi -dmenu -i -p "Coding" -theme ~/.config/rofi/quick-actions.rasi)
-    if [ -z "$coding_selected" ]; then
-        main_menu
-        return
-    fi
-    
-    case "$coding_selected" in
-			" Shell Scripts (PATH)")
-				rofi-scripts
-            ;;
-			" Zorro File Manager")
-			foot -e bash -c "superb; exec bash"
-            ;;
-        "󰁍 Back to Main")
-            main_menu
-            return
-            ;;
-    esac
-    coding_menu
-}
-
 
 keybinds_menu() {
     # Keybinds submenu
@@ -260,7 +235,7 @@ documents_menu() {
             rofi-notes
             ;;
         "📚 Books")
-            rofi-docs
+            rofi-bookmarks
             ;;
         "󰁍 Back to Main")
             main_menu
@@ -311,10 +286,7 @@ multimedia_menu() {
         "🎬 Video Tools"
         "🎥 Video Player"
         "📹 Screen Record"
-				"🖼️ Screenshot"
-				"🖼️ Screenshot (FS)"
-				"🖼️ OCR"
-				"🖼️ Textpicker"
+        "🔄 Screen Record (FS)"
         "󰁍 Back to Main"
     )
     
@@ -333,21 +305,12 @@ multimedia_menu() {
         "🎥 Video Player")
             rofi-video-list
             ;;
-        "📹 Screenrecord")
+        "📹 Screen Record")
             rofi-screenrecord
             ;;
-				"🖼️ Screenshot")
-            rofi-screenshot
-            ;;
-				"🖼️ Screenshot (FS)")
+        "🔄 Screen Record (FS)")
             rofi-screenshot-fs
             ;;
-				"🖼️ OCR")
-						ocr
-						;;
-				"🖼️ Textpicker")
-						text-picker
-						;;
         "󰁍 Back to Main")
             main_menu
             return
@@ -363,7 +326,6 @@ utilities_menu() {
     utils_menu=(
         "📋 Clipboard"
         "🖼️ Screenshot"
- 				"🖼️ Screenshot (FS)"
         "📜 Scripts"
         "󰁍 Back to Main"
     )
@@ -382,9 +344,6 @@ utilities_menu() {
             ;;
         "🖼️ Screenshot")
             rofi-screenshot
-            ;;
-					"🖼️ Screenshot (FS)")
- 					rofi-screenshot-fs
             ;;
         "📜 Scripts")
             rofi-scripts
