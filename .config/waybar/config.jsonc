@@ -71,7 +71,8 @@
         "exec": "~/.config/waybar/scripts/gpu-M1-lite.sh",
         "format": "󰢮 {}",
         "return-type": "json",
- 				"on-click": "foot -T 'floaty-medium' -e bash -c 'btop'",
+ 				"on-click": "kitty --class floating --title floating -e sh -c 'while true; do btop; sleep 0.1; done' &",
+ 				// "on-click": "foot -T 'floaty-medium' -e bash -c 'btop'",
         "interval": 2
     },
 
@@ -84,8 +85,9 @@
   "disk": {
     "interval": 15,
     "format": "󰋊 {percentage_used:>2}%",
-    "on-click": "foot -T 'floaty-small' -e bash -c 'cd ~ && sudo ncdu'",
-    "on-click-right": "foot -T 'floaty-small' -e bash -c 'cd / && sudo ncdu'"
+ 		"on-click": "kitty --class floating --title floating -e watch duf"
+    // "on-click": "foot -T 'floaty-small' -e bash -c 'cd ~ && sudo ncdu'",
+    // "on-click-right": "foot -T 'floaty-small' -e bash -c 'cd / && sudo ncdu'"
   },
 
   "backlight": {
@@ -145,7 +147,7 @@
     "format": "{icon}",
     "format-icons": "",
     "exec-on-event": "true",
-    "on-click": "bm-power",
+    "on-click": "rofi-power",
     "tooltip-format": "Power Menu"
   },
 
@@ -182,7 +184,7 @@
    "custom/quick-actions": {
         "format": "",
         "tooltip-format": "Quick Actions",
-        "on-click": "~/.config/waybar/scripts/quick-actions.sh"
+        "on-click": "quick-actions"
     },
 
   "sway/language": {
