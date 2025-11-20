@@ -8,9 +8,10 @@ menu=(
     "󰅇 Clipboard"
     " Code"
     "󰒓 Theme"
-    "󰍛 Hardware"
     " VPN"
     " Packages"
+    " Bluetooth"
+    "󰁹 Power"
 )
 
 # Show rofi menu
@@ -55,44 +56,17 @@ if [ -n "$selected" ]; then
                     ;;
             esac
             ;;
-        "󰍛 Hardware")
-            # Hardware submenu
-            hardware_menu=(
-                "󰁹 Power"
-                " Bluetooth"
-                "󰖩 WiFi"
-                "󰂰 Power Profile"
-                "󰕾 Sound"
-            )
-            
-            hardware_selected=$(printf '%s\n' "${hardware_menu[@]}" | rofi -dmenu -i -p "Hardware" -theme ~/.config/rofi/quick-actions.rasi)
-            
-            case "$hardware_selected" in
-                "󰁹 Power")
-                    ~/.config/waybar/scripts/power-profile.sh
-                    ;;
-                " Bluetooth")
-                    ~/.config/waybar/scripts/rofi-bluetooth.sh
-                    ;;
-                "󰖩 WiFi")
-                    # Add your WiFi script here
-                    "rofi-wifi"
-                    ;;
-                "󰂰 Power Profile")
-                    # Add your power profile script here
-                    ~/.config/waybar/scripts/power-profile.sh
-                    ;;
-                "󰕾 Sound")
-                    # Add your sound control script here
-                    ~/.config/waybar/scripts/rofi-audio.sh
-                    ;;
-            esac
-            ;;
         " VPN")
             ~/.config/waybar/scripts/tailscale.sh
             ;;
         " Packages")
             ~/.config/waybar/scripts/installer-wrapper.sh
+            ;;
+        " Bluetooth")
+            ~/.config/waybar/scripts/rofi-bluetooth.sh
+            ;;
+        "󰁹 Power")
+            ~/.config/waybar/scripts/power-profile.sh
             ;;
         " Keybinds")
             ~/.config/waybar/scripts/cheatsheet.sh
