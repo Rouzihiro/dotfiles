@@ -34,7 +34,7 @@ if [ -n "$selected" ]; then
                 " Wallpaper"
                 "󰞅 Emojis"
                 " Icons"
-                "󰝰 Picker"
+                "󰝰 GTK-Theme-Installer"
             )
             
             theme_selected=$(printf '%s\n' "${theme_menu[@]}" | rofi -dmenu -i -p "Theme" -theme ~/.config/rofi/quick-actions.rasi)
@@ -49,9 +49,8 @@ if [ -n "$selected" ]; then
                 " Icons")
                     ~/.config/waybar/scripts/icon-picker.sh
                     ;;
-                "󰝰 Picker")
-                    # Add your color picker script here
-                    ~/.config/waybar/scripts/color-picker.sh
+                "󰝰 GTK-Theme-Installer")
+										"z-theme-set-gtk"    
                     ;;
             esac
             ;;
@@ -69,21 +68,18 @@ if [ -n "$selected" ]; then
             
             case "$hardware_selected" in
                 "󰁹 Power")
-                    ~/.config/waybar/scripts/power-profile.sh
+                    "rofi-power"
                     ;;
                 " Bluetooth")
-                    ~/.config/waybar/scripts/rofi-bluetooth.sh
+                    "rofi-bluetooth"
                     ;;
                 "󰖩 WiFi")
-                    # Add your WiFi script here
                     "rofi-wifi"
                     ;;
                 "󰂰 Power Profile")
-                    # Add your power profile script here
-                    ~/.config/waybar/scripts/power-profile.sh
+                    "rofi-power-profile"
                     ;;
                 "󰕾 Sound")
-                    # Add your sound control script here
                     ~/.config/waybar/scripts/rofi-audio.sh
                     ;;
             esac
