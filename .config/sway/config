@@ -2,30 +2,17 @@
 set $mod Mod4
 set $opacity 0.9
 set $term foot
-set $launcher wofi ---show drun
+set $term2 kitty
+set $launcher rofi -show drun
 set $browser librewolf
 set $files thunar
-set $tfiles thunar
-set $fileManager thunar
-set $TfileManager $term -e yazi
+set $fm $term -e superb
+set $tfm $term -e yazi
 set $editor $term -e nvim
 
 set $lockscreen swaylock -i ~/Pictures/lockscreen/VIM.png
 # output * bg ~/dotfiles/.wall/Wallpapers/konoha1.jpg fill
 
-### Keybindings
-bindsym $mod+Return exec $term
-bindsym $mod+Space exec $launcher
-bindsym $mod+Shift+n exec $editor
-bindsym $mod+e exec $TfileManager
-# bindsym $mod+b exec $browser
-bindsym $mod+Shift+r reload
-bindsym $mod+q kill
-bindsym $mod+Ctrl+q exec swaymsg exit
-
-# Layout
-bindsym $mod+f fullscreen
-bindsym $mod+Shift+f floating toggle
 # bindsym $mod+a focus parent
 
 ### Mode: vm_mode

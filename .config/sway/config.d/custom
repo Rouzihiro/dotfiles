@@ -1,5 +1,11 @@
-bindsym $mod+mod1+space exec rofi-scripts
-bindsym $mod+mod1+Shift+space exec z-menu
+bindsym $mod+Escape exec rofi-power
+
+bindsym $mod+Return exec $term
+bindsym $mod+Shift+Return exec $term2
+
+bindsym $mod+space exec $launcher
+bindsym $mod+mod1+space exec quick-actions
+bindsym $mod+mod1+shift+space exec rofi-scripts
 
 bindsym $mod+a exec $term -e btop
 bindsym $mod+Mod1+a exec $term -e ncdu
@@ -11,6 +17,13 @@ bindsym $mod+Shift+b exec rofi-bluetooth
 bindsym $mod+d exec rofi-aria
 bindsym $mod+Mod1+d exec rofi-docs
 bindsym $mod+Shift+d exec bm-music-downloader
+
+bindsym $mod+e exec $fm
+bindsym $mod+Mod1+e exec $tfm
+bindsym $mod+Shift+e exec $files
+
+bindsym $mod+f fullscreen
+bindsym $mod+Shift+f floating toggle
 
 bindsym $mod+mod1+h exec $term -T 'floaty-small' -e bash -c 'cd / && sudo ncdu'
 
@@ -24,6 +37,7 @@ bindsym $mod+mod1+m exec $term -T 'floaty-small' -e bash -c 'sudo ps_mem; echo "
 
 bindsym $mod+n exec rofi-notes
 bindsym $mod+mod1+n exec bm-notes
+bindsym $mod+Shift+n exec $editor
 
 bindsym $mod+o exec ocr
 bindsym $mod+mod1+o exec sh -c text-picker
@@ -32,13 +46,15 @@ bindsym $mod+p scratchpad show
 bindsym $mod+mod1+p exec rofi-power-profile
 bindsym $mod+Shift+p floating enable, resize set width 1800 height 1000, move scratchpad
 
-bindsym $mod+s exec rofi-screenshot
-bindsym $mod+mod1+s exec rofi-screenshot-fs
-
-bindsym $mod+Escape exec rofi-power
+bindsym $mod+q kill
+bindsym $mod+Ctrl+q exec swaymsg exit
 
 bindsym $mod+r exec $term --app-id=runner_floating -e runner
 bindsym $mod+mod1+r exec rofi-screenrecord
+bindsym $mod+Shift+r reload
+
+bindsym $mod+s exec rofi-screenshot
+bindsym $mod+mod1+s exec rofi-screenshot-fs
 
 bindsym $mod+t exec rofi-theme-set
 bindsym $mod+mod1+t exec rofi-timewarrior
