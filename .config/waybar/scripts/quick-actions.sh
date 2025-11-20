@@ -41,8 +41,8 @@ main_menu() {
                 ~/.config/waybar/scripts/tailscale.sh
                 ;;
             " Packages")
-                ~/.config/waybar/scripts/installer-wrapper.sh
-                ;;
+                packages_menu                 
+								;;
             " Keybinds")
                 keybinds_menu
                 ;;
@@ -73,10 +73,40 @@ main_menu() {
     fi
 }
 
+packages_menu() {
+    packages_menu=(
+	" Zorro Package Installer"
+	" Package Installer"
+        "󰁍 Back to Main"
+    )
+    
+    packages_selected=$(printf '%s\n' "${packages_menu[@]}" | rofi -dmenu -i -p "Packages" -theme ~/.config/rofi/quick-actions.rasi)
+    if [ -z "$packages_selected" ]; then
+        main_menu
+        return
+    fi
+    
+    case "$packages_selected" in
+			" Zorro Package Installer")
+				foot -e bash -c "z-pkg-install; exec bash"
+            ;;
+			" Package Installer")
+	 		"z-pkg-install-lite"
+            ;;
+        "󰁍 Back to Main")
+            main_menu
+            return
+            ;;
+    esac
+    packages_menu
+}
+
 coding_menu() {
     coding_menu=(
 			" Shell Scripts (PATH)"
 			" Zorro File Manager"
+			" Zorro Scripts"
+			" Dotfiles Scripts"
         "󰁍 Back to Main"
     )
     
@@ -92,6 +122,12 @@ coding_menu() {
             ;;
 			" Zorro File Manager")
 			foot -e bash -c "superb; exec bash"
+            ;;
+			" Dotfiles Scripts")
+			foot -e bash -c "dotfiles-scripts; exec bash"
+            ;;
+			" Zorro Scripts")
+			foot -e bash -c "zorro-scripts; exec bash"
             ;;
         "󰁍 Back to Main")
             main_menu
@@ -109,6 +145,7 @@ keybinds_menu() {
         " Sway Keybinds 2"
         " Hyprland Keybinds"
         " ZSH Keybinds"
+				" Cheats"
         "󰁍 Back to Main"
     )
     
@@ -122,18 +159,19 @@ keybinds_menu() {
     
     case "$kb_selected" in
         " Sway Keybinds")
-            ~/.config/waybar/scripts/cheatsheet.sh
+            cheatsheet-sway
             ;;
         " Sway Keybinds 2")
             "$HOME/.local/bin/zorro/z-menu-keybindings-sway-soft"
             ;;
         " Hyprland Keybinds")
-            # Add your Hyprland keybinds script here
-            notify-send "Keybinds" "Hyprland keybinds not configured yet"
+						cheatsheet-hypr
             ;;
         " ZSH Keybinds")
-            # Add your ZSH keybinds script here
             notify-send "Keybinds" "ZSH keybinds not configured yet"
+            ;;
+  			" Cheats")
+					foot -e bash -c "cheats; exec bash"
             ;;
         "󰁍 Back to Main")
             main_menu
