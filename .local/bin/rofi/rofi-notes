@@ -16,7 +16,7 @@ entries=$(find "$DIR" -maxdepth 1 -type f -name "*.md" -printf "📝 %f\n" | sor
 options="📄 Create New Note\n🗑️ Delete Note\n$entries"
 
 # Launch rofi
-selection=$(echo -e "$options" | rofi -dmenu -i -p "🗒 Notes")
+selection=$(echo -e "$options" | rofi -dmenu -i -l 20 -p "🗒 Notes" -config "$HOME/.config/rofi/list.rasi")
 
 [ -z "$selection" ] && exit
 
