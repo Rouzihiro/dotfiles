@@ -110,6 +110,7 @@
   },
 
   "battery": {
+  	"on-click": "rofi-power-profile",
     "states": { "warning": 30, "critical": 15 },
     "format": "{capacity}% {icon}",
     "format-charging": " {capacity}%",
