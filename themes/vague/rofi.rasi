@@ -1,7 +1,7 @@
 * {
-    primary: #b4b4b4;
-    primary-fixed: #b4b4b4;
-    primary-fixed-dim: #8a8a8a;
+    primary: #d4af37;
+    primary-fixed: #d4af37;
+    primary-fixed-dim: #b8941f;
     on-primary: #1a1a1a;
     on-primary-fixed: #1a1a1a;
     on-primary-fixed-variant: #2a2a2a;
@@ -30,7 +30,7 @@
     surface: #1a1a1a;
     on-surface: #d0d0d0;
     on-surface-variant: #a0a0a0;
-    outline: #404040;
+    outline: #d4af37;
     outline-variant: #2a2a2a;
     shadow: #000000;
     scrim: #000000;
