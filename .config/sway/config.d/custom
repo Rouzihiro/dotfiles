@@ -1,6 +1,7 @@
 bindsym $mod+Escape exec rofi-power
 
 bindsym $mod+Return exec $term
+bindsym $mod+mod1+Return exec $term2
 bindsym $mod+Shift+Return exec $term2
 
 bindsym $mod+space exec $launcher
