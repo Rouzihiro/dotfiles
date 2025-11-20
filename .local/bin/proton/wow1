@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+# wow-asahi-native
+
+export WINEPREFIX="$HOME/.wine" 
+export WINEARCH=win64
+export WINEDEBUG=-all
+
+# Use native Asahi driver, not Zink
+unset MESA_LOADER_DRIVER_OVERRIDE
+unset GALLIUM_DRIVER
+
+# Clear any DXVK overrides
+unset WINEDLLOVERRIDES
+
+echo "🎮 Launching WoW with native Asahi driver..."
+
+wine "$HOME/Games/Frostmourne/Wow.exe" -opengl -windowed $@

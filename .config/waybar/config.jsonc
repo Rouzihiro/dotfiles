@@ -1,0 +1,192 @@
+// vim:ft=jsonc
+{
+  "layer": "top",
+  "position": "top",
+  "height": 33,
+  "margin-left": 10,
+  "margin-right": 10,
+  "margin-top": 8,
+  "margin-bottom": 0,
+  "spacing": 1,
+  "reload_style_on_change": true,
+
+  "modules-center": [
+ 	"custom/quick-actions",
+		"sway/workspaces", 
+		"tray"
+	],
+
+  "modules-left": [
+		"custom/launcher",
+    "clock",
+    "network",
+		"custom/gpu"
+  ],
+
+    "custom/launcher": {
+        "format": "󰣇",
+        "tooltip-format": "Application launcher",
+        "on-click": "rofi -show drun -modi drun -theme ~/.config/rofi/grid.rasi"
+    },
+
+    "custom/wallpaper": {
+        "exec": "ls ~/Pictures/wallpapers | wc -l",
+        "format": "󰸉",
+        "tooltip-format": "Pick from {} wallpapers!",
+        "on-click": "~/.config/waybar/scripts/wallpaper-selector.sh"
+    },
+
+
+  "modules-right": [
+    "memory",
+    "disk",
+    "backlight",
+    "wireplumber",
+    "power-profiles-daemon",
+    "sway/language",
+    "custom/separator",
+		"idle_inhibitor", 
+    "custom/bluetooth",
+    "network#wifi",
+ 		"battery",
+    "custom/power"
+  ],
+
+  // -------------------- Module configurations --------------------
+
+  "tray": {
+    "icon-size": 16,
+    "spacing": 5,
+    "show-passive-items": true
+  },
+
+    "clock": {
+        "format": "{:%Y/%m/%d  %H:%M:%S}",
+        "on-click": "kitty --class floating --title 'Calendar' -e calcurse",
+        "tooltip-format": "<big>Click to launch </big>\n<tt>{calendar}</tt>",
+        "interval": 1
+    },
+
+ 	"custom/gpu": {
+        "exec": "~/.config/waybar/scripts/gpu-M1-lite.sh",
+        "format": "󰢮 {}",
+        "return-type": "json",
+ 				"on-click": "foot -T 'floaty-medium' -e bash -c 'btop'",
+        "interval": 2
+    },
+
+  "memory": {
+    "interval": 2,
+    "format": " {:>2}%",
+    "on-click": "foot -T 'floaty-small' -e bash -c 'sudo ps_mem; read -rp \"Press Enter to exit...\"'"
+  },
+
+  "disk": {
+    "interval": 15,
+    "format": "󰋊 {percentage_used:>2}%",
+    "on-click": "foot -T 'floaty-small' -e bash -c 'cd ~ && sudo ncdu'",
+    "on-click-right": "foot -T 'floaty-small' -e bash -c 'cd / && sudo ncdu'"
+  },
+
+  "backlight": {
+    "interval": 2,
+    "format": "{icon} {percent}%",
+    "format-icons": ["","","","","","","","","","","","","","",""],
+    "tooltip-format": "backlight {percent}",
+    "on-scroll-up": "brightness.sh up",
+    "on-scroll-down": "brightness.sh down",
+    "icon-size": 10
+  },
+
+  "network": {
+    "interval": 1,
+    "format-wifi": "  {bandwidthTotalBytes:>2}",
+    "format-ethernet": " {bandwidthTotalBytes:>2}",
+    "tooltip-format-wifi": "  {essid} ({signalStrength}%)",
+    "tooltip-format-ethernet": "󰈀 {ipaddr}",
+    "format-disconnected": "󰀦 Disconnected"
+  },
+
+  "battery": {
+    "states": { "warning": 30, "critical": 15 },
+    "format": "{capacity}% {icon}",
+    "format-charging": " {capacity}%",
+    "format-plugged": " {capacity}%",
+    "format-icons": ["", "", "", "", ""]
+  },
+
+  "wireplumber": {
+    "format": "{icon} {volume:>3}%",
+    "format-muted": "󰖁 {volume:>3}%",
+    "format-icons": ["", "", ""]
+  },
+
+  "power-profiles-daemon": {
+    "format": "{icon}",
+    "tooltip-format": "Power profile: {profile}\nDriver: {driver}",
+    "tooltip": true,
+    "format-icons": {
+      "default": "",
+      "performance": "",
+      "balanced": "",
+      "power-saver": ""
+    }
+  },
+
+  "idle_inhibitor": {
+    "format": "{icon}",
+    "format-icons": {
+      "activated": "󰈈",
+      "deactivated": "󰈉"
+    }
+  },
+
+  "custom/power": {
+    "format": "{icon}",
+    "format-icons": "",
+    "exec-on-event": "true",
+    "on-click": "bm-power",
+    "tooltip-format": "Power Menu"
+  },
+
+  "custom/bluetooth": {
+    "format": "{icon}",
+    "format-icons": "",
+    "exec-on-event": "true",
+    "on-click": "wofi-bluetooth",
+    "tooltip-format": "Bluetooth Menu"
+  },
+   
+    "network#wifi": {
+        "format-wifi": "󰤨 {signalStrength}%",
+        "format-disconnected": "󰤭 Disconnected",
+        "tooltip-format": "Wifi: {essid} ({signalStrength}%)",
+        "on-click": "~/.config/waybar/scripts/wifi-menu.sh"
+    },
+
+  "custom/separator": {
+    "format": "{icon}",
+    "format-icons": "|",
+    "tooltip": false
+  },
+
+   "custom/weather": {
+        "exec": "~/.config/waybar/scripts/weather.sh",
+        "return-type": "json",
+        "interval": 120,
+        "format": "{}",
+        "on-click": "~/.config/waybar/scripts/weather.sh toggle",
+        "signal": 8
+    },
+
+   "custom/quick-actions": {
+        "format": "",
+        "tooltip-format": "Quick Actions",
+        "on-click": "~/.config/waybar/scripts/quick-actions.sh"
+    },
+
+  "sway/language": {
+    "format": "  {short}",
+    "on-click": "swaymsg 'input * xkb_switch_layout next'",
+  }
+}
