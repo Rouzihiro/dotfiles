@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+# wow-arm64-fix
+
+export WINEPREFIX="$HOME/.wine" 
+export WINEARCH=win64
+export WINEDEBUG=-all
+
+# Disable WOW64 experimental mode warnings
+export WINEDEBUG=--wow64
+
+# Basic ARM64 compatibility
+export vblank_mode=0
+
+echo "🎮 Launching WoW with ARM64 WOW64 fixes..."
+
+wine "$HOME/Games/Frostmourne/Wow.exe" -opengl -windowed $@

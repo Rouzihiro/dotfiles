@@ -1,238 +1,77 @@
 @import "../zorro/current/theme/waybar.css";
 
-@define-color bg_op          alpha(@bg, 0.8);
-@define-color bg_alt_op      alpha(@bg_alt, 0.8);
-@define-color fg_op          alpha(@fg, 0.8);
-@define-color border_op      alpha(@border, 0.8);
+/* -------------------- Global opacity control -------------------- */
+/* -------------------- Opacity variants for theme colors -------------------- */
+@define-color bg_opacity          alpha(@bg, 0.8);
+@define-color fg_opacity          alpha(@fg, 0.8);
+@define-color foreground_opacity  alpha(@foreground, 0.8);
+@define-color bordercolor_opacity alpha(@bordercolor, 0.8);
+@define-color highlight_opacity   alpha(@highlight, 0.8);
+@define-color alert_opacity       alpha(@alert, 0.8);
+@define-color activegreen_opacity alpha(@activegreen, 0.8);
+@define-color disabled_opacity    alpha(@disabled, 0.8);
 
-@define-color red_op         alpha(@red, 0.8);
-@define-color green_op       alpha(@green, 0.8);
-@define-color yellow_op      alpha(@yellow, 0.8);
-@define-color blue_op        alpha(@blue, 0.8);
-@define-color purple_op      alpha(@purple, 0.8);
-@define-color aqua_op        alpha(@aqua, 0.8);
-@define-color orange_op      alpha(@orange, 0.8);
-@define-color gray_op        alpha(@gray, 0.8);
-
-@define-color activegreen_op alpha(@activegreen, 0.8);
-@define-color highlight_op   alpha(@highlight, 0.8);
-@define-color alert_op       alpha(@alert, 0.8);
-@define-color disabled_op    alpha(@disabled, 0.8);
-@define-color foreground_op  alpha(@fg, 0.8);
-
-
-/* ---------- Global Styles ---------- */
-* {
-    font-family: "JetBrainsMono Nerd Font";
-    font-weight: bold;
-    min-height: 0;
-    font-size: 97%;
-    font-feature-settings: '"zero", "ss01", "ss02", "ss03", "ss04", "ss05", "cv31"';
-}
-
-window#waybar {
+/* -------------------- Window styling -------------------- */
+window {
     background: transparent;
-    border-radius: 0px;
-    color: @fg;
+ 		border: none;
+ 		border-radius: 0;
+ 		font-family: "JetBrainsMono Nerd Font";
+    /* font-family: "JetBrains Mono"; */
+ 		font-size: 12px;
+    font-weight: 500;
+ 		min-height: 0;
 }
 
-window#waybar.hidden {
-    opacity: 0;
-}
-
-tooltip {
-    background: @bg_alt;
-    border-radius: 12px;
-    border-width: 1px;
-    border-style: solid;
-    border-color: @border;
-    color: @fg;
-}
-
-/* ---------- Module Groups ---------- */
-.modules-left,
-.modules-center,
-.modules-right {
- 		background-color:	alpha(@bg, 0.6);
-    /* background-color: @bg_alt; */
-    border-radius: 15px;
-    border-bottom: 2px solid @border;
-    padding-top: 2px;
-    padding-bottom: 0px;
-    padding-right: 4px;
-    padding-left: 4px;
-}
-
-/* ---------- Workspaces ---------- */
-#workspaces {
-    padding: 0px 1px;
-    border-radius: 15px;
-    border: 2px solid @border;
-    font-weight: bold;
-    opacity: 0.8;
-    color: @fg;
-}
-
-#taskbar button,
-#workspaces button {
-    color: @gray;
-    box-shadow: none;
-    text-shadow: none;
-    border-radius: 30px;
-    padding-left: 4px;
-    padding-right: 4px;
-    transition: all 0.5s cubic-bezier(.55,-0.68,.48,1.682);
-}
-
-#taskbar button.active,
-#workspaces button.active {
-    color: @yellow;
- 		background-color: @highlight_op;
-    border-radius: 15px;
-    background-color: @bg;
-    padding-left: 8px;
-    padding-right: 8px;
-    transition: all 0.3s cubic-bezier(.55,-0.68,.48,1.682);
-}
-
-#workspaces button.focused {
-    background-color: @highlight_op;
-    color: @fg;
-}
-
-#workspaces button.urgent {
-    color: @bg;
-    border-radius: 10px;
-}
-
-#taskbar button:hover,
-#workspaces button:hover {
-    color: @yellow;
-    border-radius: 10px;
-    padding-left: 2px;
-    padding-right: 2px;
-    transition: all 0.3s cubic-bezier(.55,-0.68,.48,1.682);
-}
-
-/* ---------- Modules ---------- */
+/* -------------------- General module styling -------------------- */
+#pulseaudio,
+#temperature,
 #backlight,
-#backlight-slider,
 #battery,
-#bluetooth,
 #clock,
 #cpu,
-#disk,
-#idle_inhibitor,
-#keyboard-state,
 #memory,
-#mode,
-#mpris,
+#disk,
+#custom_cpu,
+#custom_ram,
+#custom_read,
+#custom_write,
 #network,
-#power-profiles-daemon,
-#pulseaudio,
-#pulseaudio-slider,
-#taskbar,
-#temperature,
-#tray,
-#window,
 #wireplumber,
-#workspaces,
-#custom-backlight,
-#custom-browser,
-#custom-cava_mviz,
-#custom-cycle_wall,
-#custom-dot_update,
-#custom-file_manager,
-#custom-keybinds,
-#custom-keyboard,
-#custom-light_dark,
-#custom-lock,
-#custom-hint,
-#custom-hypridle,
-#custom-menu,
-#custom-playerctl,
-#custom-power_vertical,
+#power-profiles-daemon,
+#idle_inhibitor,
+#custom-bluetooth,
+#custom-wifi,
 #custom-power,
-#custom-quit,
-#custom-reboot,
-#custom-settings,
-#custom-spotify,
-#custom-swaync,
-#custom-tty,
-#custom-updater,
-#custom-hyprpicker,
-#custom-weather,
-#custom-weather.clearNight,
-#custom-weather.cloudyFoggyDay,
-#custom-weather.cloudyFoggyNight,
-#custom-weather.default,
-#custom-weather.rainyDay,
-#custom-weather.rainyNight,
-#custom-weather.severe,
-#custom-weather.showyIcyDay,
-#custom-weather.snowyIcyNight,
-#custom-weather.sunnyDay {
+#custom_apps,
+#custom_separator,
+#custom-gpu,
+#custom_notification {
+    border-radius: 12px;
+    padding: 3px 6px;
+		background-color: alpha(@bg, 0.6);
     color: @fg;
-    padding-right: 6px;
-    padding-left: 6px;
+    font-size: 12px;
+    font-weight: 500;
 }
 
-/* ---------- Temperature ---------- */
-#temperature.critical {
-    background-color: @red;
+/* -------------------- Tray specific spacing -------------------- */
+#tray {
+    margin-left: 5px;
+    margin-right: 8px;
 }
 
-/* ---------- Sliders ---------- */
-#backlight-slider slider,
-#pulseaudio-slider slider {
-    min-width: 0px;
-    min-height: 0px;
-    opacity: 0;
-    background-image: none;
-    border: none;
-    box-shadow: none;
-}
-
-#backlight-slider trough,
-#pulseaudio-slider trough {
-    min-width: 80px;
-    min-height: 5px;
-    border-radius: 5px;
-    background-color: @bg_alt;
-}
-
-#backlight-slider highlight,
-#pulseaudio-slider highlight {
-    min-height: 10px;
-    border-radius: 5px;
-    background-color: @purple;
-}
-
-/* ---------- Audio ---------- */
-#pulseaudio-slider,
-#pulseaudio {
-    color: @purple;
-}
-
-#pulseaudio.muted {
-    color: @red;
-}
-
-/* ---------- System Info ---------- */
-#memory {
-    color: @blue;
-}
-
-#cpu {
-    color: @purple;
+#language { 
+		background-color: alpha(@bg, 0.6);
+    border-radius: 12px;
+    padding: 3px 6px;
+    color: @fg;
+    font-size: 12px;
+    font-weight: 500;
 }
 
 #battery {
     color: @green;
-}
-
-#disk {
-    color: @blue;
 }
 
 #battery.critical:not(.charging) {
@@ -244,38 +83,63 @@ tooltip {
     animation-direction: alternate;
 }
 
-/* ---------- Idle Inhibitor ---------- */
-#custom-hypridle,
-#custom-lock,
-#idle_inhibitor {
-    color: @aqua;
+
+/* -------------------- Divider styling -------------------- */
+#custom-divider {
+    font-size: 14px;
+    font-weight: bold;
+    color: @bg;
 }
 
-#custom-hypridle.notactive,
-#idle_inhibitor.activated {
-    color: @green;
+#custom-launcher {
+		background-color: alpha(@bg, 0.6);
+ 		color: @fg;
+    padding: 2px 15px;
+    /* margin: 5px 0 5px 5px; */
+    border-radius: 16px;
+    font-size: 18px;
+    /* min-height: 24px; */
+    /* padding-top: 3px; */
+    /* padding-bottom: 5px; */
+    /* padding-left: 9px; */
+    /* padding-right: 13px; */
 }
 
-/* ---------- Clock ---------- */
+#custom-quick-actions {
+		color: @fg;
+    font-size: 14px;
+		padding: 12px 12px;
+    font-weight: bold;
+}
+/* -------------------- Clock styling -------------------- */
 #clock {
-    color: @blue;
-    border-radius: 15px;
-    border: 2px solid @border;
+    font-size: 12px;
+ 		padding: 5px 6px;
 }
 
-/* ---------- Updates ---------- */
-#custom-updates {
-    color: @yellow;
+/* -------------------- Workspaces container -------------------- */
+
+#workspaces {
+    border-radius: 18px;
+    padding: 3px 1px;
 }
 
-/* ---------- Notifications ---------- */
-#swaync {
-    color: @yellow;
+/* -------------------- Workspaces buttons -------------------- */
+
+#workspaces button {
+    background-color: @bordercolor_opacity;
+    border-radius: 12px;
+    padding: 3px 3px;
+    margin: 0px 2px;
+    color: @fg;
+    font-weight: bold;
+    font-size: 8px;
 }
 
-/* ---------- Animations ---------- */
-@keyframes blink {
-    to {
-        color: @bg;
-    }
+/* -------------------- Active/focused workspace buttons -------------------- */
+#workspaces button.active,
+#workspaces button.focused {
+    background-color: @highlight_opacity;
+    font-weight: bold;
+ 		padding: 3px 6px;
 }

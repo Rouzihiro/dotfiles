@@ -1,0 +1,281 @@
+@import "../zorro/current/theme/waybar.css";
+
+@define-color bg_op          alpha(@bg, 0.8);
+@define-color bg_alt_op      alpha(@bg_alt, 0.8);
+@define-color fg_op          alpha(@fg, 0.8);
+@define-color border_op      alpha(@border, 0.8);
+
+@define-color red_op         alpha(@red, 0.8);
+@define-color green_op       alpha(@green, 0.8);
+@define-color yellow_op      alpha(@yellow, 0.8);
+@define-color blue_op        alpha(@blue, 0.8);
+@define-color purple_op      alpha(@purple, 0.8);
+@define-color aqua_op        alpha(@aqua, 0.8);
+@define-color orange_op      alpha(@orange, 0.8);
+@define-color gray_op        alpha(@gray, 0.8);
+
+@define-color activegreen_op alpha(@activegreen, 0.8);
+@define-color highlight_op   alpha(@highlight, 0.8);
+@define-color alert_op       alpha(@alert, 0.8);
+@define-color disabled_op    alpha(@disabled, 0.8);
+@define-color foreground_op  alpha(@fg, 0.8);
+
+
+/* ---------- Global Styles ---------- */
+* {
+    font-family: "JetBrainsMono Nerd Font";
+    font-weight: bold;
+    min-height: 0;
+    font-size: 97%;
+    font-feature-settings: '"zero", "ss01", "ss02", "ss03", "ss04", "ss05", "cv31"';
+}
+
+window#waybar {
+    background: transparent;
+    border-radius: 0px;
+    color: @fg;
+}
+
+window#waybar.hidden {
+    opacity: 0;
+}
+
+tooltip {
+    background: @bg_alt;
+    border-radius: 12px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: @border;
+    color: @fg;
+}
+
+/* ---------- Module Groups ---------- */
+.modules-left,
+.modules-center,
+.modules-right {
+ 		background-color:	alpha(@bg, 0.6);
+    /* background-color: @bg_alt; */
+    border-radius: 15px;
+    border-bottom: 2px solid @border;
+    padding-top: 2px;
+    padding-bottom: 0px;
+    padding-right: 4px;
+    padding-left: 4px;
+}
+
+/* ---------- Workspaces ---------- */
+#workspaces {
+    padding: 0px 1px;
+    border-radius: 15px;
+    border: 2px solid @border;
+    font-weight: bold;
+    opacity: 0.8;
+    color: @fg;
+}
+
+#taskbar button,
+#workspaces button {
+    color: @gray;
+    box-shadow: none;
+    text-shadow: none;
+    border-radius: 30px;
+    padding-left: 4px;
+    padding-right: 4px;
+    transition: all 0.5s cubic-bezier(.55,-0.68,.48,1.682);
+}
+
+#taskbar button.active,
+#workspaces button.active {
+    color: @yellow;
+ 		background-color: @highlight_op;
+    border-radius: 15px;
+    background-color: @bg;
+    padding-left: 8px;
+    padding-right: 8px;
+    transition: all 0.3s cubic-bezier(.55,-0.68,.48,1.682);
+}
+
+#workspaces button.focused {
+    background-color: @highlight_op;
+    color: @fg;
+}
+
+#workspaces button.urgent {
+    color: @bg;
+    border-radius: 10px;
+}
+
+#taskbar button:hover,
+#workspaces button:hover {
+    color: @yellow;
+    border-radius: 10px;
+    padding-left: 2px;
+    padding-right: 2px;
+    transition: all 0.3s cubic-bezier(.55,-0.68,.48,1.682);
+}
+
+/* ---------- Modules ---------- */
+#backlight,
+#backlight-slider,
+#battery,
+#bluetooth,
+#clock,
+#cpu,
+#disk,
+#idle_inhibitor,
+#keyboard-state,
+#memory,
+#mode,
+#mpris,
+#network,
+#power-profiles-daemon,
+#pulseaudio,
+#pulseaudio-slider,
+#taskbar,
+#temperature,
+#tray,
+#window,
+#wireplumber,
+#workspaces,
+#custom-backlight,
+#custom-browser,
+#custom-cava_mviz,
+#custom-cycle_wall,
+#custom-dot_update,
+#custom-file_manager,
+#custom-keybinds,
+#custom-keyboard,
+#custom-light_dark,
+#custom-lock,
+#custom-hint,
+#custom-hypridle,
+#custom-menu,
+#custom-playerctl,
+#custom-power_vertical,
+#custom-power,
+#custom-quit,
+#custom-reboot,
+#custom-settings,
+#custom-spotify,
+#custom-swaync,
+#custom-tty,
+#custom-updater,
+#custom-hyprpicker,
+#custom-weather,
+#custom-weather.clearNight,
+#custom-weather.cloudyFoggyDay,
+#custom-weather.cloudyFoggyNight,
+#custom-weather.default,
+#custom-weather.rainyDay,
+#custom-weather.rainyNight,
+#custom-weather.severe,
+#custom-weather.showyIcyDay,
+#custom-weather.snowyIcyNight,
+#custom-weather.sunnyDay {
+    color: @fg;
+    padding-right: 6px;
+    padding-left: 6px;
+}
+
+/* ---------- Temperature ---------- */
+#temperature.critical {
+    background-color: @red;
+}
+
+/* ---------- Sliders ---------- */
+#backlight-slider slider,
+#pulseaudio-slider slider {
+    min-width: 0px;
+    min-height: 0px;
+    opacity: 0;
+    background-image: none;
+    border: none;
+    box-shadow: none;
+}
+
+#backlight-slider trough,
+#pulseaudio-slider trough {
+    min-width: 80px;
+    min-height: 5px;
+    border-radius: 5px;
+    background-color: @bg_alt;
+}
+
+#backlight-slider highlight,
+#pulseaudio-slider highlight {
+    min-height: 10px;
+    border-radius: 5px;
+    background-color: @purple;
+}
+
+/* ---------- Audio ---------- */
+#pulseaudio-slider,
+#pulseaudio {
+    color: @purple;
+}
+
+#pulseaudio.muted {
+    color: @red;
+}
+
+/* ---------- System Info ---------- */
+#memory {
+    color: @blue;
+}
+
+#cpu {
+    color: @purple;
+}
+
+#battery {
+    color: @green;
+}
+
+#disk {
+    color: @blue;
+}
+
+#battery.critical:not(.charging) {
+    color: @red;
+    animation-name: blink;
+    animation-duration: 3.0s;
+    animation-timing-function: steps(12);
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+
+/* ---------- Idle Inhibitor ---------- */
+#custom-hypridle,
+#custom-lock,
+#idle_inhibitor {
+    color: @aqua;
+}
+
+#custom-hypridle.notactive,
+#idle_inhibitor.activated {
+    color: @green;
+}
+
+/* ---------- Clock ---------- */
+#clock {
+    color: @blue;
+    border-radius: 15px;
+    border: 2px solid @border;
+}
+
+/* ---------- Updates ---------- */
+#custom-updates {
+    color: @yellow;
+}
+
+/* ---------- Notifications ---------- */
+#swaync {
+    color: @yellow;
+}
+
+/* ---------- Animations ---------- */
+@keyframes blink {
+    to {
+        color: @bg;
+    }
+}
