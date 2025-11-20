@@ -1,0 +1,46 @@
+#!/bin/bash
+
+set -e  # Exit on any error
+
+echo "=== WoW Dependency Installer ==="
+
+# Set environment first
+export WINEARCH=win64
+export WINEPREFIX=~/.wine
+
+# Remove existing prefix to start fresh
+echo "🧹 Creating fresh Wine prefix..."
+rm -rf ~/.wine
+wineboot -u
+
+# Check winetricks
+if ! command -v winetricks &> /dev/null; then
+    echo "❌ winetricks not found. Install with: sudo dnf install winetricks"
+    exit 1
+fi
+
+# Dependencies list
+dependencies=(
+    corefonts
+    d3dx9
+    d3dcompiler_43
+    vcrun2008
+    vcrun2010
+)
+
+# Install each dependency
+for dep in "${dependencies[@]}"; do
+    echo "📦 Installing: $dep"
+    if winetricks -q "$dep"; then
+        echo "✅ $dep installed successfully"
+    else
+        echo "❌ Failed to install: $dep"
+        echo "Continuing with next dependency..."
+    fi
+done
+
+echo "🎉 All dependencies processed!"
+echo "Next steps:"
+echo "1. Run: winecfg"
+echo "2. Set Windows version to Windows 7" 
+echo "3. Try running your game: wine Wow.exe"

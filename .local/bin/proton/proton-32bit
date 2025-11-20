@@ -3,8 +3,6 @@
 
 # Try Proton 7 or earlier for better 32-bit support
 PROTON_DIR="$HOME/.steam/root/steamapps/common/Proton 10.0"
-# or
-# PROTON_DIR="$HOME/.steam/root/steamapps/common/Proton 6.3"
 
 STEAM_PATH="$HOME/.steam/root"
 GAME_EXE="$1"

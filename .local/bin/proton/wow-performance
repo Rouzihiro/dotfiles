@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # wow-performance
 
-export WINEPREFIX="$HOME/.wine-wow" 
+export WINEPREFIX="$HOME/.wine" 
 export WINEARCH=win64
 
 # Performance optimizations

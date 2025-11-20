@@ -1,0 +1,109 @@
+* {
+  font:                   "JetBrainsMono Nerd Font 12";
+  foreground:             #cdd6f4;   /* Text */
+  background:             #1e1e2e;   /* Base */
+  highlight:              #f5c2e7;   /* Pink */
+  bordercolor:            #89b4fa;   /* Blue */
+  alert:                  #f38ba8;   /* Red */
+  activegreen:            #a6e3a1;   /* Green */
+}
+
+element-icon {
+  size: 18;
+}
+
+element-text {
+  highlight:        @highlight;
+}
+
+window {
+  border-color:     @bordercolor;
+  border-radius:    10px;
+}
+
+inputbar {
+  text-color:       @foreground;
+  background-color: @background;
+}
+
+prompt {
+  text-color:       @background;
+  background-color: @bordercolor;
+  border-radius:    5px;
+  padding:          0px 5px;
+}
+
+textbox-prompt-colon {
+  text-color:       @background;
+  background-color: @bordercolor;
+}
+
+message {
+  text-color: @foreground;
+  background-color: @background;
+}
+
+entry {
+  text-color:       @foreground;
+  background-color: @background;
+}
+
+listview {
+  background-color: @background;
+  border-radius:    10px;
+}
+
+mode-switcher {
+  text-color:       @foreground;
+  background-color: @background;
+}
+
+button {
+  text-color:       @foreground;
+  background-color: @background;
+}
+
+button selected {
+  text-color:       @background;
+  background-color: @bordercolor;
+}
+
+element {
+  text-color:       @foreground;
+  background-color: @background;
+}
+
+element normal.normal {
+  background-color: @background;
+  text-color:       @foreground;
+}
+
+element normal.active {
+  background-color: @background;
+  text-color:       @foreground;
+}
+
+element selected.normal {
+  text-color:       @background;
+  background-color: @bordercolor;
+}
+
+element selected.active {
+  background-color: @bordercolor;
+  text-color:       @background;
+}
+
+element alternate.normal {
+  background-color: @background;
+  text-color:       @foreground;
+}
+
+element alternate.active {
+  background-color: @background;
+  text-color:       @foreground;
+}
+
+element urgent {
+  background-color: @alert;
+  text-color:       @background;
+}

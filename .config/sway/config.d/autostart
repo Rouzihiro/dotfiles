@@ -22,4 +22,5 @@ exec --no-startup-id waybar
 
 exec --no-startup-id swaybg -o "*" -i ~/.config/zorro/current/background -m fill
 
+exec_always --no-startup-id z-theme-set-gtk
 # exec_always ~/.config/zorro/current/theme/gtk.sh
