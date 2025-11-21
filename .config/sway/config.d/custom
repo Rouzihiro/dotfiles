@@ -33,7 +33,7 @@ bindsym $mod+mod1+i exec bm-wifi
 
 bindsym $mod+mod1+l exec $lockscreen
 
-bindsym $mod+m exec bm-mount-usb
+bindsym $mod+m exec rofi-mount-usb
 bindsym $mod+mod1+m exec $term -T 'floaty-small' -e bash -c 'sudo ps_mem; echo ""; read -rp "Press Enter to close..."'
 
 bindsym $mod+n exec rofi-notes
