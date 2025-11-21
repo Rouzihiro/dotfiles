@@ -1,0 +1,40 @@
+#!/usr/bin/env bash
+# rdr-vulkan-final.sh
+
+export WINEPREFIX="$HOME/.wine"
+export WINEARCH=win64
+
+# Vulkan configuration - critical for Apple Silicon
+export MESA_VK_DEVICE_SELECT=1000001  # Force Apple M1 hardware Vulkan
+export VK_ICD_FILENAMES="/usr/share/vulkan/icd.d/Mesa_icd.x86_64.json"
+export VK_LOADER_DEBUG=all
+
+# DXVK configuration for DirectX to Vulkan translation
+export DXVK_HUD=1  # Keep enabled to verify it's working
+export DXVK_ASYNC=1
+export DXVK_STATE_CACHE=1
+export DXVK_LOG_LEVEL=warn
+
+# Force native DXVK for all DirectX components
+export WINEDLLOVERRIDES="d3d11=n;d3d12=n;dxgi=n;d3d10core=n;d3d9=n"
+
+# Performance optimizations
+export __GL_SHADER_DISK_CACHE=1
+export __GL_SHADER_DISK_CACHE_PATH="$HOME/.cache/mesa-shaders"
+export MESA_SHADER_CACHE_DIR="$HOME/.cache/mesa"
+export MESA_SHADER_CACHE_MAX_SIZE=1G
+
+# Input and display fixes
+export SDL_VIDEO_X11_DGAMOUSE=0
+export WINE_MOUSE_DRV=coreinput
+
+# Debugging - minimal to reduce overhead
+export WINEDEBUG=fixme-all,err+all
+
+# Create cache directories
+mkdir -p "$HOME/.cache/mesa"
+mkdir -p "$HOME/.cache/mesa-shaders"
+
+echo "🎮 Launching $1 with Vulkan/DXVK..."
+echo "🔧 Using Apple M1 hardware Vulkan acceleration"
+wine "$1" -dx11 "${@:2}"
