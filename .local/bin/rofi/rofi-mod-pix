@@ -1,0 +1,197 @@
+#!/usr/bin/env bash
+# dm-mod-pix — Wabi-sabi image manipulator for X11/rofi
+# Dependencies: imagemagick (magick/convert), ghostscript (gs), rofi
+
+# Commands
+if command -v magick &>/dev/null; then
+    IM_COMMAND="magick"
+else
+    IM_COMMAND="convert"
+fi
+GS_COMMAND="gs"
+ROFI_OPTS="-lines 15 -location 2 -i -config $HOME/.config/rofi/list.rasi"
+
+# Get all images in current directory
+get_images() {
+    find . -maxdepth 1 -type f \( -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.png" -o -iname "*.webp" -o -iname "*.gif" -o -iname "*.bmp" \) | sort -V
+}
+
+# Rofi menu function
+rofi_menu() {
+    local prompt="$1"
+    local options="$2"
+    echo -e "$options" | rofi -dmenu -p "$prompt" $ROFI_OPTS
+}
+
+# Main menu with single/all options
+main_menu() {
+    rofi_menu "Select action:" "Rotate single\nRotate all\nFlip single\nFlip all\nBlack & White single\nBlack & White all\nCrop single\nCrop all\nConvert to PDF single\nConvert to PDF all\nMerge all to PDF\nExit"
+}
+
+# Rotate menu
+rotate_menu() {
+    rofi_menu "Rotate:" "90° Right\n180° Flip\n270° Left"
+}
+
+# Flip menu
+flip_menu() {
+    rofi_menu "Flip:" "Horizontal\nVertical\nBoth"
+}
+
+# Crop geometry
+get_crop_geometry() {
+    rofi_menu "Crop geometry (WxH+X+Y):" ""
+}
+
+# Quality
+get_quality() {
+    local quality=$(rofi_menu "Quality (1-100):" "90")
+    [[ -z "$quality" ]] && quality="90"
+    echo "$quality"
+}
+
+# File selection
+select_file() {
+    local files=($(get_images))
+    [[ ${#files[@]} -eq 0 ]] && return 1
+    
+    local file_list=$(printf "%s\n" "${files[@]}" | xargs -n1 basename)
+    rofi_menu "Select file:" "$file_list"
+}
+
+# Apply transformations to a file
+apply_transform() {
+    local file="$1" output="$2" rotate="$3" flip_h="$4" flip_v="$5" bw="$6" crop="$7" quality="$8"
+
+    local cmd="$IM_COMMAND \"$file\""
+
+    [[ -n "$crop" ]] && cmd+=" -crop $crop"
+    [[ -n "$rotate" ]] && cmd+=" -rotate $rotate"
+    [[ "$flip_h" = true ]] && cmd+=" -flip"
+    [[ "$flip_v" = true ]] && cmd+=" -flop"
+    [[ "$bw" = true ]] && cmd+=" -colorspace Gray"
+    cmd+=" -quality $quality \"$output\""
+
+    if eval "$cmd"; then
+        echo "Saved: $output" | rofi_menu "Success" ""
+        return 0
+    else
+        echo "Failed to process: $file" | rofi_menu "Error" ""
+        return 1
+    fi
+}
+
+# Convert single image to PDF
+convert_to_pdf() {
+    local file="$1" quality="$2"
+    local output="${file%.*}.pdf"
+    
+    if $IM_COMMAND "$file" -quality "$quality" "$output"; then
+        echo "PDF saved: $output" | rofi_menu "Success" ""
+    else
+        echo "Failed to convert: $file" | rofi_menu "Error" ""
+    fi
+}
+
+# Merge all images in current folder to PDF
+merge_all_to_pdf() {
+    local files=($(get_images))
+    [[ ${#files[@]} -eq 0 ]] && { echo "No images found" | rofi_menu "Error" ""; return 1; }
+    
+    local output=$(rofi_menu "Output PDF filename:" "merged.pdf")
+    [[ -z "$output" ]] && output="merged.pdf"
+    [[ "$output" != *.pdf ]] && output="$output.pdf"
+    
+    local quality=$(get_quality)
+
+    local temp_pdfs=()
+    for f in "${files[@]}"; do
+        tmp="${f%.*}.tmp.pdf"
+        if $IM_COMMAND "$f" -quality "$quality" "$tmp"; then
+            temp_pdfs+=("$tmp")
+        else
+            echo "Failed to convert: $f" | rofi_menu "Warning" ""
+        fi
+    done
+
+    if [[ ${#temp_pdfs[@]} -gt 0 ]]; then
+        if $GS_COMMAND -q -dNOPAUSE -dBATCH -sDEVICE=pdfwrite -sOutputFile="$output" "${temp_pdfs[@]}"; then
+            echo "Merged PDF saved: $output" | rofi_menu "Success" ""
+        else
+            echo "Failed to merge PDF" | rofi_menu "Error" ""
+        fi
+    else
+        echo "No files were converted successfully" | rofi_menu "Error" ""
+    fi
+
+    # Cleanup temp files
+    rm -f "${temp_pdfs[@]}"
+}
+
+# Process files based on action
+process_files() {
+    local action="$1" files=("${@:2}") rotate flip_h flip_v bw crop quality
+    
+    # Get common settings
+    quality=$(get_quality)
+    [[ -z "$quality" ]] && quality="90"
+
+    # Determine operation type
+    case "$action" in
+        "Rotate"*) 
+            local r=$(rotate_menu)
+            case "$r" in
+                "90° Right") rotate="90" ;;
+                "180° Flip") rotate="180" ;;
+                "270° Left") rotate="270" ;;
+            esac
+            ;;
+        "Flip"*)
+            local f=$(flip_menu)
+            case "$f" in
+                "Horizontal") flip_h=true ;;
+                "Vertical") flip_v=true ;;
+                "Both") flip_h=true; flip_v=true ;;
+            esac
+            ;;
+        "Black & White"*) bw=true ;;
+        "Crop"*) crop=$(get_crop_geometry) ;;
+    esac
+
+    # Apply transformations to selected files
+    for file in "${files[@]}"; do
+        if [[ "$action" =~ "Convert to PDF" ]]; then
+            convert_to_pdf "$file" "$quality"
+        else
+            local output="${file%.*}_mod.${file##*.}"
+            apply_transform "$file" "$output" "$rotate" "$flip_h" "$flip_v" "$bw" "$crop" "$quality"
+        fi
+    done
+}
+
+# Main loop
+main() {
+    while true; do
+        action=$(main_menu)
+        [[ -z "$action" ]] || [[ "$action" == "Exit" ]] && exit 0
+
+        case "$action" in
+            "Merge all to PDF")
+                merge_all_to_pdf
+                ;;
+            *"all"*)
+                files=($(get_images))
+                [[ ${#files[@]} -eq 0 ]] && { echo "No images found" | rofi_menu "Error" ""; continue; }
+                process_files "$action" "${files[@]}"
+                ;;
+            *)
+                file=$(select_file)
+                [[ -z "$file" ]] && continue
+                process_files "$action" "$file"
+                ;;
+        esac
+    done
+}
+
+# Run main function
+main

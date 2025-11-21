@@ -1,0 +1,88 @@
+#!/bin/sh
+ROFI_OPTS="-lines 10 -location 2 -i -config $HOME/.config/rofi/list.rasi"
+
+# Function to list only partitions (not whole disks) for rofi
+list_partitions() {
+    lsblk -o NAME,SIZE,FSTYPE,MOUNTPOINT,TYPE,LABEL -l | \
+    grep -E 'part$' | \
+    awk '{print NR") "$0}'
+}
+
+# Select partition via rofi
+select_partition() {
+    selected=$(list_partitions | rofi -dmenu -p "Select partition:" $ROFI_OPTS)
+    partition_num=$(echo "$selected" | awk -F')' '{print $1}')
+    selected_partition=$(lsblk -o NAME,TYPE -l | grep -E 'part$' | sed -n "${partition_num}p" | awk '{print $1}')
+
+    if [ -z "$selected_partition" ]; then
+        echo "Invalid selection. Exiting."
+        exit 1
+    fi
+    echo "Selected partition: /dev/$selected_partition"
+}
+
+# Select action via rofi
+select_action() {
+    action=$(echo -e "mount\nunmount\nremove" | rofi -dmenu -p "Choose action for /dev/$selected_partition:" $ROFI_OPTS)
+}
+
+# Perform action
+partition_action() {
+    case "$action" in
+        mount)
+            mount_point="$HOME/mount/usb"
+            mkdir -p "$mount_point"
+
+            mount_status=$(lsblk -o MOUNTPOINT -n "/dev/$selected_partition")
+
+            if [ -n "$mount_status" ]; then
+                echo "Already mounted at $mount_status."
+                exit 0
+            fi
+
+            echo "Mounting /dev/$selected_partition to $mount_point..."
+            fs_type=$(lsblk -o FSTYPE -n "/dev/$selected_partition")
+            
+            # Mount options based on filesystem type
+            if [ "$fs_type" = "ntfs" ]; then
+                sudo ntfs-3g "/dev/$selected_partition" "$mount_point" -o "uid=$(id -u),gid=$(id -g)" && \
+                    echo "✅ NTFS partition mounted successfully at $mount_point." || \
+                    echo "❌ Failed to mount NTFS partition."
+            elif [ "$fs_type" = "vfat" ] || [ "$fs_type" = "fat" ] || [ "$fs_type" = "exfat" ]; then
+                # FAT filesystems use fmask/dmask for permissions
+                sudo mount "/dev/$selected_partition" "$mount_point" -o "uid=$(id -u),gid=$(id -g),umask=000" && \
+                    echo "✅ FAT partition mounted successfully at $mount_point." || \
+                    echo "❌ Failed to mount FAT partition."
+            else
+                # For ext4, xfs, btrfs, etc.
+                sudo mount "/dev/$selected_partition" "$mount_point" -o "uid=$(id -u),gid=$(id -g)" && \
+                    echo "✅ Partition mounted successfully at $mount_point." || \
+                    echo "❌ Failed to mount partition."
+            fi
+            ;;
+        unmount)
+            echo "Unmounting /dev/$selected_partition..."
+            sync && sudo umount "/dev/$selected_partition" && \
+                echo "✅ Partition unmounted successfully." || \
+                echo "❌ Failed to unmount partition."
+            ;;
+        remove)
+            echo "Safely removing /dev/$selected_partition..."
+            sync
+            # Try to unmount first if mounted
+            sudo umount "/dev/$selected_partition" 2>/dev/null
+            sudo udisksctl power-off -b "/dev/$selected_partition" && \
+                echo "✅ Partition safely removed. You can unplug it now." || \
+                echo "❌ Failed to safely remove partition."
+            ;;
+        *)
+            echo "Invalid action. Exiting."
+            exit 1
+            ;;
+    esac
+}
+
+# Main
+select_partition
+select_action
+partition_action

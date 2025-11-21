@@ -1,0 +1,109 @@
+#!/bin/sh
+ROFI_OPTS="-lines 10 -location 2 -i -config $HOME/.config/rofi/list.rasi"
+
+# Function to list both disks and partitions for rofi
+list_storage_devices() {
+    lsblk -o NAME,SIZE,FSTYPE,MOUNTPOINT,TYPE -l | \
+    grep -E '(disk|part)$' | \
+    awk '{print NR") "$0}'
+}
+
+# Select storage device via rofi
+select_device() {
+    selected=$(list_storage_devices | rofi -dmenu -p "Select device:" $ROFI_OPTS)
+    device_num=$(echo "$selected" | awk -F')' '{print $1}')
+    selected_device=$(lsblk -o NAME,TYPE -l | grep -E '(disk|part)$' | sed -n "${device_num}p" | awk '{print $1}')
+    device_type=$(lsblk -o NAME,TYPE -l | grep -E '(disk|part)$' | sed -n "${device_num}p" | awk '{print $2}')
+
+    if [ -z "$selected_device" ]; then
+        echo "Invalid selection. Exiting."
+        exit 1
+    fi
+    echo "Selected device: /dev/$selected_device (type: $device_type)"
+}
+
+# Select action via rofi
+select_action() {
+    if [ "$device_type" = "disk" ]; then
+        action=$(echo -e "mount\nremove" | rofi -dmenu -p "Choose action for /dev/$selected_device:" $ROFI_OPTS)
+    else
+        action=$(echo -e "mount\nunmount\nremove" | rofi -dmenu -p "Choose action for /dev/$selected_device:" $ROFI_OPTS)
+    fi
+}
+
+# Perform action
+device_action() {
+    case "$action" in
+        mount)
+            mount_point="$HOME/mount/usb"
+            mkdir -p "$mount_point"
+
+            # For whole disks, we need to check if they have a filesystem
+            if [ "$device_type" = "disk" ]; then
+                fs_type=$(lsblk -o FSTYPE -n "/dev/$selected_device")
+                if [ -z "$fs_type" ] || [ "$fs_type" = "" ]; then
+                    echo "❌ Disk /dev/$selected_device doesn't appear to have a filesystem."
+                    echo "   It may need to be partitioned or formatted first."
+                    exit 1
+                fi
+            fi
+
+            mount_status=$(lsblk -o MOUNTPOINT -n "/dev/$selected_device")
+
+            if [ -n "$mount_status" ]; then
+                echo "Already mounted at $mount_status."
+                exit 0
+            fi
+
+            echo "Mounting /dev/$selected_device to $mount_point..."
+            fs_type=$(lsblk -o FSTYPE -n "/dev/$selected_device")
+            
+            # Mount options based on filesystem type
+            if [ "$fs_type" = "ntfs" ]; then
+                sudo ntfs-3g "/dev/$selected_device" "$mount_point" -o "uid=$(id -u),gid=$(id -g)" && \
+                    echo "✅ NTFS device mounted successfully at $mount_point." || \
+                    echo "❌ Failed to mount NTFS device."
+            elif [ "$fs_type" = "vfat" ] || [ "$fs_type" = "fat" ] || [ "$fs_type" = "exfat" ]; then
+                # FAT filesystems use fmask/dmask instead of uid/gid
+                sudo mount "/dev/$selected_device" "$mount_point" -o "uid=$(id -u),gid=$(id -g),umask=000" && \
+                    echo "✅ FAT device mounted successfully at $mount_point." || \
+                    echo "❌ Failed to mount FAT device."
+            else
+                # For ext4, xfs, btrfs, etc. - use standard mount without uid/gid for whole disks
+                if [ "$device_type" = "disk" ]; then
+                    sudo mount "/dev/$selected_device" "$mount_point" && \
+                        echo "✅ Device mounted successfully at $mount_point." || \
+                        echo "❌ Failed to mount device."
+                else
+                    sudo mount "/dev/$selected_device" "$mount_point" -o "uid=$(id -u),gid=$(id -g)" && \
+                        echo "✅ Device mounted successfully at $mount_point." || \
+                        echo "❌ Failed to mount device."
+                fi
+            fi
+            ;;
+        unmount)
+            echo "Unmounting /dev/$selected_device..."
+            sync && sudo umount "/dev/$selected_device" && \
+                echo "✅ Device unmounted successfully." || \
+                echo "❌ Failed to unmount device."
+            ;;
+        remove)
+            echo "Safely removing /dev/$selected_device..."
+            sync
+            # Try to unmount first if mounted
+            sudo umount "/dev/$selected_device" 2>/dev/null
+            sudo udisksctl power-off -b "/dev/$selected_device" && \
+                echo "✅ Device safely removed. You can unplug it now." || \
+                echo "❌ Failed to safely remove device."
+            ;;
+        *)
+            echo "Invalid action. Exiting."
+            exit 1
+            ;;
+    esac
+}
+
+# Main
+select_device
+select_action
+device_action

@@ -1,10 +1,7 @@
 #!/usr/bin/env bash
-# wow-stable.sh
 
-export WINEPREFIX="$HOME/.wine-wow"
+export WINEPREFIX="$HOME/.wine"
 export WINEARCH=win64
-
-export WINE_CPU_TOPOLOGY=4:0,1,2,3
 
 # Critical: Disable problematic CPU optimizations
 export DXVK_ASYNC=0  # Disable async for stability
@@ -27,5 +24,5 @@ export SDL_VIDEO_X11_DGAMOUSE=0
 # Suppress Wine debug output but keep errors
 export WINEDEBUG=fixme-all,err-all
 
-echo "🎮 Launching WoW with stability fixes..."
-wine "$HOME/Games/Frostmourne/Wow.exe" -opengl -windowed -console $@
+echo "🎮 Launching Game with stability fixes..."
+wine "$1" -opengl -windowed -console "${@:2}"
