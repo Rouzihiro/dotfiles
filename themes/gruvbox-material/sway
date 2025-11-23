@@ -1,0 +1,108 @@
+# Default foreground
+set $fujiWhite      #D4BE98
+
+# Dark foreground (statuslines)
+set $oldWhite       #C5B28D
+
+# Dark background (statuslines and floating windows)
+set $sumiInk0       #1D2021
+
+# Default background
+set $sumiInk1       #282828
+
+# Lighter background (colorcolumn, folds)
+set $sumiInk2       #2C2620
+
+# Lighter background (cursorline)
+set $sumiInk3       #45403D
+
+# Darker foreground (line numbers, fold column, non-text characters), float borders
+set $sumiInk4       #6E6A68
+
+# Popup background, visual selection background
+set $waveBlue1      #076678
+
+# Popup selection background, search background
+set $waveBlue2      #458588
+
+# Diff Add (background)
+set $winterGreen    #A9B665
+
+# Diff Change (background)
+set $winterYellow   #D8A657
+
+# Diff Deleted (background)
+set $winterRed      #EA6962
+
+# Diff Line (background)
+set $winterBlue     #076678
+
+# Git Add
+set $autumnGreen    #A9B665
+
+# Git Delete
+set $autumnRed      #EA6962
+
+# Git Change
+set $autumnYellow   #D8A657
+
+# Diagnostic Error
+set $samuraiRed     #EA6962
+
+# Diagnostic Warning
+set $roninYellow    #D8A657
+
+# Diagnostic Info
+set $waveAqua1      #7DAEA3
+
+# Diagnostic Hint
+set $dragonBlue     #458588
+
+# Comments
+set $fujiGray       #6E6A68
+
+# Light foreground
+set $springViolet1  #B8A383
+
+# Statements and Keywords
+set $oniViolet      #D3869B
+
+# Functions and Titles
+set $crystalBlue    #7DAEA3
+
+# Brackets and punctuation
+set $springViolet2  #D3869B
+
+# Specials and builtin functions
+set $springBlue     #7DAEA3
+
+# Not used 
+set $lightBlue      #89B482
+set $boatYellow1    #D8A657
+
+# Types
+set $waveAqua2      #89B482
+
+# Strings
+set $springGreen    #A9B665
+
+# Operators, RegEx
+set $boatYellow2    #D8A657
+
+# Identifiers
+set $carpYellow     #D8A657
+
+# Numbers
+set $sakuraPink     #D3869B
+
+# Standout specials 1 (builtin variables)
+set $waveRed        #EA6962
+
+# Standout specials 2 (exception handling, return)
+set $peachRed       #EA6962
+
+# Constants, imports, booleans
+set $surimiOrange   #E78A4E
+
+# Deprecated
+set $katanaGray     #6E6A68
