@@ -1,0 +1,173 @@
+#!/bin/bash
+
+# Configuration
+MOUNT_POINT="$HOME/mount/nas"
+FTP_HOST="192.168.178.1"
+CREDENTIAL_FILE="$HOME/.ssh/id_ftp"
+
+# Function to check dependencies
+check_dependencies() {
+    if ! command -v curlftpfs >/dev/null 2>&1; then
+        rofi -e "Error: curlftpfs is not installed. Please install it first."
+        exit 1
+    fi
+    
+    if ! command -v rofi >/dev/null 2>&1; then
+        echo "Error: rofi is not installed. Please install it first."
+        exit 1
+    fi
+}
+
+# Function to mount NAS
+mount_nas() {
+    # Check if credentials file exists
+    if [ ! -f "$CREDENTIAL_FILE" ]; then
+        rofi -e "❌ Error: Credentials file not found at $CREDENTIAL_FILE"
+        return 1
+    fi
+
+    # Check if mount point exists, create if not
+    mkdir -p "$MOUNT_POINT"
+
+    # Check if already mounted
+    if mountpoint -q "$MOUNT_POINT"; then
+        rofi -e "ℹ️ NAS is already mounted at $MOUNT_POINT"
+        return 0
+    fi
+
+    # Extract credentials
+    local username=$(awk -F= '/username/ {print $2}' "$CREDENTIAL_FILE" | tr -d ' ')
+    local password=$(awk -F= '/password/ {print $2}' "$CREDENTIAL_FILE" | tr -d ' ')
+
+    # Validate credentials
+    if [ -z "$username" ] || [ -z "$password" ]; then
+        rofi -e "❌ Error: Could not read username/password from credentials file"
+        return 1
+    fi
+
+    # Mount the NAS with progress indication
+    rofi -e "🔄 Mounting NAS..."
+    
+    if curlftpfs -o user="${username}:${password}",allow_other,uid=$(id -u),gid=$(id -g),umask=0000 "ftp://$FTP_HOST/" "$MOUNT_POINT" 2>/dev/null; then
+        rofi -e "✅ NAS successfully mounted at $MOUNT_POINT"
+        return 0
+    else
+        rofi -e "❌ Failed to mount NAS. Check credentials and connection."
+        return 1
+    fi
+}
+
+# Function to unmount NAS
+unmount_nas() {
+    # Check if mounted
+    if ! mountpoint -q "$MOUNT_POINT"; then
+        rofi -e "ℹ️ NAS is not currently mounted at $MOUNT_POINT"
+        return 0
+    fi
+
+    # Unmount the NAS
+    rofi -e "🔄 Unmounting NAS..."
+    
+    if fusermount -u "$MOUNT_POINT" 2>/dev/null; then
+        rofi -e "✅ NAS successfully unmounted from $MOUNT_POINT"
+        return 0
+    else
+        rofi -e "❌ Failed to unmount NAS. Try forcing unmount?"
+        local force_choice
+        force_choice=$(echo -e "Yes\nNo" | rofi -dmenu -p "Force unmount?")
+        case "$force_choice" in
+            "Yes")
+                if fusermount -uz "$MOUNT_POINT"; then
+                    rofi -e "✅ NAS force-unmounted successfully"
+                else
+                    rofi -e "❌ Force unmount also failed"
+                fi
+                ;;
+        esac
+        return 1
+    fi
+}
+
+# Function to check mount status with details
+check_status() {
+    if mountpoint -q "$MOUNT_POINT"; then
+        local mount_info
+        mount_info=$(mount | grep "$MOUNT_POINT")
+        rofi -e "📡 Status: NAS is mounted\n📍 Mount point: $MOUNT_POINT\n🔗 Connection: $mount_info"
+    else
+        rofi -e "📡 Status: NAS is not mounted\n📍 Mount point: $MOUNT_POINT"
+    fi
+}
+
+# Function to open mounted NAS in file manager
+open_nas() {
+    if mountpoint -q "$MOUNT_POINT"; then
+        if command -v xdg-open >/dev/null 2>&1; then
+            xdg-open "$MOUNT_POINT" &
+            rofi -e "📂 Opening NAS in file manager..."
+        else
+            rofi -e "ℹ️ Mounted at: $MOUNT_POINT"
+        fi
+    else
+        rofi -e "❌ NAS is not mounted. Please mount it first."
+    fi
+}
+
+# Function to test connection
+test_connection() {
+    if [ ! -f "$CREDENTIAL_FILE" ]; then
+        rofi -e "❌ Credentials file not found"
+        return 1
+    fi
+
+    local username=$(awk -F= '/username/ {print $2}' "$CREDENTIAL_FILE" | tr -d ' ')
+    local password=$(awk -F= '/password/ {print $2}' "$CREDENTIAL_FILE" | tr -d ' ')
+    
+    rofi -e "🔄 Testing connection to $FTP_HOST..."
+    
+    if curl -s --connect-timeout 10 "ftp://$FTP_HOST/" --user "${username}:${password}" >/dev/null 2>&1; then
+        rofi -e "✅ Connection successful to $FTP_HOST"
+    else
+        rofi -e "❌ Connection failed to $FTP_HOST"
+    fi
+}
+
+# Enhanced main menu
+show_menu() {
+    local choice
+    choice=$(echo -e "📡 Mount NAS\n⏏️ Unmount NAS\nℹ️ Check Status\n🔍 Test Connection\n📂 Open NAS Folder\n❌ Exit" | rofi -dmenu -p "NAS Manager" -i)
+    
+    case "$choice" in
+        *"Mount NAS"*)
+            mount_nas
+            ;;
+        *"Unmount NAS"*)
+            unmount_nas
+            ;;
+        *"Check Status"*)
+            check_status
+            ;;
+        *"Test Connection"*)
+            test_connection
+            ;;
+        *"Open NAS Folder"*)
+            open_nas
+            ;;
+        *"Exit"*)
+            exit 0
+            ;;
+        *)
+            exit 0
+            ;;
+    esac
+}
+
+# Check dependencies first
+check_dependencies
+
+# Main execution loop
+while true; do
+    show_menu
+    # Small delay to prevent rapid re-opening
+    sleep 0.3
+done

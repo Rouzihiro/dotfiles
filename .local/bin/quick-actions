@@ -12,6 +12,9 @@ main_menu() {
         "󰇧 Internet"
         "󰎁 Multimedia"
         "󰘚 Utilities"
+				"󰋊 Mounting"
+				" Fedora" 
+				" Arch"
  				" Calculator"
 				" VPN"
         "󰩛 Exit"
@@ -61,6 +64,15 @@ main_menu() {
             "󰘚 Utilities")
                 utilities_menu
                 ;;
+						"󰋊 Mounting")
+								mounting_menu
+								;;
+						" Fedora")
+						fedora_menu
+								;;
+						" Arch")
+						arch_menu
+								;;
             "󰩛 Exit")
                 exit 0
                 ;;
@@ -436,6 +448,101 @@ utilities_menu() {
     # Loop back to utilities menu unless going back to main
     utilities_menu
 }
+
+arch_menu() {
+    arch_menu=(
+        " Pacman Cleaner"
+        " AUR Cleaner"
+        " List Packages"
+        " Swap Setup"
+        "󰁍 Back to Main"
+    )
+
+    arch_selected=$(printf '%s\n' "${arch_menu[@]}" | rofi -dmenu -i -p "Arch Linux" -theme ~/.config/rofi/quick-actions.rasi)
+    if [ -z "$arch_selected" ]; then
+        main_menu
+        return
+    fi
+
+    case "$arch_selected" in
+        " Pacman Cleaner")
+            pacman-cleaner.sh
+            ;;
+        " AUR Cleaner")
+            aur-cleaner.sh
+            ;;
+        " List Packages")
+            list-pkgs
+            ;;
+        " Swap Setup")
+            swap-setup-arch
+            ;;
+        "󰁍 Back to Main")
+            main_menu
+            return
+            ;;
+    esac
+    arch_menu
+}
+
+fedora_menu() {
+    fedora_menu=(
+        " Swap Setup"
+        "󰁍 Back to Main"
+    )
+
+    fedora_selected=$(printf '%s\n' "${fedora_menu[@]}" | rofi -dmenu -i -p "Fedora" -theme ~/.config/rofi/quick-actions.rasi)
+    if [ -z "$fedora_selected" ]; then
+        main_menu
+        return
+    fi
+
+    case "$fedora_selected" in
+        " Swap Setup")
+            swap-setup-fedora
+            ;;
+        "󰁍 Back to Main")
+            main_menu
+            return
+            ;;
+    esac
+    fedora_menu
+}
+
+mounting_menu() {
+    mounting_menu=(
+        "󰋊 Mount USB"
+        "󰛳 Mount NAS"
+        "󰇚 Mount ISO"
+        "󰁍 Back to Main"
+    )
+
+    mounting_selected=$(printf '%s\n' "${mounting_menu[@]}" | rofi -dmenu -i -p "Mounting" -theme ~/.config/rofi/quick-actions.rasi)
+    if [ -z "$mounting_selected" ]; then
+        main_menu
+        return
+    fi
+
+    case "$mounting_selected" in
+        "󰋊 Mount USB")
+            rofi-mount-usb
+            ;;
+        "󰛳 Mount NAS")
+						rofi-mount-nas
+            ;;
+        "󰇚 Mount ISO")
+            rofi-mount-iso
+            ;;
+        "󰁍 Back to Main")
+            main_menu
+            return
+            ;;
+    esac
+    mounting_menu
+}
+
+
+
 
 # Start the main menu
 main_menu
