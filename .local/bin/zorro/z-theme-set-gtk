@@ -1,14 +1,37 @@
 #!/bin/bash
 
-# Get the actual theme directory name
+# Get the theme directory path
 THEME_PATH=$(readlink -f "$HOME/.config/zorro/current/theme")
-ACTUAL_THEME_NAME=$(basename "$THEME_PATH")
 
-# Use the same capitalization logic as the main script
-CAPITALIZED_THEME=$(echo "$ACTUAL_THEME_NAME" | sed -E 's/(^|-)([a-z])/\1\u\2/g; s/-//g')
-GTK_THEME_NAME="${CAPITALIZED_THEME}-Dark"
+# Read GTK theme name from file
+GTK_THEME_FILE="$THEME_PATH/gtk-theme"
+if [[ -f "$GTK_THEME_FILE" ]]; then
+    GTK_THEME_NAME=$(cat "$GTK_THEME_FILE" | tr -d '\n')
+    echo "Found GTK theme name in file: $GTK_THEME_NAME"
+else
+    echo "Error: gtk-theme file not found at $GTK_THEME_FILE" >&2
+    exit 1
+fi
 
 echo "Setting up GTK theme: $GTK_THEME_NAME"
+
+# Rename the symlink in ~/.themes to match the theme name
+THEMES_DIR="$HOME/.themes"
+if [[ -d "$THEMES_DIR" ]]; then
+    # Find the single symlink in ~/.themes
+    OLD_SYMLINK=$(find "$THEMES_DIR" -maxdepth 1 -type l | head -1)
+    if [[ -n "$OLD_SYMLINK" ]]; then
+        OLD_NAME=$(basename "$OLD_SYMLINK")
+        NEW_SYMLINK="$THEMES_DIR/$GTK_THEME_NAME"
+        
+        if [[ "$OLD_NAME" != "$GTK_THEME_NAME" ]]; then
+            echo "Renaming theme symlink: $OLD_NAME -> $GTK_THEME_NAME"
+            mv "$OLD_SYMLINK" "$NEW_SYMLINK"
+        fi
+    else
+        echo "Warning: No symlink found in $THEMES_DIR" >&2
+    fi
+fi
 
 # Wait for D-Bus but don't block too long
 for i in {1..10}; do
