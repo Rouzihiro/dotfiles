@@ -38,6 +38,7 @@ vim.pack.add({
     { src = "https://github.com/nvim-mini/mini.clue" },
     -- Themes
     { src = "https://github.com/ellisonleao/gruvbox.nvim" },
+		{ src = "https://github.com/sainnhe/gruvbox-material" },
     { src = "https://github.com/catppuccin/nvim" },
     { src = "https://github.com/rebelot/kanagawa.nvim" },
     { src = "https://github.com/EdenEast/nightfox.nvim" },

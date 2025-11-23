@@ -1,0 +1,89 @@
+# Colors should be in 6 or 2 character hexadecimal or single spaced rgb decimal: "#RRGGBB", "#BW" or "0-255 0-255 0-255"
+# example for white: "#FFFFFF", "#ff" or "255 255 255".
+
+# All graphs and meters can be gradients
+# For single color graphs leave "mid" and "end" variable empty.
+# Use "start" and "end" variables for two color gradient
+# Use "start", "mid" and "end" for three color gradient
+
+# Main background, empty for terminal default, need to be empty if you want transparent background
+theme[main_bg]="#282828"
+
+# Main text color
+theme[main_fg]="#a9b665"
+
+# Title color for boxes
+theme[title]="#d4be98"
+
+# Highlight color for keyboard shortcuts
+theme[hi_fg]="#d8a657"
+
+# Background color of selected items
+theme[selected_bg]="#282828"
+
+# Foreground color of selected items
+theme[selected_fg]="#d8a657"
+
+# Color of inactive/disabled text
+theme[inactive_fg]="#2c2620"
+
+# Color of text appearing on top of graphs, i.e uptime and current network graph scaling
+theme[graph_text]="#5a524c"
+
+# Misc colors for processes box including mini cpu graphs, details memory graph and details status text
+theme[proc_misc]="#a9b665"
+
+# Cpu box outline color
+theme[cpu_box]="#a9b665"
+
+# Memory/disks box outline color
+theme[mem_box]="#a9b665"
+
+# Net up/down box outline color
+theme[net_box]="#a9b665"
+
+# Processes box outline color
+theme[proc_box]="#a9b665"
+
+# Box divider line and small boxes line color
+theme[div_line]="#a9b665"
+
+# Temperature graph colors
+theme[temp_start]="#458588"
+theme[temp_mid]="#d3869b"
+theme[temp_end]="#ea6962"
+
+# CPU graph colors
+theme[cpu_start]="#a9b665"
+theme[cpu_mid]="#d8a657"
+theme[cpu_end]="#ea6962"
+
+# Mem/Disk free meter
+theme[free_start]="#4e5900"
+theme[free_mid]=""
+theme[free_end]="#a9b665"
+
+# Mem/Disk cached meter
+theme[cached_start]="#458588"
+theme[cached_mid]=""
+theme[cached_end]="#7daea3"
+
+# Mem/Disk available meter
+theme[available_start]="#d8a657"
+theme[available_mid]=""
+theme[available_end]="#d8a657"
+
+# Mem/Disk used meter
+theme[used_start]="#ea6962"
+theme[used_mid]=""
+theme[used_end]="#ea6962"
+
+# Download graph colors
+theme[download_start]="#3d4070"
+theme[download_mid]="#6c71c4"
+theme[download_end]="#a3a8f7"
+
+# Upload graph colors
+theme[upload_start]="#701c45"
+theme[upload_mid]="#d3869b"
+theme[upload_end]="#d3869b"
