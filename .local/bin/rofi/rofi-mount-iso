@@ -1,0 +1,92 @@
+#!/bin/sh
+
+# Set mount point
+MOUNT_POINT="$HOME/mount/iso"
+
+# Function to mount ISO
+mount_iso() {
+    local iso_path="$1"
+    
+    if [ ! -f "$iso_path" ]; then
+        notify-send "ISO Mount" "Error: File '$iso_path' does not exist." -u critical
+        exit 1
+    fi
+
+    mkdir -p "$MOUNT_POINT"
+
+    if sudo mount -o loop "$iso_path" "$MOUNT_POINT"; then
+        notify-send "ISO Mount" "Successfully mounted $(basename "$iso_path") to $MOUNT_POINT" -u normal
+    else
+        notify-send "ISO Mount" "Failed to mount $(basename "$iso_path")" -u critical
+    fi
+}
+
+# Function with advanced file browser (if fzf is available)
+browse_iso_advanced() {
+    if command -v fzf >/dev/null 2>&1; then
+        local iso_file
+        iso_file=$(find "$HOME" -type f \( -name "*.iso" -o -name "*.ISO" \) 2>/dev/null | fzf --height 40% --border --prompt="Select ISO: ")
+        
+        if [ -n "$iso_file" ]; then
+            mount_iso "$iso_file"
+        fi
+    else
+        browse_iso
+    fi
+}
+
+# Function to show recent ISOs (last 10 accessed)
+show_recent_isos() {
+    local recent_iso
+    recent_iso=$(find "$HOME" -type f \( -name "*.iso" -o -name "*.ISO" \) -exec ls -lt --time=atime {} + 2>/dev/null | head -10 | awk '{print $9}' | rofi -dmenu -p "Recent ISOs:" -i)
+    
+    if [ -n "$recent_iso" ]; then
+        mount_iso "$recent_iso"
+    fi
+}
+
+# Enhanced main menu
+show_main_menu() {
+    local choice
+    choice=$(echo -e "📁 Mount ISO (Enter Path)\n🔍 Browse and Mount\n🕒 Recent ISOs\n⏏️ Unmount ISO\nℹ️ Check Status\n❌ Exit" | rofi -dmenu -p "ISO Manager" -i)
+    
+    case "$choice" in
+        *"Enter Path"*)
+            local iso_path
+            iso_path=$(rofi -dmenu -p "Enter ISO path:")
+            [ -n "$iso_path" ] && mount_iso "$iso_path"
+            ;;
+        *"Browse"*)
+            browse_iso_advanced
+            ;;
+        *"Recent"*)
+            show_recent_isos
+            ;;
+        *"Unmount"*)
+            unmount_iso
+            ;;
+        *"Check Status"*)
+            check_status
+            ;;
+        *"Exit"*)
+            exit 0
+            ;;
+    esac
+}
+
+# Make sure rofi is installed
+if ! command -v rofi >/dev/null 2>&1; then
+    echo "Error: rofi is not installed. Please install it first."
+    exit 1
+fi
+
+# Main execution
+if [ -n "$1" ]; then
+    mount_iso "$1"
+else
+    while true; do
+        show_main_menu
+        # Small delay to prevent rapid re-opening
+        sleep 0.5
+    done
+fi
