@@ -51,6 +51,7 @@ window {
     padding: 3px 6px;
 		background-color: alpha(@bg, 0.6);
     color: @fg;
+		border: 2px solid @bg;
     font-size: 12px;
     font-weight: 500;
 }
@@ -64,6 +65,7 @@ window {
 #language { 
 		background-color: alpha(@bg, 0.6);
     border-radius: 12px;
+		border: 2px solid @bg;
     padding: 3px 6px;
     color: @fg;
     font-size: 12px;
@@ -97,6 +99,7 @@ window {
     padding: 2px 15px;
     /* margin: 5px 0 5px 5px; */
     border-radius: 16px;
+		border: 2px solid @bg;
     font-size: 18px;
     /* min-height: 24px; */
     /* padding-top: 3px; */
@@ -106,16 +109,15 @@ window {
 }
 
 #custom-quick-actions {
+		background-color: alpha(@bg, 0.6);
 		color: @fg;
+  	border-radius: 16px;
+		border: 2px solid @bg;
     font-size: 14px;
 		padding: 12px 12px;
-    font-weight: bold;
+    /* font-weight: bold; */
 }
-/* -------------------- Clock styling -------------------- */
-#clock {
-    font-size: 12px;
- 		padding: 5px 6px;
-}
+
 
 /* -------------------- Workspaces container -------------------- */
 
@@ -129,6 +131,7 @@ window {
 #workspaces button {
     background-color: @bordercolor_opacity;
     border-radius: 12px;
+		border: 2px solid @bg;
     padding: 3px 3px;
     margin: 0px 2px;
     color: @fg;
