@@ -68,6 +68,21 @@ style = 'bg:color_wave_blue fg:color_fg0'
 
 [os.symbols]
 Arch = "󰣇"
+Alpine = " "
+Debian = " "
+EndeavourOS = " "
+Fedora = " "
+Linux = " "
+Macos = " "
+Manjaro = " "
+Mint = " "
+NixOS = " "
+openSUSE = " "
+Pop = " "
+SUSE = " "
+Ubuntu = " "
+Windows = " "
+
 
 [username]
 show_always = true
