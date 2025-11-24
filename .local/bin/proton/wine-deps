@@ -22,10 +22,15 @@ fi
 # Dependencies list
 dependencies=(
     corefonts
+		win10
+ 		dotnet48 
+		dotnet35 
+    vcrun2013
+		dinput8
+		vkd3d
+		dxvk
     d3dx9
     d3dcompiler_43
-    vcrun2008
-    vcrun2010
 )
 
 # Install each dependency
