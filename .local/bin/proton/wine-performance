@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 GAME_EXE="$1"
-export WINEPREFIX="$HOME/.wine-wow" 
+export WINEPREFIX="$HOME/.wine" 
 export WINEARCH=win64
 export DXVK_ASYNC=1
 export DXVK_STATE_CACHE=1

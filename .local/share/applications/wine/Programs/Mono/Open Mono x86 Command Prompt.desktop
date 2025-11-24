@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=Open Mono x86 Command Prompt
+Exec=env WINEPREFIX="/home/rey/.wine" wine C:\\\\users\\\\rey\\\\AppData\\\\Roaming\\\\Microsoft\\\\Windows\\\\Start\\ Menu\\\\Programs\\\\Mono\\\\Open\\ Mono\\ x86\\ Command\\ Prompt.lnk
+Type=Application
+StartupNotify=true
+Path=/home/rey/.wine/dosdevices/c:/Program Files (x86)/Mono/
+Icon=FC03_cmd.0
+StartupWMClass=cmd.exe

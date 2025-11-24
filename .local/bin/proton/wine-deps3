@@ -1,0 +1,67 @@
+#!/bin/bash
+
+set -e  # Exit on any error
+
+echo "=== WoW Dependency Installer ==="
+
+# Set environment first
+export WINEARCH=win64
+export WINEPREFIX=~/.wine
+
+# Remove existing prefix to start fresh
+echo "🧹 Creating fresh Wine prefix..."
+rm -rf ~/.wine
+wineboot -u
+
+# Check winetricks
+if ! command -v winetricks &> /dev/null; then
+    echo "❌ winetricks not found. Install with: sudo dnf install winetricks"
+    exit 1
+fi
+
+# Dependencies list - UPDATED WITH WEBVIEW2
+dependencies=(
+    corefonts
+    win10
+    dotnet48 
+    vcrun2013
+    d3dx9
+    d3dcompiler_43
+    edgewebview  # WebView2 Runtime for modern launchers
+)
+
+# Install each dependency
+for dep in "${dependencies[@]}"; do
+    echo "📦 Installing: $dep"
+    if winetricks -q "$dep"; then
+        echo "✅ $dep installed successfully"
+    else
+        echo "❌ Failed to install: $dep"
+        echo "Continuing with next dependency..."
+    fi
+done
+
+# Verification step
+echo "🔍 Verifying key installations..."
+if WINEPREFIX=~/.wine wine reg query "HKLM\\Software\\Microsoft\\EdgeUpdate\\Clients\\{F3017226-FE2A-4295-8BDF-00C3A9A7E4C5}" 2>/dev/null; then
+    echo "✅ WebView2 Runtime verified"
+else
+    echo "⚠️ WebView2 Runtime not found in registry"
+fi
+
+# Final configuration
+echo "⚙️ Performing final configuration..."
+WINEPREFIX=~/.wine winecfg /v win10 2>/dev/null || true
+
+echo ""
+echo "🎉 All dependencies processed!"
+echo ""
+echo "Next steps:"
+echo "1. Place your WoW game files in a directory"
+echo "2. Run: WINEPREFIX=~/.wine wine Wow.exe"
+echo "3. Or for Turtle WoW: WINEPREFIX=~/.wine wine turtle-wow.exe"
+echo ""
+echo "Troubleshooting:"
+echo "- If launcher has issues, WebView2 is now installed"
+echo "- If graphics issues, try: WINEPREFIX=~/.wine wine Wow.exe -opengl"
+echo "- For performance: WINEPREFIX=~/.wine wine Wow.exe -d3d9"
