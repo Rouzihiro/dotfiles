@@ -1,0 +1,166 @@
+#!/bin/bash
+
+THEMES_DIR="$HOME/dotfiles/themes"
+PREVIEW_NAME="color-palette.png"
+PALETTES_DIR="$HOME/assets/color-palettes"
+
+# Function to parse waybar.css and extract colors
+parse_waybar_css() {
+    local css_file="$1"
+    local -A colors
+    
+    while IFS= read -r line; do
+        # Match @define-color lines
+        if [[ $line =~ @define-color[[:space:]]+([a-zA-Z0-9_]+)[[:space:]]+(#[a-fA-F0-9]{6}) ]]; then
+            color_name="${BASH_REMATCH[1]}"
+            color_value="${BASH_REMATCH[2]}"
+            colors["$color_name"]="$color_value"
+        fi
+    done < "$css_file"
+    
+    # Return the colors array
+    declare -p colors
+}
+
+# Function to generate color palette preview
+generate_palette_preview() {
+    local theme_dir="$1"
+    local css_file="$theme_dir/waybar.css"
+    local output="$theme_dir/$PREVIEW_NAME"
+    
+    if [[ ! -f "$css_file" ]]; then
+        echo "No waybar.css found in $theme_dir, skipping..."
+        return 1
+    fi
+    
+    echo "Generating palette for $(basename "$theme_dir")..."
+    
+    # Parse the CSS file
+    eval "$(parse_waybar_css "$css_file")"
+    
+    # Set default colors if specific ones aren't found
+    local bg="${colors[bg]:-${colors[bg_alt]:-#000000}}"
+    local fg="${colors[fg]:-${colors[foreground]:-#FFFFFF}}"
+    
+    # Select key colors to display (prioritize important ones)
+    local display_colors=(
+        "${colors[red]:-${colors[alert]:-#FF0000}}"
+        "${colors[green]:-${colors[activegreen]:-#00FF00}}"
+        "${colors[yellow]:-#FFFF00}"
+        "${colors[blue]:-#0000FF}"
+        "${colors[purple]:-#FF00FF}"
+        "${colors[aqua]:-${colors[highlight]:-#00FFFF}}"
+        "${colors[orange]:-#FFA500}"
+        "${colors[gray]:-#808080}"
+    )
+    
+    # Generate the preview image
+    if command -v magick &> /dev/null; then
+        local draw_cmd=()
+        local y_pos=40
+        
+        # Theme name (capitalized and spaced for display only)
+        local theme_name=$(basename "$theme_dir" | sed -E 's/(^|-)([a-z])/\1\u\2/g; s/-/ /g')
+        draw_cmd+=("-fill" "$fg" "-font" "JetBrainsMono Nerd Font" "-pointsize" "14" "-annotate" "+20+25" "$theme_name")
+        
+        # Color blocks only (no labels)
+        local start_x=20
+        local start_y=45
+        local block_size=25
+        local spacing=5
+        local blocks_per_row=4
+        
+        for i in "${!display_colors[@]}"; do
+            local row=$((i / blocks_per_row))
+            local col=$((i % blocks_per_row))
+            local x=$((start_x + col * (block_size + spacing)))
+            local y=$((start_y + row * (block_size + spacing)))
+            local x2=$((x + block_size))
+            local y2=$((y + block_size))
+            
+            draw_cmd+=("-fill" "${display_colors[i]}" "-draw" "rectangle $x,$y $x2,$y2")
+        done
+        
+        magick -size 180x150 xc:"$bg" "${draw_cmd[@]}" "$output"
+        
+    elif command -v convert &> /dev/null; then
+        local draw_cmd=()
+        local y_pos=40
+        
+        local theme_name=$(basename "$theme_dir" | sed -E 's/(^|-)([a-z])/\1\u\2/g; s/-/ /g')
+        draw_cmd+=("-fill" "$fg" "-font" "JetBrainsMono Nerd Font" "-pointsize" "14" "-annotate" "+20+25" "$theme_name")
+        
+        # Color blocks only
+        local start_x=20
+        local start_y=45
+        local block_size=25
+        local spacing=5
+        local blocks_per_row=4
+        
+        for i in "${!display_colors[@]}"; do
+            local row=$((i / blocks_per_row))
+            local col=$((i % blocks_per_row))
+            local x=$((start_x + col * (block_size + spacing)))
+            local y=$((start_y + row * (block_size + spacing)))
+            local x2=$((x + block_size))
+            local y2=$((y + block_size))
+            
+            draw_cmd+=("-fill" "${display_colors[i]}" "-draw" "rectangle $x,$y $x2,$y2")
+        done
+        
+        convert -size 180x150 xc:"$bg" "${draw_cmd[@]}" "$output"
+    fi
+    
+    echo "Created: $output"
+}
+
+# Function to copy palettes to assets directory (with exact folder names)
+copy_palettes_to_assets() {
+    echo "Copying palette images to $PALETTES_DIR..."
+    mkdir -p "$PALETTES_DIR"
+    
+    local count=0
+    find "$THEMES_DIR" -name "$PREVIEW_NAME" | while read -r palette; do
+        local theme_dir=$(dirname "$palette")
+        local theme_name=$(basename "$theme_dir")  # Keep exact folder name
+        local dest_file="$PALETTES_DIR/${theme_name}.png"  # Use exact folder name
+        
+        # Overwrite if exists
+        cp -f "$palette" "$dest_file"
+        echo "  ✓ $theme_name"
+        ((count++))
+    done
+    
+    echo "Copied $count palette images to $PALETTES_DIR"
+}
+
+# Main function to process all themes
+main() {
+    echo "Generating color palette previews for all themes in $THEMES_DIR..."
+    echo "Found themes:"
+    
+    find "$THEMES_DIR" -mindepth 1 -maxdepth 1 \( -type d -o -type l \) | sort | while read -r theme_dir; do
+        local theme_name=$(basename "$theme_dir")
+        echo "  - $theme_name"
+        
+        # Generate the preview (will overwrite existing)
+        generate_palette_preview "$theme_dir"
+    done
+    
+    echo ""
+    echo "Color palette generation complete!"
+    echo "Preview images saved as '$PREVIEW_NAME' in each theme directory"
+    
+    # Ask user if they want to copy to assets directory
+    echo ""
+    read -p "Do you want to store a copy of each palette inside $PALETTES_DIR? (y/N): " -n 1 -r
+    echo ""
+    if [[ $REPLY =~ ^[Yy]$ ]]; then
+        copy_palettes_to_assets
+    else
+        echo "Skipping copy to assets directory."
+    fi
+}
+
+# Run the main function
+main

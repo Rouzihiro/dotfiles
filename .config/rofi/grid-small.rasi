@@ -1,0 +1,91 @@
+@import "colors.rasi"
+
+configuration {
+    show-icons: true;
+    icon-theme: "Numix-Circle";
+    font: "JetBrainsMono Nerd Font 11";
+}
+
+* {
+    background-color: transparent;
+    text-color: @on-surface;
+}
+
+window {
+    background-color: @surface-container;
+    border: 1px solid;
+    border-color: @primary;
+    border-radius: 12px;
+    padding: 12px;
+    width: 700px;
+}
+
+mainbox {
+    background-color: transparent;
+    children: [ inputbar, listview ];
+    spacing: 12px;
+}
+
+inputbar {
+    background-color: @surface-container-high;
+    border-radius: 8px;
+    padding: 8px 12px;
+    children: [ prompt, entry ];
+    spacing: 8px;
+}
+
+prompt {
+    text-color: @primary;
+    font: "JetBrainsMono Nerd Font Bold 12";
+}
+
+entry {
+    placeholder: "Search themes...";
+    placeholder-color: @outline;
+    text-color: @on-surface;
+}
+
+listview {
+    background-color: transparent;
+    columns: 4;
+    lines: 3;
+    spacing: 6px;
+    scrollbar: false;
+    fixed-height: false;
+    border: 0;
+}
+
+element {
+    background-color: @surface-container-high;
+    text-color: @on-surface;
+    border-radius: 8px;
+    padding: 8px;
+    spacing: 8px;
+    orientation: vertical;
+    children: [ element-icon, element-text ];
+}
+
+element-icon {
+    size: 64px;
+    horizontal-align: 0.5;
+}
+
+element-text {
+    horizontal-align: 0.5;
+    text-color: inherit;
+    font: "JetBrainsMono Nerd Font 10";
+}
+
+element selected {
+    background-color: @primary;
+    text-color: @on-primary;
+}
+
+element selected.active {
+    background-color: @secondary;
+    text-color: @on-secondary;
+}
+
+element-text selected {
+    text-color: inherit;
+}

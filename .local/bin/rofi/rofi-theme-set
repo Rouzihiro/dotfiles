@@ -2,95 +2,110 @@
 
 THEMES_DIR="$HOME/.config/zorro/themes/"
 CURRENT_THEME_DIR="$HOME/.config/zorro/current/theme"
+PALETTES_DIR="$HOME/Pictures/color-palettes"
+CACHE_DIR="$HOME/.cache/theme-palette-thumbnails"
 
-# Get current theme
-current_theme=""
-if [ -L "$CURRENT_THEME_DIR" ]; then
-    current_theme=$(basename "$(readlink "$CURRENT_THEME_DIR")")
-    current_theme=$(echo "$current_theme" | sed -E 's/(^|-)([a-z])/\1\u\2/g; s/-/ /g')
-fi
+# Create cache directory if it doesn't exist
+mkdir -p "$CACHE_DIR"
 
-# Build menu with icons and current theme indication
-menu=()
+# Generate thumbnails for theme palettes
+generate_palette_thumbnails() {
+    find -L "$PALETTES_DIR" -type f -iname "*.png" | while read -r palette; do
+        filename=$(basename "$palette")
+        thumbnail="$CACHE_DIR/${filename%.*}.png"
 
-# Use a temporary file to store the menu items
-temp_file=$(mktemp)
-
-# Generate theme list with current theme marked
-find "$THEMES_DIR" -mindepth 1 -maxdepth 1 \( -type d -o -type l \) | sort | while read -r path; do
-    # Check if it's a symlink and get the actual target
-    if [ -L "$path" ]; then
-        target=$(readlink -f "$path")
-        theme_name=$(basename "$target")
-        display_name=$(echo "$theme_name" | sed -E 's/(^|-)([a-z])/\1\u\2/g; s/-/ /g')
-        icon="󰈏"  # Chain icon for symlinks
-    else
-        theme_name=$(basename "$path")
-        display_name=$(echo "$theme_name" | sed -E 's/(^|-)([a-z])/\1\u\2/g; s/-/ /g')
-        icon="󰄮"  # Folder icon for regular themes
-    fi
-    
-    if [ "$display_name" = "$current_theme" ]; then
-        echo "$icon $display_name (Active)" >> "$temp_file"
-    else
-        echo "$icon $display_name" >> "$temp_file"
-    fi
-done
-
-# Read the temp file into the menu array
-while IFS= read -r line; do
-    menu+=("$line")
-done < "$temp_file"
-
-# Clean up
-rm -f "$temp_file"
-
-# Show rofi menu
-selected=$(printf '%s\n' "${menu[@]}" | rofi -dmenu -i -p "Select Theme")
-
-# Handle selection
-if [ -n "$selected" ]; then
-    # Extract theme name (remove icon and active status)
-    theme_display_name=$(echo "$selected" | sed 's/^[^ ]* //' | sed 's/ (Active)//')
-    
-    # Normalize to directory name
-    theme_name_normalized=$(echo "$theme_display_name" | tr '[:upper:]' '[:lower:]' | tr ' ' '-')
-    theme_path="$THEMES_DIR/$theme_name_normalized"
-
-    # Check if theme exists (follow symlinks)
-    if [[ ! -e "$theme_path" ]]; then
-        notify-send -a "Theme" "Error" "Theme '$theme_display_name' does not exist" -i dialog-error
-        exit 2
-    fi
-
-    # Switch theme
-    ln -nsf "$theme_path" "$CURRENT_THEME_DIR"
-
-    # Rename .themes symlink
-    if [[ -d "$HOME/.themes" ]]; then
-        SYMLINK_PATH=$(find "$HOME/.themes" -maxdepth 1 -type l | head -n 1)
-        
-        if [[ -n "$SYMLINK_PATH" ]]; then
-            # Get actual theme name (follow symlink if needed)
-            if [ -L "$theme_path" ]; then
-                ACTUAL_THEME_NAME=$(basename "$(readlink -f "$theme_path")")
-            else
-                ACTUAL_THEME_NAME=$(basename "$theme_path")
+        # Only generate if thumbnail doesn't exist or is older than original
+        if [ ! -f "$thumbnail" ] || [ "$palette" -nt "$thumbnail" ]; then
+            if command -v magick &> /dev/null; then
+                magick "$palette" -resize 200x200^ -gravity center -extent 200x200 +adjoin "$thumbnail" 2>/dev/null
+            elif command -v convert &> /dev/null; then
+                convert "$palette" -resize 200x200^ -gravity center -extent 200x200 +adjoin "$thumbnail" 2>/dev/null
             fi
-            CAPITALIZED_THEME=$(echo "$ACTUAL_THEME_NAME" | sed -E 's/(^|-)([a-z])/\1\u\2/g; s/-//g')
-            NEW_NAME="$HOME/.themes/${CAPITALIZED_THEME}-Dark"
-            mv "$SYMLINK_PATH" "$NEW_NAME"
         fi
-    fi
+    done
+}
 
-    # Quick restarts (non-blocking)
-    z-theme-bg-next &
-    z-theme-bat &
-    tmux source-file ~/.config/tmux/tmux.conf &
-    z-restart waybar &
-    pkill -SIGUSR2 btop &
-
-    notify-send -a "Theme" "Theme Changed" "Switched to $theme_display_name" -i preferences-desktop-theme
-    echo "Theme base setup completed: $theme_display_name"
-    echo "Run 'z-theme-set-gtk' to apply GTK settings"
+# Check if ImageMagick is installed and generate thumbnails
+if command -v magick &> /dev/null || command -v convert &> /dev/null; then
+    generate_palette_thumbnails &
+    # Wait for thumbnails to generate
+    wait
 fi
+
+# Build rofi entries with palette previews
+build_menu() {
+    find "$THEMES_DIR" -mindepth 1 -maxdepth 1 \( -type d -o -type l \) | sort | while read -r theme_path; do
+        theme_name=$(basename "$theme_path")
+        display_name=$(echo "$theme_name" | sed -E 's/(^|-)([a-z])/\1\u\2/g; s/-/ /g')
+        
+        # Look for palette thumbnail
+        palette_thumbnail="$CACHE_DIR/$theme_name.png"
+        
+        if [ -f "$palette_thumbnail" ]; then
+            printf "%s\0icon\x1f%s\n" "$display_name" "$palette_thumbnail"
+        else
+            echo "$display_name"
+        fi
+    done
+}
+
+# Get current theme for highlighting
+get_current_theme() {
+    if [ -L "$CURRENT_THEME_DIR" ]; then
+        basename "$(readlink "$CURRENT_THEME_DIR")"
+    fi
+}
+
+# Show rofi menu with palette previews
+CURRENT_THEME=$(get_current_theme)
+SELECTED_THEME=$(build_menu | rofi -dmenu -i -p "Select Theme" -show-icons \
+    -theme ~/.config/rofi/grid-small.rasi \
+    -theme-str 'element-icon { size: 6em; }' \
+    -me-select-entry '' \
+    -me-accept-entry MousePrimary 2>/dev/null)
+
+[ -z "$SELECTED_THEME" ] && exit
+
+# Normalize to directory name
+THEME_NAME_NORMALIZED=$(echo "$SELECTED_THEME" | tr '[:upper:]' '[:lower:]' | tr ' ' '-')
+THEME_PATH="$THEMES_DIR/$THEME_NAME_NORMALIZED"
+
+if [[ ! -d "$THEME_PATH" ]]; then
+    notify-send -a "Theme" "Error" "Theme '$THEME_NAME_NORMALIZED' does not exist" -i dialog-error
+    exit 2
+fi
+
+echo "Switching to theme: $SELECTED_THEME"
+
+# Core theme setup only
+ln -nsf "$THEME_PATH" "$CURRENT_THEME_DIR"
+
+# Rename .themes symlink
+if [[ -d "$HOME/.themes" ]]; then
+    SYMLINK_PATH=$(find "$HOME/.themes" -maxdepth 1 -type l | head -n 1)
+    
+    if [[ -n "$SYMLINK_PATH" ]]; then
+        ACTUAL_THEME_NAME=$(basename "$THEME_PATH")
+        CAPITALIZED_THEME=$(echo "$ACTUAL_THEME_NAME" | sed -E 's/(^|-)([a-z])/\1\u\2/g; s/-//g')
+        NEW_NAME="$HOME/.themes/${CAPITALIZED_THEME}-Dark"
+        mv "$SYMLINK_PATH" "$NEW_NAME"
+    fi
+fi
+
+# Quick restarts (non-blocking)
+z-theme-bg-next &
+z-theme-bat &
+tmux source-file ~/.config/tmux/tmux.conf &
+z-restart waybar &
+pkill -SIGUSR2 btop &
+
+# Show notification with palette preview if available
+PALETTE_PREVIEW="$PALETTES_DIR/$THEME_NAME_NORMALIZED.png"
+if [ -f "$PALETTE_PREVIEW" ]; then
+    notify-send -a "Theme" "Theme Changed" "Switched to $SELECTED_THEME" -i "$PALETTE_PREVIEW"
+else
+    notify-send -a "Theme" "Theme Changed" "Switched to $SELECTED_THEME" -i preferences-desktop-theme
+fi
+
+echo "Theme base setup completed: $SELECTED_THEME"
+echo "Run 'zorro-theme-set-gtk' to apply GTK settings"
