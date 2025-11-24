@@ -1,8 +1,0 @@
-[Desktop Entry]
-Type=Application
-Name=NOTEPAD
-MimeType=application/x-wonderswan-color-rom;
-Exec=env WINEPREFIX="/home/rey/.wine" wine start /ProgIDOpen scriptletfile %f
-NoDisplay=true
-StartupNotify=true
-Icon=B5C2_NOTEPAD.0
