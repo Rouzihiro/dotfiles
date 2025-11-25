@@ -98,4 +98,3 @@ else
 fi
 
 echo "Theme base setup completed: $SELECTED_THEME"
-echo "Run 'z-theme-set-gtk' to apply GTK settings"
