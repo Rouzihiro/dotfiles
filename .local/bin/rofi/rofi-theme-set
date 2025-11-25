@@ -88,6 +88,7 @@ z-restart waybar &
 pkill -SIGUSR2 btop &
 z-theme-set-starship
 z-theme-set-gtk
+$HOME/.config/zorro/current/theme/gtk.sh
 
 # Show notification with palette preview if available
 PALETTE_PREVIEW="$PALETTES_DIR/$THEME_NAME_NORMALIZED.png"
