@@ -87,6 +87,7 @@ tmux source-file ~/.config/tmux/tmux.conf &
 z-restart waybar &
 pkill -SIGUSR2 btop &
 z-theme-set-starship
+z-theme-set-gtk
 $HOME/.config/zorro/current/theme/gtk.sh
 
 # Show notification with palette preview if available
