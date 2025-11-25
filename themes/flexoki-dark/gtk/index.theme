@@ -1,9 +1,12 @@
-[X-GNOME-Metatheme]
-Name=flexoki
+[Desktop Entry]
 Type=X-GNOME-Metatheme
-Comment=flexoki theme fork from adw-gtk3 theme
+Name=Material-Black
+Comment=A Material Design theme
 Encoding=UTF-8
-GtkTheme=flexoki
+
+[X-GNOME-Metatheme]
+GtkTheme=Material-Black
+MetacityTheme=Material-Black
 IconTheme=Tela-dark
 CursorTheme=la-capitaine-cursor-theme
 CursorSize=24
