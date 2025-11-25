@@ -7,6 +7,7 @@ Encoding=UTF-8
 [X-GNOME-Metatheme]
 GtkTheme=Catppuccin-Purple-Light
 MetacityTheme=Catppuccin-Purple-Light
-IconTheme=Tela-circle
-CursorTheme=Catppuccin-cursors
+IconTheme=Tela-light
+CursorTheme=la-capitaine-cursor-theme
+CursorTheme=
 ButtonLayout=close,minimize,maximize:menu
