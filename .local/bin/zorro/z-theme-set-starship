@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+
+# Get the current theme and format the name
+THEME_NAME=$(basename "$(realpath "$HOME/.config/zorro/current/theme")" | sed -E 's/(^|-)([a-z])/\1\u\2/g; s/-/ /g; s/ /_/g')
+
+# Check if theme was retrieved successfully
+if [ -z "$THEME_NAME" ]; then
+    echo "Error: Could not get current theme"
+    exit 1
+fi
+
+# Define the starship config file
+STARSHIP_CONFIG="$HOME/.config/starship.toml"
+
+# Check if starship config exists
+if [ ! -f "$STARSHIP_CONFIG" ]; then
+    echo "Error: Starship config not found at $STARSHIP_CONFIG"
+    exit 1
+fi
+
+# Get current palette from line 2
+CURRENT_PALETTE=$(sed -n '2p' "$STARSHIP_CONFIG" | grep -o "palette = '[^']*'" | cut -d"'" -f2)
+
+# Only update if theme changed
+if [ "$CURRENT_PALETTE" != "$THEME_NAME" ]; then
+    TEMP_FILE=$(mktemp)
+    if sed "2s/.*/palette = '$THEME_NAME'/" "$STARSHIP_CONFIG" > "$TEMP_FILE"; then
+        mv "$TEMP_FILE" "$STARSHIP_CONFIG"
+        echo "Starship palette updated to: $THEME_NAME"
+    else
+        echo "Error: Failed to update starship config"
+        rm -f "$TEMP_FILE"
+        exit 1
+    fi
+else
+    echo "Starship palette already set to: $THEME_NAME"
+fi

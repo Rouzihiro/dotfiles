@@ -51,7 +51,8 @@ mkdir -p ~/.config/sway/config.d/
 ln -snf ~/.config/zorro/current/theme/sway ~/.config/sway/config.d/theme
 # ln -snf ~/.config/zorro/current/theme/sway-env ~/.config/sway/config.d/environment
 
-ln -sf ~/.config/zorro/current/theme/starship.toml ~/.config/starship.toml
+cp ~/dotfiles/themes/starship.toml  ~/.config/starship.toml
+# ln -sf ~/.config/zorro/current/theme/starship.toml ~/.config/starship.toml
 
 mkdir -p ~/.config/i3blocks
 ln -sf ~/.config/zorro/current/theme/i3blocks ~/.config/i3blocks/config
