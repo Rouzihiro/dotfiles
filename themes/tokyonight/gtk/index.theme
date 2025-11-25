@@ -7,6 +7,6 @@ Encoding=UTF-8
 [X-GNOME-Metatheme]
 GtkTheme=Tokyo-Night
 MetacityTheme=Tokyo-Night
-IconTheme=Tela-circle-Dark
-CursorTheme=Tokyonight
+IconTheme=Tela-dark
+CursorTheme=la-capitaine-cursor-theme
 ButtonLayout=close,minimize,maximize:menu
