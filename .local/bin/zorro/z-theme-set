@@ -35,5 +35,6 @@ pkill -SIGUSR2 btop
 z-theme-bat
 pkill waybar
 waybar
+z-theme-set-starship
 #z-theme-set-terminal
 #z-theme-set-gnome
