@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+# Save as: ~/.local/bin/update-theme-cache
+
+PALETTES_DIR="$HOME/Pictures/color-palettes"
+CACHE_DIR="$HOME/.cache/theme-palette-thumbnails"
+
+# Create cache directory if it doesn't exist
+mkdir -p "$CACHE_DIR"
+
+# Force regenerate all thumbnails
+update_palette_cache() {
+    if command -v magick &> /dev/null || command -v convert &> /dev/null; then
+        echo "Updating theme palette cache..."
+        find -L "$PALETTES_DIR" -type f -iname "*.png" | while read -r palette; do
+            filename=$(basename "$palette")
+            thumbnail="$CACHE_DIR/${filename%.*}.png"
+            
+            echo "Generating: $filename"
+            if command -v magick &> /dev/null; then
+                magick "$palette" -resize 200x200^ -gravity center -extent 200x200 +adjoin "$thumbnail" 2>/dev/null
+            else
+                convert "$palette" -resize 200x200^ -gravity center -extent 200x200 +adjoin "$thumbnail" 2>/dev/null
+            fi
+        done
+        echo "Cache update complete!"
+    else
+        echo "Error: ImageMagick not found. Install with: sudo apt install imagemagick"
+        exit 1
+    fi
+}
+
+update_palette_cache
