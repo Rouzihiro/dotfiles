@@ -80,17 +80,17 @@ echo "Switching to theme: $SELECTED_THEME"
 # Core theme setup only
 ln -nsf "$THEME_PATH" "$CURRENT_THEME_DIR"
 
-# Rename .themes symlink
-if [[ -d "$HOME/.themes" ]]; then
-    SYMLINK_PATH=$(find "$HOME/.themes" -maxdepth 1 -type l | head -n 1)
-    
-    if [[ -n "$SYMLINK_PATH" ]]; then
-        ACTUAL_THEME_NAME=$(basename "$THEME_PATH")
-        CAPITALIZED_THEME=$(echo "$ACTUAL_THEME_NAME" | sed -E 's/(^|-)([a-z])/\1\u\2/g; s/-//g')
-        NEW_NAME="$HOME/.themes/${CAPITALIZED_THEME}-Dark"
-        mv "$SYMLINK_PATH" "$NEW_NAME"
-    fi
-fi
+# # Rename .themes symlink
+# if [[ -d "$HOME/.themes" ]]; then
+#     SYMLINK_PATH=$(find "$HOME/.themes" -maxdepth 1 -type l | head -n 1)
+#
+#     if [[ -n "$SYMLINK_PATH" ]]; then
+#         ACTUAL_THEME_NAME=$(basename "$THEME_PATH")
+#         CAPITALIZED_THEME=$(echo "$ACTUAL_THEME_NAME" | sed -E 's/(^|-)([a-z])/\1\u\2/g; s/-//g')
+#         NEW_NAME="$HOME/.themes/${CAPITALIZED_THEME}-Dark"
+#         mv "$SYMLINK_PATH" "$NEW_NAME"
+#     fi
+# fi
 
 # Quick restarts (non-blocking)
 z-theme-bg-next &
@@ -99,6 +99,7 @@ tmux source-file ~/.config/tmux/tmux.conf &
 z-restart waybar &
 pkill -SIGUSR2 btop &
 z-theme-set-starship
+z-theme-set-gtk
 
 # Show notification with palette preview if available
 PALETTE_PREVIEW="$PALETTES_DIR/$THEME_NAME_NORMALIZED.png"
