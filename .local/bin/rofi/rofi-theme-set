@@ -98,6 +98,7 @@ z-theme-bat &
 tmux source-file ~/.config/tmux/tmux.conf &
 z-restart waybar &
 pkill -SIGUSR2 btop &
+z-theme-set-starship
 
 # Show notification with palette preview if available
 PALETTE_PREVIEW="$PALETTES_DIR/$THEME_NAME_NORMALIZED.png"
@@ -108,4 +109,4 @@ else
 fi
 
 echo "Theme base setup completed: $SELECTED_THEME"
-echo "Run 'zorro-theme-set-gtk' to apply GTK settings"
+echo "Run 'z-theme-set-gtk' to apply GTK settings"

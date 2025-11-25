@@ -169,7 +169,7 @@ cd dotfiles
 chmod +x install-arch.sh
 chmod +x install-fedora.sh
 chmod +x install-themes.sh
-./installer-arch.sh
+./install-arch.sh
 ./install-fedora.sh
 ./install-themes.sh
 ```
