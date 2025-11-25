@@ -7,6 +7,6 @@ Encoding=UTF-8
 [X-GNOME-Metatheme]
 GtkTheme=Catppuccin-Dark
 MetacityTheme=Catppuccin-Dark
-IconTheme=Tela-circle-Dark
-CursorTheme=Catppuccin-cursors
+IconTheme=Tela-dark
+CursorTheme=la-capitaine-cursor-theme
 ButtonLayout=close,minimize,maximize:menu
