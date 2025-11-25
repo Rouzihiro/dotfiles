@@ -52,7 +52,7 @@ map({ "n", "v", "x" }, "<C-s>", [[:s/\V]], { desc = "Enter substitute mode" })
 map({ "v", "x", "n" }, "<C-y>", '"+y', { desc = "Yank to system clipboard" })
 map({ "n", "v" }, "d", "\"_d", { desc = "Delete without cutting" })
 map({ "n", "v" }, "D", "\"_D", { desc = "Delete line without cutting" })
-map({ "n", "v" }, "X", "dd", { desc = "Delete current line" })
+map({ "n", "v" }, "X", "d$", { desc = "Delete to end of line without cutting" })
 map("n", "<leader>y", "yt#", { noremap = true, silent = true, desc = "Yank until #" })
 
 map({ "n" }, "P", "mzA<space><esc>p`z", { desc = "Paste to end of line" })
@@ -65,9 +65,11 @@ map({ 'n', 'v' }, '<leader>c', '1z=', { desc = "Correct last misspelled word" })
 -- =====================
 -- Registers
 -- =====================
-map({ "n" }, "<leader>R", "<Cmd>display<CR>", { desc = "Show registers" })
-for i = 0, 9 do
-	map('n', '<leader>r' .. i, '"' .. i .. 'p', { desc = "Paste register " .. i })
+map({ "n" }, "<leader>r", "<Cmd>display<CR>", { desc = "Show registers" })
+
+for i = 1, 9 do
+    map("n", "<leader>p" .. i, '"' .. i .. 'p', { desc = "Paste from register " .. i })
+    map("n", "<leader>P" .. i, '"' .. i .. 'P', { desc = "Paste from register " .. i .. " before cursor" })
 end
 
 -- =====================
