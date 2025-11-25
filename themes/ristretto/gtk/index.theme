@@ -1,0 +1,12 @@
+Type=X-GNOME-Metatheme
+[Desktop Entry]
+Name=Ristretto
+Comment=An Flat Gtk+ theme based on Elegant Design
+Encoding=UTF-8
+
+[X-GNOME-Metatheme]
+GtkTheme=Ristretto
+MetacityTheme=Ristretto
+IconTheme=Tela-dark
+CursorTheme=la-capitaine-cursor-theme
+ButtonLayout=close,minimize,maximize:menu
