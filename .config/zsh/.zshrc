@@ -48,6 +48,7 @@ for dir in "$HOME/.local/bin/"*/; do
     [ -d "$dir" ] && export PATH="$dir:$PATH"
 done
 
+
 # -------------------------------
 # Load aliases
 # -------------------------------
