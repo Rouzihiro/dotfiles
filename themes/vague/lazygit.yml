@@ -34,7 +34,7 @@ gui:
 git:
   paging:
     colorArg: always
-    pager: delta --dark --paging=never
+  pager: delta --syntax-theme=TwoDark --dark --paging=never
   merging:
     manualCommit: false
   commit:

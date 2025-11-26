@@ -47,11 +47,11 @@ window {
 #custom_separator,
 #custom-gpu,
 #custom_notification {
-    border-radius: 12px;
-    padding: 3px 6px;
-		background-color: alpha(@bg, 0.6);
+    border-radius: 10px;
+    padding: 2px 5px; 
+    background-color: alpha(@bg, 0.6);
     color: @fg;
-		border: 2px solid @bg;
+    border: 1px solid @bg;
     font-size: 12px;
     font-weight: 500;
 }
@@ -63,10 +63,10 @@ window {
 }
 
 #language { 
-		background-color: alpha(@bg, 0.6);
-    border-radius: 12px;
-		border: 2px solid @bg;
-    padding: 3px 6px;
+    background-color: alpha(@bg, 0.6);
+    border-radius: 10px;
+    border: 1px solid @bg;
+    padding: 0px 5px;
     color: @fg;
     font-size: 12px;
     font-weight: 500;
@@ -94,27 +94,21 @@ window {
 }
 
 #custom-launcher {
-		background-color: alpha(@bg, 0.6);
- 		color: @fg;
-    padding: 2px 15px;
-    /* margin: 5px 0 5px 5px; */
-    border-radius: 16px;
-		border: 2px solid @bg;
+    background-color: alpha(@bg, 0.6);
+    color: @fg;
+    padding: 1px 12px;
+    border-radius: 12px;
+    border: 1px solid @bg;
     font-size: 18px;
-    /* min-height: 24px; */
-    /* padding-top: 3px; */
-    /* padding-bottom: 5px; */
-    /* padding-left: 9px; */
-    /* padding-right: 13px; */
 }
 
 #custom-quick-actions {
 		background-color: alpha(@bg, 0.6);
 		color: @fg;
-  	border-radius: 16px;
-		border: 2px solid @bg;
-    font-size: 14px;
-		padding: 12px 12px;
+  	border-radius: 10px;
+		border: 1px solid @bg;
+    font-size: 12px;
+		padding: 4px 10px;
     /* font-weight: bold; */
 }
 
@@ -122,8 +116,8 @@ window {
 /* -------------------- Workspaces container -------------------- */
 
 #workspaces {
-    border-radius: 18px;
-    padding: 3px 1px;
+    border-radius: 12px;
+    padding: 0px 6px;
 }
 
 /* -------------------- Workspaces buttons -------------------- */
@@ -132,7 +126,7 @@ window {
     background-color: @bordercolor_opacity;
     border-radius: 12px;
 		border: 2px solid @bg;
-    padding: 3px 3px;
+    padding: 2px 0px;
     margin: 0px 2px;
     color: @fg;
     font-weight: bold;
@@ -144,5 +138,5 @@ window {
 #workspaces button.focused {
     background-color: @highlight_opacity;
     font-weight: bold;
- 		padding: 3px 6px;
+ 		padding: 2px 3px;
 }
