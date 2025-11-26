@@ -3,48 +3,47 @@
 # : Manager {{{
 
 [manager]
-cwd = { fg = "#83a598" }
+cwd = { fg = "#6e94b2" }  # Changed to mauve
 
 # Hovered
 hovered = { reversed = true, bold = true }
-# hovered         = { bg = "#3c3836", bold = true }
 preview_hovered = { underline = true }
 
 # Find
-find_keyword = { fg = "#b8bb26", italic = true }
-find_position = { fg = "#fe8019", bg = "reset", italic = true }
+find_keyword = { fg = "#7fa563", italic = true }  # Changed to green
+find_position = { fg = "#e8b589", bg = "reset", italic = true }  # Changed to peach
 
 # Marker
-marker_copied = { fg = "#8ec07c", bg = "#8ec07c" }
-marker_cut = { fg = "#d3869b", bg = "#d3869b" }
-marker_marked = { fg = "#83a598", bg = "#83a598" }
-marker_selected = { fg = "#fbf1c7", bg = "#fbf1c7" }
+marker_copied = { fg = "#7fa563", bg = "#7fa563" }  # Changed to green
+marker_cut = { fg = "#d8647e", bg = "#d8647e" }  # Changed to red
+marker_marked = { fg = "#6e94b2", bg = "#6e94b2" }  # Changed to mauve
+marker_selected = { fg = "#cdcdcd", bg = "#cdcdcd" }  # Changed to text color
 
 # Tab
-tab_active = { fg = "#282828", bg = "#a89984" }
-tab_inactive = { fg = "#a89984", bg = "#504945" }
+tab_active = { fg = "#141415", bg = "#6e94b2" }  # Changed base/mauve
+tab_inactive = { fg = "#6e94b2", bg = "#3d3d3d" }  # Changed mauve/surface1
 tab_width = 1
 
 # Count
-count_copied = { fg = "#282828", bg = "#8ec07c" }
-count_cut = { fg = "#282828", bg = "#d3869b" }
-count_selected = { fg = "#282828", bg = "#fbf1c7" }
+count_copied = { fg = "#141415", bg = "#7fa563" }  # Changed base/green
+count_cut = { fg = "#141415", bg = "#d8647e" }  # Changed base/red
+count_selected = { fg = "#141415", bg = "#cdcdcd" }  # Changed base/text
 
 # Border
 border_symbol = "│"
-border_style = { fg = "#665c54" }
+border_style = { fg = "#666666" }  # Changed to overlay0
 
 # : }}}
 
 # : Mode {{{
 
 [mode]
-normal_main = { fg = "#282828", bg = "#a89984", bold = true }
-normal_alt = { fg = "#a89984", bg = "#504945" }
-select_main = { fg = "#282828", bg = "#fe8019", bold = true }
-select_alt = { fg = "#a89984", bg = "#504945" }
-unset_main = { fg = "#282828", bg = "#b8bb26", bold = true }
-unset_alt = { fg = "#a89984", bg = "#504945" }
+normal_main = { fg = "#141415", bg = "#6e94b2", bold = true }  # Changed base/mauve
+normal_alt = { fg = "#6e94b2", bg = "#3d3d3d" }  # Changed mauve/surface1
+select_main = { fg = "#141415", bg = "#e8b589", bold = true }  # Changed base/peach
+select_alt = { fg = "#6e94b2", bg = "#3d3d3d" }  # Changed mauve/surface1
+unset_main = { fg = "#141415", bg = "#7fa563", bold = true }  # Changed base/green
+unset_alt = { fg = "#6e94b2", bg = "#3d3d3d" }  # Changed mauve/surface1
 
 # : }}}
 
@@ -56,24 +55,24 @@ sep_right = { open = "\ue0be", close = "\ue0b8" }
 overall = { }
 
 # Progress
-progress_label = { fg = "#ebdbb2", bold = true }
-progress_normal = { fg = "#504945", bg = "#3c3836" }
-progress_error = { fg = "#fb4934", bg = "#3c3836" }
+progress_label = { fg = "#cdcdcd", bold = true }  # Changed to text
+progress_normal = { fg = "#666666", bg = "#3d3d3d" }  # Changed overlay0/surface1
+progress_error = { fg = "#d8647e", bg = "#3d3d3d" }  # Changed red/surface1
 
 # Permissions
-perm_type = { fg = "#504945" }
-perm_read = { fg = "#b8bb26" }
-perm_write = { fg = "#fb4934" }
-perm_exec = { fg = "#b8bb26" }
-perm_sep = { fg = "#665c54" }
+perm_type = { fg = "#666666" }  # Changed to overlay0
+perm_read = { fg = "#7fa563" }  # Changed to green
+perm_write = { fg = "#d8647e" }  # Changed to red
+perm_exec = { fg = "#7fa563" }  # Changed to green
+perm_sep = { fg = "#666666" }  # Changed to overlay0
 
 # : }}}
 
 # : Select {{{
 
 [pick]
-border = { fg = "#458588" }
-active = { fg = "#d3869b", bold = true }
+border = { fg = "#6e94b2" }  # Changed to mauve
+active = { fg = "#d8647e", bold = true }  # Changed to red
 inactive = {}
 
 # : }}}
@@ -81,7 +80,7 @@ inactive = {}
 # : Input {{{
 
 [input]
-border = { fg = "#ebdbb2" }
+border = { fg = "#cdcdcd" }  # Changed to text
 title = {}
 value = {}
 selected = { reversed = true }
@@ -91,7 +90,7 @@ selected = { reversed = true }
 # : Tasks {{{
 
 [tasks]
-border = { fg = "#504945" }
+border = { fg = "#666666" }  # Changed to overlay0
 title = {}
 hovered = { underline = true }
 
@@ -100,31 +99,31 @@ hovered = { underline = true }
 # : Which {{{
 
 [which]
-mask = { bg = "#3c3836" }
-cand = { fg = "#83a598" }
-rest = { fg = "#928374" }
-desc = { fg = "#fe8019" }
+mask = { bg = "#3d3d3d" }  # Changed to surface1
+cand = { fg = "#6e94b2" }  # Changed to mauve
+rest = { fg = "#818181" }  # Changed to overlay1
+desc = { fg = "#e8b589" }  # Changed to peach
 separator = "  "
-separator_style = { fg = "#504945" }
+separator_style = { fg = "#666666" }  # Changed to overlay0
 
 # : }}}
 
 # : Help {{{
 
 [help]
-on = { fg = "#83a598" }
-run = { fg = "#d3869b" }
+on = { fg = "#6e94b2" }  # Changed to mauve
+run = { fg = "#d8647e" }  # Changed to red
 hovered = { reversed = true, bold = true }
-footer = { fg = "#3c3836", bg = "#a89984" }
+footer = { fg = "#3d3d3d", bg = "#6e94b2" }  # Changed surface1/mauve
 
 # : }}}
 
 # : Notify {{{
 
 [notify]
-title_info = { fg = "#8ec07c" }
-title_warn = { fg = "#fbf1c7" }
-title_error = { fg = "#d3869b" }
+title_info = { fg = "#7fa563" }  # Changed to green
+title_warn = { fg = "#f3be7c" }  # Changed to yellow
+title_error = { fg = "#d8647e" }  # Changed to red
 
 # : }}}
 
@@ -133,21 +132,21 @@ title_error = { fg = "#d3869b" }
 [filetype]
 rules = [
   # Images
-  { mime = "image/*", fg = "#d3869b" },
+  { mime = "image/*", fg = "#d8647e" },  # Changed to red
 
   # Media
-  { mime = "{audio,video}/*", fg = "#fabd2f" },
+  { mime = "{audio,video}/*", fg = "#f3be7c" },  # Changed to yellow
 
   # Archives
-  { mime = "application/*zip", fg = "#fb4934" },
-  { mime = "application/x-{tar,bzip*,7z-compressed,xz,rar}", fg = "#fb4934" },
+  { mime = "application/*zip", fg = "#d8647e" },  # Changed to red
+  { mime = "application/x-{tar,bzip*,7z-compressed,xz,rar}", fg = "#d8647e" },  # Changed to red
 
   # Documents
-  { mime = "application/{pdf,doc,rtf,vnd.*}", fg = "#689d6a" },
+  { mime = "application/{pdf,doc,rtf,vnd.*}", fg = "#7fa563" },  # Changed to green
 
   # Fallback
-  { name = "*", fg = "#ebdbb2" },
-  { name = "*/", fg = "#83a598" },
+  { name = "*", fg = "#cdcdcd" },  # Changed to text
+  { name = "*/", fg = "#6e94b2" },  # Changed to mauve (folders)
 ]
 
 # : }}}
@@ -155,12 +154,12 @@ rules = [
 # : Confirmation {{{
 
 [confirm]
-border = { fg = "#a89984" }
-title = { fg = "#83a598" }
-content = { fg = "#fbf1c7" }
-body = { fg = "red" }
-list = { fg = "#ebdbb2" }
-btn_yes = { reversed = true, fg = "#ebdbb2" }
+border = { fg = "#6e94b2" }  # Changed to mauve
+title = { fg = "#6e94b2" }  # Changed to mauve
+content = { fg = "#cdcdcd" }  # Changed to text
+body = { fg = "#d8647e" }  # Changed to red
+list = { fg = "#cdcdcd" }  # Changed to text
+btn_yes = { reversed = true, fg = "#cdcdcd" }  # Changed to text
 btn_no = {}
 btn_labels = [ "  [Y]es  ", "  (N)o  " ]
 
@@ -169,8 +168,8 @@ btn_labels = [ "  [Y]es  ", "  (N)o  " ]
 # : Completion {{{
 
 [cmp]
-border = { fg = "#a89984" }
-active = { reversed = true, fg = "#83a598" }
-inactive = { fg = "#ebdbb2" }
+border = { fg = "#6e94b2" }  # Changed to mauve
+active = { reversed = true, fg = "#6e94b2" }  # Changed to mauve
+inactive = { fg = "#cdcdcd" }  # Changed to text
 
 # : }}}

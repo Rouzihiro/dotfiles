@@ -507,6 +507,7 @@ multimedia_menu() {
 screenrecord_menu() {
 
     screenrecord_options=(
+  			" Without audio"
         " With desktop audio"
         " With desktop + microphone audio" 
         " With desktop + microphone audio + webcam"
@@ -522,6 +523,10 @@ screenrecord_menu() {
     fi
     
     case "$screenrecord_selected" in
+  			*"Without audio")
+            z-cmd-screenrecord --no-audio
+            notify-send "Screen Record" "Starting recording with no audio"
+            ;;
         *"With desktop audio")
             z-cmd-screenrecord --with-desktop-audio
             notify-send "Screen Record" "Starting recording with desktop audio"
@@ -684,7 +689,7 @@ mounting_menu() {
 learn_menu() {
     learn_menu=(
         " Keybindings"
-        " Omarchy"
+        " Github"
         " Hyprland"
         "󰣇 Arch"
         " Neovim"
@@ -703,8 +708,8 @@ learn_menu() {
         *Keybindings*) 
 					Keybinds_learn_menu
             ;;
-        *Omarchy*)
-            xdg-open "https://learn.omacom.io/2/the-omarchy-manual" 2>/dev/null &
+        *Github*)
+            xdg-open "https://github.com/Rouzihiro" 2>/dev/null &
             ;;
         *Hyprland*)
             xdg-open "https://wiki.hypr.land/" 2>/dev/null &
