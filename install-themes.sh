@@ -1,13 +1,3 @@
-# Set gnome theme settings
-# gsettings set org.gnome.desktop.interface gtk-theme "Adwaita-dark"
-# gsettings set org.gnome.desktop.interface color-scheme "prefer-dark"
-# gsettings set org.gnome.desktop.interface icon-theme "Yaru-blue"
-
-# Set links for Nautilius action icons
-# sudo ln -snf /usr/share/icons/Adwaita/symbolic/actions/go-previous-symbolic.svg /usr/share/icons/Yaru/scalable/actions/go-previous-symbolic.svg
-# sudo ln -snf /usr/share/icons/Adwaita/symbolic/actions/go-next-symbolic.svg /usr/share/icons/Yaru/scalable/actions/go-next-symbolic.svg
-# sudo gtk-update-icon-cache /usr/share/icons/Yaru
-
 # Setup theme links
 mkdir -p ~/.config/zorro/themes
 for f in ~/dotfiles/themes/*; do ln -nfs "$f" ~/.config/zorro/themes/; done
@@ -21,7 +11,6 @@ ln -snf "$(find ~/.config/zorro/current/theme/backgrounds -type f -o -type l | s
 ln -snf ~/.config/zorro/current/theme/nvim.lua ~/.config/nvim/lua/theme.lua
 
 mkdir -p ~/.themes
-ln -snf ~/.config/zorro/current/theme/gtk ~/.themes/gtk
 ln -snf ~/.config/zorro/current/theme/gtk/gtk-4.0 ~/.config/gtk-4.0
 
 mkdir -p ~/.config/btop/themes

@@ -5,11 +5,13 @@
 
 ## Requirements:
 ## - `brightnessctl`: Controls screen brightness.
-## - `mako`: Sends notifications.
+## - `dunst`: Sends notifications.
 
 ## Usage:
 ## - Run with `up` to increase brightness.
 ## - Run with `down` to decrease brightness.
+
+## Author: Pahasara Dewnith (https://github.com/Pahasara)
 
 msgTag="brightness"
 
@@ -28,7 +30,8 @@ current=$(brightnessctl get)
 max=$(brightnessctl max)
 percentage=$((current * 100 / max))
 
-notify-send -t 3000 \
-         -a "Brightness" -i "$HOME/.local/share/icons/dunst/brightness.png" \
-         -h string:x-canonical-private-synchronous:$msgTag \
+dunstify -t 2000 \
+         -a "Brightness" -u low -I "$HOME/.local/share/icons/dunst/brightness.png" \
+         -h string:x-dunst-stack-tag:$msgTag \
+         -h int:value:"$percentage" \
          "Brightness: ${percentage}%"
