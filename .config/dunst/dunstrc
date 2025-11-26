@@ -1,5 +1,5 @@
-# Minimal Dunst config (Nightfox-inspired)
 [global]
+include = "~/.config/zorro/current/theme/dunst.conf"
 monitor = 0
 follow = mouse
 origin = top-right
