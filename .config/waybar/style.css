@@ -16,8 +16,7 @@ window {
     background: transparent;
  		border: none;
  		border-radius: 0;
- 		font-family: "JetBrainsMono Nerd Font";
-    /* font-family: "JetBrains Mono"; */
+ 		font-family: "JetBrainsMono Nerd Font Propo";
  		font-size: 12px;
     font-weight: 500;
  		min-height: 0;
@@ -48,7 +47,7 @@ window {
 #custom-gpu,
 #custom_notification {
     border-radius: 10px;
-    padding: 2px 5px; 
+    padding: 4px 5px; 
     background-color: alpha(@bg, 0.6);
     color: @fg;
     border: 1px solid @bg;
@@ -130,7 +129,8 @@ window {
     margin: 0px 2px;
     color: @fg;
     font-weight: bold;
-    font-size: 8px;
+    font-size: 12px;
+		min-width: 44px;
 }
 
 /* -------------------- Active/focused workspace buttons -------------------- */
