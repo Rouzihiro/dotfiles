@@ -1,3 +1,3 @@
 #!/bin/bash
 cmd="$*"
-setsid foot --app-id="runner_floating" -e bash -c "z-show-logo; $*; z-show-done" >/dev/null 2>&1 &
+setsid kitty --app-id="runner_floating" -e bash -c "z-show-logo; $*; z-show-done" >/dev/null 2>&1 &
