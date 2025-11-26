@@ -2,7 +2,7 @@
 
 main_menu() {
     menu=(
-        " Keybinds"
+				"󰍛 Sys. Tools"
         "󰅇 Clipboard"
         " Coding"
         "󰒓 Theme"
@@ -15,6 +15,7 @@ main_menu() {
 				"󰋊 Mounting"
 				" Fedora" 
 				" Arch"
+				"Learn" 
  				" Calculator"
 				" VPN"
         "󰩛 Exit"
@@ -28,6 +29,9 @@ main_menu() {
         exit 0  # ESC from main menu exits completely
     elif [ -n "$selected" ]; then
         case "$selected" in
+						"󰍛 Sys. Tools")
+								system_menu
+								;;
             "󰅇 Clipboard")
                 clipse-gui
                 ;;
@@ -46,9 +50,6 @@ main_menu() {
             " Packages")
                 packages_menu                 
 								;;
-            " Keybinds")
-                keybinds_menu
-                ;;
             " Calculator")
                 rofi -show calc -modi calc -no-show-match -no-sort
                 ;;
@@ -73,6 +74,9 @@ main_menu() {
 						" Arch")
 						arch_menu
 								;;
+						"Learn")
+							learn_menu
+								;;
             "󰩛 Exit")
                 exit 0
                 ;;
@@ -84,6 +88,144 @@ main_menu() {
         fi
     fi
 }
+
+# System Tools Menu (Option 3 with install capabilities)
+system_menu() {
+    tools_menu=(
+        "📊 Disk Usage (duf)"
+        "📈 System Monitor (btop)"
+        "🌐 Network Monitor (nethogs)"
+        "💾 Disk Space (ncdu)"
+        "🔍 File Search (fzf)"
+        "📁 Tree View"
+        "⚡ Process Monitor (btm)"
+        "⬇️ Install Tools"
+        "󰁍 Back"
+    )
+    
+    tool_selected=$(printf '%s\n' "${tools_menu[@]}" | rofi -dmenu -i -p "System Tools" -theme ~/.config/rofi/quick-actions-small.rasi)
+    
+    if [ -z "$tool_selected" ]; then
+        # Return to wherever we came from
+        return
+    fi
+    
+    case "$tool_selected" in
+        *duf*)
+            present_terminal "duf"
+            ;;
+        *btop*)
+            present_terminal "btop"
+            ;;
+        *nethogs*)
+            present_terminal "sudo nethogs"
+            ;;
+        *ncdu*)
+            present_terminal "ncdu"
+            ;;
+        *fzf*)
+            present_terminal "fzf"
+            ;;
+        *Tree*View*)
+            present_terminal "tree"
+            ;;
+        *btm*)
+            present_terminal "btm"
+            ;;
+        *Install*Tools*)
+            install_tools_menu
+            ;;
+        "󰁍 Back")
+            return
+            ;;
+    esac
+    
+    system_tools_menu
+}
+
+detect_distro() {
+    if [ -f /etc/arch-release ]; then
+        echo "arch"
+    elif [ -f /etc/fedora-release ]; then
+        echo "fedora"
+    else
+        echo "unknown"
+    fi
+}
+
+install_tool() {
+    local tool_name=$1
+    local distro=$(detect_distro)
+    
+    case "$distro" in
+        arch)
+            present_terminal "echo 'Installing $tool_name on Arch...'; sudo pacman -S --noconfirm $tool_name"
+            ;;
+        fedora)
+            present_terminal "echo 'Installing $tool_name on Fedora...'; sudo dnf install -y $tool_name"
+            ;;
+        *)
+            present_terminal "echo 'Unknown distribution: $distro'; sleep 5"
+            ;;
+    esac
+}
+
+install_tools_menu() {
+    local distro=$(detect_distro)
+    
+    install_menu=(
+        "📊 Install duf"
+        "📈 Install btop"
+				"📈 Install htop"
+        "🌐 Install nethogs"
+        "💾 Install ncdu"
+        "🔍 Install fzf"
+        "📁 Install tree"
+        "⚡ Install bottom (btm)"
+        "󰁍 Back to System Tools"
+    )
+    
+    install_selected=$(printf '%s\n' "${install_menu[@]}" | rofi -dmenu -i -p "Install Tools ($distro)" -theme ~/.config/rofi/quick-actions-small.rasi)
+    
+    if [ -z "$install_selected" ]; then
+        system_tools_menu
+        return
+    fi
+    
+    case "$install_selected" in
+        *duf*)
+            install_tool "duf"
+            ;;
+        *htop*)
+            install_tool "htop"
+            ;;
+				*btop*)
+            install_tool "btop"
+            ;;
+        *nethogs*)
+            install_tool "nethogs"
+            ;;
+        *ncdu*)
+            install_tool "ncdu"
+            ;;
+        *fzf*)
+            install_tool "fzf"
+            ;;
+        *tree*)
+            install_tool "tree"
+            ;;
+        *bottom*)
+            install_tool "bottom"
+            ;;
+        "󰁍 Back to System Tools")
+            system_tools_menu
+            return
+            ;;
+    esac
+    
+    install_tools_menu
+}
+
 
 packages_menu() {
     packages_menu=(
@@ -147,52 +289,6 @@ coding_menu() {
             ;;
     esac
     coding_menu
-}
-
-
-keybinds_menu() {
-    # Keybinds submenu
-    kb_menu=(
-        " Sway Keybinds"
-        " Sway Keybinds 2"
-        " Hyprland Keybinds"
-        " ZSH Keybinds"
-				" Cheats"
-        "󰁍 Back to Main"
-    )
-    
-    kb_selected=$(printf '%s\n' "${kb_menu[@]}" | rofi -dmenu -i -p "Keybinds" -theme ~/.config/rofi/quick-actions.rasi)
-    
-    # Handle ESC key (empty selection)
-    if [ -z "$kb_selected" ]; then
-        main_menu
-        return
-    fi
-    
-    case "$kb_selected" in
-        " Sway Keybinds")
-            cheatsheet-sway
-            ;;
-        " Sway Keybinds 2")
-            "$HOME/.local/bin/zorro/z-menu-keybindings-sway-soft"
-            ;;
-        " Hyprland Keybinds")
-						cheatsheet-hypr
-            ;;
-        " ZSH Keybinds")
-            notify-send "Keybinds" "ZSH keybinds not configured yet"
-            ;;
-  			" Cheats")
-					foot -e bash -c "cheats; exec bash"
-            ;;
-        "󰁍 Back to Main")
-            main_menu
-            return
-            ;;
-    esac
-    
-    # Loop back to keybinds menu unless going back to main
-    keybinds_menu
 }
 
 theme_menu() {
@@ -541,7 +637,104 @@ mounting_menu() {
     mounting_menu
 }
 
+learn_menu() {
+    learn_menu=(
+        " Keybindings"
+        " Omarchy"
+        " Hyprland"
+        "󰣇 Arch"
+        " Neovim"
+        "󱆃 Bash"
+        "󰁍 Back to Main"
+    )
+    
+    learn_selected=$(printf '%s\n' "${learn_menu[@]}" | rofi -dmenu -i -p "Learn" -theme ~/.config/rofi/quick-actions.rasi)
+    
+    if [ -z "$learn_selected" ]; then
+        main_menu
+        return
+    fi
+    
+    case "$learn_selected" in
+        *Keybindings*) 
+					Keybinds_learn_menu
+            ;;
+        *Omarchy*)
+            xdg-open "https://learn.omacom.io/2/the-omarchy-manual" 2>/dev/null &
+            ;;
+        *Hyprland*)
+            xdg-open "https://wiki.hypr.land/" 2>/dev/null &
+            ;;
+        *Arch*)
+            xdg-open "https://wiki.archlinux.org/title/Main_page" 2>/dev/null &
+            ;;
+        *Bash*)
+            xdg-open "https://devhints.io/bash" 2>/dev/null &
+            ;;
+        *Neovim*)
+            xdg-open "https://www.lazyvim.org/keymaps" 2>/dev/null &
+            ;;
+        "󰁍 Back to Main")
+            main_menu
+            return
+            ;;
+    esac
+    
+    # Loop back to learn menu unless going back to main
+    learn_menu
+}
 
+Keybinds_learn_menu() {
+    # Keybinds submenu
+    kb_menu=(
+        " Sway Keybinds"
+        " Sway Keybinds 2"
+        " Hyprland Keybinds"
+        " ZSH Keybinds"
+				" Cheats"
+        "󰁍 Back to Main"
+    )
+    
+    kb_selected=$(printf '%s\n' "${kb_menu[@]}" | rofi -dmenu -i -p "Keybinds" -theme ~/.config/rofi/quick-actions.rasi)
+    
+    # Handle ESC key (empty selection)
+    if [ -z "$kb_selected" ]; then
+        main_menu
+        return
+    fi
+    
+    case "$kb_selected" in
+        " Sway Keybinds")
+            cheatsheet-sway
+            ;;
+        " Sway Keybinds 2")
+            "$HOME/.local/bin/zorro/z-menu-keybindings-sway-soft"
+            ;;
+        " Hyprland Keybinds")
+						cheatsheet-hypr
+            ;;
+        " ZSH Keybinds")
+            notify-send "Keybinds" "ZSH keybinds not configured yet"
+            ;;
+  			" Cheats")
+					foot -e bash -c "cheats; exec bash"
+            ;;
+        "󰁍 Back to Main")
+            main_menu
+            return
+            ;;
+    esac
+    
+    Keybinds_learn_menu
+}
+
+present_terminal() {
+    if command -v z-launch-floating-terminal >/dev/null 2>&1; then
+        z-launch-floating-terminal "$1"
+    else
+        foot -e bash -c "$1; exec bash"
+    fi
+}
 
 
 # Start the main menu
