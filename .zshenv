@@ -10,6 +10,10 @@ export ZDOTDIR="$XDG_CONFIG_HOME/zsh"
 export ZSH_CACHE_DIR="$XDG_CACHE_HOME/zsh"
 export ZSH_COMPDUMP="${ZSH_CACHE_DIR}/.zcompdump-${(%):-%m}-${ZSH_VERSION}"
 
+export DOTFILES_DIR="$HOME/dotfiles"
+export PROJECTS_DIR="$HOME/Projects"
+export SUCKLESS_DIR="$HOME/suckless"
+
 # ─────────────────────────────
 # Editors / Apps
 # ─────────────────────────────
@@ -17,13 +21,6 @@ export BROWSER="brave"
 export EDITOR="nvim"
 export SUDO_EDITOR="$EDITOR"
 export VISUAL="$EDITOR"
-
-# ─────────────────────────────
-# Theming
-# ─────────────────────────────
-#export GTK_THEME="Nightfox-Dark"
-#export GTK2_RC_FILES="$HOME/.themes/Nightfox-Dark/gtk-2.0/gtkrc"
-# export BAT_THEME="Nightfox-Dark"
 
 # ─────────────────────────────
 # Manpages with bat

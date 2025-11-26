@@ -456,13 +456,13 @@ multimedia_menu() {
     media_menu=(
         "🎬 Video Tools"
         "🎥 Video Player"
-        "📹 Screenrecord"
+        "📹 Screen Record"
 				"🖼️ Screenshot"
 				"🖼️ Screenshot (FS)"
 				"🖼️ OCR"
 				"🖼️ Textpicker"
         "󰁍 Back to Main"
-    )	
+    )
     
     media_selected=$(printf '%s\n' "${media_menu[@]}" | rofi -dmenu -i -p "Multimedia" -theme ~/.config/rofi/quick-actions.rasi)
     
@@ -480,7 +480,7 @@ multimedia_menu() {
             rofi-video-list
             ;;
         "📹 Screenrecord")
-            screenrecord_menu
+            rofi-screenrecord
             ;;
 				"🖼️ Screenshot")
             rofi-screenshot
@@ -503,50 +503,6 @@ multimedia_menu() {
     # Loop back to multimedia menu unless going back to main
     multimedia_menu
 }
-
-screenrecord_menu() {
-
-    screenrecord_options=(
-        " With desktop audio"
-        " With desktop + microphone audio" 
-        " With desktop + microphone audio + webcam"
-				"⏹️ Stop Screen Recording"
-        "󰁍 Back to Multimedia"
-    )
-    
-    screenrecord_selected=$(printf '%s\n' "${screenrecord_options[@]}" | rofi -dmenu -i -p "Screen Record" -theme ~/.config/rofi/quick-actions.rasi)
-    
-    if [ -z "$screenrecord_selected" ]; then
-        multimedia_menu
-        return
-    fi
-    
-    case "$screenrecord_selected" in
-        *"With desktop audio")
-            z-cmd-screenrecord --with-desktop-audio
-            notify-send "Screen Record" "Starting recording with desktop audio"
-            ;;
-        *"With desktop + microphone audio")
-            z-cmd-screenrecord --with-desktop-audio --with-microphone-audio
-            notify-send "Screen Record" "Starting recording with desktop + microphone audio"
-            ;;
-        *"With desktop + microphone audio + webcam")
-            z-cmd-screenrecord --with-desktop-audio --with-microphone-audio --with-webcam
-            notify-send "Screen Record" "Starting recording with desktop + microphone audio + webcam"
-            ;;
-        *"Stop Screen Recording")
-            z-cmd-screenrecord --stop-recording
-            notify-send "Screen Record" "Stopping recording"
-            ;;
-        "󰁍 Back to Multimedia")
-            multimedia_menu
-            return
-            ;;
-    esac
-    
-    screenrecord_menu
-}
-
 
 utilities_menu() {
     # Utilities submenu
