@@ -157,7 +157,6 @@ vimcmd_replace_symbol = '[❮](bold fg:lavender)'
 vimcmd_visual_symbol = '[❮](bold fg:yellow)'
 
 [cmd_duration]
-show_milliseconds = true
 format = " in $duration "
 style = "bg:lavender"
 disabled = false
