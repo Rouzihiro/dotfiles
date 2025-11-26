@@ -1,0 +1,3 @@
+#!/bin/bash
+cmd="$*"
+setsid kitty --app-id="runner_floating" -e bash -i -c "$*; exec bash" >/dev/null 2>&1 &
