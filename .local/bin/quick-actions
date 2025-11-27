@@ -598,6 +598,7 @@ arch_menu() {
     arch_menu=(
         " Pacman Cleaner"
         " AUR Cleaner"
+				" Orphan Remover"
         " List Packages"
         " Swap Setup"
         "󰁍 Back to Main"
@@ -612,6 +613,9 @@ arch_menu() {
     case "$arch_selected" in
         " Pacman Cleaner")
             pacman-cleaner.sh
+            ;;
+				 "*Orphan*")
+            pm-orphan
             ;;
         " AUR Cleaner")
             aur-cleaner.sh

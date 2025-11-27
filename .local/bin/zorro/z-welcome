@@ -1,0 +1,91 @@
+#!/bin/bash
+
+# Source colors from tmux-palette.conf
+source_colors() {
+    local palette_file="$HOME/.config/zorro/current/theme/tmux-palette.conf"
+    
+    if [[ -f "$palette_file" ]]; then
+        # First, source all the color definitions
+        source <(grep -E '^[a-zA-Z]+="#[0-9a-fA-F]{6}"' "$palette_file")
+        
+        # Now handle the signature variable - it could be a reference OR direct hex
+        signature_line=$(grep '^signature=' "$palette_file" | cut -d'=' -f2 | tr -d ' "')
+        
+        if [[ -n "$signature_line" ]]; then
+            if [[ "$signature_line" =~ ^#[0-9a-fA-F]{6}$ ]]; then
+                # Direct hex value
+                signature_color="$signature_line"
+            else
+                # Variable reference - resolve it
+                signature_color="${!signature_line}"
+            fi
+        else
+            # Fallback to blue if signature not found
+            signature_color="$blue"
+            echo "Using fallback signature color: blue -> $signature_color" >&2
+        fi
+    else
+        echo "Error: $palette_file not found!" >&2
+        exit 1
+    fi
+}
+
+# Convert hex to terminal 256-color codes (approximation)
+hex_to_ansi() {
+    local hex=${1//#/}
+    local r g b
+    
+    # Safety check - ensure we have a valid hex
+    if [[ ! "$hex" =~ ^[0-9a-fA-F]{6}$ ]]; then
+        echo "37"  # default white if invalid
+        return
+    fi
+    
+    # Convert hex to RGB
+    r=$((16#${hex:0:2}))
+    g=$((16#${hex:2:2}))
+    b=$((16#${hex:4:2}))
+    
+    # Convert RGB to 256-color code (simplified)
+    if [[ $r -eq $g && $g -eq $b ]]; then
+        # Grayscale
+        if [[ $r -lt 8 ]]; then
+            echo "16"
+        elif [[ $r -gt 248 ]]; then
+            echo "231"
+        else
+            local gray=$(( (r - 8) * 24 / 247 ))
+            echo $(( 232 + gray ))
+        fi
+    else
+        # 256-color cube (6x6x6)
+        local r_idx=$(( r * 6 / 256 ))
+        local g_idx=$(( g * 6 / 256 ))
+        local b_idx=$(( b * 6 / 256 ))
+        echo $(( 16 + 36 * r_idx + 6 * g_idx + b_idx ))
+    fi
+}
+
+clear
+
+# Source the colors
+source_colors
+
+# Convert colors to ANSI codes
+border_color=$(hex_to_ansi "$signature_color")        # Using signature color for border
+title_color=$(hex_to_ansi "$peach")                   # Peach for title  
+host_color=$(hex_to_ansi "$mauve")                    # Mauve for host
+kernel_color=$(hex_to_ansi "$signature_color")        # Using signature color for kernel
+uptime_color=$(hex_to_ansi "$yellow")                 # Yellow for uptime
+date_color=$(hex_to_ansi "$sky")                      # Sky for date
+accent_color=$(hex_to_ansi "$green")                  # Green for accent text
+
+echo -e "\e[38;5;${border_color}m======================================\e[0m"
+echo -e "   🐉 Welcome back, \e[38;5;${title_color}mZorro-OS\e[0m"
+echo -e "   Host:   \e[38;5;${host_color}m$(uname -n)\e[0m"
+echo -e "   Kernel: \e[38;5;${kernel_color}m$(uname -r)\e[0m"
+echo -e "   Uptime: \e[38;5;${uptime_color}m$(uptime -p | cut -d ' ' -f2-)\e[0m"
+echo -e "   Date:   \e[38;5;${date_color}m$(date)\e[0m"
+echo -e "\e[38;5;${border_color}m======================================\e[0m"
+echo -e "   🍁 \e[38;5;${accent_color}mLinux is ready to serve you\e[0m 🍁"
+echo
