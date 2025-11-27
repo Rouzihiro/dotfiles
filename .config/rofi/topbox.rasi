@@ -1,26 +1,5 @@
 @import "colors.rasi"
 
-configuration {
-  modi:                 "drun,run,filebrowser,window";
-  dpi:                  90;
-  show-icons:           true;
-  icon-theme:           "Papirus";
-  terminal:             "footclient";
-  window-format:        "{w} · {c} · {t}";
-  drun-display-format:  "{name}";
-  disable-history:      false;
-  max-history-size:     50;
-
-  display-drun:         " Apps";
-  display-run:          " Runs";
-  display-nerdy:        "󰱨 Nerdy";
-  display-emoji:        "󰱨 Emoji";
-  display-window:       " Windows";
-  display-filebrowser:  " Files";
-  display-ssh:          "󰣀 SSH";
-  display-keys:         " Keys";
-}
-
 * {
   spacing:       0.1em;
   padding:       0.2em;
@@ -145,8 +124,8 @@ element normal.active {
 }
 
 element selected.normal {
-  background-color: @primary-container;
-  text-color: @on-primary-container;
+  background-color: @primary;
+  text-color: @on-primary;
 }
 
 element selected.active {

@@ -2,7 +2,7 @@
 
 # Rofi dmenu mode, -i make search case-insensitive, -l is the number of line
 rofi_command() {
-  rofi -dmenu -i -p "Power" -config "$HOME/.config/rofi/config.rasi"
+  rofi -dmenu -i -p "Power" -config "$HOME/.config/rofi/topbox.rasi"
 }
 
 shutdown=" 󰐥 | Shutdown"
