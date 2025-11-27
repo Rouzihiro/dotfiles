@@ -11,10 +11,10 @@ theme[main_fg]="#CECDC3"
 theme[title]="#CECDC3"
 
 # Highlight color for keyboard shortcuts
-theme[hi_fg]="#4385BE"
+theme[hi_fg]="#3AA99F"
 
 # Background color of selected item in processes box
-theme[selected_bg]="#414868"
+theme[selected_bg]="#343331"
 
 # Foreground color of selected item in processes box
 theme[selected_fg]="#CECDC3"
@@ -23,7 +23,7 @@ theme[selected_fg]="#CECDC3"
 theme[inactive_fg]="#878580"
 
 # Misc colors for processes box including mini cpu graphs, details memory graph and details status text
-theme[proc_misc]="#4385BE"
+theme[proc_misc]="#3AA99F"
 
 # Cpu box outline color
 theme[cpu_box]="#878580"

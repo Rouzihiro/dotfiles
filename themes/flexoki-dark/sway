@@ -1,8 +1,8 @@
 # Default foreground
-set $fujiWhite      #FFFCF0
+set $fujiWhite      #CECDC3
 
 # Dark foreground (statuslines)
-set $oldWhite       #E6E4D9
+set $oldWhite       #B7B5AC
 
 # Dark background (statuslines and floating windows)
 set $sumiInk0       #1C1B1A
@@ -11,7 +11,7 @@ set $sumiInk0       #1C1B1A
 set $sumiInk1       #100F0F
 
 # Lighter background (colorcolumn, folds)
-set $sumiInk2       #403F3C
+set $sumiInk2       #403E3C
 
 # Lighter background (cursorline)
 set $sumiInk3       #575653
@@ -20,10 +20,10 @@ set $sumiInk3       #575653
 set $sumiInk4       #878580
 
 # Popup background, visual selection background
-set $waveBlue1      #0D3C6B
+set $waveBlue1      #142625
 
 # Popup selection background, search background
-set $waveBlue2      #205EA6
+set $waveBlue2      #24837B
 
 # Diff Add (background)
 set $winterGreen    #66800B
@@ -35,7 +35,7 @@ set $winterYellow   #AD8301
 set $winterRed      #D14D41
 
 # Diff Line (background)
-set $winterBlue     #0D3C6B
+set $winterBlue     #142625
 
 # Git Add
 set $autumnGreen    #879A39
@@ -53,28 +53,28 @@ set $samuraiRed     #D14D41
 set $roninYellow    #D0A215
 
 # Diagnostic Info
-set $waveAqua1      #4385BE
+set $waveAqua1      #3AA99F
 
 # Diagnostic Hint
-set $dragonBlue     #205EA6
+set $dragonBlue     #24837B
 
 # Comments
 set $fujiGray       #878580
 
 # Light foreground
-set $springViolet1  #CECCC0
+set $springViolet1  #B7B5AC
 
 # Statements and Keywords
-set $oniViolet      #A02F6F
+set $oniViolet      #8B7EC8
 
 # Functions and Titles
-set $crystalBlue    #4385BE
+set $crystalBlue    #3AA99F
 
 # Brackets and punctuation
-set $springViolet2  #A02F6F
+set $springViolet2  #8B7EC8
 
 # Specials and builtin functions
-set $springBlue     #4385BE
+set $springBlue     #3AA99F
 
 # Not used (assigned Nightfox-consistent shades)
 set $lightBlue      #3AA99F
@@ -93,7 +93,7 @@ set $boatYellow2    #AD8301
 set $carpYellow     #D0A215
 
 # Numbers
-set $sakuraPink     #A02F6F
+set $sakuraPink     #8B7EC8
 
 # Standout specials 1 (builtin variables)
 set $waveRed        #D14D41
@@ -102,7 +102,7 @@ set $waveRed        #D14D41
 set $peachRed       #D14D41
 
 # Constants, imports, booleans
-set $surimiOrange   #D15F00
+set $surimiOrange   #DA702C
 
 # Deprecated
 set $katanaGray     #878580
