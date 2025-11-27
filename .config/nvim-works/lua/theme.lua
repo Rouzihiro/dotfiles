@@ -1,1 +1,0 @@
-/home/rey/.config/zorro/current/theme/nvim.lua
