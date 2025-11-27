@@ -40,6 +40,9 @@ alias crpe='rsync -avh --progress --inplace --ignore-errors --partial --timeout=
 
 alias rm='rm -rf'
 
+alias ls-fonts='fc-list :spacing=100 -f "%{family[0]}\n" | grep -v -iE "emoji|signwriting" | sort -u'
+alias ls-fontsf='fc-list :spacing=100 -f "%{family}: %{style}\n" | grep -v -iE "emoji|signwriting" | sort'
+
 # Safer delete with trash-cli
 alias tp='trash-put'
 alias tl='trash-list | fzf | xargs -r trash-info'
@@ -47,6 +50,8 @@ alias tr='trash-restore'
 alias te='rm -rfv ~/.local/share/vifm/Trash/*; trash-empty'
 
 # Navigation
+alias cda="cd && cd assets"
+alias cdc="cd && cd Projects"
 alias cdd="cd && cd Downloads"
 alias cdp="cd && cd Pictures"
 alias cdw="cd && cd Documents"
@@ -64,18 +69,15 @@ alias fex='muvm -ti FEXBash'
 
 # Editors
 alias v='nvim'
-alias vi='nvim -c "lua require[[mini.pick]].builtin.files()"'
-alias vim='nvim -c "lua require[[oil]].open()"'
-alias nv='nvim -c "lua require[[oil]].open()"'
-alias vimdiff="nvim -d"
-alias vid="nvim -d"
-alias sv='sudo nvim'
+alias vi="nvim -c \"lua require('fzf-lua').oldfiles()\""
+alias vim='nvim -c "lua require('\''fzf-lua'\'').files()"'
+alias vdiff="nvim -d"
+alias sv="sudo -E ~/.local/share/bob/nightly/bin/nvim" 
 
 # Git
 alias g='git'
 alias gaa='git add . -v'
 alias gc='git commit -m'
-alias gct='git commit'
 alias gs='git status'
 alias gps='git push -v'
 alias gpf='git push -v --force'
@@ -84,21 +86,10 @@ alias gpl='git pull'
 alias gpr='git pull --rebase'
 alias gl='git log --graph --oneline --decorate --all'
 alias gls='git log --stat'
-alias gd='git diff'
-alias gds='git diff --stat'
 alias gco='git checkout'
 alias gcb='git checkout -b'
 alias gsw='git switch'
 alias gm='git merge'
-alias goo='git remote -v | grep github.com | grep fetch | head -1 | awk '\''{print $2}'\'' | sed '\''s|git@github.com:|https://github.com/|'\'' | xargs xdg-open'
-alias gb='git branch'
-alias gba='git branch -a'
-alias gbd='git branch -d'
-alias gbD='git branch -D'
-alias grb='git rebase'
-alias grba='git rebase --abort'
-alias grbc='git rebase --continue'
-alias grbi='git rebase -i'
 alias grs='git reset'
 alias grsh='git reset --hard'
 alias grst='git restore --staged'
