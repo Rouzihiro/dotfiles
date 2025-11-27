@@ -503,18 +503,16 @@ multimedia_menu() {
     # Loop back to multimedia menu unless going back to main
     multimedia_menu
 }
-
 screenrecord_menu() {
-
     screenrecord_options=(
-  			" Without audio"
-        " With desktop audio"
-        " With desktop + microphone audio" 
-        " With desktop + microphone audio + webcam"
-				"⏹️ Stop Screen Recording"
+        " No audio"
+        " System audio" 
+        " Microphone"
+        " Mic + Camera"
+        "⏹️ Stop"
         "󰁍 Back to Multimedia"
     )
-    
+
     screenrecord_selected=$(printf '%s\n' "${screenrecord_options[@]}" | rofi -dmenu -i -p "Screen Record" -theme ~/.config/rofi/quick-actions.rasi)
     
     if [ -z "$screenrecord_selected" ]; then
@@ -523,27 +521,27 @@ screenrecord_menu() {
     fi
     
     case "$screenrecord_selected" in
-  			*"Without audio")
+        *"No audio")
             z-cmd-screenrecord --no-audio
             notify-send "Screen Record" "Starting recording with no audio"
             ;;
-        *"With desktop audio")
+        *"System audio")
             z-cmd-screenrecord --with-desktop-audio
             notify-send "Screen Record" "Starting recording with desktop audio"
             ;;
-        *"With desktop + microphone audio")
+        *"Microphone")
             z-cmd-screenrecord --with-desktop-audio --with-microphone-audio
             notify-send "Screen Record" "Starting recording with desktop + microphone audio"
             ;;
-        *"With desktop + microphone audio + webcam")
+        *"Mic + Camera")
             z-cmd-screenrecord --with-desktop-audio --with-microphone-audio --with-webcam
             notify-send "Screen Record" "Starting recording with desktop + microphone audio + webcam"
             ;;
-        *"Stop Screen Recording")
+        *"Stop")
             z-cmd-screenrecord --stop-recording
             notify-send "Screen Record" "Stopping recording"
             ;;
-        "󰁍 Back to Multimedia")
+        *"Back to Multimedia")
             multimedia_menu
             return
             ;;
@@ -551,7 +549,6 @@ screenrecord_menu() {
     
     screenrecord_menu
 }
-
 
 utilities_menu() {
     # Utilities submenu

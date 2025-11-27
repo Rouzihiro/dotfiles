@@ -12,36 +12,33 @@ configuration {
   max-history-size:     50;
 
   display-drun:         " Apps";
-  display-run:          " Runs";
-  display-nerdy:        "󰱨 Nerdy";
-  display-emoji:        "󰱨 Emoji";
+  display-run:          " Run";
   display-window:       " Windows";
   display-filebrowser:  " Files";
-  display-ssh:          "󰣀 SSH";
-  display-keys:         " Keys";
 }
 
 * {
   spacing:       0.1em;
   padding:       0.2em;
   margin:        0px;
-  border-radius: 1em;
+  border-radius: 0.8em;
   background-color: transparent;
   text-color: @on-surface;
+  font: "JetBrainsMono Nerd Font 12";
 }
 
 window {
-  width: 40%;
+  width: 45%;
   orientation: vertical;
-  location: north east;
-  anchor: north east;
+  location: center;
+  anchor: center;
   x-offset: 0px;
   y-offset: 0px;
   margin: 0px;
   padding: 0px;
   border: 2px;
   border-color: @primary;
-  border-radius: 1em;
+  border-radius: 0.8em;
   spacing: 0.1em;
   children: [ mainbox ];
   background-color: @surface;
@@ -54,45 +51,54 @@ mainbox {
   padding: 0px;
 }
 
+/* Hidden search bar but functional */
 inputbar {
   spacing: 0.1em;
-  padding: 12px 16px;
+  padding: 0px;
+  margin: 0px;
   children: [ textbox-prompt-colon, entry ];
-  background-color: @surface-container-high;
-  border-radius: 1em 1em 0px 0px;
+  background-color: transparent;
+  border-radius: 0px;
+  border: 0px;
+  height: 0px;
 }
 
 textbox-prompt-colon {
   expand: false;
-  padding: 4px 0px;
-  border-radius: 1em;
-  str: " ";
+  padding: 0px;
+  margin: 0px;
+  border-radius: 0px;
+  str: "";
   background-color: transparent;
-  text-color: @primary;
-  font: "JetBrainsMono Nerd Font Bold 14";
+  text-color: transparent;
+  font: "JetBrainsMono Nerd Font Bold 0";
 }
 
 entry {
-  placeholder:  " Search...";
-  placeholder-color: @on-surface-variant;
-  padding: 4px 0px;
-  border-radius: 1em;
+  placeholder: "";
+  placeholder-color: transparent;
+  padding: 0px;
+  margin: 0px;
+  border-radius: 0px;
   background-color: transparent;
-  text-color: @on-surface;
+  text-color: transparent;
+  font: "JetBrainsMono Nerd Font Bold 0";
 }
 
 mode-switcher {
-  spacing: 0.1em;
+  spacing: 0.5em;
   orientation: horizontal;
   background-color: @surface-container-high;
   padding: 8px 16px;
+  border-radius: 0.8em 0.8em 0px 0px;
 }
 
 button {
-  padding: 8px 16px;
-  border-radius: 1em;
+  padding: 6px 12px;
+  border-radius: 0.5em;
   background-color: transparent;
   text-color: @on-surface;
+  font: "JetBrainsMono Nerd Font 11";
 }
 
 button selected {
@@ -101,17 +107,17 @@ button selected {
 }
 
 listview {
-  lines: 12;
-  columns: 2;
-  spacing: 2px;
-  scrollbar: false;
-  cycle: false;
-  dynamic: false;
+  lines: 10;
+  columns: 1;
+  spacing: 1px;
+  scrollbar: true;
+  cycle: true;
+  dynamic: true;
   fixed-height: false;
   margin: 0px;
-  padding: 8px 0px;
+  padding: 6px 0px;
   border: 0px;
-  border-radius: 0px 0px 1em 1em;
+  border-radius: 0px 0px 0.8em 0.8em;
   background-color: @surface;
 }
 
@@ -137,8 +143,8 @@ element normal.active {
 }
 
 element selected.normal {
-  background-color: @primary-container;
-  text-color: @on-primary-container;
+  background-color: @primary;
+  text-color: @on-primary;
 }
 
 element selected.active {
@@ -161,10 +167,19 @@ element-text {
   text-color: inherit;
   vertical-align: 0.5;
   horizontal-align: 0.0;
+  font: "JetBrainsMono Nerd Font 12";
 }
 
 element-icon {
   background-color: transparent;
   size: 16px;
-  padding: 0px 4px 0px 0px;
+  padding: 0px 8px 0px 0px;
+}
+
+scrollbar {
+  width: 4px;
+  background-color: @surface-container;
+  handle-color: @primary-container;
+  handle-width: 4px;
+  border-radius: 2px;
 }
