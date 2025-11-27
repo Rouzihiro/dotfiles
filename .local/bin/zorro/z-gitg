@@ -1,8 +1,8 @@
 #!/bin/bash
+
 fancy-select () {
     prompt_desc="$1"
-
-    fzf --color=16 --border=none --margin=0,0,0,0 --style=full:rounded --tac --ghost="$prompt_desc" || return 1
+    gum choose --header="$prompt_desc" --cursor="→ " --selected.foreground="212" || return 1
 }
 
 # Git diff functions
@@ -46,8 +46,8 @@ main() {
         "reset") git reset --hard ;;
         "git-index-diff") 
             echo "Enter two commit offsets (e.g., 2 1 for diff between HEAD~2 and HEAD~1)"
-            read -p "Old offset: " old
-            read -p "New offset: " new
+            old=$(gum input --placeholder "Old offset")
+            new=$(gum input --placeholder "New offset")
             git-index-diff "$old" "$new" 
             ;;
         "git-latest-diff") git-latest-diff ;;
