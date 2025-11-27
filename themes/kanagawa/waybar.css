@@ -12,7 +12,7 @@
 @define-color bordercolor  #727169;  /* subtle borders */
 
 /* Accents / highlights */
-@define-color highlight    #c8c093;  /* active/focused items */
+@define-color highlight    #7e9cd8;  /* active/focused items */
 @define-color alert        #f07178;  /* errors / warnings */
 @define-color activegreen  #99bb66;  /* success / active indicators */
 @define-color disabled     #5c5a72;  /* inactive/dimmed text */

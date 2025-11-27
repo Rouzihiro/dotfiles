@@ -1,0 +1,111 @@
+# Kanagawa Dragon Theme for Sway
+# Generated from kitty.conf
+
+# Default foreground
+set $fujiWhite      #c5c9c5
+
+# Dark foreground (statuslines)
+set $oldWhite       #C8C093
+
+# Dark background (statuslines and floating windows)
+set $sumiInk0       #0d0c0c
+
+# Default background
+set $sumiInk1       #181616
+
+# Lighter background (colorcolumn, folds)
+set $sumiInk2       #a6a69c
+
+# Lighter background (cursorline)
+set $sumiInk3       #a6a69c
+
+# Darker foreground (line numbers, fold column, non-text characters), float borders
+set $sumiInk4       #a6a69c
+
+# Popup background, visual selection background
+set $waveBlue1      #8ba4b0
+
+# Popup selection background, search background
+set $waveBlue2      #8ba4b0
+
+# Diff Add (background)
+set $winterGreen    #8a9a7b
+
+# Diff Change (background)
+set $winterYellow   #c4b28a
+
+# Diff Deleted (background)
+set $winterRed      #c4746e
+
+# Diff Line (background)
+set $winterBlue     #8ba4b0
+
+# Git Add
+set $autumnGreen    #8a9a7b
+
+# Git Delete
+set $autumnRed      #c4746e
+
+# Git Change
+set $autumnYellow   #c4b28a
+
+# Diagnostic Error
+set $samuraiRed     #c4746e
+
+# Diagnostic Warning
+set $roninYellow    #c4b28a
+
+# Diagnostic Info
+set $waveAqua1      #8ba4b0
+
+# Diagnostic Hint
+set $dragonBlue     #8ba4b0
+
+# Comments
+set $fujiGray       #a6a69c
+
+# Light foreground
+set $springViolet1  #C8C093
+
+# Statements and Keywords
+set $oniViolet      #a292a3
+
+# Functions and Titles
+set $crystalBlue    #8ba4b0
+
+# Brackets and punctuation
+set $springViolet2  #a292a3
+
+# Specials and builtin functions
+set $springBlue     #8ba4b0
+
+# Not used (assigned Nightfox-consistent shades)
+set $lightBlue      #8ea4a2
+set $boatYellow1    #c4b28a
+
+# Types
+set $waveAqua2      #8ea4a2
+
+# Strings
+set $springGreen    #8a9a7b
+
+# Operators, RegEx
+set $boatYellow2    #c4b28a
+
+# Identifiers
+set $carpYellow     #c4b28a
+
+# Numbers
+set $sakuraPink     #a292a3
+
+# Standout specials 1 (builtin variables)
+set $waveRed        #c4746e
+
+# Standout specials 2 (exception handling, return)
+set $peachRed       #c4746e
+
+# Constants, imports, booleans
+set $surimiOrange   #b6927b
+
+# Deprecated
+set $katanaGray     #a6a69c
