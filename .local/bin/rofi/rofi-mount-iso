@@ -1,7 +1,8 @@
 #!/bin/sh
 
-# Set mount point
+# Set mount point and theme
 MOUNT_POINT="$HOME/mount/iso"
+ROFI_THEME="$HOME/.config/rofi/topbox.rasi"
 
 # Function to mount ISO
 mount_iso() {
@@ -21,6 +22,30 @@ mount_iso() {
     fi
 }
 
+# Function to unmount ISO
+unmount_iso() {
+    if mountpoint -q "$MOUNT_POINT"; then
+        if sudo umount "$MOUNT_POINT"; then
+            notify-send "ISO Unmount" "Successfully unmounted ISO from $MOUNT_POINT" -u normal
+        else
+            notify-send "ISO Unmount" "Failed to unmount ISO" -u critical
+        fi
+    else
+        notify-send "ISO Unmount" "No ISO is currently mounted at $MOUNT_POINT" -u normal
+    fi
+}
+
+# Function to check status
+check_status() {
+    if mountpoint -q "$MOUNT_POINT"; then
+        local mount_info
+        mount_info=$(mount | grep "$MOUNT_POINT")
+        rofi -config "$ROFI_THEME" -e "📡 Status: ISO is mounted\n📍 Mount point: $MOUNT_POINT\n🔗 Details: $mount_info"
+    else
+        rofi -config "$ROFI_THEME" -e "📡 Status: No ISO mounted\n📍 Mount point: $MOUNT_POINT"
+    fi
+}
+
 # Function with advanced file browser (if fzf is available)
 browse_iso_advanced() {
     if command -v fzf >/dev/null 2>&1; then
@@ -31,14 +56,17 @@ browse_iso_advanced() {
             mount_iso "$iso_file"
         fi
     else
-        browse_iso
+        # Fallback to simple file selection
+        local iso_file
+        iso_file=$(find "$HOME" -type f \( -name "*.iso" -o -name "*.ISO" \) 2>/dev/null | rofi -config "$ROFI_THEME" -dmenu -p "Select ISO:")
+        [ -n "$iso_file" ] && mount_iso "$iso_file"
     fi
 }
 
 # Function to show recent ISOs (last 10 accessed)
 show_recent_isos() {
     local recent_iso
-    recent_iso=$(find "$HOME" -type f \( -name "*.iso" -o -name "*.ISO" \) -exec ls -lt --time=atime {} + 2>/dev/null | head -10 | awk '{print $9}' | rofi -dmenu -p "Recent ISOs:" -i)
+    recent_iso=$(find "$HOME" -type f \( -name "*.iso" -o -name "*.ISO" \) -exec ls -lt --time=atime {} + 2>/dev/null | head -10 | awk '{print $9}' | rofi -config "$ROFI_THEME" -dmenu -p "Recent ISOs:" -i)
     
     if [ -n "$recent_iso" ]; then
         mount_iso "$recent_iso"
@@ -48,12 +76,12 @@ show_recent_isos() {
 # Enhanced main menu
 show_main_menu() {
     local choice
-    choice=$(echo -e "📁 Mount ISO (Enter Path)\n🔍 Browse and Mount\n🕒 Recent ISOs\n⏏️ Unmount ISO\nℹ️ Check Status\n❌ Exit" | rofi -dmenu -p "ISO Manager" -i)
+    choice=$(echo -e "📁 Mount ISO (Enter Path)\n🔍 Browse and Mount\n🕒 Recent ISOs\n⏏️ Unmount ISO\nℹ️ Check Status\n❌ Exit" | rofi -config "$ROFI_THEME" -dmenu -p "ISO Manager" -i)
     
     case "$choice" in
         *"Enter Path"*)
             local iso_path
-            iso_path=$(rofi -dmenu -p "Enter ISO path:")
+            iso_path=$(rofi -config "$ROFI_THEME" -dmenu -p "Enter ISO path:")
             [ -n "$iso_path" ] && mount_iso "$iso_path"
             ;;
         *"Browse"*)
