@@ -6,7 +6,7 @@ separator_block_width=10
 [weather]
 command=weather-short
 interval=1000
-color=#fffcf0
+color=#CECDC3
 
 [separator]
 full_text="⟨"
@@ -16,7 +16,7 @@ color=#878580
 command=bandwith
 interval=1
 label=   
-color=#879a39
+color=#879A39
 
 [separator]
 full_text="⟨"
@@ -27,7 +27,7 @@ label=
 instance=/
 command=df -h / | awk 'NR==2 {print $3 "/" $2}'
 interval=30
-color=#a02f6f
+color=#8B7EC8
 
 [separator]
 full_text="⟨"
@@ -37,7 +37,7 @@ color=#878580
 label= 
 command=memory
 interval=2
-color=#d0a215
+color=#D0A215
 
 [separator]
 full_text="⟨"
@@ -47,7 +47,7 @@ color=#878580
 label= 
 command=cpu-usage
 interval=2
-color=#d14d41
+color=#D14D41
 
 [separator]
 full_text="⟨"
@@ -56,7 +56,7 @@ color=#878580
 [wifi]
 command=wifi-status
 interval=30
-color=#4385be
+color=#3AA99F
 
 [separator]
 full_text="⟨"
@@ -66,7 +66,7 @@ color=#878580
 command=wpctl get-volume @DEFAULT_AUDIO_SINK@ | awk '{if ($3 == "[MUTED]") print "MUTED"; else print int($2 * 100) " %"}'
 interval=1
 label=   
-color=#d15f00
+color=#DA702C
 
 [separator]
 full_text="⟨"
@@ -76,7 +76,7 @@ color=#878580
 command=power-wrapper
 interval=5
 signal=10
-color=#879a39
+color=#879A39
 
 [separator]
 full_text="⟨"
@@ -86,7 +86,7 @@ color=#878580
 command=brightnessctl g | awk '{print $1}'
 interval=5
 label=   
-color=#d0a215
+color=#D0A215
 
 [separator]
 full_text="⟨"
@@ -97,7 +97,7 @@ interval=1
 command=timer
 separator_block_width=10
 label= 
-color=#4385be
+color=#3AA99F
 
 [separator]
 full_text="⟨"
@@ -106,7 +106,7 @@ color=#878580
 [keymap]
 command=kb-layout
 interval=2
-color=#a02f6f
+color=#8B7EC8
 
 [separator]
 full_text="⟨"
@@ -115,7 +115,7 @@ color=#878580
 [battery]
 command=battery
 interval=30
-color=#879a39
+color=#879A39
 
 [separator]
 full_text="⟨"
@@ -124,4 +124,4 @@ color=#878580
 [shutdown_menu]
 full_text= 
 command=powermenu
-color=#d14d41
+color=#D14D41
