@@ -1,10 +1,20 @@
+command -v nvim > /dev/null 2>&1 && export MANPAGER="nvim +Man!"
+
+ls-man () {
+    entry_raw="$(man -k . | fzf --exact --style=full)" || return 1
+    manpage_name="$(echo "$entry_raw" | cut -f1 -d ' ')"
+    manpage_select="$(echo "$entry_raw" | cut -f2 -d ' ' | sed 's/^(//;s/)$//')"
+    man "${manpage_select}" "${manpage_name}" || return 1
+}
+
+
 # Restart a program.
 refresh () {
 	killall $1
 	$1 &
 }
 
-ls-monitors () {
+ls-monitor () {
 wlr-randr | grep -o '^[^ ]*'
 }
 
@@ -25,7 +35,7 @@ alias uptick='clear; while [[ 1 == 1 ]]; do echo -en "\r$(uptime -p)\033[A"; don
 # Check To See If System Is BIOS Or UEFI
 alias bios-or-uefi='[[ -d /sys/firmware/efi ]] && echo "UEFI" || echo "BIOS"'
 
-alias kill-steam='while [[ 1 == 1 ]]; do killall steam; pkill steam; done'
+alias ko-steam='while [[ 1 == 1 ]]; do killall steam; pkill steam; done'
 
 # Fancy select screen.
 fancy-select () {
@@ -165,12 +175,12 @@ dirsize() {
 
 # Quick file search
 ff() {
-    find . -type f -name "*$1*" 2>/dev/null
+    find . -type f -iname "*$1*" 2>/dev/null
 }
 
 # Quick directory search  
 fd() {
-    find . -type d -name "*$1*" 2>/dev/null
+    find . -type d -iname "*$1*" 2>/dev/null
 }
 
 fs() {
