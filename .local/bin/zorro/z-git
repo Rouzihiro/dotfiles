@@ -1,0 +1,61 @@
+#!/bin/bash
+
+
+fancy-select () {
+    prompt_desc="$1"
+
+    fzf --color=16 --border=none --margin=0,0,0,0 --style=full:rounded --tac --ghost="$prompt_desc" || return 1
+}
+
+
+# Git diff functions
+git-index-diff() {
+    cmd_usage="Usage: git-index-diff <OLD> <NEW>"
+
+    if [[ "$1" == "" ]] || [[ "$2" == "" ]]; then
+        echo "$cmd_usage" >&2
+        return 1
+    fi
+
+    [[ -d ./.git ]] || echo "Not in a Git repository directory!" >&2
+    [[ -d ./.git ]] || return 1
+
+    new_commit="$(git log | grep "^commit " | head --lines $((1 + $2)) | tail --lines 1 | cut -f2 -d ' ')"
+    old_commit="$(git log | grep "^commit " | head --lines $((1 + $1)) | tail --lines 1 | cut -f2 -d ' ')"
+
+    git diff $old_commit $new_commit
+}
+
+git-latest-diff() {
+    git-index-diff 1 0
+}
+
+# Main zgit function
+main() {
+    case "$(echo -e "status\nadd\nadd all\ncommit\npush\nbranches\nlog\npull\nstash\nrebase\nmerge\ntags\nswitch\nreset\ngit-index-diff\ngit-latest-diff" | fancy-select "Git Action:")" in
+        "status") git status ;;
+        "add") git add "$(git status --porcelain | fancy-select "Select files to add:" | cut -c4-)" ;;
+        "add all") git add . ;;
+        "commit") git commit -v ;;
+        "push") git push ;;
+        "branches") git branch -a ;;
+        "log") git log --oneline -20 ;;
+        "pull") git pull ;;
+        "stash") git stash list ;;
+        "rebase") git rebase -i HEAD~5 ;;
+        "merge") git merge --no-ff ;;
+        "tags") git tag -l ;;
+        "switch") git checkout "$(git branch | fancy-select "Switch to branch:" | sed "s/^* //")" ;;
+        "reset") git reset --hard ;;
+        "git-index-diff") 
+            echo "Enter two commit offsets (e.g., 2 1 for diff between HEAD~2 and HEAD~1)"
+            read -p "Old offset: " old
+            read -p "New offset: " new
+            git-index-diff "$old" "$new" 
+            ;;
+        "git-latest-diff") git-latest-diff ;;
+    esac
+}
+
+# Run the main function
+main "$@"

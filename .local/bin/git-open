@@ -1,0 +1,29 @@
+#!/bin/bash
+
+remote="${1:-origin}"  # Default to 'origin' if no argument
+
+if [[ -d "./.git" ]]; then
+    if git remote get-url "$remote" > /dev/null 2>&1; then
+        remote_url="$(git remote get-url "$remote")"
+        # Convert SSH URL to HTTPS
+        if [[ "$remote_url" == git@* ]]; then
+            remote_url=$(echo "$remote_url" | sed 's/git@//; s/:/\//; s/\.git$//')
+            remote_url="https://$remote_url"
+        else
+            remote_url=$(echo "$remote_url" | sed 's/\.git$//')
+        fi
+        echo "Opening URL: '$remote_url'"
+    else
+        echo "Not a valid remote: '$remote'" >&2
+        echo "Available remotes: $(git remote)" >&2
+        exit 1
+    fi
+else
+    echo "Not a valid Git repository!" >&2
+    exit 1
+fi
+
+open_with="xdg-open"
+[[ "$2" == "" ]] || open_with="$2"
+
+$open_with "$remote_url" > /dev/null 2>&1 &

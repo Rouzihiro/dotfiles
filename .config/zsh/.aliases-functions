@@ -1,3 +1,49 @@
+# Restart a program.
+refresh () {
+	killall $1
+	$1 &
+}
+
+ls-monitors () {
+wlr-randr | grep -o '^[^ ]*'
+}
+
+
+# Print out all the color IDs.
+all-the-colors () {
+    for i in $(seq 30 37); do
+        echo -e "\033[1;${i}m${i}:\033[0m \033[0;${i}m(^-^)\033[0m"
+    done
+}
+
+# Why such a long command for something so simple!?
+alias get-framerate='ffprobe -v error -select_streams v:0 -show_entries stream=avg_frame_rate -of default=noprint_wrappers=1:nokey=1'
+
+# Uptime Timer
+alias uptick='clear; while [[ 1 == 1 ]]; do echo -en "\r$(uptime -p)\033[A"; done'
+
+# Check To See If System Is BIOS Or UEFI
+alias bios-or-uefi='[[ -d /sys/firmware/efi ]] && echo "UEFI" || echo "BIOS"'
+
+alias kill-steam='while [[ 1 == 1 ]]; do killall steam; pkill steam; done'
+
+# Fancy select screen.
+fancy-select () {
+    prompt_desc="$1"
+
+    fzf --color=16 --border=none --margin=0,0,0,0 --style=full:rounded --tac --ghost="$prompt_desc" || return 1
+}
+
+# File selection
+alias zcat='bat "$(find . -type f | fancy-select "Open file:" | sed "s/\x1b\[[0-9;]*m//g")"'
+alias zbat='bat "$(find . -type f | fancy-select "Open file:" | sed "s/\x1b\[[0-9;]*m//g")"'
+
+# Directory navigation  
+alias zz='cd "$(find . -type d | fancy-select "Go to directory:")"'
+
+# Process management
+alias zko='ps aux | fancy-select "Kill process:" | awk "{print \$2}" | xargs kill'
+
 normalize() {
   ffmpeg -i "$1" -af loudnorm=I=-14:TP=-1.0:LRA=11 -c:v copy -c:a aac -b:a 192k output.mp4
 }
