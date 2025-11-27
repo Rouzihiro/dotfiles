@@ -5,6 +5,7 @@ alias upgrade='yay -Syu'
 alias arch-clean="yay -Rns $(pacman -Qtdq) && dunstify 'Arch Linux' 'Removed unused packages 🧹' -a System -u low"
 
 # Pacman
+alias zpm='yay -Slq | fzf --multi --preview "yay -Si {1}" | xargs -ro yay -S'
 alias pm='sudo pacman -S'                          # Install package
 alias pmr='sudo pacman -Rns'                       # Remove package with unused deps
 alias pmu2='sudo pacman -Syu --overwrite "/usr/lib/firmware/nvidia/*" linux-firmware-nvidia' # Pacman Update with Nvidia Firmware Override (for Surface devices) 
