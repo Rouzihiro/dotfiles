@@ -29,12 +29,13 @@ git-latest-diff() {
 
 # Main zgit function
 main() {
-    case "$(echo -e "status\nadd\nadd all\ncommit\npush\nbranches\nlog\npull\nstash\nrebase\nmerge\ntags\nswitch\nreset\ngit-index-diff\ngit-latest-diff" | fancy-select "Git Action:")" in
+    case "$(echo -e "status\nadd\nadd all\ncommit\npush\namend\nbranches\nlog\npull\nstash\nrebase\nmerge\ntags\nswitch\nreset\ngit-index-diff\ngit-latest-diff" | fancy-select "Git Action:")" in
         "status") git status ;;
         "add") git add "$(git status --porcelain | fancy-select "Select files to add:" | cut -c4-)" ;;
         "add all") git add . ;;
         "commit") git commit -v ;;
         "push") git push ;;
+				"amend") git commit --amend ;;
         "branches") git branch -a ;;
         "log") git log --oneline -20 ;;
         "pull") git pull ;;
