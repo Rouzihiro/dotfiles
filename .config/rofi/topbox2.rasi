@@ -1,0 +1,170 @@
+@import "colors.rasi"
+
+configuration {
+  modi:                 "drun,run,filebrowser,window";
+  dpi:                  90;
+  show-icons:           true;
+  icon-theme:           "Papirus";
+  terminal:             "footclient";
+  window-format:        "{w} · {c} · {t}";
+  drun-display-format:  "{name}";
+  disable-history:      false;
+  max-history-size:     50;
+
+  display-drun:         " Apps";
+  display-run:          " Runs";
+  display-nerdy:        "󰱨 Nerdy";
+  display-emoji:        "󰱨 Emoji";
+  display-window:       " Windows";
+  display-filebrowser:  " Files";
+  display-ssh:          "󰣀 SSH";
+  display-keys:         " Keys";
+}
+
+* {
+  spacing:       0.1em;
+  padding:       0.2em;
+  margin:        0px;
+  border-radius: 1em;
+  background-color: transparent;
+  text-color: @on-surface;
+}
+
+window {
+  width: 40%;
+  orientation: vertical;
+  location: north east;
+  anchor: north east;
+  x-offset: 0px;
+  y-offset: 0px;
+  margin: 0px;
+  padding: 0px;
+  border: 2px;
+  border-color: @primary;
+  border-radius: 1em;
+  spacing: 0.1em;
+  children: [ mainbox ];
+  background-color: @surface;
+}
+
+mainbox {
+  spacing: 0.1em;
+  children: [ inputbar, mode-switcher, listview ];
+  background-color: @surface;
+  padding: 0px;
+}
+
+inputbar {
+  spacing: 0.1em;
+  padding: 12px 16px;
+  children: [ textbox-prompt-colon, entry ];
+  background-color: @surface-container-high;
+  border-radius: 1em 1em 0px 0px;
+}
+
+textbox-prompt-colon {
+  expand: false;
+  padding: 4px 0px;
+  border-radius: 1em;
+  str: " ";
+  background-color: transparent;
+  text-color: @primary;
+  font: "JetBrainsMono Nerd Font Bold 14";
+}
+
+entry {
+  placeholder:  " Search...";
+  placeholder-color: @on-surface-variant;
+  padding: 4px 0px;
+  border-radius: 1em;
+  background-color: transparent;
+  text-color: @on-surface;
+}
+
+mode-switcher {
+  spacing: 0.1em;
+  orientation: horizontal;
+  background-color: @surface-container-high;
+  padding: 8px 16px;
+}
+
+button {
+  padding: 8px 16px;
+  border-radius: 1em;
+  background-color: transparent;
+  text-color: @on-surface;
+}
+
+button selected {
+  background-color: @primary-container;
+  text-color: @on-primary-container;
+}
+
+listview {
+  lines: 12;
+  columns: 2;
+  spacing: 2px;
+  scrollbar: false;
+  cycle: false;
+  dynamic: false;
+  fixed-height: false;
+  margin: 0px;
+  padding: 8px 0px;
+  border: 0px;
+  border-radius: 0px 0px 1em 1em;
+  background-color: @surface;
+}
+
+element {
+  border: 0px;
+  border-radius: 0px;
+  padding: 8px 16px;
+  spacing: 12px;
+  orientation: horizontal;
+  vertical-align: 0.5;
+  background-color: transparent;
+  text-color: @on-surface;
+}
+
+element normal.normal {
+  background-color: transparent;
+  text-color: @on-surface;
+}
+
+element normal.active {
+  background-color: @surface-container-high;
+  text-color: @on-surface;
+}
+
+element selected.normal {
+  background-color: @primary-container;
+  text-color: @on-primary-container;
+}
+
+element selected.active {
+  background-color: @primary;
+  text-color: @on-primary;
+}
+
+element alternate.normal {
+  background-color: transparent;
+  text-color: @on-surface;
+}
+
+element alternate.active {
+  background-color: @surface-container-high;
+  text-color: @on-surface;
+}
+
+element-text {
+  background-color: transparent;
+  text-color: inherit;
+  vertical-align: 0.5;
+  horizontal-align: 0.0;
+}
+
+element-icon {
+  background-color: transparent;
+  size: 16px;
+  padding: 0px 4px 0px 0px;
+}

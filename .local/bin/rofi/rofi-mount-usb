@@ -1,5 +1,5 @@
 #!/bin/sh
-ROFI_OPTS="-lines 10 -location 2 -i -config $HOME/.config/rofi/list.rasi"
+ROFI_OPTS="-lines 10 -location 2 -i -config $HOME/.config/rofi/topbox.rasi"
 
 # Function to list both disks and partitions for rofi
 list_storage_devices() {

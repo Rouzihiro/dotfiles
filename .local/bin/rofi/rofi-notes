@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 DIR="$HOME/Documents/Notes"
+ROFI_THEME="$HOME/.config/rofi/list.rasi"
 mkdir -p "$DIR"
 
 # Choose terminal dynamically
@@ -16,12 +17,12 @@ entries=$(find "$DIR" -maxdepth 1 -type f -name "*.md" -printf "📝 %f\n" | sor
 options="📄 Create New Note\n🗑️ Delete Note\n$entries"
 
 # Launch rofi
-selection=$(echo -e "$options" | rofi -dmenu -i -l 20 -p "🗒 Notes" -config "$HOME/.config/rofi/list.rasi")
+selection=$(echo -e "$options" | rofi -config "$ROFI_THEME" -dmenu -i -l 20 -p "🗒 Notes")
 
 [ -z "$selection" ] && exit
 
 if [[ "$selection" == "📄 Create New Note" ]]; then
-    new_name=$(rofi -dmenu -p "New note name (no .md):")
+    new_name=$(rofi -config "$ROFI_THEME" -dmenu -p "New note name (no .md):")
     [ -z "$new_name" ] && exit
     file="$DIR/$new_name.md"
     [ -e "$file" ] || touch "$file"
@@ -30,7 +31,7 @@ if [[ "$selection" == "📄 Create New Note" ]]; then
 fi
 
 if [[ "$selection" == "🗑️ Delete Note" ]]; then
-    delete_target=$(find "$DIR" -maxdepth 1 -type f -name "*.md" -printf "📝 %f\n" | sort | rofi -dmenu -i -p "🗑 Select note to delete:")
+    delete_target=$(find "$DIR" -maxdepth 1 -type f -name "*.md" -printf "📝 %f\n" | sort | rofi -config "$ROFI_THEME" -dmenu -i -p "🗑 Select note to delete:")
     [ -z "$delete_target" ] && exit
     filename="${delete_target#📝 }"
     rm -f "$DIR/$filename"
@@ -39,4 +40,3 @@ fi
 
 filename="${selection#📝 }"
 "$term" -e nvim "$DIR/$filename" &
-
