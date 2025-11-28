@@ -8,13 +8,13 @@ configuration {
 
 * {
     background-color: transparent;
-    text-color: @on-surface;
+    text-color: @foreground;
 }
 
 window {
-    background-color: @surface-container;
-    border: 1px solid;
-    border-color: @primary;
+    background-color: @color0;  /* Softer dark background */
+    border: 2px solid;
+    border-color: @color3;      /* Warm golden border instead of bright orange */
     border-radius: 12px;
     padding: 12px;
     width: 700px;
@@ -27,7 +27,7 @@ mainbox {
 }
 
 inputbar {
-    background-color: @surface-container-high;
+    background-color: @color0;
     border-radius: 8px;
     padding: 8px 12px;
     children: [ prompt, entry ];
@@ -35,14 +35,14 @@ inputbar {
 }
 
 prompt {
-    text-color: @primary;
+    text-color: @color3;        /* Golden prompt for hierarchy */
     font: "JetBrainsMono Nerd Font Bold 12";
 }
 
 entry {
-    placeholder: "Search themes...";
-    placeholder-color: @outline;
-    text-color: @on-surface;
+    placeholder: "Search...";
+    placeholder-color: @color0;
+    text-color: @foreground;
 }
 
 listview {
@@ -56,34 +56,33 @@ listview {
 }
 
 element {
-    background-color: @surface-container-high;
-    text-color: @on-surface;
+    background-color: @color0;
+    text-color: @foreground;
     border-radius: 8px;
-    padding: 8px;
+    padding: 8px 8px;
     spacing: 8px;
     orientation: vertical;
     children: [ element-icon, element-text ];
 }
 
 element-icon {
-    size: 64px;
+    size: 96px;
     horizontal-align: 0.5;
 }
 
 element-text {
     horizontal-align: 0.5;
     text-color: inherit;
-    font: "JetBrainsMono Nerd Font 10";
 }
 
 element selected {
-    background-color: @primary;
-    text-color: @on-primary;
+    background-color: @color3;  /* Calm blue instead of bright orange */
+    text-color: @color0;       /* Light text for contrast */
 }
 
 element selected.active {
-    background-color: @secondary;
-    text-color: @on-secondary;
+    background-color: @color3;  /* Golden active state */
+    text-color: @color0;        /* Dark text for readability */
 }
 
 element-text selected {

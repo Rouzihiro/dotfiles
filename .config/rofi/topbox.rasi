@@ -6,7 +6,7 @@
   margin:        0px;
   border-radius: 1em;
   background-color: transparent;
-  text-color: @on-surface;
+  text-color: @foreground;
 }
 
 window {
@@ -18,31 +18,31 @@ window {
   y-offset: 0px;
   margin: 0px;
   padding: 0px;
-  border: 2px;
-  border-color: @primary;
+  border: 2px solid;
+  border-color: @color3;      /* Warm golden border */
   border-radius: 1em;
   spacing: 0.1em;
   children: [ mainbox ];
-  background-color: @surface;
+  background-color: @color0;  /* Softer dark background */
 }
 
 mainbox {
   spacing: 0.1em;
-  children: [ inputbar, mode-switcher, listview ];  /* Keep inputbar */
-  background-color: @surface;
+  children: [ inputbar, mode-switcher, listview ];
+  background-color: transparent;
   padding: 0px;
 }
 
 /* Make inputbar invisible but functional */
 inputbar {
   spacing: 0.1em;
-  padding: 0px;  /* Remove padding */
+  padding: 0px;
   margin: 0px;
   children: [ textbox-prompt-colon, entry ];
-  background-color: transparent;  /* Make bg transparent */
+  background-color: transparent;
   border-radius: 0px;
   border: 0px;
-  height: 0px;  /* Make it zero height */
+  height: 0px;
 }
 
 textbox-prompt-colon {
@@ -50,10 +50,10 @@ textbox-prompt-colon {
   padding: 0px;
   margin: 0px;
   border-radius: 0px;
-  str: "";  /* Empty prompt */
+  str: "";
   background-color: transparent;
-  text-color: transparent;  /* Hide text */
-  font: "JetBrainsMono Nerd Font Bold 0";  /* Zero font size */
+  text-color: transparent;
+  font: "JetBrainsMono Nerd Font Bold 0";
 }
 
 entry {
@@ -63,14 +63,14 @@ entry {
   margin: 0px;
   border-radius: 0px;
   background-color: transparent;
-  text-color: transparent;  /* Hide text */
-  font: "JetBrainsMono Nerd Font Bold 0";  /* Zero font size */
+  text-color: transparent;
+  font: "JetBrainsMono Nerd Font Bold 0";
 }
 
 mode-switcher {
   spacing: 0.1em;
   orientation: horizontal;
-  background-color: @surface-container-high;
+  background-color: @color0;
   padding: 8px 16px;
   border-radius: 1em 1em 0px 0px;
 }
@@ -79,12 +79,12 @@ button {
   padding: 8px 16px;
   border-radius: 1em;
   background-color: transparent;
-  text-color: @on-surface;
+  text-color: @foreground;
 }
 
 button selected {
-  background-color: @primary-container;
-  text-color: @on-primary-container;
+  background-color: @color3;  /* Golden selection matching border */
+  text-color: @color0;        /* Dark text for contrast */
 }
 
 listview {
@@ -99,7 +99,7 @@ listview {
   padding: 8px 0px;
   border: 0px;
   border-radius: 0px 0px 1em 1em;
-  background-color: @surface;
+  background-color: @color0;  /* Muted gray background */
 }
 
 element {
@@ -110,37 +110,37 @@ element {
   orientation: horizontal;
   vertical-align: 0.5;
   background-color: transparent;
-  text-color: @on-surface;
+  text-color: @foreground;
 }
 
 element normal.normal {
   background-color: transparent;
-  text-color: @on-surface;
+  text-color: @foreground;
 }
 
 element normal.active {
-  background-color: @surface-container-high;
-  text-color: @on-surface;
+  background-color: @color0;  /* Softer dark for active */
+  text-color: @foreground;
 }
 
 element selected.normal {
-  background-color: @primary;
-  text-color: @on-primary;
+  background-color: @color3;  /* Golden selection matching border */
+  text-color: @color0;        /* Dark text for readability */
 }
 
 element selected.active {
-  background-color: @primary;
-  text-color: @on-primary;
+  background-color: @color3;  /* Consistent golden selection */
+  text-color: @color0;        /* Dark text for readability */
 }
 
 element alternate.normal {
   background-color: transparent;
-  text-color: @on-surface;
+  text-color: @foreground;
 }
 
 element alternate.active {
-  background-color: @surface-container-high;
-  text-color: @on-surface;
+  background-color: @color0;  /* Softer dark for active */
+  text-color: @foreground;
 }
 
 element-text {

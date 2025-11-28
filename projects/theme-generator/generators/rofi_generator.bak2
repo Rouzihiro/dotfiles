@@ -9,13 +9,6 @@ class RofiGenerator(BaseGenerator):
         output_file = output_file or self.default_filename
         self.backup_file(output_file)
         
-        # Build extended colors section only if they exist
-        extended_colors = ""
-        if 'color16' in self.colors:
-            extended_colors += f"    color16: {self.colors['color16']};\n"
-        if 'color17' in self.colors:
-            extended_colors += f"    color17: {self.colors['color17']};\n"
-        
         template = f"""* {{
     background: {self.colors['background']};
     foreground: {self.colors['foreground']};
@@ -44,7 +37,9 @@ class RofiGenerator(BaseGenerator):
     color15: {self.colors['color15']};
     
     /* Extended colors */
-{extended_colors}}}
+    color16: {self.colors['color16']};
+    color17: {self.colors['color17']};
+}}
 """
         
         with open(output_file, 'w') as f:

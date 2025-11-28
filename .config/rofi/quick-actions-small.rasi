@@ -7,44 +7,44 @@ configuration {
 
 * {
     background-color: transparent;
-    text-color: @on-surface;
+    text-color: @foreground;
 }
 
 window {
-    background-color: @surface-container;
-    border: 1px solid;
-    border-color: @primary;
+    background-color: @color0;  /* Softer dark background */
+    border: 2px solid;
+    border-color: @color3;      /* Warm golden border */
     border-radius: 12px;
     padding: 12px;
     width: 400px;
     location: north east;
     anchor: north east;
-    x-offset: -15;
-    y-offset: 15;
+    x-offset: -20;
+    y-offset: 20;
 }
 
 mainbox {
     background-color: transparent;
     children: [ listview ];
-    spacing: 8px;
+    spacing: 16px;
 }
 
 listview {
     background-color: transparent;
-    columns: 1;
-    lines: 6;
-    spacing: 6px;
+    columns: 3;
+    lines: 4;
+    spacing: 12px;
     scrollbar: false;
     fixed-height: true;
     border: 0;
 }
 
 element {
-    background-color: @surface-container-high;
-    text-color: @on-surface;
-    border-radius: 8px;
-    padding: 12px 16px;
-    spacing: 8px;
+    background-color: @color0;
+    text-color: @foreground;
+    border-radius: 12px;
+    padding: 16px 20px;
+    spacing: 12px;
     orientation: horizontal;
 }
 
@@ -55,13 +55,13 @@ element-text {
 }
 
 element selected {
-    background-color: @primary;
-    text-color: @on-primary;
+    background-color: @color3;  /* Same golden color as border */
+    text-color: @color0;        /* Dark text for readability */
 }
 
 element selected.active {
-    background-color: @secondary;
-    text-color: @on-secondary;
+    background-color: @color3;  /* Consistent golden color */
+    text-color: @color0;        /* Dark text for readability */
 }
 
 element-text selected {
