@@ -23,7 +23,7 @@ configuration {
   margin:        0px;
   border-radius: 0.8em;
   background-color: transparent;
-  text-color: @foreground;
+  text-color: @on-sigbg;
   font: "JetBrainsMono Nerd Font 12";
 }
 
@@ -37,11 +37,11 @@ window {
   margin: 0px;
   padding: 0px;
   border: 2px solid;
-  border-color: @sig1;      /* Warm golden border */
+  border-color: @sig1;
   border-radius: 0.8em;
   spacing: 0.1em;
   children: [ mainbox ];
-  background-color: @sigbg;  /* Softer dark background */
+  background-color: @sigbg;
 }
 
 mainbox {
@@ -88,7 +88,7 @@ entry {
 mode-switcher {
   spacing: 0.5em;
   orientation: horizontal;
-  background-color: @sigbg;
+  background-color: @sig-surface-container;
   padding: 8px 16px;
   border-radius: 0.8em 0.8em 0px 0px;
 }
@@ -97,13 +97,13 @@ button {
   padding: 6px 12px;
   border-radius: 0.5em;
   background-color: transparent;
-  text-color: @foreground;
+  text-color: @on-sigbg;
   font: "JetBrainsMono Nerd Font 11";
 }
 
 button selected {
-  background-color: @sig1;  /* Golden selection matching border */
-  text-color: @sigbg;        /* Dark text for contrast */
+  background-color: @sig1;
+  text-color: @on-sig1;
 }
 
 listview {
@@ -118,7 +118,7 @@ listview {
   padding: 6px 0px;
   border: 0px;
   border-radius: 0px 0px 0.8em 0.8em;
-  background-color: @sigbg;
+  background-color: @sig-surface-container;
 }
 
 element {
@@ -129,37 +129,37 @@ element {
   orientation: horizontal;
   vertical-align: 0.5;
   background-color: transparent;
-  text-color: @foreground;
+  text-color: @on-sigbg;
 }
 
 element normal.normal {
   background-color: transparent;
-  text-color: @foreground;
+  text-color: @on-sigbg;
 }
 
 element normal.active {
-  background-color: @sigbg;  /* Softer dark for active state */
-  text-color: @foreground;
+  background-color: @sig-surface-high;
+  text-color: @on-sigbg;
 }
 
 element selected.normal {
-  background-color: @sig1;  /* Golden selection matching border */
-  text-color: @sigbg;        /* Dark text for readability */
+  background-color: @sig1;
+  text-color: @on-sig1;
 }
 
 element selected.active {
-  background-color: @sig1;  /* Consistent golden selection */
-  text-color: @sigbg;        /* Dark text for readability */
+  background-color: @sig1;
+  text-color: @on-sig1;
 }
 
 element alternate.normal {
   background-color: transparent;
-  text-color: @foreground;
+  text-color: @on-sigbg;
 }
 
 element alternate.active {
-  background-color: @sigbg;  /* Softer dark for active state */
-  text-color: @foreground;
+  background-color: @sig-surface-high;
+  text-color: @on-sigbg;
 }
 
 element-text {
@@ -178,8 +178,8 @@ element-icon {
 
 scrollbar {
   width: 4px;
-  background-color: @sigbg;  /* Softer dark background */
-  handle-color: @sig1;      /* Golden handle matching theme */
+  background-color: @sig-surface-high;
+  handle-color: @sig1;
   handle-width: 4px;
   border-radius: 2px;
 }
