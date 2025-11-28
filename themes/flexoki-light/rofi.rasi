@@ -1,47 +1,35 @@
 * {
-    primary: #af3029;
-    primary-fixed: #af3029;
-    primary-fixed-dim: #da702c;
-    on-primary: #fffcf0;
-    on-primary-fixed: #fffcf0;
-    on-primary-fixed-variant: #f4f3f6;
-    primary-container: #e9e7f1;
-    on-primary-container: #100f14;
-    secondary: #66800b;
-    secondary-fixed: #66800b;
-    secondary-fixed-dim: #87815f;
-    on-secondary: #fffcf0;
-    on-secondary-fixed: #fffcf0;
-    on-secondary-fixed-variant: #f4f3f6;
-    secondary-container: #e9e7f1;
-    on-secondary-container: #100f14;
-    tertiary: #ad8301;
-    tertiary-fixed: #ad8301;
-    tertiary-fixed-dim: #8e6a50;
-    on-tertiary: #fffcf0;
-    on-tertiary-fixed: #fffcf0;
-    on-tertiary-fixed-variant: #f4f3f6;
-    tertiary-container: #e9e7f1;
-    on-tertiary-container: #100f14;
-    error: #d14d41;
-    on-error: #fffcf0;
-    error-container: #e9e7f1;
-    on-error-container: #100f14;
-    surface: #fffcf0;
-    on-surface: #100f14;
-    on-surface-variant: #5c5c5e;
-    outline: #b7b5c2;
-    outline-variant: #e9e7f1;
-    shadow: #000000;
-    scrim: #000000;
-    inverse-surface: #100f14;
-    inverse-on-surface: #f4f3f6;
-    inverse-primary: #e9e7f1;
-    surface-dim: #f4f3f6;
-    surface-bright: #fffcf0;
-    surface-container-lowest: #ffffff;
-    surface-container-low: #f9f9fb;
-    surface-container: #f4f3f6;
-    surface-container-high: #e9e7f1;
-    surface-container-highest: #b7b5c2;
+    background: #FFFCF0;      /* background */
+    foreground: #100F0F;      /* foreground */
+    selection-background: #CECDC3;  /* selection bg */
+    selection-foreground: #100F0F;  /* selection fg */
+    border-color: #CECDC3;    /* border */
+    
+    /* Signature colors - customize these per theme */
+    sigbg: @color15;           /* signature background */
+    sig1: @color9;            /* signature color 1 */
+    sig2: @color10;            /* signature color 2 */
+    sig3: @color13;            /* signature color 3 */
+
+    /* Normal colors */
+    color0: #100F0F;          /* black */
+    color1: #D14D41;          /* red */
+    color2: #879A39;          /* green */
+    color3: #D0A215;          /* yellow */
+    color4: #4385BE;          /* blue */
+    color5: #CE5D97;          /* magenta */
+    color6: #3AA99F;          /* cyan */
+    color7: #FFFCF0;          /* white */
+
+    /* Bright colors */
+    color8: #6F6E69;          /* bright black */
+    color9: #AF3029;          /* bright red */
+    color10: #66800B;         /* bright green */
+    color11: #AD8301;         /* bright yellow */
+    color12: #205EA6;         /* bright blue */
+    color13: #A02F6F;         /* bright magenta */
+    color14: #24837B;         /* bright cyan */
+    color15: #F2F0E599;         /* bright white */
+
+    /* Extended colors */
 }
