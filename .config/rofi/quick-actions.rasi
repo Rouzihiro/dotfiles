@@ -11,9 +11,9 @@ configuration {
 }
 
 window {
-    background-color: @color0;  /* Softer dark background */
+    background-color: @sigbg;  /* Softer dark background */
     border: 2px solid;
-    border-color: @color3;      /* Warm golden border */
+    border-color: @sig1;      /* Warm golden border */
     border-radius: 16px;
     padding: 16px;
     width: 550px;
@@ -40,7 +40,7 @@ listview {
 }
 
 element {
-    background-color: @color0; 
+    background-color: @sigbg; 
     text-color: @foreground;
     border-radius: 12px;
     padding: 16px 20px;
@@ -55,13 +55,13 @@ element-text {
 }
 
 element selected {
-    background-color: @color3;  /* Same golden color as border */
-    text-color: @color0;        /* Dark text for readability */
+    background-color: @sig1;  /* Same golden color as border */
+    text-color: @sigbg;        /* Dark text for readability */
 }
 
 element selected.active {
-    background-color: @color3;  /* Consistent golden color */
-    text-color: @color0;        /* Dark text for readability */
+    background-color: @sig1;  /* Consistent golden color */
+    text-color: @sigbg;        /* Dark text for readability */
 }
 
 element-text selected {

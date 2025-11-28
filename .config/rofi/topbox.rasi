@@ -19,11 +19,11 @@ window {
   margin: 0px;
   padding: 0px;
   border: 2px solid;
-  border-color: @color3;      /* Warm golden border */
+  border-color: @sig1;      /* Warm golden border */
   border-radius: 1em;
   spacing: 0.1em;
   children: [ mainbox ];
-  background-color: @color0;  /* Softer dark background */
+  background-color: @sigbg;  /* Softer dark background */
 }
 
 mainbox {
@@ -70,7 +70,7 @@ entry {
 mode-switcher {
   spacing: 0.1em;
   orientation: horizontal;
-  background-color: @color0;
+  background-color: @sigbg;
   padding: 8px 16px;
   border-radius: 1em 1em 0px 0px;
 }
@@ -83,8 +83,8 @@ button {
 }
 
 button selected {
-  background-color: @color3;  /* Golden selection matching border */
-  text-color: @color0;        /* Dark text for contrast */
+  background-color: @sig1;  /* Golden selection matching border */
+  text-color: @sigbg;        /* Dark text for contrast */
 }
 
 listview {
@@ -99,7 +99,7 @@ listview {
   padding: 8px 0px;
   border: 0px;
   border-radius: 0px 0px 1em 1em;
-  background-color: @color0;  /* Muted gray background */
+  background-color: @sigbg;  /* Muted gray background */
 }
 
 element {
@@ -119,18 +119,18 @@ element normal.normal {
 }
 
 element normal.active {
-  background-color: @color0;  /* Softer dark for active */
+  background-color: @sigbg;  /* Softer dark for active */
   text-color: @foreground;
 }
 
 element selected.normal {
-  background-color: @color3;  /* Golden selection matching border */
-  text-color: @color0;        /* Dark text for readability */
+  background-color: @sig1;  /* Golden selection matching border */
+  text-color: @sigbg;        /* Dark text for readability */
 }
 
 element selected.active {
-  background-color: @color3;  /* Consistent golden selection */
-  text-color: @color0;        /* Dark text for readability */
+  background-color: @sig1;  /* Consistent golden selection */
+  text-color: @sigbg;        /* Dark text for readability */
 }
 
 element alternate.normal {
@@ -139,7 +139,7 @@ element alternate.normal {
 }
 
 element alternate.active {
-  background-color: @color0;  /* Softer dark for active */
+  background-color: @sigbg;  /* Softer dark for active */
   text-color: @foreground;
 }
 

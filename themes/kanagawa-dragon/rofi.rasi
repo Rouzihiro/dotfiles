@@ -1,31 +1,37 @@
 * {
-    background: #181616;
-    foreground: #c5c9c5;
-    selection-background: #2D4F67;
-    selection-foreground: #C8C093;
-    border-color: #2D4F67;
+    background: #181616;      /* background */
+    foreground: #c5c9c5;      /* foreground */
+    selection-background: #2D4F67;  /* selection bg */
+    selection-foreground: #C8C093;  /* selection fg */
+    border-color: #2D4F67;    /* border */
     
+    /* Signature colors - customize these per theme */
+    sigbg: @color0;           /* signature background */
+    sig1: @color8;            /* signature color 1 */
+    sig2: @color2;            /* signature color 2 */
+    sig3: @color3;            /* signature color 3 */
+
     /* Normal colors */
-    color0: #0d0c0c;
-    color1: #c4746e;
-    color2: #8a9a7b;
-    color3: #c4b28a;
-    color4: #8ba4b0;
-    color5: #a292a3;
-    color6: #8ea4a2;
-    color7: #C8C093;
-    
+    color0: #0d0c0c;          /* black */
+    color1: #c4746e;          /* red */
+    color2: #8a9a7b;          /* green */
+    color3: #c4b28a;          /* yellow */
+    color4: #8ba4b0;          /* blue */
+    color5: #a292a3;          /* magenta */
+    color6: #8ea4a2;          /* cyan */
+    color7: #C8C093;          /* white */
+
     /* Bright colors */
-    color8: #a6a69c;
-    color9: #E46876;
-    color10: #87a987;
-    color11: #E6C384;
-    color12: #7FB4CA;
-    color13: #938AA9;
-    color14: #7AA89F;
-    color15: #c5c9c5;
-    
+    color8: #a6a69c;          /* bright black */
+    color9: #E46876;          /* bright red */
+    color10: #87a987;         /* bright green */
+    color11: #E6C384;         /* bright yellow */
+    color12: #7FB4CA;         /* bright blue */
+    color13: #938AA9;         /* bright magenta */
+    color14: #7AA89F;         /* bright cyan */
+    color15: #c5c9c5;         /* bright white */
+
     /* Extended colors */
-    color16: #b6927b;
-    color17: #b98d7b;
+    color16: #b6927b;          /* orange */
+    color17: #b98d7b;          /* peach */
 }
