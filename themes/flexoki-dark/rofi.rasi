@@ -1,29 +1,35 @@
 * {
-    background: #100F0F;
-    foreground: #CECDC3;
-    selection-background: #403E3C;
-    selection-foreground: #CECDC3;
-    border-color: #403E3C;
+    background: #100F0F;      /* background */
+    foreground: #CECDC3;      /* foreground */
+    selection-background: #403E3C;  /* selection bg */
+    selection-foreground: #CECDC3;  /* selection fg */
+    border-color: #403E3C;    /* border */
     
+    /* Signature colors - customize these per theme */
+    sigbg: @color0;           /* signature background */
+    sig1: @color14;            /* signature color 1 */
+    sig2: @color2;            /* signature color 2 */
+    sig3: @color3;            /* signature color 3 */
+
     /* Normal colors */
-    color0: #100F0F;
-    color1: #AF3029;
-    color2: #66800B;
-    color3: #AD8301;
-    color4: #205EA6;
-    color5: #A02F6F;
-    color6: #24837B;
-    color7: #878580;
-    
+    color0: #100F0F99;          /* black */
+    color1: #AF3029;          /* red */
+    color2: #66800B;          /* green */
+    color3: #AD8301;          /* yellow */
+    color4: #205EA6;          /* blue */
+    color5: #A02F6F;          /* magenta */
+    color6: #24837B;          /* cyan */
+    color7: #878580;          /* white */
+
     /* Bright colors */
-    color8: #6F6E69;
-    color9: #D14D41;
-    color10: #879A39;
-    color11: #D0A215;
-    color12: #4385BE;
-    color13: #CE5D97;
-    color14: #3AA99F;
-    color15: #CECDC3;
-    
+    color8: #6F6E69;          /* bright black */
+    color9: #D14D41;          /* bright red */
+    color10: #879A39;         /* bright green */
+    color11: #D0A215;         /* bright yellow */
+    color12: #4385BE;         /* bright blue */
+    color13: #CE5D97;         /* bright magenta */
+    color14: #3AA99F;         /* bright cyan */
+    color15: #CECDC3;         /* bright white */
+
     /* Extended colors */
 }

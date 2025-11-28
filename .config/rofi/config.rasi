@@ -19,11 +19,11 @@ window {
   margin: 0px;
   padding: 0px;
   border: 2px solid;
-  border-color: @color3;
+  border-color: @sig1;
   border-radius: 1em;
   spacing: 0.1em;
   children: [ mainbox ];
-  background-color: @color0;
+  background-color: @sigbg;
 }
 
 mainbox {
@@ -69,7 +69,7 @@ entry {
 mode-switcher {
   spacing: 0.1em;
   orientation: horizontal;
-  background-color: @color8;
+  background-color: @sigbg;
   padding: 8px 16px;
   border-radius: 1em 1em 0px 0px;
 }
@@ -82,8 +82,8 @@ button {
 }
 
 button selected {
-  background-color: @color3;
-  text-color: @color0;
+  background-color: @sig1;
+  text-color: @sigbg;
 }
 
 listview {
@@ -98,7 +98,7 @@ listview {
   padding: 8px 0px;
   border: 0px;
   border-radius: 0px 0px 1em 1em;
-  background-color: @color0;
+  background-color: @sigbg;
 }
 
 element {
@@ -118,18 +118,18 @@ element normal.normal {
 }
 
 element normal.active {
-  background-color: @color0;
+  background-color: @sigbg;
   text-color: @foreground;
 }
 
 element selected.normal {
-  background-color: @color3;
-  text-color: @color0;
+  background-color: @sig1;
+  text-color: @sigbg;
 }
 
 element selected.active {
-  background-color: @color3;
-  text-color: @color0;
+  background-color: @sig1;
+  text-color: @sigbg;
 }
 
 element alternate.normal {
@@ -138,7 +138,7 @@ element alternate.normal {
 }
 
 element alternate.active {
-  background-color: @color0;
+  background-color: @sigbg;
   text-color: @foreground;
 }
 

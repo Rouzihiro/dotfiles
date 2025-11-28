@@ -20,11 +20,11 @@ window {
   margin: 0px;
   padding: 0px;
   border: 2px solid;
-  border-color: @color3;      /* Warm golden border */
+  border-color: @sig1;      /* Warm golden border */
   border-radius: 0.5em;
   spacing: 0.1em;
   children: [ mainbox ];
-  background-color: @color0;  /* Softer dark background */
+  background-color: @sigbg;  /* Softer dark background */
 }
 
 mainbox {
@@ -71,7 +71,7 @@ entry {
 mode-switcher {
   spacing: 0.1em;
   orientation: horizontal;
-  background-color: @color0;
+  background-color: @sigbg;
   padding: 6px 12px;
   border-radius: 0.5em 0.5em 0px 0px;
 }
@@ -85,8 +85,8 @@ button {
 }
 
 button selected {
-  background-color: @color3;  /* Golden selection matching border */
-  text-color: @color0;        /* Dark text for contrast */
+  background-color: @sig1;  /* Golden selection matching border */
+  text-color: @sigbg;        /* Dark text for contrast */
 }
 
 listview {
@@ -101,7 +101,7 @@ listview {
   padding: 4px 0px;
   border: 0px;
   border-radius: 0px 0px 0.5em 0.5em;
-  background-color: @color0;
+  background-color: @sigbg;
 }
 
 element {
@@ -122,18 +122,18 @@ element normal.normal {
 }
 
 element normal.active {
-  background-color: @color0;  /* Softer dark for active state */
+  background-color: @sigbg;  /* Softer dark for active state */
   text-color: @foreground;
 }
 
 element selected.normal {
-  background-color: @color3;  /* Golden selection matching border */
-  text-color: @color0;        /* Dark text for readability */
+  background-color: @sig1;  /* Golden selection matching border */
+  text-color: @sigbg;        /* Dark text for readability */
 }
 
 element selected.active {
-  background-color: @color3;  /* Consistent golden selection */
-  text-color: @color0;        /* Dark text for readability */
+  background-color: @sig1;  /* Consistent golden selection */
+  text-color: @sigbg;        /* Dark text for readability */
 }
 
 element alternate.normal {
@@ -142,7 +142,7 @@ element alternate.normal {
 }
 
 element alternate.active {
-  background-color: @color0;  /* Softer dark for active state */
+  background-color: @sigbg;  /* Softer dark for active state */
   text-color: @foreground;
 }
 
@@ -162,8 +162,8 @@ element-icon {
 
 scrollbar {
   width: 4px;
-  background-color: @color0;  /* Softer dark background */
-  handle-color: @color3;      /* Golden handle matching theme */
+  background-color: @sigbg;  /* Softer dark background */
+  handle-color: @sig1;      /* Golden handle matching theme */
   handle-width: 4px;
   border-radius: 2px;
 }
