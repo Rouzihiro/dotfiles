@@ -7,13 +7,13 @@ configuration {
 
 * {
     background-color: transparent;
-    text-color: @foreground;
+    text-color: @on-sigbg;
 }
 
 window {
-    background-color: @sigbg;  /* Softer dark background */
+    background-color: @sigbg;
     border: 2px solid;
-    border-color: @sig1;      /* Warm golden border */
+    border-color: @sig1;
     border-radius: 16px;
     padding: 16px;
     width: 550px;
@@ -40,8 +40,8 @@ listview {
 }
 
 element {
-    background-color: @sigbg; 
-    text-color: @foreground;
+    background-color: @sig-surface-high;
+    text-color: @on-sigbg;
     border-radius: 12px;
     padding: 16px 20px;
     spacing: 12px;
@@ -55,15 +55,17 @@ element-text {
 }
 
 element selected {
-    background-color: @sig1;  /* Same golden color as border */
-    text-color: @sigbg;        /* Dark text for readability */
+    background-color: @sig1;
+    text-color: @on-sig1;
 }
 
 element selected.active {
-    background-color: @sig1;  /* Consistent golden color */
-    text-color: @sigbg;        /* Dark text for readability */
+    background-color: @sig2;
+    text-color: @on-sig2;
 }
 
 element-text selected {
     text-color: inherit;
 }
+
+
