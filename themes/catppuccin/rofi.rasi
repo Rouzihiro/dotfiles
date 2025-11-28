@@ -32,4 +32,13 @@
     color15: #A1A8C9;         /* bright white */
 
     /* Extended colors */
+
+    on-sigbg: #fbf1c7;
+    on-sig1: #282828;
+    on-sig2: #282828;
+    on-sig3: #282828;
+    sig-surface: #2e313e;
+    sig-surface-container: #3c3f51;
+    sig-surface-high: #686b7b;
+    text-color: @on-sigbg;
 }
