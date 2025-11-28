@@ -12,7 +12,7 @@
     sig3: @color3;            /* signature color 3 */
 
     /* Normal colors */
-    color0: #3c3836CC;          /* black */
+    color0: #3c3836;          /* black */
     color1: #cc241d;          /* red */
     color2: #98971a;          /* green */
     color3: #d79921;          /* yellow */
@@ -32,4 +32,13 @@
     color15: #fbf1c7;         /* bright white */
 
     /* Extended colors */
+
+    on-sigbg: #fbf1c7;
+    on-sig1: #282828;
+    on-sig2: #282828;
+    on-sig3: #282828;
+    sig-surface: #2a2725;
+    sig-surface-container: #363230;
+    sig-surface-high: #635f5e;
+    text-color: @on-sigbg;
 }

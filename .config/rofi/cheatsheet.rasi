@@ -3,7 +3,7 @@
 * {
     font: "JetBrainsMono Nerd Font 14";
     background-color: transparent;
-    text-color: @foreground;
+    text-color: @on-sigbg;
 }
 
 window {
@@ -24,7 +24,7 @@ mainbox {
 }
 
 inputbar {
-    background-color: @sigbg;
+    background-color: @sig-surface-container;
     children: [ prompt, entry ];
     padding: 12px 16px;
     spacing: 12px;
@@ -40,14 +40,14 @@ prompt {
 
 entry {
     background-color: transparent;
-    text-color: @foreground;
+    text-color: @on-sigbg;
     placeholder: "Search...";
-    placeholder-color: @sigbg;
+    placeholder-color: @on-sigbg-muted;
     padding: 4px 0px;
 }
 
 listview {
-    background-color: @sigbg;
+    background-color: @sig-surface-container;
     columns: 3;
     lines: 20;
     padding: 12px;
@@ -60,7 +60,7 @@ listview {
 
 scrollbar {
     width: 6px;
-    background-color: @sigbg;
+    background-color: @sig-surface-high;
     handle-color: @sig1;
     handle-width: 6px;
     border-radius: 3px;
@@ -70,7 +70,7 @@ scrollbar {
 
 element {
     background-color: transparent;
-    text-color: @foreground;
+    text-color: @on-sigbg;
     padding: 6px 10px;
     border-radius: 4px;
     spacing: 8px;
@@ -79,32 +79,32 @@ element {
 
 element normal.normal {
     background-color: transparent;
-    text-color: @foreground;
+    text-color: @on-sigbg;
 }
 
 element normal.active {
-    background-color: @sigbg;
-    text-color: @foreground;
+    background-color: @sig-surface-high;
+    text-color: @on-sigbg;
 }
 
 element selected.normal {
     background-color: @sig1;
-    text-color: @sigbg;
+    text-color: @on-sig1;
 }
 
 element selected.active {
     background-color: @sig1;
-    text-color: @sigbg;
+    text-color: @on-sig1;
 }
 
 element alternate.normal {
     background-color: transparent;
-    text-color: @foreground;
+    text-color: @on-sigbg;
 }
 
 element alternate.active {
-    background-color: @sigbg;
-    text-color: @foreground;
+    background-color: @sig-surface-high;
+    text-color: @on-sigbg;
 }
 
 element-text {
@@ -120,7 +120,7 @@ element-icon {
 }
 
 message {
-    background-color: @sigbg;
+    background-color: @sig-surface-high;
     padding: 8px;
     border-radius: 4px;
     margin: 8px;
@@ -128,6 +128,6 @@ message {
 
 textbox {
     background-color: transparent;
-    text-color: @foreground;
+    text-color: @on-sigbg;
     padding: 4px;
 }

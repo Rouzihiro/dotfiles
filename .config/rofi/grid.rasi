@@ -8,13 +8,13 @@ configuration {
 
 * {
     background-color: transparent;
-    text-color: @foreground;
+    text-color: @on-sigbg;
 }
 
 window {
-    background-color: @sigbg;  /* Softer dark background */
+    background-color: @sigbg;
     border: 2px solid;
-    border-color: @sig1;      /* Warm golden border instead of bright orange */
+    border-color: @sig1;
     border-radius: 16px;
     padding: 16px;
     width: 900px;
@@ -27,7 +27,7 @@ mainbox {
 }
 
 inputbar {
-    background-color: @sigbg;
+    background-color: @sig-surface-container;
     border-radius: 12px;
     padding: 12px 16px;
     children: [ prompt, entry ];
@@ -35,14 +35,14 @@ inputbar {
 }
 
 prompt {
-    text-color: @sig1;        /* Golden prompt for hierarchy */
+    text-color: @sig1;
     font: "JetBrainsMono Nerd Font Bold 13";
 }
 
 entry {
     placeholder: "Search...";
-    placeholder-color: @sigbg;
-    text-color: @foreground;
+    placeholder-color: @on-sigbg-muted;
+    text-color: @on-sigbg;
 }
 
 listview {
@@ -56,8 +56,8 @@ listview {
 }
 
 element {
-    background-color: @sigbg;
-    text-color: @foreground;
+    background-color: @sig-surface-high;
+    text-color: @on-sigbg;
     border-radius: 12px;
     padding: 10px 12px;
     spacing: 12px;
@@ -76,13 +76,13 @@ element-text {
 }
 
 element selected {
-    background-color: @sig1;  /* Calm blue instead of bright orange */
-    text-color: @sigbg;       /* Light text for contrast */
+    background-color: @sig1;
+    text-color: @on-sig1;
 }
 
 element selected.active {
-    background-color: @sig1;  /* Golden active state */
-    text-color: @sigbg;        /* Dark text for readability */
+    background-color: @sig1;
+    text-color: @on-sig1;
 }
 
 element-text selected {
