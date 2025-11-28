@@ -34,4 +34,13 @@
     /* Extended colors */
     color16: #b6927b;          /* orange */
     color17: #b98d7b;          /* peach */
+
+    on-sigbg: #fbf1c7;
+    on-sig1: #282828;
+    on-sig2: #282828;
+    on-sig3: #282828;
+    sig-surface: #090808;
+    sig-surface-container: #0b0a0a;
+    sig-surface-high: #3d3c3c;
+    text-color: @on-sigbg;
 }

@@ -1,5 +1,5 @@
 * {
-    background: #14141599;      /* background */
+    background: #141415CC;      /* background */
     foreground: #cdcdcd;      /* foreground */
     selection-background: #6e94b2;  /* selection bg */
     selection-foreground: #141415;  /* selection fg */
@@ -32,4 +32,13 @@
     color15: #cdcdcd;         /* bright white */
 
     /* Extended colors */
+
+    on-sigbg: #282828;
+    on-sig1: #282828;
+    on-sig2: #282828;
+    on-sig3: #282828;
+    sig-surface: #4d677c;
+    sig-surface-container: #6385a0;
+    sig-surface-high: #8ba9c1;
+    text-color: @on-sigbg;
 }

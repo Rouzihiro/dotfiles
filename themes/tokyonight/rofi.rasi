@@ -1,5 +1,5 @@
 * {
-    background: #1a1b2699;      /* background */
+    background: #1a1b26CC;      /* background */
     foreground: #c0caf5;      /* foreground */
     selection-background: #283457;  /* selection bg */
     selection-foreground: #c0caf5;  /* selection fg */
@@ -34,4 +34,13 @@
     /* Extended colors */
     color16: #ff9e64;          /* orange */
     color17: #db4b4b;          /* peach */
+
+    on-sigbg: #fbf1c7;
+    on-sig1: #282828;
+    on-sig2: #282828;
+    on-sig3: #282828;
+    sig-surface: #1c243c;
+    sig-surface-container: #242e4e;
+    sig-surface-high: #535c78;
+    text-color: @on-sigbg;
 }
