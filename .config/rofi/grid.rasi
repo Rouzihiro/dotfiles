@@ -8,13 +8,13 @@ configuration {
 
 * {
     background-color: transparent;
-    text-color: @on-surface;
+    text-color: @foreground;
 }
 
 window {
-    background-color: @surface-container;
+    background-color: @color0;  /* Softer dark background */
     border: 2px solid;
-    border-color: @primary;
+    border-color: @color3;      /* Warm golden border instead of bright orange */
     border-radius: 16px;
     padding: 16px;
     width: 900px;
@@ -27,7 +27,7 @@ mainbox {
 }
 
 inputbar {
-    background-color: @surface-container-high;
+    background-color: @color0;
     border-radius: 12px;
     padding: 12px 16px;
     children: [ prompt, entry ];
@@ -35,14 +35,14 @@ inputbar {
 }
 
 prompt {
-    text-color: @primary;
+    text-color: @color3;        /* Golden prompt for hierarchy */
     font: "JetBrainsMono Nerd Font Bold 13";
 }
 
 entry {
     placeholder: "Search...";
-    placeholder-color: @outline;
-    text-color: @on-surface;
+    placeholder-color: @color0;
+    text-color: @foreground;
 }
 
 listview {
@@ -56,8 +56,8 @@ listview {
 }
 
 element {
-    background-color: @surface-container-high;
-    text-color: @on-surface;
+    background-color: @color0;
+    text-color: @foreground;
     border-radius: 12px;
     padding: 10px 12px;
     spacing: 12px;
@@ -76,13 +76,13 @@ element-text {
 }
 
 element selected {
-    background-color: @primary;
-    text-color: @on-primary;
+    background-color: @color3;  /* Calm blue instead of bright orange */
+    text-color: @color0;       /* Light text for contrast */
 }
 
 element selected.active {
-    background-color: @secondary;
-    text-color: @on-secondary;
+    background-color: @color3;  /* Golden active state */
+    text-color: @color0;        /* Dark text for readability */
 }
 
 element-text selected {

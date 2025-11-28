@@ -23,7 +23,7 @@ configuration {
   margin:        0px;
   border-radius: 0.8em;
   background-color: transparent;
-  text-color: @on-surface;
+  text-color: @foreground;
   font: "JetBrainsMono Nerd Font 12";
 }
 
@@ -36,18 +36,18 @@ window {
   y-offset: 0px;
   margin: 0px;
   padding: 0px;
-  border: 2px;
-  border-color: @primary;
+  border: 2px solid;
+  border-color: @color3;      /* Warm golden border */
   border-radius: 0.8em;
   spacing: 0.1em;
   children: [ mainbox ];
-  background-color: @surface;
+  background-color: @color0;  /* Softer dark background */
 }
 
 mainbox {
   spacing: 0.1em;
   children: [ inputbar, mode-switcher, listview ];
-  background-color: @surface;
+  background-color: transparent;
   padding: 0px;
 }
 
@@ -88,7 +88,7 @@ entry {
 mode-switcher {
   spacing: 0.5em;
   orientation: horizontal;
-  background-color: @surface-container-high;
+  background-color: @color0;
   padding: 8px 16px;
   border-radius: 0.8em 0.8em 0px 0px;
 }
@@ -97,13 +97,13 @@ button {
   padding: 6px 12px;
   border-radius: 0.5em;
   background-color: transparent;
-  text-color: @on-surface;
+  text-color: @foreground;
   font: "JetBrainsMono Nerd Font 11";
 }
 
 button selected {
-  background-color: @primary-container;
-  text-color: @on-primary-container;
+  background-color: @color3;  /* Golden selection matching border */
+  text-color: @color0;        /* Dark text for contrast */
 }
 
 listview {
@@ -118,7 +118,7 @@ listview {
   padding: 6px 0px;
   border: 0px;
   border-radius: 0px 0px 0.8em 0.8em;
-  background-color: @surface;
+  background-color: @color0;
 }
 
 element {
@@ -129,37 +129,37 @@ element {
   orientation: horizontal;
   vertical-align: 0.5;
   background-color: transparent;
-  text-color: @on-surface;
+  text-color: @foreground;
 }
 
 element normal.normal {
   background-color: transparent;
-  text-color: @on-surface;
+  text-color: @foreground;
 }
 
 element normal.active {
-  background-color: @surface-container-high;
-  text-color: @on-surface;
+  background-color: @color0;  /* Softer dark for active state */
+  text-color: @foreground;
 }
 
 element selected.normal {
-  background-color: @primary;
-  text-color: @on-primary;
+  background-color: @color3;  /* Golden selection matching border */
+  text-color: @color0;        /* Dark text for readability */
 }
 
 element selected.active {
-  background-color: @primary;
-  text-color: @on-primary;
+  background-color: @color3;  /* Consistent golden selection */
+  text-color: @color0;        /* Dark text for readability */
 }
 
 element alternate.normal {
   background-color: transparent;
-  text-color: @on-surface;
+  text-color: @foreground;
 }
 
 element alternate.active {
-  background-color: @surface-container-high;
-  text-color: @on-surface;
+  background-color: @color0;  /* Softer dark for active state */
+  text-color: @foreground;
 }
 
 element-text {
@@ -178,8 +178,8 @@ element-icon {
 
 scrollbar {
   width: 4px;
-  background-color: @surface-container;
-  handle-color: @primary-container;
+  background-color: @color0;  /* Softer dark background */
+  handle-color: @color3;      /* Golden handle matching theme */
   handle-width: 4px;
   border-radius: 2px;
 }
