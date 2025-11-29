@@ -1,185 +1,91 @@
 @import "colors.rasi"
 
 configuration {
-  modi:                 "drun,run,filebrowser,window";
-  dpi:                  90;
-  show-icons:           true;
-  icon-theme:           "Papirus";
-  terminal:             "footclient";
-  window-format:        "{w} · {c} · {t}";
-  drun-display-format:  "{name}";
-  disable-history:      false;
-  max-history-size:     50;
-
-  display-drun:         " Apps";
-  display-run:          " Run";
-  display-window:       " Windows";
-  display-filebrowser:  " Files";
+	modi:				"drun";
+	font:				"Rubik 10";
+	display-drun: 			"";
+	drun-display-format:            "{name}";
+	sidebar-mode: 			false;
 }
 
 * {
-  spacing:       0.1em;
-  padding:       0.2em;
-  margin:        0px;
-  border-radius: 0.8em;
-  background-color: transparent;
-  text-color: @on-sigbg;
-  font: "JetBrainsMono Nerd Font 12";
+	button:				@sig1;
+	background-color:		@sigbg;
+	text-color:			@on-sigbg;
 }
 
 window {
-  width: 45%;
-  orientation: vertical;
-  location: center;
-  anchor: center;
-  x-offset: 0px;
-  y-offset: 0px;
-  margin: 0px;
-  padding: 0px;
-  border: 2px solid;
-  border-color: @sig1;
-  border-radius: 0.8em;
-  spacing: 0.1em;
-  children: [ mainbox ];
-  background-color: @sigbg;
+	width:			    	40%;
+	background-color:               @sigbg;
+	border-radius:                  16px;
 }
 
-mainbox {
-  spacing: 0.1em;
-  children: [ inputbar, mode-switcher, listview ];
-  background-color: transparent;
-  padding: 0px;
-}
-
-/* Hidden search bar but functional */
-inputbar {
-  spacing: 0.1em;
-  padding: 0px;
-  margin: 0px;
-  children: [ textbox-prompt-colon, entry ];
-  background-color: transparent;
-  border-radius: 0px;
-  border: 0px;
-  height: 0px;
-}
-
-textbox-prompt-colon {
-  expand: false;
-  padding: 0px;
-  margin: 0px;
-  border-radius: 0px;
-  str: "";
-  background-color: transparent;
-  text-color: transparent;
-  font: "JetBrainsMono Nerd Font Bold 0";
-}
+prompt { enabled: false; }
 
 entry {
-  placeholder: "";
-  placeholder-color: transparent;
-  padding: 0px;
-  margin: 0px;
-  border-radius: 0px;
-  background-color: transparent;
-  text-color: transparent;
-  font: "JetBrainsMono Nerd Font Bold 0";
+	placeholder:			"Search";
+	placeholder-color:              inherit;
+	expand:                         true;
+	padding:                        1.5%;
+	border-radius:			8px;
+	background-color:               @sig-surface-container;
+	text-color:                     @on-sigbg;
 }
 
-mode-switcher {
-  spacing: 0.5em;
-  orientation: horizontal;
-  background-color: @sig-surface-container;
-  padding: 8px 16px;
-  border-radius: 0.8em 0.8em 0px 0px;
-}
-
-button {
-  padding: 6px 12px;
-  border-radius: 0.5em;
-  background-color: transparent;
-  text-color: @on-sigbg;
-  font: "JetBrainsMono Nerd Font 11";
-}
-
-button selected {
-  background-color: @sig1;
-  text-color: @on-sig1;
+inputbar {
+	children: 			[ prompt, entry ];
+	background-image:               url("/home/rey/.config/zorro/current/bg-blurr.png", width);
+	expand:                         false;
+	border-radius:                  0px 0px 8px 8px;
+	padding:                        100px 30px 30px 300px;
+	background-color:               transparent;
 }
 
 listview {
-  lines: 10;
-  columns: 1;
-  spacing: 1px;
-  scrollbar: true;
-  cycle: true;
-  dynamic: true;
-  fixed-height: false;
-  margin: 0px;
-  padding: 6px 0px;
-  border: 0px;
-  border-radius: 0px 0px 0.8em 0.8em;
-  background-color: @sig-surface-container;
+	columns:                        1;
+	lines:	                        4;
+	cycle:                          false;
+	dynamic:                        true;
+	layout:                         vertical;
+	padding:			30px 200px 30px 30px;
+	background-color:               transparent;
+}
+
+mainbox { 
+	children: [ inputbar, listview ]; 
+	background-color:               transparent;
+	spacing:                        0px;
 }
 
 element {
-  border: 0px;
-  border-radius: 0px;
-  padding: 8px 16px;
-  spacing: 12px;
-  orientation: horizontal;
-  vertical-align: 0.5;
-  background-color: transparent;
-  text-color: @on-sigbg;
-}
-
-element normal.normal {
-  background-color: transparent;
-  text-color: @on-sigbg;
+	orientation:                    vertical;
+	padding:                        1.5% 0% 1.5% 0%;
+	border-radius:			8px;
+	background-color:               transparent;
+	text-color:                     @on-sigbg;
 }
 
 element normal.active {
-  background-color: @sig-surface-high;
-  text-color: @on-sigbg;
-}
-
-element selected.normal {
-  background-color: @sig1;
-  text-color: @on-sig1;
-}
-
-element selected.active {
-  background-color: @sig1;
-  text-color: @on-sig1;
-}
-
-element alternate.normal {
-  background-color: transparent;
-  text-color: @on-sigbg;
-}
-
-element alternate.active {
-  background-color: @sig-surface-high;
-  text-color: @on-sigbg;
+	background-color:               @sig-surface-high;
+	text-color:                     @on-sigbg;
 }
 
 element-text {
-  background-color: transparent;
-  text-color: inherit;
-  vertical-align: 0.5;
-  horizontal-align: 0.0;
-  font: "JetBrainsMono Nerd Font 12";
+	expand:                         true;
+	vertical-align:                 0.5;
+	margin:                         0.5% 3% 0% 3%;
+	background-color: 		inherit;
+	text-color:       		inherit;
 }
 
-element-icon {
-  background-color: transparent;
-  size: 16px;
-  padding: 0px 8px 0px 0px;
+element selected {
+	background-color:               @sig1;
+	text-color:                     @on-sig1;
+	border-radius:                  8px;
 }
 
-scrollbar {
-  width: 4px;
-  background-color: @sig-surface-high;
-  handle-color: @sig1;
-  handle-width: 4px;
-  border-radius: 2px;
+element selected.active {
+	background-color:               @sig1;
+	text-color:                     @on-sig1;
+	border-radius:                  8px;
 }
