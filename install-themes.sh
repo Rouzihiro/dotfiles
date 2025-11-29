@@ -47,3 +47,5 @@ ln -sf ~/.config/zorro/current/theme/i3blocks ~/.config/i3blocks/config
 
 mkdir -p ~/.config/mako
 ln -snf ~/.config/zorro/current/theme/mako.ini ~/.config/mako/config
+
+z-theme-cache
