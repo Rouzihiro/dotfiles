@@ -34,7 +34,7 @@ entry {
 
 inputbar {
 	children: 			[ prompt, entry ];
-	background-image:               url("/home/rey/.config/zorro/current/bg-blurr.png", width);
+	background-image:               url("/home/rey/.config/zorro/current/theme/rofi.png", width);
 	expand:                         false;
 	border-radius:                  0px 0px 8px 8px;
 	padding:                        100px 30px 30px 300px;

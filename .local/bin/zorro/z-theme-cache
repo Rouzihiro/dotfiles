@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
-# Save as: ~/.local/bin/update-theme-cache
 
 PALETTES_DIR="$HOME/Pictures/color-palettes"
+THEMES_DIR="$HOME/dotfiles/themes"
 CACHE_DIR="$HOME/.cache/theme-palette-thumbnails"
 
-# Create cache directory if it doesn't exist
+# Create cache directory for palettes
 mkdir -p "$CACHE_DIR"
 
-# Force regenerate all thumbnails
+# Force regenerate all palette thumbnails
 update_palette_cache() {
     if command -v magick &> /dev/null || command -v convert &> /dev/null; then
         echo "Updating theme palette cache..."
@@ -15,18 +15,51 @@ update_palette_cache() {
             filename=$(basename "$palette")
             thumbnail="$CACHE_DIR/${filename%.*}.png"
             
-            echo "Generating: $filename"
+            echo "Generating palette thumbnail: $filename"
             if command -v magick &> /dev/null; then
                 magick "$palette" -resize 200x200^ -gravity center -extent 200x200 +adjoin "$thumbnail" 2>/dev/null
             else
                 convert "$palette" -resize 200x200^ -gravity center -extent 200x200 +adjoin "$thumbnail" 2>/dev/null
             fi
         done
-        echo "Cache update complete!"
+        echo "Palette cache update complete!"
     else
         echo "Error: ImageMagick not found. Install with: sudo apt install imagemagick"
         exit 1
     fi
 }
 
+# Generate rofi background for each theme
+update_rofi_cache() {
+    if command -v magick &> /dev/null || command -v convert &> /dev/null; then
+        echo "Updating rofi theme backgrounds..."
+        find -L "$THEMES_DIR" -type d -name "backgrounds" | while read -r bg_dir; do
+            theme_dir=$(dirname "$bg_dir")
+            theme_name=$(basename "$theme_dir")
+            rofi_bg="$theme_dir/rofi.png"
+            
+            # Find the first background image in the backgrounds folder
+            background=$(find -L "$bg_dir" -type f \( -iname "*.png" -o -iname "*.jpg" -o -iname "*.jpeg" \) | head -1)
+            
+            if [[ -n "$background" ]]; then
+                echo "Generating rofi background for: $theme_name"
+                if command -v magick &> /dev/null; then
+                    magick "$background" -resize 1366x768 -blur 0x12 "$rofi_bg" 2>/dev/null
+                else
+                    convert "$background" -resize 1366x768 -blur 0x12 "$rofi_bg" 2>/dev/null
+                fi
+                echo "Created: $rofi_bg"
+            else
+                echo "Warning: No background images found for theme: $theme_name"
+            fi
+        done
+        echo "Rofi backgrounds update complete!"
+    else
+        echo "Error: ImageMagick not found. Install with: sudo apt install imagemagick"
+        exit 1
+    fi
+}
+
+# Update both caches
 update_palette_cache
+update_rofi_cache
