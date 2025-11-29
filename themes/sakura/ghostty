@@ -1,0 +1,27 @@
+# Symphony
+# Author: vyrx
+# Theme: Sakura
+
+# Background and foreground colors
+background = #0d0509
+foreground = #f0eaed
+
+# Standard colors
+palette = 0=#0d0509
+palette = 1=#E85F6F
+palette = 2=#F29B9A
+palette = 3=#D4A882
+palette = 4=#D9A56C
+palette = 5=#D1B399
+palette = 6=#E8C099
+palette = 7=#f0eaed
+
+# Bright colors
+palette = 8=#4a3c45
+palette = 9=#FF7A8A
+palette = 10=#FFB5B4
+palette = 11=#E6BA94
+palette = 12=#EBB97E
+palette = 13=#E3C5AB
+palette = 14=#FBD2AB
+palette = 15=#ffffff
