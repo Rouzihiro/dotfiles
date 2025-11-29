@@ -1,0 +1,2 @@
+exec_always export XCURSOR_THEME=la-capitaine-cursor-theme
+exec_always export XCURSOR_SIZE=24
