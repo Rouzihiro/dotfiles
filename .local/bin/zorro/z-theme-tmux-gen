@@ -4,7 +4,7 @@
 
 input_file="rofi.rasi"
 template_file="tmux-template.conf"
-output_file="tmux-colors"
+output_file="tmux-colors.conf"
 
 # Check if input files exist
 if [ ! -f "$input_file" ]; then
