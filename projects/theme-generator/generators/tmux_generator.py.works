@@ -1,0 +1,139 @@
+from . import BaseGenerator
+
+class TmuxGenerator(BaseGenerator):
+    def default_filename(self):
+        return "tmux-palette.conf"
+    
+    def generate(self, output_file=None):
+        output_file = output_file or self.default_filename()
+        self.backup_file(output_file)
+        
+        # Map Rofi's harmonious colors to tmux variables
+        tmux_colors = {
+            # Base colors
+            'base': self.colors['background'],           # background
+            'text': self.colors['foreground'],           # foreground
+            'crust': self.colors['color0'],              # black
+            
+            # Signature colors from Rofi
+            'signature': self.colors['color5'],          # sig1 (magenta)
+            'accent': self.colors['color9'],             # sig2/sig3 (bright red)
+            'secondary': self.colors['color3'],          # yellow for variety
+            
+            # Harmonious surface colors from Rofi
+            'surface': '#2c2429',                        # sig-surface without alpha
+            'surface_container': '#42363e',              # sig-surface-container without alpha  
+            'surface_high': '#856c7c',                   # sig-surface-high without alpha
+            
+            # Additional colors from Rofi palette
+            'red': self.colors['color1'],
+            'green': self.colors['color2'], 
+            'yellow': self.colors['color3'],
+            'blue': self.colors['color4'],
+            'magenta': self.colors['color5'],
+            'cyan': self.colors['color6'],
+            'white': self.colors['color7'],
+            'bright_black': self.colors['color8'],
+            'bright_red': self.colors['color9'],
+            'bright_green': self.colors['color10'],
+            'bright_yellow': self.colors['color11'],
+            'bright_blue': self.colors['color12'],
+            'bright_magenta': self.colors['color13'],
+            'bright_cyan': self.colors['color14'],
+            'bright_white': self.colors['color15'],
+            
+            # Special colors
+            'peach': self.colors.get('color17', '#B8758A'),  # peach from extended
+        }
+        
+        template = f"""# Tmux color configuration - Generated from Rofi harmony
+# Base colors
+base="{tmux_colors['base']}"
+text="{tmux_colors['text']}"
+crust="{tmux_colors['crust']}"
+
+# Signature colors (from Rofi sig1, sig2, sig3)
+signature="{tmux_colors['signature']}"    # sig1 - active elements
+accent="{tmux_colors['accent']}"          # sig2/sig3 - highlights  
+secondary="{tmux_colors['secondary']}"    # additional accent
+
+# Surface colors (from Rofi harmonious surfaces)
+surface="{tmux_colors['surface']}"
+surface_container="{tmux_colors['surface_container']}"
+surface_high="{tmux_colors['surface_high']}"
+
+# Color palette (from Rofi colors)
+red="{tmux_colors['red']}"
+green="{tmux_colors['green']}"
+yellow="{tmux_colors['yellow']}"
+blue="{tmux_colors['blue']}"
+magenta="{tmux_colors['magenta']}"
+cyan="{tmux_colors['cyan']}"
+white="{tmux_colors['white']}"
+black="{tmux_colors['crust']}"
+
+# Bright colors
+bright_black="{tmux_colors['bright_black']}"
+bright_red="{tmux_colors['bright_red']}"
+bright_green="{tmux_colors['bright_green']}"
+bright_yellow="{tmux_colors['bright_yellow']}"
+bright_blue="{tmux_colors['bright_blue']}"
+bright_magenta="{tmux_colors['bright_magenta']}"
+bright_cyan="{tmux_colors['bright_cyan']}"
+bright_white="{tmux_colors['bright_white']}"
+
+# Special colors
+peach="{tmux_colors['peach']}"
+
+# Basic setup
+set -g status-position top
+set -g status-style "fg=$text,bg=$base"
+set -g base-index 1
+set -g renumber-windows on
+
+# Pane borders - using signature color for active, surface_high for inactive
+set -g pane-active-border-style "fg=$signature"
+set -g pane-border-style "fg=$surface_high"
+
+# Simplified status bar
+set -g status-left ""
+set -g status-right ""
+
+##### Window Tabs - using surface_container for inactive, signature for active
+set -g window-status-separator " "
+set -g window-status-format \\
+	"#[fg=$surface_container,bg=default]#[fg=$text,bg=$surface_container] #I:#W #[fg=$surface_container,bg=default]"
+
+set -g window-status-current-format \\
+	"#[fg=$signature,bg=default]#[fg=$base,bg=$signature] #I:#W #[fg=$signature,bg=default]"
+
+##### Right Status - using harmonious colors from Rofi
+set -g status-right '#[fg=$green,bg=default]#[fg=$crust,bg=$green]  #(basename "#{{pane_current_path}}") #[fg=$green,bg=$accent]#[fg=$crust,bg=$accent] #(timew | awk "/^ *Total/ {{print \\$NF}}") #[fg=$accent,bg=default]'
+
+##### Message Styling - using signature color for highlights
+set -g message-style "fg=$crust,bg=$signature"
+set -g message-command-style "fg=$text,bg=$base"
+
+# Additional tmux elements that match starship
+set -g mode-style "fg=$crust,bg=$signature"
+set -g status-justify left
+
+# Optional: Set selection colors to match
+set -g copy-mode-match-style "fg=$crust,bg=$secondary"
+set -g copy-mode-current-match-style "fg=$crust,bg=$accent"
+"""
+        
+        with open(output_file, 'w') as f:
+            f.write(template)
+        print(f"Tmux configuration generated successfully: {output_file}")
+        
+        # Show the color mapping
+        print("\nRofi to Tmux color mapping:")
+        print("-" * 40)
+        print(f"  base (background): {tmux_colors['base']}")
+        print(f"  text (foreground): {tmux_colors['text']}")
+        print(f"  signature (sig1):  {tmux_colors['signature']}")
+        print(f"  accent (sig2/3):   {tmux_colors['accent']}")
+        print(f"  surfaces:          {tmux_colors['surface_high']} -> {tmux_colors['surface_container']} -> {tmux_colors['surface']}")
+        
+        return output_file
