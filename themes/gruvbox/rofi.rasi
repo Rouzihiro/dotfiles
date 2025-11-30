@@ -5,11 +5,25 @@
     selection-foreground: #ebdbb2;  /* selection fg */
     border-color: #d65d0e;    /* border */
     
-    /* Signature colors - customize these per theme */
+    /* Signature colors - customized selection */
     sigbg: @color0;           /* signature background */
     sig1: @color3;            /* signature color 1 */
     sig2: @color2;            /* signature color 2 */
-    sig3: @color3;            /* signature color 3 */
+    sig3: @color11;            /* signature color 3 */
+
+    /* Contrast colors for signature elements */
+    on-sigbg: @color15;    /* text on signature background */
+    on-sig1: @color0;      /* text on signature color 1 */
+    on-sig2: @color0;      /* text on signature color 2 */
+    on-sig3: @color0;      /* text on signature color 3 */
+
+    /* Harmonious surface colors for menu elements */
+    sig-surface: #242120CC;        /* surface with transparency */
+    sig-surface-container: #36323040;  /* surface container */
+    sig-surface-high: #6c646180;       /* high surface */
+
+    /* Text color reference */
+    text-color: @on-sigbg;
 
     /* Normal colors */
     color0: #3c3836;          /* black */
@@ -32,13 +46,4 @@
     color15: #fbf1c7;         /* bright white */
 
     /* Extended colors */
-
-    on-sigbg: #fbf1c7;
-    on-sig1: #282828;
-    on-sig2: #282828;
-    on-sig3: #282828;
-    sig-surface: #2a2725;
-    sig-surface-container: #363230;
-    sig-surface-high: #635f5e;
-    text-color: @on-sigbg;
 }
