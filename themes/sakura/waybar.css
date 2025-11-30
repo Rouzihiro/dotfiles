@@ -1,12 +1,21 @@
-/**
- * ════════════════════════════════════════════════════════
- *   Symphony by https://github.com/vyrx-dev
- *   Theme: Sakura
- * ════════════════════════════════════════════════════════
- */
+@define-color foreground 	#f0eaed;
+@define-color background 	#0d0509;
+@define-color bg 				#0d0509;
+@define-color fg 				#f0eaed;
+@define-color bordercolor #4a3c45;
+@define-color highlight 	#D4A882;
+@define-color alert 			#E85F6F;
+@define-color activegreen #F29B9A;
+@define-color disabled    #0d0509;
 
-@define-color waybar_accent rgba(209, 179, 153, 0.10);
-@define-color waybar_accent_fg @on_background;
-@define-color on_background #dee4e4;
-@define-color surface_container #1a2121;
-@define-color error #ffb4ab;
+@define-color bg_alt      #0d0509;
+@define-color border      #4a3c45;
+
+@define-color red         #E85F6F;
+@define-color green       #F29B9A;
+@define-color yellow      #D4A882;
+@define-color blue        #D9A56C;
+@define-color purple      #D1B399;
+@define-color aqua        #E8C099;
+@define-color orange      #f0eaed;
+@define-color gray        #4a3c45;

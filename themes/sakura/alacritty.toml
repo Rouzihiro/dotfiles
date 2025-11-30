@@ -1,63 +1,35 @@
-# Theme: Sakura
-
 [colors.primary]
-background = "#0d0509"
-foreground = "#f0eaed"
-
-[colors.cursor]
-text = "#0d0509"
-cursor = "#f0eaed"
-
-[colors.vi_mode_cursor]
-text = "#0d0509"
-cursor = "#f0eaed"
-
-[colors.search.matches]
-foreground = "#0d0509"
-background = "#f0eaed"
-
-[colors.search.focused_match]
-foreground = "CellBackground"
-background = "CellForeground"
-
-[colors.line_indicator]
-foreground = "None"
-background = "None"
-
-[colors.footer_bar]
-foreground = "#4a3c45"
-background = "#f0eaed"
-
-[colors.selection]
-text = "CellBackground"
-background = "CellForeground"
+background = '#0d0509'
+foreground = '#f0eaed'
 
 [colors.normal]
-black = "#0d0509"
-red = "#E85F6F"
-green = "#F29B9A"
-yellow = "#D4A882"
-blue = "#D9A56C"
-magenta = "#D1B399"
-cyan = "#E8C099"
-white = "#f0eaed"
+black = '#0d0509'
+red = '#E85F6F'
+green = '#F29B9A'
+yellow = '#D4A882'
+blue = '#D9A56C'
+magenta = '#D1B399'
+cyan = '#E8C099'
+white = '#f0eaed'
 
 [colors.bright]
-black = "#4a3c45"
-red = "#FF7A8A"
-green = "#FFB5B4"
-yellow = "#E6BA94"
-blue = "#EBB97E"
-magenta = "#E3C5AB"
-cyan = "#FBD2AB"
-white = "#ffffff"
+black = '#4a3c45'
+red = '#FF7A8A'
+green = '#FFB5B4'
+yellow = '#E6BA94'
+blue = '#EBB97E'
+magenta = '#E3C5AB'
+cyan = '#FBD2AB'
+white = '#ffffff'
 
-[colors.dim]
-black = "#f0eaed"
-red = "#B8758A"
-green = "#C298A8"
-yellow = "#B89C74"
-blue = "#B88A5E"
-magenta = "#B19584"
-cyan = "#C4A284"
-white = "#4a3c45"
+[colors.selection]
+background = '#f0eaed'
+foreground = '#0d0509'
+
+[[colors.indexed_colors]]
+index = 16
+color = '#f0eaed'
+
+[[colors.indexed_colors]]
+index = 17
+color = '#B8758A'
