@@ -51,6 +51,7 @@ vim.pack.add({
 		{ src = "https://github.com/ribru17/bamboo.nvim" 	}, 
 		{ src = "https://github.com/gthelding/monokai-pro.nvim" 	}, 
 		{ src = "https://github.com/rose-pine/neovim" 	}, 
+		{ src = "https://github.com/bjarneo/pixel.nvim" },
 
 })
 

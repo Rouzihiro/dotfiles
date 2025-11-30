@@ -6,10 +6,10 @@
     border-color: #f0eaed;    /* border */
     
     /* Signature colors - customize these per theme */
-    sigbg: #4a3c45;           /* signature background */
-    sig1: #E85F6F;            /* signature color 1 */
-    sig2: #F29B9A;            /* signature color 2 */
-    sig3: #D4A882;            /* signature color 3 */
+    sigbg: @color8;           /* signature background */
+    sig1: @color1;            /* signature color 1 */
+    sig2: @color2;            /* signature color 2 */
+    sig3: @color3;            /* signature color 3 */
 
     /* Normal colors */
     color0: #0d0509;          /* black */
@@ -32,6 +32,6 @@
     color15: #ffffff;         /* bright white */
 
     /* Extended colors */
-    color16: #f0eaed;         /* orange */
-    color17: #B8758A;         /* peach */
+    color16: #f0eaed;          /* orange */
+    color17: #B8758A;          /* peach */
 }
