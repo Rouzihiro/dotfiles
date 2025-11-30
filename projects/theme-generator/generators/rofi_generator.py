@@ -13,6 +13,7 @@ class RofiGenerator(BaseGenerator):
         
         # Available color options with descriptions
         color_options = {
+            '0': ('color0', 'black'),
             '1': ('color1', 'red'),
             '2': ('color2', 'green'), 
             '3': ('color3', 'yellow'),
