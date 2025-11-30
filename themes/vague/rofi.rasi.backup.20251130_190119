@@ -7,8 +7,8 @@
     
     /* Signature colors - customized selection */
     sigbg: @color8;           /* signature background */
-    sig1: @color3;            /* signature color 1 */
-    sig2: @color4;            /* signature color 2 */
+    sig1: @color4;            /* signature color 1 */
+    sig2: @color3;            /* signature color 2 */
     sig3: @color1;            /* signature color 3 */
 
     /* Contrast colors for signature elements */
