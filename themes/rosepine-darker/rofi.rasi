@@ -1,19 +1,33 @@
 * {
-    background: #191724CC;      /* background */
+    background: #191724;      /* background */
     foreground: #e0def4;      /* foreground */
     selection-background: #403d52;  /* selection bg */
     selection-foreground: #e0def4;  /* selection fg */
     border-color: #403d52;    /* border */
     
-    /* Signature colors - customize these per theme */
-    sigbg: @background;           /* signature background */
-    sig1: @color1;            /* signature color 1 */
-    sig2: @color2;            /* signature color 2 */
+    /* Signature colors - customized selection */
+    sigbg: @color8;           /* signature background */
+    sig1: @color2;            /* signature color 1 */
+    sig2: @color1;            /* signature color 2 */
     sig3: @color3;            /* signature color 3 */
+
+    /* Contrast colors for signature elements */
+    on-sigbg: @color15;    /* text on signature background */
+    on-sig1: @color15;      /* text on signature color 1 */
+    on-sig2: @color0;      /* text on signature color 2 */
+    on-sig3: @color0;      /* text on signature color 3 */
+
+    /* Harmonious surface colors for menu elements */
+    sig-surface: #423f50CC;        /* surface with transparency */
+    sig-surface-container: #635f7840;  /* surface container */
+    sig-surface-high: #c6bef180;       /* high surface */
+
+    /* Text color reference */
+    text-color: @on-sigbg;
 
     /* Normal colors */
     color0: #26233a;          /* black */
-    color1: #eb6f9299;          /* red */
+    color1: #eb6f92;          /* red */
     color2: #31748f;          /* green */
     color3: #f6c177;          /* yellow */
     color4: #9ccfd8;          /* blue */
@@ -32,13 +46,4 @@
     color15: #e0def4;         /* bright white */
 
     /* Extended colors */
-
-    on-sigbg: #fbf1c7;
-    on-sig1: #282828;
-    on-sig2: #fbf1c7;
-    on-sig3: #282828;
-    sig-surface: #2c2a39;
-    sig-surface-container: #393649;
-    sig-surface-high: #666374;
-    text-color: @on-sigbg;
 }

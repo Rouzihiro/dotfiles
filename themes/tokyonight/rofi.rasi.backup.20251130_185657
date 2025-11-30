@@ -1,33 +1,19 @@
 * {
-    background: #1a1b26;      /* background */
+    background: #1a1b26CC;      /* background */
     foreground: #c0caf5;      /* foreground */
     selection-background: #283457;  /* selection bg */
     selection-foreground: #c0caf5;  /* selection fg */
     border-color: #283457;    /* border */
     
-    /* Signature colors - customized selection */
-    sigbg: @color8;           /* signature background */
+    /* Signature colors - customize these per theme */
+    sigbg: @background;           /* signature background */
     sig1: @color4;            /* signature color 1 */
-    sig2: @color1;            /* signature color 2 */
-    sig3: @color2;            /* signature color 3 */
-
-    /* Contrast colors for signature elements */
-    on-sigbg: @color15;    /* text on signature background */
-    on-sig1: @color0;      /* text on signature color 1 */
-    on-sig2: @color0;      /* text on signature color 2 */
-    on-sig3: @color0;      /* text on signature color 3 */
-
-    /* Harmonious surface colors for menu elements */
-    sig-surface: #272b3eCC;        /* surface with transparency */
-    sig-surface-container: #3a405d40;  /* surface container */
-    sig-surface-high: #7581bb80;       /* high surface */
-
-    /* Text color reference */
-    text-color: @on-sigbg;
+    sig2: @color2;            /* signature color 2 */
+    sig3: @color3;            /* signature color 3 */
 
     /* Normal colors */
     color0: #15161e;          /* black */
-    color1: #f7768e;          /* red */
+    color1: #f7768e99;          /* red */
     color2: #9ece6a;          /* green */
     color3: #e0af68;          /* yellow */
     color4: #7aa2f7;          /* blue */
@@ -48,4 +34,13 @@
     /* Extended colors */
     color16: #ff9e64;          /* orange */
     color17: #db4b4b;          /* peach */
+
+    on-sigbg: #fbf1c7;
+    on-sig1: #282828;
+    on-sig2: #282828;
+    on-sig3: #282828;
+    sig-surface: #1c243c;
+    sig-surface-container: #242e4e;
+    sig-surface-high: #535c78;
+    text-color: @on-sigbg;
 }
