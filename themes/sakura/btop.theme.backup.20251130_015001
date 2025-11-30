@@ -1,0 +1,74 @@
+# Symphony
+# Author: vyrx
+# Theme: Sakura
+
+# Main background, empty for terminal default, need to be empty if you want transparent background
+theme[main_bg]=""
+
+# Main text color
+theme[main_fg]="#f0eaed"
+
+# Title color for boxes
+theme[title]="#D1B399"
+
+# Highlight color for keyboard shortcuts
+theme[hi_fg]="#E3C5AB"
+
+# Background color of selected item in processes box
+theme[selected_bg]="#4a3c45"
+
+# Foreground color of selected item in processes box
+theme[selected_fg]="#f0eaed"
+
+# Color of inactive/disabled text
+theme[inactive_fg]="#4a3c45"
+
+# Misc colors for processes box including mini cpu graphs, details memory graph and details status text
+theme[proc_misc]="#D1B399"
+
+# Box outline and divider line color
+theme[cpu_box]="#F29B9A"
+theme[mem_box]="#F29B9A"
+theme[net_box]="#F29B9A"
+theme[proc_box]="#F29B9A"
+theme[div_line]="#4a3c45"
+
+# Gradient for all meters and graphs
+theme[temp_start]="#E8C099"
+theme[temp_mid]="#D9A56C"
+theme[temp_end]="#F29B9A"
+
+
+theme[cpu_start]="#E8C099"
+theme[cpu_mid]="#D9A56C"
+theme[cpu_end]="#F29B9A"
+
+
+theme[free_start]="#D9A56C"
+theme[free_mid]="#D4A882"
+theme[free_end]="#D4A882"
+
+
+theme[cached_start]="#D4A882"
+theme[cached_mid]="#D4A882"
+theme[cached_end]="#D4A882"
+
+
+theme[available_start]="#E8C099"
+theme[available_mid]="#E8C099"
+theme[available_end]="#E8C099"
+
+
+theme[used_start]="#F29B9A"
+theme[used_mid]="#F29B9A"
+theme[used_end]="#F29B9A"
+
+
+theme[download_start]="#D4A882"
+theme[download_mid]="#E8C099"
+theme[download_end]="#EBB97E"
+
+
+theme[upload_start]="#D4A882"
+theme[upload_mid]="#E8C099"
+theme[upload_end]="#EBB97E"

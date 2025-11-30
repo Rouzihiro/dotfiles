@@ -105,6 +105,10 @@
       "rev": "01cb3a8",
       "src": "https://github.com/stevearc/oil.nvim"
     },
+    "pixel.nvim": {
+      "rev": "fd06541",
+      "src": "https://github.com/bjarneo/pixel.nvim"
+    },
     "plenary.nvim": {
       "rev": "b9fd522",
       "src": "https://github.com/nvim-lua/plenary.nvim"
