@@ -1,5 +1,5 @@
 "$schema" = 'https://starship.rs/config-schema.json'
-palette = 'Vague'
+palette = 'Gruvbox_Material'
 
 format = """
 [](signature)\
@@ -749,3 +749,32 @@ surface0="#0d0c0c"
 base="#181616"
 mantle="#0d0c0c"
 crust="#0d0c0c"
+
+[palettes.Sakura]
+signature="#D1B399"
+rosewater="#f0eaed"
+flamingo="#f0eaed"
+pink="#D1B399"
+mauve="#D1B399"
+red="#E85F6F"
+maroon="#E85F6F"
+peach="#D4A882" #missing
+yellow="#D4A882"
+green="#F29B9A"
+teal="#E8C099"
+sky="#D9A56C"
+sapphire="#D9A56C"
+blue="#D9A56C"
+lavender="#D1B399"
+text="#f0eaed"
+subtext1="#f0eaed"
+subtext0="#4a3c45"
+overlay2="#4a3c45"
+overlay1="#4a3c45"
+overlay0="#4a3c45"
+surface2="#4a3c45"
+surface1="#4a3c45"
+surface0="#0d0509"
+base="#0d0509"
+mantle="#0d0509"
+crust="#0d0509"
