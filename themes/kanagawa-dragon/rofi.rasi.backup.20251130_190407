@@ -6,21 +6,21 @@
     border-color: #2D4F67;    /* border */
     
     /* Signature colors - customized selection */
-    sigbg: @color0;           /* signature background */
+    sigbg: @color8;           /* signature background */
     sig1: @color4;            /* signature color 1 */
     sig2: @color3;            /* signature color 2 */
     sig3: @color3;            /* signature color 3 */
 
     /* Contrast colors for signature elements */
-    on-sigbg: @color15;    /* text on signature background */
+    on-sigbg: @color0;    /* text on signature background */
     on-sig1: @color0;      /* text on signature color 1 */
     on-sig2: @color0;      /* text on signature color 2 */
     on-sig3: @color0;      /* text on signature color 3 */
 
     /* Harmonious surface colors for menu elements */
-    sig-surface: #0a0909CC;        /* surface with transparency */
-    sig-surface-container: #0b0a0a40;  /* surface container */
-    sig-surface-high: #17151580;       /* high surface */
+    sig-surface: #63635dCC;        /* surface with transparency */
+    sig-surface-container: #95958c40;  /* surface container */
+    sig-surface-high: #c9c9bd80;       /* high surface */
 
     /* Text color reference */
     text-color: @on-sigbg;
