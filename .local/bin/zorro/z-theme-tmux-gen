@@ -3,7 +3,8 @@
 # Script to extract specific colors from rofi.rasi and prepend to tmux-colors
 
 input_file="rofi.rasi"
-template_file="tmux-template.conf"
+template_file="$HOME/dotfiles/projects/templates/tmux-template.conf"  
+# template_file="tmux-template.conf"
 output_file="tmux-colors.conf"
 
 # Check if input files exist
