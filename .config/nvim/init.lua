@@ -52,6 +52,7 @@ vim.pack.add({
 		{ src = "https://github.com/gthelding/monokai-pro.nvim" 	}, 
 		{ src = "https://github.com/rose-pine/neovim" 	}, 
 		{ src = "https://github.com/bjarneo/pixel.nvim" },
+		{ src = "https://github.com/maxmx03/solarized.nvim" },
 
 })
 

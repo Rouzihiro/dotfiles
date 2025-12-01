@@ -1,31 +1,37 @@
+/*
+ * Rofi Color Theme
+ * Generated with WCAG-compliant color science
+ */
+
 * {
+    /* Base colors */
     background: #111C18;      /* background */
     foreground: #C1C497;      /* foreground */
     selection-background: #C1C497;  /* selection bg */
     selection-foreground: #111C18;  /* selection fg */
     border-color: #C1C497;    /* border */
     
-    /* Signature colors - customized selection */
-    sigbg: @color0;           /* signature background */
+    /* Signature colors - interactive selection */
+    sigbg: @background;           /* signature background */
     sig1: @color2;            /* signature color 1 */
     sig2: @color3;            /* signature color 2 */
-    sig3: @color3;            /* signature color 3 */
+    sig3: @color12;            /* signature color 3 */
 
-    /* Contrast colors for signature elements */
+    /* WCAG-compliant contrast colors */
     on-sigbg: @color15;    /* text on signature background */
     on-sig1: @color0;      /* text on signature color 1 */
-    on-sig2: @color15;      /* text on signature color 2 */
-    on-sig3: @color15;      /* text on signature color 3 */
+    on-sig2: @color0;      /* text on signature color 2 */
+    on-sig3: @color0;      /* text on signature color 3 */
 
-    /* Harmonious surface colors for menu elements */
-    sig-surface: #152119CC;        /* surface with transparency */
-    sig-surface-container: #1f312640;  /* surface container */
-    sig-surface-high: #3f634d80;       /* high surface */
+    /* Harmonious surface colors with transparency */
+    sig-surface: #0b1212CC;        /* surface with 80% opacity */
+    sig-surface-container: #0e161640;  /* surface container 25% */
+    sig-surface-high: #40494680;       /* high surface 50% */
 
     /* Text color reference */
     text-color: @on-sigbg;
 
-    /* Normal colors */
+    /* Standard 16-color palette */
     color0: #23372B;          /* black */
     color1: #FF5345;          /* red */
     color2: #549E6A;          /* green */
@@ -35,7 +41,6 @@
     color6: #2DD5B7;          /* cyan */
     color7: #F6F5DD;          /* white */
 
-    /* Bright colors */
     color8: #53685B;          /* bright black */
     color9: #DB9F9C;          /* bright red */
     color10: #143614;         /* bright green */
@@ -45,5 +50,5 @@
     color14: #8CD3CB;         /* bright cyan */
     color15: #9EEBB3;         /* bright white */
 
-    /* Extended colors */
+    /* Extended colors (if present in theme) */
 }

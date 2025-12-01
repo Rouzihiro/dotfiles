@@ -11,7 +11,6 @@ ln -snf "$(find ~/.config/zorro/current/theme/backgrounds -type f -o -type l | s
 ln -snf ~/.config/zorro/current/theme/nvim.lua ~/.config/nvim/lua/theme.lua
 
 mkdir -p ~/.themes
-ln -snf ~/.config/zorro/current/theme/gtk/gtk-4.0 ~/.config/gtk-4.0
 
 mkdir -p ~/.config/btop/themes
 ln -snf ~/.config/zorro/current/theme/btop.theme ~/.config/btop/themes/current.theme
@@ -40,7 +39,7 @@ mkdir -p ~/.config/sway/config.d/
 ln -snf ~/.config/zorro/current/theme/sway ~/.config/sway/config.d/theme
 # ln -snf ~/.config/zorro/current/theme/sway-env ~/.config/sway/config.d/environment
 
-ln -snf $HOME/dotfiles/.config/starship.toml $HOME/.config/starship.toml
+# ln -snf $HOME/dotfiles/.config/starship.toml $HOME/.config/starship.toml
 
 mkdir -p ~/.config/i3blocks
 ln -sf ~/.config/zorro/current/theme/i3blocks ~/.config/i3blocks/config

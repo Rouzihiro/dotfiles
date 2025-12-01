@@ -155,6 +155,7 @@ class RofiGenerator(BaseGenerator):
         
         # Available color options with descriptions
         color_options = {
+            'bg': ('background', 'background'),
             '0': ('color0', 'black'),
             '1': ('color1', 'red'),
             '2': ('color2', 'green'), 
@@ -177,7 +178,11 @@ class RofiGenerator(BaseGenerator):
         print("\n📊 Available colors:")
         print("-" * 60)
         for key, (color_name, description) in color_options.items():
-            color_value = self.colors.get(color_name, 'N/A')
+            # Special handling for 'background' key
+            if key == 'bg':
+                color_value = self.colors.get('background', 'N/A')
+            else:
+                color_value = self.colors.get(color_name, 'N/A')
             print(f"  {key:>2}. {color_name:8} = {color_value:9} ({description})")
         
         print("\n🎯 Please select colors for signature elements:")
@@ -185,21 +190,26 @@ class RofiGenerator(BaseGenerator):
         
         sig_choices = {}
         
-        # Get signature background
+        # Get signature background with 'bg' as default
         while True:
-            choice = input("\nSelect signature background (sigbg) [default: 8 - bright black]: ").strip()
+            choice = input("\nSelect signature background (sigbg) [default: bg - background]: ").strip()
             if not choice:
-                choice = '8'  # Default to bright black
+                choice = 'bg'  # Default to background
             if choice in color_options:
                 sig_choices['sigbg'] = color_options[choice][0]
                 break
             else:
-                print("❌ Invalid choice! Please select a number from the list above.")
+                print("❌ Invalid choice! Please select from the options above (bg, 0-15).")
         
         # Get signature colors 1-3 with smart suggestions
         for i in range(1, 4):
             while True:
-                default = str(i) if int(choice) != i else str((i + 1) % 16)  # Avoid same as background
+                # Avoid suggesting same as background
+                if choice in ('0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15'):
+                    default = str((int(choice) + i) % 16)
+                else:
+                    default = str(i)  # Default to color1, color2, color3
+                
                 suggestion = f"[default: {default} - {color_options.get(default, ('', ''))[1]}]"
                 
                 choice_i = input(f"Select signature color {i} (sig{i}) {suggestion}: ").strip()
@@ -214,7 +224,8 @@ class RofiGenerator(BaseGenerator):
                         bg_ref = sig_choices['sigbg']
                         sig_ref = sig_choices[f'sig{i}']
                         
-                        bg_color = self.colors.get(bg_ref, '#000000')
+                        # Get actual color values for contrast check
+                        bg_color = self.colors.get(bg_ref, self.colors.get('background', '#000000'))
                         sig_color = self.colors.get(sig_ref, '#000000')
                         
                         contrast = self.get_contrast_ratio(bg_color, sig_color)
@@ -225,13 +236,17 @@ class RofiGenerator(BaseGenerator):
                     
                     break
                 else:
-                    print("❌ Invalid choice! Please select a number from the list above.")
+                    print("❌ Invalid choice! Please select from the options above (bg, 0-15).")
         
         # Show final selection
         print("\n✅ Signature color selection complete:")
         print("-" * 60)
         for sig_name, color_ref in sig_choices.items():
-            color_value = self.colors.get(color_ref, 'N/A')
+            # Special handling for 'background' key
+            if color_ref == 'background':
+                color_value = self.colors.get('background', 'N/A')
+            else:
+                color_value = self.colors.get(color_ref, 'N/A')
             print(f"  {sig_name}: @{color_ref} ({color_value})")
         
         confirm = input("\n🚀 Continue with generation? [Y/n]: ").strip().lower()
@@ -272,7 +287,7 @@ class RofiGenerator(BaseGenerator):
     def _calculate_surface_colors(self, sig_choices):
         """Calculate harmonious surface colors using proper color science"""
         sigbg_color_ref = sig_choices['sigbg']
-        sigbg_hex = self.colors.get(sigbg_color_ref, '#000000')
+        sigbg_hex = self.colors.get(sigbg_color_ref, self.colors.get('background', '#000000'))
         
         # Create surface variants with different brightness levels
         sig_surface = self.adjust_color_brightness(sigbg_hex, -0.3)  # 30% darker
@@ -387,7 +402,7 @@ class RofiGenerator(BaseGenerator):
         print(f"  Accent: @{sig_choices['sig3']}")
         
         # Check contrast ratios
-        bg_color = self.colors.get(sig_choices['sigbg'], '#000000')
+        bg_color = self.colors.get(sig_choices['sigbg'], self.colors.get('background', '#000000'))
         sig1_color = self.colors.get(sig_choices['sig1'], '#000000')
         contrast = self.get_contrast_ratio(bg_color, sig1_color)
         
