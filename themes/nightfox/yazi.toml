@@ -1,53 +1,173 @@
-[flavor]
-name = "nightfox"
-author = "Rey"
-version = "0.1"
+# : Manager [[[
 
-[palette]
-bg        = "#192330"  # background
-bg_alt    = "#131a24"  # darker background
-fg        = "#cdcecf"  # foreground
-fg_alt    = "#aeafb0"  # dimmed fg
+[mgr]
+cwd = { fg = "#cdcecf" }
 
-red       = "#c94f6d"
-orange    = "#f4a261"
-yellow    = "#dbc074"
-green     = "#81b29a"
-cyan      = "#63cdcf"
-blue      = "#719cd6"
-magenta   = "#9d79d6"
+# Tab
+tab_active = { fg = "#393b44", bg = "#86abdc", bold = true }
+tab_inactive = { fg = "#cdcecf", bg = "#575860" }
+tab_width = 1
 
-comment   = "#60728a"
-highlight = "#29394f"
+# Find
+find_keyword = { fg = "#c94f6d", bold = true, italic = true, underline = true }
+find_position = { fg = "#c94f6d", bold = true, italic = true }
 
-[style]
-# Default UI
-default        = { fg = "fg", bg = "bg" }
-directory      = { fg = "blue", bold = true }
-executable     = { fg = "green", bold = true }
-link           = { fg = "cyan", italic = true }
-socket         = { fg = "magenta", bold = true }
-device         = { fg = "orange", bold = true }
-fifo           = { fg = "yellow", italic = true }
+# Marker
+marker_copied = { fg = "#81b29a", bg = "#81b29a" }
+marker_cut = { fg = "#e4e4e5", bg = "#e4e4e5" }
+marker_marked = { fg = "#86abdc", bg = "#86abdc" }
+marker_selected = { fg = "#666a7a", bg = "#666a7a" }
 
-# UI chrome
-border         = { fg = "highlight" }
-selection      = { fg = "bg", bg = "yellow", bold = true }
-cursor         = { fg = "bg", bg = "blue", bold = true }
-preview        = { fg = "fg", bg = "bg_alt" }
+# Count
+count_copied = { fg = "#192330", bg = "#e4e4e5" }
+count_cut = { fg = "#192330", bg = "#e4e4e5" }
+count_selected = { fg = "#393b44", bg = "#666a7a" }
 
-# Status bar
-status_bar     = { fg = "bg", bg = "blue", bold = true }
-status_line    = { fg = "fg", bg = "bg_alt" }
-status_error   = { fg = "red", bg = "bg_alt", bold = true }
-status_info    = { fg = "cyan", bg = "bg_alt" }
-status_success = { fg = "green", bg = "bg_alt" }
-status_warn    = { fg = "yellow", bg = "bg_alt" }
+# Border
+border_symbol = " "
+border_style  = { fg = "#86abdc" }
 
-# Git highlighting
-git_new        = { fg = "green" }
-git_modified   = { fg = "yellow" }
-git_deleted    = { fg = "red" }
-git_renamed    = { fg = "blue" }
-git_ignored    = { fg = "comment" }
-git_untracked  = { fg = "comment" }
+# : ]]]
+
+
+# : Status [[[
+
+[status]
+separator_open = "🭁"
+separator_close = "🭠"
+separator_style = { bg = "#575860", fg = "#86abdc" }
+
+[mode]
+# Mode
+normal_main = { bg = "#86abdc", fg = "#393b44", bold = true }
+normal_alt  = { bg = "#393b44", fg = "#cdcecf" }
+
+# Select mode
+select_main = { bg = "#e4e4e5", fg = "#393b44", bold = true }
+select_alt  = { bg = "#393b44", fg = "#cdcecf" }
+
+# Unset mode
+unset_main = { bg = "#666a7a", fg = "#393b44", bold = true }
+unset_alt  = { bg = "#393b44", fg = "#cdcecf" }
+
+# Progress
+progress_label = { bold = true }
+progress_normal = { fg = "#86abdc", bg = "#393b44" }
+progress_error = { fg = "#81b29a", bg = "#393b44" }
+
+# Permissions
+permissions_t = { fg = "#86abdc" }
+permissions_w = { fg = "#666a7a" }
+permissions_x = { fg = "#81b29a" }
+permissions_r = { fg = "#cdcecf" }
+permissions_s = { fg = "#e4e4e5" }
+
+# : ]]]
+
+
+# : Select [[[
+
+[select]
+border = { fg = "#86abdc" }
+active = { fg = "#666a7a", bold = true }
+
+# : ]]]
+
+
+# : Input [[[
+
+[input]
+border = { fg = "#86abdc" }
+value = { fg = "#cdcecf" }
+
+# : ]]]
+
+# : Tabs [[[
+
+[tabs]
+active = { fg = "#86abdc", bold = true, bg = "#192330" }
+inactive = { fg = "#e4e4e5", bg = "#192330" }
+sep_inner = { open = "[", close = "]" }
+
+# : ]]]
+
+
+# : Completion [[[
+
+[completion]
+border = { fg = "#86abdc", bg = "#575860" }
+
+# : ]]]
+
+
+# : Tasks [[[
+
+[tasks]
+border = { fg = "#86abdc" }
+title = {}
+hovered = { fg = "#e4e4e5", underline = true }
+
+# : ]]]
+
+
+# : Which [[[
+
+[which]
+cols = 3
+mask = { bg = "#393b44" }
+cand = { fg = "#86abdc" }
+rest = { fg = "#393b44" }
+desc = { fg = "#cdcecf" }
+separator = " ▶ "
+separator_style = { fg = "#cdcecf" }
+
+# : ]]]
+
+
+# : Help [[[
+
+[help]
+on = { fg = "#cdcecf" }
+run = { fg = "#cdcecf" }
+footer = { fg = "#393b44", bg = "#e4e4e5" }
+
+# : ]]]
+
+
+# : Notify [[[
+
+[notify]
+title_info = { fg = "#666a7a" }
+title_warn = { fg = "#86abdc" }
+title_error = { fg = "#81b29a" }
+
+# : ]]]
+
+
+# : File-specific styles [[[
+
+[filetype]
+
+rules = [
+    # Images
+    { mime = "image/*", fg = "#666a7a" },
+
+    # Media
+    { mime = "{audio,video}/*", fg = "#86abdc" },
+
+    # Archives
+    { mime = "application/{zip,rar,7z*,tar,gzip,xz,zstd,bzip*,lzma,compress,archive,cpio,arj,xar,ms-cab*}", fg = "#e4e4e5" },
+
+    # Documents
+    { mime = "application/{pdf,doc,rtf}", fg = "#cdcecf" },
+
+    # Special files
+    { name = "*", is = "orphan", bg = "#81b29a" },
+    { name = "*", is = "exec", fg = "#e4e4e5" },
+
+    # Fallback
+    { name = "*", fg = "#cdcecf" },
+    { name = "*/", fg = "#86abdc" },
+]
+
+# : ]]]
