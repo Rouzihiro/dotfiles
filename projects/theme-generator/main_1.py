@@ -59,20 +59,8 @@ class ThemeGenerator:
         """Return list of available generators"""
         return list(self.generators.keys())
     
-    def _get_generator_order(self, generator_names):
-        """Ensure rofi runs first, others in alphabetical order"""
-        if 'rofi' in generator_names:
-            # Put rofi first
-            ordered = ['rofi']
-            # Add the rest in alphabetical order
-            ordered.extend(sorted([g for g in generator_names if g != 'rofi']))
-            return ordered
-        else:
-            # No rofi, just alphabetical order
-            return sorted(generator_names)
-    
     def generate_all(self):
-        """Generate all config files, ensuring rofi runs first"""
+        """Generate all config files"""
         print("🚀 Modular Theme Generator")
         print("==========================")
         print(f"📁 Found {len(self.generators)} generators")
@@ -81,25 +69,20 @@ class ThemeGenerator:
             # Parse colors from kitty.conf
             colors = self.parser.parse()
             print("")
-            print("🎯 Generating theme files (ensuring rofi runs first)...")
+            print("🎯 Generating theme files...")
             print("")
-            
-            # Get all generator names in correct order
-            all_generators = list(self.generators.keys())
-            ordered_generators = self._get_generator_order(all_generators)
             
             generated_files = []
             
             # Generate all configs
-            for gen_name in ordered_generators:
+            for name, generator_class in self.generators.items():
                 try:
-                    generator_class = self.generators[gen_name]
                     generator = generator_class(colors)
                     output_file = generator.generate()
                     generated_files.append(output_file)
                     print(f"✅ Generated: {output_file}")
                 except Exception as e:
-                    print(f"❌ Failed to generate {gen_name}: {e}")
+                    print(f"❌ Failed to generate {name}: {e}")
             
             print("")
             print("🎉 All done! Generated files:")
@@ -133,14 +116,9 @@ class ThemeGenerator:
     def list_generators(self):
         """List all available generators"""
         print("📋 Available generators:")
-        # List rofi first, then others alphabetically
-        if 'rofi' in self.generators:
-            print(f"   - rofi (runs first) -> {self.generators['rofi'].__name__}")
-        
         for name in sorted(self.get_available_generators()):
-            if name != 'rofi':
-                generator_class = self.generators[name]
-                print(f"   - {name}: {generator_class.__name__}")
+            generator_class = self.generators[name]
+            print(f"   - {name}: {generator_class.__name__} -> {generator_class.default_filename}")
 
 def main():
     """Main function"""
@@ -156,7 +134,7 @@ def main():
             # Generate specific app
             generator.generate_specific(command)
     else:
-        # Generate all (with rofi first)
+        # Generate all
         generator.generate_all()
 
 def print_help(generator):
@@ -164,22 +142,14 @@ def print_help(generator):
     print("🎨 Theme Generator - Generate config files from kitty.conf")
     print("")
     print("Usage:")
-    print("  python main.py                    # Generate all configs (rofi first)")
+    print("  python main.py                    # Generate all configs")
     print("  python main.py <app_name>         # Generate specific app config")
     print("  python main.py --list             # List all available generators")
     print("  python main.py --help             # Show this help")
     print("")
-    print("Note: When generating all, rofi always runs first")
-    print("      because it creates a color palette needed by other apps.")
-    print("")
     print("Available generators:")
-    # Show rofi first in help
-    if 'rofi' in generator.get_available_generators():
-        print("  - rofi (always runs first)")
-    
     for name in sorted(generator.get_available_generators()):
-        if name != 'rofi':
-            print(f"  - {name}")
+        print(f"  - {name}")
 
 if __name__ == "__main__":
     main()
