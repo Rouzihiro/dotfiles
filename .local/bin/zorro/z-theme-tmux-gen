@@ -1,11 +1,12 @@
 #!/bin/bash
 
 # Script to extract specific colors from rofi.rasi and prepend to tmux-colors
+# Includes backup of generated file before overwriting
 
 input_file="rofi.rasi"
 template_file="$HOME/dotfiles/projects/templates/tmux-template.conf"  
-# template_file="tmux-template.conf"
 output_file="tmux-colors.conf"
+backup_file="${output_file}.bak"
 
 # Check if input files exist
 if [ ! -f "$input_file" ]; then
@@ -18,10 +19,19 @@ if [ ! -f "$template_file" ]; then
     exit 1
 fi
 
-# Step 1: Copy tmux-template.conf to tmux-colors
+# Step 1: Check if output file exists and create backup
+if [ -f "$output_file" ]; then
+    echo "Backing up existing $output_file to $backup_file"
+    cp "$output_file" "$backup_file"
+    echo "Backup created: $backup_file"
+else
+    echo "No existing $output_file found, skipping backup"
+fi
+
+# Step 2: Copy tmux-template.conf to tmux-colors
 cp "$template_file" "$output_file"
 
-# Step 2: Create a temporary file for the converted colors
+# Step 3: Create a temporary file for the converted colors
 temp_file=$(mktemp)
 
 # First pass: collect all color definitions including @colorX references
@@ -105,12 +115,18 @@ echo "bright_magenta=\"$(remove_alpha "$(resolve_color "${color_map[color13]}")"
 echo "bright_cyan=\"$(remove_alpha "$(resolve_color "${color_map[color14]}")")\"" >> "$temp_file"
 echo "bright_white=\"$(remove_alpha "$(resolve_color "${color_map[color15]}")")\"" >> "$temp_file"
 
-# Step 3: Prepend the converted colors to the tmux-colors file
+# Step 4: Prepend the converted colors to the tmux-colors file
 cat "$temp_file" "$output_file" > "${output_file}.new" && mv "${output_file}.new" "$output_file"
 
 # Clean up
 rm "$temp_file"
 
+echo ""
 echo "Conversion complete!"
 echo "Extracted all required colors from $input_file and prepended to $output_file"
 echo "Note: Alpha channels removed from colors for tmux compatibility"
+
+# Show backup status
+if [ -f "$backup_file" ]; then
+    echo "Backup file: $backup_file (created from previous version)"
+fi
