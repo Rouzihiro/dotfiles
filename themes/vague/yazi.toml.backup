@@ -1,0 +1,175 @@
+# vim:fileencoding=utf-8:foldmethod=marker
+
+# : Manager {{{
+
+[manager]
+cwd = { fg = "#6e94b2" }  # Changed to mauve
+
+# Hovered
+hovered = { reversed = true, bold = true }
+preview_hovered = { underline = true }
+
+# Find
+find_keyword = { fg = "#7fa563", italic = true }  # Changed to green
+find_position = { fg = "#e8b589", bg = "reset", italic = true }  # Changed to peach
+
+# Marker
+marker_copied = { fg = "#7fa563", bg = "#7fa563" }  # Changed to green
+marker_cut = { fg = "#d8647e", bg = "#d8647e" }  # Changed to red
+marker_marked = { fg = "#6e94b2", bg = "#6e94b2" }  # Changed to mauve
+marker_selected = { fg = "#cdcdcd", bg = "#cdcdcd" }  # Changed to text color
+
+# Tab
+tab_active = { fg = "#141415", bg = "#6e94b2" }  # Changed base/mauve
+tab_inactive = { fg = "#6e94b2", bg = "#3d3d3d" }  # Changed mauve/surface1
+tab_width = 1
+
+# Count
+count_copied = { fg = "#141415", bg = "#7fa563" }  # Changed base/green
+count_cut = { fg = "#141415", bg = "#d8647e" }  # Changed base/red
+count_selected = { fg = "#141415", bg = "#cdcdcd" }  # Changed base/text
+
+# Border
+border_symbol = "│"
+border_style = { fg = "#666666" }  # Changed to overlay0
+
+# : }}}
+
+# : Mode {{{
+
+[mode]
+normal_main = { fg = "#141415", bg = "#6e94b2", bold = true }  # Changed base/mauve
+normal_alt = { fg = "#6e94b2", bg = "#3d3d3d" }  # Changed mauve/surface1
+select_main = { fg = "#141415", bg = "#e8b589", bold = true }  # Changed base/peach
+select_alt = { fg = "#6e94b2", bg = "#3d3d3d" }  # Changed mauve/surface1
+unset_main = { fg = "#141415", bg = "#7fa563", bold = true }  # Changed base/green
+unset_alt = { fg = "#6e94b2", bg = "#3d3d3d" }  # Changed mauve/surface1
+
+# : }}}
+
+# : Status {{{
+
+[status]
+sep_left = { open = "\ue0be", close = "\ue0b8" }
+sep_right = { open = "\ue0be", close = "\ue0b8" }
+overall = { }
+
+# Progress
+progress_label = { fg = "#cdcdcd", bold = true }  # Changed to text
+progress_normal = { fg = "#666666", bg = "#3d3d3d" }  # Changed overlay0/surface1
+progress_error = { fg = "#d8647e", bg = "#3d3d3d" }  # Changed red/surface1
+
+# Permissions
+perm_type = { fg = "#666666" }  # Changed to overlay0
+perm_read = { fg = "#7fa563" }  # Changed to green
+perm_write = { fg = "#d8647e" }  # Changed to red
+perm_exec = { fg = "#7fa563" }  # Changed to green
+perm_sep = { fg = "#666666" }  # Changed to overlay0
+
+# : }}}
+
+# : Select {{{
+
+[pick]
+border = { fg = "#6e94b2" }  # Changed to mauve
+active = { fg = "#d8647e", bold = true }  # Changed to red
+inactive = {}
+
+# : }}}
+
+# : Input {{{
+
+[input]
+border = { fg = "#cdcdcd" }  # Changed to text
+title = {}
+value = {}
+selected = { reversed = true }
+
+# : }}}
+
+# : Tasks {{{
+
+[tasks]
+border = { fg = "#666666" }  # Changed to overlay0
+title = {}
+hovered = { underline = true }
+
+# : }}}
+
+# : Which {{{
+
+[which]
+mask = { bg = "#3d3d3d" }  # Changed to surface1
+cand = { fg = "#6e94b2" }  # Changed to mauve
+rest = { fg = "#818181" }  # Changed to overlay1
+desc = { fg = "#e8b589" }  # Changed to peach
+separator = "  "
+separator_style = { fg = "#666666" }  # Changed to overlay0
+
+# : }}}
+
+# : Help {{{
+
+[help]
+on = { fg = "#6e94b2" }  # Changed to mauve
+run = { fg = "#d8647e" }  # Changed to red
+hovered = { reversed = true, bold = true }
+footer = { fg = "#3d3d3d", bg = "#6e94b2" }  # Changed surface1/mauve
+
+# : }}}
+
+# : Notify {{{
+
+[notify]
+title_info = { fg = "#7fa563" }  # Changed to green
+title_warn = { fg = "#f3be7c" }  # Changed to yellow
+title_error = { fg = "#d8647e" }  # Changed to red
+
+# : }}}
+
+# : File-specific styles {{{
+
+[filetype]
+rules = [
+  # Images
+  { mime = "image/*", fg = "#d8647e" },  # Changed to red
+
+  # Media
+  { mime = "{audio,video}/*", fg = "#f3be7c" },  # Changed to yellow
+
+  # Archives
+  { mime = "application/*zip", fg = "#d8647e" },  # Changed to red
+  { mime = "application/x-{tar,bzip*,7z-compressed,xz,rar}", fg = "#d8647e" },  # Changed to red
+
+  # Documents
+  { mime = "application/{pdf,doc,rtf,vnd.*}", fg = "#7fa563" },  # Changed to green
+
+  # Fallback
+  { name = "*", fg = "#cdcdcd" },  # Changed to text
+  { name = "*/", fg = "#6e94b2" },  # Changed to mauve (folders)
+]
+
+# : }}}
+
+# : Confirmation {{{
+
+[confirm]
+border = { fg = "#6e94b2" }  # Changed to mauve
+title = { fg = "#6e94b2" }  # Changed to mauve
+content = { fg = "#cdcdcd" }  # Changed to text
+body = { fg = "#d8647e" }  # Changed to red
+list = { fg = "#cdcdcd" }  # Changed to text
+btn_yes = { reversed = true, fg = "#cdcdcd" }  # Changed to text
+btn_no = {}
+btn_labels = [ "  [Y]es  ", "  (N)o  " ]
+
+# : }}}
+
+# : Completion {{{
+
+[cmp]
+border = { fg = "#6e94b2" }  # Changed to mauve
+active = { reversed = true, fg = "#6e94b2" }  # Changed to mauve
+inactive = { fg = "#cdcdcd" }  # Changed to text
+
+# : }}}
