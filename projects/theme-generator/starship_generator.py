@@ -6,32 +6,29 @@ import shutil
 from pathlib import Path
 
 def format_palette_name(theme_name):
-    """Convert theme folder name to proper palette name format."""
-    # Convert kebab-case to PascalCase with underscores
-    parts = theme_name.split('-')
-    formatted = ''.join(part.title() for part in parts)
-    # Replace underscores if any and handle multiple separators
-    formatted = formatted.replace('_', '')
+    """
+    Convert theme folder name to palette name.
+    Simple rule: replace - with _, capitalize first letter of each word.
+    Example: 'catppuccin-latte' -> 'Catppuccin_Latte'
+    """
+    # Replace hyphens with underscores
+    name_with_underscores = theme_name.replace('-', '_')
     
-    # Special replacements for known patterns
-    formatted = formatted.replace('Light', '_Light')
-    formatted = formatted.replace('Dark', '_Dark')
-    formatted = formatted.replace('Darker', '_Darker')
+    # Split by underscores
+    parts = name_with_underscores.split('_')
     
-    # Ensure we don't have double underscores
-    formatted = formatted.replace('__', '_')
+    # Capitalize each part
+    capitalized_parts = [part.capitalize() for part in parts]
     
-    # Remove leading/trailing underscores
-    formatted = formatted.strip('_')
-    
-    return formatted
+    # Join back with underscores
+    return '_'.join(capitalized_parts)
 
 def backup_starship_config(starship_path):
     """Backup existing starship.toml if it exists."""
     if starship_path.exists():
-        backup_path = starship_path.parent / f"starship.toml.backup.{int(os.path.getmtime(starship_path))}"
+        backup_path = starship_path.parent / f"starship.toml.backup"
         shutil.copy2(starship_path, backup_path)
-        print(f"✓ Backed up existing starship.toml to {backup_path}")
+        print(f"📦 Backed up existing starship.toml to {backup_path}")
         return True
     return False
 
@@ -39,161 +36,137 @@ def copy_template(template_path, destination_path):
     """Copy template starship.toml to config directory."""
     try:
         shutil.copy2(template_path, destination_path)
-        print(f"✓ Copied template from {template_path} to {destination_path}")
+        print(f"📄 Copied template to {destination_path}")
         return True
     except Exception as e:
-        print(f"✗ Error copying template: {e}")
+        print(f"❌ Error copying template: {e}")
         return False
 
-def extract_color_definitions(tmux_colors_path):
-    """Extract color definitions from a tmux-colors.conf file."""
+def extract_colors(tmux_colors_path):
+    """Extract color definitions from tmux-colors.conf."""
     try:
         with open(tmux_colors_path, 'r') as f:
             content = f.read()
         
-        # Pattern to match color definitions (handles both = and space, with or without quotes)
-        color_pattern = r'(\w+)\s*[=:]\s*"?(#[\da-fA-F]{6})"?'
+        # Pattern to match color definitions (handles various formats)
+        color_pattern = r'(\w+)\s*[=:]\s*"?#([0-9a-fA-F]{6})"?'
         colors = dict(re.findall(color_pattern, content))
         
-        # Filter for the specific colors we want
-        target_colors = [
-            "base", "text", "crust", "sig1", "sig2", "on_sig1", "on_sig2",
-            "on_sigbg", "sig_bg", "sig_surface_high", "red"
-        ]
+        # Colors we want to extract
+        target_colors = {
+            'base', 'text', 'crust', 'sig1', 'sig2', 
+            'on_sig1', 'on_sig2', 'on_sigbg', 'sig_bg', 
+            'sig_surface_high', 'red'
+        }
         
+        # Extract only the colors we want
         extracted = {}
-        for color_name in target_colors:
-            if color_name in colors:
-                extracted[color_name] = colors[color_name]
-            else:
-                # Try to find similar patterns
-                for key in colors.keys():
-                    if color_name in key or key in color_name:
-                        extracted[color_name] = colors[key]
-                        break
+        for color in target_colors:
+            if color in colors:
+                extracted[color] = f"#{colors[color]}"
         
         return extracted
     except Exception as e:
-        print(f"  ✗ Error reading {tmux_colors_path}: {e}")
+        print(f"  ❌ Error reading {tmux_colors_path}: {e}")
         return {}
 
-def find_theme_folders(themes_dir):
-    """Find all theme folders containing tmux-colors.conf."""
+def find_all_themes(themes_dir):
+    """Find all theme folders with tmux-colors.conf."""
     themes = []
     themes_dir = Path(themes_dir)
     
     if not themes_dir.exists():
-        print(f"✗ Themes directory not found: {themes_dir}")
+        print(f"❌ Themes directory not found: {themes_dir}")
         return themes
     
-    for item in themes_dir.iterdir():
-        if item.is_dir():
-            tmux_colors_path = item / "tmux-colors.conf"
-            if tmux_colors_path.exists():
-                themes.append((item.name, tmux_colors_path))
+    # Look for tmux-colors.conf in all subdirectories
+    for root, dirs, files in os.walk(themes_dir):
+        root_path = Path(root)
+        if 'tmux-colors.conf' in files:
+            # Get the theme folder name (the immediate parent directory)
+            theme_name = root_path.name
+            tmux_path = root_path / 'tmux-colors.conf'
+            themes.append((theme_name, tmux_path))
     
     return themes
 
-def add_palette_to_starship(starship_path, theme_name, color_definitions):
-    """Add a palette section to starship.toml."""
-    if not color_definitions:
-        return False
-    
-    palette_name = format_palette_name(theme_name)
-    
-    # Read current content
-    with open(starship_path, 'r') as f:
-        content = f.read()
-    
-    # Remove any existing palette entry for this theme
-    pattern = rf'\[palettes\.{re.escape(palette_name)}\](.*?)(?=\n\[|\Z)'
-    content = re.sub(pattern, '', content, flags=re.DOTALL)
-    
-    # Add new palette at the end
-    palette_section = f"\n\n[palettes.{palette_name}]\n"
-    for color_name, color_value in sorted(color_definitions.items()):
-        palette_section += f'{color_name} = "{color_value}"\n'
-    
-    # Append to file
-    with open(starship_path, 'a') as f:
-        f.write(palette_section)
-    
-    return True
-
 def main():
-    # Define paths
-    home_dir = Path.home()
-    dotfiles_dir = home_dir / "dotfiles"
-    themes_dir = dotfiles_dir / "themes"
-    template_path = dotfiles_dir / "projects" / "template" / "starship.toml"
-    starship_path = home_dir / ".config" / "starship.toml"
+    # Setup paths
+    home = Path.home()
+    dotfiles = home / "dotfiles"
+    themes_dir = dotfiles / "themes"
+    template = dotfiles / "projects" / "templates" / "starship.toml"
+    starship_config = home / ".config" / "starship.toml"
     
     print("🎨 Starship Palette Generator")
     print("=" * 40)
     
-    # Step 1: Backup existing starship.toml
-    print("\n1. Backing up existing config...")
-    backed_up = backup_starship_config(starship_path)
+    # Ensure config directory exists
+    starship_config.parent.mkdir(exist_ok=True)
+    
+    # Step 1: Backup existing config
+    print("\n1. Checking for existing config...")
+    backed_up = backup_starship_config(starship_config)
     
     # Step 2: Copy template
-    print("\n2. Copying template...")
-    if not template_path.exists():
-        print(f"✗ Template not found: {template_path}")
+    print("\n2. Setting up new config...")
+    if not template.exists():
+        print(f"❌ Template not found: {template}")
         return
     
-    if not copy_template(template_path, starship_path):
+    if not copy_template(template, starship_config):
         return
     
-    # Step 3: Find theme folders
-    print("\n3. Finding themes...")
-    themes = find_theme_folders(themes_dir)
+    # Step 3: Find all themes
+    print("\n3. Discovering themes...")
+    themes = find_all_themes(themes_dir)
     
     if not themes:
-        print("✗ No theme folders with tmux-colors.conf found!")
+        print("❌ No themes found with tmux-colors.conf!")
         return
     
-    print(f"   Found {len(themes)} theme(s):")
-    for theme_name, _ in themes:
-        print(f"   • {theme_name}")
+    print(f"   Found {len(themes)} theme(s)")
     
-    # Step 4: Extract colors and add palettes
-    print("\n4. Extracting colors and creating palettes...")
+    # Step 4: Process each theme
+    print("\n4. Extracting colors...")
     success_count = 0
     
-    for theme_name, tmux_colors_path in themes:
-        print(f"   Processing {theme_name}...")
+    for theme_name, tmux_path in sorted(themes, key=lambda x: x[0]):
+        palette_name = format_palette_name(theme_name)
+        print(f"   • {theme_name:20} → {palette_name}")
         
-        color_definitions = extract_color_definitions(tmux_colors_path)
+        colors = extract_colors(tmux_path)
         
-        if color_definitions:
-            palette_name = format_palette_name(theme_name)
-            if add_palette_to_starship(starship_path, theme_name, color_definitions):
-                print(f"     ✓ Added palette '{palette_name}' with {len(color_definitions)} colors")
-                success_count += 1
-            else:
-                print(f"     ✗ Failed to add palette for {theme_name}")
+        if colors:
+            # Append palette to starship.toml
+            with open(starship_config, 'a') as f:
+                f.write(f"\n\n[palettes.{palette_name}]\n")
+                for color_name in sorted(colors.keys()):
+                    f.write(f'{color_name} = "{colors[color_name]}"\n')
+            
+            success_count += 1
+            print(f"     ✅ Added {len(colors)} colors")
         else:
-            print(f"     ✗ No color definitions found for {theme_name}")
+            print(f"     ⚠️  No colors found")
     
     # Step 5: Summary
     print("\n" + "=" * 40)
-    print("🎉 Summary")
-    print(f"   • Themes processed: {len(themes)}")
+    print("✨ Summary")
+    print(f"   • Total themes found: {len(themes)}")
     print(f"   • Palettes created: {success_count}")
+    print(f"   • Config file: {starship_config}")
     
     if backed_up:
-        print(f"   • Backup created: starship.toml.backup.*")
+        print(f"   • Backup saved: starship.toml.backup")
     
-    print(f"   • New config: {starship_path}")
-    
-    # Show example of how to use palettes in starship.toml
-    print("\n💡 Usage Tip:")
-    print("   To use a palette in starship.toml, add this to your [format] section:")
-    print("   palette = \"Everforest_Dark\"  # or any palette name created above")
-    print("\n   Available palettes:")
-    for theme_name, _ in themes:
-        palette_name = format_palette_name(theme_name)
-        print(f"   • {palette_name}")
+    # Show example usage
+    if success_count > 0:
+        print("\n💡 Quick Start:")
+        print("   To use a palette, add this to your starship.toml:")
+        print("   [format]")
+        print("   palette = \"Everforest\"")
+        print("\n   Or use a specific variant:")
+        print("   palette = \"Catppuccin_Latte\"")
 
 if __name__ == "__main__":
     main()
