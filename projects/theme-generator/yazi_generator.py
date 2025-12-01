@@ -1,129 +1,183 @@
-#!/bin/bash
-# generate-all-yazi-themes.sh
+#!/usr/bin/env python3
+import re
+import os
+import sys
+from pathlib import Path
+import shutil
 
-HOME_DIR="$HOME"
-TEMPLATES_DIR="$HOME_DIR/dotfiles/projects/templates"
-THEMES_DIR="$HOME_DIR/dotfiles/themes"
+# Hardcoded paths
+HOME = Path.home()
+TEMPLATE_FILE = HOME / "dotfiles" / "projects" / "templates" / "yazi-template.toml"
+THEMES_DIR = HOME / "dotfiles" / "themes"
 
-# Find the template file
-TEMPLATE_FILE=$(find "$TEMPLATES_DIR" -type f \( -name "*yazi*template*" -o -name "*yazi*.toml" \) | head -n1)
-
-if [ -z "$TEMPLATE_FILE" ]; then
-    echo "Error: No Yazi template found in $TEMPLATES_DIR"
-    exit 1
-fi
-
-echo "Using template: $(basename "$TEMPLATE_FILE")"
-echo ""
-
-# Read template content
-TEMPLATE_CONTENT=$(cat "$TEMPLATE_FILE")
-
-# Find all theme folders with tmux-colors.conf
-echo "Finding theme folders..."
-THEME_FOLDERS=()
-while IFS= read -r folder; do
-    if [ -f "$folder/tmux-colors.conf" ]; then
-        THEME_FOLDERS+=("$folder")
-        echo "  - $(basename "$folder")"
-    fi
-done < <(find "$THEMES_DIR" -type d -mindepth 1 -maxdepth 1)
-
-if [ ${#THEME_FOLDERS[@]} -eq 0 ]; then
-    echo "No theme folders with tmux-colors.conf found!"
-    exit 1
-fi
-
-echo ""
-echo "Generating yazi.toml files..."
-echo "(Existing yazi.toml files will be backed up as yazi.toml.backup)"
-echo ""
-
-# List of colors to extract
-COLOR_NAMES=("base" "text" "crust" "sig1" "sig2" "on_sig1" "on_sig2" "on_sigbg" "sig_bg" "sig_surface_high" "red")
-
-SUCCESSFUL=0
-for theme_folder in "${THEME_FOLDERS[@]}"; do
-    theme_name=$(basename "$theme_folder")
-    echo "Processing $theme_name..."
+def parse_colors_file(filepath):
+    """Parse tmux colors file and extract only the specific color definitions we need"""
+    colors = {}
     
-    # Backup existing yazi.toml
-    if [ -f "$theme_folder/yazi.toml" ]; then
-        cp "$theme_folder/yazi.toml" "$theme_folder/yazi.toml.backup"
-        echo "  ✓ Backed up existing yazi.toml"
-    fi
+    # These are the specific color variables we want to extract
+    target_colors = {
+        'base', 'text', 'crust', 'sig1', 'sig2', 'on_sig1', 
+        'on_sig2', 'on_sigbg', 'sig_bg', 'sig_surface_high', 'red'
+    }
     
-    # Parse colors from tmux-colors.conf using multiple patterns
-    declare -A COLORS
+    with open(filepath, 'r') as f:
+        content = f.read()
     
-    for color_name in "${COLOR_NAMES[@]}"; do
-        # Try different patterns to find the color
-        color_value=$(
-            # Pattern 1: name="#RRGGBB"
-            grep -E "^[[:space:]]*${color_name}[[:space:]]*=[[:space:]]*\"#[0-9a-fA-F]{6}\"" "$theme_folder/tmux-colors.conf" |
-            sed -E 's/^[[:space:]]*'"${color_name}"'[[:space:]]*=[[:space:]]*"([^"]+)".*$/\1/' |
-            head -n1
-        )
+    # Look for color definitions in various formats
+    for color_name in target_colors:
+        # Try different patterns
+        patterns = [
+            rf'{color_name}\s*=\s*"([^"]+)"',              # name="#RRGGBB"
+            rf'set.*@?{color_name}\s+"([^"]+)"',          # set @name "#RRGGBB"
+            rf'\${color_name}\s*=\s*"([^"]+)"',           # $name="#RRGGBB"
+            rf'{color_name}\s*:\s*"([^"]+)"',             # name: "#RRGGBB"
+            rf'{color_name}\s*=\s*([^#\s]+#\w+)',         # name=#RRGGBB (without quotes)
+            rf'{color_name}\s*=\s*([^#\s]+#\w+)\s*;',     # name=#RRGGBB; (CSS style)
+            rf'{color_name}\s*=\s*([^#\s]+#\w+)\s*$',     # name=#RRGGBB at end of line
+        ]
         
-        # Pattern 2: set @name "#RRGGBB" (tmux format)
-        if [ -z "$color_value" ]; then
-            color_value=$(
-                grep -E "set.*@?${color_name}[[:space:]]+\"#[0-9a-fA-F]{6}\"" "$theme_folder/tmux-colors.conf" |
-                sed -E 's/.*set.*@?'"${color_name}"'[[:space:]]+\"([^"]+)\".*/\1/' |
-                head -n1
-            )
-        fi
-        
-        # Pattern 3: $name="#RRGGBB"
-        if [ -z "$color_value" ]; then
-            color_value=$(
-                grep -E "\\\$${color_name}[[:space:]]*=[[:space:]]*\"#[0-9a-fA-F]{6}\"" "$theme_folder/tmux-colors.conf" |
-                sed -E 's/.*\$'"${color_name}"'[[:space:]]*=[[:space:]]*"([^"]+)".*/\1/' |
-                head -n1
-            )
-        fi
-        
-        # Pattern 4: name: "#RRGGBB"
-        if [ -z "$color_value" ]; then
-            color_value=$(
-                grep -E "^[[:space:]]*${color_name}[[:space:]]*:[[:space:]]*\"#[0-9a-fA-F]{6}\"" "$theme_folder/tmux-colors.conf" |
-                sed -E 's/^[[:space:]]*'"${color_name}"'[[:space:]]*:[[:space:]]*"([^"]+)".*$/\1/' |
-                head -n1
-            )
-        fi
-        
-        if [ -n "$color_value" ]; then
-            COLORS["$color_name"]="$color_value"
-        else
-            echo "  Warning: Could not find color definition for '$color_name'"
-            COLORS["$color_name"]="#000000"  # Default black
-        fi
-    done
+        for pattern in patterns:
+            match = re.search(pattern, content, re.IGNORECASE)
+            if match:
+                color_value = match.group(1).strip().strip('"').strip("'")
+                # Ensure it starts with #
+                if not color_value.startswith('#'):
+                    color_value = '#' + color_value
+                colors[color_name] = color_value
+                break
     
-    echo "  Extracted colors: ${!COLORS[*]}"
+    return colors
+
+def merge_template(template_content, colors):
+    """Merge color definitions into template content"""
+    # Replace all placeholders with actual colors
+    for name, color in colors.items():
+        placeholder = f"{{{{{name}}}}}"
+        template_content = template_content.replace(placeholder, color)
+    
+    return template_content
+
+def generate_yazi_theme(theme_folder, template_content):
+    """Generate a Yazi theme file for a specific theme folder"""
+    colors_file = theme_folder / "tmux-colors.conf"
+    
+    if not colors_file.exists():
+        print(f"  ⚠ No tmux-colors.conf found in {theme_folder.name}")
+        return False
+    
+    # Parse colors
+    colors = parse_colors_file(colors_file)
+    
+    # Check if we have all required colors
+    required_colors = ['base', 'text', 'crust', 'sig1', 'sig2', 'on_sig1', 
+                      'on_sig2', 'on_sigbg', 'sig_bg', 'sig_surface_high', 'red']
+    
+    missing = [c for c in required_colors if c not in colors]
+    if missing:
+        print(f"  ⚠ Missing colors in {theme_folder.name}: {missing}")
+        # Fill missing with defaults
+        for color in missing:
+            colors[color] = "#000000"
+    
+    # Show extracted colors
+    found_colors = list(colors.keys())
+    print(f"  ✓ Found {len(found_colors)}/{len(required_colors)} colors: {', '.join(found_colors)}")
     
     # Merge template
-    merged_content="$TEMPLATE_CONTENT"
+    merged_content = merge_template(template_content, colors)
     
-    # Replace all color placeholders
-    for color_name in "${!COLORS[@]}"; do
-        placeholder="{{$color_name}}"
-        color_value="${COLORS[$color_name]}"
-        merged_content="${merged_content//$placeholder/$color_value}"
-    done
+    # Write output as yazi.toml
+    output_file = theme_folder / "yazi.toml"
+    with open(output_file, 'w') as f:
+        f.write(merged_content)
     
-    # Write yazi.toml
-    echo "$merged_content" > "$theme_folder/yazi.toml"
-    echo "  ✓ Generated yazi.toml"
-    
-    SUCCESSFUL=$((SUCCESSFUL + 1))
-    
-    # Clean up for next iteration
-    unset COLORS
-    declare -A COLORS
-    
-    echo ""
-done
+    return True
 
-echo "=================================================="
-echo "Successfully generated yazi.toml for $SUCCESSFUL/${#THEME_FOLDERS[@]} theme folders!"
+def backup_existing_yazi_theme(theme_folder):
+    """Backup existing yazi.toml if it exists"""
+    yazi_file = theme_folder / "yazi.toml"
+    
+    if yazi_file.exists():
+        backup_path = theme_folder / "yazi.toml.backup"
+        shutil.copy2(yazi_file, backup_path)
+        return True
+    return False
+
+def main():
+    # Check if directories exist
+    if not TEMPLATE_FILE.exists():
+        print(f"Error: Template file not found: {TEMPLATE_FILE}")
+        sys.exit(1)
+    
+    if not THEMES_DIR.exists():
+        print(f"Error: Themes directory not found: {THEMES_DIR}")
+        sys.exit(1)
+    
+    print(f"Using template: {TEMPLATE_FILE}")
+    print(f"Themes directory: {THEMES_DIR}")
+    print("")
+    
+    # Read template content
+    try:
+        with open(TEMPLATE_FILE, 'r') as f:
+            template_content = f.read()
+    except Exception as e:
+        print(f"Error reading template file: {e}")
+        sys.exit(1)
+    
+    # Find all theme folders
+    theme_folders = []
+    for item in THEMES_DIR.iterdir():
+        if item.is_dir():
+            # Check if it's likely a theme folder by looking for tmux-colors.conf
+            if (item / "tmux-colors.conf").exists():
+                theme_folders.append(item)
+    
+    if not theme_folders:
+        print(f"No theme folders with tmux-colors.conf found in {THEMES_DIR}")
+        sys.exit(1)
+    
+    print(f"Found {len(theme_folders)} theme folders:")
+    for folder in theme_folders:
+        print(f"  - {folder.name}")
+    
+    print("\n" + "="*60)
+    print("Generating yazi.toml files...")
+    print("(Existing yazi.toml files will be backed up as yazi.toml.backup)")
+    print("="*60 + "\n")
+    
+    successful = 0
+    for theme_folder in theme_folders:
+        print(f"🎨 Processing: {theme_folder.name}")
+        
+        # Backup existing yazi.toml if it exists
+        if backup_existing_yazi_theme(theme_folder):
+            print(f"  📦 Backed up existing yazi.toml")
+        
+        # Generate new yazi.toml
+        if generate_yazi_theme(theme_folder, template_content):
+            successful += 1
+            print(f"  ✅ Generated yazi.toml")
+        else:
+            print(f"  ❌ Failed to generate yazi.toml")
+        
+        print("")  # Empty line between themes
+    
+    print("="*60)
+    print(f"SUMMARY")
+    print("="*60)
+    print(f"✅ Successfully generated: {successful}/{len(theme_folders)} theme folders")
+    print(f"📁 Total themes found: {len(theme_folders)}")
+    
+    if successful > 0:
+        print("\nGenerated yazi.toml files:")
+        for theme_folder in theme_folders:
+            yazi_file = theme_folder / "yazi.toml"
+            if yazi_file.exists():
+                # Check if backup was created
+                backup_file = theme_folder / "yazi.toml.backup"
+                backup_status = " (with backup)" if backup_file.exists() else ""
+                print(f"  📄 {theme_folder.name}/yazi.toml{backup_status}")
+
+if __name__ == "__main__":
+    main()

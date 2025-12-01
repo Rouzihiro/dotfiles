@@ -1,0 +1,53 @@
+[flavor]
+name = "nightfox"
+author = "Rey"
+version = "0.1"
+
+[palette]
+bg        = "#192330"  # background
+bg_alt    = "#131a24"  # darker background
+fg        = "#cdcecf"  # foreground
+fg_alt    = "#aeafb0"  # dimmed fg
+
+red       = "#c94f6d"
+orange    = "#f4a261"
+yellow    = "#dbc074"
+green     = "#81b29a"
+cyan      = "#63cdcf"
+blue      = "#719cd6"
+magenta   = "#9d79d6"
+
+comment   = "#60728a"
+highlight = "#29394f"
+
+[style]
+# Default UI
+default        = { fg = "fg", bg = "bg" }
+directory      = { fg = "blue", bold = true }
+executable     = { fg = "green", bold = true }
+link           = { fg = "cyan", italic = true }
+socket         = { fg = "magenta", bold = true }
+device         = { fg = "orange", bold = true }
+fifo           = { fg = "yellow", italic = true }
+
+# UI chrome
+border         = { fg = "highlight" }
+selection      = { fg = "bg", bg = "yellow", bold = true }
+cursor         = { fg = "bg", bg = "blue", bold = true }
+preview        = { fg = "fg", bg = "bg_alt" }
+
+# Status bar
+status_bar     = { fg = "bg", bg = "blue", bold = true }
+status_line    = { fg = "fg", bg = "bg_alt" }
+status_error   = { fg = "red", bg = "bg_alt", bold = true }
+status_info    = { fg = "cyan", bg = "bg_alt" }
+status_success = { fg = "green", bg = "bg_alt" }
+status_warn    = { fg = "yellow", bg = "bg_alt" }
+
+# Git highlighting
+git_new        = { fg = "green" }
+git_modified   = { fg = "yellow" }
+git_deleted    = { fg = "red" }
+git_renamed    = { fg = "blue" }
+git_ignored    = { fg = "comment" }
+git_untracked  = { fg = "comment" }

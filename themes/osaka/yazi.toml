@@ -1,101 +1,173 @@
+# : Manager [[[
 
-[manager]
-cwd = { fg = "#00b894" }
-hovered = { reversed = true, bold = true }
-preview_hovered = { underline = true }
-find_keyword = { fg = "#55efc4", italic = true }
-find_position = { fg = "#ffeaa7", bg = "reset", italic = true }
-marker_copied = { fg = "#00b894", bg = "#00b894" }
-marker_cut = { fg = "#d63031", bg = "#d63031" }
-marker_marked = { fg = "#0984e3", bg = "#0984e3" }
-marker_selected = { fg = "#dfe6e9", bg = "#dfe6e9" }
-tab_active = { fg = "#2d3436", bg = "#0984e3" }
-tab_inactive = { fg = "#0984e3", bg = "#636e72" }
+[mgr]
+cwd = { fg = "#C1C497" }
+
+# Tab
+tab_active = { fg = "#23372B", bg = "#549E6A", bold = true }
+tab_inactive = { fg = "#C1C497", bg = "#53685B" }
 tab_width = 1
-count_copied = { fg = "#2d3436", bg = "#00b894" }
-count_cut = { fg = "#2d3436", bg = "#d63031" }
-count_selected = { fg = "#2d3436", bg = "#dfe6e9" }
-border_symbol = "│"
-border_style = { fg = "#b2bec3" }
 
-[mode]
-normal_main = { fg = "#2d3436", bg = "#0984e3", bold = true }
-normal_alt = { fg = "#0984e3", bg = "#636e72" }
-select_main = { fg = "#2d3436", bg = "#ffeaa7", bold = true }
-select_alt = { fg = "#0984e3", bg = "#636e72" }
-unset_main = { fg = "#2d3436", bg = "#00b894", bold = true }
-unset_alt = { fg = "#0984e3", bg = "#636e72" }
+# Find
+find_keyword = { fg = "#FF5345", bold = true, italic = true, underline = true }
+find_position = { fg = "#FF5345", bold = true, italic = true }
+
+# Marker
+marker_copied = { fg = "#459451", bg = "#459451" }
+marker_cut = { fg = "#9EEBB3", bg = "#9EEBB3" }
+marker_marked = { fg = "#549E6A", bg = "#549E6A" }
+marker_selected = { fg = "#3f634d", bg = "#3f634d" }
+
+# Count
+count_copied = { fg = "#111C18", bg = "#9EEBB3" }
+count_cut = { fg = "#111C18", bg = "#9EEBB3" }
+count_selected = { fg = "#23372B", bg = "#3f634d" }
+
+# Border
+border_symbol = " "
+border_style  = { fg = "#549E6A" }
+
+# : ]]]
+
+
+# : Status [[[
 
 [status]
-sep_left = { open = "\ue0be", close = "\ue0b8" }
-sep_right = { open = "\ue0be", close = "\ue0b8" }
-overall = { }
-progress_label = { fg = "#dfe6e9", bold = true }
-progress_normal = { fg = "#636e72", bg = "#2d3436" }
-progress_error = { fg = "#d63031", bg = "#2d3436" }
-perm_type = { fg = "#636e72" }
-perm_read = { fg = "#00b894" }
-perm_write = { fg = "#d63031" }
-perm_exec = { fg = "#00b894" }
-perm_sep = { fg = "#b2bec3" }
+separator_open = "🭁"
+separator_close = "🭠"
+separator_style = { bg = "#53685B", fg = "#549E6A" }
 
-[pick]
-border = { fg = "#0984e3" }
-active = { fg = "#d63031", bold = true }
-inactive = { }
+[mode]
+# Mode
+normal_main = { bg = "#549E6A", fg = "#23372B", bold = true }
+normal_alt  = { bg = "#23372B", fg = "#C1C497" }
+
+# Select mode
+select_main = { bg = "#9EEBB3", fg = "#9EEBB3", bold = true }
+select_alt  = { bg = "#23372B", fg = "#C1C497" }
+
+# Unset mode
+unset_main = { bg = "#3f634d", fg = "#9EEBB3", bold = true }
+unset_alt  = { bg = "#23372B", fg = "#C1C497" }
+
+# Progress
+progress_label = { bold = true }
+progress_normal = { fg = "#549E6A", bg = "#23372B" }
+progress_error = { fg = "#459451", bg = "#23372B" }
+
+# Permissions
+permissions_t = { fg = "#549E6A" }
+permissions_w = { fg = "#3f634d" }
+permissions_x = { fg = "#459451" }
+permissions_r = { fg = "#C1C497" }
+permissions_s = { fg = "#9EEBB3" }
+
+# : ]]]
+
+
+# : Select [[[
+
+[select]
+border = { fg = "#549E6A" }
+active = { fg = "#3f634d", bold = true }
+
+# : ]]]
+
+
+# : Input [[[
 
 [input]
-border = { fg = "#dfe6e9" }
-title = { }
-value = { }
-selected = { reversed = true }
+border = { fg = "#549E6A" }
+value = { fg = "#C1C497" }
+
+# : ]]]
+
+# : Tabs [[[
+
+[tabs]
+active = { fg = "#549E6A", bold = true, bg = "#111C18" }
+inactive = { fg = "#9EEBB3", bg = "#111C18" }
+sep_inner = { open = "[", close = "]" }
+
+# : ]]]
+
+
+# : Completion [[[
+
+[completion]
+border = { fg = "#549E6A", bg = "#53685B" }
+
+# : ]]]
+
+
+# : Tasks [[[
 
 [tasks]
-border = { fg = "#0984e3" }
-title = { }
-hovered = { underline = true }
+border = { fg = "#549E6A" }
+title = {}
+hovered = { fg = "#9EEBB3", underline = true }
+
+# : ]]]
+
+
+# : Which [[[
 
 [which]
-mask = { bg = "#2d3436" }
-cand = { fg = "#0984e3" }
-rest = { fg = "#b2bec3" }
-desc = { fg = "#ffeaa7" }
-separator = "  "
-separator_style = { fg = "#636e72" }
+cols = 3
+mask = { bg = "#23372B" }
+cand = { fg = "#549E6A" }
+rest = { fg = "#23372B" }
+desc = { fg = "#C1C497" }
+separator = " ▶ "
+separator_style = { fg = "#C1C497" }
+
+# : ]]]
+
+
+# : Help [[[
 
 [help]
-on = { fg = "#0984e3" }
-run = { fg = "#d63031" }
-hovered = { reversed = true, bold = true }
-footer = { fg = "#2d3436", bg = "#0984e3" }
+on = { fg = "#C1C497" }
+run = { fg = "#C1C497" }
+footer = { fg = "#9EEBB3", bg = "#9EEBB3" }
+
+# : ]]]
+
+
+# : Notify [[[
 
 [notify]
-title_info = { fg = "#00b894" }
-title_warn = { fg = "#dfe6e9" }
-title_error = { fg = "#d63031" }
+title_info = { fg = "#3f634d" }
+title_warn = { fg = "#549E6A" }
+title_error = { fg = "#459451" }
+
+# : ]]]
+
+
+# : File-specific styles [[[
 
 [filetype]
+
 rules = [
-  { mime = "image/*", fg = "#d63031" },
-  { mime = "{audio,video}/*", fg = "#00b894" },
-  { mime = "application/*zip", fg = "#d63031" },
-  { mime = "application/x-{tar,bzip*,7z-compressed,xz,rar}", fg = "#d63031" },
-  { mime = "application/{pdf,doc,rtf,vnd.*}", fg = "#00b894" },
-  { name = "*", fg = "#dfe6e9" },
-	{ name = "*/", fg = "#81a1c1" } 
+    # Images
+    { mime = "image/*", fg = "#3f634d" },
+
+    # Media
+    { mime = "{audio,video}/*", fg = "#549E6A" },
+
+    # Archives
+    { mime = "application/{zip,rar,7z*,tar,gzip,xz,zstd,bzip*,lzma,compress,archive,cpio,arj,xar,ms-cab*}", fg = "#9EEBB3" },
+
+    # Documents
+    { mime = "application/{pdf,doc,rtf}", fg = "#C1C497" },
+
+    # Special files
+    { name = "*", is = "orphan", bg = "#459451" },
+    { name = "*", is = "exec", fg = "#9EEBB3" },
+
+    # Fallback
+    { name = "*", fg = "#C1C497" },
+    { name = "*/", fg = "#549E6A" },
 ]
 
-[confirm]
-border = { fg = "#0984e3" }
-title = { fg = "#0984e3" }
-content = { fg = "#dfe6e9" }
-body = { fg = "red" }
-list = { fg = "#dfe6e9" }
-btn_yes = { reversed = true, fg = "#dfe6e9" }
-btn_no = { }
-btn_labels = [ "  [Y]es  ", "  (N)o  " ]
-
-[cmp]
-border = { fg = "#0984e3" }
-active = { reversed = true, fg = "#0984e3" }
-inactive = { fg = "#dfe6e9" }
+# : ]]]
