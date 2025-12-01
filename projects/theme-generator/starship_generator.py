@@ -95,7 +95,7 @@ def main():
     home = Path.home()
     dotfiles = home / "dotfiles"
     themes_dir = dotfiles / "themes"
-    template = dotfiles / "projects" / "templates" / "starship.toml"
+    template = dotfiles / "projects" / "templates" / "starship-template.toml"
     starship_config = home / ".config" / "starship.toml"
     
     print("🎨 Starship Palette Generator")

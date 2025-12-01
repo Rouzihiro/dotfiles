@@ -1,0 +1,173 @@
+# : Manager [[[
+
+[mgr]
+cwd = { fg = "{{text}}" }
+
+# Tab
+tab_active = { fg = "{{on_sig1}}", bg = "{{sig1}}", bold = true }
+tab_inactive = { fg = "{{text}}", bg = "{{crust}}" }
+tab_width = 1
+
+# Find
+find_keyword = { fg = "{{red}}", bold = true, italic = true, underline = true }
+find_position = { fg = "{{red}}", bold = true, italic = true }
+
+# Marker
+marker_copied = { fg = "{{sig2}}", bg = "{{sig2}}" }
+marker_cut = { fg = "{{on_sigbg}}", bg = "{{on_sigbg}}" }
+marker_marked = { fg = "{{sig1}}", bg = "{{sig1}}" }
+marker_selected = { fg = "{{sig_surface_high}}", bg = "{{sig_surface_high}}" }
+
+# Count
+count_copied = { fg = "{{base}}", bg = "{{on_sigbg}}" }
+count_cut = { fg = "{{base}}", bg = "{{on_sigbg}}" }
+count_selected = { fg = "{{on_sig1}}", bg = "{{sig_surface_high}}" }
+
+# Border
+border_symbol = " "
+border_style  = { fg = "{{sig1}}" }
+
+# : ]]]
+
+
+# : Status [[[
+
+[status]
+separator_open = "🭁"
+separator_close = "🭠"
+separator_style = { bg = "{{crust}}", fg = "{{sig1}}" }
+
+[mode]
+# Mode
+normal_main = { bg = "{{sig1}}", fg = "{{on_sig1}}", bold = true }
+normal_alt  = { bg = "{{sig_bg}}", fg = "{{text}}" }
+
+# Select mode
+select_main = { bg = "{{on_sigbg}}", fg = "{{on_sig2}}", bold = true }
+select_alt  = { bg = "{{sig_bg}}", fg = "{{text}}" }
+
+# Unset mode
+unset_main = { bg = "{{sig_surface_high}}", fg = "{{on_sig2}}", bold = true }
+unset_alt  = { bg = "{{sig_bg}}", fg = "{{text}}" }
+
+# Progress
+progress_label = { bold = true }
+progress_normal = { fg = "{{sig1}}", bg = "{{sig_bg}}" }
+progress_error = { fg = "{{sig2}}", bg = "{{sig_bg}}" }
+
+# Permissions
+permissions_t = { fg = "{{sig1}}" }
+permissions_w = { fg = "{{sig_surface_high}}" }
+permissions_x = { fg = "{{sig2}}" }
+permissions_r = { fg = "{{text}}" }
+permissions_s = { fg = "{{on_sigbg}}" }
+
+# : ]]]
+
+
+# : Select [[[
+
+[select]
+border = { fg = "{{sig1}}" }
+active = { fg = "{{sig_surface_high}}", bold = true }
+
+# : ]]]
+
+
+# : Input [[[
+
+[input]
+border = { fg = "{{sig1}}" }
+value = { fg = "{{text}}" }
+
+# : ]]]
+
+# : Tabs [[[
+
+[tabs]
+active = { fg = "{{sig1}}", bold = true, bg = "{{base}}" }
+inactive = { fg = "{{on_sigbg}}", bg = "{{base}}" }
+sep_inner = { open = "[", close = "]" }
+
+# : ]]]
+
+
+# : Completion [[[
+
+[completion]
+border = { fg = "{{sig1}}", bg = "{{crust}}" }
+
+# : ]]]
+
+
+# : Tasks [[[
+
+[tasks]
+border = { fg = "{{sig1}}" }
+title = {}
+hovered = { fg = "{{on_sigbg}}", underline = true }
+
+# : ]]]
+
+
+# : Which [[[
+
+[which]
+cols = 3
+mask = { bg = "{{sig_bg}}" }
+cand = { fg = "{{sig1}}" }
+rest = { fg = "{{on_sig1}}" }
+desc = { fg = "{{text}}" }
+separator = " ▶ "
+separator_style = { fg = "{{text}}" }
+
+# : ]]]
+
+
+# : Help [[[
+
+[help]
+on = { fg = "{{text}}" }
+run = { fg = "{{text}}" }
+footer = { fg = "{{on_sig2}}", bg = "{{on_sigbg}}" }
+
+# : ]]]
+
+
+# : Notify [[[
+
+[notify]
+title_info = { fg = "{{sig_surface_high}}" }
+title_warn = { fg = "{{sig1}}" }
+title_error = { fg = "{{sig2}}" }
+
+# : ]]]
+
+
+# : File-specific styles [[[
+
+[filetype]
+
+rules = [
+    # Images
+    { mime = "image/*", fg = "{{sig_surface_high}}" },
+
+    # Media
+    { mime = "{audio,video}/*", fg = "{{sig1}}" },
+
+    # Archives
+    { mime = "application/{zip,rar,7z*,tar,gzip,xz,zstd,bzip*,lzma,compress,archive,cpio,arj,xar,ms-cab*}", fg = "{{on_sigbg}}" },
+
+    # Documents
+    { mime = "application/{pdf,doc,rtf}", fg = "{{text}}" },
+
+    # Special files
+    { name = "*", is = "orphan", bg = "{{sig2}}" },
+    { name = "*", is = "exec", fg = "{{on_sigbg}}" },
+
+    # Fallback
+    { name = "*", fg = "{{text}}" },
+    { name = "*/", fg = "{{sig1}}" },
+]
+
+# : ]]]

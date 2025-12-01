@@ -156,7 +156,7 @@ vimcmd_visual_symbol = '[❮](bold fg:sig2)'
 
 [cmd_duration]
 format = " in $duration "
-style = "bg:lavender"
+style = "bg:red"
 disabled = false
 show_notifications = true
 min_time_to_notify = 45000
