@@ -9,8 +9,7 @@ class SwayGenerator(BaseGenerator):
         output_file = output_file or self.default_filename
         self.backup_file(output_file)
         
-        template = f"""# Kanagawa Dragon Theme for Sway
-# Generated from kitty.conf
+        template = f"""# Generated from kitty.conf
 
 # Default foreground
 set $fujiWhite      {self.colors['foreground']}

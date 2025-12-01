@@ -4,19 +4,23 @@ THEMES_DIR="$HOME/dotfiles/themes"
 PREVIEW_NAME="color-palette.png"
 PALETTES_DIR="$HOME/assets/color-palettes"
 
-# Function to parse waybar.css and extract colors
-parse_waybar_css() {
-    local css_file="$1"
+# Function to parse kitty.conf and extract colors
+parse_kitty_conf() {
+    local conf_file="$1"
     local -A colors
     
     while IFS= read -r line; do
-        # Match @define-color lines
-        if [[ $line =~ @define-color[[:space:]]+([a-zA-Z0-9_]+)[[:space:]]+(#[a-fA-F0-9]{6}) ]]; then
+        # Skip comments and empty lines
+        [[ $line =~ ^[[:space:]]*# ]] && continue
+        [[ -z "${line//[[:space:]]/}" ]] && continue
+        
+        # Match color definitions (simplified regex)
+        if [[ $line =~ ^[[:space:]]*([a-z0-9_]+)[[:space:]]+(#[a-fA-F0-9]{6}) ]]; then
             color_name="${BASH_REMATCH[1]}"
             color_value="${BASH_REMATCH[2]}"
             colors["$color_name"]="$color_value"
         fi
-    done < "$css_file"
+    done < "$conf_file"
     
     # Return the colors array
     declare -p colors
@@ -25,52 +29,87 @@ parse_waybar_css() {
 # Function to generate color palette preview
 generate_palette_preview() {
     local theme_dir="$1"
-    local css_file="$theme_dir/waybar.css"
+    local conf_file="$theme_dir/kitty.conf"
     local output="$theme_dir/$PREVIEW_NAME"
     
-    if [[ ! -f "$css_file" ]]; then
-        echo "No waybar.css found in $theme_dir, skipping..."
+    if [[ ! -f "$conf_file" ]]; then
+        echo "No kitty.conf found in $theme_dir, skipping..."
         return 1
     fi
     
     echo "Generating palette for $(basename "$theme_dir")..."
     
-    # Parse the CSS file
-    eval "$(parse_waybar_css "$css_file")"
+    # Parse the kitty.conf file
+    eval "$(parse_kitty_conf "$conf_file")"
     
-    # Set default colors if specific ones aren't found
-    local bg="${colors[bg]:-${colors[bg_alt]:-#000000}}"
-    local fg="${colors[fg]:-${colors[foreground]:-#FFFFFF}}"
+    # Get background and foreground
+    local bg="${colors[background]:-#000000}"
+    local fg="${colors[foreground]:-#FFFFFF}"
     
-    # Select key colors to display (prioritize important ones)
-    local display_colors=(
-        "${colors[red]:-${colors[alert]:-#FF0000}}"
-        "${colors[green]:-${colors[activegreen]:-#00FF00}}"
-        "${colors[yellow]:-#FFFF00}"
-        "${colors[blue]:-#0000FF}"
-        "${colors[purple]:-#FF00FF}"
-        "${colors[aqua]:-${colors[highlight]:-#00FFFF}}"
-        "${colors[orange]:-#FFA500}"
-        "${colors[gray]:-#808080}"
-    )
+    # Choose which 12 colors to display
+    # Option 1: color0-color11 (first 12 colors)
+    # Option 2: Mix of normal and bright colors
+    # Option 3: Custom selection - let's do color0-color7 + color8-color11
+   
+# Mix: color0-color5 + color8-color13 (balanced)
+local display_colors=()
+# 6 normal colors
+for i in {0..5}; do
+    local color_key="color$i"
+    display_colors+=("${colors[$color_key]:-#000000}")
+done
+# 6 bright colors  
+for i in {8..13}; do
+    local color_key="color$i"
+    display_colors+=("${colors[$color_key]:-#000000}")
+done
+
+
+    local display_colors=()
+    
+    # Add color0-color7 (normal colors)
+    for i in {0..7}; do
+        local color_key="color$i"
+        if [[ -n "${colors[$color_key]}" ]]; then
+            display_colors+=("${colors[$color_key]}")
+        else
+            # Use black as placeholder for missing colors
+            display_colors+=("#000000")
+        fi
+    done
+    
+    # Add color8-color11 (first 4 bright colors)
+    for i in {8..11}; do
+        local color_key="color$i"
+        if [[ -n "${colors[$color_key]}" ]]; then
+            display_colors+=("${colors[$color_key]}")
+        else
+            display_colors+=("#000000")
+        fi
+    done
+    
+    # If we want exactly 12 colors but different ones, here are other options:
+    # Option A: All bright colors (color8-color15) + 4 normal colors
+    # Option B: Every other color from the 16
+    # Option C: Custom curated selection
     
     # Generate the preview image
-    if command -v magick &> /dev/null; then
+    if command -v magick &> /dev/null || command -v convert &> /dev/null; then
         local draw_cmd=()
-        local y_pos=40
         
-        # Theme name (capitalized and spaced for display only)
+        # Theme name
         local theme_name=$(basename "$theme_dir" | sed -E 's/(^|-)([a-z])/\1\u\2/g; s/-/ /g')
         draw_cmd+=("-fill" "$fg" "-font" "JetBrainsMono Nerd Font" "-pointsize" "14" "-annotate" "+20+25" "$theme_name")
         
-        # Color blocks only (no labels)
+        # Draw the 12 color blocks in a 4x3 grid (4 columns, 3 rows)
         local start_x=20
         local start_y=45
         local block_size=25
         local spacing=5
-        local blocks_per_row=4
+        local blocks_per_row=4  # 4 columns
+        local total_blocks=12
         
-        for i in "${!display_colors[@]}"; do
+        for i in $(seq 0 $((total_blocks-1))); do
             local row=$((i / blocks_per_row))
             local col=$((i % blocks_per_row))
             local x=$((start_x + col * (block_size + spacing)))
@@ -81,34 +120,12 @@ generate_palette_preview() {
             draw_cmd+=("-fill" "${display_colors[i]}" "-draw" "rectangle $x,$y $x2,$y2")
         done
         
-        magick -size 180x150 xc:"$bg" "${draw_cmd[@]}" "$output"
-        
-    elif command -v convert &> /dev/null; then
-        local draw_cmd=()
-        local y_pos=40
-        
-        local theme_name=$(basename "$theme_dir" | sed -E 's/(^|-)([a-z])/\1\u\2/g; s/-/ /g')
-        draw_cmd+=("-fill" "$fg" "-font" "JetBrainsMono Nerd Font" "-pointsize" "14" "-annotate" "+20+25" "$theme_name")
-        
-        # Color blocks only
-        local start_x=20
-        local start_y=45
-        local block_size=25
-        local spacing=5
-        local blocks_per_row=4
-        
-        for i in "${!display_colors[@]}"; do
-            local row=$((i / blocks_per_row))
-            local col=$((i % blocks_per_row))
-            local x=$((start_x + col * (block_size + spacing)))
-            local y=$((start_y + row * (block_size + spacing)))
-            local x2=$((x + block_size))
-            local y2=$((y + block_size))
-            
-            draw_cmd+=("-fill" "${display_colors[i]}" "-draw" "rectangle $x,$y $x2,$y2")
-        done
-        
-        convert -size 180x150 xc:"$bg" "${draw_cmd[@]}" "$output"
+        # Use magick or convert
+        if command -v magick &> /dev/null; then
+            magick -size 180x150 xc:"$bg" "${draw_cmd[@]}" "$output"
+        else
+            convert -size 180x150 xc:"$bg" "${draw_cmd[@]}" "$output"
+        fi
     fi
     
     echo "Created: $output"

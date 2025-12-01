@@ -24,6 +24,10 @@
       "rev": "c642487",
       "src": "https://github.com/hrsh7th/cmp-path"
     },
+    "doom-one.vim": {
+      "rev": "31cf41f",
+      "src": "https://github.com/romgrk/doom-one.vim"
+    },
     "everforest-nvim": {
       "rev": "557bce9",
       "src": "https://github.com/neanias/everforest-nvim"
@@ -113,6 +117,10 @@
       "rev": "b9fd522",
       "src": "https://github.com/nvim-lua/plenary.nvim"
     },
+    "solarized.nvim": {
+      "rev": "c0dfe1c",
+      "src": "https://github.com/maxmx03/solarized.nvim"
+    },
     "telescope-env.nvim": [],
     "telescope-ui-select.nvim": [],
     "telescope.nvim": {
@@ -129,6 +137,10 @@
     "vague.nvim": {
       "rev": "5689afd",
       "src": "https://github.com/vague2k/vague.nvim"
+    },
+    "vim-monokai-pro": {
+      "rev": "6c449e5",
+      "src": "https://github.com/phanviet/vim-monokai-pro"
     }
   }
 }

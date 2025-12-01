@@ -31,8 +31,7 @@ class DircolorsGenerator(BaseGenerator):
         orange_rgb = self.hex_to_rgb(self.colors['orange'])
         gray_rgb = self.hex_to_rgb(self.colors['gray'])
         
-        template = f"""# Kanagawa Dragon Theme for dircolors
-# Generated from kitty.conf
+        template = f"""# Generated from kitty.conf
 
 RESET 0
 

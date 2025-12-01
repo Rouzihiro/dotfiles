@@ -1,109 +1,110 @@
+# Generated from kitty.conf
 
 # Default foreground
-set $fujiWhite      #FDF6E3
+set $fujiWhite      #C1C497
 
 # Dark foreground (statuslines)
-set $oldWhite       #EEE8D5
+set $oldWhite       #F6F5DD
 
 # Dark background (statuslines and floating windows)
-set $sumiInk0       #002B36
+set $sumiInk0       #23372B
 
 # Default background
-set $sumiInk1       #073642
+set $sumiInk1       #111C18
 
 # Lighter background (colorcolumn, folds)
-set $sumiInk2       #586E75
+set $sumiInk2       #53685B
 
 # Lighter background (cursorline)
-set $sumiInk3       #657B83
+set $sumiInk3       #53685B
 
 # Darker foreground (line numbers, fold column, non-text characters), float borders
-set $sumiInk4       #839496
+set $sumiInk4       #53685B
 
 # Popup background, visual selection background
-set $waveBlue1      #268BD2
+set $waveBlue1      #509475
 
 # Popup selection background, search background
-set $waveBlue2      #2AA198
+set $waveBlue2      #509475
 
 # Diff Add (background)
-set $winterGreen    #859900
+set $winterGreen    #549E6A
 
 # Diff Change (background)
-set $winterYellow   #B58900
+set $winterYellow   #459451
 
 # Diff Deleted (background)
-set $winterRed      #DC322F
+set $winterRed      #FF5345
 
 # Diff Line (background)
-set $winterBlue     #268BD2
+set $winterBlue     #509475
 
 # Git Add
-set $autumnGreen    #859900
+set $autumnGreen    #549E6A
 
 # Git Delete
-set $autumnRed      #DC322F
+set $autumnRed      #FF5345
 
 # Git Change
-set $autumnYellow   #B58900
+set $autumnYellow   #459451
 
 # Diagnostic Error
-set $samuraiRed     #DC322F
+set $samuraiRed     #FF5345
 
 # Diagnostic Warning
-set $roninYellow    #B58900
+set $roninYellow    #459451
 
 # Diagnostic Info
-set $waveAqua1      #2AA198
+set $waveAqua1      #509475
 
 # Diagnostic Hint
-set $dragonBlue     #268BD2
+set $dragonBlue     #509475
 
 # Comments
-set $fujiGray       #93A1A1
+set $fujiGray       #53685B
 
 # Light foreground
-set $springViolet1  #EEE8D5
+set $springViolet1  #F6F5DD
 
 # Statements and Keywords
-set $oniViolet      #6C71C4
+set $oniViolet      #D2689C
 
 # Functions and Titles
-set $crystalBlue    #268BD2
+set $crystalBlue    #509475
 
 # Brackets and punctuation
-set $springViolet2  #93A1A1
+set $springViolet2  #D2689C
 
 # Specials and builtin functions
-set $springBlue     #2AA198
+set $springBlue     #509475
 
 # Not used (assigned Nightfox-consistent shades)
-set $lightBlue      #839496
-set $boatYellow1    #B58900
+set $lightBlue      #2DD5B7
+set $boatYellow1    #459451
 
 # Types
-set $waveAqua2      #2AA198
+set $waveAqua2      #2DD5B7
 
 # Strings
-set $springGreen    #859900
+set $springGreen    #549E6A
 
 # Operators, RegEx
-set $boatYellow2    #B58900
+set $boatYellow2    #459451
 
 # Identifiers
-set $carpYellow     #CB4B16
+set $carpYellow     #459451
 
 # Numbers
-set $sakuraPink     #DC322F
+set $sakuraPink     #D2689C
 
 # Standout specials 1 (builtin variables)
-set $waveRed        #DC322F
+set $waveRed        #FF5345
 
 # Standout specials 2 (exception handling, return)
-set $peachRed       #DC322F
+set $peachRed       #FF5345
 
 # Constants, imports, booleans
-set $surimiOrange   #CB4B16
+set $surimiOrange   
 
 # Deprecated
-set $katanaGray     #586E75
+set $katanaGray     #53685B

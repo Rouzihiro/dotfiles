@@ -14,8 +14,7 @@ class HyprlandGenerator(BaseGenerator):
         color4 = self.colors['color4'].lstrip('#')
         color0 = self.colors['color0'].lstrip('#')
         
-        template = f"""# Kanagawa Dragon Theme for Hyprland
-# Generated from: kitty.conf
+        template = f"""# Generated from: kitty.conf
 
 general {{
     border_size = 2
