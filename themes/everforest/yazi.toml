@@ -16,12 +16,12 @@ find_position = { fg = "#e67e80", bold = true, italic = true }
 marker_copied = { fg = "#dbbc7f", bg = "#dbbc7f" }
 marker_cut = { fg = "#9da9a0", bg = "#9da9a0" }
 marker_marked = { fg = "#a7c080", bg = "#a7c080" }
-marker_selected = { fg = "#5d717a", bg = "#5d717a" }
+marker_selected = { fg = "#5c6569", bg = "#5c6569" }
 
 # Count
 count_copied = { fg = "#272e33", bg = "#9da9a0" }
 count_cut = { fg = "#272e33", bg = "#9da9a0" }
-count_selected = { fg = "#343f44", bg = "#5d717a" }
+count_selected = { fg = "#343f44", bg = "#5c6569" }
 
 # Border
 border_symbol = " "
@@ -47,7 +47,7 @@ select_main = { bg = "#9da9a0", fg = "#343f44", bold = true }
 select_alt  = { bg = "#343f44", fg = "#d3c6aa" }
 
 # Unset mode
-unset_main = { bg = "#5d717a", fg = "#343f44", bold = true }
+unset_main = { bg = "#5c6569", fg = "#343f44", bold = true }
 unset_alt  = { bg = "#343f44", fg = "#d3c6aa" }
 
 # Progress
@@ -57,7 +57,7 @@ progress_error = { fg = "#dbbc7f", bg = "#343f44" }
 
 # Permissions
 permissions_t = { fg = "#a7c080" }
-permissions_w = { fg = "#5d717a" }
+permissions_w = { fg = "#5c6569" }
 permissions_x = { fg = "#dbbc7f" }
 permissions_r = { fg = "#d3c6aa" }
 permissions_s = { fg = "#9da9a0" }
@@ -69,7 +69,7 @@ permissions_s = { fg = "#9da9a0" }
 
 [select]
 border = { fg = "#a7c080" }
-active = { fg = "#5d717a", bold = true }
+active = { fg = "#5c6569", bold = true }
 
 # : ]]]
 
@@ -137,7 +137,7 @@ footer = { fg = "#343f44", bg = "#9da9a0" }
 # : Notify [[[
 
 [notify]
-title_info = { fg = "#5d717a" }
+title_info = { fg = "#5c6569" }
 title_warn = { fg = "#a7c080" }
 title_error = { fg = "#dbbc7f" }
 
@@ -150,7 +150,7 @@ title_error = { fg = "#dbbc7f" }
 
 rules = [
     # Images
-    { mime = "image/*", fg = "#5d717a" },
+    { mime = "image/*", fg = "#5c6569" },
 
     # Media
     { mime = "{audio,video}/*", fg = "#a7c080" },

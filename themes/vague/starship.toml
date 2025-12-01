@@ -1,0 +1,428 @@
+"$schema" = 'https://starship.rs/config-schema.json'
+palette = 'Everforest'
+
+format = """
+[](sig1)\
+$os\
+$username\
+[](bg:sig2 fg:sig1)\
+$directory\
+[](bg:sig1 fg:sig2)\
+$git_branch\
+$git_status\
+$c\
+$rust\
+$golang\
+$nodejs\
+$php\
+$java\
+$kotlin\
+$haskell\
+$python\
+$conda\
+[](bg:sig1 fg:sig1)\
+$time\
+[ ](fg:sig1)\
+$cmd_duration\
+$line_break\
+$character"""
+
+[os]
+disabled = false
+style = "bg:sig1 fg:on_sig1"
+
+[os.symbols]
+Windows = ""
+Ubuntu = "󰕈"
+SUSE = ""
+Raspbian = "󰐿"
+Mint = "󰣭"
+Macos = "󰀵"
+Manjaro = ""
+Linux = "󰌽"
+Gentoo = "󰣨"
+Fedora = "󰣛"
+Alpine = ""
+Amazon = ""
+Android = ""
+Arch = "󰣇"
+Artix = "󰣇"
+CentOS = ""
+Debian = "󰣚"
+Redhat = "󱄛"
+RedHatEnterprise = "󱄛"
+
+[username]
+show_always = true
+style_user = "bg:sig1 fg:on_sig1"
+style_root = "bg:sig1 fg:on_sig1"
+format = '[ $user]($style)'
+
+[directory]
+style = "bg:sig2 fg:on_sig2"
+format = "[ $path ]($style)"
+truncation_length = 3
+truncation_symbol = "…/"
+
+[directory.substitutions]
+"Documents" = "󰈙 "
+"Downloads" = " "
+"Music" = "󰝚 "
+"Pictures" = " "
+"Developer" = "󰲋 "
+
+[git_branch]
+symbol = ""
+style = "bg:sig1"
+format = '[[ $symbol $branch ](fg:on_sig1 bg:sig1)]($style)'
+
+[git_status]
+style = "bg:sig1"
+format = '[[($all_status$ahead_behind )](fg:on_sig1 bg:sig1)]($style)'
+
+[nodejs]
+symbol = ""
+style = "bg:sig1"
+format = '[[ $symbol( $version) ](fg:crust bg:sig1)]($style)'
+
+[c]
+symbol = " "
+style = "bg:sig1"
+format = '[[ $symbol( $version) ](fg:crust bg:sig1)]($style)'
+
+[rust]
+symbol = ""
+style = "bg:sig1"
+format = '[[ $symbol( $version) ](fg:crust bg:sig1)]($style)'
+
+[golang]
+symbol = ""
+style = "bg:sig1"
+format = '[[ $symbol( $version) ](fg:crust bg:sig1)]($style)'
+
+[php]
+symbol = ""
+style = "bg:sig1"
+format = '[[ $symbol( $version) ](fg:crust bg:sig1)]($style)'
+
+[java]
+symbol = " "
+style = "bg:sig1"
+format = '[[ $symbol( $version) ](fg:crust bg:sig1)]($style)'
+
+[kotlin]
+symbol = ""
+style = "bg:sig1"
+format = '[[ $symbol( $version) ](fg:crust bg:sig1)]($style)'
+
+[haskell]
+symbol = ""
+style = "bg:sig1"
+format = '[[ $symbol( $version) ](fg:crust bg:sig1)]($style)'
+
+[python]
+symbol = ""
+style = "bg:sig1"
+format = '[[ $symbol( $version)(\(#$virtualenv\)) ](fg:crust bg:sig1)]($style)'
+
+[docker_context]
+symbol = ""
+style = "bg:sig2"
+format = '[[ $symbol( $context) ](fg:crust bg:sig2)]($style)'
+
+[conda]
+symbol = "  "
+style = "fg:crust bg:sig2"
+format = '[$symbol$environment ]($style)'
+ignore_base = false
+
+[time]
+disabled = false
+time_format = "%R"
+style = "bg:sig1"
+format = '[[  $time ](fg:on_sig1 bg:sig1)]($style)'
+
+[line_break]
+disabled = true
+
+[character]
+disabled = false
+success_symbol = '[❯](bold fg:sig1)'
+error_symbol = '[❯](bold fg:red)'
+vimcmd_symbol = '[❮](bold fg:sig1)'
+vimcmd_replace_one_symbol = '[❮](bold fg:sig2)'
+vimcmd_replace_symbol = '[❮](bold fg:sig2)'
+vimcmd_visual_symbol = '[❮](bold fg:sig2)'
+
+[cmd_duration]
+format = " in $duration "
+style = "bg:red"
+disabled = false
+show_notifications = true
+min_time_to_notify = 45000
+
+
+[palettes.Catppuccin]
+base = "#1E1E2E"
+crust = "#43465A"
+on_sig1 = "#282828"
+on_sig2 = "#282828"
+on_sigbg = "#fbf1c7"
+red = "#F38BA8"
+sig1 = "#F38BA8"
+sig2 = "#A6E3A1"
+sig_bg = "#43465A"
+sig_surface_high = "#686b7b"
+text = "#CDD6F4"
+
+
+[palettes.Catppuccin_Latte]
+base = "#EFF1F5"
+crust = "#6C6F85"
+on_sig1 = "#fbf1c7"
+on_sig2 = "#282828"
+on_sigbg = "#282828"
+red = "#D20F39"
+sig1 = "#4C4F69"
+sig2 = "#40A02B"
+sig_bg = "#ACB0BE"
+sig_surface_high = "#bcbfcb"
+text = "#4C4F69"
+
+
+[palettes.Everforest]
+base = "#272e33"
+crust = "#868d80"
+on_sig1 = "#343f44"
+on_sig2 = "#343f44"
+on_sigbg = "#9da9a0"
+red = "#e67e80"
+sig1 = "#a7c080"
+sig2 = "#dbbc7f"
+sig_bg = "#343f44"
+sig_surface_high = "#5c6569"
+text = "#d3c6aa"
+
+
+[palettes.Flexoki_Dark]
+base = "#100F0F"
+crust = "#6F6E69"
+on_sig1 = "#282828"
+on_sig2 = "#282828"
+on_sigbg = "#fbf1c7"
+red = "#AF3029"
+sig1 = "#3AA99F"
+sig2 = "#66800B"
+sig_bg = "#100F0F"
+sig_surface_high = "#3f3f3f"
+text = "#CECDC3"
+
+
+[palettes.Flexoki_Light]
+base = "#FFFCF0"
+crust = "#6F6E69"
+on_sig1 = "#fbf1c7"
+on_sig2 = "#282828"
+on_sigbg = "#282828"
+red = "#D14D41"
+sig1 = "#AF3029"
+sig2 = "#66800B"
+sig_bg = "#F2F0E5"
+sig_surface_high = "#f4f3ea"
+text = "#100F0F"
+
+
+[palettes.Gruvbox]
+base = "#282828"
+crust = "#928374"
+on_sig1 = "#3c3836"
+on_sig2 = "#3c3836"
+on_sigbg = "#fbf1c7"
+red = "#cc241d"
+sig1 = "#d79921"
+sig2 = "#98971a"
+sig_bg = "#3c3836"
+sig_surface_high = "#6c6461"
+text = "#ebdbb2"
+
+
+[palettes.Gruvbox_Material]
+base = "#282828"
+crust = "#6e6a68"
+on_sig1 = "#2c2620"
+on_sig2 = "#2c2620"
+on_sigbg = "#fbf1c7"
+red = "#ea6962"
+sig1 = "#d8a657"
+sig2 = "#a9b665"
+sig_bg = "#2c2620"
+sig_surface_high = "#56514c"
+text = "#d4be98"
+
+
+[palettes.Kanagawa]
+base = "#1f1f28"
+crust = "#727169"
+on_sig1 = "#16161d"
+on_sig2 = "#16161d"
+on_sigbg = "#dcd7ba"
+red = "#c34043"
+sig1 = "#7fb4ca"
+sig2 = "#c8c093"
+sig_bg = "#727169"
+sig_surface_high = "#cac9ba"
+text = "#dcd7ba"
+
+
+[palettes.Kanagawa_Dragon]
+base = "#181616"
+crust = "#a6a69c"
+on_sig1 = "#0d0c0c"
+on_sig2 = "#0d0c0c"
+on_sigbg = "#c5c9c5"
+red = "#c4746e"
+sig1 = "#8ba4b0"
+sig2 = "#c4b28a"
+sig_bg = "#0d0c0c"
+sig_surface_high = "#171515"
+text = "#c5c9c5"
+
+
+[palettes.Matte_Black]
+base = "#121212"
+crust = "#4d4d4d"
+on_sig1 = "#080808"
+on_sig2 = "#080808"
+on_sigbg = "#c0c0c0"
+red = "#f87070"
+sig1 = "#ffe16b"
+sig2 = "#79dcaa"
+sig_bg = "#4d4d4d"
+sig_surface_high = "#8a8a8a"
+text = "#e0e0e0"
+
+
+[palettes.Nightfox]
+base = "#192330"
+crust = "#575860"
+on_sig1 = "#393b44"
+on_sig2 = "#393b44"
+on_sigbg = "#e4e4e5"
+red = "#c94f6d"
+sig1 = "#86abdc"
+sig2 = "#81b29a"
+sig_bg = "#393b44"
+sig_surface_high = "#666a7a"
+text = "#cdcecf"
+
+
+[palettes.Nord]
+base = "#2E3440"
+crust = "#4C566A"
+on_sig1 = "#3B4252"
+on_sig2 = "#3B4252"
+on_sigbg = "#ECEFF4"
+red = "#BF616A"
+sig1 = "#81A1C1"
+sig2 = "#A3BE8C"
+sig_bg = "#4C566A"
+sig_surface_high = "#889abe"
+text = "#D8DEE9"
+
+
+[palettes.Osaka]
+base = "#111C18"
+crust = "#53685B"
+on_sig1 = "#23372B"
+on_sig2 = "#9EEBB3"
+on_sigbg = "#9EEBB3"
+red = "#FF5345"
+sig1 = "#549E6A"
+sig2 = "#459451"
+sig_bg = "#23372B"
+sig_surface_high = "#3f634d"
+text = "#C1C497"
+
+
+[palettes.Ristretto]
+base = "#2c2525"
+crust = "#948a8b"
+on_sig1 = "#282828"
+on_sig2 = "#282828"
+on_sigbg = "#fbf1c7"
+red = "#fd6883"
+sig1 = "#fd6883"
+sig2 = "#adda78"
+sig_bg = "#2c2525"
+sig_surface_high = "#666467"
+text = "#e6d9db"
+
+
+[palettes.Rosepine]
+base = "#faf4ed"
+crust = "#9893a5"
+on_sig1 = "#282828"
+on_sig2 = "#fbf1c7"
+on_sigbg = "#282828"
+red = "#b4637a"
+sig1 = "#b4637a"
+sig2 = "#286983"
+sig_bg = "#faf4ed"
+sig_surface_high = "#e5e1e0"
+text = "#575279"
+
+
+[palettes.Rosepine_Darker]
+base = "#191724"
+crust = "#6e6a86"
+on_sig1 = "#e0def4"
+on_sig2 = "#26233a"
+on_sigbg = "#e0def4"
+red = "#eb6f92"
+sig1 = "#31748f"
+sig2 = "#eb6f92"
+sig_bg = "#6e6a86"
+sig_surface_high = "#c6bef1"
+text = "#e0def4"
+
+
+[palettes.Sakura]
+base = "#0d0509"
+crust = "#4a3c45"
+on_sig1 = "#0d0509"
+on_sig2 = "#0d0509"
+on_sigbg = "#ffffff"
+red = "#E85F6F"
+sig1 = "#D1B399"
+sig2 = "#FF7A8A"
+sig_bg = "#4a3c45"
+sig_surface_high = "#856c7c"
+text = "#f0eaed"
+
+
+[palettes.Tokyonight]
+base = "#1a1b26"
+crust = "#414868"
+on_sig1 = "#15161e"
+on_sig2 = "#15161e"
+on_sigbg = "#c0caf5"
+red = "#f7768e"
+sig1 = "#7aa2f7"
+sig2 = "#f7768e"
+sig_bg = "#414868"
+sig_surface_high = "#7581bb"
+text = "#c0caf5"
+
+
+[palettes.Vague]
+base = "#141415"
+crust = "#606079"
+on_sig1 = "#1c1c24"
+on_sig2 = "#1c1c24"
+on_sigbg = "#cdcdcd"
+red = "#d8647e"
+sig1 = "#f3be7c"
+sig2 = "#6e94b2"
+sig_bg = "#606079"
+sig_surface_high = "#acacd9"
+text = "#cdcdcd"
