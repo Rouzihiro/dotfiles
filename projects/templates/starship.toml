@@ -1,0 +1,162 @@
+"$schema" = 'https://starship.rs/config-schema.json'
+palette = 'Everforest'
+
+format = """
+[](sig1)\
+$os\
+$username\
+[](bg:sig2 fg:sig1)\
+$directory\
+[](bg:sig1 fg:sig2)\
+$git_branch\
+$git_status\
+$c\
+$rust\
+$golang\
+$nodejs\
+$php\
+$java\
+$kotlin\
+$haskell\
+$python\
+$conda\
+[](bg:sig1 fg:sig1)\
+$time\
+[ ](fg:sig1)\
+$cmd_duration\
+$line_break\
+$character"""
+
+[os]
+disabled = false
+style = "bg:sig1 fg:on_sig1"
+
+[os.symbols]
+Windows = ""
+Ubuntu = "󰕈"
+SUSE = ""
+Raspbian = "󰐿"
+Mint = "󰣭"
+Macos = "󰀵"
+Manjaro = ""
+Linux = "󰌽"
+Gentoo = "󰣨"
+Fedora = "󰣛"
+Alpine = ""
+Amazon = ""
+Android = ""
+Arch = "󰣇"
+Artix = "󰣇"
+CentOS = ""
+Debian = "󰣚"
+Redhat = "󱄛"
+RedHatEnterprise = "󱄛"
+
+[username]
+show_always = true
+style_user = "bg:sig1 fg:on_sig1"
+style_root = "bg:sig1 fg:on_sig1"
+format = '[ $user]($style)'
+
+[directory]
+style = "bg:sig2 fg:on_sig2"
+format = "[ $path ]($style)"
+truncation_length = 3
+truncation_symbol = "…/"
+
+[directory.substitutions]
+"Documents" = "󰈙 "
+"Downloads" = " "
+"Music" = "󰝚 "
+"Pictures" = " "
+"Developer" = "󰲋 "
+
+[git_branch]
+symbol = ""
+style = "bg:sig1"
+format = '[[ $symbol $branch ](fg:on_sig1 bg:sig1)]($style)'
+
+[git_status]
+style = "bg:sig1"
+format = '[[($all_status$ahead_behind )](fg:on_sig1 bg:sig1)]($style)'
+
+[nodejs]
+symbol = ""
+style = "bg:sig1"
+format = '[[ $symbol( $version) ](fg:crust bg:sig1)]($style)'
+
+[c]
+symbol = " "
+style = "bg:sig1"
+format = '[[ $symbol( $version) ](fg:crust bg:sig1)]($style)'
+
+[rust]
+symbol = ""
+style = "bg:sig1"
+format = '[[ $symbol( $version) ](fg:crust bg:sig1)]($style)'
+
+[golang]
+symbol = ""
+style = "bg:sig1"
+format = '[[ $symbol( $version) ](fg:crust bg:sig1)]($style)'
+
+[php]
+symbol = ""
+style = "bg:sig1"
+format = '[[ $symbol( $version) ](fg:crust bg:sig1)]($style)'
+
+[java]
+symbol = " "
+style = "bg:sig1"
+format = '[[ $symbol( $version) ](fg:crust bg:sig1)]($style)'
+
+[kotlin]
+symbol = ""
+style = "bg:sig1"
+format = '[[ $symbol( $version) ](fg:crust bg:sig1)]($style)'
+
+[haskell]
+symbol = ""
+style = "bg:sig1"
+format = '[[ $symbol( $version) ](fg:crust bg:sig1)]($style)'
+
+[python]
+symbol = ""
+style = "bg:sig1"
+format = '[[ $symbol( $version)(\(#$virtualenv\)) ](fg:crust bg:sig1)]($style)'
+
+[docker_context]
+symbol = ""
+style = "bg:sig2"
+format = '[[ $symbol( $context) ](fg:crust bg:sig2)]($style)'
+
+[conda]
+symbol = "  "
+style = "fg:crust bg:sig2"
+format = '[$symbol$environment ]($style)'
+ignore_base = false
+
+[time]
+disabled = false
+time_format = "%R"
+style = "bg:sig1"
+format = '[[  $time ](fg:on_sig1 bg:sig1)]($style)'
+
+[line_break]
+disabled = true
+
+[character]
+disabled = false
+success_symbol = '[❯](bold fg:sig1)'
+error_symbol = '[❯](bold fg:red)'
+vimcmd_symbol = '[❮](bold fg:sig1)'
+vimcmd_replace_one_symbol = '[❮](bold fg:sig2)'
+vimcmd_replace_symbol = '[❮](bold fg:sig2)'
+vimcmd_visual_symbol = '[❮](bold fg:sig2)'
+
+[cmd_duration]
+format = " in $duration "
+style = "bg:lavender"
+disabled = false
+show_notifications = true
+min_time_to_notify = 45000
