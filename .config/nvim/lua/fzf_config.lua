@@ -43,6 +43,10 @@ local opts = { noremap = true, silent = true }
 -- MINI.CLUE HEADERS
 -- =====================
 map("n", "<leader>f", function() end, { desc = "Files ▸" })
+map("n", "<leader>tc", function() end, { desc = "Typst ▸" })
+map("n", "<leader>r", function() end, { desc = "Replace ▸" })
+map("n", "<leader>p", function() end, { desc = "Paste ▸" })
+map("n", "<leader>P", function() end, { desc = "Paste ▸" })
 map("n", "<leader>b", function() end, { desc = "Buffers ▸" })
 map("n", "<leader>g", function() end, { desc = "Git ▸" })
 map("n", "<leader>l", function() end, { desc = "LSP ▸" })
