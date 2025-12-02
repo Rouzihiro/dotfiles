@@ -24,6 +24,10 @@
       "rev": "c642487",
       "src": "https://github.com/hrsh7th/cmp-path"
     },
+    "doom-one.vim": {
+      "rev": "31cf41fdf753b1d99d3ec1d50d44f42af8f1c2c8",
+      "src": "https://github.com/romgrk/doom-one.vim"
+    },
     "everforest-nvim": {
       "rev": "557bce9",
       "src": "https://github.com/neanias/everforest-nvim"
@@ -105,13 +109,29 @@
       "rev": "01cb3a8",
       "src": "https://github.com/stevearc/oil.nvim"
     },
+    "pixel.nvim": {
+      "rev": "fd06541f7c790e22ad18f0ee5873b246de5b4a87",
+      "src": "https://github.com/bjarneo/pixel.nvim"
+    },
     "plenary.nvim": {
       "rev": "b9fd522",
       "src": "https://github.com/nvim-lua/plenary.nvim"
     },
-    "telescope-env.nvim": [],
-    "telescope-ui-select.nvim": [],
+    "solarized.nvim": {
+      "rev": "c0dfe1cbfabd93b546baf5f1408f5df7e02e2050",
+      "src": "https://github.com/maxmx03/solarized.nvim"
+    },
+    "telescope-env.nvim": {
+      "rev": "00a703cc7b713cdda0a981d88fddf3ce25502af5",
+      "src": "https://github.com/LinArcX/telescope-env.nvim"
+    },
+    "telescope-ui-select.nvim": {
+      "rev": "6e51d7da30bd139a6950adf2a47fda6df9fa06d2",
+      "src": "https://github.com/nvim-telescope/telescope-ui-select.nvim"
+    },
     "telescope.nvim": {
+      "rev": "a0bbec21143c7bc5f8bb02e0005fa0b982edc026",
+      "src": "https://github.com/nvim-telescope/telescope.nvim",
       "version": "'0.1.8'"
     },
     "tokyonight.nvim": {
@@ -122,9 +142,17 @@
       "rev": "87d0f3a",
       "src": "https://github.com/chomosuke/typst-preview.nvim"
     },
+    "typst.vim": {
+      "rev": "235e042",
+      "src": "https://github.com/Rouzihiro/typst.vim"
+    },
     "vague.nvim": {
       "rev": "5689afd",
       "src": "https://github.com/vague2k/vague.nvim"
+    },
+    "vim-monokai-pro": {
+      "rev": "6c449e5d4ef6086c519de0544d4aca46c0a9596c",
+      "src": "https://github.com/phanviet/vim-monokai-pro"
     }
   }
 }
