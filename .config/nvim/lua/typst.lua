@@ -12,36 +12,27 @@ function M.setup()
         group = vim.api.nvim_create_augroup("TypstFiletype", { clear = true })
     })
 
-    -- Configure tinymist LSP
+    -- Configure tinymist LSP (for Neovim 0.12+)
     local function setup_tinymist_lsp()
-        -- Check if tinymist is available
-        local mason_registry = require("mason-registry")
-        if not mason_registry.is_installed("tinymist") then
-            vim.notify("tinymist is not installed. Run :MasonInstall tinymist", vim.log.levels.WARN)
+        -- Try to find tinymist executable
+        local tinymist_cmd = nil
+        
+        -- Check Mason location first (most reliable for Neovim)
+        local mason_bin = os.getenv("HOME") .. "/.local/share/nvim/mason/bin/tinymist"
+        if vim.fn.executable(mason_bin) == 1 then
+            tinymist_cmd = { mason_bin }
+        -- Check cargo/bin
+        elseif vim.fn.executable("tinymist") == 1 then
+            tinymist_cmd = { "tinymist" }
+        else
+            vim.notify("tinymist not found in PATH or Mason. Install it via :MasonInstall tinymist", vim.log.levels.WARN)
             return
         end
         
-        -- Use the new vim.lsp.config API for Neovim 0.12
-        local configs = require("lspconfig.configs")
-        
-        -- Check if tinymist config exists
-        if not configs.tinymist then
-            -- Define tinymist configuration
-            configs.tinymist = {
-                default_config = {
-                    cmd = { 'tinymist' },
-                    filetypes = { 'typst' },
-                    root_dir = require('lspconfig.util').root_pattern('*.typ'),
-                },
-            }
-        end
-        
-        -- Get the config
-        local config = configs.tinymist
-        
-        -- Setup with the new API
-        local client_config = {
-            cmd = { 'tinymist' },
+        -- Simple vim.lsp.start approach for Neovim 0.12
+        vim.lsp.start({
+            name = 'tinymist',
+            cmd = tinymist_cmd,
             filetypes = { 'typst' },
             root_dir = require('lspconfig.util').root_pattern('*.typ'),
             settings = {
@@ -83,10 +74,7 @@ function M.setup()
                     end
                 end, { buffer = bufnr, desc = "Unpin main file" })
             end,
-        }
-        
-        -- Start the LSP client
-        vim.lsp.start(client_config)
+        })
     end
 
   
