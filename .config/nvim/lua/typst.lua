@@ -14,8 +14,6 @@ function M.setup()
 
     -- Configure tinymist LSP
     local function setup_tinymist_lsp()
-        local lspconfig = require("lspconfig")
-        
         -- Check if tinymist is available
         local mason_registry = require("mason-registry")
         if not mason_registry.is_installed("tinymist") then
@@ -23,13 +21,33 @@ function M.setup()
             return
         end
         
-        lspconfig.tinymist.setup({
+        -- Use the new vim.lsp.config API for Neovim 0.12
+        local configs = require("lspconfig.configs")
+        
+        -- Check if tinymist config exists
+        if not configs.tinymist then
+            -- Define tinymist configuration
+            configs.tinymist = {
+                default_config = {
+                    cmd = { 'tinymist' },
+                    filetypes = { 'typst' },
+                    root_dir = require('lspconfig.util').root_pattern('*.typ'),
+                },
+            }
+        end
+        
+        -- Get the config
+        local config = configs.tinymist
+        
+        -- Setup with the new API
+        local client_config = {
+            cmd = { 'tinymist' },
+            filetypes = { 'typst' },
+            root_dir = require('lspconfig.util').root_pattern('*.typ'),
             settings = {
                 formatterMode = "typstyle",
                 exportPdf = "onType",  -- Options: "onType", "onSave", "never"
                 semanticTokens = "disable",
-                -- Optional: Enable syntax-only mode for power saving
-                -- syntaxOnly = "disable",  -- Options: "disable", "enable", "onPowerSaving"
             },
             on_attach = function(client, bufnr)
                 -- Enable formatting on save
@@ -65,9 +83,13 @@ function M.setup()
                     end
                 end, { buffer = bufnr, desc = "Unpin main file" })
             end,
-        })
+        }
+        
+        -- Start the LSP client
+        vim.lsp.start(client_config)
     end
 
+  
     -- Configure typst-preview plugin
     local function setup_typst_preview()
         local ok, typst_preview = pcall(require, "typst-preview")
