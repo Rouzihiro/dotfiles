@@ -151,3 +151,5 @@ map("n", "<leader>za", 'ggVG"+y')
 -- map("n", "<leader>se", "<cmd>set spelllang=en_us<CR>", { desc = "English spell" })
 -- map("n", "<leader>sd", "<cmd>set spelllang=de<CR>", { desc = "German spell" })
 -- map("n", "z=", "z=1<CR>", { silent = true, desc = "Accept 1st suggestion" })
+--
+map("n", "<leader>tv", ":TypstPreview<CR>", { buffer = 0, desc = "Typst Preview" })
