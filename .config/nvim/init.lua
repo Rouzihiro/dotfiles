@@ -56,6 +56,8 @@ vim.pack.add({
 
 })
 
+require("typst").setup()
+require("typst-cheatsheet")
 require("fzf_config")
 require("keymaps")
 require("plugins.cmp")
