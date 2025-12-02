@@ -82,7 +82,7 @@ ln -nsf "$THEME_PATH" "$CURRENT_THEME_DIR"
 
 # Quick restarts (non-blocking)
 z-theme-bg-next &
-z-theme-bat &
+z-theme-bat --notify &
 tmux source-file ~/.config/tmux/tmux.conf &
 z-restart waybar &
 pkill -SIGUSR2 btop &

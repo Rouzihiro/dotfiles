@@ -299,6 +299,10 @@ theme_menu() {
         " Icons"
         "󰝰 GTK-Theme-Installer"
         "🎨 Theme Switcher"
+				"🎨 Update Starship"
+				"🎨 Generate palettes"
+				"🎨 Cache update"
+				"󱧿 Refresh Themes"
         "󰁍 Back to Main"
     )
     
@@ -315,7 +319,7 @@ theme_menu() {
             rofi-wall
             ;;
         "󰞅 Emojis")
-            rofi -show emoji -theme ~/.config/rofi/config.rasi
+            rofi-emoji
             ;;
         " Icons")
             ~/.config/waybar/scripts/icon-picker.sh
@@ -326,6 +330,18 @@ theme_menu() {
         "🎨 Theme Switcher")
             rofi-theme-set
             ;;
+			 "🎨 Update Starship palettes")
+						present_terminal "python /home/rey/Projects/theme-generator/starship_generator.py"
+            ;;
+			 "🎨 Generate palettes")
+            present_terminal "z-theme-palettes-gen"
+            ;;
+				"🎨 Cache update")
+						present_terminal "z-theme-cache"
+						;;
+				"*Refresh Themes*")
+						present_terminal "$HOME/dotfiles/install-themes.sh"
+						;;
         "󰁍 Back to Main")
             main_menu
             return

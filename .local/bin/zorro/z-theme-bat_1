@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+
+# Get the current Zorro theme directory
+CURRENT_THEME=$(basename "$(realpath "$HOME/.config/zorro/current/theme")")
+
+# Map Zorro themes to bat themes
+case "$CURRENT_THEME" in
+    "catppuccin")         export BAT_THEME="Monokai Extended" ;;
+    "catppuccin-latte")   export BAT_THEME="Monokai Extended Light" ;;
+    "dark-mode")          export BAT_THEME="Monokai Extended" ;;
+    "everforest")         export BAT_THEME="OneHalfDark" ;;
+    "flexoki-light")      export BAT_THEME="OneHalfLight" ;;
+    "gruvbox")            export BAT_THEME="gruvbox-dark" ;;
+    "gruvbox-dark")       export BAT_THEME="gruvbox-dark" ;;
+    "kanagawa")           export BAT_THEME="Monokai Extended" ;;
+    "light-mode")         export BAT_THEME="Monokai Extended Light" ;;
+    "matte-black")        export BAT_THEME="DarkNeon" ;;
+    "nightfox")           export BAT_THEME="Dracula" ;;
+    "nord")               export BAT_THEME="Nord" ;;
+    "osaka-jade")         export BAT_THEME="1337" ;;
+    "ristretto")          export BAT_THEME="Sublime Snazzy" ;;
+    "rose-pine")          export BAT_THEME="GitHub" ;;
+    "rose-pine-darker")   export BAT_THEME="GitHub" ;;
+    "Sakura")             export BAT_THEME="sakura-dark" ;;
+    "solarized")          export BAT_THEME="Solarized" ;;
+    "solarized-dark")     export BAT_THEME="Solarized" ;;
+    "tokyo-night")        export BAT_THEME="Dracula" ;;
+    "vague")              export BAT_THEME="DarkNeon" ;;
+    "zenburn")            export BAT_THEME="zenburn" ;;
+    # add more mappings if needed
+esac
