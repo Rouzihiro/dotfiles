@@ -12,7 +12,7 @@ local function create_tinymist_command(command_name, client, bufnr)
 end
 
 return {
-	cmd = { 'tinymist', 'lsp' },  -- FIXED: Added 'lsp' subcommand
+	cmd = { 'tinymist' },
 	filetypes = { 'typst' },
 	root_markers = { '.git' },
 	settings = {

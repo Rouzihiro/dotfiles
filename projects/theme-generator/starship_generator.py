@@ -3,6 +3,7 @@
 import os
 import re
 import shutil
+import subprocess
 from pathlib import Path
 
 def format_palette_name(theme_name):
@@ -22,6 +23,76 @@ def format_palette_name(theme_name):
     
     # Join back with underscores
     return '_'.join(capitalized_parts)
+
+def get_current_theme():
+    """Get current theme name and format it for starship."""
+    try:
+        # Get the current theme path
+        theme_path = Path.home() / ".config" / "zorro" / "current" / "theme"
+        
+        if not theme_path.exists():
+            print("❌ Current theme symlink not found")
+            return None
+        
+        # Get the real path and extract theme name
+        real_path = theme_path.resolve()
+        theme_name = real_path.name
+        
+        # Format the theme name (same logic as bash script)
+        # Convert kebab-case to Title_Case
+        formatted = theme_name.replace('-', ' ').title().replace(' ', '_')
+        
+        print(f"   Current theme: {theme_name} → {formatted}")
+        return formatted
+        
+    except Exception as e:
+        print(f"❌ Error getting current theme: {e}")
+        return None
+
+def update_starship_palette(theme_name):
+    """Update starship template with current palette."""
+    try:
+        starship_config = Path.home() / "dotfiles" / "projects" / "templates" / "starship-template.toml"
+        
+        if not starship_config.exists():
+            print(f"❌ Starship config not found: {starship_config}")
+            return False
+        
+        # Read the entire file
+        with open(starship_config, 'r') as f:
+            lines = f.readlines()
+        
+        # Check if we have at least 2 lines
+        if len(lines) < 2:
+            print("❌ Starship config is too short")
+            return False
+        
+        # Get current palette from line 2 (0-indexed line 1)
+        current_palette = None
+        if 'palette =' in lines[1]:
+            # Extract current palette value
+            match = re.search(r"palette = '([^']*)'", lines[1])
+            if match:
+                current_palette = match.group(1)
+        
+        # Only update if theme changed
+        if current_palette == theme_name:
+            print(f"   Starship palette already set to: {theme_name}")
+            return True
+        
+        # Update line 2 with new palette
+        lines[1] = f"palette = '{theme_name}'\n"
+        
+        # Write back to file
+        with open(starship_config, 'w') as f:
+            f.writelines(lines)
+        
+        print(f"   Starship palette updated to: {theme_name}")
+        return True
+        
+    except Exception as e:
+        print(f"❌ Error updating starship palette: {e}")
+        return False
 
 def backup_starship_config(starship_path):
     """Backup existing starship.toml if it exists."""
@@ -101,6 +172,18 @@ def main():
     print("🎨 Starship Palette Generator")
     print("=" * 40)
     
+    # Step 0: Get current theme and update template
+    print("\n0. Getting current theme...")
+    current_theme = get_current_theme()
+    
+    if current_theme:
+        if update_starship_palette(current_theme):
+            print("✅ Template updated with current palette")
+        else:
+            print("⚠️  Could not update template, continuing anyway...")
+    
+    print("=" * 40)
+    
     # Ensure config directory exists
     starship_config.parent.mkdir(exist_ok=True)
     
@@ -152,6 +235,7 @@ def main():
     # Step 5: Summary
     print("\n" + "=" * 40)
     print("✨ Summary")
+    print(f"   • Current theme: {current_theme or 'Not found'}")
     print(f"   • Total themes found: {len(themes)}")
     print(f"   • Palettes created: {success_count}")
     print(f"   • Config file: {starship_config}")
@@ -162,11 +246,12 @@ def main():
     # Show example usage
     if success_count > 0:
         print("\n💡 Quick Start:")
-        print("   To use a palette, add this to your starship.toml:")
-        print("   [format]")
-        print("   palette = \"Everforest\"")
-        print("\n   Or use a specific variant:")
-        print("   palette = \"Catppuccin_Latte\"")
+        print("   Palette in use (from template):")
+        print(f"   palette = \"{current_theme or 'YourTheme'}\"")
+        print("\n   Available palettes:")
+        for theme_name, _ in sorted(themes, key=lambda x: x[0]):
+            palette_name = format_palette_name(theme_name)
+            print(f"   • {palette_name}")
 
 if __name__ == "__main__":
     main()

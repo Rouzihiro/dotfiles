@@ -1,27 +1,162 @@
 #!/usr/bin/env bash
+# z-theme-bat: Intelligent Bat theme switcher for Zorro themes
+# Usage: z-theme-bat [--notify] [--dry-run] [theme-name]
 
-# Get the current Zorro theme directory
-CURRENT_THEME=$(basename "$(realpath "$HOME/.config/zorro/current/theme")")
+set -e
+
+# Configuration
+CONFIG_DIR="$HOME/.config/zorro"
+THEME_DIR="$CONFIG_DIR/current/theme"
+BAT_CACHE_FILE="$HOME/.cache/current-bat-theme"
+NOTIFY=false
+DRY_RUN=false
+FORCE_THEME=""
+
+# Colors for output
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+BLUE='\033[0;34m'
+NC='\033[0m' # No Color
+
+# Parse arguments
+while [[ $# -gt 0 ]]; do
+    case $1 in
+        --notify)
+            NOTIFY=true
+            shift
+            ;;
+        --dry-run)
+            DRY_RUN=true
+            shift
+            ;;
+        --help|-h)
+            echo "Usage: z-theme-bat [OPTIONS] [theme-name]"
+            echo ""
+            echo "Options:"
+            echo "  --notify      Show desktop notification"
+            echo "  --dry-run     Show what would be set without changing"
+            echo "  --help, -h    Show this help message"
+            echo ""
+            echo "If no theme-name is provided, reads from current Zorro theme."
+            echo ""
+            echo "Examples:"
+            echo "  z-theme-bat                    # Use current Zorro theme"
+            echo "  z-theme-bat sakura             # Force sakura theme"
+            echo "  z-theme-bat --notify           # With notification"
+            echo "  z-theme-bat --dry-run gruvbox  # Test gruvbox mapping"
+            exit 0
+            ;;
+        -*)
+            echo "Error: Unknown option $1"
+            exit 1
+            ;;
+        *)
+            FORCE_THEME="$1"
+            shift
+            ;;
+    esac
+done
+
+# Get the current or forced theme
+if [[ -n "$FORCE_THEME" ]]; then
+    CURRENT_THEME="$FORCE_THEME"
+    echo -e "${BLUE}Using forced theme:${NC} $CURRENT_THEME"
+elif [[ -L "$THEME_DIR" ]]; then
+    CURRENT_THEME=$(basename "$(realpath "$THEME_DIR")")
+    echo -e "${BLUE}Detected Zorro theme:${NC} $CURRENT_THEME"
+else
+    echo -e "${RED}Error: No theme directory found at $THEME_DIR${NC}"
+    echo "Either run with a theme name or ensure Zorro theme is set up."
+    exit 1
+fi
 
 # Map Zorro themes to bat themes
+# Note: This matches your case statement exactly
 case "$CURRENT_THEME" in
-    "catppuccin")         export BAT_THEME="Monokai Extended" ;;
-    "catppuccin-latte")   export BAT_THEME="Monokai Extended Light" ;;
-    "everforest")         export BAT_THEME="OneHalfDark" ;;
-    "flexoki-light")      export BAT_THEME="OneHalfLight" ;;
-    "gruvbox")            export BAT_THEME="gruvbox-dark" ;;
-    "kanagawa")           export BAT_THEME="Monokai Extended" ;;
-    "matte-black")        export BAT_THEME="DarkNeon" ;;
-    "nightfox")           export BAT_THEME="Dracula" ;;
-    "nord")               export BAT_THEME="Nord" ;;
-    "osaka-jade")         export BAT_THEME="1337" ;;
-    "ristretto")          export BAT_THEME="Sublime Snazzy" ;;
-    "rose-pine")          export BAT_THEME="GitHub" ;;
-    "rose-pine-darker")   export BAT_THEME="GitHub" ;;
-    "tokyo-night")        export BAT_THEME="Dracula" ;;
-    "vague")              export BAT_THEME="DarkNeon" ;;
-    "dark-mode")          export BAT_THEME="Monokai Extended" ;;
-    "light-mode")         export BAT_THEME="Monokai Extended Light" ;;
-    "zenburn")            export BAT_THEME="zenburn" ;;
-    # add more mappings if needed
+    "catppuccin")         BAT_THEME="Monokai Extended" ;;
+    "catppuccin-latte")   BAT_THEME="Monokai Extended Light" ;;
+    "dark-mode")          BAT_THEME="Monokai Extended" ;;
+    "everforest")         BAT_THEME="OneHalfDark" ;;
+    "flexoki-light")      BAT_THEME="OneHalfLight" ;;
+    "gruvbox")            BAT_THEME="gruvbox-dark" ;;
+    "gruvbox-dark")       BAT_THEME="gruvbox-dark" ;;
+    "kanagawa")           BAT_THEME="Monokai Extended" ;;
+    "light-mode")         BAT_THEME="Monokai Extended Light" ;;
+    "matte-black")        BAT_THEME="DarkNeon" ;;
+    "nightfox")           BAT_THEME="Dracula" ;;
+    "nord")               BAT_THEME="Nord" ;;
+    "osaka-jade")         BAT_THEME="1337" ;;
+    "ristretto")          BAT_THEME="Sublime Snazzy" ;;
+    "rose-pine")          BAT_THEME="GitHub" ;;
+    "rose-pine-darker")   BAT_THEME="GitHub" ;;
+    "sakura")             BAT_THEME="sakura-dark" ;;
+    "solarized")          BAT_THEME="Solarized" ;;
+    "solarized-dark")     BAT_THEME="Solarized" ;;
+    "tokyo-night")        BAT_THEME="Dracula" ;;
+    "vague")              BAT_THEME="DarkNeon" ;;
+    "zenburn")            BAT_THEME="zenburn" ;;
+    *)
+        # Fallback: use theme name directly or default
+        if bat --list-themes | grep -q "^$CURRENT_THEME$"; then
+            BAT_THEME="$CURRENT_THEME"
+            echo -e "${YELLOW}Using theme name directly:${NC} $BAT_THEME"
+        else
+            BAT_THEME="OneHalfDark"
+            echo -e "${YELLOW}Theme not mapped, using default:${NC} $BAT_THEME"
+        fi
+        ;;
 esac
+
+# Verify the theme exists in Bat
+if ! bat --list-themes | grep -q "^$BAT_THEME$"; then
+    echo -e "${RED}Warning: Bat theme '$BAT_THEME' not found${NC}"
+    echo "Available themes:"
+    bat --list-themes | head -20
+    echo "..."
+    
+    # Try to find a similar theme
+    SIMILAR=$(bat --list-themes | grep -i "${CURRENT_THEME%%-*}" | head -1)
+    if [[ -n "$SIMILAR" ]]; then
+        BAT_THEME="$SIMILAR"
+        echo -e "${YELLOW}Using similar theme:${NC} $BAT_THEME"
+    else
+        BAT_THEME="OneHalfDark"
+        echo -e "${YELLOW}Falling back to:${NC} $BAT_THEME"
+    fi
+fi
+
+# Apply the theme
+if [[ "$DRY_RUN" == true ]]; then
+    echo -e "${GREEN}Dry run - would set:${NC}"
+    echo "  BAT_THEME=\"$BAT_THEME\""
+    echo "  Cache file: $BAT_CACHE_FILE"
+    echo ""
+    echo -e "${BLUE}Test command:${NC}"
+    echo "  echo 'print(\"Test\")' | bat --theme=\"$BAT_THEME\""
+else
+    # Export for current shell
+    export BAT_THEME="$BAT_THEME"
+    
+    # Write to cache file for other shells/sessions
+    echo "export BAT_THEME=\"$BAT_THEME\"" > "$BAT_CACHE_FILE"
+    
+    echo -e "${GREEN}✓ Bat theme set to:${NC} $BAT_THEME"
+    echo "  Cache updated: $BAT_CACHE_FILE"
+    
+    # Show notification if requested
+    if [[ "$NOTIFY" == true ]] && command -v notify-send &> /dev/null; then
+        notify-send -a "Bat Theme" "Theme Changed" "Bat: $BAT_THEME" \
+            -i terminal \
+            -h string:x-dunst-stack-tag:bat-theme
+    fi
+fi
+
+# Quick test to show the theme in action
+if [[ "$DRY_RUN" == false ]] && [[ -t 1 ]]; then
+    echo ""
+    echo -e "${BLUE}Preview:${NC}"
+    echo 'echo "print(\"Hello from $BAT_THEME\")" | python3' | \
+        bat --theme="$BAT_THEME" --language=python --style=plain --color=always 2>/dev/null || \
+        echo -e "${YELLOW}(Preview not available)${NC}"
+fi

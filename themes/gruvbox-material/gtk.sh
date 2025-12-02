@@ -8,3 +8,4 @@ gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
 gsettings set org.gnome.desktop.interface cursor-size 24
 
 export XCURSOR_THEME=la-capitaine-cursor-theme
+export BAT_THEME="gruvbox-dark"
