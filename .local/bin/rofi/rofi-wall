@@ -3,10 +3,40 @@
 WALLPAPER_DIR="$HOME/Pictures/wallpapers"
 CACHE_DIR="$HOME/.cache/wallpaper-thumbnails"
 THUMBNAIL_DIR="$HOME/Videos/thumbnails/"
+ROFI_BLUR_PATH="$HOME/.config/zorro/current/bg-rofi-blur.png"
 
 # Create directories if they don't exist
 mkdir -p "$CACHE_DIR"
 mkdir -p "$THUMBNAIL_DIR"
+mkdir -p "$(dirname "$ROFI_BLUR_PATH")"
+
+# Function to create blurred version for rofi
+create_rofi_blur() {
+    local wallpaper_path="$1"
+    
+    echo "Creating blurred background for rofi..."
+    
+    if command -v magick &> /dev/null; then
+        magick "$wallpaper_path" \
+            -resize 1366x768^ \
+            -gravity center \
+            -extent 1366x768 \
+            -blur 0x8 \
+            "$ROFI_BLUR_PATH"
+    elif command -v convert &> /dev/null; then
+        convert "$wallpaper_path" \
+            -resize 1366x768^ \
+            -gravity center \
+            -extent 1366x768 \
+            -blur 0x8 \
+            "$ROFI_BLUR_PATH"
+    else
+        echo "Warning: ImageMagick not found, skipping rofi blur"
+        return 1
+    fi
+    
+    echo "Blurred background created: $ROFI_BLUR_PATH"
+}
 
 # Generate thumbnails for all wallpapers (static images)
 generate_thumbnails() {
@@ -117,6 +147,11 @@ if [ -n "$selected" ]; then
         # Save the real wallpaper path for restoration on next boot
         echo "$real_path" > "$HOME/.cache/last_wallpaper"
 
+			 # CREATE SYMLINK TO ZORRO CURRENT BACKGROUND
+        ZORRO_BG_PATH="$HOME/.config/zorro/current/background"
+        mkdir -p "$(dirname "$ZORRO_BG_PATH")"
+        ln -sf "$real_path" "$ZORRO_BG_PATH"
+
         # Get file extension from the actual file
         extension="${real_path##*.}"
 
@@ -127,13 +162,20 @@ if [ -n "$selected" ]; then
             # Handle MP4 animated wallpaper
             filename=$(basename "$real_path")
             thumbnail_path="$THUMBNAIL_DIR/${filename%.*}.jpg"
-
+            
             # For videos, we can't use swaybg directly
-            # You might want to use a different tool for video wallpapers in Sway
+            # Create blurred background from video thumbnail
+            if [ -f "$thumbnail_path" ]; then
+                create_rofi_blur "$thumbnail_path" &
+            fi
+            
             notify-send -a "Wallpaper" "Video Wallpaper" "Video wallpapers not supported with swaybg. Use: $selected"
         else
             # Handle static image wallpaper with swaybg
             swaybg -i "$real_path" -m fill &
+            
+            # Create blurred background for rofi
+            create_rofi_blur "$real_path" &
             
             # Send notification
             notify-send -a "Wallpaper" "Wallpaper Applied" "$(basename "$selected")" -i "$real_path"

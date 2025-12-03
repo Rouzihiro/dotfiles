@@ -1,0 +1,4 @@
+#!/bin/bash
+magick "$(readlink -f ~/.config/zorro/current/background)" \
+    -resize 1366x768^ -gravity center -extent 1366x768 -blur 0x8 \
+    ~/.config/zorro/current/bg-rofi-blur.png
