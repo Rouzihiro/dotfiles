@@ -7,3 +7,17 @@ node_modules/
 .DS_Store
 *result*
 .config/nvim/lazy-lock.json
+
+.local/bin/bob
+.local/bin/f2py
+.local/bin/numpy-config
+.local/bin/fonttools
+.local/bin/pyftmerge
+.local/bin/pyftsubset
+.local/bin/ttx
+.local/bin/lsm2bin
+.local/bin/tiff2fsspec
+.local/bin/tiffcomment
+.local/bin/tifffile
+.local/bin/imageio_download_bin
+.local/bin/imageio_remove_bin
