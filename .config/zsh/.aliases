@@ -1,4 +1,6 @@
 alias typst-up="cargo install typst-cli --force"
+alias sf="search-in-file.py"
+alias replace="replace-in-file.py"
 
 # Search running processes
 alias p="ps aux | grep "
