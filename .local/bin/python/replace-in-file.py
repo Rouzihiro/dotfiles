@@ -1,59 +1,146 @@
 #!/usr/bin/env python3
 """
-File Search and Replace Tool
-Simplified syntax: replace_in_file.py <file> <search> <replace> [options]
+File Search, Replace, and View Tool
+Combined file viewer, search, and replace tool.
+
+Usage:
+  # VIEW entire file:
+  r <file>                           # View entire file
+  
+  # VIEW specific lines:
+  r <file> -l <line>                 # View single line
+  r <file> -l <start>-<end>          # View line range (e.g., 1-10)
+  r <file> -l <line1>,<line2>,...   # View specific lines (e.g., 1,5,10)
+  
+  # SEARCH mode:
+  r <file> <search>                  # Search for text
+  
+  # REPLACE mode:
+  r <file> <search> <replace>        # Replace text
+  
+  # LINE REPLACE mode:
+  r <file> -lr <line> <text>         # Replace line (use -lr instead of -l)
 
 Options:
-  -f, --first <n>        Replace only first N occurrences (default: all)
-  -l, --line <n>         Replace entire line number N
-  -p, --preview          Preview changes without saving
-  -b, --backup           Create backup before modifying
   -R, --regex            Pattern is a regular expression
   -C, --case-sensitive   Case-sensitive search (default: insensitive)
-  -m, --multiple <file>  Load multiple patterns from JSON/YAML file
-  
+  -p, --preview          Preview changes
+  -c, --count            Show only count of matches (search mode)
+  -f N, --first N        Replace only first N occurrences
+  -b, --backup           Create backup before modifying
+  -d, --dry-run          Preview without asking (same as -p)
+
 Examples:
-  # Basic replacement (most common)
-  replace_in_file.py file.txt "old" "new"
+  # VIEW:
+  r file.txt                    # View entire file
+  r file.txt -l 5              # View line 5
+  r file.txt -l 1-10           # View lines 1-10
+  r file.txt -l 1,5,10         # View lines 1, 5, and 10
   
-  # Replace only first occurrence
-  replace_in_file.py file.txt "error" "warning" -f 1
+  # SEARCH:
+  r log.txt "ERROR"            # Search for ERROR
   
-  # Replace first 3 occurrences
-  replace_in_file.py file.txt "foo" "bar" -f 3
+  # REPLACE:
+  r config.txt "old" "new"     # Basic replace
   
-  # Replace specific line
-  replace_in_file.py file.txt -l 42 "new line text"
-  
-  # Regex replacement
-  replace_in_file.py log.txt "User\\s+(\\d+)" "Account \\1" -R
-  
-  # Preview changes
-  replace_in_file.py config.txt "localhost" "server" -p
-  
-  # Create backup
-  replace_in_file.py important.txt "temp" "permanent" -b
-  
-  # Case-sensitive
-  replace_in_file.py code.py "DEBUG" "PRODUCTION" -C
+  # LINE REPLACE:
+  r script.py -lr 42 "new code" # Replace line 42 (using -lr flag)
 """
 
 import sys
 import re
 import os
 import shutil
-import json
-import yaml
 import argparse
 from datetime import datetime
-from typing import List, Tuple, Optional
+from typing import Tuple, Optional, List
 
-class FileReplacer:
+class FileTool:
     def __init__(self, filename: str):
         self.filename = filename
         self.original_content = None
         self.modified_content = None
         
+    def view_lines(self, line_spec: Optional[str] = None):
+        """View specific lines or entire file."""
+        try:
+            if not os.path.exists(self.filename):
+                print(f"Error: File '{self.filename}' not found.")
+                sys.exit(1)
+            
+            if not os.access(self.filename, os.R_OK):
+                print(f"Error: Cannot read file '{self.filename}'.")
+                sys.exit(1)
+            
+            # Read all lines
+            with open(self.filename, 'r') as f:
+                lines = f.readlines()
+            
+            # If no line spec, show all lines
+            if line_spec is None:
+                for i, line in enumerate(lines, 1):
+                    print(f"{i:6}: {line.rstrip()}")
+                return
+            
+            # Parse line specification
+            line_nums = self.parse_line_spec(line_spec, len(lines))
+            if not line_nums:
+                print(f"Error: Invalid line specification: {line_spec}")
+                return
+            
+            # Show requested lines
+            for i in line_nums:
+                if 1 <= i <= len(lines):
+                    print(f"{i:6}: {lines[i-1].rstrip()}")
+                else:
+                    print(f"Warning: Line {i} is out of range (1-{len(lines)})")
+                    
+        except Exception as e:
+            print(f"Error viewing file: {e}")
+            sys.exit(1)
+    
+    def parse_line_spec(self, spec: str, max_lines: int) -> List[int]:
+        """Parse line specification like '5', '1-10', or '1,5,10'."""
+        try:
+            result = []
+            
+            # Handle comma-separated list
+            if ',' in spec:
+                parts = spec.split(',')
+                for part in parts:
+                    part = part.strip()
+                    if '-' in part:
+                        # Range like 1-10
+                        start_str, end_str = part.split('-', 1)
+                        start = int(start_str.strip())
+                        end = int(end_str.strip())
+                        result.extend(range(start, end + 1))
+                    else:
+                        # Single number
+                        result.append(int(part))
+            
+            # Handle range like 1-10
+            elif '-' in spec:
+                start_str, end_str = spec.split('-', 1)
+                start = int(start_str.strip())
+                end = int(end_str.strip())
+                result = list(range(start, end + 1))
+            
+            # Handle single number
+            else:
+                result.append(int(spec))
+            
+            # Filter out invalid line numbers
+            result = [i for i in result if 1 <= i <= max_lines]
+            
+            # Remove duplicates and sort
+            result = sorted(set(result))
+            
+            return result
+            
+        except ValueError:
+            return []
+    
     def read_file(self) -> str:
         """Read the file content."""
         try:
@@ -87,6 +174,49 @@ class FileReplacer:
             print(f"Warning: Could not create backup: {e}")
             return None
     
+    def search_text(self, pattern: str, use_regex: bool = False, 
+                   case_sensitive: bool = False, count_only: bool = False) -> int:
+        """Search for text in file."""
+        content = self.read_file()
+        lines = content.splitlines()
+        matches = 0
+        
+        flags = 0 if case_sensitive else re.IGNORECASE
+        
+        if use_regex:
+            try:
+                pattern_re = re.compile(pattern, flags)
+            except re.error as e:
+                print(f"Regex error: {e}")
+                return 0
+        else:
+            pattern_re = re.compile(re.escape(pattern), flags)
+        
+        if not count_only:
+            print(f"\nSearching '{self.filename}' for: {pattern}")
+            print("=" * 60)
+        
+        for i, line in enumerate(lines, 1):
+            if pattern_re.search(line):
+                matches += 1
+                if not count_only:
+                    try:
+                        highlighted = pattern_re.sub(f"\033[91m\\g<0>\033[0m", line)
+                    except:
+                        highlighted = line
+                    print(f"Line {i}: {highlighted[:120]}{'...' if len(line) > 120 else ''}")
+        
+        if not count_only:
+            if matches == 0:
+                print("No matches found.")
+            else:
+                print("=" * 60)
+                print(f"Found {matches} match{'es' if matches != 1 else ''}")
+        elif count_only:
+            print(f"Matches found: {matches}")
+        
+        return matches
+    
     def replace_text(self, pattern: str, replacement: str, 
                     use_regex: bool = False, max_replacements: Optional[int] = None,
                     case_sensitive: bool = False) -> Tuple[int, str]:
@@ -97,16 +227,19 @@ class FileReplacer:
         flags = 0 if case_sensitive else re.IGNORECASE
         
         if use_regex:
-            if max_replacements:
-                modified, count = re.sub(pattern, replacement, modified, 
-                                        count=max_replacements, flags=flags), max_replacements
-            else:
-                modified, count = re.subn(pattern, replacement, modified, 
-                                         flags=flags)
+            try:
+                if max_replacements:
+                    modified = re.sub(pattern, replacement, modified, 
+                                     count=max_replacements, flags=flags)
+                    count = max_replacements
+                else:
+                    modified, count = re.subn(pattern, replacement, modified, 
+                                             flags=flags)
+            except re.error as e:
+                print(f"Regex error: {e}")
+                return 0, modified
         else:
-            # Simple text replacement
             if not case_sensitive:
-                # Case-insensitive string replacement using regex
                 pattern_re = re.compile(re.escape(pattern), flags=re.IGNORECASE)
                 if max_replacements:
                     modified = pattern_re.sub(replacement, modified, count=max_replacements)
@@ -114,9 +247,7 @@ class FileReplacer:
                 else:
                     modified, count = pattern_re.subn(replacement, modified)
             else:
-                # Case-sensitive string replacement
                 if max_replacements:
-                    # We need to implement this manually for case-sensitive
                     count = 0
                     parts = []
                     remaining = modified
@@ -168,18 +299,19 @@ class FileReplacer:
         print("PREVIEW OF CHANGES:")
         print("="*60)
         
+        changed_lines = 0
         for i, (orig, mod) in enumerate(zip(orig_lines, mod_lines), 1):
             if orig != mod:
+                changed_lines += 1
                 print(f"\nLine {i}:")
-                # Truncate long lines for display
-                orig_display = orig[:100] + ('...' if len(orig) > 100 else '')
-                mod_display = mod[:100] + ('...' if len(mod) > 100 else '')
-                print(f"  Original: {orig_display}")
-                print(f"  Modified: {mod_display}")
+                print(f"  Original: {orig[:100]}{'...' if len(orig) > 100 else ''}")
+                print(f"  Modified: {mod[:100]}{'...' if len(mod) > 100 else ''}")
         
-        # Handle added/removed lines
+        if changed_lines == 0:
+            print("No changes detected.")
+        
         if len(orig_lines) != len(mod_lines):
-            print(f"\nNote: Number of lines changed from {len(orig_lines)} to {len(mod_lines)}")
+            print(f"\nNote: Line count changed from {len(orig_lines)} to {len(mod_lines)}")
         
         print("="*60)
     
@@ -202,141 +334,175 @@ class FileReplacer:
             self.create_backup()
         
         self.write_file(self.modified_content)
-        print("Changes applied successfully.")
+        print("✓ Changes applied successfully.")
 
-def load_multiple_patterns(pattern_file: str) -> List[dict]:
-    """Load multiple patterns from JSON or YAML file."""
-    if not os.path.exists(pattern_file):
-        print(f"Error: Pattern file '{pattern_file}' not found.")
-        sys.exit(1)
+def parse_arguments():
+    """Parse command line arguments with custom handling."""
+    args = sys.argv[1:]
     
-    try:
-        with open(pattern_file, 'r') as f:
-            if pattern_file.endswith('.json'):
-                patterns = json.load(f)
-            elif pattern_file.endswith(('.yaml', '.yml')):
-                patterns = yaml.safe_load(f)
-            else:
-                print(f"Error: Unsupported file format. Use .json or .yaml")
-                sys.exit(1)
+    if not args:
+        return {'mode': 'help'}
+    
+    if args[0] in ['-h', '--help']:
+        return {'mode': 'help'}
+    
+    result = {
+        'filename': None,
+        'search': None,
+        'replace': None,
+        'line_spec': None,  # For viewing lines: -l 3 or -l 1-5
+        'line_num': None,   # For replacing a line: -lr 3 "text"
+        'regex': False,
+        'case_sensitive': False,
+        'preview': False,
+        'count': False,
+        'first': None,
+        'backup': False,
+        'dry_run': False,
+    }
+    
+    i = 0
+    while i < len(args):
+        arg = args[i]
         
-        # Validate pattern structure
-        if isinstance(patterns, list):
-            for i, pattern in enumerate(patterns):
-                if not all(k in pattern for k in ['search', 'replace']):
-                    print(f"Error: Pattern {i} missing 'search' or 'replace' key")
-                    sys.exit(1)
-            return patterns
-        else:
-            print("Error: Pattern file should contain a list of patterns")
+        if arg == '-R' or arg == '--regex':
+            result['regex'] = True
+            i += 1
+        elif arg == '-C' or arg == '--case-sensitive':
+            result['case_sensitive'] = True
+            i += 1
+        elif arg == '-p' or arg == '--preview':
+            result['preview'] = True
+            i += 1
+        elif arg == '-c' or arg == '--count':
+            result['count'] = True
+            i += 1
+        elif arg == '-b' or arg == '--backup':
+            result['backup'] = True
+            i += 1
+        elif arg == '-d' or arg == '--dry-run':
+            result['preview'] = True
+            i += 1
+        elif arg == '-f' or arg == '--first':
+            if i + 1 >= len(args):
+                print("Error: -f requires a number")
+                sys.exit(1)
+            try:
+                result['first'] = int(args[i + 1])
+            except ValueError:
+                print(f"Error: -f requires a number, got '{args[i + 1]}'")
+                sys.exit(1)
+            i += 2
+        elif arg == '-l' or arg == '--line':
+            # VIEW mode: -l <line-spec>
+            if i + 1 >= len(args):
+                print("Error: -l requires a line specification")
+                print("Examples: -l 5, -l 1-10, -l 1,5,10")
+                sys.exit(1)
+            result['line_spec'] = args[i + 1]
+            i += 2
+        elif arg == '-lr' or arg == '--line-replace':
+            # LINE REPLACE mode: -lr <line> <text>
+            if i + 2 >= len(args):
+                print("Error: -lr requires line number and replacement text")
+                print("Usage: r <file> -lr <line> <text>")
+                sys.exit(1)
+            try:
+                result['line_num'] = int(args[i + 1])
+            except ValueError:
+                print(f"Error: -lr requires a line number, got '{args[i + 1]}'")
+                sys.exit(1)
+            result['replace'] = args[i + 2]
+            i += 3
+        elif arg.startswith('-'):
+            print(f"Error: Unknown option: {arg}")
             sys.exit(1)
-            
-    except Exception as e:
-        print(f"Error loading pattern file: {e}")
-        sys.exit(1)
+        else:
+            # Positional argument
+            if result['filename'] is None:
+                result['filename'] = arg
+            elif result['search'] is None:
+                result['search'] = arg
+            elif result['replace'] is None:
+                result['replace'] = arg
+            else:
+                print(f"Warning: Ignoring extra argument: {arg}")
+            i += 1
+    
+    # Determine mode
+    if result['filename'] is None:
+        result['mode'] = 'error'
+    elif result['line_num'] is not None:
+        result['mode'] = 'line_replace'
+    elif result['line_spec'] is not None:
+        result['mode'] = 'view_lines'
+    elif result['search'] is None:
+        result['mode'] = 'view_all'
+    elif result['replace'] is None:
+        result['mode'] = 'search'
+    else:
+        result['mode'] = 'replace'
+    
+    return result
 
 def main():
-    parser = argparse.ArgumentParser(
-        description="File search and replace tool with simplified syntax",
-        formatter_class=argparse.RawDescriptionHelpFormatter,
-        epilog=__doc__
-    )
+    args = parse_arguments()
     
-    # Positional arguments for common use case
-    parser.add_argument("filename", help="File to modify")
-    parser.add_argument("search", nargs="?", help="Text to search for", default=None)
-    parser.add_argument("replace", nargs="?", help="Replacement text", default=None)
-    
-    # Options
-    parser.add_argument("-f", "--first", type=int, 
-                       help="Replace only first N occurrences (default: all)")
-    
-    parser.add_argument("-l", "--line", type=int, 
-                       help="Replace entire line number N")
-    
-    parser.add_argument("-p", "--preview", action="store_true",
-                       help="Preview changes without saving")
-    
-    parser.add_argument("-b", "--backup", action="store_true",
-                       help="Create backup before modifying")
-    
-    parser.add_argument("-R", "--regex", action="store_true",
-                       help="Pattern is a regular expression")
-    
-    parser.add_argument("-C", "--case-sensitive", action="store_true",
-                       help="Case-sensitive search (default: insensitive)")
-    
-    parser.add_argument("-m", "--multiple", 
-                       help="Load multiple patterns from JSON/YAML file")
-    
-    args = parser.parse_args()
-    
-    # Validation
-    if args.multiple and (args.search or args.replace):
-        print("Error: Cannot use --multiple with search/replace arguments")
+    if args['mode'] == 'help':
+        print(__doc__)
+        sys.exit(0)
+    elif args['mode'] == 'error':
+        print("Error: No filename provided")
+        print("\nQuick usage:")
+        print("  r file.txt                    # View file")
+        print("  r file.txt -l 5              # View line 5")
+        print("  r file.txt 'search'          # Search")
+        print("  r file.txt 'old' 'new'       # Replace")
+        print("  r file.txt -lr 42 'text'     # Replace line 42")
         sys.exit(1)
     
-    if args.line and args.search:
-        print("Error: Cannot use both --line and search/replace arguments")
-        sys.exit(1)
+    tool = FileTool(args['filename'])
     
-    if args.line and not args.replace:
-        print("Error: When using --line, provide replacement text as third argument")
-        sys.exit(1)
+    if args['dry_run']:
+        args['preview'] = True
     
-    if not args.multiple and not args.line and (not args.search or not args.replace):
-        print("Error: Need both search and replace arguments for text replacement")
-        print("Usage: replace_in_file.py <file> <search> <replace> [options]")
-        print("       replace_in_file.py <file> -l <line> <text> [options]")
-        print("       replace_in_file.py <file> -m <pattern_file> [options]")
-        sys.exit(1)
+    if args['mode'] == 'view_all':
+        tool.view_lines()
     
-    # Initialize replacer
-    replacer = FileReplacer(args.filename)
+    elif args['mode'] == 'view_lines':
+        tool.view_lines(args['line_spec'])
     
-    # Handle multiple patterns from file
-    if args.multiple:
-        patterns = load_multiple_patterns(args.multiple)
-        total_changes = 0
+    elif args['mode'] == 'search':
+        matches = tool.search_text(
+            pattern=args['search'],
+            use_regex=args['regex'],
+            case_sensitive=args['case_sensitive'],
+            count_only=args['count']
+        )
+        if args['count'] and matches == 0:
+            print("No matches found.")
+    
+    elif args['mode'] == 'replace':
+        count, _ = tool.replace_text(
+            pattern=args['search'],
+            replacement=args['replace'],
+            use_regex=args['regex'],
+            max_replacements=args['first'],
+            case_sensitive=args['case_sensitive']
+        )
         
-        for pattern_data in patterns:
-            print(f"\nProcessing pattern: {pattern_data['search'][:50]}...")
-            count, _ = replacer.replace_text(
-                pattern=pattern_data['search'],
-                replacement=pattern_data['replace'],
-                use_regex=pattern_data.get('regex', False),
-                max_replacements=pattern_data.get('first', None),
-                case_sensitive=pattern_data.get('case_sensitive', False)
-            )
-            total_changes += count
-            print(f"  Matches found: {count}")
-        
-        print(f"\nTotal changes across all patterns: {total_changes}")
+        if count == 0:
+            print("No matches found.")
+            print("No changes to apply.")
+        else:
+            print(f"Found {count} match{'es' if count != 1 else ''}")
+            tool.apply_changes(backup=args['backup'], preview=args['preview'])
     
-    # Handle line replacement
-    elif args.line:
-        if not args.replace:
-            print("Error: Need replacement text for line replacement")
-            sys.exit(1)
-            
-        success = replacer.replace_line(args.line, args.replace)
+    elif args['mode'] == 'line_replace':
+        success = tool.replace_line(args['line_num'], args['replace'])
         if not success:
             sys.exit(1)
-        print(f"Line {args.line} replaced")
-    
-    # Handle text replacement (most common case)
-    else:
-        count, _ = replacer.replace_text(
-            pattern=args.search,
-            replacement=args.replace,
-            use_regex=args.regex,
-            max_replacements=args.first,
-            case_sensitive=args.case_sensitive
-        )
-        print(f"Matches found: {count}")
-    
-    # Apply changes
-    replacer.apply_changes(backup=args.backup, preview=args.preview)
+        tool.apply_changes(backup=args['backup'], preview=args['preview'])
 
 if __name__ == "__main__":
     main()

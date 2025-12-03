@@ -1,6 +1,7 @@
 alias typst-up="cargo install typst-cli --force"
 alias sf="search-in-file.py"
 alias replace="replace-in-file.py"
+alias r="replace-in-file.py"
 
 # Search running processes
 alias p="ps aux | grep "
@@ -29,9 +30,10 @@ alias se="sudoedit"
 
 # File and directory management
 alias :q="exit"
-alias ls="eza --color=always --long --git --no-filesize --icons=always --no-time --no-user --no-permissions"
-alias lsp="eza --color=always --long --git --no-filesize --icons=always --no-time --no-user"
-alias lsa="eza --color=always --long --git --icons=always -b -a --total-size"
+alias ls="eza -G --icons --color=always --group-directories-first"
+alias lsh="eza -G --long --icons --color=always --no-permissions --no-user --no-time --group-directories-first 2>/dev/null"
+alias lsa="eza -G --long --icons --color=always --no-permissions --no-user --group-directories-first 2>/dev/null"
+alias lsp="eza -l --color=always --git --no-filesize --icons=always --no-time --no-user --group-directories-first"
 alias lt="eza --tree --level=2 --long --icons --git"
 alias tree="eza --tree --level=3 --icons --git"
 
@@ -88,15 +90,6 @@ alias gpf='git push -v --force'
 alias gf='git fetch --all --tags --prune'
 alias gpl='git pull'
 alias gpr='git pull --rebase'
-alias gl='git log --graph --oneline --decorate --all'
-alias gls='git log --stat'
-alias gco='git checkout'
-alias gcb='git checkout -b'
-alias gsw='git switch'
-alias gm='git merge'
-alias grs='git reset'
-alias grsh='git reset --hard'
-alias grst='git restore --staged'
 alias lg='lazygit'
 alias lgf='cd ~/dotfiles && lazygit'
 
