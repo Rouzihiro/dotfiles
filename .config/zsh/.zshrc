@@ -8,6 +8,7 @@ plugins=(
     dnf
     zsh-autosuggestions
     zsh-syntax-highlighting
+		zsh-autocomplete 
 )
 
 [ -f "$ZSH/oh-my-zsh.sh" ] && source "$ZSH/oh-my-zsh.sh"

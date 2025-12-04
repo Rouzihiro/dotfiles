@@ -11,7 +11,7 @@ set -o pipefail
 SCRIPT_DIR=$(pwd)
 BACKUP_DIR="$HOME/.bkp_config_$(date +%Y%m%d_%H%M%S)"
 LOG_FILE="$HOME/Documents/installer-log.txt"
-PKGS_DIR="$SCRIPT_DIR/pkgs"
+PKGS_DIR="$SCRIPT_DIR/arch/pkgs"
 
 mkdir -p "$BACKUP_DIR"
 mkdir -p "$(dirname "$LOG_FILE")"
@@ -157,31 +157,46 @@ link_configs() {
 setup_zsh() {
     log "Installing Oh My Zsh..."
     if [[ ! -d "$HOME/.oh-my-zsh" ]]; then
-        git clone https://github.com/ohmyzsh/ohmyzsh.git "$HOME/.oh-my-zsh" &>> "$LOG_FILE"
+        git clone https://github.com/ohmyzsh/ohmyzsh.git "$HOME/.oh-my-zsh" 2>&1 | tee -a "$LOG_FILE"
+        log "Oh My Zsh installed."
     else
-        log "Oh My Zsh already present; skipping clone."
+        log "Oh My Zsh already installed. Updating..."
+        cd "$HOME/.oh-my-zsh" && git pull 2>&1 | tee -a "$LOG_FILE"
     fi
 
-    log "Installing Oh My Zsh plugins..."
+    log "Setting up Oh My Zsh plugins..."
     OMZ_CUSTOM="$HOME/.oh-my-zsh/custom"
     mkdir -p "$OMZ_CUSTOM/plugins"
-    if [[ ! -d "$OMZ_CUSTOM/plugins/zsh-autosuggestions" ]]; then
-        git clone https://github.com/zsh-users/zsh-autosuggestions.git "$OMZ_CUSTOM/plugins/zsh-autosuggestions" &>> "$LOG_FILE"
-    else
-        log "zsh-autosuggestions already present; skipping."
-    fi
-    if [[ ! -d "$OMZ_CUSTOM/plugins/zsh-syntax-highlighting" ]]; then
-        git clone https://github.com/zsh-users/zsh-syntax-highlighting.git "$OMZ_CUSTOM/plugins/zsh-syntax-highlighting" &>> "$LOG_FILE"
-    else
-        log "zsh-syntax-highlighting already present; skipping."
-    fi
+    
+    # Function to install or update a plugin
+    setup_plugin() {
+        local plugin_name="$1"
+        local repo_url="$2"
+        local plugin_dir="$OMZ_CUSTOM/plugins/$plugin_name"
+        
+        if [[ ! -d "$plugin_dir" ]]; then
+            log "Installing $plugin_name..."
+            git clone "$repo_url" "$plugin_dir" 2>&1 | tee -a "$LOG_FILE"
+        else
+            log "Updating $plugin_name..."
+            cd "$plugin_dir" && git pull 2>&1 | tee -a "$LOG_FILE"
+        fi
+    }
+    
+    # Install/update each plugin
+    setup_plugin "zsh-autosuggestions" "https://github.com/zsh-users/zsh-autosuggestions.git"
+    setup_plugin "zsh-syntax-highlighting" "https://github.com/zsh-users/zsh-syntax-highlighting.git"
+    setup_plugin "zsh-autocomplete" "https://github.com/marlonrichert/zsh-autocomplete.git"
 
-    if [[ "$SHELL" != "/usr/bin/zsh" ]]; then
+    # Change shell to zsh if not already
+    if [[ "$SHELL" != "/bin/zsh" ]] && [[ "$SHELL" != "/usr/bin/zsh" ]]; then
         log "Changing default shell to zsh..."
-        chsh -s /usr/bin/zsh
+        chsh -s /bin/zsh 2>&1 | tee -a "$LOG_FILE"
     else
-        log "Default shell already zsh."
+        log "Zsh is already the default shell."
     fi
+    
+    log "Zsh setup complete!"
 }
 
 switch_git_remote() {
