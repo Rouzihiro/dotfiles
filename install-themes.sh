@@ -48,3 +48,4 @@ mkdir -p ~/.config/mako
 ln -snf ~/.config/zorro/current/theme/mako.ini ~/.config/mako/config
 
 z-theme-cache
+python ~/dotfiles/projects/theme-generator/starship_generator.py

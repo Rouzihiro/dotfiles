@@ -1,0 +1,8 @@
+#!/bin/bash
+CHOICE=$(printf "1. HDMI Only\n2. Laptop Only\n3. Both Displays" | rofi -dmenu -p "Select:")
+
+case $CHOICE in
+    "1. HDMI Only") swaymsg output eDP-1 disable && swaymsg output HDMI-A-1 enable mode 1920x1080@60.000Hz ;;
+    "2. Laptop Only") swaymsg output HDMI-A-1 disable && swaymsg output eDP-1 enable mode 1920x1080@120.019Hz ;;
+    "3. Both Displays") swaymsg output eDP-1 enable mode 1920x1080@120.019Hz && swaymsg output HDMI-A-1 enable mode 1920x1080@60.000Hz position 1920,0 ;;
+esac
