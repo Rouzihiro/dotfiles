@@ -1,2 +1,2 @@
-#i3blocks
-#waybar
+i3blocks
+waybar

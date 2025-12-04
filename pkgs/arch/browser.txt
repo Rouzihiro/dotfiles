@@ -1,5 +1,5 @@
 # Browsers
-librewolf-bin
+#librewolf-bin
 brave-bin
 # zen-browser-bin
 #ungoogled-chromium-bin         

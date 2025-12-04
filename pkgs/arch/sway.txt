@@ -2,8 +2,9 @@
 sway
 swayidle
 swaylock
-dunst
+#dunst
 #swaync
+mako
 swaybg
 autotiling-rs
 xorg-xwayland
