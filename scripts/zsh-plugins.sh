@@ -25,45 +25,63 @@ install_omz() {
         return 1
     fi
 
-    # Install Oh My Zsh if missing
+    # Install or update Oh My Zsh
     if [ ! -d "$HOME/.oh-my-zsh" ]; then
         log_info "Installing Oh My Zsh..."
         sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
     else
-        log_info "Oh My Zsh already installed."
+        log_info "Updating Oh My Zsh..."
+        cd "$HOME/.oh-my-zsh" && git pull
     fi
 
     # Plugin directory
     ZSH_CUSTOM="${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}"
 
-    # Plugins
-    log_info "Installing Zsh plugins..."
-    declare -A plugin_repos=(
-        ["zsh-autosuggestions"]="https://github.com/zsh-users/zsh-autosuggestions.git"
-        ["zsh-syntax-highlighting"]="https://github.com/zsh-users/zsh-syntax-highlighting.git"
-        ["zsh-autocomplete"]="https://github.com/marlonrichert/zsh-autocomplete.git"
-    )
-
-    for plugin in "${!plugin_repos[@]}"; do
-        plugin_dir="$ZSH_CUSTOM/plugins/$plugin"
+    # Function to install or update a plugin
+    setup_plugin() {
+        local plugin_name="$1"
+        local repo_url="$2"
+        local plugin_dir="$ZSH_CUSTOM/plugins/$plugin_name"
+        
+        mkdir -p "$(dirname "$plugin_dir")"
+        
         if [ ! -d "$plugin_dir" ]; then
-            git clone --depth 1 "${plugin_repos[$plugin]}" "$plugin_dir" || 
-                log_warning "Failed to clone $plugin"
+            log_info "Installing $plugin_name..."
+            git clone --depth 1 "$repo_url" "$plugin_dir" 2>/dev/null || 
+                log_warning "Failed to clone $plugin_name"
         else
-            log_info "$plugin already exists."
+            log_info "Updating $plugin_name..."
+            cd "$plugin_dir" && git pull 2>/dev/null ||
+                log_warning "Failed to update $plugin_name"
         fi
-    done
+    }
+
+    # Install/update plugins
+    log_info "Setting up Zsh plugins..."
+    setup_plugin "zsh-autosuggestions" "https://github.com/zsh-users/zsh-autosuggestions.git"
+    setup_plugin "zsh-syntax-highlighting" "https://github.com/zsh-users/zsh-syntax-highlighting.git"
+    setup_plugin "zsh-autocomplete" "https://github.com/marlonrichert/zsh-autocomplete.git"
 
     # Optional: copy dotfiles if they exist
     log_info "Copying local dotfiles if present..."
     for file in .zshrc .zprofile .aliases .bashrc .bash_profile; do
-        [[ -f "$file" ]] && cp -v "$file" "$HOME/" || true
+        if [[ -f "$file" ]]; then
+            cp -v "$file" "$HOME/"
+        fi
     done
 
     # Set default shell to zsh
-    if [[ "$SHELL" != *zsh ]]; then
+    current_shell="$(basename "$SHELL")"
+    if [[ "$current_shell" != "zsh" ]]; then
         log_info "Changing default shell to Zsh..."
-        chsh -s "$(command -v zsh)" || log_warning "Failed to set Zsh as default shell."
+        zsh_path="$(command -v zsh)"
+        if [ -n "$zsh_path" ]; then
+            chsh -s "$zsh_path" || log_warning "Failed to set Zsh as default shell."
+        else
+            log_warning "Could not find zsh binary path."
+        fi
+    else
+        log_info "Zsh is already the default shell."
     fi
 
     log_success "Zsh setup completed."
@@ -83,4 +101,3 @@ main() {
 }
 
 main "$@"
-
