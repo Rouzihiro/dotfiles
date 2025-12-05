@@ -22,6 +22,9 @@ mkdir -p "$(dirname "$HISTFILE")"
 export HISTORY_IGNORE="(ls|ls -a|cd|clear|pwd|exit|cd -|cd ..)"
 HISTSIZE=10000
 SAVEHIST=10000
+
+zstyle ':autocomplete:*' min-input 3
+zstyle ':autocomplete:min-input' num 3
 setopt HIST_IGNORE_ALL_DUPS
 setopt HIST_FIND_NO_DUPS
 setopt INC_APPEND_HISTORY 
