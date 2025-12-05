@@ -1,0 +1,32 @@
+#!/bin/bash
+# wow-try.sh - Try different graphical modes
+
+WOW_DIR="$HOME/Games/TurtleWoW"
+PROTON="$HOME/Games/GE-Proton10-25/proton"
+PREFIX="$HOME/Games/wow_turtle_prefix"
+
+echo "Select graphical mode:"
+echo "1) OpenGL (Default)"
+echo "2) Direct3D"
+echo "3) Direct3D 9" 
+echo "4) Safe Mode"
+echo "5) Windowed 720p"
+read -p "Choice [1-5]: " choice
+
+case $choice in
+    1) ARGS="-opengl -console -windowed" ;;
+    2) ARGS="-d3d -console -windowed" ;;
+    3) ARGS="-d3d9 -console -windowed" ;;
+    4) ARGS="-opengl -console -windowed -safe" ;;
+    5) ARGS="-opengl -console -windowed -resx=1280 -resy=720" ;;
+    *) ARGS="-opengl -console -windowed" ;;
+esac
+
+export STEAM_COMPAT_DATA_PATH="$PREFIX"
+export STEAM_COMPAT_CLIENT_INSTALL_PATH="$HOME/.steam/root"
+export PROTON_USE_WINED3D=1
+export mesa_glthread=false
+export MESA_GL_VERSION_OVERRIDE=3.3
+
+cd "$WOW_DIR"
+"$PROTON" run WoW.exe $ARGS
