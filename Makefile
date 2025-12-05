@@ -63,9 +63,9 @@ help:
 run: check
 	@echo -e "$(YELLOW)📦 Dotfiles Management System$(NC)"
 	@echo -e "$(BLUE)Select a script to run:$(NC)"
-	@choice=$$(echo -e "1. dots-bootstrap.sh     - Main Installer (run once to setup dotfiles)\n2. install-themes.sh   - Themes Installer\n3. assets.sh           - Install assets (theme-files/icons/wallpapers)\n4. zorro-scripts       - Theme related scripts (.local/bin/zorro-scripts)\n5. quick-actions       - Beautiful system & tool configuration menu (rofi)\n6. dotfiles-scripts    - Misc scripts (run once)" | \
+	@choice=$$(echo -e "1. dots-bootstrap.sh   - Main Installer (run once to setup dotfiles)\n2. install-themes.sh   - Themes Installer\n3. assets.sh           - Install assets (theme-files/icons/wallpapers)\n4. zorro-scripts       - Theme related scripts (.local/bin/zorro-scripts)\n5. quick-actions       - Beautiful system & tool configuration menu (rofi)\n6. dotfiles-scripts    - Misc scripts (run once)" | \
 	fzf --height=60% --border --prompt="Choose script [1-6] > " \
-	--header="📁 $(BLUE)Dotfiles Management$(NC) | $(notdir $(SCRIPT_DIR))" \
+	--header="📁 Dotfiles Management | $$(basename $$(pwd))" \
 	--ansi | \
 	cut -d'.' -f1); \
 	case $$choice in \
