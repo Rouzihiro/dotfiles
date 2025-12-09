@@ -155,39 +155,30 @@ link_configs() {
 }
 
 setup_zsh() {
-    log "Installing Oh My Zsh..."
-    if [[ ! -d "$HOME/.oh-my-zsh" ]]; then
-        git clone https://github.com/ohmyzsh/ohmyzsh.git "$HOME/.oh-my-zsh" 2>&1 | tee -a "$LOG_FILE"
-        log "Oh My Zsh installed."
+    log "Installing Zinit..."
+    
+    # Define folder variables
+    local ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
+    local ZDOTDIR="${ZDOTDIR:-${HOME}/.config/zsh}"
+    local ZCACHEDIR="${XDG_CACHE_HOME:-${HOME}/.cache}/zsh"
+    
+    # Install Zinit
+    if [[ ! -f "$ZINIT_HOME/zinit.zsh" ]]; then
+        log "Cloning Zinit..."
+        mkdir -p "$(dirname "$ZINIT_HOME")"
+        git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME" --depth 1 2>&1 | tee -a "$LOG_FILE"
+        log "Zinit installed."
     else
-        log "Oh My Zsh already installed. Updating..."
-        cd "$HOME/.oh-my-zsh" && git pull 2>&1 | tee -a "$LOG_FILE"
+        log "Zinit already installed. Updating..."
+        cd "$ZINIT_HOME" && git pull 2>&1 | tee -a "$LOG_FILE"
     fi
-
-    log "Setting up Oh My Zsh plugins..."
-    OMZ_CUSTOM="$HOME/.oh-my-zsh/custom"
-    mkdir -p "$OMZ_CUSTOM/plugins"
     
-    # Function to install or update a plugin
-    setup_plugin() {
-        local plugin_name="$1"
-        local repo_url="$2"
-        local plugin_dir="$OMZ_CUSTOM/plugins/$plugin_name"
-        
-        if [[ ! -d "$plugin_dir" ]]; then
-            log "Installing $plugin_name..."
-            git clone "$repo_url" "$plugin_dir" 2>&1 | tee -a "$LOG_FILE"
-        else
-            log "Updating $plugin_name..."
-            cd "$plugin_dir" && git pull 2>&1 | tee -a "$LOG_FILE"
-        fi
-    }
+    # Create Zsh directories
+    log "Creating Zsh directories..."
+    mkdir -p "$ZDOTDIR"
+    mkdir -p "$ZCACHEDIR"
+    mkdir -p "${HOME}/.local/bin"
     
-    # Install/update each plugin
-    setup_plugin "zsh-autosuggestions" "https://github.com/zsh-users/zsh-autosuggestions.git"
-    setup_plugin "zsh-syntax-highlighting" "https://github.com/zsh-users/zsh-syntax-highlighting.git"
-    setup_plugin "zsh-autocomplete" "https://github.com/marlonrichert/zsh-autocomplete.git"
-
     # Change shell to zsh if not already
     if [[ "$SHELL" != "/bin/zsh" ]] && [[ "$SHELL" != "/usr/bin/zsh" ]]; then
         log "Changing default shell to zsh..."
