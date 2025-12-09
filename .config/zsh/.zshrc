@@ -1,67 +1,43 @@
-# ============================================
-# Zinit Plugin Manager Setup (FIXED)
-# ============================================
-# Define Zinit directory
-ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
+source "${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git/zinit.zsh"
 
-# Auto-install if missing
-if [[ ! -f "${ZINIT_HOME}/zinit.zsh" ]]; then
-    bash -c "$(curl --fail --show-error --silent --location \
-        https://raw.githubusercontent.com/zdharma-continuum/zinit/HEAD/scripts/install.sh)"
-fi
+#╔═╗┌─┐┌┐┌  ┌─┐┬ ┬┌┬┐┌─┐  ┌─┐┬─┐┌─┐┌┬┐┌─┐┌┬┐
+#╔═╝├┤ │││  └─┐│ │ │││ │  ├─┘├┬┘│ ││││├─┘ │ 
+#╚═╝└─┘┘└┘  └─┘└─┘─┴┘└─┘  ┴  ┴└─└─┘┴ ┴┴   ┴ 
+export SUDO_PROMPT="$fg[red][sudo] $fg[yellow]password for $USER  :$fg[white]"
 
-# Load Zinit
-source "${ZINIT_HOME}/zinit.zsh"
-autoload -Uz _zinit
-(( ${+_comps} )) && _comps[zinit]=_zinit
-
-# ============================================
-# Plugins (Clean & Fast)
-# ============================================
-# Syntax highlighting
+#  ╔═╗┬  ┬ ┬┌─┐┬┌┐┌┌─┐
+#  ╠═╝│  │ ││ ┬││││└─┐
+#  ╩  ┴─┘└─┘└─┘┴┘└┘└─┘
 zinit light zsh-users/zsh-syntax-highlighting
-
-# Autosuggestions
+zinit light zsh-users/zsh-completions
 zinit light zsh-users/zsh-autosuggestions
 
-# Auto-complete
-zinit light marlonrichert/zsh-autocomplete
-
-# Completions
-zinit light zsh-users/zsh-completions
-
-# Essential OMZ plugins
+#  ╔═╗┌┐┌┬┌─┐┌─┐┌─┐┌┬┐┌─┐
+#  ╚═╗││││├─┘├─┘├┤  │ └─┐
+#  ╚═╝┘└┘┴┴  ┴  └─┘ ┴ └─┘
 zinit snippet OMZP::git
 zinit snippet OMZP::sudo
+zinit snippet OMZP::archlinux
 zinit snippet OMZP::command-not-found
 
-# OS Detection for package manager
-if grep -qi 'fedora' /etc/os-release 2>/dev/null; then
-    zinit snippet OMZP::dnf
-elif grep -qi 'arch' /etc/os-release 2>/dev/null; then
-    zinit snippet OMZP::archlinux
-fi
-
-# ============================================
-# Completion System
-# ============================================
+#  ╔═╗┌─┐┌┬┐┌─┐┬  ┌─┐┌┬┐┬┌─┐┌┐┌   ┬   ╦  ┌─┐┌─┐┌┬┐┬┌┐┌┌─┐  ╔═╗┌┐┌┌─┐┬┌┐┌┌─┐
+#  ║  │ ││││├─┘│  ├┤  │ ││ ││││  ┌┼─  ║  │ │├─┤ │││││││ ┬  ║╣ ││││ ┬││││├┤ 
+#  ╚═╝└─┘┴ ┴┴  ┴─┘└─┘ ┴ ┴└─┘┘└┘  └┘   ╩═╝└─┘┴ ┴─┴┘┴┘└┘└─┘  ╚═╝┘└┘└─┘┴┘└┘└─┘
 autoload -Uz compinit 
 
-# Create directory if needed
-[[ -d ~/.config/zsh ]] || mkdir -p ~/.config/zsh
-
-# zcompdump setup
 for dump in ~/.config/zsh/zcompdump(N.mh+24); do
   compinit -d ~/.config/zsh/zcompdump
 done
+
 compinit -C -d ~/.config/zsh/zcompdump
 
-# Git info in prompt
 autoload -Uz vcs_info
 precmd () { vcs_info }
 _comp_options+=(globdots)
 
-# Completion styles
+#  ╔═╗┌─┐┌┬┐┌─┐┬  ┌─┐┌┬┐┬┌─┐┌┐┌┌─┐  ╔═╗┌┬┐┬ ┬┬  ┌─┐
+#  ║  │ ││││├─┘│  ├┤  │ ││ ││││└─┐  ╚═╗ │ └┬┘│  ├┤ 
+#  ╚═╝└─┘┴ ┴┴  ┴─┘└─┘ ┴ ┴└─┘┘└┘└─┘  ╚═╝ ┴  ┴ ┴─┘└─┘
 zstyle ':completion:*' verbose true
 zstyle ':completion:*:*:*:*:*' menu select
 zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
@@ -73,30 +49,107 @@ zstyle ':completion:*:warnings' format "%B%F{red}No matches for:%f %F{magenta}%d
 zstyle ':completion:*:descriptions' format '%F{yellow}[-- %d --]%f'
 zstyle ':vcs_info:*' formats ' %B%s-[%F{magenta}%f %F{yellow}%b%f]-'
 
-# ============================================
-# History Settings
-# ============================================
-export HISTFILE="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/history"
-mkdir -p "$(dirname "$HISTFILE")"
+#  ╔═╗┬ ┬┌┬┐┌─┐  ┌─┐┬ ┬┌─┐┌─┐┌─┐┌─┐┌┬┐┬┌─┐┌┐┌  ┌─┐┌─┐┌┬┐┌┬┐┬┌┐┌┌─┐┌─┐
+#  ╠═╣│ │ │ │ │  └─┐│ ││ ┬│ ┬├┤ └─┐ │ ││ ││││  └─┐├┤  │  │ │││││ ┬└─┐
+#  ╩ ╩└─┘ ┴ └─┘  └─┘└─┘└─┘└─┘└─┘└─┘ ┴ ┴└─┘┘└┘  └─┘└─┘ ┴  ┴ ┴┘└┘└─┘└─┘
+ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 
-export HISTORY_IGNORE="(ls|ls -a|cd|clear|pwd|exit|cd -|cd ..)"
-HISTSIZE=10000
-SAVEHIST=10000
+#  ╦ ╦┌─┐┬┌┬┐┬┌┐┌┌─┐  ╔╦╗┌─┐┌┬┐┌─┐
+#  ║║║├─┤│ │ │││││ ┬   ║║│ │ │ └─┐
+#  ╚╩╝┴ ┴┴ ┴ ┴┘└┘└─┘  ═╩╝└─┘ ┴ └─┘
+expand-or-complete-with-dots() {
+  echo -n "\e[31m…\e[0m"
+  zle expand-or-complete
+  zle redisplay
+}
 
-# History options
-setopt HIST_IGNORE_ALL_DUPS
-setopt HIST_FIND_NO_DUPS
-setopt INC_APPEND_HISTORY 
-setopt SHARE_HISTORY
+zle -N expand-or-complete-with-dots
+bindkey "^I" expand-or-complete-with-dots
+
+#  ╦ ╦┬┌─┐┌┬┐┌─┐┬─┐┬ ┬
+#  ╠═╣│└─┐ │ │ │├┬┘└┬┘
+#  ╩ ╩┴└─┘ ┴ └─┘┴└─ ┴ 
+HISTSIZE=10000000
+SAVEHIST=10000000
+HISTFILE="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/history"
+HISTDUP=erase
+setopt appendhistory
+setopt sharehistory
 setopt hist_ignore_space
 setopt hist_ignore_all_dups
 setopt hist_save_no_dups
 setopt hist_ignore_dups
 setopt hist_find_no_dups
 
-# ============================================
-# PATH Setup
-# ============================================
+#  ╔═╗┌─┐┌┬┐┬┌─┐┌┐┌┌─┐
+#  ║ ║├─┘ │ ││ ││││└─┐
+#  ╚═╝┴   ┴ ┴└─┘┘└┘└─┘
+stty stop undef                    # Disable ctrl-s to freeze terminal.
+setopt interactive_comments
+setopt AUTOCD               # change directory just by typing its name
+setopt PROMPT_SUBST         # enable command substitution in prompt
+setopt MENU_COMPLETE        # Automatically highlight first element of completion menu
+setopt LIST_PACKED            # The completion menu takes less space.
+setopt AUTO_LIST            # Automatically list choices on ambiguous completion.
+setopt COMPLETE_IN_WORD     # Complete from both ends of a word.
+
+
+#  ╔═╗┌─┐┌┐┌  ╔═╗┬─┐┌─┐┌┬┐┌─┐┌┬┐
+#  ╔═╝├┤ │││  ╠═╝├┬┘│ ││││├─┘ │ 
+#  ╚═╝└─┘┘└┘  ╩  ┴└─└─┘┴ ┴┴   ┴ 
+function dir_icon {
+  if [[ "$PWD" == "$HOME" ]]; then
+    echo "%B%F{cyan}%f%b"
+  else
+    echo "%B%F{cyan}%f%b"
+  fi
+}
+PS1='%B%F{green}%f%b  %B%F{magenta}%n%f%b $(dir_icon)  %B%F{red}%~%f%b${vcs_info_msg_0_} %(?.%B%F{green}.%F{red})%f%b '
+
+#  ╦  ╦┬┌┬┐┌┐ ┬┌┐┌┌┬┐
+#  ╚╗╔╝││││├┴┐││││ ││
+#   ╚╝ ┴┴ ┴└─┘┴┘└┘─┴┘
+bindkey -v
+export KEYTIMEOUT=1
+
+#Cursor Shapes For Different Vim Mode
+#Cursor style cheat sheet
+# Set cursor style (DECSCUSR), VT520.
+# 0  ⇒  blinking block.
+# 1  ⇒  blinking block (default).
+# 2  ⇒  steady block.
+# 3  ⇒  blinking underline.
+# 4  ⇒  steady underline.
+# 5  ⇒  blinking bar, xterm.
+# 6  ⇒  steady bar, xterm.
+
+function zle-keymap-select () {
+    case $KEYMAP in
+        vicmd) echo -ne '\e[1 q';;  #block
+        viins|main) echo -ne '\e[5 q';; #beam
+    esac
+}
+zle -N zle-keymap-select
+zle-line-init(){
+    zle -K viins # initiate vi insert as keymap (can be removed if 'bindkey -v' has been set elsewhere)
+    echo -ne "\e[5 q"
+}
+zle -N zle-line-init
+echo -ne '\e[5 q' # Use beam shape cursor on startup
+preexec() { echo -ne '\e[5 q' ;} # USE beam shape cursor for each new prompt
+
+bindkey '^j' history-search-backward
+bindkey '^k' history-search-forward
+bindkey '^[w' kill-region
+bindkey '^y' autosuggest-accept
+bindkey -v '^?' backward-delete-char
+
+#  ╔═╗┬ ┬┌─┐┬  ┬    ╦┌┐┌┌┬┐┌─┐┌─┐┬─┐┌─┐┌┬┐┬┌─┐┌┐┌
+#  ╚═╗├─┤├┤ │  │    ║│││ │ ├┤ │ ┬├┬┘├─┤ │ ││ ││││
+#  ╚═╝┴ ┴└─┘┴─┘┴─┘  ╩┘└┘ ┴ └─┘└─┘┴└─┴ ┴ ┴ ┴└─┘┘└┘
+eval "$(zoxide init --cmd cd zsh)"
+
+
 eval "$(dircolors -b ${HOME}/.config/zsh/.dircolors 2>/dev/null || dircolors -b)"
 export PATH="$HOME/.local/bin:$HOME/.local/share/bob/nightly/bin:/usr/local/bin:$PATH:$HOME/.dotnet/tools"
 
@@ -163,73 +216,6 @@ if command -v starship >/dev/null 2>&1; then
 fi
 
 # ============================================
-# Sudo Prompt
-# ============================================
-export SUDO_PROMPT="%F{red}[sudo] %F{yellow}password for %n  :%f"
-
-# ============================================
-# Autosuggest Strategy
-# ============================================
-ZSH_AUTOSUGGEST_STRATEGY=(history completion)
-
-# ============================================
-# Completion Dots Animation
-# ============================================
-expand-or-complete-with-dots() {
-  echo -n "\e[31m…\e[0m"
-  zle expand-or-complete
-  zle redisplay
-}
-zle -N expand-or-complete-with-dots
-bindkey "^I" expand-or-complete-with-dots
-
-# ============================================
-# Shell Options
-# ============================================
-stty stop undef
-setopt interactive_comments
-setopt AUTOCD
-setopt PROMPT_SUBST
-setopt MENU_COMPLETE
-setopt LIST_PACKED
-setopt AUTO_LIST
-setopt COMPLETE_IN_WORD
-
-# ============================================
-# Vi Mode with Cursor Change
-# ============================================
-bindkey -v
-export KEYTIMEOUT=1
-function zle-keymap-select () {
-    case $KEYMAP in
-        vicmd) echo -ne '\e[1 q';;  # block cursor
-        viins|main) echo -ne '\e[5 q';; # beam cursor
-    esac
-}
-zle -N zle-keymap-select
-zle-line-init(){
-    zle -K viins
-    echo -ne "\e[5 q"
-}
-zle -N zle-line-init
-echo -ne '\e[5 q'
-preexec() { echo -ne '\e[5 q' ;}
-
-# Vi mode keybindings
-bindkey '^j' history-search-backward
-bindkey '^k' history-search-forward
-bindkey '^[w' kill-region
-bindkey '^y' autosuggest-accept
-bindkey -v '^?' backward-delete-char
-
-# ============================================
-# Zoxide
-# ============================================
-if command -v zoxide >/dev/null 2>&1; then
-    eval "$(zoxide init --cmd cd zsh)"
-fi
-
-# ============================================
 # Load Aliases
 # ============================================
 for file in "${ZDOTDIR:-$HOME/.config/zsh}"/.aliases*; do
@@ -241,12 +227,3 @@ done
 # ============================================
 [ "$(tty)" = "/dev/tty1" ] && exec sway
 
-# Load a few important annexes, without Turbo
-# (this is currently required for annexes)
-zinit light-mode for \
-    zdharma-continuum/zinit-annex-as-monitor \
-    zdharma-continuum/zinit-annex-bin-gem-node \
-    zdharma-continuum/zinit-annex-patch-dl \
-    zdharma-continuum/zinit-annex-rust
-
-### End of Zinit's installer chunk
