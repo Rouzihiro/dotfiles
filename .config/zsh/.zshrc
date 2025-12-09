@@ -8,7 +8,7 @@ plugins=(
     dnf
     zsh-autosuggestions
     zsh-syntax-highlighting
-		zsh-autocomplete 
+		# zsh-autocomplete 
 )
 
 [ -f "$ZSH/oh-my-zsh.sh" ] && source "$ZSH/oh-my-zsh.sh"
@@ -60,10 +60,9 @@ export PATH="$HOME/.cargo/bin:$PATH"
 # -------------------------------
 for file in "$ZDOTDIR"/.aliases*; do
     [ -f "$file" ] || continue          
-    [[ "$(basename "$file")" == ".aliases-arch" ]] && continue  # skip this one
+    [[ "$(basename "$file")" == .aliases-fedora* ]] && continue  # skip fedora aliases
     source "$file"
 done
-
 # -------------------------------
 # FZF key bindings
 # -------------------------------
