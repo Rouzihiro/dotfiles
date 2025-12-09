@@ -1,5 +1,5 @@
 ### Startup programs
-exec autotiling-rs
+exec autotiling
 exec wl-paste -t text --watch clipman store --no-persist
 # exec mako
 exec swayidle -w \

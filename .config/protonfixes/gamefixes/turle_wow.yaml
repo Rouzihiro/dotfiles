@@ -1,0 +1,11 @@
+turtle_wow:
+  name: "Turtle WoW"
+  fixes:
+    wined3d: true
+  winetricks:
+    - corefonts
+    - tahoma
+  env:
+    DXVK_HUD: "0"
+    PROTON_NO_FSYNC: "0"
+    PROTON_USE_WINED3D: "1"

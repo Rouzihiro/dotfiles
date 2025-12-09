@@ -1,0 +1,1 @@
+GAMEID=turtle-wow PROTON_USE_WINED3D=1 umu-run WoW.exe
