@@ -1,13 +1,13 @@
 # ===== Fedora =====
 
 # System update
-alias update="sudo dnf upgrade --refresh && dunstify 'Fedora' 'System updated successfully ✨' -a System -u low"
+alias update="sudo dnf upgrade --refresh && notify-send 'Fedora' 'System updated successfully ✨' -a System -u low"
 
 # Full system upgrade (same as above)
 alias upgrade="sudo dnf upgrade --refresh"
 
 # Clean up unused packages (orphans) & notify
-alias fedora-clean="sudo dnf autoremove && dunstify 'Fedora' 'Removed unused packages 🧹' -a System -u low"
+alias fedora-clean="sudo dnf autoremove && notify-send 'Fedora' 'Removed unused packages 🧹' -a System -u low"
 
 # DNF shorthand aliases
 alias pm="sudo dnf install"                              # Install package
