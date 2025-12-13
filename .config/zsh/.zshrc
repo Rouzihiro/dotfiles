@@ -84,12 +84,12 @@ setopt hist_find_no_dups
 #  ╔═╗┌─┐┌┬┐┬┌─┐┌┐┌┌─┐
 #  ║ ║├─┘ │ ││ ││││└─┐
 #  ╚═╝┴   ┴ ┴└─┘┘└┘└─┘
-stty stop undef                    # Disable ctrl-s to freeze terminal.
+stty stop undef             # Disable ctrl-s to freeze terminal.
 setopt interactive_comments
 setopt AUTOCD               # change directory just by typing its name
 setopt PROMPT_SUBST         # enable command substitution in prompt
 setopt MENU_COMPLETE        # Automatically highlight first element of completion menu
-setopt LIST_PACKED            # The completion menu takes less space.
+setopt LIST_PACKED          # The completion menu takes less space.
 setopt AUTO_LIST            # Automatically list choices on ambiguous completion.
 setopt COMPLETE_IN_WORD     # Complete from both ends of a word.
 
@@ -148,7 +148,6 @@ bindkey -v '^?' backward-delete-char
 #  ╚═╗├─┤├┤ │  │    ║│││ │ ├┤ │ ┬├┬┘├─┤ │ ││ ││││
 #  ╚═╝┴ ┴└─┘┴─┘┴─┘  ╩┘└┘ ┴ └─┘└─┘┴└─┴ ┴ ┴ ┴└─┘┘└┘
 eval "$(zoxide init --cmd cd zsh)"
-
 
 eval "$(dircolors -b ${HOME}/.config/zsh/.dircolors 2>/dev/null || dircolors -b)"
 export PATH="$HOME/.local/bin:$HOME/.local/share/bob/nightly/bin:/usr/local/bin:$PATH:$HOME/.dotnet/tools"
