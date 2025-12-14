@@ -99,7 +99,7 @@ done
         
         # Theme name
         local theme_name=$(basename "$theme_dir" | sed -E 's/(^|-)([a-z])/\1\u\2/g; s/-/ /g')
-        draw_cmd+=("-fill" "$fg" "-font" "JetBrainsMono Nerd Font" "-pointsize" "14" "-annotate" "+20+25" "$theme_name")
+				draw_cmd+=("-fill" "$fg" "-font" "DejaVu-Sans" "-pointsize" "14" "-annotate" "+20+25" "$theme_name")
         
         # Draw the 12 color blocks in a 4x3 grid (4 columns, 3 rows)
         local start_x=20
