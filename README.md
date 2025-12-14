@@ -186,6 +186,71 @@ chmod +x install-themes.sh
 
 ---
 
+# Theme Generator - How To
+
+## Overview
+This project generates consistent theme files across multiple applications based on a single Kitty terminal color palette configuration.
+
+## Prerequisites
+- Python 3.x installed
+- `$HOME/dotfiles/themes` directory exists
+- `$HOME/dotfiles/.local/bin` in your shell PATH
+
+## Setup Instructions
+
+### 1. Create Your Kitty Configuration
+First, create a `kitty.conf` file in your themes directory with your desired color palette:
+Create the file at `$HOME/dotfiles/themes/kitty.conf` with the following content:
+
+# Base color palette
+color0-15 
+
+# Application-specific colors
+background #YOUR_BACKGROUND
+foreground #YOUR_FOREGROUND
+selection_foreground #YOUR_SELECTION_FG
+selection_background #YOUR_SELECTION_BG
+cursor #YOUR_CURSOR
+cursor_text_color #YOUR_CURSOR_TEXT
+url_color #YOUR_URL_COLOR
+active_tab_foreground #YOUR_ACTIVE_TAB_FG
+active_tab_background #YOUR_ACTIVE_TAB_BG
+inactive_tab_foreground #YOUR_INACTIVE_TAB_FG
+inactive_tab_background #YOUR_INACTIVE_TAB_BG
+
+Replace all the `#YOUR_...` placeholders with your actual hex color values.
+
+### 2. Generate Theme Files
+After creating your `kitty.conf` file, run the theme generator:
+
+python ~/dotfiles/projects/theme-generator/main.py
+
+This will parse your Kitty color palette and generate theme files for various applications (Vim, terminal, etc.) in the appropriate directories.
+
+### 3. Generate Starship Configuration
+Finally, run the Starship generator to create a consistent prompt configuration:
+
+python ~/dotfiles/projects/theme-generator/starship_generator.py
+
+This will create a Starship configuration file that matches your color palette.
+
+### 4. Install and Apply Themes
+Run the theme installer script to make the new theme available in your theme selector:
+
+$HOME/dotfiles/install-themes.sh
+
+### 5. Generate Palette Files
+Finally, generate the palette files for your theme selector:
+
+$HOME/dotfiles/.local/bin/zorro/z-theme-palettes-gen
+
+## Notes
+- The theme generator reads from `$HOME/dotfiles/themes/kitty.conf`
+- Generated files will be placed in their respective application directories
+- Run all scripts whenever you update your color palette to keep everything synchronized
+- Ensure `$HOME/dotfiles/.local/bin` is in your shell PATH for the palette generator to work
+
+
 <!-- Badge Definitions -->
 [rust]: https://img.shields.io/badge/-Rust-DEA584?logo=rust&logoColor=black
 [nim]: https://img.shields.io/badge/-nim-%23ffe953
