@@ -146,6 +146,10 @@
       "rev": "87d0f3a",
       "src": "https://github.com/chomosuke/typst-preview.nvim"
     },
+    "typst.vim": {
+      "rev": "235e0423ab8b1ec83a29d8b1a45cfbd6c0296382",
+      "src": "https://github.com/Rouzihiro/typst.vim"
+    },
     "vague.nvim": {
       "rev": "5689afd",
       "src": "https://github.com/vague2k/vague.nvim"
