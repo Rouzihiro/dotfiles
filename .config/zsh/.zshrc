@@ -1,4 +1,27 @@
-source "${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git/zinit.zsh"
+# Auto-install zinit if not present
+ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
+ZINIT_ZSH="${ZINIT_HOME}/zinit.zsh"
+
+# Install zinit if missing
+if [[ ! -f "${ZINIT_ZSH}" ]]; then
+    echo "🚀 Installing zinit..."
+    rm -rf "${ZINIT_HOME}"
+    bash -c "$(curl --fail --show-error --silent --location \
+        https://raw.githubusercontent.com/zdharma-continuum/zinit/HEAD/scripts/install.sh)"
+fi
+
+# Load zinit if available
+if [[ -f "${ZINIT_ZSH}" ]]; then
+    source "${ZINIT_ZSH}"
+    
+    # Load important annexes (zinit extensions) - MOVED HERE FROM END OF FILE
+    zinit light-mode for \
+        zdharma-continuum/zinit-annex-as-monitor \
+        zdharma-continuum/zinit-annex-bin-gem-node \
+        zdharma-continuum/zinit-annex-patch-dl \
+        zdharma-continuum/zinit-annex-rust
+fi
+
 
 #╔═╗┌─┐┌┐┌  ┌─┐┬ ┬┌┬┐┌─┐  ┌─┐┬─┐┌─┐┌┬┐┌─┐┌┬┐
 #╔═╝├┤ │││  └─┐│ │ │││ │  ├─┘├┬┘│ ││││├─┘ │ 
@@ -23,13 +46,25 @@ zinit snippet OMZP::command-not-found
 if [[ -f /etc/os-release ]]; then
     . /etc/os-release
     case ${ID} in
-        arch) zinit snippet OMZP::archlinux ;;
-        fedora) zinit snippet OMZP::fedora ;;
-        *) echo "Unsupported distribution: ${ID}" ;;
+        arch) 
+            zinit snippet OMZP::archlinux 
+            ;;
+        fedora|fedora-asahi-remix) 
+            # Source local .fedora file
+            local fedora_file="${ZDOTDIR:-$HOME/.config/zsh}/.fedora"
+            if [[ -f "$fedora_file" ]]; then
+                source "$fedora_file"
+            else
+                echo "⚠️  Fedora detected but .fedora file not found at: $fedora_file"
+            fi
+            ;;
+        *) 
+            echo "Unsupported distribution: ${ID}" 
+            ;;
     esac
 else
     echo "Cannot detect distribution: /etc/os-release not found"
-fi   
+fi
 
 #  ╔═╗┌─┐┌┬┐┌─┐┬  ┌─┐┌┬┐┬┌─┐┌┐┌   ┬   ╦  ┌─┐┌─┐┌┬┐┬┌┐┌┌─┐  ╔═╗┌┐┌┌─┐┬┌┐┌┌─┐
 #  ║  │ ││││├─┘│  ├┤  │ ││ ││││  ┌┼─  ║  │ │├─┤ │││││││ ┬  ║╣ ││││ ┬││││├┤ 
@@ -236,4 +271,3 @@ done
 # Sway Autostart
 # ============================================
 [ "$(tty)" = "/dev/tty1" ] && exec sway
-
