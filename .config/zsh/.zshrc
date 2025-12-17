@@ -17,8 +17,19 @@ zinit light zsh-users/zsh-autosuggestions
 #  ╚═╝┘└┘┴┴  ┴  └─┘ ┴ └─┘
 zinit snippet OMZP::git
 zinit snippet OMZP::sudo
-zinit snippet OMZP::archlinux
 zinit snippet OMZP::command-not-found
+
+# Detect distribution and load the appropriate plugin
+if [[ -f /etc/os-release ]]; then
+    . /etc/os-release
+    case ${ID} in
+        arch) zinit snippet OMZP::archlinux ;;
+        fedora) zinit snippet OMZP::fedora ;;
+        *) echo "Unsupported distribution: ${ID}" ;;
+    esac
+else
+    echo "Cannot detect distribution: /etc/os-release not found"
+fi   
 
 #  ╔═╗┌─┐┌┬┐┌─┐┬  ┌─┐┌┬┐┬┌─┐┌┐┌   ┬   ╦  ┌─┐┌─┐┌┬┐┬┌┐┌┌─┐  ╔═╗┌┐┌┌─┐┬┌┐┌┌─┐
 #  ║  │ ││││├─┘│  ├┤  │ ││ ││││  ┌┼─  ║  │ │├─┤ │││││││ ┬  ║╣ ││││ ┬││││├┤ 
