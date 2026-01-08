@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=Turtle WoW
+Comment=Play WoW via Umu-Launcher
+Exec=sh -c 'PROTON_USE_WINED3D=1 umu-run ~/Games/TurtleWoW/SuperWoWlauncher.exe'
+Type=Application
+StartupNotify=true
+Icon=wow
+Categories=Game;Roleplaying;
