@@ -6,16 +6,16 @@
   <property name="pressureMultiplier" value="1"/>
   <property name="zoomGesturesEnabled" value="true"/>
   <property name="selectedToolbar" value="Portrait"/>
-  <property name="lastSavePath" value="/home/rey/Documents/wedding"/>
+  <property name="lastSavePath" value="/home/rey/Documents/tax-report/2024/done"/>
   <property name="lastOpenPath" value="/home/rey/Documents/wedding"/>
-  <property name="lastImagePath" value="/home/rey/Documents/boberg/working-hours"/>
+  <property name="lastImagePath" value="/home/rey/Documents/signature"/>
   <property name="edgePanSpeed" value="20"/>
   <property name="edgePanMaxMult" value="5"/>
   <property name="zoomStep" value="10"/>
   <property name="zoomStepScroll" value="2"/>
   <property name="displayDpi" value="72"/>
-  <property name="mainWndWidth" value="1320"/>
-  <property name="mainWndHeight" value="1545"/>
+  <property name="mainWndWidth" value="1688"/>
+  <property name="mainWndHeight" value="1007"/>
   <property name="maximized" value="false"/>
   <property name="showToolbar" value="true"/>
   <property name="showSidebar" value="true"/>
@@ -25,6 +25,7 @@
   <property name="scrollbarOnLeft" value="false"/>
   <property name="menubarVisible" value="true"/>
   <property name="filepathShownInTitlebar" value="false"/>
+  <property name="pageNumberShownInTitlebar" value="false"/>
   <property name="numColumns" value="1"/>
   <property name="numRows" value="1"/>
   <property name="viewFixedRows" value="false"/>
@@ -67,9 +68,12 @@
   <property name="autosaveEnabled" value="true"/>
   <property name="autosaveTimeout" value="3"/>
   <property name="addHorizontalSpace" value="false"/>
-  <property name="addHorizontalSpaceAmount" value="150"/>
+  <property name="addHorizontalSpaceAmountRight" value="150"/>
+  <property name="addHorizontalSpaceAmountLeft" value="150"/>
   <property name="addVerticalSpace" value="false"/>
-  <property name="addVerticalSpaceAmount" value="150"/>
+  <property name="addVerticalSpaceAmountAbove" value="150"/>
+  <property name="addVerticalSpaceAmountBelow" value="150"/>
+  <property name="unlimitedScrolling" value="false"/>
   <property name="drawDirModsEnabled" value="false"/>
   <property name="drawDirModsRadius" value="50"/>
   <property name="snapRotation" value="true"/>
@@ -81,9 +85,14 @@
   <property name="touchDrawing" value="false"/>
   <property name="gtkTouchInertialScrolling" value="true"/>
   <property name="pressureGuessing" value="false"/>
+  <property name="recolor.enabled" value="false"/>
+  <property name="recolor.sidebar" value="false"/>
+  <property name="recolor.dark" value="4281349190"/>
+  <property name="recolor.light" value="4291219701"/>
   <property name="selectionBorderColor" value="4294901760"/>
   <property name="backgroundColor" value="4292664021"/>
   <property name="selectionMarkerColor" value="4285702095"/>
+  <property name="activeSelectionColor" value="4286381056"/>
   <property name="touchZoomStartThreshold" value="0"/>
   <property name="pageRerenderThreshold" value="5"/>
   <!--The count of rendered PDF pages which will be cached.-->
@@ -114,6 +123,9 @@
   <property name="inputSystemTPCButton" value="false"/>
   <property name="inputSystemDrawOutsideWindow" value="true"/>
   <property name="preferredLocale" value=""/>
+  <property name="useSpacesForTab" value="false"/>
+  <property name="numberOfSpacesForTab" value="4"/>
+  <property name="laserPointerFadeOutTime" value="500"/>
   <property name="stabilizerAveragingMethod" value="0"/>
   <property name="stabilizerPreprocessor" value="0"/>
   <property name="stabilizerBuffersize" value="20"/>
@@ -123,6 +135,7 @@
   <property name="stabilizerMass" value="5"/>
   <property name="stabilizerCuspDetection" value="true"/>
   <property name="stabilizerFinalizeStroke" value="true"/>
+  <property name="colorPalette" value="/usr/share/xournalpp/palettes/xournal.gpl"/>
   <property name="latexSettings.autoCheckDependencies" value="true"/>
   <property name="latexSettings.defaultText" value="x^2"/>
   <property name="latexSettings.globalTemplatePath" value="/usr/share/xournalpp/resources/default_template.tex"/>
@@ -134,18 +147,26 @@
   <property name="latexSettings.sourceViewAutoIndent" value="true"/>
   <property name="latexSettings.sourceViewSyntaxHighlight" value="true"/>
   <property name="latexSettings.sourceViewShowLineNumbers" value="false"/>
+  <property name="latexSettings.useExternalEditor" value="false"/>
+  <property name="latexSettings.externalEditorAutoConfirm" value="false"/>
+  <property name="latexSettings.externalEditorCmd" value=""/>
+  <property name="latexSettings.temporaryFileExt" value="tex"/>
   <property name="font" font="Sans" size="10"/>
   <data name="buttonConfig">
     <data name="default">
       <attribute name="color" type="hex" value="ff000000"/>
       <attribute name="drawingType" type="string" value="default"/>
       <attribute name="size" type="string" value="thin"/>
+      <attribute name="strokeType" type="string" value="none"/>
       <attribute name="tool" type="string" value="pen"/>
     </data>
     <data name="eraser">
       <attribute name="eraserMode" type="string" value="none"/>
       <attribute name="size" type="string" value="none"/>
       <attribute name="tool" type="string" value="eraser"/>
+    </data>
+    <data name="left">
+      <attribute name="tool" type="string" value="none"/>
     </data>
     <data name="middle">
       <attribute name="tool" type="string" value="hand"/>
@@ -180,33 +201,18 @@
     </data>
   </data>
   <data name="tools">
-    <attribute name="current" type="string" value="hand"/>
-    <data name="drawArrow">
-      <attribute name="drawingType" type="string" value="default"/>
-    </data>
-    <data name="drawCoordinateSystem">
-      <attribute name="drawingType" type="string" value="default"/>
-    </data>
-    <data name="drawDoubleArrow">
-      <attribute name="drawingType" type="string" value="default"/>
-    </data>
-    <data name="drawEllipse">
-      <attribute name="drawingType" type="string" value="default"/>
-    </data>
-    <data name="drawRect">
-      <attribute name="drawingType" type="string" value="default"/>
-    </data>
-    <data name="drawSpline">
-      <attribute name="drawingType" type="string" value="default"/>
-    </data>
+    <attribute name="current" type="string" value="text"/>
+    <data name="drawArrow"/>
+    <data name="drawCoordinateSystem"/>
+    <data name="drawDoubleArrow"/>
+    <data name="drawEllipse"/>
+    <data name="drawRect"/>
+    <data name="drawSpline"/>
     <data name="eraser">
-      <attribute name="drawingType" type="string" value="default"/>
       <attribute name="size" type="string" value="MEDIUM"/>
       <attribute name="type" type="string" value="whiteout"/>
     </data>
-    <data name="hand">
-      <attribute name="drawingType" type="string" value="default"/>
-    </data>
+    <data name="hand"/>
     <data name="highlighter">
       <attribute name="color" type="hex" value="ffffff00"/>
       <attribute name="drawingType" type="string" value="default"/>
@@ -214,8 +220,14 @@
       <attribute name="fillAlpha" type="int" value="128"/>
       <attribute name="size" type="string" value="MEDIUM"/>
     </data>
-    <data name="image">
-      <attribute name="drawingType" type="string" value="default"/>
+    <data name="image"/>
+    <data name="laserPointerHighlighter">
+      <attribute name="color" type="hex" value="ffff0000"/>
+      <attribute name="size" type="string" value="MEDIUM"/>
+    </data>
+    <data name="laserPointerPen">
+      <attribute name="color" type="hex" value="ffff0000"/>
+      <attribute name="size" type="string" value="MEDIUM"/>
     </data>
     <data name="pen">
       <attribute name="color" type="hex" value="ff3333cc"/>
@@ -225,42 +237,23 @@
       <attribute name="size" type="string" value="MEDIUM"/>
       <attribute name="style" type="string" value="plain"/>
     </data>
-    <data name="playObject">
-      <attribute name="drawingType" type="string" value="default"/>
-    </data>
-    <data name="selectMultiLayerRect">
-      <attribute name="drawingType" type="string" value="default"/>
-    </data>
-    <data name="selectMultiLayerRegion">
-      <attribute name="drawingType" type="string" value="default"/>
-    </data>
-    <data name="selectObject">
-      <attribute name="drawingType" type="string" value="default"/>
-    </data>
+    <data name="playObject"/>
+    <data name="selectMultiLayerRect"/>
+    <data name="selectMultiLayerRegion"/>
+    <data name="selectObject"/>
     <data name="selectPdfTextLinear">
       <attribute name="color" type="hex" value="ff000000"/>
-      <attribute name="drawingType" type="string" value="default"/>
     </data>
     <data name="selectPdfTextRect">
       <attribute name="color" type="hex" value="ff000000"/>
-      <attribute name="drawingType" type="string" value="default"/>
     </data>
-    <data name="selectRect">
-      <attribute name="drawingType" type="string" value="default"/>
-    </data>
-    <data name="selectRegion">
-      <attribute name="drawingType" type="string" value="default"/>
-    </data>
-    <data name="showFloatingToolbox">
-      <attribute name="drawingType" type="string" value="default"/>
-    </data>
+    <data name="selectRect"/>
+    <data name="selectRegion"/>
+    <data name="showFloatingToolbox"/>
     <data name="text">
       <attribute name="color" type="hex" value="ff000000"/>
-      <attribute name="drawingType" type="string" value="default"/>
     </data>
-    <data name="verticalSpace">
-      <attribute name="drawingType" type="string" value="default"/>
-    </data>
+    <data name="verticalSpace"/>
   </data>
   <data name="touch"/>
 </settings>
