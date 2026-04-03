@@ -17,4 +17,4 @@ export FEX_X87REDUCEDPRECISION=1
 export UMU_LOG=1
 
 # Launch WoW without auto-upgrading Proton
-umu-run WoW.exe --no-upgrade
+umu-run ~/Games/TurtleWoW/WoW.exe --no-upgrade
