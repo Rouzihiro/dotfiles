@@ -1,0 +1,20 @@
+#!/bin/bash
+# WoW on Mac M1 via UMU-Proton-9
+
+# WINE prefix
+export WINEPREFIX=$HOME/Games/umu/WoW_prefix
+
+# Proton path
+export PROTONPATH=$HOME/.local/share/Steam/compatibilitytools.d/UMU-Proton-9.0-4e
+
+# Disable Steam Runtime auto-update
+export UMU_RUNTIME_UPDATE=0
+
+# FEX x87 reduced precision for M1
+export FEX_X87REDUCEDPRECISION=1
+
+# Enable UMU debug logs (optional)
+export UMU_LOG=1
+
+# Launch WoW without auto-upgrading Proton
+umu-run "/home/rey/Games/Ascension/resources/ascension-live/Ascension.exe" --no-upgrade

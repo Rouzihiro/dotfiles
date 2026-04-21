@@ -1,0 +1,27 @@
+#!/bin/bash
+
+export WINEPREFIX="$HOME/Games/umu/WoW_prefix"
+export PROTONPATH="$HOME/.local/share/Steam/compatibilitytools.d/UMU-Proton-9.0-4e"
+
+export UMU_RUNTIME_UPDATE=0
+export UMU_LOG=1
+
+export FEX_X87REDUCEDPRECISION=1
+
+# --- Vulkan stability tweaks (KEEP DXVK) ---
+
+# IMPORTANT: allow proper driver detection
+unset MESA_LOADER_DRIVER_OVERRIDE
+
+# Reduce swapchain issues (flicker fix)
+export DXVK_FRAME_RATE=60
+export vblank_mode=0
+
+# Avoid async bugs on ARM
+unset DXVK_ASYNC
+
+# Disable esync/fsync (still good idea)
+export PROTON_NO_ESYNC=1
+export PROTON_NO_FSYNC=1
+
+umu-run "$HOME/Games/Ascension/resources/epoch-live/Ascension.exe" --no-upgrade
