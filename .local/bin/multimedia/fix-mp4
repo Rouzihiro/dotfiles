@@ -1,0 +1,6 @@
+#!/bin/sh
+set -eu
+
+for f in *.mp4; do
+  ffmpeg -fflags +genpts -i "$f" -c copy -movflags +faststart "fixed_$f"
+done
