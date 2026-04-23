@@ -1,0 +1,14 @@
+#!/bin/bash
+
+export WINEPREFIX="$HOME/Games/wine-wow-clean"
+export FEX_X87REDUCEDPRECISION=1
+
+unset MESA_LOADER_DRIVER_OVERRIDE
+
+export DXVK_FRAME_RATE=60
+export vblank_mode=0
+
+export WINEESYNC=0
+export WINEFSYNC=0
+
+wine "$HOME/Games/Ascension/resources/epoch-live/Ascension.exe"
