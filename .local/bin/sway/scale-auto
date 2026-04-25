@@ -1,0 +1,9 @@
+#!/bin/sh
+
+ARCH=$(uname -m)
+
+if [ "$ARCH" = "aarch64" ]; then
+    swaymsg output eDP-1 scale 1.5
+else
+    swaymsg output eDP-1 scale 1
+fi
