@@ -1,0 +1,10 @@
+#!/bin/sh
+
+if [ -z "$1" ]; then
+    echo "Usage: scale <value>"
+    exit 1
+fi
+
+OUTPUT=$(swaymsg -t get_outputs | jq -r '.[] | select(.focused) | .name')
+
+swaymsg output "$OUTPUT" scale "$1"
