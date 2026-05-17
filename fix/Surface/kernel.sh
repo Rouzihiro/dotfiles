@@ -1,42 +1,92 @@
 #!/bin/bash
-# linux-surface-setup.sh
-# Sets up the Linux Surface kernel on Arch Linux
+set -euo pipefail
 
-set -e
+echo "======================================"
+echo " Surface Arch Setup (Unified Script)"
+echo "======================================"
 
-KEY_ID="56C464BAAC421453"
-PACMAN_CONF="/etc/pacman.conf"
-REPO_ENTRY="[linux-surface]
-Server = https://pkg.surfacelinux.com/arch/"
+# -----------------------------
+# 1. Ensure correct system state
+# -----------------------------
+echo "[1/7] Syncing time (IMPORTANT for PGP)..."
+sudo timedatectl set-ntp true
 
-echo "[*] Adding Linux Surface GPG key..."
-curl -s https://raw.githubusercontent.com/linux-surface/linux-surface/master/pkg/keys/surface.asc \
-    | sudo pacman-key --add -
+# -----------------------------
+# 2. Fix keyring (critical)
+# -----------------------------
+echo "[2/7] Resetting pacman keyring..."
 
-echo "[*] Verifying key fingerprint..."
-sudo pacman-key --finger "$KEY_ID"
+sudo pacman-key --init
+sudo pacman-key --populate archlinux
 
-echo "[*] Locally signing the key..."
-sudo pacman-key --lsign-key "$KEY_ID"
+sudo pacman -Sy --noconfirm archlinux-keyring
 
-if ! grep -q "linux-surface" "$PACMAN_CONF"; then
-    echo "[*] Adding linux-surface repository to $PACMAN_CONF..."
-    echo -e "\n$REPO_ENTRY" | sudo tee -a "$PACMAN_CONF" > /dev/null
-else
-    echo "[*] Repository already present in $PACMAN_CONF. Skipping..."
+# -----------------------------
+# 3. Base firmware + networking
+# -----------------------------
+echo "[3/7] Installing base firmware + network tools..."
+
+sudo pacman -S --noconfirm \
+    linux-firmware \
+    networkmanager \
+    bluez \
+    bluez-utils \
+    pipewire \
+    pipewire-pulse \
+    wireplumber
+
+sudo systemctl enable --now NetworkManager
+sudo systemctl enable --now bluetooth
+
+# -----------------------------
+# 4. Surface Linux repo (safe)
+# -----------------------------
+echo "[4/7] Adding linux-surface repo..."
+
+if ! grep -q "\[linux-surface\]" /etc/pacman.conf; then
+    echo -e "\n[linux-surface]
+Server = https://pkg.surfacelinux.com/arch/" | sudo tee -a /etc/pacman.conf
 fi
 
-echo "[*] Refreshing package database..."
-sudo pacman -Syu --noconfirm
+# -----------------------------
+# 5. Surface key (modern safe method)
+# -----------------------------
+echo "[5/7] Importing Surface GPG key..."
 
-echo "[*] Installing linux-surface kernel and dependencies..."
-sudo pacman -S --noconfirm linux-surface linux-surface-headers iptsd
+KEY_URL="https://raw.githubusercontent.com/linux-surface/linux-surface/master/pkg/keys/surface.asc"
+KEY_FILE="/tmp/surface.asc"
 
-echo "[*] Optional: Installing WiFi firmware for Surface Pro 4–6, Book 1–2, Laptop 1–2..."
-sudo pacman -S --noconfirm linux-firmware-marvell || echo "Skipping firmware if not needed."
+curl -fsSL "$KEY_URL" -o "$KEY_FILE"
 
-echo "[*] NOTE: Please install 'libwacom-surface' from the AUR manually."
-echo "[*] You can use an AUR helper like yay or manually clone and build it from:"
-echo "    https://aur.archlinux.org/packages/libwacom-surface"
+sudo pacman-key --add "$KEY_FILE"
+sudo pacman-key --lsign-key 56C464BAAC421453
 
-echo "[✓] Setup complete. Reboot to start using the linux-surface kernel."
+# -----------------------------
+# 6. Install Surface kernel
+# -----------------------------
+echo "[6/7] Installing linux-surface kernel..."
+
+sudo pacman -Sy --noconfirm
+sudo pacman -S --noconfirm \
+    linux-surface \
+    linux-surface-headers \
+    iptsd
+
+# Optional Wi-Fi firmware (safe fallback)
+sudo pacman -S --noconfirm linux-firmware-marvell || true
+
+# -----------------------------
+# 7. Desktop base (Hyprland-ready)
+# -----------------------------
+echo "[7/7] Installing minimal desktop stack..."
+
+sudo pacman -S --noconfirm \
+    waybar \
+    kitty \
+		foot \
+    polkit
+
+echo "======================================"
+echo " DONE"
+echo " Reboot recommended"
+echo "======================================"
