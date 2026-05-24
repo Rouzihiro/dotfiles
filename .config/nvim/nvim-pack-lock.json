@@ -24,9 +24,17 @@
       "rev": "c642487",
       "src": "https://github.com/hrsh7th/cmp-path"
     },
+    "doom-one.nvim": {
+      "rev": "beae92173315c7282f6897e666cfd67fbf0f3ac9",
+      "src": "https://github.com/NTBBloodbath/doom-one.nvim"
+    },
     "doom-one.vim": {
       "rev": "31cf41fdf753b1d99d3ec1d50d44f42af8f1c2c8",
       "src": "https://github.com/romgrk/doom-one.vim"
+    },
+    "dracula.nvim": {
+      "rev": "ae752c13e95fb7c5f58da4b5123cb804ea7568ee",
+      "src": "https://github.com/Mofiqul/dracula.nvim"
     },
     "everforest-nvim": {
       "rev": "557bce9",
@@ -40,6 +48,10 @@
       "rev": "8337813",
       "src": "https://github.com/ibhagwan/fzf-lua"
     },
+    "github-nvim-theme": {
+      "rev": "c106c9472154d6b2c74b74565616b877ae8ed31d",
+      "src": "https://github.com/projekt0n/github-nvim-theme"
+    },
     "gruvbox-material": {
       "rev": "4bfc698",
       "src": "https://github.com/sainnhe/gruvbox-material"
@@ -47,6 +59,10 @@
     "gruvbox.nvim": {
       "rev": "5e0a460",
       "src": "https://github.com/ellisonleao/gruvbox.nvim"
+    },
+    "kanagawa-paper.nvim": {
+      "rev": "3a024e8fd7105ee9416aafcdb0a7787be1795d68",
+      "src": "https://github.com/thesimonho/kanagawa-paper.nvim"
     },
     "kanagawa.nvim": {
       "rev": "aef7f5c",
@@ -75,6 +91,10 @@
     "monokai-pro.nvim": {
       "rev": "5b06ae0",
       "src": "https://github.com/gthelding/monokai-pro.nvim"
+    },
+    "moonfly": {
+      "rev": "fe0179e650fac51c9a9190e2fafea69952aba1b6",
+      "src": "https://github.com/bluz71/vim-moonfly-colors"
     },
     "neovim": {
       "rev": "eb3ff49",
@@ -120,6 +140,10 @@
     "plenary.nvim": {
       "rev": "b9fd522",
       "src": "https://github.com/nvim-lua/plenary.nvim"
+    },
+    "retro-theme.nvim": {
+      "rev": "d1379cc74e253b7be6086a45d26184182f184241",
+      "src": "https://github.com/mistweaverco/retro-theme.nvim"
     },
     "solarized.nvim": {
       "rev": "c0dfe1cbfabd93b546baf5f1408f5df7e02e2050",
