@@ -1,0 +1,103 @@
+* {
+    background-color: transparent;
+    text-color: {{fg}};
+    font: "JetBrainsMono Nerd Font 12";
+}
+
+configuration {
+    show-icons: true;
+    icon-theme: "Papirus";
+    location: 0;
+    display-drun: "Launch:";
+}
+
+window {
+    width: 20%;
+    transparency: "real";
+    orientation: vertical;
+    border-color: {{secondary}};
+    border-radius: 10px;
+    background-color: {{bg}};
+}
+
+mainbox {
+    children: [inputbar, listview];
+}
+
+/* INPUT */
+inputbar {
+    padding: 10px;
+    background-color: {{bg_alt}};
+    children: [prompt, entry];
+    border-radius: 8px;
+}
+
+prompt {
+    text-color: {{secondary}};
+    padding: 10px 6px 10px 10px;
+}
+
+entry {
+    text-color: {{primary}};
+    padding: 10px;
+}
+
+/* LIST */
+listview {
+    columns: 1;
+    lines: 8;
+    padding: 8px 0px;
+    fixed-height: true;
+    border: 0;
+    background-color: transparent;
+}
+
+/* ELEMENTS */
+element {
+    padding: 4px 8px;
+    text-color: {{fg}};
+    background-color: transparent;
+    border-radius: 5px;
+    orientation: horizontal;
+}
+
+element normal normal {
+    background-color: transparent;
+    text-color: {{fg}};
+}
+
+element normal active {
+    background-color: {{bg_alt}};
+    text-color: {{fg}};
+}
+
+element alternate normal {
+    background-color: transparent;
+    text-color: {{fg}};
+}
+
+element alternate active {
+    background-color: {{bg_alt}};
+    text-color: {{fg}};
+}
+
+element selected normal {
+    background-color: {{secondary}};
+    text-color: {{bg}};
+}
+
+element selected active {
+    background-color: {{secondary}};
+    text-color: {{bg}};
+}
+
+element-icon {
+    size: 16px;
+    background-color: transparent;
+    padding: 0px 6px 0px 0px;
+}
+
+element-text {
+    background-color: transparent;
+    text-color: inherit;
+}

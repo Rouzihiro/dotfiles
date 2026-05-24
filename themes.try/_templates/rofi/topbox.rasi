@@ -1,0 +1,159 @@
+* {
+  spacing: 0.1em;
+  padding: 0.2em;
+  margin: 0px;
+  border-radius: 1em;
+  background-color: transparent;
+  text-color: @fg;
+}
+
+window {
+  width: 40%;
+  orientation: vertical;
+  location: north east;
+  anchor: north east;
+  x-offset: 0px;
+  y-offset: 0px;
+
+  margin: 0px;
+  padding: 0px;
+
+  border: 2px solid;
+  border-color: @primary;
+  border-radius: 1em;
+
+  spacing: 0.1em;
+  children: [mainbox];
+  background-color: @bg;
+}
+
+mainbox {
+  spacing: 0.1em;
+  children: [inputbar, mode-switcher, listview];
+  background-color: transparent;
+  padding: 0px;
+}
+
+/* INPUT (hidden but functional) */
+inputbar {
+  spacing: 0.1em;
+  padding: 0px;
+  margin: 0px;
+  children: [textbox-prompt-colon, entry];
+  background-color: transparent;
+  border: 0px;
+  height: 0px;
+}
+
+textbox-prompt-colon {
+  expand: false;
+  padding: 0px;
+  margin: 0px;
+  background-color: transparent;
+  text-color: transparent;
+  font: "JetBrainsMono Nerd Font Bold 0";
+}
+
+entry {
+  placeholder: "";
+  placeholder-color: transparent;
+  padding: 0px;
+  margin: 0px;
+  background-color: transparent;
+  text-color: @fg;
+  font: "JetBrainsMono Nerd Font Bold 0";
+}
+
+/* MODE SWITCHER */
+mode-switcher {
+  orientation: horizontal;
+  background-color: @bg_alt;
+  padding: 8px 16px;
+  border-radius: 1em 1em 0px 0px;
+}
+
+button {
+  padding: 8px 16px;
+  border-radius: 1em;
+  background-color: transparent;
+  text-color: @fg;
+}
+
+button selected {
+  background-color: @primary;
+  text-color: @bg;
+}
+
+/* LIST */
+listview {
+  lines: 12;
+  columns: 2;
+  spacing: 2px;
+
+  scrollbar: false;
+  cycle: false;
+  dynamic: false;
+  fixed-height: false;
+
+  margin: 0px;
+  padding: 8px 0px;
+
+  border: 0px;
+  border-radius: 0px 0px 1em 1em;
+
+  background-color: @bg_alt;
+}
+
+/* ELEMENT BASE */
+element {
+  padding: 8px 16px;
+  spacing: 12px;
+  orientation: horizontal;
+  vertical-align: 0.5;
+
+  background-color: transparent;
+  text-color: @fg;
+}
+
+/* STATES (explicit = safest) */
+element normal normal {
+  background-color: transparent;
+  text-color: @fg;
+}
+
+element normal active {
+  background-color: transparent;
+  text-color: @fg;
+}
+
+element alternate normal {
+  background-color: transparent;
+  text-color: @fg;
+}
+
+element alternate active {
+  background-color: transparent;
+  text-color: @fg;
+}
+
+element selected normal {
+  background-color: @primary;
+  text-color: @bg;
+}
+
+element selected active {
+  background-color: @primary;
+  text-color: @bg;
+}
+
+/* CONTENT */
+element-text {
+  text-color: inherit;
+  vertical-align: 0.5;
+  horizontal-align: 0.0;
+}
+
+element-icon {
+  size: 16px;
+  padding: 0px 4px 0px 0px;
+}

@@ -1,0 +1,105 @@
+* {
+    background-color: transparent;
+    text-color: {{fg}};
+    font: "JetBrainsMono Nerd Font 12";
+}
+
+configuration {
+    show-icons: true;
+    icon-theme: "Papirus";
+    location: 0;
+    display-drun: "Launch:";
+}
+
+window {
+    width: 45%;
+    transparency: "real";
+    orientation: vertical;
+    border-color: {{secondary}};
+    border-radius: 10px;
+    background-color: {{bg}};
+}
+
+mainbox {
+    children: [inputbar, listview];
+}
+
+element {
+    padding: 4px 8px;
+    text-color: {{fg}};
+    background-color: {{bg}};
+    border-radius: 5px;
+}
+
+element selected {
+    text-color: {{bg}};
+    background-color: {{secondary}};
+}
+
+element-text {
+    background-color: inherit;
+    text-color: inherit;
+}
+
+element-icon {
+    size: 16px;
+    background-color: inherit;
+    padding: 0px 6px 0px 0px;
+    vertical-align: 0.5;
+}
+
+element selected active {
+    background-color: {{bg}};
+    text-color: {{fg}};
+}
+
+element alternate normal {
+    background-color: {{bg}};
+    text-color: {{fg}};
+}
+
+element alternate active {
+    background-color: {{secondary}};
+    text-color: {{bg}};
+}
+
+element normal active {
+    background-color: {{bg}};
+    text-color: {{fg}};
+}
+
+element normal normal {
+    background-color: {{bg}};
+    text-color: {{fg}};
+}
+
+element normal urgent {
+    background-color: {{alert}};
+    text-color: {{bg}};
+}
+
+listview {
+    columns: 1;
+    lines: 24;
+    padding: 8px 0px;
+    fixed-height: true;
+    fixed-columns: true;
+    fixed-lines: true;
+    border: 0px 10px 6px 10px;
+}
+
+inputbar {
+    padding: 10px 0px 0px 0px;
+}
+
+entry {
+    text-color: {{primary}};
+    padding: 10px 10px 0px 0px;
+    margin: 0px -2px 0px 0px;
+}
+
+prompt {
+    text-color: {{secondary}};
+    padding: 10px 6px 0px 10px;
+    margin: 0px -2px 0px 0px;
+}
