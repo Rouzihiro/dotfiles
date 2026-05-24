@@ -29,8 +29,8 @@ ln -snf ~/.config/zorro/current/theme/dircolors ~/.config/zsh/.dircolors
 
 mkdir -p ~/.config/tmux
 
-mkdir -p ~/.config/yazi/flavors/theme.yazi
-ln -snf ~/.config/zorro/current/theme/yazi.toml ~/.config/yazi/flavors/theme.yazi/flavor.toml
+mkdir -p ~/.config/yazi
+ln -snf ~/.config/zorro/current/theme/yazi.toml ~/.config/yazi/theme.toml
 
 mkdir -p ~/.config/lazygit
 ln -snf ~/.config/zorro/current/theme/lazygit.yml ~/.config/lazygit/config.yml
@@ -49,3 +49,17 @@ ln -snf ~/.config/zorro/current/theme/mako.ini ~/.config/mako/config
 
 z-theme-cache
 python ~/dotfiles/projects/theme-generator/starship_generator.py
+
+# ya pkg add yazi-rs/flavors:catppuccin-mocha
+# ya pkg add yazi-rs/flavors:catppuccin-latte
+# ya pkg add BennyOe/tokyo-night
+# ya pkg add marcosvnmelo/kanagawa-dragon
+# ya pkg add dangooddd/kanagawa
+# ya pkg add matt-dong-123/gruvbox-material
+# ya pkg add Chromium-3-Oxide/everforest-medium
+# ya pkg add gosxrgxx/flexoki-dark
+# ya pkg add gosxrgxx/flexoki-light
+# ya pkg add Mintass/rose-pine-moon
+# ya pkg add Mintass/rose-pine
+# ya pkg add AdithyanA2005/nord
+

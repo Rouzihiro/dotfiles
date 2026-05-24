@@ -4,12 +4,12 @@
 set shell zsh
 set shellopts '-euy'
 set ifs "\n"
-set drawbox true    # Shows the box around the panes
+set drawbox false    # Shows the box around the panes
 set roundbox true
 set dirfirst true
 set mouse true
-set hidden true     # Hidden Files
-set ratios 1:5    # Preview should be set after setting ratios, Needed for singlePane function
+set hidden true
+# set ratios 1:5    # Preview should be set after setting ratios, Needed for singlePane function
 set icons true      # Icons(Needs a Icons file or LF_ICONS env variable)
 set preview true
 set sixel true
@@ -21,8 +21,8 @@ set ignorecase true # Ignore case when searching
 set scrolloff 5    # Leaves space on Top and Bottom of the screen
 set cursorpreviewfmt "\033[7;2m"
 
-
-set previewer ~/.config/lf/preview
+# set previewer ~/.config/lf/preview-wrapper.sh 
+set previewer ~/.config/lf/previewer.sh
 
 # Sort Downloads directory by creation time, reverse
 setlocal ~/Downloads/ sortby ctime
@@ -34,6 +34,7 @@ setlocal ~/Pictures/screenshot/ info ctime
 setlocal ~/Pictures/screenshot/ reverse
 
 source ~/.config/lf/functions
+source ~/.config/lf/functions2
 source ~/.config/lf/nicheFunc
 source ~/.config/lf/mappings
 source ~/.config/lf/context

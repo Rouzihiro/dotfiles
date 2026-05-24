@@ -1,0 +1,125 @@
+map +x $chmod +x "$f"
+map -x $chmod -x "$f"
+
+# Get the current files file type.
+cmd type %xdg-mime query filetype "$f"
+
+# Get the complete path of the current selection.
+# Wrap it in apostrophes.
+cmd path %{{
+  if [[ $f = *" "* ]]; then
+    fout="'$f'"
+  else
+    fout="$f"
+  fi
+  echo -n "$fout" | xclip -selection clipboard &> /dev/null
+  echo "$f"
+}}
+
+# Get the size of the selected items.
+cmd size %{{
+  IFS=';' read -r -a files <<< "$fx"
+  [ ${#files[@]} -eq 0 ] && exit 0
+  du -shc -- "${files[@]}" | awk '/total/{print $1}'
+}}
+
+# A simple add menu. Inspired by nvim-tree.
+# If the input ends in a slash, a folder is created. Otherwise a file is
+# created. Nested paths are also cleanly handled.
+map a add
+cmd add %{{
+  echo -n "New: "
+  read ans
+  if [[ $ans == */ ]]; then
+    mkdir -p $ans
+  elif [[ $ans == */* ]]; then
+    mkdir -p ${ans%/*}
+    touch $ans
+  else
+    touch $ans
+  fi
+}}
+
+# A simple batch rename. Uses the util-linux provided rename command.
+# Finds the first occurance of the from string, and replaces it with the to
+# string. Does not do complex pattern matching. To add a prefix, leave from
+# empty. To add a postfix before the extension, match the . and add it back
+# at the end of into.
+map R rename-pattern
+cmd rename-pattern %{{
+  echo -n "From: "
+  IFS= read -r from
+  echo -n "Into: "
+  IFS= read -r into
+  IFS=';' read -ra arr <<< "$fx"
+  rename "$from" "$into" "${arr[@]}"
+}}
+
+# Create a zip file from the selection.
+# I do not remember why this is so difficult, but it works all the time.
+map zz zip
+cmd zip %{{
+  echo -n "ZIP file name [NewZip.zip]: "
+  read name
+  name=${name:-NewZip.zip}
+  IFS=';' read -ra filesarray <<< "$fx"
+  filelist=""
+  for absfile in "${filesarray[@]}"; do
+    relfile=${absfile##"$PWD"/}
+    filelist="$filelist $relfile"
+  done
+  zip -r "$PWD/$name" $filelist
+  echo "Zipped selection."
+}}
+
+# Initiate a recursive fuzzy find with fzf. There is some configuration
+# included for asthetic reasons. The selected item is highlighted after
+# the window disappears. The only difference between the two are the flags
+# that are passed to fd. 
+
+map / fzf-normal
+cmd fzf-normal ${{
+  # Search files, following symlinks, but remember the symlink path
+  res="$(find -L . -type f -o -type d 2>/dev/null | fzf --smart-case --style=minimal \
+    --color="pointer:magenta,hl:magenta,hl+:magenta,separator:grey,info:grey:bold,prompt:white" \
+    --info=right --pointer="█" --separator="━")"
+  
+  if [ -n "$res" ]; then
+    # Remove leading './' from find output
+    res="${res#./}"
+    
+    if [ -d "$res" ]; then
+      res="$(printf '%s' "$res" | sed 's/\\/\\\\/g;s/"/\\"/g')"
+      lf -remote "send $id cd \"$res\""
+    else
+      dir=$(dirname -- "$res")
+      dir="$(printf '%s' "$dir" | sed 's/\\/\\\\/g;s/"/\\"/g')"
+      lf -remote "send $id cd \"$dir\""
+      file=$(basename -- "$res")
+      file="$(printf '%s' "$file" | sed 's/\\/\\\\/g;s/"/\\"/g')"
+      lf -remote "send $id select \"$file\""
+    fi
+  fi
+}}
+
+map ? fzf-hidden
+cmd fzf-hidden ${{
+  res="$(find -L . -type f -o -type d 2>/dev/null | fzf --smart-case --style=minimal \
+    --color="pointer:magenta,hl:magenta,hl+:magenta,separator:grey,info:grey:bold,prompt:white" \
+    --info=right --pointer="█" --separator="━")"
+  
+  if [ -n "$res" ]; then
+    res="${res#./}"
+    if [ -d "$res" ]; then
+      res="$(printf '%s' "$res" | sed 's/\\/\\\\/g;s/"/\\"/g')"
+      lf -remote "send $id cd \"$res\""
+    else
+      dir=$(dirname -- "$res")
+      dir="$(printf '%s' "$dir" | sed 's/\\/\\\\/g;s/"/\\"/g')"
+      lf -remote "send $id cd \"$dir\""
+      file=$(basename -- "$res")
+      file="$(printf '%s' "$file" | sed 's/\\/\\\\/g;s/"/\\"/g')"
+      lf -remote "send $id select \"$file\""
+    fi
+  fi
+}}
