@@ -188,5 +188,13 @@ verbs: [
          external: "mv {file} {other-panel-directory}"
          leave_broot: false
      }
+
+{
+    key: "ctrl-l"
+    external: "ln -snf {file} {other-panel-directory}"
+    leave_broot: false
+}
+
+
 ]
 
