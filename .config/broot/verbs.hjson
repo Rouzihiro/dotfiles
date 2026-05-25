@@ -188,14 +188,5 @@ verbs: [
          external: "mv {file} {other-panel-directory}"
          leave_broot: false
      }
-
-    {
-        invocation: "symlink"
-        key: "ctrl-l"
-        execution: "/bin/bash -c 'read -p \"Target path: \" target; ln -snf \"$target\" \"{file}\"'"
-        leave_broot: false
-    }
-
-
 ]
 
