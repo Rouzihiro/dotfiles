@@ -27,8 +27,6 @@ fi
 #╔═╝├┤ │││  └─┐│ │ │││ │  ├─┘├┬┘│ ││││├─┘ │ 
 #╚═╝└─┘┘└┘  └─┘└─┘─┴┘└─┘  ┴  ┴└─└─┘┴ ┴┴   ┴ 
 export SUDO_PROMPT="$fg[red][sudo] $fg[yellow]password for $USER  :$fg[white]"
-export LF_ICONS="di=📁:fi=📄:ln=🔗:ex=⚡:*.pdf=📄:*.jpg=🖼️:*.png=🖼️:*.mp4=🎬"
-
 #  ╔═╗┬  ┬ ┬┌─┐┬┌┐┌┌─┐
 #  ╠═╝│  │ ││ ┬││││└─┐
 #  ╩  ┴─┘└─┘└─┘┴┘└┘└─┘

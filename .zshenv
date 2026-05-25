@@ -35,6 +35,8 @@ export DOTNET_CLI_TELEMETRY_OPTOUT=1
 export SHADER_CACHE_DIR="${XDG_CACHE_HOME:-$HOME/.cache}/shader_cache"  # custom shader cache
 export ANV_DEBUG="video-decode,video-encode"
 
+export LF_ICONS="di=📁:fi=📄:ln=🔗:ex=⚡:*.pdf=📄:*.jpg=🖼️:*.png=🖼️:*.mp4=🎬"
+
 export BEMENU_OPTS="--fn 'JetBrainsMono Nerd Font 12' \
   --center --line-height 22 --margin 8 --width-factor 0.5 \
   --nb '#2e3440' --nf '#cdcecf' \
