@@ -270,3 +270,5 @@ done
 # Sway Autostart
 # ============================================
 [ "$(tty)" = "/dev/tty1" ] && exec sway
+
+source /home/rey/.config/broot/launcher/bash/br
