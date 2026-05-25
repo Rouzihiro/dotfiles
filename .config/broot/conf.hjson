@@ -33,7 +33,7 @@ default_flags: "hg"
 # directory, set a terminal_title pattern by uncommenting one of
 # the examples below and tuning it to your taste.
 #
-# terminal_title: "[broot] {git-name}"
+terminal_title: "[broot] {git-name}"
 # terminal_title: "{file} 🐄"
 # terminal_title: "-= {file-name} =-"
 # reset_terminal_title_on_exit: false
@@ -54,8 +54,8 @@ default_flags: "hg"
 #
 # You may start either in 'command' mode, or in 'input' mode
 #
-# modal: true
-# initial_mode: command
+ modal: true
+ initial_mode: input
 
 ###############################################################
 # Whether to mark the selected line with a triangle
