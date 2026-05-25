@@ -1,47 +1,76 @@
-#!/bin/bash
+#!/usr/bin/env bash
+file="$1"
+width="$2"
+height="$3"
+x="$4"
+y="$5"
 
-case "$1" in
+# Set terminal type for kitty protocol
+export TERM=xterm-kitty
 
+# Function to clear all Kitty images
+clear_kitty_images() {
+    printf "\e_Ga=d,d=A;\e\\" > /dev/tty
+}
+
+# Function to preview images
+preview_image() {
+    # Check if chafa is available
+    if ! command -v chafa &> /dev/null; then
+        echo "chafa not installed"
+        return 1
+    fi
+    
+    # Clear previous images first
+    clear_kitty_images
+    
+    # Buffer the output of chafa
+    output=$(chafa -f kitty --animate off -s "${width}x${height}" "$file" 2>/dev/null)
+    
+    if [ -n "$output" ]; then
+        # Set cursor to correct position
+        printf "\e[${y};${x}H" > /dev/tty
+        # Print the chafa output
+        printf "%s" "$output" > /dev/tty
+        exit 1  # Exit with non-zero to force redraw on every preview
+    fi
+}
+
+# Function to preview text files
+preview_text() {
+    # Clear images when showing text
+    clear_kitty_images
+    
+    # Use bat if available for syntax highlighting
+    if command -v bat &> /dev/null; then
+        bat --style=numbers --color=always --paging=never "$file" 2>/dev/null
+    else
+        head -n "$height" "$file" 2>/dev/null
+    fi
+}
+
+# Main logic
+case "$file" in
+    *.jpg|*.jpeg|*.png|*.gif|*.bmp|*.tiff|*.webp|*.ico)
+        preview_image
+        ;;
     *.pdf)
-        author=$(exiftool -Author -T -f "$1"); [[ $author == "-" ]] && author=""
-        title=$(exiftool -Title -T -f "$1"); [[ $title == "-" ]] && title=""
-        printf "\033[30;47;1mPDF\033[0m "
-        if [[ -n $author && -n $title ]]; then
-            printf "\033[0;3;4m$author: \033[0m\033[0;4;1m$title\033[0m"
-        elif [[ -n $author ]]; then
-            printf "\033[0;3;4m$author\033[0m"
-        elif [[ -n $title ]]; then
-            printf "\033[0;4;1m$title\033[0m"
+        # Clear images for PDF preview
+        clear_kitty_images
+        
+        # Optional: preview PDFs with pdftoppm
+        if command -v pdftoppm &> /dev/null; then
+            temp_dir=$(mktemp -d)
+            pdftoppm -jpeg -f 1 -singlefile "$file" "$temp_dir/preview" 2>/dev/null
+            if [ -f "${temp_dir}/preview.jpg" ]; then
+                preview_image "${temp_dir}/preview.jpg"
+            fi
+            rm -rf "$temp_dir"
         fi
-        printf "\n\n"
-        pdftotext -l 5 "$1" - ;;
-
-    *.png | *.jpg | *.jpeg | *.webp | *.svg | *.gif)
-        printf "\033[30;47;1mIMAGE\033[0m\n\n"
-        exiftool -FileType -ImageSize -Megapixels -Compression "$1" ;;
-
-    *.mp4 | *.mkv | *.mov)
-        printf "\033[30;47;1mVIDEO\033[0m\n\n"
-        exiftool -FileType -Duration -ImageSize -CompressorID -AudioFormat \
-            -AvgBitrate "$1" ;;
-
-    *.mp3 | *.wav | *.m4a | *.m4b | *.flac | *.opus)
-        printf "\033[30;47;1mAUDIO\033[0m\n\n"
-        exiftool -Artist -Title -Year -Album -Genre -Comment -Duration \
-            -FileType -SampleRate -ChannelMode -AudioBitrate "$1" ;;
-
-    *.mobi | *.epub)
-        printf "\033[30;47;1mBOOK\033[0m\n\n" ;;
-
-    *.zip)
-        printf "\033[30;47;1mZIP\033[0m \033[0;3;4mOpen to Extract\033[0m\n\n"
-        unzip -l "$1" | tail -n +2 ;;
-
-    *.tar* | *.rar | *.7z | *.gz | *.tgz)
-        printf "\033[30;47;1mARCHIVE\033[0m" ;;
-
+        ;;
     *)
-        printf "\033[30;47;1mTEXT\033[0m\n\n"
-        highlight -O ansi --max-size 64M --line-length=60 --wrap-simple "$1" ;;
-
+        preview_text
+        ;;
 esac
+
+exit 0
