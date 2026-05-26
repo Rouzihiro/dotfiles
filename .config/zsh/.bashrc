@@ -1,4 +1,4 @@
-# -------------------------------
+# ------------------------------
 # Modernized Bash RC (Zsh-like behavior)
 # -------------------------------
 
@@ -130,6 +130,8 @@ PROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND ; }history -a; history -n"
 
 # Ignore common commands in history
 export HISTIGNORE="ls:ls -a:cd:clear:pwd:exit:cd -:cd .."
+
+source /home/rey/.config/broot/launcher/bash/br
 
 # -------------------------------
 # Optional: Autostart Sway on tty1
