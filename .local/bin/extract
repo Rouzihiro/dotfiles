@@ -13,6 +13,9 @@ if [ ! -f "$FILE" ]; then
     exit 1
 fi
 
+# Change to the directory containing the archive
+cd "$(dirname "$FILE")"
+
 case "$FILE" in
     *.tar.bz2)   tar xjf "$FILE"     ;;
     *.tar.gz)    tar xzf "$FILE"     ;;
