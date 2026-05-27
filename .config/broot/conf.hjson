@@ -25,7 +25,7 @@
 # A popular flag is the `g` one which displays git related info.
 #
 # default_flags:
-default_flags: "hg"
+default_flags: "hgi"
 
 ###############################################################
 # Terminal's title
@@ -36,7 +36,7 @@ default_flags: "hg"
 terminal_title: "[broot] {git-name}"
 # terminal_title: "{file} 🐄"
 # terminal_title: "-= {file-name} =-"
-# reset_terminal_title_on_exit: false
+reset_terminal_title_on_exit: false
 
 ###############################################################
 # Date/Time format
@@ -87,7 +87,7 @@ show_selection_mark: true
 # and set it to false or true if you notice the colors in
 # previewed images are too off.
 #
-# true_colors: false
+true_colors: true
 
 ###############################################################
 # Icons

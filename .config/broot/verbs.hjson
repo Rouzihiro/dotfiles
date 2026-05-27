@@ -208,5 +208,44 @@ verbs: [
     leave_broot: true
 }
 
-]
+{
+				invocation: "open"
+        shortcut: "o"
+        apply_to: file
+        execution: "xdg-open {file}"
+        leave_broot: false
+}
 
+{
+				invocation: lazygit
+        shortcut: lg
+        leave_broot: false
+        execution: "lazygit -p {directory}"
+}
+{
+				invocation: lazygit
+        shortcut: git
+        leave_broot: false
+        execution: "lazygit -p {directory}"
+}
+
+				# Refresh ui state of outside changes
+    {
+        key: ctrl-r
+        execution: ":refresh"
+    }
+   
+	  {
+        key: ctrl-p
+        execution: ":toggle_preview"
+    }
+				
+				# Toggle tree view
+    {
+        invocation: toggle_tree
+        key: ctrl-v
+        execution: ":toggle_tree"
+        leave_broot: false
+    }
+
+]
