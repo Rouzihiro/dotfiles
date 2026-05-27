@@ -197,16 +197,18 @@ verbs: [
 
 {
     invocation: "run {cmd}"
-    execution: "{cmd} \"{file}\""
-    from_shell: true
-    leave_broot: true
-}
-{
-    invocation: "run2 {cmd}"
     execution: ["{cmd}", "{file}"]
     from_shell: true
     leave_broot: true
 }
+
+{
+    invocation: "run2 {cmd}"
+    execution: ["bash", "-c", "cd \"{directory}\" && {cmd} \"{file}\""]
+    from_shell: false
+    leave_broot: true
+}
+
 
 {
 				invocation: "open"
