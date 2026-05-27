@@ -1,0 +1,39 @@
+#!/bin/bash
+
+FILE="$1"
+if [ ! -f "$FILE" ]; then
+    echo "Not a valid file: $FILE"
+    exit 1
+fi
+
+choice=$(echo -e "↻ Rotate 90°\n↺ Rotate -90°\n🔄 Flip horizontal\n🔄 Flip vertical\n🖼️ Convert to PNG\n📐 Resize 50%\n🌈 Grayscale\n✂️ Crop (interactive)\n💧 Blur\n✨ Sharpen\n🌞 Brighten\n🌑 Darken\n📝 Watermark\n📏 Border\nCancel" | fzf --height=50% --reverse --prompt="Image operation: ")
+
+case "$choice" in
+    "↻ Rotate 90°") magick "$FILE" -rotate 90 "$FILE" ;;
+    "↺ Rotate -90°") magick "$FILE" -rotate -90 "$FILE" ;;
+    "🔄 Flip horizontal") magick "$FILE" -flip "$FILE" ;;
+    "🔄 Flip vertical") magick "$FILE" -flop "$FILE" ;;
+    "🖼️ Convert to PNG") magick "$FILE" "${FILE%.*}.png" ;;
+    "📐 Resize 50%") magick "$FILE" -resize 50% "$FILE" ;;
+    "🌈 Grayscale") magick "$FILE" -colorspace Gray "$FILE" ;;
+    "✂️ Crop (interactive)")
+        echo "Enter crop geometry (e.g., 800x600+10+10):"
+        echo "Format: WIDTHxHEIGHT+XOFFSET+YOFFSET"
+        read -p "Geometry: " geometry
+        [ -n "$geometry" ] && magick "$FILE" -crop "$geometry" +repage "$FILE"
+        ;;
+    "💧 Blur") magick "$FILE" -blur 0x8 "$FILE" ;;
+    "✨ Sharpen") magick "$FILE" -sharpen 0x1 "$FILE" ;;
+    "🌞 Brighten") magick "$FILE" -modulate 110 "$FILE" ;;
+    "🌑 Darken") magick "$FILE" -modulate 90 "$FILE" ;;
+    "📝 Watermark")
+        read -p "Enter watermark text: " watermark
+        magick "$FILE" -pointsize 36 -fill "rgba(255,255,255,0.5)" -gravity southeast -annotate +10+10 "$watermark" "$FILE"
+        ;;
+    "📏 Border") magick "$FILE" -bordercolor black -border 10x10 "$FILE" ;;
+    *) echo "Cancelled" ;;
+esac
+
+echo ""
+echo "✓ Image operation complete!"
+sleep 2

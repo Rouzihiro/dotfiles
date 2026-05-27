@@ -201,7 +201,12 @@ verbs: [
     from_shell: true
     leave_broot: true
 }
-
+{
+    invocation: "run2 {cmd}"
+    execution: ["{cmd}", "{file}"]
+    from_shell: true
+    leave_broot: true
+}
 
 ]
 
