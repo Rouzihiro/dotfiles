@@ -97,3 +97,23 @@ vim.lsp.enable({
     "intelephense", "biome", "tailwindcss",
     "ts_ls", "emmet_language_server", "emmet_ls", "solargraph"
 })
+
+-- Set path to only your specified directories
+vim.opt.path = {
+		os.getenv("HOME") .. "/.config/**",
+		os.getenv("HOME") .. "/dotfiles/**",
+		os.getenv("HOME") .. "/Downloads/**",
+		os.getenv("HOME") .. "/Documents/**",
+}
+
+-- Ignore problematic files/folders
+vim.opt.wildignore = {
+		"*/node_modules/*",
+		"*/dist/*",
+		"*/target/*",
+		"*.git/*",
+		"*/__pycache__/*",
+		"*.pyc",
+		"*.swp",
+		"*.log",
+}
