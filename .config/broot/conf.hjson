@@ -54,8 +54,8 @@ reset_terminal_title_on_exit: false
 #
 # You may start either in 'command' mode, or in 'input' mode
 #
- modal: true
- initial_mode: input
+# modal: true
+# initial_mode: input
 
 ###############################################################
 # Whether to mark the selected line with a triangle
@@ -228,12 +228,12 @@ lines_after_match_in_preview: 1
 preview_transformers: [
     // # Use mutool to render any PDF file as an image
     // # In this example we use placeholders for the input and output files
-    // {
-    //     input_extensions: [ "pdf" ] // case doesn't matter
-    //     output_extension: png
-    //     mode: image
-    //     command: [ "mutool", "draw", "-w", "1000", "-o", "{output-path}", "{input-path}" ]
-    // }
+     {
+         input_extensions: [ "pdf" ] // case doesn't matter
+         output_extension: png
+         mode: image
+         command: [ "mutool", "draw", "-w", "1000", "-o", "{output-path}", "{input-path}" ]
+     }
 
     // # Use LibreOffice to render Office files as images
     // # In this example, {output-dir} is used to specify where LibreOffice must write the result
