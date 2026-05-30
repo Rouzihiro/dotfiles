@@ -1,0 +1,43 @@
+#!/bin/bash
+
+# Launch the argument(s) in the default editor
+# Usage: z-launch-editor <file-or-directory>
+
+# Check if an argument was provided
+if [[ -z "$1" ]]; then
+    echo "Usage: z-launch-editor <file-or-directory>"
+    exit 1
+fi
+
+# Check if file/directory exists
+if [[ ! -e "$1" ]]; then
+    echo "Error: $1 does not exist"
+    exit 1
+fi
+
+# Try different editors in order of preference
+if command -v nvim &>/dev/null; then
+    # Neovim
+    nvim "$1"
+elif command -v vim &>/dev/null; then
+    # Vim
+    vim "$1"
+elif command -v code &>/dev/null; then
+    # VS Code (supports file/line opening)
+    code "$1"
+elif command -v cursor &>/dev/null; then
+    # Cursor editor
+    cursor "$1"
+elif command -v zed &>/dev/null; then
+    # Zed editor
+    zed "$1"
+elif command -v subl &>/dev/null; then
+    # Sublime Text
+    subl "$1"
+elif command -v nano &>/dev/null; then
+    # Nano as last resort
+    nano "$1"
+else
+    echo "Error: No editor found"
+    exit 1
+fi

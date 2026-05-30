@@ -97,7 +97,7 @@ install_terminal() {
 
 show_learn_menu() {
   case $(menu "Learn" "  Keybindings\n  z\n  Hyprland\n󰣇  Arch\n  Neovim\n󱆃  Bash") in
-  *Keybindings*) z-menu-keybindings ;;
+  *Keybindings*) show_keybindings_submenu ;;
   *z*) z-launch-webapp "https://learn.omacom.io/2/the-z-manual" ;;
   *Hyprland*) z-launch-webapp "https://wiki.hypr.land/" ;;
   *Arch*) z-launch-webapp "https://wiki.archlinux.org/title/Main_page" ;;
@@ -106,6 +106,22 @@ show_learn_menu() {
   *) show_main_menu ;;
   esac
 }
+
+show_keybindings_submenu() {
+  case $(menu "Keybindings" "  Sway Keybindings\n  Sway Custom Soft\n󰕮  Zsh Keybindings") in
+  *"Sway Keybindings"*) 
+    z-menu-keybindings-sway-hard
+    ;;
+  *"Sway Custom Soft"*) 
+    z-menu-keybindings-sway-soft
+    ;;
+  *"Zsh Keybindings"*) 
+		show-aliases
+       ;;
+  *) show_learn_menu ;;
+  esac
+}
+
 
 show_trigger_menu() {
   case $(menu "Trigger" "  Capture\n  Share\n󰔎  Toggle") in
