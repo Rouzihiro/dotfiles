@@ -114,8 +114,8 @@ bindkey "^I" expand-or-complete-with-dots
 #  ╦ ╦┬┌─┐┌┬┐┌─┐┬─┐┬ ┬
 #  ╠═╣│└─┐ │ │ │├┬┘└┬┘
 #  ╩ ╩┴└─┘ ┴ └─┘┴└─ ┴ 
-HISTSIZE=10000000
-SAVEHIST=10000000
+HISTSIZE=20000
+SAVEHIST=20000
 HISTFILE="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/history"
 HISTDUP=erase
 setopt appendhistory
@@ -125,6 +125,7 @@ setopt hist_ignore_all_dups
 setopt hist_save_no_dups
 setopt hist_ignore_dups
 setopt hist_find_no_dups
+setopt HIST_REDUCE_BLANKS
 
 #  ╔═╗┌─┐┌┬┐┬┌─┐┌┐┌┌─┐
 #  ║ ║├─┘ │ ││ ││││└─┐
@@ -137,7 +138,10 @@ setopt MENU_COMPLETE        # Automatically highlight first element of completio
 setopt LIST_PACKED          # The completion menu takes less space.
 setopt AUTO_LIST            # Automatically list choices on ambiguous completion.
 setopt COMPLETE_IN_WORD     # Complete from both ends of a word.
-
+DIRSTACKSIZE=20
+setopt AUTO_PUSHD
+setopt PUSHD_IGNORE_DUPS
+setopt PUSHD_SILENT
 
 #  ╔═╗┌─┐┌┐┌  ╔═╗┬─┐┌─┐┌┬┐┌─┐┌┬┐
 #  ╔═╝├┤ │││  ╠═╝├┬┘│ ││││├─┘ │ 

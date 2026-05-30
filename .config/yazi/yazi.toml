@@ -1,60 +1,108 @@
 [mgr]
-sort_by        = "natural"
-sort_sensitive = false
-sort_reverse   = false
+linemode = "size_and_mtime"
+show_header = true
 sort_dir_first = true
-sort_translit  = true
-linemode       = "none"
+sort_by = "alphabetical"
+show_symlink = true
+show_hidden = true
 
-show_hidden    = true
-show_symlink   = true
-scrolloff      = 8
+[plugin]
+prepend_fetchers = [
+    { id = "git", url = "*",  run = "git", group = "git" },
+    { id = "git", url = "*/", run = "git", group = "git" },
+]
 
-mouse_event    = ["click", "scroll", "touch", "move"]
-title_format   = "Yazi: {cwd}"
+# --- Official Piper Previewers ---
+
+[[plugin.prepend_previewers]]
+url = "*.md"
+run = 'piper -- CLICOLOR_FORCE=1 /home/nico/go/bin/glow -w=$w -s=dark "$1"'
+
+[[plugin.prepend_previewers]]
+mime = "video/*"
+run = "video-timeline"
+
+# KRA (Krita) preview - extracts mergedimage.png from the archive
+[[plugin.prepend_previewers]]
+url = "*.{kra,KRA}"
+run = "kra"
+
+# TIFF preview using built-in magick (requires ImageMagick)
+[[plugin.prepend_previewers]]
+mime = "image/tiff"
+run = "magick"
+
+[[plugin.prepend_previewers]]
+url = "*.{tif,tiff,TIF,TIFF}"
+run = "magick"
+
+[[plugin.prepend_previewers]]
+url = "*.{docx,xlsx,pptx,odt,ods,odp}"
+run = "office"
+
+[[plugin.prepend_previewers]]
+mime = "{image,audio}/*"
+run = "mediainfo"
+
+[[plugin.prepend_previewers]]
+mime = "application/x-subrip"
+run = "mediainfo"
+
+[[plugin.prepend_previewers]]
+mime = "application/{*zip,tar,bzip2,7z*,rar,xz,zstd,java-archive}"
+run = "ouch"
+
+# --------------------------------
 
 [preview]
-wrap            = "no"
-tab_size        = 2
-
-# Slightly more balanced for performance + quality
-max_width       = 1600
-max_height      = 1600
-
-cache_dir       = ""
-image_delay     = 60
-
-# Better quality on modern GPUs (Mesa/Asahi friendly)
-image_filter    = "catmull-rom"
-image_quality   = 80
-
-# safer default for HiDPI Wayland setups
-ueberzug_scale  = 0.5
-ueberzug_offset = [0, 0, 0, 0]
+max_width = 10000
+max_height = 10000
 
 [tasks]
-micro_workers    = 12
-macro_workers    = 32
+image_bound = [65535, 65535]
 
-# reduce retry spam (prevents lag spikes)
-bizarre_retry    = 3
-
-# increase slightly for modern machines (you’re on M1 → fine)
-image_alloc      = 805306368  # 768MB
-
-image_bound      = [0, 0]
-suppress_preload = false
 
 [opener]
-pdf_read = [
-  { run = "evince %s", desc = "Read" },
+pdf = [{ run = 'xreader "$@"', desc = "Open PDF with Xreader", detach = true }]
+img = [
+    { run = 'xviewer "$@"', desc = "Open Image with Xviewer", detach = true },
 ]
-
-pdf_annotate = [
-  { run = "xournalpp %s", desc = "Annotate" },
+extract = [
+    { run = 'ouch d -y "$@"', desc = "Extract here with ouch", for = "unix" },
 ]
+view-viu = [{ run = 'viu "$@"', desc = "View with viu", block = true }]
+vlc = [
+    { run = 'flatpak run org.videolan.VLC "$@"', desc = "Open with VLC", detach = true },
+]
+typora = [
+    { run = 'flatpak run io.typora.Typora "$@"', desc = "Open with Typora", detach = true },
+]
+# Define your editor here
+edit = [{ run = '${EDITOR:-vim} "$@"', desc = "Edit", block = true }]
 
 [open]
+prepend_rules = [
+    # Markdown files with Typora (prepended to ensure it matches first)
+    { url = "*.{md,MD,markdown}", use = "typora" },
+]
+
 rules = [
-  { mime = "application/pdf", use = "pdf_read" },
+    # 0. PDF opening
+    { mime = "application/pdf", use = "pdf" },
+    { url = "*.{pdf,PDF}", use = "pdf" },
+
+    # 1. Image opening
+    { mime = "image/*", use = "img" },
+    { url = "*.{jpg,jpeg,png,webp,gif,tif,tiff,TIF,TIFF,JPG,JPEG,PNG,WEBP,GIF}", use = "img" },
+
+    # 2. Video opening
+    { mime = "video/*", use = "vlc" },
+    { url = "*.{mp4,mkv,avi,mov,wmv,flv,webm}", use = "vlc" },
+
+    # 3. Archive extraction
+    { mime = "application/{*zip,tar,bzip2,7z*,rar,xz,zstd,java-archive}", use = "extract" },
+
+    # 4. Other text files with editor
+    { mime = "text/*", use = "edit" },
+    { url = "*.{yml,yaml,toml,lua}", use = "edit" },
 ]

@@ -1,5 +1,15 @@
 command -v nvim > /dev/null 2>&1 && export MANPAGER="nvim +Man!"
 
+d() {
+  # List stack, skip current dir, and fuzzy search unique paths
+  local dir=$(dirs -p -v | tail -n +2 | fzf --height 40% --reverse --header="Jump to Previous Directory" | awk '{print $2}')
+  
+  # Jump if a selection was made
+  if [[ -n "$dir" ]]; then
+    cd "${dir/#\~/$HOME}"
+  fi
+}
+
 ls-man () {
     entry_raw="$(man -k . | fzf --exact --style=full)" || return 1
     manpage_name="$(echo "$entry_raw" | cut -f1 -d ' ')"
