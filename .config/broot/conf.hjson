@@ -54,8 +54,8 @@ reset_terminal_title_on_exit: false
 #
 # You may start either in 'command' mode, or in 'input' mode
 #
-# modal: true
-# initial_mode: input
+modal: true
+initial_mode: input
 
 ###############################################################
 # Whether to mark the selected line with a triangle
