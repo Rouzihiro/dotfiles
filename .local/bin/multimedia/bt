@@ -1,0 +1,89 @@
+#!/usr/bin/env bash
+# -----------------------------------------------------------------------------
+# bt - fzf bluetooth widget script
+# Version: v0.1.0
+# Created by Lukas Grumlik - (Rakosn1cek)
+# April 2026
+# Descriptions:
+# Scans for devices and provides a selection menu via fzf.
+# Handles the filtering of blocked system actions during execution.
+# -----------------------------------------------------------------------------
+
+# Power on
+bluetoothctl power on > /dev/null
+
+echo "Scanning..."
+# Filter out RSSI junk and anything where the Name is just the MAC again
+devices=$(bluetoothctl --timeout 2 scan on > /dev/null && bluetoothctl devices | \
+    grep -v "RSSI is nil" | \
+    awk '
+    {
+        mac=$2; 
+        $1=$2=""; 
+        name=substr($0,3); 
+        
+        # Strip dashes and colons to compare "pure" hex strings
+        clean_name = name; gsub(/[-:]/, "", clean_name);
+        clean_mac = mac; gsub(/[-:]/, "", clean_mac);
+
+        if (length(name) > 0 && clean_name != clean_mac) 
+            print name " | " mac
+    }' | sort -u)
+
+if [ -z "$devices" ]; then
+    echo "No named devices found."
+    exit 1
+fi
+
+HEADER_TEXT="
+	    BLUETOOTH CONNECTION v0.1.0
+	Minimalist bluetooth connection widget
+
+Select Bluetooth Device ESC to quit
+"
+
+# Step 1: Pick the Device (Displaying only the name)
+selected_device=$(echo "$devices" | fzf --height 40% \
+    --reverse \
+    --border rounded \
+    --margin=1,2 \
+    --header "$HEADER_TEXT" \
+    --header-first \
+    --info inline \
+    --delimiter " \| " \
+    --with-nth 1 \
+)
+
+[ -z "$selected_device" ] && exit
+
+mac=$(echo "$selected_device" | awk -F ' | ' '{print $NF}')
+name=$(echo "$selected_device" | awk -F ' | ' '{print $1}')
+
+# Step 2: Pick the Action
+action=$(echo -e "Connect\nDisconnect\nTrust\nRemove" | \
+    fzf --height 20% --reverse --border rounded --margin=1,2 \
+        --header "Action for $name" --info inline \
+        --color="bg+:-1,bg:-1,hl:3,fg:7,header:3,info:4,pointer:3,marker:3,prompt:3")
+
+[ -z "$action" ] && exit
+
+clear
+case $action in
+    Connect)
+        echo "Connecting to $name..."
+        bluetoothctl connect "$mac" 2>/dev/null | grep -q "Connection successful" && \
+            echo "Done." || echo "Failed."
+        ;;
+    Disconnect)
+        echo "Disconnecting $name..."
+        bluetoothctl disconnect "$mac" > /dev/null 2>&1 && echo "Done."
+        ;;
+    Trust)
+        bluetoothctl trust "$mac" > /dev/null 2>&1 && echo "$name is now trusted."
+        ;;
+    Remove)
+        bluetoothctl remove "$mac" > /dev/null 2>&1 && echo "$name removed."
+        ;;
+esac
+
+sleep 1
