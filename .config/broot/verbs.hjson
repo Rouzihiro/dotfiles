@@ -183,18 +183,20 @@ verbs: [
          external: "cp -r {file} {other-panel-directory}"
          leave_broot: false
      }
-     {
-         key: ctrl-m
-         external: "mv {file} {other-panel-directory}"
-         leave_broot: false
-     }
 
-	{
-    key: ctrl-n
-    external: "sh -c 'mv \"$1\" \"$2\"' _ {file} {other-panel-directory}"
-    leave_broot: false
-	}
+#     {
+#         key: ctrl-m
+#         external: "mv {file} {other-panel-directory}"
+#         leave_broot: false
+#     }
 
+
+{
+  invocation: "copy_path"
+  key: "ctrl-y"
+  execution: "wl-copy {file}"
+  leave_broot: false
+}
 
 {
     key: "ctrl-l"
