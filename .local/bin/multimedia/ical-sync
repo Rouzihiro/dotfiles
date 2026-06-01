@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+
+set -e
+
+vdirsyncer sync
+
+STATE_DIR="$HOME/.cache/calcurse-sync"
+mkdir -p "$STATE_DIR"
+STATE_FILE="$STATE_DIR/imported.txt"
+
+touch "$STATE_FILE"
+
+find ~/.local/share/calcurse/calendars \
+  -name "*.ics" | while read -r file; do
+
+    # skip already imported files
+    if grep -qF "$file" "$STATE_FILE"; then
+        continue
+    fi
+
+    calcurse -i "$file"
+    echo "$file" >> "$STATE_FILE"
+
+done
