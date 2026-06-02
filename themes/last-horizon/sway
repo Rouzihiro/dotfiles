@@ -1,0 +1,110 @@
+# Generated from kitty.conf
+
+# Default foreground
+set $fujiWhite      #FAFCFB
+
+# Dark foreground (statuslines)
+set $oldWhite       #cfd3cd
+
+# Dark background (statuslines and floating windows)
+set $sumiInk0       #0c0b0c
+
+# Default background
+set $sumiInk1       #0c0b0c
+
+# Lighter background (colorcolumn, folds)
+set $sumiInk2       #584e51
+
+# Lighter background (cursorline)
+set $sumiInk3       #584e51
+
+# Darker foreground (line numbers, fold column, non-text characters), float borders
+set $sumiInk4       #584e51
+
+# Popup background, visual selection background
+set $waveBlue1      #b59790
+
+# Popup selection background, search background
+set $waveBlue2      #b59790
+
+# Diff Add (background)
+set $winterGreen    #87a9b0
+
+# Diff Change (background)
+set $winterYellow   #6B5E73
+
+# Diff Deleted (background)
+set $winterRed      #c38b7b
+
+# Diff Line (background)
+set $winterBlue     #b59790
+
+# Git Add
+set $autumnGreen    #87a9b0
+
+# Git Delete
+set $autumnRed      #c38b7b
+
+# Git Change
+set $autumnYellow   #6B5E73
+
+# Diagnostic Error
+set $samuraiRed     #c38b7b
+
+# Diagnostic Warning
+set $roninYellow    #6B5E73
+
+# Diagnostic Info
+set $waveAqua1      #b59790
+
+# Diagnostic Hint
+set $dragonBlue     #b59790
+
+# Comments
+set $fujiGray       #584e51
+
+# Light foreground
+set $springViolet1  #cfd3cd
+
+# Statements and Keywords
+set $oniViolet      #c4d8e2
+
+# Functions and Titles
+set $crystalBlue    #b59790
+
+# Brackets and punctuation
+set $springViolet2  #c4d8e2
+
+# Specials and builtin functions
+set $springBlue     #b59790
+
+# Not used (assigned Nightfox-consistent shades)
+set $lightBlue      #a5a0b6
+set $boatYellow1    #6B5E73
+
+# Types
+set $waveAqua2      #a5a0b6
+
+# Strings
+set $springGreen    #87a9b0
+
+# Operators, RegEx
+set $boatYellow2    #6B5E73
+
+# Identifiers
+set $carpYellow     #6B5E73
+
+# Numbers
+set $sakuraPink     #c4d8e2
+
+# Standout specials 1 (builtin variables)
+set $waveRed        #c38b7b
+
+# Standout specials 2 (exception handling, return)
+set $peachRed       #c38b7b
+
+# Constants, imports, booleans
+set $surimiOrange   
+
+# Deprecated
+set $katanaGray     #584e51

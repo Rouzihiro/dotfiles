@@ -53,6 +53,7 @@ vim.pack.add({
 		{ src = "https://github.com/rose-pine/neovim" 	}, 
 		{ src = "https://github.com/bjarneo/pixel.nvim" },
 		{ src = "https://github.com/bjarneo/ethereal.nvim" },
+		{ src = "https://github.com/bjarneo/aether.nvim" },
 		{ src = "https://github.com/maxmx03/solarized.nvim" },
 
 })
