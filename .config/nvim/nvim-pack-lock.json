@@ -8,6 +8,10 @@
       "rev": "cb938c2",
       "src": "https://github.com/aznhe21/actions-preview.nvim"
     },
+    "aether.nvim": {
+      "rev": "386ff6f884220b3ae9affbc8271aace4c92012c0",
+      "src": "https://github.com/bjarneo/aether.nvim"
+    },
     "bamboo.nvim": {
       "rev": "6ec224a",
       "src": "https://github.com/ribru17/bamboo.nvim"

@@ -1,5 +1,5 @@
 "$schema" = 'https://starship.rs/config-schema.json'
-palette = 'Ethereal'
+palette = 'Last_Horizon'
 
 format = """
 [](sig1)\
