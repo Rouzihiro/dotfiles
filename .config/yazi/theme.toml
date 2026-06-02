@@ -1,8 +1,1 @@
-[flavor]
-use = "vscode-dark-modern"
-
-[icon]
-prepend_rules = [{ name = "*.md", text = "", fg = "#61afef" }]
-
-[indicator]
-padding = { open = "", close = "" }
+/home/rey/.config/zorro/current/theme/yazi.toml

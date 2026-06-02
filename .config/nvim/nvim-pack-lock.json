@@ -36,6 +36,10 @@
       "rev": "ae752c13e95fb7c5f58da4b5123cb804ea7568ee",
       "src": "https://github.com/Mofiqul/dracula.nvim"
     },
+    "ethereal.nvim": {
+      "rev": "a0ec73332e537228981b6a4f465cef82bb3e1d36",
+      "src": "https://github.com/bjarneo/ethereal.nvim"
+    },
     "everforest-nvim": {
       "rev": "557bce9",
       "src": "https://github.com/neanias/everforest-nvim"
