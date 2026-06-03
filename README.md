@@ -56,6 +56,9 @@ Clone your dotfiles and make sure the scripts and themes are in place:
 └── .local/bin/rofi/wofi-theme-switcher
 ```
 
+also clone my assets repo and place it in your $HOME folder:
+https://github.com/Rouzihiro/assets
+
 ## 🚀 Great performance for x86 and Apple Silicon M1
   
 This setup with Sway WM idles at ~600MB RAM with our ultra-efficient stack:  
