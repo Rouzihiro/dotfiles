@@ -16,6 +16,10 @@
       "rev": "6ec224a",
       "src": "https://github.com/ribru17/bamboo.nvim"
     },
+    "base16-vim": {
+      "rev": "3be3cd82cd31acfcab9a41bad853d9c68d30478d",
+      "src": "https://github.com/chriskempson/base16-vim"
+    },
     "cmp-buffer": {
       "rev": "b74fab3",
       "src": "https://github.com/hrsh7th/cmp-buffer"
@@ -39,6 +43,10 @@
     "dracula.nvim": {
       "rev": "ae752c13e95fb7c5f58da4b5123cb804ea7568ee",
       "src": "https://github.com/Mofiqul/dracula.nvim"
+    },
+    "dune.nvim": {
+      "rev": "46254a1bc7f1943ee68e143e90f811fa9088704b",
+      "src": "https://github.com/szammyboi/dune.nvim"
     },
     "ethereal.nvim": {
       "rev": "a0ec73332e537228981b6a4f465cef82bb3e1d36",
@@ -75,6 +83,10 @@
     "kanagawa.nvim": {
       "rev": "aef7f5c",
       "src": "https://github.com/rebelot/kanagawa.nvim"
+    },
+    "lumon.nvim": {
+      "rev": "f8ce95213e57b379089da23abc36a1fc39936b63",
+      "src": "https://github.com/omacom-io/lumon.nvim"
     },
     "marks.nvim": {
       "rev": "f353e8c",
