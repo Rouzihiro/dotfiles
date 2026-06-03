@@ -5,50 +5,50 @@
 
 * {
     /* Base colors */
-    background: #20201d;      /* background */
-    foreground: #b854d4;      /* foreground */
-    selection-background: #a6a28c;  /* selection bg */
-    selection-foreground: #20201d;  /* selection fg */
-    border-color: #a6a28c;    /* border */
+    background: #1b1a17;      /* background */
+    foreground: #d0c8b6;      /* foreground */
+    selection-background: #b7a37a;  /* selection bg */
+    selection-foreground: #1b1a17;  /* selection fg */
+    border-color: #b7a37a;    /* border */
     
     /* Signature colors - interactive selection */
-    sigbg: @background;           /* signature background */
-    sig1: @color3;            /* signature color 1 */
-    sig2: @color1;            /* signature color 2 */
-    sig3: @color4;            /* signature color 3 */
+    sigbg: @color7;           /* signature background */
+    sig1: @color4;            /* signature color 1 */
+    sig2: @color3;            /* signature color 2 */
+    sig3: @color8;            /* signature color 3 */
 
     /* WCAG-compliant contrast colors */
-    on-sigbg: @color15;    /* text on signature background */
+    on-sigbg: @color0;    /* text on signature background */
     on-sig1: @color0;      /* text on signature color 1 */
-    on-sig2: @color15;      /* text on signature color 2 */
-    on-sig3: @color0;      /* text on signature color 3 */
+    on-sig2: @color0;      /* text on signature color 2 */
+    on-sig3: @color15;      /* text on signature color 3 */
 
     /* Harmonious surface colors with transparency */
-    sig-surface: #141415CC;        /* surface with 80% opacity */
-    sig-surface-container: #18181a40;  /* surface container 25% */
-    sig-surface-high: #4c4c4a80;       /* high surface 50% */
+    sig-surface: #85808fCC;        /* surface with 80% opacity */
+    sig-surface-container: #a29cae40;  /* surface container 25% */
+    sig-surface-high: #d8d2c680;       /* high surface 50% */
 
     /* Text color reference */
     text-color: @on-sigbg;
 
     /* Standard 16-color palette */
-    color0: #20201d;          /* black */
-    color1: #d73737;          /* red */
-    color2: #60ac39;          /* green */
-    color3: #ae9513;          /* yellow */
-    color4: #6684e1;          /* blue */
-    color5: #b854d4;          /* magenta */
-    color6: #1fad83;          /* cyan */
-    color7: #a6a28c;          /* white */
+    color0: #1b1a17;          /* black */
+    color1: #c26a4a;          /* red */
+    color2: #8a9a7b;          /* green */
+    color3: #c2a46a;          /* yellow */
+    color4: #6f8fa3;          /* blue */
+    color5: #a08a9a;          /* magenta */
+    color6: #7fa6a3;          /* cyan */
+    color7: #cfc7b8;          /* white */
 
-    color8: #7d7a68;          /* bright black */
-    color9: #d73737;          /* bright red */
-    color10: #60ac39;         /* bright green */
-    color11: #ae9513;         /* bright yellow */
-    color12: #6684e1;         /* bright blue */
-    color13: #b854d4;         /* bright magenta */
-    color14: #1fad83;         /* bright cyan */
-    color15: #fefbec;         /* bright white */
+    color8: #3a352f;          /* bright black */
+    color9: #d17a5a;          /* bright red */
+    color10: #9caf8a;         /* bright green */
+    color11: #d1b57a;         /* bright yellow */
+    color12: #86a6bb;         /* bright blue */
+    color13: #b39aa8;         /* bright magenta */
+    color14: #95b8b5;         /* bright cyan */
+    color15: #e6dccb;         /* bright white */
 
     /* Extended colors (if present in theme) */
 }
