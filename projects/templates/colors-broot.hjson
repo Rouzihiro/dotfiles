@@ -1,0 +1,108 @@
+skin: {
+
+    default: {{foreground}} none / {{color8}} none
+
+    tree: {{color0}} none / {{background}} none
+    parent: {{color4}} none / {{color6}} none
+
+    file: {{foreground}} none / {{color15}} none
+    directory: {{color4}} none bold / {{color5}} none
+
+    exe: {{color2}} none
+    link: {{color5}} none
+
+    pruning: {{color8}} none italic
+
+    perm__: {{color0}} none
+    perm_r: {{color3}} none
+    perm_w: {{color1}} none
+    perm_x: {{color2}} none
+
+    owner: {{color6}} none
+    group: {{color4}} none
+
+    count: {{color3}} {{background}}
+
+    dates: {{color8}} none
+    sparse: {{color3}} none
+
+    content_extract: {{color6}} none
+    content_match: {{color2}} none bold
+
+    device_id_major: {{color4}} none
+    device_id_sep: {{color8}} none
+    device_id_minor: {{color5}} none
+
+    git_branch: {{color3}} none
+    git_insertions: {{color2}} none
+    git_deletions: {{color1}} none
+
+    git_status_current: {{foreground}} none
+    git_status_modified: {{color3}} none
+    git_status_new: {{color2}} none bold
+    git_status_ignored: {{color8}} none
+    git_status_conflicted: {{color1}} none
+    git_status_other: {{color1}} none
+
+    selected_line: none {{color8}} / none {{background}}
+
+    char_match: {{color4}} none bold
+    file_error: {{color1}} none bold
+
+    flag_label: {{foreground}} {{background}}
+    flag_value: {{color3}} {{background}} bold
+
+    input: {{foreground}} {{background}} / {{color15}} none
+
+    status_error: {{background}} {{color1}}
+    status_job: {{color3}} {{background}}
+
+    status_normal: {{foreground}} {{background}} / {{color8}} {{background}}
+    status_italic: {{color3}} {{background}} / {{color8}} {{background}}
+    status_bold: {{color3}} {{background}} bold / {{color8}} {{background}}
+    status_code: {{color4}} {{background}} / {{color8}} {{background}}
+    status_ellipsis: {{foreground}} {{background}} / {{color8}} {{background}}
+
+    purpose_normal: {{foreground}} {{background}}
+    purpose_italic: {{color3}} {{background}}
+    purpose_bold: {{color3}} {{background}} bold
+    purpose_ellipsis: {{foreground}} {{background}}
+
+    scrollbar_track: {{background}} none
+    scrollbar_thumb: {{color8}} none
+
+    help_paragraph: {{foreground}} none
+    help_bold: {{color2}} none bold
+    help_italic: {{color3}} none
+    help_code: {{foreground}} {{background}}
+    help_headers: {{color4}} none bold
+    help_table_border: {{color0}} none
+
+    preview: {{foreground}} {{background}} / {{color15}} {{color0}}
+    preview_title: {{color4}} {{background}} bold / {{color5}} {{color0}}
+
+    preview_line_number: {{color8}} {{color0}}
+    preview_separator: {{color0}} none
+    preview_match: none {{color8}}
+
+    hex_null: {{color0}} none
+    hex_ascii_graphic: {{foreground}} none
+    hex_ascii_whitespace: {{color2}} none
+    hex_ascii_other: {{color4}} none
+    hex_non_ascii: {{color1}} none
+
+    staging_area_title: {{color4}} {{background}} bold / {{color5}} {{color0}}
+
+    mode_command_mark: {{background}} {{color4}} bold
+
+    good_to_bad_0: {{color2}}
+    good_to_bad_1: {{color6}}
+    good_to_bad_2: {{color4}}
+    good_to_bad_3: {{color5}}
+    good_to_bad_4: {{color3}}
+    good_to_bad_5: {{color11}}
+    good_to_bad_6: {{color1}}
+    good_to_bad_7: {{color9}}
+    good_to_bad_8: {{color5}}
+    good_to_bad_9: {{color8}}
+}
