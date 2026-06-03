@@ -1,20 +1,22 @@
+# Generated from kitty.conf
+
 # Default foreground
 set $fujiWhite      #cdcdcd
 
 # Dark foreground (statuslines)
-set $oldWhite       #b8b8b8
+set $oldWhite       #cdcdcd
 
 # Dark background (statuslines and floating windows)
-set $sumiInk0       #101010
+set $sumiInk0       #1c1c24
 
 # Default background
 set $sumiInk1       #141415
 
 # Lighter background (colorcolumn, folds)
-set $sumiInk2       #1c1c24
+set $sumiInk2       #606079
 
 # Lighter background (cursorline)
-set $sumiInk3       #252530
+set $sumiInk3       #606079
 
 # Darker foreground (line numbers, fold column, non-text characters), float borders
 set $sumiInk4       #606079
@@ -23,7 +25,7 @@ set $sumiInk4       #606079
 set $waveBlue1      #6e94b2
 
 # Popup selection background, search background
-set $waveBlue2      #5a7690
+set $waveBlue2      #6e94b2
 
 # Diff Add (background)
 set $winterGreen    #7fa563
@@ -56,7 +58,7 @@ set $roninYellow    #f3be7c
 set $waveAqua1      #6e94b2
 
 # Diagnostic Hint
-set $dragonBlue     #7e98e8
+set $dragonBlue     #6e94b2
 
 # Comments
 set $fujiGray       #606079
@@ -71,38 +73,38 @@ set $oniViolet      #bb9dbd
 set $crystalBlue    #6e94b2
 
 # Brackets and punctuation
-set $springViolet2  #a5a5a5
+set $springViolet2  #bb9dbd
 
 # Specials and builtin functions
-set $springBlue     #7e98e8
+set $springBlue     #6e94b2
 
-# Not used (assigned Vague-consistent shades)
-set $lightBlue      #9bb4bc
+# Not used (assigned Nightfox-consistent shades)
+set $lightBlue      #7e98e8
 set $boatYellow1    #f3be7c
 
 # Types
-set $waveAqua2      #9bb4bc
+set $waveAqua2      #7e98e8
 
 # Strings
-set $springGreen    #e8b589
+set $springGreen    #7fa563
 
 # Operators, RegEx
-set $boatYellow2    #90a0b5
+set $boatYellow2    #f3be7c
 
 # Identifiers
-set $carpYellow     #c3c3d5
+set $carpYellow     #f3be7c
 
 # Numbers
-set $sakuraPink     #e0a363
+set $sakuraPink     #bb9dbd
 
 # Standout specials 1 (builtin variables)
-set $waveRed        #aeaed1
+set $waveRed        #d8647e
 
 # Standout specials 2 (exception handling, return)
 set $peachRed       #d8647e
 
 # Constants, imports, booleans
-set $surimiOrange   #b4d4cf
+set $surimiOrange   
 
 # Deprecated
 set $katanaGray     #606079

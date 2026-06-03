@@ -1,0 +1,22 @@
+@define-color foreground 	#ffffff;
+@define-color background 	#000000;
+@define-color bg 				#000000;
+@define-color fg 				#ffffff;
+@define-color bordercolor #5c5c5c;
+@define-color highlight 	#cecece;
+@define-color alert 			#a4a4a4;
+@define-color activegreen #b6b6b6;
+@define-color disabled    #404040;
+
+@define-color bg_alt      #404040;
+@define-color border      #5c5c5c;
+
+@define-color red         #a4a4a4;
+@define-color green       #b6b6b6;
+@define-color yellow      #cecece;
+@define-color blue        #8d8d8d;
+@define-color purple      #9b9b9b;
+@define-color aqua        #b0b0b0;
+
+@define-color orange      #cecece;
+@define-color gray        #5c5c5c;

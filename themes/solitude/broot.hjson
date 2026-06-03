@@ -1,0 +1,69 @@
+
+skin: {
+
+    default: rgb(202, 204, 204) none / rgb(75, 78, 85) none
+
+    tree: rgb(16, 19, 21) none / rgb(16, 19, 21) none
+    parent: rgb(121, 129, 134) none / rgb(112, 112, 112) none
+
+    file: rgb(202, 204, 204) none / rgb(165, 174, 180) none
+    directory: rgb(121, 129, 134) none bold / rgb(174, 174, 174) none
+
+    exe: rgb(159, 165, 169) none
+    link: rgb(174, 174, 174) none
+
+    pruning: rgb(75, 78, 85) none italic
+
+    perm__: rgb(16, 19, 21) none
+    perm_r: rgb(217, 219, 220) none
+    perm_w: rgb(86, 93, 96) none
+    perm_x: rgb(159, 165, 169) none
+
+    owner: rgb(112, 112, 112) none
+    group: rgb(121, 129, 134) none
+
+    count: rgb(217, 219, 220) rgb(16, 19, 21)
+
+    dates: rgb(75, 78, 85) none
+    sparse: rgb(217, 219, 220) none
+
+    content_extract: rgb(112, 112, 112) none
+    content_match: rgb(159, 165, 169) none bold
+
+    git_branch: rgb(217, 219, 220) none
+    git_insertions: rgb(159, 165, 169) none
+    git_deletions: rgb(86, 93, 96) none
+
+    git_status_current: rgb(202, 204, 204) none
+    git_status_modified: rgb(217, 219, 220) none
+    git_status_new: rgb(159, 165, 169) none bold
+    git_status_ignored: rgb(75, 78, 85) none
+    git_status_conflicted: rgb(86, 93, 96) none
+
+    selected_line: none rgb(75, 78, 85) / none rgb(16, 19, 21)
+
+    char_match: rgb(121, 129, 134) none bold
+    file_error: rgb(86, 93, 96) none bold
+
+    input: rgb(202, 204, 204) rgb(16, 19, 21) / rgb(165, 174, 180) none
+
+    status_error: rgb(16, 19, 21) rgb(86, 93, 96)
+    status_job: rgb(217, 219, 220) rgb(16, 19, 21)
+
+    status_normal: rgb(202, 204, 204) rgb(16, 19, 21)
+
+    status_bold: rgb(217, 219, 220) rgb(16, 19, 21) bold
+
+    scrollbar_thumb: rgb(75, 78, 85) none
+
+    help_headers: rgb(121, 129, 134) none bold
+
+    preview: rgb(202, 204, 204) rgb(16, 19, 21)
+
+    preview_title: rgb(121, 129, 134) rgb(16, 19, 21) bold
+
+    preview_match: none rgb(75, 78, 85)
+
+    mode_command_mark: rgb(16, 19, 21) rgb(121, 129, 134) bold
+
+}

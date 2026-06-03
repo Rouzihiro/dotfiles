@@ -1,0 +1,69 @@
+
+skin: {
+
+    default: rgb(205, 205, 205) none / rgb(96, 96, 121) none
+
+    tree: rgb(28, 28, 36) none / rgb(20, 20, 21) none
+    parent: rgb(110, 148, 178) none / rgb(126, 152, 232) none
+
+    file: rgb(205, 205, 205) none / rgb(205, 205, 205) none
+    directory: rgb(110, 148, 178) none bold / rgb(187, 157, 189) none
+
+    exe: rgb(127, 165, 99) none
+    link: rgb(187, 157, 189) none
+
+    pruning: rgb(96, 96, 121) none italic
+
+    perm__: rgb(28, 28, 36) none
+    perm_r: rgb(243, 190, 124) none
+    perm_w: rgb(216, 100, 126) none
+    perm_x: rgb(127, 165, 99) none
+
+    owner: rgb(126, 152, 232) none
+    group: rgb(110, 148, 178) none
+
+    count: rgb(243, 190, 124) rgb(20, 20, 21)
+
+    dates: rgb(96, 96, 121) none
+    sparse: rgb(243, 190, 124) none
+
+    content_extract: rgb(126, 152, 232) none
+    content_match: rgb(127, 165, 99) none bold
+
+    git_branch: rgb(243, 190, 124) none
+    git_insertions: rgb(127, 165, 99) none
+    git_deletions: rgb(216, 100, 126) none
+
+    git_status_current: rgb(205, 205, 205) none
+    git_status_modified: rgb(243, 190, 124) none
+    git_status_new: rgb(127, 165, 99) none bold
+    git_status_ignored: rgb(96, 96, 121) none
+    git_status_conflicted: rgb(216, 100, 126) none
+
+    selected_line: none rgb(96, 96, 121) / none rgb(20, 20, 21)
+
+    char_match: rgb(110, 148, 178) none bold
+    file_error: rgb(216, 100, 126) none bold
+
+    input: rgb(205, 205, 205) rgb(20, 20, 21) / rgb(205, 205, 205) none
+
+    status_error: rgb(20, 20, 21) rgb(216, 100, 126)
+    status_job: rgb(243, 190, 124) rgb(20, 20, 21)
+
+    status_normal: rgb(205, 205, 205) rgb(20, 20, 21)
+
+    status_bold: rgb(243, 190, 124) rgb(20, 20, 21) bold
+
+    scrollbar_thumb: rgb(96, 96, 121) none
+
+    help_headers: rgb(110, 148, 178) none bold
+
+    preview: rgb(205, 205, 205) rgb(20, 20, 21)
+
+    preview_title: rgb(110, 148, 178) rgb(20, 20, 21) bold
+
+    preview_match: none rgb(96, 96, 121)
+
+    mode_command_mark: rgb(20, 20, 21) rgb(110, 148, 178) bold
+
+}

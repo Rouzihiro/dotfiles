@@ -1,0 +1,54 @@
+/*
+ * Rofi Color Theme
+ * Generated with WCAG-compliant color science
+ */
+
+* {
+    /* Base colors */
+    background: #101315;      /* background */
+    foreground: #cacccc;      /* foreground */
+    selection-background: #798186;  /* selection bg */
+    selection-foreground: #101315;  /* selection fg */
+    border-color: #798186;    /* border */
+    
+    /* Signature colors - interactive selection */
+    sigbg: @color8;           /* signature background */
+    sig1: @color9;            /* signature color 1 */
+    sig2: @color4;            /* signature color 2 */
+    sig3: @color3;            /* signature color 3 */
+
+    /* WCAG-compliant contrast colors */
+    on-sigbg: @color15;    /* text on signature background */
+    on-sig1: @color0;      /* text on signature color 1 */
+    on-sig2: @color0;      /* text on signature color 2 */
+    on-sig3: @color0;      /* text on signature color 3 */
+
+    /* Harmonious surface colors with transparency */
+    sig-surface: #34363aCC;        /* surface with 80% opacity */
+    sig-surface-container: #3f424740;  /* surface container 25% */
+    sig-surface-high: #6f717780;       /* high surface 50% */
+
+    /* Text color reference */
+    text-color: @on-sigbg;
+
+    /* Standard 16-color palette */
+    color0: #101315;          /* black */
+    color1: #565d60;          /* red */
+    color2: #9fa5a9;          /* green */
+    color3: #d9dbdc;          /* yellow */
+    color4: #798186;          /* blue */
+    color5: #aeaeae;          /* magenta */
+    color6: #707070;          /* cyan */
+    color7: #cbc2be;          /* white */
+
+    color8: #4b4e55;          /* bright black */
+    color9: #de6145;          /* bright red */
+    color10: #343d41;         /* bright green */
+    color11: #c9c2b4;         /* bright yellow */
+    color12: #5d6367;         /* bright blue */
+    color13: #9a9a9a;         /* bright magenta */
+    color14: #707070;         /* bright cyan */
+    color15: #a5aeb4;         /* bright white */
+
+    /* Extended colors (if present in theme) */
+}

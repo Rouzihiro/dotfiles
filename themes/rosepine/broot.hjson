@@ -1,0 +1,69 @@
+
+skin: {
+
+    default: rgb(87, 82, 121) none / rgb(152, 147, 165) none
+
+    tree: rgb(242, 233, 225) none / rgb(250, 244, 237) none
+    parent: rgb(86, 148, 159) none / rgb(215, 130, 126) none
+
+    file: rgb(87, 82, 121) none / rgb(87, 82, 121) none
+    directory: rgb(86, 148, 159) none bold / rgb(144, 122, 169) none
+
+    exe: rgb(40, 105, 131) none
+    link: rgb(144, 122, 169) none
+
+    pruning: rgb(152, 147, 165) none italic
+
+    perm__: rgb(242, 233, 225) none
+    perm_r: rgb(234, 157, 52) none
+    perm_w: rgb(180, 99, 122) none
+    perm_x: rgb(40, 105, 131) none
+
+    owner: rgb(215, 130, 126) none
+    group: rgb(86, 148, 159) none
+
+    count: rgb(234, 157, 52) rgb(250, 244, 237)
+
+    dates: rgb(152, 147, 165) none
+    sparse: rgb(234, 157, 52) none
+
+    content_extract: rgb(215, 130, 126) none
+    content_match: rgb(40, 105, 131) none bold
+
+    git_branch: rgb(234, 157, 52) none
+    git_insertions: rgb(40, 105, 131) none
+    git_deletions: rgb(180, 99, 122) none
+
+    git_status_current: rgb(87, 82, 121) none
+    git_status_modified: rgb(234, 157, 52) none
+    git_status_new: rgb(40, 105, 131) none bold
+    git_status_ignored: rgb(152, 147, 165) none
+    git_status_conflicted: rgb(180, 99, 122) none
+
+    selected_line: none rgb(152, 147, 165) / none rgb(250, 244, 237)
+
+    char_match: rgb(86, 148, 159) none bold
+    file_error: rgb(180, 99, 122) none bold
+
+    input: rgb(87, 82, 121) rgb(250, 244, 237) / rgb(87, 82, 121) none
+
+    status_error: rgb(250, 244, 237) rgb(180, 99, 122)
+    status_job: rgb(234, 157, 52) rgb(250, 244, 237)
+
+    status_normal: rgb(87, 82, 121) rgb(250, 244, 237)
+
+    status_bold: rgb(234, 157, 52) rgb(250, 244, 237) bold
+
+    scrollbar_thumb: rgb(152, 147, 165) none
+
+    help_headers: rgb(86, 148, 159) none bold
+
+    preview: rgb(87, 82, 121) rgb(250, 244, 237)
+
+    preview_title: rgb(86, 148, 159) rgb(250, 244, 237) bold
+
+    preview_match: none rgb(152, 147, 165)
+
+    mode_command_mark: rgb(250, 244, 237) rgb(86, 148, 159) bold
+
+}

@@ -1,3 +1,4 @@
+# Generated from kitty.conf
 
 # Default foreground
 set $fujiWhite      #D8DEE9
@@ -6,25 +7,25 @@ set $fujiWhite      #D8DEE9
 set $oldWhite       #E5E9F0
 
 # Dark background (statuslines and floating windows)
-set $sumiInk0       #2E3440
+set $sumiInk0       #3B4252
 
 # Default background
-set $sumiInk1       #3B4252
+set $sumiInk1       #2E3440
 
 # Lighter background (colorcolumn, folds)
-set $sumiInk2       #434C5E
+set $sumiInk2       #4C566A
 
 # Lighter background (cursorline)
 set $sumiInk3       #4C566A
 
 # Darker foreground (line numbers, fold column, non-text characters), float borders
-set $sumiInk4       #616E88
+set $sumiInk4       #4C566A
 
 # Popup background, visual selection background
 set $waveBlue1      #81A1C1
 
 # Popup selection background, search background
-set $waveBlue2      #5E81AC
+set $waveBlue2      #81A1C1
 
 # Diff Add (background)
 set $winterGreen    #A3BE8C
@@ -36,7 +37,7 @@ set $winterYellow   #EBCB8B
 set $winterRed      #BF616A
 
 # Diff Line (background)
-set $winterBlue     #88C0D0
+set $winterBlue     #81A1C1
 
 # Git Add
 set $autumnGreen    #A3BE8C
@@ -54,16 +55,16 @@ set $samuraiRed     #BF616A
 set $roninYellow    #EBCB8B
 
 # Diagnostic Info
-set $waveAqua1      #8FBCBB
+set $waveAqua1      #81A1C1
 
 # Diagnostic Hint
-set $dragonBlue     #88C0D0
+set $dragonBlue     #81A1C1
 
 # Comments
 set $fujiGray       #4C566A
 
 # Light foreground
-set $springViolet1  #B48EAD
+set $springViolet1  #E5E9F0
 
 # Statements and Keywords
 set $oniViolet      #B48EAD
@@ -78,11 +79,11 @@ set $springViolet2  #B48EAD
 set $springBlue     #81A1C1
 
 # Not used (assigned Nightfox-consistent shades)
-set $lightBlue      #8FBCBB
+set $lightBlue      #88C0D0
 set $boatYellow1    #EBCB8B
 
 # Types
-set $waveAqua2      #8FBCBB
+set $waveAqua2      #88C0D0
 
 # Strings
 set $springGreen    #A3BE8C
@@ -94,7 +95,7 @@ set $boatYellow2    #EBCB8B
 set $carpYellow     #EBCB8B
 
 # Numbers
-set $sakuraPink     #BF616A
+set $sakuraPink     #B48EAD
 
 # Standout specials 1 (builtin variables)
 set $waveRed        #BF616A
@@ -103,7 +104,7 @@ set $waveRed        #BF616A
 set $peachRed       #BF616A
 
 # Constants, imports, booleans
-set $surimiOrange   #D08770
+set $surimiOrange   
 
 # Deprecated
 set $katanaGray     #4C566A

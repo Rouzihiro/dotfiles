@@ -1,119 +1,91 @@
+# Generated from kitty.conf
+
+# Colors should be in 6 or 2 character hexadecimal or single spaced rgb decimal: "#RRGGBB", "#BW" or "0-255 0-255 0-255"
+# example for white: "#FFFFFF", "#ff" or "255 255 255".
+
+# All graphs and meters can be gradients
+# For single color graphs leave "mid" and "end" variable empty.
+# Use "start" and "end" variables for two color gradient
+# Use "start", "mid" and "end" for three color gradient
+
 # Main background, empty for terminal default, need to be empty if you want transparent background
 theme[main_bg]="#faf4ed"
-# Base
 
 # Main text color
-theme[main_fg]="#575279"
-# Text
+theme[main_fg]="#9893a5"
 
 # Title color for boxes
-theme[title]="#908caa"
-# Subtle
+theme[title]="#575279"
 
 # Highlight color for keyboard shortcuts
-theme[hi_fg]="#e0def4"
-# Text
+theme[hi_fg]="#ea9d34"
 
-# Background color of selected item in processes box
-theme[selected_bg]="#524f67"
-# HL High
+# Background color of selected items
+theme[selected_bg]="#faf4ed"
 
-# Foreground color of selected item in processes box
-theme[selected_fg]="#f6c177"
-# Gold
+# Foreground color of selected items
+theme[selected_fg]="#ea9d34"
 
 # Color of inactive/disabled text
-theme[inactive_fg]="#403d52"
-# HL Med
+theme[inactive_fg]="#faf4ed"
 
 # Color of text appearing on top of graphs, i.e uptime and current network graph scaling
-theme[graph_text]="#9ccfd8"
-# Foam
-
-# Background color of the percentage meters
-theme[meter_bg]="#9ccfd8"
-# Foam
+theme[graph_text]="#9893a5"
 
 # Misc colors for processes box including mini cpu graphs, details memory graph and details status text
-theme[proc_misc]="#c4a7e7"
-# Iris
+theme[proc_misc]="#286983"
 
 # Cpu box outline color
-theme[cpu_box]="#ebbcba"
-# Rose
+theme[cpu_box]="#9893a5"
 
 # Memory/disks box outline color
-theme[mem_box]="#31748f"
-# Pine
+theme[mem_box]="#9893a5"
 
 # Net up/down box outline color
-theme[net_box]="#c4a7e7"
-# Iris
+theme[net_box]="#9893a5"
 
 # Processes box outline color
-theme[proc_box]="#eb6f92"
-# Love
+theme[proc_box]="#9893a5"
 
 # Box divider line and small boxes line color
-theme[div_line]="#6e6a86"
-# Muted
+theme[div_line]="#9893a5"
 
 # Temperature graph colors
-theme[temp_start]="#ebbcba"
-# Rose
-theme[temp_mid]="#f6c177"
-# Gold
-theme[temp_end]="#eb6f92"
-# Love
+theme[temp_start]="#56949f"
+theme[temp_mid]="#907aa9"
+theme[temp_end]="#b4637a"
 
 # CPU graph colors
-theme[cpu_start]="#f6c177"
-# Gold
-theme[cpu_mid]="#ebbcba"
-# Rose
-theme[cpu_end]="#eb6f92"
-# Love
+theme[cpu_start]="#286983"
+theme[cpu_mid]="#ea9d34"
+theme[cpu_end]="#b4637a"
 
 # Mem/Disk free meter
-# all love
-theme[free_start]="#eb6f92"
-theme[free_mid]="#eb6f92"
-theme[free_end]="#eb6f92"
+theme[free_start]="#286983"
+theme[free_mid]=""
+theme[free_end]="#286983"
 
 # Mem/Disk cached meter
-# all iris
-theme[cached_start]="#c4a7e7"
-theme[cached_mid]="#c4a7e7"
-theme[cached_end]="#c4a7e7"
+theme[cached_start]="#56949f"
+theme[cached_mid]=""
+theme[cached_end]="#56949f"
 
 # Mem/Disk available meter
-# all pine
-theme[available_start]="#31748f"
-theme[available_mid]="#31748f"
-theme[available_end]="#31748f"
+theme[available_start]="#ea9d34"
+theme[available_mid]=""
+theme[available_end]="#ea9d34"
 
 # Mem/Disk used meter
-# all rose
-theme[used_start]="#ebbcba"
-theme[used_mid]="#ebbcba"
-theme[used_end]="#ebbcba"
+theme[used_start]="#b4637a"
+theme[used_mid]=""
+theme[used_end]="#b4637a"
 
 # Download graph colors
-# Pine for start, foam for the rest
-theme[download_start]="#31748f"
-theme[download_mid]="#9ccfd8"
-theme[download_end]="#9ccfd8"
+theme[download_start]="#907aa9"
+theme[download_mid]="#907aa9"
+theme[download_end]="#907aa9"
 
 # Upload graph colors
-theme[upload_start]="#ebbcba"
-# Rose for start
-theme[upload_mid]="#eb6f92"
-# Love for mid and end
-theme[upload_end]="#eb6f92"
-
-# Process box color gradient for threads, mem and cpu usage
-theme[process_start]="#31748f"
-# Pine
-theme[process_mid]="#9ccfd8"
-# Foam for mid and end
-theme[process_end]="#9ccfd8"
+theme[upload_start]="#907aa9"
+theme[upload_mid]="#907aa9"
+theme[upload_end]="#907aa9"
