@@ -23,4 +23,5 @@ alias unlock="sudo rm -f /var/lib/dnf/.rpm-lock"         # Remove lock file if D
 alias mirrors="sudo dnf install -y dnf-plugin-fastestmirror && sudo dnf fastestmirror"  
 
 # System fetch summary
-alias fetch='clear && fastfetch && echo "Install Date: $(lsblk -o MOUNTPOINT,UUID | grep "/ " | cut -d " " -f 2)"'
+# alias fetch='clear && fastfetch && echo "Install Date: $(lsblk -o MOUNTPOINT,UUID | grep "/ " | cut -d " " -f 2)"'
+alias fetch='clear && fastfetch -c examples/22'
