@@ -111,32 +111,71 @@ This setup with Sway WM idles at ~600MB RAM with our ultra-efficient stack:
 <table>
 <tr>
 <td align="center"><img src="assets/catppuccin.png" width="400"/><br><b>Catppuccin</b></td>
-<td align="center"><img src="assets/sakura.png" width="400"/><br><b>Sakura</b></td>
+<td align="center"><img src="assets/dune.png" width="400"/><br><b>Dune</b></td>
 </tr>
+
+<tr>
+<td align="center"><img src="assets/etheral.png" width="400"/><br><b>Etheral</b></td>
+<td align="center"><img src="assets/everforest.png" width="400"/><br><b>Everforest</b></td>
+</tr>
+
+<tr>
+<td align="center"><img src="assets/flexoki-dark.png" width="400"/><br><b>Flexoki Dark</b></td>
+<td align="center"><img src="assets/gruvbox.png" width="400"/><br><b>Gruvbox</b></td>
+</tr>
+
+<tr>
+<td align="center"><img src="assets/gruvbox-material.png" width="400"/><br><b>Gruvbox Material</b></td>
+<td align="center"><img src="assets/hackerman.png" width="400"/><br><b>Hackerman</b></td>
+</tr>
+
+<tr>
+<td align="center"><img src="assets/kanagawa-dragon.png" width="400"/><br><b>Kanagawa Dragon</b></td>
+<td align="center"><img src="assets/last-horizon.png" width="400"/><br><b>Last Horizon</b></td>
+</tr>
+
+<tr>
+<td align="center"><img src="assets/lumon.png" width="400"/><br><b>Lumon</b></td>
+<td align="center"><img src="assets/matte-black.png" width="400"/><br><b>Matte Black</b></td>
+</tr>
+
+<tr>
+<td align="center"><img src="assets/miasma.png" width="400"/><br><b>Miasma</b></td>
+<td align="center"><img src="assets/nightfox.png" width="400"/><br><b>Nightfox</b></td>
+</tr>
+
+<tr>
+<td align="center"><img src="assets/nord.png" width="400"/><br><b>Nord</b></td>
+<td align="center"><img src="assets/osaka.png" width="400"/><br><b>Osaka</b></td>
+</tr>
+
+<tr>
+<td align="center"><img src="assets/retro-82.png" width="400"/><br><b>Retro 82</b></td>
+<td align="center"><img src="assets/ristretto.png" width="400"/><br><b>Ristretto</b></td>
+</tr>
+
 <tr>
 <td align="center"><img src="assets/rosepine.png" width="400"/><br><b>Rosé Pine</b></td>
 <td align="center"><img src="assets/rosepine-darker.png" width="400"/><br><b>Rosé Pine Darker</b></td>
 </tr>
+
 <tr>
-<td align="center"><img src="assets/gruvbox-material.png" width="400"/><br><b>Gruvbox Material</b></td>
-<td align="center"><img src="assets/gruvbox.png" width="400"/><br><b>Gruvbox</b></td>
+<td align="center"><img src="assets/sakura.png" width="400"/><br><b>Sakura</b></td>
+<td align="center"><img src="assets/solarized-dark.png" width="400"/><br><b>Solarized Dark</b></td>
 </tr>
+
 <tr>
-<td align="center"><img src="assets/kanagawa.png" width="400"/><br><b>Kanagawa</b></td>
-<td align="center"><img src="assets/nord.png" width="400"/><br><b>Nord</b></td>
-</tr>
-<tr>
-<td align="center"><img src="assets/everforest.png" width="400"/><br><b>Everorest</b></td>
-<td align="center"><img src="assets/dune.png" width="400"/><br><b>Dune</b></td>
-</tr>
+<td align="center"><img src="assets/solitude.png" width="400"/><br><b>Solitude</b></td>
 <td align="center"><img src="assets/tokyonight.png" width="400"/><br><b>Tokyo Night</b></td>
-<td align="center"><img src="assets/etheral.png" width="400"/><br><b>Etheral</b></td>
+</tr>
+
+<tr>
+<td align="center"><img src="assets/vague.png" width="400"/><br><b>Vague</b></td>
+<td align="center"><img src="assets/vantablack.png" width="400"/><br><b>Vantablack</b></td>
 </tr>
 </table>
 
 <div align="center">
-
-
 
 ## Window Managers
 
