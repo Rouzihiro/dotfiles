@@ -60,6 +60,10 @@ vim.pack.add({
 		{ src = "https://github.com/OldJobobo/miasma.nvim" },
 		{ src = "https://github.com/OldJobobo/retro-82.nvim" },
 		{ src = "https://github.com/ficcdaf/ashen.nvim" },
+		{ src = "https://github.com/NTBBloodbath/doom-one.nvim" },
+		{ src = "https://github.com/mofiqul/dracula.nvim" },
+		{ src = "https://github.com/tanvirtin/monokai.nvim" },
+		{ src = "https://github.com/nyoom-engineering/oxocarbon.nvim" },
 		{ src = "https://github.com/maxmx03/solarized.nvim" },
 
 })

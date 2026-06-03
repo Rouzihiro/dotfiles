@@ -46,7 +46,7 @@
     },
     "dracula.nvim": {
       "rev": "ae752c13e95fb7c5f58da4b5123cb804ea7568ee",
-      "src": "https://github.com/Mofiqul/dracula.nvim"
+      "src": "https://github.com/mofiqul/dracula.nvim"
     },
     "dune.nvim": {
       "rev": "46254a1bc7f1943ee68e143e90f811fa9088704b",
@@ -120,6 +120,10 @@
       "rev": "5b06ae0",
       "src": "https://github.com/gthelding/monokai-pro.nvim"
     },
+    "monokai.nvim": {
+      "rev": "b8bd44d5796503173627d7a1fc51f77ec3a08a63",
+      "src": "https://github.com/tanvirtin/monokai.nvim"
+    },
     "moonfly": {
       "rev": "fe0179e650fac51c9a9190e2fafea69952aba1b6",
       "src": "https://github.com/bluz71/vim-moonfly-colors"
@@ -160,6 +164,10 @@
     "oil.nvim": {
       "rev": "01cb3a8",
       "src": "https://github.com/stevearc/oil.nvim"
+    },
+    "oxocarbon.nvim": {
+      "rev": "cf49e389c22dab56224e43ae16422ddcd5b61b28",
+      "src": "https://github.com/nyoom-engineering/oxocarbon.nvim"
     },
     "pixel.nvim": {
       "rev": "fd06541f7c790e22ad18f0ee5873b246de5b4a87",
@@ -213,6 +221,10 @@
     "vantablack.nvim": {
       "rev": "8a05ea96343914f1001e937b4fa7d9d44b51d221",
       "src": "https://github.com/bjarneo/vantablack.nvim"
+    },
+    "vim-github-dark": {
+      "rev": "25361ac70c66d776bdcf5d749042f07e6e7f50ff",
+      "src": "https://github.com/vv9k/vim-github-dark"
     },
     "vim-monokai-pro": {
       "rev": "6c449e5d4ef6086c519de0544d4aca46c0a9596c",
