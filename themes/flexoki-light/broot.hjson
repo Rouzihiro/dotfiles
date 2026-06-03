@@ -1,0 +1,82 @@
+skin: {
+    default: rgb(16, 15, 15) none / rgb(111, 110, 105) none
+    tree: rgb(206, 205, 195) none / rgb(230, 228, 217) none
+    parent: rgb(58, 169, 159) none / rgb(36, 131, 123) none
+    file: rgb(16, 15, 15) none / rgb(111, 110, 105) none
+    directory: rgb(67, 133, 190) none bold / rgb(32, 94, 166) none
+    exe: rgb(102, 128, 11) none
+    link: rgb(160, 47, 111) none
+    pruning: rgb(111, 110, 105) none italic
+    perm__: rgb(206, 205, 195) none
+    perm_r: rgb(173, 131, 1) none
+    perm_w: rgb(209, 77, 65) none
+    perm_x: rgb(102, 128, 11) none
+    owner: rgb(36, 131, 123) none
+    group: rgb(67, 133, 190) none
+    count: rgb(173, 131, 1) rgb(255, 252, 240)
+    dates: rgb(111, 110, 105) none
+    sparse: rgb(209, 77, 65) none
+    content_extract: rgb(58, 169, 159) none
+    content_match: rgb(102, 128, 11) none bold
+    device_id_major: rgb(67, 133, 190) none
+    device_id_sep: rgb(111, 110, 105) none
+    device_id_minor: rgb(67, 133, 190) none
+    git_branch: rgb(173, 131, 1) none
+    git_insertions: rgb(135, 154, 57) none
+    git_deletions: rgb(209, 77, 65) none
+    git_status_current: rgb(206, 205, 195) none
+    git_status_modified: rgb(173, 131, 1) none
+    git_status_new: rgb(135, 154, 57) none bold
+    git_status_ignored: rgb(230, 228, 217) none
+    git_status_conflicted: rgb(209, 77, 65) none
+    git_status_other: rgb(175, 48, 41) none
+    selected_line: none rgb(230, 228, 217) / none rgb(242, 240, 229)
+    char_match: rgb(32, 94, 166) none bold
+    file_error: rgb(175, 48, 41) none bold
+    flag_label: rgb(16, 15, 15) rgb(230, 228, 217)
+    flag_value: rgb(173, 131, 1) rgb(230, 228, 217) bold
+    input: rgb(16, 15, 15) rgb(230, 228, 217) / rgb(111, 110, 105) none
+    status_error: rgb(255, 252, 240) rgb(175, 48, 41)
+    status_job: rgb(173, 131, 1) rgb(230, 228, 217)
+    status_normal: rgb(16, 15, 15) rgb(230, 228, 217) / rgb(111, 110, 105) rgb(242, 240, 229)
+    status_italic: rgb(173, 131, 1) rgb(230, 228, 217) / rgb(111, 110, 105) rgb(242, 240, 229)
+    status_bold: rgb(173, 131, 1) rgb(230, 228, 217) bold / rgb(111, 110, 105) rgb(242, 240, 229)
+    status_code: rgb(58, 169, 159) rgb(230, 228, 217) / rgb(111, 110, 105) rgb(242, 240, 229)
+    status_ellipsis: rgb(16, 15, 15) rgb(230, 228, 217) / rgb(111, 110, 105) rgb(242, 240, 229)
+    purpose_normal: rgb(16, 15, 15) rgb(230, 228, 217)
+    purpose_italic: rgb(173, 131, 1) rgb(230, 228, 217)
+    purpose_bold: rgb(173, 131, 1) rgb(230, 228, 217) bold
+    purpose_ellipsis: rgb(16, 15, 15) rgb(230, 228, 217)
+    scrollbar_track: rgb(242, 240, 229) none / rgb(255, 252, 240) none
+    scrollbar_thumb: rgb(206, 205, 195) none / rgb(230, 228, 217) none
+    help_paragraph: rgb(16, 15, 15) none
+    help_bold: rgb(67, 133, 190) none bold
+    help_italic: rgb(173, 131, 1) none
+    help_code: rgb(16, 15, 15) rgb(230, 228, 217)
+    help_headers: rgb(32, 94, 166) none bold
+    help_table_border: rgb(206, 205, 195) none
+    preview: rgb(16, 15, 15) rgb(255, 252, 240) / rgb(111, 110, 105) rgb(242, 240, 229)
+    preview_title: rgb(67, 133, 190) rgb(230, 228, 217) bold / rgb(32, 94, 166) rgb(242, 240, 229)
+    preview_line_number: rgb(206, 205, 195) rgb(242, 240, 229)
+    preview_separator: rgb(206, 205, 195) none
+    preview_match: none rgb(200, 220, 180)
+    hex_null: rgb(230, 228, 217) none
+    hex_ascii_graphic: rgb(16, 15, 15) none
+    hex_ascii_whitespace: rgb(58, 169, 159) none
+    hex_ascii_other: rgb(67, 133, 190) none
+    hex_non_ascii: rgb(209, 77, 65) none
+    staging_area_title: rgb(67, 133, 190) rgb(230, 228, 217) bold / rgb(32, 94, 166) rgb(242, 240, 229)
+    mode_command_mark: rgb(255, 252, 240) rgb(67, 133, 190) bold
+    good_to_bad_0: rgb(102, 128, 11)
+    good_to_bad_1: rgb(118, 148, 30)
+    good_to_bad_2: rgb(36, 131, 123)
+    good_to_bad_3: rgb(67, 133, 190)
+    good_to_bad_4: rgb(32, 94, 166)
+    good_to_bad_5: rgb(173, 131, 1)
+    good_to_bad_6: rgb(160, 47, 111)
+    good_to_bad_7: rgb(190, 60, 90)
+    good_to_bad_8: rgb(209, 77, 65)
+    good_to_bad_9: rgb(175, 48, 41)
+}
+
+syntax_theme: GitHub

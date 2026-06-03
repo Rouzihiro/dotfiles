@@ -1,0 +1,107 @@
+skin: {
+    default: rgb(223, 223, 224) none / rgb(115, 128, 145) none
+
+    tree: rgb(25, 35, 48) none / rgb(57, 59, 68) none
+    parent: rgb(113, 156, 214) none / rgb(131, 186, 164) none
+
+    file: rgb(223, 223, 224) none / rgb(184, 195, 205) none
+    directory: rgb(113, 156, 214) none bold / rgb(186, 161, 226) none
+
+    exe: rgb(131, 178, 154) none
+    link: rgb(157, 121, 214) none
+
+    pruning: rgb(115, 128, 145) none italic
+
+    perm__: rgb(57, 59, 68) none
+    perm_r: rgb(219, 192, 116) none
+    perm_w: rgb(201, 79, 109) none
+    perm_x: rgb(131, 178, 154) none
+
+    owner: rgb(99, 205, 207) none
+    group: rgb(113, 156, 214) none
+
+    count: rgb(219, 192, 116) rgb(25, 35, 48)
+
+    dates: rgb(115, 128, 145) none
+    sparse: rgb(244, 162, 97) none
+
+    content_extract: rgb(113, 156, 214) none
+    content_match: rgb(131, 178, 154) none bold
+
+    device_id_major: rgb(113, 156, 214) none
+    device_id_sep: rgb(57, 59, 68) none
+    device_id_minor: rgb(157, 121, 214) none
+
+    git_branch: rgb(244, 162, 97) none
+    git_insertions: rgb(131, 178, 154) none
+    git_deletions: rgb(201, 79, 109) none
+
+    git_status_current: rgb(223, 223, 224) none
+    git_status_modified: rgb(219, 192, 116) none
+    git_status_new: rgb(131, 178, 154) none bold
+    git_status_ignored: rgb(57, 59, 68) none
+    git_status_conflicted: rgb(201, 79, 109) none
+    git_status_other: rgb(201, 79, 109) none
+
+    selected_line: none rgb(43, 59, 81) / none rgb(25, 35, 48)
+
+    char_match: rgb(113, 156, 214) none bold
+    file_error: rgb(201, 79, 109) none bold
+
+    flag_label: rgb(223, 223, 224) rgb(25, 35, 48)
+    flag_value: rgb(219, 192, 116) rgb(25, 35, 48) bold
+
+    input: rgb(223, 223, 224) rgb(25, 35, 48) / rgb(115, 128, 145) none
+
+    status_error: rgb(25, 35, 48) rgb(201, 79, 109)
+    status_job: rgb(244, 162, 97) rgb(25, 35, 48)
+
+    status_normal: rgb(223, 223, 224) rgb(25, 35, 48) / rgb(115, 128, 145) rgb(25, 35, 48)
+    status_italic: rgb(186, 161, 226) rgb(25, 35, 48) / rgb(115, 128, 145) rgb(25, 35, 48)
+    status_bold: rgb(113, 156, 214) rgb(25, 35, 48) bold / rgb(115, 128, 145) rgb(25, 35, 48)
+    status_code: rgb(99, 205, 207) rgb(25, 35, 48) / rgb(115, 128, 145) rgb(25, 35, 48)
+    status_ellipsis: rgb(223, 223, 224) rgb(25, 35, 48) / rgb(115, 128, 145) rgb(25, 35, 48)
+
+    purpose_normal: rgb(223, 223, 224) rgb(25, 35, 48)
+    purpose_italic: rgb(186, 161, 226) rgb(25, 35, 48)
+    purpose_bold: rgb(113, 156, 214) rgb(25, 35, 48) bold
+    purpose_ellipsis: rgb(223, 223, 224) rgb(25, 35, 48)
+
+    scrollbar_track: rgb(25, 35, 48) none
+    scrollbar_thumb: rgb(57, 59, 68) none
+
+    help_paragraph: rgb(223, 223, 224) none
+    help_bold: rgb(131, 178, 154) none bold
+    help_italic: rgb(186, 161, 226) none
+    help_code: rgb(223, 223, 224) rgb(25, 35, 48)
+    help_headers: rgb(113, 156, 214) none bold
+    help_table_border: rgb(57, 59, 68) none
+
+    preview: rgb(223, 223, 224) rgb(25, 35, 48) / rgb(184, 195, 205) rgb(19, 26, 36)
+    preview_title: rgb(113, 156, 214) rgb(25, 35, 48) bold / rgb(186, 161, 226) rgb(19, 26, 36)
+
+    preview_line_number: rgb(115, 128, 145) rgb(19, 26, 36)
+    preview_separator: rgb(57, 59, 68) none
+    preview_match: none rgb(43, 59, 81)
+
+    hex_null: rgb(57, 59, 68) none
+    hex_ascii_graphic: rgb(223, 223, 224) none
+    hex_ascii_whitespace: rgb(131, 178, 154) none
+    hex_ascii_other: rgb(99, 205, 207) none
+    hex_non_ascii: rgb(201, 79, 109) none
+
+    staging_area_title: rgb(113, 156, 214) rgb(25, 35, 48) bold / rgb(186, 161, 226) rgb(19, 26, 36)
+
+    mode_command_mark: rgb(25, 35, 48) rgb(113, 156, 214) bold
+
+    good_to_bad_0: rgb(131, 178, 154)
+    good_to_bad_1: rgb(99, 205, 207)
+    good_to_bad_2: rgb(113, 156, 214)
+    good_to_bad_3: rgb(186, 161, 226)
+    good_to_bad_4: rgb(219, 192, 116)
+    good_to_bad_5: rgb(244, 162, 97)
+    good_to_bad_6: rgb(201, 79, 109)
+    good_to_bad_7: rgb(209, 105, 131)
+    good_to_bad_8: rgb(186, 161, 226)
+    good_to_bad_9: rgb(57, 59, 68)
+}
