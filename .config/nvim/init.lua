@@ -54,8 +54,12 @@ vim.pack.add({
 		{ src = "https://github.com/bjarneo/pixel.nvim" },
 		{ src = "https://github.com/bjarneo/ethereal.nvim" },
 		{ src = "https://github.com/bjarneo/aether.nvim" },
+		{ src = "https://github.com/bjarneo/vantablack.nvim" },
 		{ src = "https://github.com/omacom-io/lumon.nvim" },
 		{ src = "https://github.com/szammyboi/dune.nvim" },
+		{ src = "https://github.com/OldJobobo/miasma.nvim" },
+		{ src = "https://github.com/OldJobobo/retro-82.nvim" },
+		{ src = "https://github.com/ficcdaf/ashen.nvim" },
 		{ src = "https://github.com/maxmx03/solarized.nvim" },
 
 })

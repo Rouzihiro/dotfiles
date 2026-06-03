@@ -12,6 +12,10 @@
       "rev": "386ff6f884220b3ae9affbc8271aace4c92012c0",
       "src": "https://github.com/bjarneo/aether.nvim"
     },
+    "ashen.nvim": {
+      "rev": "bfb04bd50b69d863469b2deb9fb361cf0d945ba7",
+      "src": "https://github.com/ficcdaf/ashen.nvim"
+    },
     "bamboo.nvim": {
       "rev": "6ec224a",
       "src": "https://github.com/ribru17/bamboo.nvim"
@@ -104,6 +108,10 @@
       "rev": "a8a039f",
       "src": "https://github.com/tahayvr/matteblack.nvim"
     },
+    "miasma.nvim": {
+      "rev": "466456f08d1a114c983c0d24e8fc01339e3b0a27",
+      "src": "https://github.com/OldJobobo/miasma.nvim"
+    },
     "mini.clue": {
       "rev": "c465495",
       "src": "https://github.com/nvim-mini/mini.clue"
@@ -161,6 +169,10 @@
       "rev": "b9fd522",
       "src": "https://github.com/nvim-lua/plenary.nvim"
     },
+    "retro-82.nvim": {
+      "rev": "41b8c42ed0099eb43824903ef606a6b051d33505",
+      "src": "https://github.com/OldJobobo/retro-82.nvim"
+    },
     "retro-theme.nvim": {
       "rev": "d1379cc74e253b7be6086a45d26184182f184241",
       "src": "https://github.com/mistweaverco/retro-theme.nvim"
@@ -197,6 +209,10 @@
     "vague.nvim": {
       "rev": "5689afd",
       "src": "https://github.com/vague2k/vague.nvim"
+    },
+    "vantablack.nvim": {
+      "rev": "8a05ea96343914f1001e937b4fa7d9d44b51d221",
+      "src": "https://github.com/bjarneo/vantablack.nvim"
     },
     "vim-monokai-pro": {
       "rev": "6c449e5d4ef6086c519de0544d4aca46c0a9596c",
