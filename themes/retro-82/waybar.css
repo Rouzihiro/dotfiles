@@ -1,3 +1,22 @@
-@define-color bg #00172e;
-@define-color foreground #f6dcac;
-@define-color background alpha(@bg, 0.8);
+@define-color foreground 	#f6dcac;
+@define-color background 	#05182e;
+@define-color bg 				#05182e;
+@define-color fg 				#f6dcac;
+@define-color bordercolor #134e5a;
+@define-color highlight 	#e97b3c;
+@define-color alert 			#f85525;
+@define-color activegreen #028391;
+@define-color disabled    #303442;
+
+@define-color bg_alt      #303442;
+@define-color border      #134e5a;
+
+@define-color red         #f85525;
+@define-color green       #028391;
+@define-color yellow      #e97b3c;
+@define-color blue        #faa968;
+@define-color purple      #3f8f8a;
+@define-color aqua        #8cbfb8;
+
+@define-color orange      #e97b3c;
+@define-color gray        #134e5a;

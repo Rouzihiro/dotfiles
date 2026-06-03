@@ -1,17 +1,37 @@
+/*
+ * Rofi Color Theme
+ * Generated with WCAG-compliant color science
+ */
+
 * {
-    background: #faf4edCC;      /* background */
+    /* Base colors */
+    background: #faf4ed;      /* background */
     foreground: #575279;      /* foreground */
     selection-background: #dfdad9;  /* selection bg */
     selection-foreground: #575279;  /* selection fg */
     border-color: #dfdad9;    /* border */
     
-    /* Signature colors - customize these per theme */
-    sigbg: @background;           /* signature background */
+    /* Signature colors - interactive selection */
+    sigbg: @color8;           /* signature background */
     sig1: @color1;            /* signature color 1 */
     sig2: @color2;            /* signature color 2 */
     sig3: @color3;            /* signature color 3 */
 
-    /* Normal colors */
+    /* WCAG-compliant contrast colors */
+    on-sigbg: @color0;    /* text on signature background */
+    on-sig1: @color0;      /* text on signature color 1 */
+    on-sig2: @color7;      /* text on signature color 2 */
+    on-sig3: @color0;      /* text on signature color 3 */
+
+    /* Harmonious surface colors with transparency */
+    sig-surface: #6a6672CC;        /* surface with 80% opacity */
+    sig-surface-container: #817c8b40;  /* surface container 25% */
+    sig-surface-high: #aca8b780;       /* high surface 50% */
+
+    /* Text color reference */
+    text-color: @on-sigbg;
+
+    /* Standard 16-color palette */
     color0: #f2e9e1;          /* black */
     color1: #b4637a;          /* red */
     color2: #286983;          /* green */
@@ -21,7 +41,6 @@
     color6: #d7827e;          /* cyan */
     color7: #575279;          /* white */
 
-    /* Bright colors */
     color8: #9893a5;          /* bright black */
     color9: #b4637a;          /* bright red */
     color10: #286983;         /* bright green */
@@ -31,14 +50,5 @@
     color14: #d7827e;         /* bright cyan */
     color15: #575279;         /* bright white */
 
-    /* Extended colors */
-
-    on-sigbg: #282828;
-    on-sig1: #282828;
-    on-sig2: #fbf1c7;
-    on-sig3: #282828;
-    sig-surface: #9c9897;
-    sig-surface-container: #c8c4c3;
-    sig-surface-high: #e5e1e0;
-    text-color: @on-sigbg;
+    /* Extended colors (if present in theme) */
 }

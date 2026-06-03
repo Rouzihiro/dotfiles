@@ -1,27 +1,27 @@
 gui:
   theme:
     activeBorderColor:
-      - '#7aa2f7'
+      - '#bb9af7'
       - bold
     inactiveBorderColor:
       - '#414868'
     optionsTextColor:
-      - '#7dcfff'
+      - '#7aa2f7'
     selectedLineBgColor:
       - '#1a1b26'
     cherryPickedCommitBgColor:
-      - '#10121c'
+      - '#15161e'
     cherryPickedCommitFgColor:
-      - '#7aa2f7'
+      - '#bb9af7'
     unstagedChangesColor:
-      - '#f07178'
+      - '#f7768e'
     defaultFgColor:
       - '#c0caf5'
     searchingActiveBorderColor:
-      - '#ffcb6b'
+      - '#e0af68'
 
   authorColors:
-    '*': '#89ddff'
+    '*': '#9ece6a'
 
   nerdFontsVersion: "3"
   showFileTree: true
@@ -32,14 +32,14 @@ gui:
   editor: "nvim"
 
   git:
-  paging:
-    colorArg: always
-    pager: delta --dark --paging=never
-  merging:
-    manualCommit: false
-  commit:
-    signOff: false
-  log:
-    showGraph: true
+    paging:
+      colorArg: always
+      pager: delta --dark --paging=never
+    merging:
+      manualCommit: false
+    commit:
+      signOff: false
+    log:
+      showGraph: true
 
 notARepository: "quit"
