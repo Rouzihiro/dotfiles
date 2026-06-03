@@ -95,7 +95,7 @@ This setup with Sway WM idles at ~600MB RAM with our ultra-efficient stack:
 
 # Core System
 - **Shell:** `zsh` & `bash`
-- **Kernel:** Linux 6.14.8-asahi-1-1-ARCH
+- **Kernel:** Linux 6.19.14-asahi-ARCH
 
 ![Sway Home Screenshot](./assets/wall.png)
 ![Sway Home Screenshot 2](./assets/nvim.png)
@@ -105,6 +105,38 @@ This setup with Sway WM idles at ~600MB RAM with our ultra-efficient stack:
 ![Sway Home Screenshot 6](./assets/utilities.png)
 ![Sway Home Screenshot 7](./assets/rofi.png)
 ![Sway Home Screenshot 8](./assets/thunar.png)
+
+## Themes
+
+<table>
+<tr>
+<td align="center"><img src="assets/catppuccin.png" width="400"/><br><b>Catppuccin</b></td>
+<td align="center"><img src="assets/sakura.png" width="400"/><br><b>Sakura</b></td>
+</tr>
+<tr>
+<td align="center"><img src="assets/rosepine.png" width="400"/><br><b>Rosé Pine</b></td>
+<td align="center"><img src="assets/rosepine-darker.png" width="400"/><br><b>Rosé Pine Darker</b></td>
+</tr>
+<tr>
+<td align="center"><img src="assets/gruvbox-material.png" width="400"/><br><b>Gruvbox Material</b></td>
+<td align="center"><img src="assets/gruvbox.png" width="400"/><br><b>Gruvbox</b></td>
+</tr>
+<tr>
+<td align="center"><img src="assets/kanagawa.png" width="400"/><br><b>Kanagawa</b></td>
+<td align="center"><img src="assets/nord.png" width="400"/><br><b>Nord</b></td>
+</tr>
+<tr>
+<td align="center"><img src="assets/everforest.png" width="400"/><br><b>Everorest</b></td>
+<td align="center"><img src="assets/dune.png" width="400"/><br><b>Dune</b></td>
+</tr>
+<td align="center"><img src="assets/tokyonight.png" width="400"/><br><b>Tokyo Night</b></td>
+<td align="center"><img src="assets/etheral.png" width="400"/><br><b>Etheral</b></td>
+</tr>
+</table>
+
+<div align="center">
+
+
 
 ## Window Managers
 
