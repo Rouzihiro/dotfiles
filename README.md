@@ -1,5 +1,5 @@
 <h1 align="center" style="display: flex; justify-content: center; align-items: center;">
-<img src="./assets/Zorro-OS.png" width="500px" style="center" />
+<!-- <img src="./assets/Zorro-OS.png" width="500px" style="center" /> -->
 <br>
 ArchLinux & Fedora Universal Installer for a Lightweight & Beautiful Setup
 <br>
@@ -10,7 +10,7 @@ ArchLinux & Fedora Universal Installer for a Lightweight & Beautiful Setup
 bash <(curl -sSL https://kutt.it/ReyDot)
 ```
 
-![Theme Switcher Demo]
+### Theme Switcher Demo
 
 https://github.com/user-attachments/assets/75b108d7-b7f5-4757-b0a9-b01c8b649eb5
 
