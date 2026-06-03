@@ -13,7 +13,7 @@ find_keyword = { fg = "#c38b7b", bold = true, italic = true, underline = true }
 find_position = { fg = "#c38b7b", bold = true, italic = true }
 
 # Marker
-marker_copied = { fg = "#a5a0b6", bg = "#a5a0b6" }
+marker_copied = { fg = "#87a9b0", bg = "#87a9b0" }
 marker_cut = { fg = "#e2dddc", bg = "#e2dddc" }
 marker_marked = { fg = "#b59790", bg = "#b59790" }
 marker_selected = { fg = "#3c3b3c", bg = "#3c3b3c" }
@@ -53,12 +53,12 @@ unset_alt  = { bg = "#0c0b0c", fg = "#FAFCFB" }
 # Progress
 progress_label = { bold = true }
 progress_normal = { fg = "#b59790", bg = "#0c0b0c" }
-progress_error = { fg = "#a5a0b6", bg = "#0c0b0c" }
+progress_error = { fg = "#87a9b0", bg = "#0c0b0c" }
 
 # Permissions
 permissions_t = { fg = "#b59790" }
 permissions_w = { fg = "#3c3b3c" }
-permissions_x = { fg = "#a5a0b6" }
+permissions_x = { fg = "#87a9b0" }
 permissions_r = { fg = "#FAFCFB" }
 permissions_s = { fg = "#e2dddc" }
 
@@ -139,7 +139,7 @@ footer = { fg = "#0c0b0c", bg = "#e2dddc" }
 [notify]
 title_info = { fg = "#3c3b3c" }
 title_warn = { fg = "#b59790" }
-title_error = { fg = "#a5a0b6" }
+title_error = { fg = "#87a9b0" }
 
 # : ]]]
 
@@ -162,7 +162,7 @@ rules = [
     { mime = "application/{pdf,doc,rtf}", fg = "#FAFCFB" },
 
     # Special files
-    { name = "*", is = "orphan", bg = "#a5a0b6" },
+    { name = "*", is = "orphan", bg = "#87a9b0" },
     { name = "*", is = "exec", fg = "#e2dddc" },
 
     # Fallback
