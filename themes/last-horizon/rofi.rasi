@@ -14,8 +14,8 @@
     /* Signature colors - interactive selection */
     sigbg: @background;           /* signature background */
     sig1: @color12;            /* signature color 1 */
-    sig2: @color6;            /* signature color 2 */
-    sig3: @color4;            /* signature color 3 */
+    sig2: @color2;            /* signature color 2 */
+    sig3: @color7;            /* signature color 3 */
 
     /* WCAG-compliant contrast colors */
     on-sigbg: @color15;    /* text on signature background */

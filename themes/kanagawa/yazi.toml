@@ -13,15 +13,15 @@ find_keyword = { fg = "#c34043", bold = true, italic = true, underline = true }
 find_position = { fg = "#c34043", bold = true, italic = true }
 
 # Marker
-marker_copied = { fg = "#c8c093", bg = "#c8c093" }
+marker_copied = { fg = "#e6c384", bg = "#e6c384" }
 marker_cut = { fg = "#dcd7ba", bg = "#dcd7ba" }
 marker_marked = { fg = "#7fb4ca", bg = "#7fb4ca" }
-marker_selected = { fg = "#cac9ba", bg = "#cac9ba" }
+marker_selected = { fg = "#8e8d87", bg = "#8e8d87" }
 
 # Count
 count_copied = { fg = "#1f1f28", bg = "#dcd7ba" }
 count_cut = { fg = "#1f1f28", bg = "#dcd7ba" }
-count_selected = { fg = "#16161d", bg = "#cac9ba" }
+count_selected = { fg = "#16161d", bg = "#8e8d87" }
 
 # Border
 border_symbol = " "
@@ -47,18 +47,18 @@ select_main = { bg = "#dcd7ba", fg = "#16161d", bold = true }
 select_alt  = { bg = "#727169", fg = "#dcd7ba" }
 
 # Unset mode
-unset_main = { bg = "#cac9ba", fg = "#16161d", bold = true }
+unset_main = { bg = "#8e8d87", fg = "#16161d", bold = true }
 unset_alt  = { bg = "#727169", fg = "#dcd7ba" }
 
 # Progress
 progress_label = { bold = true }
 progress_normal = { fg = "#7fb4ca", bg = "#727169" }
-progress_error = { fg = "#c8c093", bg = "#727169" }
+progress_error = { fg = "#e6c384", bg = "#727169" }
 
 # Permissions
 permissions_t = { fg = "#7fb4ca" }
-permissions_w = { fg = "#cac9ba" }
-permissions_x = { fg = "#c8c093" }
+permissions_w = { fg = "#8e8d87" }
+permissions_x = { fg = "#e6c384" }
 permissions_r = { fg = "#dcd7ba" }
 permissions_s = { fg = "#dcd7ba" }
 
@@ -69,7 +69,7 @@ permissions_s = { fg = "#dcd7ba" }
 
 [select]
 border = { fg = "#7fb4ca" }
-active = { fg = "#cac9ba", bold = true }
+active = { fg = "#8e8d87", bold = true }
 
 # : ]]]
 
@@ -137,9 +137,9 @@ footer = { fg = "#16161d", bg = "#dcd7ba" }
 # : Notify [[[
 
 [notify]
-title_info = { fg = "#cac9ba" }
+title_info = { fg = "#8e8d87" }
 title_warn = { fg = "#7fb4ca" }
-title_error = { fg = "#c8c093" }
+title_error = { fg = "#e6c384" }
 
 # : ]]]
 
@@ -150,7 +150,7 @@ title_error = { fg = "#c8c093" }
 
 rules = [
     # Images
-    { mime = "image/*", fg = "#cac9ba" },
+    { mime = "image/*", fg = "#8e8d87" },
 
     # Media
     { mime = "{audio,video}/*", fg = "#7fb4ca" },
@@ -162,7 +162,7 @@ rules = [
     { mime = "application/{pdf,doc,rtf}", fg = "#dcd7ba" },
 
     # Special files
-    { name = "*", is = "orphan", bg = "#c8c093" },
+    { name = "*", is = "orphan", bg = "#e6c384" },
     { name = "*", is = "exec", fg = "#dcd7ba" },
 
     # Fallback

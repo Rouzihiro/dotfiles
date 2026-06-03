@@ -12,21 +12,21 @@
     border-color: #ffcead;    /* border */
     
     /* Signature colors - interactive selection */
-    sigbg: @background;           /* signature background */
-    sig1: @color3;            /* signature color 1 */
-    sig2: @color2;            /* signature color 2 */
-    sig3: @color1;            /* signature color 3 */
+    sigbg: @color12;           /* signature background */
+    sig1: @color13;            /* signature color 1 */
+    sig2: @color6;            /* signature color 2 */
+    sig3: @color0;            /* signature color 3 */
 
     /* WCAG-compliant contrast colors */
-    on-sigbg: @color15;    /* text on signature background */
+    on-sigbg: @color0;    /* text on signature background */
     on-sig1: @color0;      /* text on signature color 1 */
     on-sig2: @color0;      /* text on signature color 2 */
-    on-sig3: @color0;      /* text on signature color 3 */
+    on-sig3: @color15;      /* text on signature color 3 */
 
     /* Harmonious surface colors with transparency */
-    sig-surface: #040714CC;        /* surface with 80% opacity */
-    sig-surface-container: #05091840;  /* surface container 25% */
-    sig-surface-high: #373b4b80;       /* high surface 50% */
+    sig-surface: #888aa6CC;        /* surface with 80% opacity */
+    sig-surface-container: #a5a6cb40;  /* surface container 25% */
+    sig-surface-high: #cecff380;       /* high surface 50% */
 
     /* Text color reference */
     text-color: @on-sigbg;

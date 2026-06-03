@@ -13,15 +13,15 @@
     
     /* Signature colors - interactive selection */
     sigbg: @background;           /* signature background */
-    sig1: @color2;            /* signature color 1 */
-    sig2: @color1;            /* signature color 2 */
-    sig3: @color3;            /* signature color 3 */
+    sig1: @color4;            /* signature color 1 */
+    sig2: @color6;            /* signature color 2 */
+    sig3: @color0;            /* signature color 3 */
 
     /* WCAG-compliant contrast colors */
     on-sigbg: @color15;    /* text on signature background */
     on-sig1: @color15;      /* text on signature color 1 */
-    on-sig2: @color15;      /* text on signature color 2 */
-    on-sig3: @color15;      /* text on signature color 3 */
+    on-sig2: @color0;      /* text on signature color 2 */
+    on-sig3: @color0;      /* text on signature color 3 */
 
     /* Harmonious surface colors with transparency */
     sig-surface: #000409CC;        /* surface with 80% opacity */

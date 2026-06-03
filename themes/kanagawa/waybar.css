@@ -1,24 +1,15 @@
-/* Kanagawa theme for Waybar */
+@define-color foreground 	#dcd7ba;
+@define-color background 	#1f1f28;
+@define-color bg 				#1f1f28;
+@define-color fg 				#dcd7ba;
+@define-color bordercolor #727169;
+@define-color highlight 	#c0a36e;
+@define-color alert 			#c34043;
+@define-color activegreen #76946a;
+@define-color disabled    #16161d;
 
-/* Backgrounds */
-@define-color bg           #1f1f28;  /* dark background */
-@define-color background   #1f1f28;  /* panel background */
-
-/* Foreground / text */
-@define-color fg           #dcd7ba;  /* main text */
-@define-color foreground   #dcd7ba;  /* modules that use 'foreground' */
-
-/* Borders and separators */
-@define-color bordercolor  #727169;  /* subtle borders */
-
-/* Accents / highlights */
-@define-color highlight    #7e9cd8;  /* active/focused items */
-@define-color alert        #f07178;  /* errors / warnings */
-@define-color activegreen  #99bb66;  /* success / active indicators */
-@define-color disabled     #5c5a72;  /* inactive/dimmed text */
-
-@define-color bg_alt      #2a2a37;
-@define-color border      #363646;
+@define-color bg_alt      #16161d;
+@define-color border      #727169;
 
 @define-color red         #c34043;
 @define-color green       #76946a;
@@ -26,5 +17,6 @@
 @define-color blue        #7e9cd8;
 @define-color purple      #957fb8;
 @define-color aqua        #6a9589;
+
 @define-color orange      #ffa066;
 @define-color gray        #727169;
