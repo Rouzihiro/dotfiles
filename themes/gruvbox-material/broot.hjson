@@ -1,0 +1,82 @@
+skin: {
+    default: rgb(212, 190, 152) none / rgb(110, 106, 104) none
+    tree: rgb(44, 38, 32) none / rgb(40, 40, 40) none
+    parent: rgb(125, 174, 163) none / rgb(69, 133, 136) none
+    file: rgb(212, 190, 152) none / rgb(169, 182, 101) none
+    directory: rgb(125, 174, 163) none bold / rgb(69, 133, 136) none
+    exe: rgb(169, 182, 101) none
+    link: rgb(211, 134, 155) none
+    pruning: rgb(110, 106, 104) none italic
+    perm__: rgb(44, 38, 32) none
+    perm_r: rgb(216, 166, 87) none
+    perm_w: rgb(234, 105, 98) none
+    perm_x: rgb(169, 182, 101) none
+    owner: rgb(137, 180, 130) none
+    group: rgb(125, 174, 163) none
+    count: rgb(216, 166, 87) rgb(40, 40, 40)
+    dates: rgb(110, 106, 104) none
+    sparse: rgb(231, 138, 78) none
+    content_extract: rgb(125, 174, 163) none
+    content_match: rgb(169, 182, 101) none bold
+    device_id_major: rgb(125, 174, 163) none
+    device_id_sep: rgb(110, 106, 104) none
+    device_id_minor: rgb(125, 174, 163) none
+    git_branch: rgb(216, 166, 87) none
+    git_insertions: rgb(169, 182, 101) none
+    git_deletions: rgb(234, 105, 98) none
+    git_status_current: rgb(44, 38, 32) none
+    git_status_modified: rgb(216, 166, 87) none
+    git_status_new: rgb(169, 182, 101) none bold
+    git_status_ignored: rgb(50, 48, 47) none
+    git_status_conflicted: rgb(234, 105, 98) none
+    git_status_other: rgb(234, 105, 98) none
+    selected_line: none rgb(58, 52, 46) / none rgb(44, 38, 32)
+    char_match: rgb(137, 180, 130) none bold
+    file_error: rgb(234, 105, 98) none bold
+    flag_label: rgb(212, 190, 152) rgb(40, 40, 40)
+    flag_value: rgb(216, 166, 87) rgb(40, 40, 40) bold
+    input: rgb(212, 190, 152) rgb(40, 40, 40) / rgb(169, 162, 152) none
+    status_error: rgb(251, 241, 199) rgb(234, 105, 98)
+    status_job: rgb(216, 166, 87) rgb(40, 40, 40)
+    status_normal: rgb(212, 190, 152) rgb(40, 40, 40) / rgb(110, 106, 104) rgb(40, 40, 40)
+    status_italic: rgb(216, 166, 87) rgb(40, 40, 40) / rgb(110, 106, 104) rgb(40, 40, 40)
+    status_bold: rgb(216, 166, 87) rgb(40, 40, 40) bold / rgb(110, 106, 104) rgb(40, 40, 40)
+    status_code: rgb(125, 174, 163) rgb(40, 40, 40) / rgb(110, 106, 104) rgb(40, 40, 40)
+    status_ellipsis: rgb(212, 190, 152) rgb(40, 40, 40) / rgb(110, 106, 104) rgb(40, 40, 40)
+    purpose_normal: rgb(212, 190, 152) rgb(40, 40, 40)
+    purpose_italic: rgb(216, 166, 87) rgb(40, 40, 40)
+    purpose_bold: rgb(216, 166, 87) rgb(40, 40, 40) bold
+    purpose_ellipsis: rgb(212, 190, 152) rgb(40, 40, 40)
+    scrollbar_track: rgb(40, 40, 40) none / rgb(40, 40, 40) none
+    scrollbar_thumb: rgb(110, 106, 104) none / rgb(60, 56, 54) none
+    help_paragraph: rgb(212, 190, 152) none
+    help_bold: rgb(169, 182, 101) none bold
+    help_italic: rgb(216, 166, 87) none
+    help_code: rgb(212, 190, 152) rgb(40, 40, 40)
+    help_headers: rgb(231, 138, 78) none bold
+    help_table_border: rgb(44, 38, 32) none
+    preview: rgb(212, 190, 152) rgb(40, 40, 40) / rgb(169, 162, 152) rgb(44, 44, 44)
+    preview_title: rgb(231, 138, 78) rgb(40, 40, 40) bold / rgb(190, 110, 50) rgb(44, 44, 44)
+    preview_line_number: rgb(44, 38, 32) rgb(44, 44, 44)
+    preview_separator: rgb(44, 38, 32) none
+    preview_match: none rgb(70, 60, 30)
+    hex_null: rgb(44, 38, 32) none
+    hex_ascii_graphic: rgb(212, 190, 152) none
+    hex_ascii_whitespace: rgb(137, 180, 130) none
+    hex_ascii_other: rgb(125, 174, 163) none
+    hex_non_ascii: rgb(234, 105, 98) none
+    staging_area_title: rgb(231, 138, 78) rgb(40, 40, 40) bold / rgb(190, 110, 50) rgb(44, 44, 44)
+    mode_command_mark: rgb(40, 40, 40) rgb(231, 138, 78) bold
+    good_to_bad_0: rgb(169, 182, 101)
+    good_to_bad_1: rgb(150, 185, 115)
+    good_to_bad_2: rgb(137, 180, 130)
+    good_to_bad_3: rgb(125, 174, 163)
+    good_to_bad_4: rgb(125, 160, 163)
+    good_to_bad_5: rgb(216, 166, 87)
+    good_to_bad_6: rgb(231, 138, 78)
+    good_to_bad_7: rgb(211, 134, 155)
+    good_to_bad_8: rgb(234, 105, 98)
+    good_to_bad_9: rgb(220, 80, 75)
+}
+
+syntax_theme: MochaDark
