@@ -1,0 +1,69 @@
+
+skin: {
+
+    default: rgb(187, 194, 207) none / rgb(89, 89, 89) none
+
+    tree: rgb(0, 0, 0) none / rgb(40, 44, 52) none
+    parent: rgb(169, 161, 225) none / rgb(81, 175, 239) none
+
+    file: rgb(187, 194, 207) none / rgb(191, 191, 191) none
+    directory: rgb(169, 161, 225) none bold / rgb(198, 120, 221) none
+
+    exe: rgb(152, 190, 101) none
+    link: rgb(198, 120, 221) none
+
+    pruning: rgb(89, 89, 89) none italic
+
+    perm__: rgb(0, 0, 0) none
+    perm_r: rgb(236, 190, 123) none
+    perm_w: rgb(255, 108, 107) none
+    perm_x: rgb(152, 190, 101) none
+
+    owner: rgb(81, 175, 239) none
+    group: rgb(169, 161, 225) none
+
+    count: rgb(236, 190, 123) rgb(40, 44, 52)
+
+    dates: rgb(89, 89, 89) none
+    sparse: rgb(236, 190, 123) none
+
+    content_extract: rgb(81, 175, 239) none
+    content_match: rgb(152, 190, 101) none bold
+
+    git_branch: rgb(236, 190, 123) none
+    git_insertions: rgb(152, 190, 101) none
+    git_deletions: rgb(255, 108, 107) none
+
+    git_status_current: rgb(187, 194, 207) none
+    git_status_modified: rgb(236, 190, 123) none
+    git_status_new: rgb(152, 190, 101) none bold
+    git_status_ignored: rgb(89, 89, 89) none
+    git_status_conflicted: rgb(255, 108, 107) none
+
+    selected_line: none rgb(89, 89, 89) / none rgb(40, 44, 52)
+
+    char_match: rgb(169, 161, 225) none bold
+    file_error: rgb(255, 108, 107) none bold
+
+    input: rgb(187, 194, 207) rgb(40, 44, 52) / rgb(191, 191, 191) none
+
+    status_error: rgb(40, 44, 52) rgb(255, 108, 107)
+    status_job: rgb(236, 190, 123) rgb(40, 44, 52)
+
+    status_normal: rgb(187, 194, 207) rgb(40, 44, 52)
+
+    status_bold: rgb(236, 190, 123) rgb(40, 44, 52) bold
+
+    scrollbar_thumb: rgb(89, 89, 89) none
+
+    help_headers: rgb(169, 161, 225) none bold
+
+    preview: rgb(187, 194, 207) rgb(40, 44, 52)
+
+    preview_title: rgb(169, 161, 225) rgb(40, 44, 52) bold
+
+    preview_match: none rgb(89, 89, 89)
+
+    mode_command_mark: rgb(40, 44, 52) rgb(169, 161, 225) bold
+
+}

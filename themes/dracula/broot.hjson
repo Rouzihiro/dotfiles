@@ -1,0 +1,69 @@
+
+skin: {
+
+    default: rgb(248, 248, 242) none / rgb(98, 114, 164) none
+
+    tree: rgb(33, 34, 44) none / rgb(40, 42, 54) none
+    parent: rgb(189, 147, 249) none / rgb(139, 233, 253) none
+
+    file: rgb(248, 248, 242) none / rgb(255, 255, 255) none
+    directory: rgb(189, 147, 249) none bold / rgb(255, 121, 198) none
+
+    exe: rgb(80, 250, 123) none
+    link: rgb(255, 121, 198) none
+
+    pruning: rgb(98, 114, 164) none italic
+
+    perm__: rgb(33, 34, 44) none
+    perm_r: rgb(241, 250, 140) none
+    perm_w: rgb(255, 85, 85) none
+    perm_x: rgb(80, 250, 123) none
+
+    owner: rgb(139, 233, 253) none
+    group: rgb(189, 147, 249) none
+
+    count: rgb(241, 250, 140) rgb(40, 42, 54)
+
+    dates: rgb(98, 114, 164) none
+    sparse: rgb(241, 250, 140) none
+
+    content_extract: rgb(139, 233, 253) none
+    content_match: rgb(80, 250, 123) none bold
+
+    git_branch: rgb(241, 250, 140) none
+    git_insertions: rgb(80, 250, 123) none
+    git_deletions: rgb(255, 85, 85) none
+
+    git_status_current: rgb(248, 248, 242) none
+    git_status_modified: rgb(241, 250, 140) none
+    git_status_new: rgb(80, 250, 123) none bold
+    git_status_ignored: rgb(98, 114, 164) none
+    git_status_conflicted: rgb(255, 85, 85) none
+
+    selected_line: none rgb(98, 114, 164) / none rgb(40, 42, 54)
+
+    char_match: rgb(189, 147, 249) none bold
+    file_error: rgb(255, 85, 85) none bold
+
+    input: rgb(248, 248, 242) rgb(40, 42, 54) / rgb(255, 255, 255) none
+
+    status_error: rgb(40, 42, 54) rgb(255, 85, 85)
+    status_job: rgb(241, 250, 140) rgb(40, 42, 54)
+
+    status_normal: rgb(248, 248, 242) rgb(40, 42, 54)
+
+    status_bold: rgb(241, 250, 140) rgb(40, 42, 54) bold
+
+    scrollbar_thumb: rgb(98, 114, 164) none
+
+    help_headers: rgb(189, 147, 249) none bold
+
+    preview: rgb(248, 248, 242) rgb(40, 42, 54)
+
+    preview_title: rgb(189, 147, 249) rgb(40, 42, 54) bold
+
+    preview_match: none rgb(98, 114, 164)
+
+    mode_command_mark: rgb(40, 42, 54) rgb(189, 147, 249) bold
+
+}
