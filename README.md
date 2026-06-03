@@ -97,15 +97,6 @@ This setup with Sway WM idles at ~600MB RAM with our ultra-efficient stack:
 - **Shell:** `zsh` & `bash`
 - **Kernel:** Linux 6.19.14-asahi-ARCH
 
-![Sway Home Screenshot](./assets/wall.png)
-![Sway Home Screenshot 2](./assets/nvim.png)
-![Sway Home Screenshot 3](./assets/nvim2.png)
-![Sway Home Screenshot 4](./assets/tmux.png)
-![Sway Home Screenshot 5](./assets/fetch.png)
-![Sway Home Screenshot 6](./assets/utilities.png)
-![Sway Home Screenshot 7](./assets/rofi.png)
-![Sway Home Screenshot 8](./assets/thunar.png)
-
 ## Themes
 
 <table>
@@ -175,8 +166,6 @@ This setup with Sway WM idles at ~600MB RAM with our ultra-efficient stack:
 </tr>
 </table>
 
-<div align="center">
-
 ## Window Managers
 
 ### Sway Ecosystem
@@ -187,9 +176,6 @@ This setup with Sway WM idles at ~600MB RAM with our ultra-efficient stack:
 | [Swaylock](https://github.com/swaywm/swaylock) | Screen locker | ![C][c] |
 | [Swayidle](https://github.com/swaywm/swayidle) | Idle management | ![C][c] |
 | [i3blocks](https://github.com/vivien/i3blocks) | Status Bar for Sway/i3 | ![C][c] |
-
-![Sway Home Screenshot 9](./assets/bar1.png)
-![Sway Home Screenshot 10](./assets/bar2.png)
 
 ### System Components
 | Component | Description | Language |
@@ -205,7 +191,6 @@ This setup with Sway WM idles at ~600MB RAM with our ultra-efficient stack:
 | Component | Description | Language |
 |-----------|-------------|-----------|
 | [Autotiling-rs](https://github.com/nwg-piotr/autotiling-rs) | Auto-Tiling Script for Sway/Hyprland | ![Rust][rust] |
-| [Bob](https://github.com/MordechaiHadad/bob) | Neovim Version Manager (Nightly Installer) | ![Rust][rust] |
 | [Brave Browser](https://brave.com) | Web Browser | ![JavaScript][js] |
 | [Btop](https://github.com/aristocratos/btop) | System Monitor | ![C++][cpp] |
 | [Fastfetch](https://github.com/fastfetch-cli/fastfetch) | System Information Tool | ![C][c] |
@@ -237,9 +222,6 @@ This setup with Sway WM idles at ~600MB RAM with our ultra-efficient stack:
 ```bash
 git clone https://github.com/Rouzihiro/dotfiles.git
 cd dotfiles
-chmod +x install-arch.sh
-chmod +x install-fedora.sh
-chmod +x install-themes.sh
 ./install-arch.sh
 ./install-fedora.sh
 ./install-themes.sh
