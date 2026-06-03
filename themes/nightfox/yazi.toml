@@ -16,12 +16,12 @@ find_position = { fg = "#c94f6d", bold = true, italic = true }
 marker_copied = { fg = "#81b29a", bg = "#81b29a" }
 marker_cut = { fg = "#e4e4e5", bg = "#e4e4e5" }
 marker_marked = { fg = "#86abdc", bg = "#86abdc" }
-marker_selected = { fg = "#666a7a", bg = "#666a7a" }
+marker_selected = { fg = "#78797f", bg = "#78797f" }
 
 # Count
 count_copied = { fg = "#192330", bg = "#e4e4e5" }
 count_cut = { fg = "#192330", bg = "#e4e4e5" }
-count_selected = { fg = "#393b44", bg = "#666a7a" }
+count_selected = { fg = "#393b44", bg = "#78797f" }
 
 # Border
 border_symbol = " "
@@ -40,24 +40,24 @@ separator_style = { bg = "#575860", fg = "#86abdc" }
 [mode]
 # Mode
 normal_main = { bg = "#86abdc", fg = "#393b44", bold = true }
-normal_alt  = { bg = "#393b44", fg = "#cdcecf" }
+normal_alt  = { bg = "#575860", fg = "#cdcecf" }
 
 # Select mode
 select_main = { bg = "#e4e4e5", fg = "#393b44", bold = true }
-select_alt  = { bg = "#393b44", fg = "#cdcecf" }
+select_alt  = { bg = "#575860", fg = "#cdcecf" }
 
 # Unset mode
-unset_main = { bg = "#666a7a", fg = "#393b44", bold = true }
-unset_alt  = { bg = "#393b44", fg = "#cdcecf" }
+unset_main = { bg = "#78797f", fg = "#393b44", bold = true }
+unset_alt  = { bg = "#575860", fg = "#cdcecf" }
 
 # Progress
 progress_label = { bold = true }
-progress_normal = { fg = "#86abdc", bg = "#393b44" }
-progress_error = { fg = "#81b29a", bg = "#393b44" }
+progress_normal = { fg = "#86abdc", bg = "#575860" }
+progress_error = { fg = "#81b29a", bg = "#575860" }
 
 # Permissions
 permissions_t = { fg = "#86abdc" }
-permissions_w = { fg = "#666a7a" }
+permissions_w = { fg = "#78797f" }
 permissions_x = { fg = "#81b29a" }
 permissions_r = { fg = "#cdcecf" }
 permissions_s = { fg = "#e4e4e5" }
@@ -69,7 +69,7 @@ permissions_s = { fg = "#e4e4e5" }
 
 [select]
 border = { fg = "#86abdc" }
-active = { fg = "#666a7a", bold = true }
+active = { fg = "#78797f", bold = true }
 
 # : ]]]
 
@@ -114,7 +114,7 @@ hovered = { fg = "#e4e4e5", underline = true }
 
 [which]
 cols = 3
-mask = { bg = "#393b44" }
+mask = { bg = "#575860" }
 cand = { fg = "#86abdc" }
 rest = { fg = "#393b44" }
 desc = { fg = "#cdcecf" }
@@ -137,7 +137,7 @@ footer = { fg = "#393b44", bg = "#e4e4e5" }
 # : Notify [[[
 
 [notify]
-title_info = { fg = "#666a7a" }
+title_info = { fg = "#78797f" }
 title_warn = { fg = "#86abdc" }
 title_error = { fg = "#81b29a" }
 
@@ -150,7 +150,7 @@ title_error = { fg = "#81b29a" }
 
 rules = [
     # Images
-    { mime = "image/*", fg = "#666a7a" },
+    { mime = "image/*", fg = "#78797f" },
 
     # Media
     { mime = "{audio,video}/*", fg = "#86abdc" },
