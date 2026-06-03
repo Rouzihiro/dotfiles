@@ -1,27 +1,27 @@
 gui:
   theme:
     activeBorderColor:
-      - '#9d79d6'   # Nightfox purple accent
+      - '#9d79d6'
       - bold
     inactiveBorderColor:
-      - '#6c7086'   # Nightfox overlay0
+      - '#575860'
     optionsTextColor:
-      - '#89b4fa'   # Nightfox blue
+      - '#719cd6'
     selectedLineBgColor:
-      - '#1e1e2e'   # Nightfox base
+      - '#192330'
     cherryPickedCommitBgColor:
-      - '#2d2d2d'   # Slightly darker than base
+      - '#393b44'
     cherryPickedCommitFgColor:
-      - '#cba6f7'   # Nightfox mauve
+      - '#9d79d6'
     unstagedChangesColor:
-      - '#f38ba8'   # Nightfox red/pink
+      - '#c94f6d'
     defaultFgColor:
-      - '#cdd6f4'   # Nightfox foreground
+      - '#cdcecf'
     searchingActiveBorderColor:
-      - '#f9e2af'   # Nightfox yellow
+      - '#dbc074'
 
   authorColors:
-    '*': '#b4befe'  # Nightfox lavender
+    '*': '#81b29a'
 
   nerdFontsVersion: "3"
   showFileTree: true
@@ -32,14 +32,14 @@ gui:
   editor: "nvim"
 
   git:
-  paging:
-    colorArg: always
-    pager: delta --dark --paging=never
-  merging:
-    manualCommit: false
-  commit:
-    signOff: false
-  log:
-    showGraph: true
+    paging:
+      colorArg: always
+      pager: delta --dark --paging=never
+    merging:
+      manualCommit: false
+    commit:
+      signOff: false
+    log:
+      showGraph: true
 
-notARepository: "quit"  # exit lazygit when not in a repo
+notARepository: "quit"
