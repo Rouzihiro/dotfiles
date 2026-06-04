@@ -365,13 +365,6 @@ mkdir -p ~/Documents/Notes
 
 Inside this directory, create your note files. These files are used by the Rofi bookmark/notes scripts and can be freely customized:
 
-```bash
-touch ~/Documents/Notes/gaming.md
-touch ~/Documents/Notes/coding.md
-touch ~/Documents/Notes/work.md
-```
----
-
 ## Bookmark File Configuration
 
 Define the files used by your Rofi bookmark script in your configuration:
