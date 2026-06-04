@@ -8,6 +8,7 @@ node_modules/
 *result*
 .config/nvim/lazy-lock.json
 .config/vdirsyncer/google_token
+google_token
 
 .local/bin/bob
 .local/bin/f2py
