@@ -43,7 +43,8 @@ The magic? **Symlinks.** Instead of moving files or copying themes around, the s
 
 ## Installation
 
-Clone your dotfiles and make sure the scripts and themes are in place:
+Clone my dotfiles and make sure the .local/bin folder and its subfolders are set to $PATH in your SHELL and that the scripts and themes are in place.
+ 
 
 ```bash
 # Example directory structure
@@ -181,6 +182,122 @@ This setup with Sway WM idles at ~600MB RAM with our ultra-efficient stack:
 | [Swayidle](https://github.com/swaywm/swayidle) | Idle management | ![C][c] |
 | [i3blocks](https://github.com/vivien/i3blocks) | Status Bar for Sway/i3 | ![C][c] |
 
+### Keybindings
+
+<details>
+<summary><b>Applications</b></summary>
+
+| Key | Action |
+|------|---------|
+| `Super + Return` | Foot Terminal |
+| `Super + Alt + Return` | Kitty Terminal |
+| `Super + Shift + Return` | Kitty Terminal |
+| `Super + E` | Superfile |
+| `Super + Alt + E` | Yazi |
+| `Super + Shift + E` | Thunar |
+| `Super + N` | Notes Menu |
+| `Super + Alt + N` | Notes Dashboard |
+| `Super + Shift + N` | Neovim |
+| `Super + A` | Btop |
+| `Super + Alt + A` | NCDU |
+| `Super + R` | Runner |
+| `Super + O` | OCR |
+| `Super + Alt + O` | Text Picker |
+
+</details>
+
+<details>
+<summary><b>Launchers & Menus</b></summary>
+
+| Key | Action |
+|------|---------|
+| `Super + Space` | App Launcher |
+| `Super + Alt + Space` | Quick Actions |
+| `Super + Alt + Shift + Space` | Script Launcher |
+| `Super + B` | Bookmarks |
+| `Super + Shift + B` | Bluetooth |
+| `Super + I` | Wi-Fi Menu |
+| `Super + D` | Aria Downloads |
+| `Super + Alt + D` | Documents |
+| `Super + M` | USB Mount Menu |
+| `Super + Alt + M` | Monitor Switcher |
+| `Super + T` | Theme Selector |
+| `Super + Alt + T` | Timewarrior |
+| `Super + V` | Video Browser |
+| `Super + Alt + V` | Video Tools |
+| `Super + Z` | Keybinding Cheatsheet |
+| `Super + \`` | Window List |
+
+</details>
+
+<details>
+<summary><b>Window Management</b></summary>
+
+| Key | Action |
+|------|---------|
+| `Super + H/J/K/L` | Focus Window |
+| `Super + Shift + H/J/K/L` | Move Window |
+| `Super + Ctrl + H/J/K/L` | Resize Window |
+| `Super + F` | Fullscreen |
+| `Super + Shift + F` | Toggle Floating |
+| `Super + Q` | Close Window |
+| `Super + P` | Show Scratchpad |
+| `Super + Shift + P` | Move Window to Scratchpad |
+| `3-Finger Swipe Left/Right` | Previous / Next Workspace |
+| `3-Finger Swipe Up` | Toggle Floating |
+| `4-Finger Swipe` | Move Active Window |
+
+</details>
+
+<details>
+<summary><b>System</b></summary>
+
+| Key | Action |
+|------|---------|
+| `Super + Alt + L` | Lock Screen |
+| `Super + Escape` | Power Menu |
+| `Super + Ctrl + Q` | Exit Sway |
+| `Super + Shift + R` | Reload Configuration |
+| `Super + Alt + M` | Monitor Switcher |
+| `Super + Alt + P` | Power Profile |
+| `Super + Alt + W` | Random Wallpaper |
+| `Super + W` | Wallpaper Selector |
+| `Super + Shift + I` | VM Mode |
+
+</details>
+
+<details>
+<summary><b>Screenshots & Recording</b></summary>
+
+| Key | Action |
+|------|---------|
+| `Super + S` | Screenshot Menu |
+| `Super + Alt + S` | Fullscreen Screenshot |
+| `Super + Alt + R` | Screen Recording |
+
+</details>
+
+<details>
+<summary><b>Media & Brightness</b></summary>
+
+| Key | Action |
+|------|---------|
+| `XF86AudioRaiseVolume` | Volume Up |
+| `XF86AudioLowerVolume` | Volume Down |
+| `XF86AudioMute` | Toggle Mute |
+| `XF86AudioPlay` | Play / Pause |
+| `XF86AudioPrev` | Previous Track |
+| `XF86AudioNext` | Next Track |
+| `XF86MonBrightnessUp` | Brightness Up |
+| `XF86MonBrightnessDown` | Brightness Down |
+
+</details>
+
+See `.config/sway/config.d/keybindings.conf` for the complete configuration.
+
+---
+
+
 ### System Components
 | Component | Description | Language |
 |-----------|-------------|-----------|
@@ -202,9 +319,8 @@ This setup with Sway WM idles at ~600MB RAM with our ultra-efficient stack:
 | [Fuzzel](https://codeberg.org/dnkl/fuzzel) | Wayland Application Launcher | ![C][c] |
 | [fzf-preview](https://github.com/yuki-yano/fzf-preview.vim) | Fuzzy Finder Preview Plugin | ![TypeScript][ts] |
 | [Lazygit](https://github.com/jesseduffield/lazygit) | Git TUI Client | ![Go][go] |
-| [Librewolf](https://librewolf.net/) | Privacy-Focused Firefox Fork | ![C++][cpp] |
 | [Neovim](https://neovim.io/) | Text Editor | ![C][c] |
-| [nvim-nightly](https://github.com/neovim/neovim) | Nightly Build of Neovim | ![C][c] |
+| [nvim](https://github.com/neovim/neovim) | Neovim | ![C][c] |
 | [Satty](https://github.com/gabm/satty) | Screenshot Annotation Tool | ![Rust][rust] |
 | [Swappy](https://github.com/jtheoof/swappy) | Wayland Screenshot Editor | ![C][c] |
 | [Thunar](https://docs.xfce.org/xfce/thunar/start) | File Manager | ![C][c] |
