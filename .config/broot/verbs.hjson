@@ -270,8 +270,37 @@ verbs: [
     invocation: term
     shortcut: f
     key: ctrl-f
-    external: ["kitty", "--detach", "--class", "runner_floating", "sh", "-c", "cd {directory} && $SHELL"]
+    external: ["bash", "-c", "if [ -n \"$TMUX\" ]; then tmux new-window 'kitty --detach --class runner_floating sh -c \"cd {directory} && $SHELL\"'; else kitty --detach --class runner_floating sh -c 'cd {directory} && $SHELL'; fi"]
     leave_broot: false
+}
+
+{
+    invocation: downloads
+    key: ctrl-d
+    execution: ":focus ~/Downloads"
+}
+
+
+{
+    invocation: Documents
+    key: ctrl-w
+    execution: ":focus ~/Documents"
+}
+
+{
+    invocation: Pictures
+    key: ctrl-x
+    execution: ":focus ~/Pictures/"
+}
+{
+    invocation: Projects
+    key: ctrl-e
+    execution: ":focus ~/Projects/"
+}
+{
+    invocation: USB
+    key: ctrl-u
+    execution: ":focus ~/mount/usb/"
 }
 
 
