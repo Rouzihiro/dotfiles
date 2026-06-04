@@ -365,6 +365,8 @@ mkdir -p ~/Documents/Notes
 
 Inside this directory, create your note files. These files are used by the Rofi bookmark/notes scripts and can be freely customized:
 
+---
+
 ## Bookmark File Configuration
 
 Define the files used by your Rofi bookmark script in your configuration:
