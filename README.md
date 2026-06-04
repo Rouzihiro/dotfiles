@@ -24,6 +24,9 @@ A simple, efficient, and centralized theme management system for your dotfiles a
 
 ---
 
+[Jump to Theme Generator Guide](#theme-generator---how-to)
+
+---
 ## Overview
 
 With this setup, you define all your themes **once** inside your dotfiles. Then, using a small script, you can switch themes across all your applications **instantly**.
@@ -151,10 +154,6 @@ This setup with Sway WM idles at ~600MB RAM with our ultra-efficient stack:
 | MacBook Air M1 (8GB) | ✅ Fully Working | Includes Asahi fixes |
 | Microsoft Surface Pro 2 | ✅ Fully Working | Touchscreen support |
 | Generic Intel Laptops | ✅ Fully Working | Broad compatibility |
-
-# Core System
-- **Shell:** `zsh` & `bash`
-- **Kernel:** Linux 6.19.14-asahi-ARCH
 
 ## Themes
 
