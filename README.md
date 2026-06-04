@@ -461,23 +461,6 @@ This project generates consistent theme files across multiple applications based
 First, create a `kitty.conf` file in your themes directory with your desired color palette:
 Create the file at `$HOME/dotfiles/themes/kitty.conf` with the following content:
 
-# Base color palette
-color0-15 
-
-# Application-specific colors
-background #YOUR_BACKGROUND
-foreground #YOUR_FOREGROUND
-selection_foreground #YOUR_SELECTION_FG
-selection_background #YOUR_SELECTION_BG
-cursor #YOUR_CURSOR
-cursor_text_color #YOUR_CURSOR_TEXT
-url_color #YOUR_URL_COLOR
-active_tab_foreground #YOUR_ACTIVE_TAB_FG
-active_tab_background #YOUR_ACTIVE_TAB_BG
-inactive_tab_foreground #YOUR_INACTIVE_TAB_FG
-inactive_tab_background #YOUR_INACTIVE_TAB_BG
-
-Replace all the `#YOUR_...` placeholders with your actual hex color values.
 
 ### 2. Generate Theme Files
 After creating your `kitty.conf` file, run the theme generator:
