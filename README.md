@@ -9,7 +9,9 @@ ArchLinux & Fedora Universal Installer for a Lightweight & Beautiful Setup
 
 ### 🖥️ Automatic Installation:
 ```bash
-bash <(curl -sSL https://kutt.it/ReyDot)
+git clone https://github.com/Rouzihiro/dotfiles ~/dotfiles
+bash ~/dotfiles/.github/dots_bootstrap.sh
+bash ~/dotfiles/.github/assets.sh
 ```
 
 ### Theme Switcher Demo
@@ -43,13 +45,7 @@ The magic? **Symlinks.** Instead of moving files or copying themes around, the s
 
 ---
 
-## Installation
-
-Clone the dotfiles repository into your home directory:
-
-```bash
-git clone https://github.com/Rouzihiro/dotfiles ~/dotfiles
-```
+## Manual Installation
 
 Run the installation script:
 
@@ -117,8 +113,6 @@ Make sure the following are installed before running the setup:
 │   └── ...
 └── .local/bin/rofi/wofi-theme-switcher
 ```
-
-
 
 ## 🚀 Great performance for x86 and Apple Silicon M1
   
@@ -421,30 +415,6 @@ Each file acts as a category for quick access via the Rofi notes/bookmark system
 |-----------|-------------|-----------|
 | [Steam](https://store.steampowered.com/) | Game Distribution Platform | ![C++][cpp] |
 | [AntimicroX](https://github.com/AntiMicroX/antimicrox) | Gamepad to Keyboard/Mouse Mapper | ![C++][cpp] |
----
-
-
-### 🖥️ Manual Installation Experience
-
-**For best visual experience install FZF:**
-```bash
-git clone https://github.com/Rouzihiro/dotfiles.git
-cd dotfiles
-./install-arch.sh
-./install-fedora.sh
-./install-themes.sh
-```
-### 🌈 Customization
-
-    Edit package lists in /pkgs directory
-
-    Add your fixes to /fixes (see existing examples)
-
-    Select packages interactively during installation
-
-
-### several Shell Enhanced Functions
-
 ---
 
 # Theme Generator - How To
