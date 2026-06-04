@@ -258,5 +258,21 @@ verbs: [
         execution: ":toggle_tree"
         leave_broot: false
     }
+{
+    invocation: nvim
+    shortcut: n
+    key: ctrl-n
+    external: "nvim {file}"
+    leave_broot: true
+}
+
+{
+    invocation: term
+    shortcut: f
+    key: ctrl-f
+    external: ["kitty", "--detach", "--class", "runner_floating", "sh", "-c", "cd {directory} && $SHELL"]
+    leave_broot: false
+}
+
 
 ]
