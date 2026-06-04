@@ -1,4 +1,5 @@
 <h1 align="center" style="display: flex; justify-content: center; align-items: center;">
+![Banner](assets/banner.png)
 <!-- <img src="./assets/Zorro-OS.png" width="500px" style="center" /> -->
 <br>
 ArchLinux & Fedora Universal Installer for a Lightweight & Beautiful Setup
