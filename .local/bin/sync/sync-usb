@@ -1,0 +1,13 @@
+#!/bin/bash
+
+# Set source and destination
+SOURCE="$HOME/Downloads/Series/"
+DEST="$HOME/mount/usb/Series/"
+
+SOURCE2="$HOME/Downloads/Movies/"
+DEST2="$HOME/mount/usb/Movies/"
+
+# Run rsync with options
+rsync -ahv --ignore-existing --info=progress2 "$SOURCE" "$DEST"
+sleep 2
+rsync -ahv --ignore-existing --info=progress2 "$SOURCE2" "$DEST2"
