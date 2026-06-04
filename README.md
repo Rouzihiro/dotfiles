@@ -43,8 +43,67 @@ The magic? **Symlinks.** Instead of moving files or copying themes around, the s
 
 ## Installation
 
-Clone my dotfiles and make sure the .local/bin folder and its subfolders are set to $PATH in your SHELL and that the scripts and themes are in place.
- 
+Clone the dotfiles repository into your home directory:
+
+```bash
+git clone https://github.com/Rouzihiro/dotfiles ~/dotfiles
+```
+
+Run the installation script:
+
+```bash
+cd ~/dotfiles
+./install-arch.sh or ./install-fedora.sh 
+```
+
+The installer will:
+- Symlink `~/dotfiles/.local/bin` → `~/.local/bin`
+- Set up configuration files and themes
+- Prepare required scripts and utilities
+
+---
+
+## PATH Configuration
+
+This setup uses a hierarchical `~/.local/bin` structure, including subdirectories.
+
+To ensure all tools are available, add the following to your shell configuration (`.bashrc`, `.zshrc`, etc.):
+
+```bash
+export PATH="$HOME/.local/bin:$PATH"
+```
+
+> Note: The directory is structured with multiple subfolders that need to be added to `$PATH`.
+
+---
+
+## Assets
+
+Clone the required assets repository into your home directory:
+
+```bash
+git clone https://github.com/Rouzihiro/assets.git ~/assets
+```
+
+---
+
+## Prerequisites
+
+Make sure the following are installed before running the setup:
+
+- Git
+- Python 3.x
+- A compatible shell (bash/zsh/fish)
+- Required desktop environment / compositor dependencies (Sway/Wayland stack if used)
+
+---
+
+## Notes
+
+- The installation script manages all symlinks automatically
+- No manual copying of scripts is required
+- Themes are expected in: `~/dotfiles/themes`
+- Assets including wallpapers and icons are expected in: `~/assets`
 
 ```bash
 # Example directory structure
@@ -57,8 +116,7 @@ Clone my dotfiles and make sure the .local/bin folder and its subfolders are set
 └── .local/bin/rofi/wofi-theme-switcher
 ```
 
-also clone my assets repo and place it in your $HOME folder:
-https://github.com/Rouzihiro/assets
+
 
 ## 🚀 Great performance for x86 and Apple Silicon M1
   
@@ -180,6 +238,7 @@ This setup with Sway WM idles at ~600MB RAM with our ultra-efficient stack:
 | [Swaybg](https://github.com/swaywm/swaybg) | Wallpaper manager | ![C][c] |
 | [Swaylock](https://github.com/swaywm/swaylock) | Screen locker | ![C][c] |
 | [Swayidle](https://github.com/swaywm/swayidle) | Idle management | ![C][c] |
+| [Waybar](https://github.com/Alexays/Waybar) | Status Bar | ![C++][cpp] |
 | [i3blocks](https://github.com/vivien/i3blocks) | Status Bar for Sway/i3 | ![C][c] |
 
 ### Keybindings
@@ -192,7 +251,7 @@ This setup with Sway WM idles at ~600MB RAM with our ultra-efficient stack:
 | `Super + Return` | Foot Terminal |
 | `Super + Alt + Return` | Kitty Terminal |
 | `Super + Shift + Return` | Kitty Terminal |
-| `Super + E` | Superfile |
+| `Super + E` | Custom TUI Filemanager |
 | `Super + Alt + E` | Yazi |
 | `Super + Shift + E` | Thunar |
 | `Super + N` | Notes Menu |
@@ -200,9 +259,9 @@ This setup with Sway WM idles at ~600MB RAM with our ultra-efficient stack:
 | `Super + Shift + N` | Neovim |
 | `Super + A` | Btop |
 | `Super + Alt + A` | NCDU |
-| `Super + R` | Runner |
-| `Super + O` | OCR |
-| `Super + Alt + O` | Text Picker |
+| `Super + R` | TUI-Runner |
+| `Super + O` | OCR-Script |
+| `Super + Alt + O` | OCR-Script 2 |
 
 </details>
 
@@ -213,11 +272,10 @@ This setup with Sway WM idles at ~600MB RAM with our ultra-efficient stack:
 |------|---------|
 | `Super + Space` | App Launcher |
 | `Super + Alt + Space` | Quick Actions |
-| `Super + Alt + Shift + Space` | Script Launcher |
 | `Super + B` | Bookmarks |
 | `Super + Shift + B` | Bluetooth |
 | `Super + I` | Wi-Fi Menu |
-| `Super + D` | Aria Downloads |
+| `Super + D` | Download-Manager (aria2c)|
 | `Super + Alt + D` | Documents |
 | `Super + M` | USB Mount Menu |
 | `Super + Alt + M` | Monitor Switcher |
@@ -297,6 +355,37 @@ See `.config/sway/config.d/keybindings.conf` for the complete configuration.
 
 ---
 
+## Notes & Bookmarks Setup
+
+Create a dedicated directory for your markdown notes:
+
+```bash
+mkdir -p ~/Documents/Notes
+```
+
+Inside this directory, create your note files. These files are used by the Rofi bookmark/notes scripts and can be freely customized:
+
+```bash
+touch ~/Documents/Notes/gaming.md
+touch ~/Documents/Notes/coding.md
+touch ~/Documents/Notes/work.md
+```
+---
+
+## Bookmark File Configuration
+
+Define the files used by your Rofi bookmark script in your configuration:
+
+```bash
+BOOKMARK_FILES="
+$HOME/Documents/Notes/gaming.md
+$HOME/Documents/Notes/coding.md
+$HOME/Documents/Notes/work.md
+"
+```
+
+Each file acts as a category for quick access via the Rofi notes/bookmark system.
+
 
 ### System Components
 | Component | Description | Language |
@@ -324,6 +413,8 @@ See `.config/sway/config.d/keybindings.conf` for the complete configuration.
 | [Satty](https://github.com/gabm/satty) | Screenshot Annotation Tool | ![Rust][rust] |
 | [Swappy](https://github.com/jtheoof/swappy) | Wayland Screenshot Editor | ![C][c] |
 | [Thunar](https://docs.xfce.org/xfce/thunar/start) | File Manager | ![C][c] |
+| [Yazi](https://github.com/sxyazi/yazi) | Terminal File Manager | ![Rust][rust] |
+| [Broot](https://github.com/Canop/broot) | Terminal File Manager | ![Rust][rust] |
 | [Vifm](https://vifm.info/) | Terminal File Manager | ![C][c] |
 | [Zathura](https://github.com/pwmt/zathura) | PDF Reader | ![C][c] |
 
