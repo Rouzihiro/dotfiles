@@ -1,6 +1,6 @@
 # Terminal & Shell
+neovim
 git
-bob
 dialog
 ripgrep
 zsh

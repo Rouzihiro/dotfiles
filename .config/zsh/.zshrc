@@ -199,7 +199,7 @@ bindkey -v '^?' backward-delete-char
 eval "$(zoxide init --cmd cd zsh)"
 
 eval "$(dircolors -b ${HOME}/.config/zsh/.dircolors 2>/dev/null || dircolors -b)"
-export PATH="$HOME/.local/bin:$HOME/.local/share/bob/nightly/bin:/usr/local/bin:$PATH:$HOME/.dotnet/tools"
+export PATH="$HOME/.local/bin:/usr/local/bin:$HOME/.dotnet/tools:$PATH"
 
 # Add subfolders inside ~/.local/bin
 for dir in "$HOME/.local/bin/"*/; do

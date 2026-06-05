@@ -1,6 +1,6 @@
 #!/bin/sh
 
-export PATH="$HOME/.local/bin:$HOME/.local/share/bob/nvim-bin:/usr/local/bin:$PATH:$HOME/.dotnet/tools"
+export PATH="$HOME/.local/bin:/usr/local/bin:$HOME/.dotnet/tools:$PATH"
 for dir in "$HOME/.local/bin/"*/; do
     [ -d "$dir" ] && export PATH="$dir:$PATH"
 done
