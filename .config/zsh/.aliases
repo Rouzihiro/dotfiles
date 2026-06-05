@@ -78,7 +78,7 @@ alias v='nvim'
 alias vi="nvim -c \"lua require('fzf-lua').oldfiles()\""
 alias vim='nvim -c "lua require('\''fzf-lua'\'').files()"'
 alias vdiff="nvim -d"
-alias sv="sudo -E ~/.local/share/bob/nightly/bin/nvim" 
+alias sv="sudo -E nvim"
 
 # Git
 alias g='git'

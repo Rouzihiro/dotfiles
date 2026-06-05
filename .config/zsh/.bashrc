@@ -10,7 +10,7 @@ export LANG=en_US.UTF-8
 # -------------------------------
 # PATH Setup (prioritize ~/.local/bin)
 # -------------------------------
-export PATH="$HOME/.local/bin:$HOME/.local/share/bob/nvim-bin:$HOME/.local/share/bob/nightly/bin:/usr/local/bin:$HOME/bin:$PATH:$HOME/.dotnet/tools"
+export PATH="$HOME/.local/bin:/usr/local/bin:$HOME/.dotnet/tools:$PATH"
 
 for dir in "$HOME/.local/bin/"*/ "$HOME/bin/"*/; do
     [ -d "$dir" ] && PATH="$dir:$PATH"
