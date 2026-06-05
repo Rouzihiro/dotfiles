@@ -13,7 +13,7 @@ bindsym $mod+Mod1+a exec $term2 --title floaty-small -e sh -c ncdu
 
 bindsym $mod+b exec $term2 --title floaty-tiny -e sh -c bookmarks
 bindsym $mod+Mod1+b exec xdg-open https://
-bindsym $mod+Shift+b exec $term --title floaty-small -e sh -c bt
+bindsym $mod+Shift+b exec $term2 --title floaty-small -e sh -c bt
 
 bindsym $mod+d exec rofi-aria
 bindsym $mod+Mod1+d exec rofi-docs
