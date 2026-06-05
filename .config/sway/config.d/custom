@@ -1,19 +1,19 @@
 bindsym $mod+Escape exec rofi-power
 
 bindsym $mod+Return exec $term
-bindsym $mod+mod1+Return exec $term -T 'floaty-medium'
+bindsym $mod+mod1+Return exec $term2 -T 'floaty-medium'
 bindsym $mod+Shift+Return exec $term2
 
 bindsym $mod+space exec $launcher
 bindsym $mod+mod1+space exec quick-actions
-bindsym $mod+mod1+shift+space exec rofi-scripts
+bindsym $mod+ctrl+space exec rofi-scripts
 
-bindsym $mod+a exec $term -e btop
-bindsym $mod+Mod1+a exec $term -e ncdu
+bindsym $mod+a exec $term2 -e btop
+bindsym $mod+Mod1+a exec $term2 --title floaty-small -e sh -c ncdu
 
-bindsym $mod+b exec $term --title floaty-tiny -e sh -c bookmarks
+bindsym $mod+b exec $term2 --title floaty-tiny -e sh -c bookmarks
 bindsym $mod+Mod1+b exec xdg-open https://
-bindsym $mod+Shift+b exec rofi-bluetooth
+bindsym $mod+Shift+b exec $term --title floaty-small -e sh -c bt
 
 bindsym $mod+d exec rofi-aria
 bindsym $mod+Mod1+d exec rofi-docs
@@ -26,32 +26,30 @@ bindsym $mod+Shift+e exec $files
 bindsym $mod+f fullscreen
 bindsym $mod+Shift+f floating toggle
 
-bindsym $mod+mod1+h exec $term -T 'floaty-small' -e bash -c 'cd / && sudo ncdu'
-
-bindsym $mod+i exec rofi-wifi
-bindsym $mod+mod1+i exec bm-wifi
+bindsym $mod+i exec $term2 --title floaty-small -e sh -c wifi
+bindsym $mod+mod1+i exec rofi-wifi
 
 bindsym $mod+mod1+l exec $lockscreen
 
 bindsym $mod+m exec rofi-mount-usb
 bindsym $mod+mod1+m exec rofi-monitor-switch
-bindsym $mod+mod1+shift+m exec $term -T 'floaty-small' -e bash -c 'sudo ps_mem; echo ""; read -rp "Press Enter to close..."'
+bindsym $mod+shift+m exec $term2 -T 'floaty-small' -e bash -c 'sudo ps_mem; echo ""; read -rp "Press Enter to close..."'
 
-bindsym $mod+n exec rofi-notes
-bindsym $mod+mod1+n exec bm-notes
-bindsym $mod+Shift+n exec $editor
+bindsym $mod+n exec $term2 --title floaty-small -e sh -c fzf-notes
+bindsym $mod+mod1+n exec $editor
+bindsym $mod+Shift+n exec rofi-notes
 
 bindsym $mod+o exec ocr
 bindsym $mod+mod1+o exec sh -c text-picker
 
 bindsym $mod+p scratchpad show
-bindsym $mod+mod1+p exec rofi-power-profile
-bindsym $mod+Shift+p floating enable, resize set width 1800 height 1000, move scratchpad
+bindsym $mod+mod1+p floating enable, resize set width 1800 height 1000, move scratchpad
+bindsym $mod+Shift+p exec rofi-power-profile
 
 bindsym $mod+q kill
 bindsym $mod+Ctrl+q exec swaymsg exit
 
-bindsym $mod+r exec $term --app-id=runner_floating -e runner
+bindsym $mod+r exec $term2 --app-id=runner_floating -e runner
 bindsym $mod+mod1+r exec rofi-screenrecord
 bindsym $mod+Shift+r reload
 
