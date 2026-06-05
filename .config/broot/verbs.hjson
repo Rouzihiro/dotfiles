@@ -240,7 +240,7 @@ verbs: [
     invocation: term
     shortcut: f
     key: ctrl-f
-    external: ["bash", "-c", "if [ -n \"$TMUX\" ]; then tmux new-window 'kitty --detach --class runner_floating sh -c \"cd {directory} && $SHELL\"'; else kitty --detach --class runner_floating sh -c 'cd {directory} && $SHELL'; fi"]
+ 		external: ["bash", "-c", "if [ -n \"$TMUX\" ]; then tmux new-window 'kitty --detach --title floaty-medium sh -c \"cd {directory} && $SHELL\"'; else kitty --detach --title floaty-medium sh -c 'cd {directory} && $SHELL'; fi"]
     leave_broot: false
 }
 {
