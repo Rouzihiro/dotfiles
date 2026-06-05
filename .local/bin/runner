@@ -1,7 +1,7 @@
 #!/bin/bash
 
 TERM=xterm-256color
-APP=$(echo -e "Neovim\nBrowser\nThunar\nFoot\nBluetooth\nReddit\nChatGPT\nGitHub\nDeepSeek\nTranslate\nYouTube\nRapidMovies\nNoodle\nEporner\nFitGirl\nDodi\nFzMovies\nMoviesjoytv\nMaps" | fzf --reverse --border rounded)
+APP=$(echo -e "Neovim\nBrowser\nThunar\nFoot\nBluetooth\nReddit\nChatGPT\nGitHub\nDeepSeek\nTranslate\nYouTube\nRapidMovies\nFitGirl\nDodi\nMaps" | fzf --reverse --border rounded)
 
 open_url() {
     xdg-open "$1"
@@ -20,12 +20,8 @@ case "$APP" in
     [Tt]ranslate) open_url "https://translate.google.com" ;;
     [Yy]ou[Tt]ube) open_url "https://www.youtube.com" ;;
     [Rr]apid[Mm]ovies) open_url "https://rmz.cr" ;;
-    [Nn]oodle) open_url "https://noodlemagazine.com" ;;
-    [Ee]porner) open_url "https://www.eporner.com/" ;;
     [Ff]it[Gg]irl) open_url "https://fitgirl-repacks.site" ;;
     [Dd]odi) open_url "https://dodi-repacks.site" ;;
-    [Ff]z[Mm]ovies) open_url "https://fzmovies.net/movieslist.php?catID=2&by=latest" ;;
-    [Mm]ovies[Jj]oy[Tt]v) open_url "https://moviesjoytv.to" ;;
     [Mm]aps) open_url "https://www.google.de/maps" ;;
 esac
 
