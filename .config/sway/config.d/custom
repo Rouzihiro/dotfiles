@@ -1,7 +1,7 @@
 bindsym $mod+Escape exec rofi-power
 
 bindsym $mod+Return exec $term
-bindsym $mod+mod1+Return exec $term2
+bindsym $mod+mod1+Return exec $term -T 'floaty-medium'
 bindsym $mod+Shift+Return exec $term2
 
 bindsym $mod+space exec $launcher
@@ -11,7 +11,7 @@ bindsym $mod+mod1+shift+space exec rofi-scripts
 bindsym $mod+a exec $term -e btop
 bindsym $mod+Mod1+a exec $term -e ncdu
 
-bindsym $mod+b exec rofi-bookmarks
+bindsym $mod+b exec $term --title floaty-tiny -e sh -c bookmarks
 bindsym $mod+Mod1+b exec xdg-open https://
 bindsym $mod+Shift+b exec rofi-bluetooth
 

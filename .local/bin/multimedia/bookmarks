@@ -1,0 +1,100 @@
+#!/bin/sh
+set -eu
+# --------------------------
+# Bookmark files
+# --------------------------
+BOOKMARK_FILES="
+$HOME/Documents/Notes/gaming.md
+$HOME/Documents/Notes/xxx.md
+$HOME/Documents/Notes/coding.md
+$HOME/Documents/Notes/movies.md
+$HOME/Documents/Notes/work.md
+$HOME/Documents/Notes/torrent.md
+"
+# --------------------------
+# Browser fallback
+# --------------------------
+BRAVE="$(command -v brave || command -v brave-browser || true)"
+FALLBACK="$(command -v xdg-open || echo librewolf)"
+# --------------------------
+# Emit bookmark lines
+# Format:
+# display<TAB>url<TAB>tag
+# --------------------------
+emit() {
+    tag="$1"
+    file="$2"
+    [ -f "$file" ] || return 0
+    grep -vE '^\s*(#|$)' "$file" | while IFS= read -r line; do
+        case "$line" in
+            *"::"*)
+                title="${line%%::*}"
+                url="${line#*::}"
+                title="$(printf '%s' "$title" | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')"
+                url="$(printf '%s' "$url" | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')"
+                ;;
+            *)
+                url="$line"
+                title="$(printf '%s' "$url" | sed -E \
+                    's#https?://##;
+                     s#^www\.##;
+                     s#/.*$##;
+                     s/\.(com|org|net|de|io|co)$//')"
+                ;;
+        esac
+        printf '󰖯 [%s] %s\t%s\t%s\n' \
+            "$tag" "$title" "$url" "$tag"
+    done
+}
+# --------------------------
+# Build menu
+# --------------------------
+selection="$(
+{
+    for f in $BOOKMARK_FILES; do
+        tag="$(basename "$f" .md)"
+        emit "$tag" "$f"
+    done
+} | sort | \
+fzf \
+    --height=80% \
+    --layout=reverse \
+    --border \
+    --prompt='links> ' \
+    --delimiter='\t' \
+    --with-nth=1
+)"
+[ -n "$selection" ] || exit 0
+url="$(printf '%s\n' "$selection" | cut -f2)"
+tag="$(printf '%s\n' "$selection" | cut -f3)"
+# --------------------------
+# Clean URL
+# --------------------------
+url="$(printf '%s' "$url" \
+    | sed \
+        -e 's/[[:space:]]\+#.*$//' \
+        -e 's/[[:space:]]\/\/.*$//' \
+        -e 's/^[[:space:]]*//' \
+        -e 's/[[:space:]]*$//')"
+case "$url" in
+    http://*|https://*|file://*|about:*|chrome:*)
+        ;;
+    *)
+        url="https://$url"
+        ;;
+esac
+# --------------------------
+# Open browser via swaymsg exec
+# so it works from keybinds too
+# --------------------------
+open_with() {
+    browser="$1"
+    [ -n "$browser" ] || return 1
+    swaymsg exec "'$browser' '$url'" && exit 0
+}
+case "$tag" in
+    work) open_with "$BRAVE" ;;
+    *)    open_with "$BRAVE" ;;
+esac
+# Final fallback
+swaymsg exec "'$FALLBACK' '$url'"

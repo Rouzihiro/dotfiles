@@ -19,6 +19,13 @@ for_window [title="floaty-medium"] resize set 1000 800
 for_window [title="floaty-medium"] border pixel 2
 for_window [title="floaty-medium"] opacity 0.8
 
+for_window [title="floaty-tiny"] floating enable
+for_window [title="floaty-tiny"] move position center
+for_window [title="floaty-tiny"] resize set 500 350
+for_window [title="floaty-tiny"] opacity 0.8
+
+
+
 ### Gaps and borders
 gaps inner 5
 gaps outer 2
