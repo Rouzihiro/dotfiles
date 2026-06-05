@@ -43,7 +43,7 @@ bindsym $mod+o exec ocr
 bindsym $mod+mod1+o exec sh -c text-picker
 
 bindsym $mod+p scratchpad show
-bindsym $mod+mod1+p floating enable, resize set width 1800 height 1000, move scratchpad
+bindsym $mod+mod1+p floating enable, resize set width 1200 height 1000, move scratchpad
 bindsym $mod+Shift+p exec rofi-power-profile
 
 bindsym $mod+q kill
