@@ -244,19 +244,21 @@ This setup with Sway WM idles at ~600MB RAM with our ultra-efficient stack:
 | Key | Action |
 |------|---------|
 | `Super + Return` | Foot Terminal |
-| `Super + Alt + Return` | Kitty Terminal |
+| `Super + Alt + Return` | Floating Kitty Terminal |
 | `Super + Shift + Return` | Kitty Terminal |
-| `Super + E` | Custom TUI Filemanager |
+| `Super + E` | Custom TUI File Manager |
 | `Super + Alt + E` | Yazi |
 | `Super + Shift + E` | Thunar |
-| `Super + N` | Notes Menu |
-| `Super + Alt + N` | Notes Dashboard |
-| `Super + Shift + N` | Neovim |
+| `Super + N` | FZF Notes |
+| `Super + Alt + N` | Neovim |
+| `Super + Shift + N` | Notes Dashboard |
 | `Super + A` | Btop |
 | `Super + Alt + A` | NCDU |
-| `Super + R` | TUI-Runner |
-| `Super + O` | OCR-Script |
-| `Super + Alt + O` | OCR-Script 2 |
+| `Super + R` | TUI Runner |
+| `Super + O` | OCR Tool |
+| `Super + Alt + O` | Text Picker |
+| `Super + M` | USB Mount Menu |
+| `Super + Shift + M` | Memory Usage (ps_mem) |
 
 </details>
 
@@ -266,18 +268,22 @@ This setup with Sway WM idles at ~600MB RAM with our ultra-efficient stack:
 | Key | Action |
 |------|---------|
 | `Super + Space` | App Launcher |
+| `Super + Ctrl + Space` | Script Launcher |
 | `Super + Alt + Space` | Quick Actions |
 | `Super + B` | Bookmarks |
-| `Super + Shift + B` | Bluetooth |
-| `Super + I` | Wi-Fi Menu |
-| `Super + D` | Download-Manager (aria2c)|
+| `Super + Alt + B` | Open Browser |
+| `Super + Shift + B` | Bluetooth Menu |
+| `Super + I` | Wi-Fi Menu (TUI) |
+| `Super + Alt + I` | Wi-Fi Menu (Rofi) |
+| `Super + D` | Download Manager |
 | `Super + Alt + D` | Documents |
-| `Super + M` | USB Mount Menu |
-| `Super + Alt + M` | Monitor Switcher |
+| `Super + Shift + D` | Music Downloader |
 | `Super + T` | Theme Selector |
 | `Super + Alt + T` | Timewarrior |
 | `Super + V` | Video Browser |
 | `Super + Alt + V` | Video Tools |
+| `Super + W` | Wallpaper Selector |
+| `Super + Alt + W` | Random Wallpaper |
 | `Super + Z` | Keybinding Cheatsheet |
 | `Super + \`` | Window List |
 
