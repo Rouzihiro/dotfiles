@@ -28,7 +28,7 @@ bindsym $mod+Shift+f floating toggle
 
 bindsym $mod+g exec $term2 --title floaty-small -e sh -c fzf-keyhints-sway
 
-bindsym $mod+i exec $term2 --title floaty-small -e sh -c wifi
+bindsym $mod+i exec $term2 --title floaty-small -e sh -c fzf-wifi
 bindsym $mod+mod1+i exec rofi-wifi
 
 bindsym $mod+mod1+l exec $lockscreen

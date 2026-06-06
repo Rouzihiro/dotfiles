@@ -56,3 +56,8 @@ fi
 # Output format
 echo "${ICON}"
 #echo "${ICON} ${SSID}"
+
+# Handle click events
+if [[ "$BLOCK_BUTTON" -eq 1 ]]; then
+    exec swaymsg exec -- 'kitty --title floaty-small -e sh -c fzf-wifi'
+fi

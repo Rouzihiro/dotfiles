@@ -7,7 +7,7 @@
   "margin-right": 10,
   "margin-top": 8,
   "margin-bottom": 0,
-  "spacing": 1,
+  "spacing": 2,
   "reload_style_on_change": true,
 
   "modules-center": [
@@ -164,7 +164,7 @@
         "format-wifi": "󰤨 {signalStrength}%",
         "format-disconnected": "󰤭 Disconnected",
         "tooltip-format": "Wifi: {essid} ({signalStrength}%)",
-        "on-click": "rofi-wifi"
+        "on-click": "foot -T 'floaty-medium' -e bash -c 'fzf-wifi'"
     },
 
   "custom/separator": {

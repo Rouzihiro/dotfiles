@@ -2,123 +2,113 @@
   "$schema": "https://github.com/fastfetch-cli/fastfetch/raw/dev/doc/json_schema.json",
   "logo": {
     "type": "auto",
-    //"source": "$HOME/.config/wall.png",
-    //"type": "sixel", // small
-    //"height": 18,
-    //"width": 72,
-    //"padding": {
-    //  "top": 2,
-    //},
+    "source": "$HOME/.config/fastfetch/hollow-knight.png",
+    "width": 30,
+    "padding": {
+      "top": 2,
+      "right": 4,
+      "left": 2
+    }
+  },
+  "display": {
+    "separator": "",
+    "key": {
+      "width": 10
+    }
   },
   "modules": [
-    "break",
-    {
-      "type": "custom",
-      "format": "  󰊠 Arch Linux",
-      "outputColor": "cyan",
-    },
-    {
-      "type": "custom",
-      //"format": "┌────────────────────────────────────────────────────────────────────┐",
-      "format": "┌───────────────────────────── Software ───────────────────────────────┐",
-      "outputColor": "white",
-    },
-    {
-      "type": "os",
-      "key": "  󰣇 OS ",
-      "keyColor": "red",
-      "outputColor": "bright_",
-    },
-    {
-      "type": "kernel",
-      "key": "   Kernel ",
-      "keyColor": "red",
-      "outputColor": "bright_",
-    },
-    {
-      "type": "packages",
-      "key": "  󰏖 Packages ",
-      "keyColor": "yellow",
-      "outputColor": "bright_",
-    },
-    {
-      "type": "wm",
-      "key": "   WM ",
-      "keyColor": "yellow",
-      "outputColor": "bright_",
-    },
-    {
-      "type": "shell",
-      "key": "   Shell ",
-      "keyColor": "green",
-      "outputColor": "bright_",
-    },
-    {
-      "type": "uptime",
-      "key": "   Uptime ",
-      "keyColor": "green",
-      "outputColor": "bright_",
-    },
-    {
-      "type": "custom",
-      "format": "└──────────────────────────────────────────────────────────────────────┘",
-      "outputColor": "white",
-    },
-    "break",
     {
       "type": "title",
-      "key": "   ",
-      "keyColor": "blue",
-      "outputColor": "bright_",
+      "format": "\u001b[38;2;203;166;247m\uf313 \u001b[38;2;245;194;231m{user-name}\u001b[38;2;203;166;247m@\u001b[38;2;245;194;231m{host-name}"
     },
+
+    "break",
+
     {
       "type": "custom",
-      //"format": "┌────────────────────────────────────────────────────────────────────┐",
-      "format": "┌───────────────────────────── Hardware ───────────────────────────────┐",
-      "outputColor": "white",
+      "format": "\u001b[38;2;203;166;247m\ufb31\u001b[38;2;196;160;240m\ufb31\u001b[38;2;180;190;254m\ufb31\u001b[38;2;245;194;231m\ufb31\u001b[38;2;203;166;247m\ufb31\u001b[38;2;196;160;240m\ufb31\u001b[38;2;180;190;254m\ufb31\u001b[38;2;245;194;231m\ufb31"
     },
+
+    "break",
+
     {
       "type": "host",
-      "key": "  󱩊 PC",
-      "keyColor": "blue",
-      "outputColor": "bright_",
+      "key": "\uf109",
+      "keyColor": "#cba6f7"
     },
     {
       "type": "cpu",
-      "key": "  󰍛 CPU ",
-      "keyColor": "yellow",
-      "outputColor": "bright_",
+      "key": "\uf4bc",
+      "showPeCoreCount": true,
+      "keyColor": "#c4a0f0"
     },
     {
       "type": "gpu",
-      "key": "   GPU",
-      "keyColor": "yellow",
-      "outputColor": "bright_",
+      "key": "\ue9c9",
+      "detectionMethod": "pci",
+      "keyColor": "#b4befe"
+    },
+    {
+      "type": "display",
+      "key": "\ufb04",
+      "keyColor": "#cba6f7"
     },
     {
       "type": "memory",
-      "key": "   Memory",
-      "keyColor": "green",
-      "outputColor": "bright_",
+      "key": "\uefc5",
+      "keyColor": "#c4a0f0"
     },
     {
-      "type": "colors",
-      "key": "   Colors",
-      "keyColor": "green",
-      "block": {
-        "range": [1, 6],
-      },
+      "type": "disk",
+      "key": "\uf04a",
+      "keyColor": "#b4befe"
     },
-    //{
-    //  "type": "disk",
-    //  "key": "  󰋊 Disk",
-    //  "keyColor": "blue",
-    //  "outputColor": "bright_",
-    //},
+    {
+      "type": "swap",
+      "key": "\uf0e1",
+      "keyColor": "#cba6f7"
+    },
+
+    {
+      "type": "uptime",
+      "key": "\uf252",
+      "keyColor": "#cba6f7"
+    },
+    {
+      "type": "loadavg",
+      "key": "\uf3fd",
+      "keyColor": "#c4a0f0"
+    },
+
+    {
+      "type": "packages",
+      "key": "\ueb9f",
+      "keyColor": "#b4befe"
+    },
+
+    {
+      "type": "shell",
+      "key": "\uf120",
+      "keyColor": "#cba6f7"
+    },
+    {
+      "type": "terminalfont",
+      "key": "\uf031",
+      "keyColor": "#c4a0f0"
+    },
+
+    "break",
+
     {
       "type": "custom",
-      "format": "└──────────────────────────────────────────────────────────────────────┘",
-      "outputColor": "white",
+      "format": "\u001b[38;2;203;166;247m\ufb31\u001b[38;2;180;190;254m\ufb31\u001b[38;2;245;194;231m\ufb31\u001b[38;2;203;166;247m\ufb31\u001b[38;2;180;190;254m\ufb31\u001b[38;2;245;194;231m\ufb31"
     },
-  ],
+
+    "break",
+
+    {
+      "type": "colors",
+      "symbol": "block"
+    }
+  ]
 }
