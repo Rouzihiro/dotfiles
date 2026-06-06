@@ -49,7 +49,7 @@ bindsym $mod+Shift+p exec rofi-power-profile
 bindsym $mod+q kill
 bindsym $mod+Ctrl+q exec swaymsg exit
 
-bindsym $mod+r exec $term2 --app-id=runner_floating -e runner
+bindsym $mod+r exec z-cmd-screenrecord 
 bindsym $mod+mod1+r exec rofi-screenrecord
 bindsym $mod+Shift+r reload
 
@@ -58,6 +58,7 @@ bindsym $mod+mod1+s exec rofi-screenshot-fs
 
 bindsym $mod+t exec rofi-theme-set
 bindsym $mod+mod1+t exec rofi-timewarrior
+bindsym $mod+Shift exec $term2 --app-id=runner_floating -e runner
 
 bindsym $mod+v exec rofi-videos-list
 bindsym $mod+Mod1+v exec rofi-video-tool

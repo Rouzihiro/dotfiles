@@ -20,9 +20,9 @@ class WaybarGenerator(BaseGenerator):
 @define-color bg \t\t\t\t{self.c('background')};
 @define-color fg \t\t\t\t{self.c('foreground')};
 @define-color bordercolor {self.c('gray', self.c('color8'))};
-@define-color highlight \t{self.c('yellow', self.c('color3'))};
-@define-color alert \t\t\t{self.c('red', self.c('color1'))};
-@define-color activegreen {self.c('green', self.c('color2'))};
+@define-color highlight \t{self.c('sig1')};
+@define-color alert {self.c('sig3')};
+@define-color activegreen {self.c('sig2')};
 @define-color disabled    {self.c('color0')};
 
 @define-color bg_alt      {self.c('color0')};
