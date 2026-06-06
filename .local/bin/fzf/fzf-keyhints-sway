@@ -1,0 +1,85 @@
+#!/bin/bash
+# keyhints-fzf - show sway keybindings using fzf
+
+SWAY_CONFIG="$HOME/.config/sway/config.d/custom"
+
+# Generate the keybindings list with tabular formatting
+bindings=$(grep -rE '^\s*bindsym\s+' "$SWAY_CONFIG" | \
+    sed -E 's/^[^:]+://; s/^\s*bindsym\s+//' | \
+    awk '
+    {
+        # Split into binding and the rest at first space
+        space = index($0, " ");
+        binding = substr($0, 1, space - 1);
+        rest = substr($0, space + 1);
+
+        # Strip leading whitespace from rest
+        gsub(/^[ \t]+/, "", rest);
+
+        # Build human-readable modifier string from binding
+        mod = binding;
+
+        # Replace $mod with SUPER
+        gsub(/\$mod/, "SUPER", mod);
+
+        # Normalise modifier names
+        gsub(/[Mm]od1/, "ALT", mod);
+        gsub(/[Ss]hift/, "SHIFT", mod);
+        gsub(/[Cc]trl/, "CTRL", mod);
+        gsub(/[Ss]uper/, "SUPER", mod);
+
+        # The last segment after the final + is the key
+        n = split(mod, parts, "+");
+        key = parts[n];
+
+        # Build modifier prefix (everything except the last part)
+        mods = "";
+        for (i = 1; i < n; i++) {
+            if (mods != "") mods = mods "+";
+            mods = mods parts[i];
+        }
+
+        # Strip "exec" keyword for cleaner description
+        desc = rest;
+        gsub(/^exec /, "", desc);
+        gsub(/^exec_always /, "", desc);
+        
+        # Shorten very long commands
+        if (length(desc) > 60) {
+            # Try to grab just the command name
+            cmd = desc;
+            gsub(/ .*$/, "", cmd);
+            desc = cmd " …";
+        }
+
+        # Format the key combination
+        if (mods != "") {
+            key_combo = mods "+" key;
+        } else {
+            key_combo = key;
+        }
+
+        # Skip empty descriptions
+        if (desc != "") {
+            # Left-align key combo (25 chars), then description
+            printf "%-25s  %s\n", key_combo, desc;
+        }
+    }
+    ' | sort -u)
+
+# Exit if no bindings found
+if [ -z "$bindings" ]; then
+    echo "No keybindings found in $SWAY_CONFIG"
+    exit 1
+fi
+
+# Use fzf with clean table display
+echo "$bindings" | fzf \
+    --layout=reverse \
+    --border \
+    --height=40% \
+    --prompt="🔑 Keybindings > " \
+    --no-preview \
+    --color='bg+:-1,fg+:green,pointer:green' \
+    --with-nth=1,2 \
+    --nth=1,2
