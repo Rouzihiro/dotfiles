@@ -1,0 +1,54 @@
+#!/bin/bash
+# In case u wanna use this, install and acrivate swww-daemon and make the change to rofi-theme-set
+# Cycles through the background images available
+BACKGROUNDS_DIR="$HOME/.config/zorro/current/theme/backgrounds/"
+CURRENT_BACKGROUND_LINK="$HOME/.config/zorro/current/background"
+mapfile -d '' -t BACKGROUNDS < <(find "$BACKGROUNDS_DIR" \( -type f -o -type l \) -print0 | sort -z)
+TOTAL=${#BACKGROUNDS[@]}
+
+if [[ $TOTAL -eq 0 ]]; then
+  notify-send "No background was found for theme" -t 2000
+  pkill -x swww-daemon
+  swww clear '#000000'
+else
+  # Get current background from symlink
+  if [[ -L "$CURRENT_BACKGROUND_LINK" ]]; then
+    CURRENT_BACKGROUND=$(readlink "$CURRENT_BACKGROUND_LINK")
+  else
+    CURRENT_BACKGROUND=""
+  fi
+
+  # Find current background index
+  INDEX=-1
+  for i in "${!BACKGROUNDS[@]}"; do
+    if [[ "${BACKGROUNDS[$i]}" == "$CURRENT_BACKGROUND" ]]; then
+      INDEX=$i
+      break
+    fi
+  done
+
+  # Get next background (wrap around)
+  if [[ $INDEX -eq -1 ]]; then
+    NEW_BACKGROUND="${BACKGROUNDS[0]}"
+  else
+    NEXT_INDEX=$(((INDEX + 1) % TOTAL))
+    NEW_BACKGROUND="${BACKGROUNDS[$NEXT_INDEX]}"
+  fi
+
+  # Set new background symlink
+  ln -nsf "$NEW_BACKGROUND" "$CURRENT_BACKGROUND_LINK"
+
+  # Ensure swww daemon is running
+  if ! pgrep -x swww-daemon > /dev/null; then
+    swww-daemon --no-cache &
+    sleep 0.5  # give it a moment to initialize
+  fi
+
+  # Apply with transition
+  swww img "$CURRENT_BACKGROUND_LINK" \
+    --transition-fps 120 \
+    --transition-type center \
+    --transition-pos bottom \
+    --transition-duration 1 \
+    --transition-bezier 0.25,0.1,0.25,1.0
+fi
