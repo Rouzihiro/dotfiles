@@ -26,9 +26,7 @@ bindsym $mod+Shift+e exec $files
 bindsym $mod+f fullscreen
 bindsym $mod+Shift+f floating toggle
 
-bindsym $mod+h exec $term2 --title floaty-medium -e sh -c fzf-keyhints-sway
-bindsym $mod+Mod1+h exec $tfm
-bindsym $mod+Shift+h exec $files
+bindsym $mod+g exec $term2 --title floaty-small -e sh -c fzf-keyhints-sway
 
 bindsym $mod+i exec $term2 --title floaty-small -e sh -c wifi
 bindsym $mod+mod1+i exec rofi-wifi
