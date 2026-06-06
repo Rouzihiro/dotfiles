@@ -24,4 +24,4 @@ alias mirrors="sudo dnf install -y dnf-plugin-fastestmirror && sudo dnf fastestm
 
 # System fetch summary
 # alias fetch='clear && fastfetch && echo "Install Date: $(lsblk -o MOUNTPOINT,UUID | grep "/ " | cut -d " " -f 2)"'
-alias fetch='clear && fastfetch -c examples/22'
+alias fetch='clear && fastfetch'
