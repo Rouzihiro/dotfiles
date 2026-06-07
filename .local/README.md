@@ -1,11 +1,11 @@
 <h1 align="center" style="display: flex; justify-content: center; align-items: center;">
-<!-- <img src="./assets/Zorro-OS.png" width="500px" style="center" /> -->
+<!-- <img src="https://raw.githubusercontent.com/Rouzihiro/assets/main/4dotfiles/Zorro-OS.png" width="500px" style="center" /> -->
 <br>
 ArchLinux & Fedora Universal Installer for a Lightweight & Beautiful Setup
 <br>
 </h1>
 
-![Banner](assets/banner.png)
+![Banner](https://raw.githubusercontent.com/Rouzihiro/assets/main/4dotfiles/banner.png)
 
 ### 🖥️ Automatic Installation:
 ```bash
@@ -159,68 +159,68 @@ This setup with Sway WM idles at ~600MB RAM with our ultra-efficient stack:
 
 <table>
 <tr>
-<td align="center"><img src="assets/catppuccin.png" width="400"/><br><b>Catppuccin</b></td>
-<td align="center"><img src="assets/dune.png" width="400"/><br><b>Dune</b></td>
+<td align="center"><img src="https://raw.githubusercontent.com/Rouzihiro/assets/main/4dotfiles/catppuccin.png" width="400"/><br><b>Catppuccin</b></td>
+<td align="center"><img src="https://raw.githubusercontent.com/Rouzihiro/assets/main/4dotfiles/dune.png" width="400"/><br><b>Dune</b></td>
 </tr>
 
 <tr>
-<td align="center"><img src="assets/etheral.png" width="400"/><br><b>Etheral</b></td>
-<td align="center"><img src="assets/everforest.png" width="400"/><br><b>Everforest</b></td>
+<td align="center"><img src="https://raw.githubusercontent.com/Rouzihiro/assets/main/4dotfiles/etheral.png" width="400"/><br><b>Etheral</b></td>
+<td align="center"><img src="https://raw.githubusercontent.com/Rouzihiro/assets/main/4dotfiles/everforest.png" width="400"/><br><b>Everforest</b></td>
 </tr>
 
 <tr>
-<td align="center"><img src="assets/flexoki-dark.png" width="400"/><br><b>Flexoki Dark</b></td>
-<td align="center"><img src="assets/gruvbox.png" width="400"/><br><b>Gruvbox</b></td>
+<td align="center"><img src="https://raw.githubusercontent.com/Rouzihiro/assets/main/4dotfiles/flexoki-dark.png" width="400"/><br><b>Flexoki Dark</b></td>
+<td align="center"><img src="https://raw.githubusercontent.com/Rouzihiro/assets/main/4dotfiles/gruvbox.png" width="400"/><br><b>Gruvbox</b></td>
 </tr>
 
 <tr>
-<td align="center"><img src="assets/gruvbox-material.png" width="400"/><br><b>Gruvbox Material</b></td>
-<td align="center"><img src="assets/hackerman.png" width="400"/><br><b>Hackerman</b></td>
+<td align="center"><img src="https://raw.githubusercontent.com/Rouzihiro/assets/main/4dotfiles/gruvbox-material.png" width="400"/><br><b>Gruvbox Material</b></td>
+<td align="center"><img src="https://raw.githubusercontent.com/Rouzihiro/assets/main/4dotfiles/hackerman.png" width="400"/><br><b>Hackerman</b></td>
 </tr>
 
 <tr>
-<td align="center"><img src="assets/kanagawa-dragon.png" width="400"/><br><b>Kanagawa Dragon</b></td>
-<td align="center"><img src="assets/last-horizon.png" width="400"/><br><b>Last Horizon</b></td>
+<td align="center"><img src="https://raw.githubusercontent.com/Rouzihiro/assets/main/4dotfiles/kanagawa-dragon.png" width="400"/><br><b>Kanagawa Dragon</b></td>
+<td align="center"><img src="https://raw.githubusercontent.com/Rouzihiro/assets/main/4dotfiles/last-horizon.png" width="400"/><br><b>Last Horizon</b></td>
 </tr>
 
 <tr>
-<td align="center"><img src="assets/lumon.png" width="400"/><br><b>Lumon</b></td>
-<td align="center"><img src="assets/matte-black.png" width="400"/><br><b>Matte Black</b></td>
+<td align="center"><img src="https://raw.githubusercontent.com/Rouzihiro/assets/main/4dotfiles/lumon.png" width="400"/><br><b>Lumon</b></td>
+<td align="center"><img src="https://raw.githubusercontent.com/Rouzihiro/assets/main/4dotfiles/matte-black.png" width="400"/><br><b>Matte Black</b></td>
 </tr>
 
 <tr>
-<td align="center"><img src="assets/miasma.png" width="400"/><br><b>Miasma</b></td>
-<td align="center"><img src="assets/nightfox.png" width="400"/><br><b>Nightfox</b></td>
+<td align="center"><img src="https://raw.githubusercontent.com/Rouzihiro/assets/main/4dotfiles/miasma.png" width="400"/><br><b>Miasma</b></td>
+<td align="center"><img src="https://raw.githubusercontent.com/Rouzihiro/assets/main/4dotfiles/nightfox.png" width="400"/><br><b>Nightfox</b></td>
 </tr>
 
 <tr>
-<td align="center"><img src="assets/nord.png" width="400"/><br><b>Nord</b></td>
-<td align="center"><img src="assets/osaka.png" width="400"/><br><b>Osaka</b></td>
+<td align="center"><img src="https://raw.githubusercontent.com/Rouzihiro/assets/main/4dotfiles/nord.png" width="400"/><br><b>Nord</b></td>
+<td align="center"><img src="https://raw.githubusercontent.com/Rouzihiro/assets/main/4dotfiles/osaka.png" width="400"/><br><b>Osaka</b></td>
 </tr>
 
 <tr>
-<td align="center"><img src="assets/retro-82.png" width="400"/><br><b>Retro 82</b></td>
-<td align="center"><img src="assets/ristretto.png" width="400"/><br><b>Ristretto</b></td>
+<td align="center"><img src="https://raw.githubusercontent.com/Rouzihiro/assets/main/4dotfiles/retro-82.png" width="400"/><br><b>Retro 82</b></td>
+<td align="center"><img src="https://raw.githubusercontent.com/Rouzihiro/assets/main/4dotfiles/ristretto.png" width="400"/><br><b>Ristretto</b></td>
 </tr>
 
 <tr>
-<td align="center"><img src="assets/rosepine.png" width="400"/><br><b>Rosé Pine</b></td>
-<td align="center"><img src="assets/rosepine-darker.png" width="400"/><br><b>Rosé Pine Darker</b></td>
+<td align="center"><img src="https://raw.githubusercontent.com/Rouzihiro/assets/main/4dotfiles/rosepine.png" width="400"/><br><b>Rosé Pine</b></td>
+<td align="center"><img src="https://raw.githubusercontent.com/Rouzihiro/assets/main/4dotfiles/rosepine-darker.png" width="400"/><br><b>Rosé Pine Darker</b></td>
 </tr>
 
 <tr>
-<td align="center"><img src="assets/sakura.png" width="400"/><br><b>Sakura</b></td>
-<td align="center"><img src="assets/solarized-dark.png" width="400"/><br><b>Solarized Dark</b></td>
+<td align="center"><img src="https://raw.githubusercontent.com/Rouzihiro/assets/main/4dotfiles/sakura.png" width="400"/><br><b>Sakura</b></td>
+<td align="center"><img src="https://raw.githubusercontent.com/Rouzihiro/assets/main/4dotfiles/solarized-dark.png" width="400"/><br><b>Solarized Dark</b></td>
 </tr>
 
 <tr>
-<td align="center"><img src="assets/solitude.png" width="400"/><br><b>Solitude</b></td>
-<td align="center"><img src="assets/tokyonight.png" width="400"/><br><b>Tokyo Night</b></td>
+<td align="center"><img src="https://raw.githubusercontent.com/Rouzihiro/assets/main/4dotfiles/solitude.png" width="400"/><br><b>Solitude</b></td>
+<td align="center"><img src="https://raw.githubusercontent.com/Rouzihiro/assets/main/4dotfiles/tokyonight.png" width="400"/><br><b>Tokyo Night</b></td>
 </tr>
 
 <tr>
-<td align="center"><img src="assets/vague.png" width="400"/><br><b>Vague</b></td>
-<td align="center"><img src="assets/vantablack.png" width="400"/><br><b>Vantablack</b></td>
+<td align="center"><img src="https://raw.githubusercontent.com/Rouzihiro/assets/main/4dotfiles/vague.png" width="400"/><br><b>Vague</b></td>
+<td align="center"><img src="https://raw.githubusercontent.com/Rouzihiro/assets/main/4dotfiles/vantablack.png" width="400"/><br><b>Vantablack</b></td>
 </tr>
 </table>
 
