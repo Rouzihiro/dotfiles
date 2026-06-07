@@ -9,6 +9,7 @@ node_modules/
 .config/nvim/lazy-lock.json
 .config/vdirsyncer/google_token
 google_token
+.config/BraveSoftware/
 
 .local/bin/bob
 .local/bin/f2py
