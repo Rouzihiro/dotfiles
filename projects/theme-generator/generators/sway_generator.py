@@ -114,9 +114,6 @@ set $waveRed        {self.colors['red']}
 # Standout specials 2 (exception handling, return)
 set $peachRed       {self.colors['red']}
 
-# Constants, imports, booleans
-set $surimiOrange   {self.colors['orange']}
-
 # Deprecated
 set $katanaGray     {self.colors['gray']}
 """

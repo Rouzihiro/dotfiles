@@ -103,8 +103,5 @@ set $waveRed        #b4637a
 # Standout specials 2 (exception handling, return)
 set $peachRed       #b4637a
 
-# Constants, imports, booleans
-set $surimiOrange   
-
 # Deprecated
 set $katanaGray     #9893a5
