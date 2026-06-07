@@ -1,0 +1,7 @@
+
+# Sway client window colors (semantic system)
+
+client.focused          #e0def4   #191724   #e0def4      #e0def4   #e0def4
+client.focused_inactive #191724     #191724   #31748f    #31748f   #191724
+client.unfocused        #191724     #191724   #6e6a86  #191724     #191724
+client.urgent           #eb6f92   #191724   #e0def4      #eb6f92   #eb6f92
