@@ -5,7 +5,7 @@
  # 	position top
  # 	mode dock
  # }
-#
+
   bar {
       position top
       tray_padding 0
@@ -15,6 +15,18 @@
       font pango:DroidSansM Nerd Font 10
  # 	 #font pango:DejaVu Sans Mono 10
  # 	 #font pango:Noto Color Emoji 10
+ colors {
+        background #11111b
+        statusline #cdd6f4
+        separator  #585b70
+
+        focused_workspace  #f5c2e7 #f5c2e7 #11111b
+        active_workspace   #313244 #313244 #cdd6f4
+        inactive_workspace #11111b #11111b #7f849c
+        urgent_workspace   #f38ba8 #f38ba8 #11111b
+        binding_mode       #fab387 #fab387 #11111b
+    }
+
  }
 
  #  bar {
