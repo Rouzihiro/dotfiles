@@ -1,0 +1,22 @@
+
+bar {
+    position top
+    tray_padding 0
+    status_command i3blocks -c ~/.config/i3blocks/config
+    separator_symbol ""
+
+    font pango:DroidSansM Nerd Font 10
+
+    colors {
+        background #060B1E
+        statusline #ffcead
+        separator  #6d7db6
+
+        focused_workspace  #ffcead #ffcead #060B1E
+        active_workspace   #92a593 #92a593 #060B1E
+        inactive_workspace #060B1E #060B1E #6d7db6
+        urgent_workspace   #ED5B5A #ED5B5A #060B1E
+
+        binding_mode       #c89dc1 #c89dc1 #060B1E
+    }
+}

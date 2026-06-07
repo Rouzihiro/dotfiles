@@ -3,121 +3,31 @@ from . import BaseGenerator
 class SwayGenerator(BaseGenerator):
     @property
     def default_filename(self):
-        return "sway"
-    
+        return "sway-theme"
+
+    def c(self, key, fallback=None):
+        return self.colors.get(key, fallback or self.colors.get("foreground"))
+
     def generate(self, output_file=None):
         output_file = output_file or self.default_filename
         self.backup_file(output_file)
-        
-        template = f"""# Generated from kitty.conf
 
-# Default foreground
-set $fujiWhite      {self.colors['foreground']}
+        bg = self.c("background")
+        fg = self.c("foreground")
+        fg_dim = self.c("color8", self.c("gray"))
 
-# Dark foreground (statuslines)
-set $oldWhite       {self.colors['color7']}
+        sig1 = self.c("sig1")
+        sig2 = self.c("sig2", self.c("color2"))
+        sig3 = self.c("sig3", self.c("color1"))
 
-# Dark background (statuslines and floating windows)
-set $sumiInk0       {self.colors['color0']}
+        template = f"""
+# Sway client window colors (semantic system)
 
-# Default background
-set $sumiInk1       {self.colors['background']}
-
-# Lighter background (colorcolumn, folds)
-set $sumiInk2       {self.colors['color8']}
-
-# Lighter background (cursorline)
-set $sumiInk3       {self.colors['color8']}
-
-# Darker foreground (line numbers, fold column, non-text characters), float borders
-set $sumiInk4       {self.colors['gray']}
-
-# Popup background, visual selection background
-set $waveBlue1      {self.colors['color4']}
-
-# Popup selection background, search background
-set $waveBlue2      {self.colors['blue']}
-
-# Diff Add (background)
-set $winterGreen    {self.colors['color2']}
-
-# Diff Change (background)
-set $winterYellow   {self.colors['color3']}
-
-# Diff Deleted (background)
-set $winterRed      {self.colors['red']}
-
-# Diff Line (background)
-set $winterBlue     {self.colors['color4']}
-
-# Git Add
-set $autumnGreen    {self.colors['green']}
-
-# Git Delete
-set $autumnRed      {self.colors['red']}
-
-# Git Change
-set $autumnYellow   {self.colors['yellow']}
-
-# Diagnostic Error
-set $samuraiRed     {self.colors['red']}
-
-# Diagnostic Warning
-set $roninYellow    {self.colors['yellow']}
-
-# Diagnostic Info
-set $waveAqua1      {self.colors['blue']}
-
-# Diagnostic Hint
-set $dragonBlue     {self.colors['blue']}
-
-# Comments
-set $fujiGray       {self.colors['gray']}
-
-# Light foreground
-set $springViolet1  {self.colors['color7']}
-
-# Statements and Keywords
-set $oniViolet      {self.colors['purple']}
-
-# Functions and Titles
-set $crystalBlue    {self.colors['blue']}
-
-# Brackets and punctuation
-set $springViolet2  {self.colors['purple']}
-
-# Specials and builtin functions
-set $springBlue     {self.colors['blue']}
-
-# Not used (assigned Nightfox-consistent shades)
-set $lightBlue      {self.colors['aqua']}
-set $boatYellow1    {self.colors['color3']}
-
-# Types
-set $waveAqua2      {self.colors['aqua']}
-
-# Strings
-set $springGreen    {self.colors['green']}
-
-# Operators, RegEx
-set $boatYellow2    {self.colors['color3']}
-
-# Identifiers
-set $carpYellow     {self.colors['yellow']}
-
-# Numbers
-set $sakuraPink     {self.colors['purple']}
-
-# Standout specials 1 (builtin variables)
-set $waveRed        {self.colors['red']}
-
-# Standout specials 2 (exception handling, return)
-set $peachRed       {self.colors['red']}
-
-# Deprecated
-set $katanaGray     {self.colors['gray']}
+client.focused          {sig1}   {bg}   {fg}      {sig1}   {sig1}
+client.focused_inactive {bg}     {bg}   {sig2}    {sig2}   {bg}
+client.unfocused        {bg}     {bg}   {fg_dim}  {bg}     {bg}
+client.urgent           {sig3}   {bg}   {fg}      {sig3}   {sig3}
 """
-        
-        with open(output_file, 'w') as f:
+
+        with open(output_file, "w") as f:
             f.write(template)
-        return output_file

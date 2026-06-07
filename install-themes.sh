@@ -45,7 +45,8 @@ ln -snf ~/.config/zorro/current/theme/sway ~/.config/sway/config.d/theme
 # ln -snf $HOME/dotfiles/.config/starship.toml $HOME/.config/starship.toml
 
 mkdir -p ~/.config/i3blocks
-ln -sf ~/.config/zorro/current/theme/i3blocks ~/.config/i3blocks/config
+ln -sf ~/.config/zorro/current/theme/i3blocks.config ~/.config/i3blocks/config
+ln -sf ~/.config/zorro/current/theme/bar ~/.config/sway/config.d/bar
 
 mkdir -p ~/.config/mako
 ln -snf ~/.config/zorro/current/theme/mako.ini ~/.config/mako/config

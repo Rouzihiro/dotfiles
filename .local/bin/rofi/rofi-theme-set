@@ -88,7 +88,6 @@ tmux source-file ~/.config/tmux/tmux.conf &
 pkill -SIGUSR2 btop &
 z-theme-set-starship
 $HOME/.config/zorro/current/theme/gtk.sh
-z-i3blocks-generator &
 z-theme-bg-blur
 
 # Show notification with palette preview if available
