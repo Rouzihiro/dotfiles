@@ -3,16 +3,24 @@
 # ─────────────────────────────
 export LANG="en_US.UTF-8"
 #export LC_ALL="en_US.UTF-8"
-
 export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_CACHE_HOME="$HOME/.cache"
 export ZDOTDIR="$XDG_CONFIG_HOME/zsh"
 export ZSH_CACHE_DIR="$XDG_CACHE_HOME/zsh"
-export ZSH_COMPDUMP="${ZSH_CACHE_DIR}/.zcompdump-${(%):-%m}-${ZSH_VERSION}"
-
 export DOTFILES_DIR="$HOME/dotfiles"
 export PROJECTS_DIR="$HOME/Projects"
 export SUCKLESS_DIR="$HOME/suckless"
+
+# ─────────────────────────────
+# PATH (set here so subshells inherit it without re-running loops)
+# ─────────────────────────────
+export PATH="$HOME/.local/bin:/usr/local/bin:$HOME/.dotnet/tools:$HOME/.cargo/bin:$PATH"
+
+# Add subfolders inside ~/.local/bin (done once here, not on every shell)
+for dir in "$HOME/.local/bin/"*/; do
+    [[ -d "$dir" ]] && export PATH="$dir:$PATH"
+done
+unset dir
 
 # ─────────────────────────────
 # Editors / Apps
@@ -32,15 +40,9 @@ export MANROFFOPT="-c"
 # Development / Debug
 # ─────────────────────────────
 export DOTNET_CLI_TELEMETRY_OPTOUT=1
-export SHADER_CACHE_DIR="${XDG_CACHE_HOME:-$HOME/.cache}/shader_cache"  # custom shader cache
-export ANV_DEBUG="video-decode,video-encode"
+export SHADER_CACHE_DIR="${XDG_CACHE_HOME:-$HOME/.cache}/shader_cache"
+# export ANV_DEBUG="video-decode,video-encode"  # uncomment only when debugging
 
 export LF_ICONS="di=📁:fi=📄:ln=🔗:ex=⚡:*.pdf=📄:*.jpg=🖼️:*.png=🖼️:*.mp4=🎬"
 
-export BEMENU_OPTS="--fn 'JetBrainsMono Nerd Font 12' \
-  --center --line-height 22 --margin 8 --width-factor 0.5 \
-  --nb '#2e3440' --nf '#cdcecf' \
-  --hb '#81b29a' --hf '#192330' \
-  --tb '#2e3440' --tf '#f6c177' \
-  --fb '#2e3440' --ff '#cdcecf' \
-  --list 20 --prompt '>'"
+export BEMENU_OPTS="--fn 'JetBrainsMono Nerd Font 12' --center --line-height 22 --margin 8 --width-factor 0.5 --nb '#2e3440' --nf '#cdcecf' --hb '#81b29a' --hf '#192330' --tb '#2e3440' --tf '#f6c177' --fb '#2e3440' --ff '#cdcecf' --list 20 --prompt '>'"
