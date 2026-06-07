@@ -1,16 +1,32 @@
-# Ignore apps folder and all subfolders
+# -------------------------
+# system / misc
+# -------------------------
 .mypy_cache/
-*.zip
+.DS_Store
 *.log
 *.bak
 node_modules/
-.DS_Store
-*result*
+*.zip
+
+# -------------------------
+# apps / sync
+# -------------------------
 .config/nvim/lazy-lock.json
 .config/vdirsyncer/google_token
 google_token
 .config/BraveSoftware/
 
+# -------------------------
+# BLOCK images inside themes/
+# -------------------------
+themes/**/*.jpg
+themes/**/*.jpeg
+themes/**/*.png
+themes/**/*.gif
+
+# -------------------------
+# binaries
+# -------------------------
 .local/bin/bob
 .local/bin/f2py
 .local/bin/numpy-config
