@@ -1,6 +1,7 @@
 import re
 import os
 import shutil
+import colorsys
 from pathlib import Path
 from . import BaseGenerator
 
@@ -39,18 +40,16 @@ class I3blocksGenerator(BaseGenerator):
         the given background key.
 
         Search order:
-          1. Semantically meaningful names (foreground, sig1-3)
+          1. Semantically meaningful names (foreground, sig1–3)
           2. color1–color16 in order
 
-        A color is skipped if it was not resolved (empty string) or if its
-        contrast against the background is indistinguishably low (< 1.5).
-        If no color clears WCAG AA (4.5:1) a warning is printed but the
-        best available color is still returned rather than crashing.
+        Skips colors with contrast < 1.5 (indistinguishable from bg).
+        Warns if nothing clears WCAG AA (4.5:1) but always returns something.
         """
         bg = colors.get(background_key, '#000000')
 
-        priority  = ['foreground', 'sig1', 'sig2', 'sig3']
-        dynamic   = [f'color{i}' for i in range(1, 17)]
+        priority   = ['foreground', 'sig1', 'sig2', 'sig3']
+        dynamic    = [f'color{i}' for i in range(1, 17)]
         candidates = priority + dynamic
 
         best_color, best_ratio = '#ffffff', 0
@@ -58,12 +57,10 @@ class I3blocksGenerator(BaseGenerator):
         for key in candidates:
             c = colors.get(key, '')
             if not c:
-                continue                          # color not present in theme
-
+                continue
             ratio = self._contrast_ratio(bg, c)
             if ratio < 1.5:
-                continue                          # indistinguishable from bg
-
+                continue
             if ratio > best_ratio:
                 best_ratio = ratio
                 best_color = c
@@ -85,7 +82,6 @@ class I3blocksGenerator(BaseGenerator):
 
     def _parse_colors_file(self, filepath):
         """Parse a rofi .rasi file and extract the color definitions we need."""
-        # Named semantic colors + color1–color16 (missing numbers are fine)
         target_colors = {
             'sigbg', 'sig1', 'sig2', 'sig3', 'foreground',
             *[f'color{i}' for i in range(1, 17)],
@@ -94,7 +90,6 @@ class I3blocksGenerator(BaseGenerator):
         with open(filepath, 'r') as f:
             content = f.read()
 
-        # Strip inline /* ... */ comments
         def strip_comments(text):
             return re.sub(r'/\*.*?\*/', '', text)
 
@@ -115,19 +110,19 @@ class I3blocksGenerator(BaseGenerator):
             pattern = rf'{re.escape(key)}\s*:\s*([^;{{\n]+)'
             m = re.search(pattern, clean_content, re.IGNORECASE)
             if not m:
-                return ''                         # not present → empty string
+                return ''
             val = m.group(1).strip().strip('"').strip("'").strip()
             if val.startswith('@'):
                 ref = val[1:].strip()
                 return raw.get(ref.lower(), '')
             if val.startswith('#'):
-                return val[:7] if len(val) > 7 else val   # drop alpha if present
+                return val[:7] if len(val) > 7 else val   # drop alpha
             return ''
 
         colors = {}
         for name in target_colors:
             resolved = resolve_value(name)
-            if resolved:                          # only store successfully resolved colors
+            if resolved:
                 colors[name] = resolved
 
         return colors
@@ -205,7 +200,6 @@ class I3blocksGenerator(BaseGenerator):
         print("   (Existing configs will be backed up as config.backup)")
         print("=" * 60)
 
-        # Named colors we always want to report on (colorN presence is dynamic)
         named_colors = ['sigbg', 'sig1', 'sig2', 'sig3', 'foreground']
         successful   = 0
 
@@ -219,7 +213,6 @@ class I3blocksGenerator(BaseGenerator):
             if missing_named:
                 print(f"   ⚠  Could not resolve named colors: {missing_named}")
 
-            # Report how many colorN were found
             found_numbered = [f'color{i}' for i in range(1, 17) if f'color{i}' in colors]
             print(
                 f"   ✓ Resolved {len(named_colors) - len(missing_named)}/{len(named_colors)} "
@@ -233,7 +226,7 @@ class I3blocksGenerator(BaseGenerator):
             for k in named_colors:
                 print(f"      {k:>12} = {colors.get(k, '(not found)')}")
 
-            # Inject the best accessible foreground for use in the template
+            # Inject best accessible foreground for use as {{BEST_FG}} if needed
             colors['best_fg'] = self._best_foreground(colors)
 
             merged_content = self._merge_template(template_content, colors)
