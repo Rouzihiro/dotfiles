@@ -1,0 +1,59 @@
+#!/usr/bin/env bash
+ROFI_FILE="${1:-$HOME/.config/zorro/current/theme/rofi.rasi}"
+TEMPLATE="$HOME/.config/i3blocks/i3blocks.template"
+OUTPUT="$HOME/.config/i3blocks/config"
+
+# ── 1. Parse raw hex values — strip inline /* comments */ first ──────────────
+declare -A RAW
+
+while IFS= read -r line; do
+    # Strip inline comments before matching
+    clean="${line%%/\**}"
+    if [[ "$clean" =~ ^[[:space:]]*(color[0-9]+|background|foreground|selection-background|selection-foreground|border-color)[[:space:]]*:[[:space:]]*(#[0-9a-fA-F]{6,8}) ]]; then
+        RAW["${BASH_REMATCH[1]}"]="${BASH_REMATCH[2]}"
+    fi
+done < "$ROFI_FILE"
+
+# ── 2. Resolve @colorN aliases ───────────────────────────────────────────────
+resolve() {
+    local key="$1"
+    local raw_line val
+
+    # Get the full line, strip comment, grab value after colon
+    raw_line=$(grep -E "^\s*${key}\s*:" "$ROFI_FILE" | head -1)
+    raw_line="${raw_line%%/\**}"   # strip /* comment */
+    val=$(echo "$raw_line" | sed 's/^[^:]*:[[:space:]]*//' | tr -d '; ' | xargs)
+
+    if [[ "$val" == @* ]]; then
+        local ref="${val:1}"
+        echo "${RAW[$ref]:-#ffffff}"
+    elif [[ "$val" == \#* ]]; then
+        echo "$val"
+    else
+        echo "#ffffff"
+    fi
+}
+
+SIGBG=$(resolve "sigbg")
+SIG1=$(resolve "sig1")
+SIG2=$(resolve "sig2")
+SIG3=$(resolve "sig3")
+FOREGROUND=$(resolve "foreground")
+COLOR1="${RAW[color1]:-#ffffff}"
+COLOR11="${RAW[color11]:-#ffffff}"
+
+echo "  sigbg=$SIGBG  sig1=$SIG1  sig2=$SIG2  sig3=$SIG3"
+echo "  foreground=$FOREGROUND  color1=$COLOR1  color11=$COLOR11"
+
+# ── 3. Apply to template ─────────────────────────────────────────────────────
+sed \
+    -e "s|{{SIGBG}}|$SIGBG|g" \
+    -e "s|{{SIG1}}|$SIG1|g" \
+    -e "s|{{SIG2}}|$SIG2|g" \
+    -e "s|{{SIG3}}|$SIG3|g" \
+    -e "s|{{FOREGROUND}}|$FOREGROUND|g" \
+    -e "s|{{COLOR1}}|$COLOR1|g" \
+    -e "s|{{COLOR11}}|$COLOR11|g" \
+    "$TEMPLATE" > "$OUTPUT"
+
+echo "✓ i3blocks config written from $(basename "$ROFI_FILE")"

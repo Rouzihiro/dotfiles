@@ -1,4 +1,3 @@
-# Kanagawa Dragon Theme for Sway
 # Generated from kitty.conf
 
 # Default foreground
@@ -103,9 +102,6 @@ set $waveRed        #E85F6F
 
 # Standout specials 2 (exception handling, return)
 set $peachRed       #E85F6F
-
-# Constants, imports, booleans
-set $surimiOrange   #f0eaed
 
 # Deprecated
 set $katanaGray     #4a3c45
