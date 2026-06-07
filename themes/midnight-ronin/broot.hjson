@@ -1,0 +1,69 @@
+
+skin: {
+
+    default: rgb(192, 202, 245) none / rgb(65, 72, 104) none
+
+    tree: rgb(21, 22, 30) none / rgb(26, 27, 38) none
+    parent: rgb(122, 162, 247) none / rgb(125, 207, 255) none
+
+    file: rgb(192, 202, 245) none / rgb(192, 202, 245) none
+    directory: rgb(122, 162, 247) none bold / rgb(187, 154, 247) none
+
+    exe: rgb(158, 206, 106) none
+    link: rgb(187, 154, 247) none
+
+    pruning: rgb(65, 72, 104) none italic
+
+    perm__: rgb(21, 22, 30) none
+    perm_r: rgb(224, 175, 104) none
+    perm_w: rgb(247, 118, 142) none
+    perm_x: rgb(158, 206, 106) none
+
+    owner: rgb(125, 207, 255) none
+    group: rgb(122, 162, 247) none
+
+    count: rgb(224, 175, 104) rgb(26, 27, 38)
+
+    dates: rgb(65, 72, 104) none
+    sparse: rgb(224, 175, 104) none
+
+    content_extract: rgb(125, 207, 255) none
+    content_match: rgb(158, 206, 106) none bold
+
+    git_branch: rgb(224, 175, 104) none
+    git_insertions: rgb(158, 206, 106) none
+    git_deletions: rgb(247, 118, 142) none
+
+    git_status_current: rgb(192, 202, 245) none
+    git_status_modified: rgb(224, 175, 104) none
+    git_status_new: rgb(158, 206, 106) none bold
+    git_status_ignored: rgb(65, 72, 104) none
+    git_status_conflicted: rgb(247, 118, 142) none
+
+    selected_line: none rgb(65, 72, 104) / none rgb(26, 27, 38)
+
+    char_match: rgb(122, 162, 247) none bold
+    file_error: rgb(247, 118, 142) none bold
+
+    input: rgb(192, 202, 245) rgb(26, 27, 38) / rgb(192, 202, 245) none
+
+    status_error: rgb(26, 27, 38) rgb(247, 118, 142)
+    status_job: rgb(224, 175, 104) rgb(26, 27, 38)
+
+    status_normal: rgb(192, 202, 245) rgb(26, 27, 38)
+
+    status_bold: rgb(224, 175, 104) rgb(26, 27, 38) bold
+
+    scrollbar_thumb: rgb(65, 72, 104) none
+
+    help_headers: rgb(122, 162, 247) none bold
+
+    preview: rgb(192, 202, 245) rgb(26, 27, 38)
+
+    preview_title: rgb(122, 162, 247) rgb(26, 27, 38) bold
+
+    preview_match: none rgb(65, 72, 104)
+
+    mode_command_mark: rgb(26, 27, 38) rgb(122, 162, 247) bold
+
+}
