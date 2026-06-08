@@ -155,6 +155,11 @@ function dir_icon {
 }
 PS1='%B%F{green}%f%b  %B%F{magenta}%n%f%b $(dir_icon)  %B%F{red}%~%f%b${vcs_info_msg_0_} %(?.%B%F{green}.%F{red})%f%b '
 
+export BAT_THEME=ansi
+export LESS="-R --RAW-CONTROL-CHARS"
+export PAGER="less -R --RAW-CONTROL-CHARS"
+export FZF_DEFAULT_OPTS="--ansi"
+
 #  ╦  ╦┬┌┬┐┌┐ ┬┌┐┌┌┬┐
 #  ╚╗╔╝││││├┴┐││││ ││
 #   ╚╝ ┴┴ ┴└─┘┴┘└┘─┴┘
