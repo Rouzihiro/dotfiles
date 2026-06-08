@@ -182,6 +182,17 @@ bindkey '^[w' kill-region
 bindkey '^y' autosuggest-accept
 bindkey -v '^?' backward-delete-char
 
+
+# Open current command line in nvim for editing
+autoload -Uz edit-command-line
+zle -N edit-command-line
+
+# Bind in normal mode (press 'v' after Esc)
+bindkey -M vicmd v edit-command-line
+
+# Add Ctrl+N for insert mode (so you don't need to press Esc first)
+bindkey -M viins '^N' edit-command-line
+
 #  ╔═╗┬ ┬┌─┐┬  ┬    ╦┌┐┌┌┬┐┌─┐┌─┐┬─┐┌─┐┌┬┐┬┌─┐┌┐┌
 #  ╚═╗├─┤├┤ │  │    ║│││ │ ├┤ │ ┬├┬┘├─┤ │ ││ ││││
 #  ╚═╝┴ ┴└─┘┴─┘┴─┘  ╩┘└┘ ┴ └─┘└─┘┴└─┴ ┴ ┴ ┴└─┘┘└┘
@@ -196,7 +207,6 @@ unset _zoxide_cache
 
 eval "$(dircolors -b ${HOME}/.config/zsh/.dircolors 2>/dev/null || dircolors -b)"
 
-# PATH is set in .zshenv — not repeated here
 
 # ============================================
 # FZF
