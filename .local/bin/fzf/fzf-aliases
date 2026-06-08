@@ -1,0 +1,75 @@
+#!/bin/zsh
+#----------------------------------------------------------------------------------
+# SHOW ALIASES
+# Version: 0.2.0
+# Description: Fuzzy alias browser — grep-based parsing, fzf picker, zsh execution
+#----------------------------------------------------------------------------------
+
+filter="${1:-}"
+filter_lc=$(echo "$filter" | tr '[:upper:]' '[:lower:]')
+
+COLOR_ESC="\033[38;2;127;180;202m"
+RESET_ESC="\033[0m"
+
+HEADER_TEXT="
+              ───────────[ Your Aliases ]───────────
+         ENTER: Run  |  ^Y: Copy name  |  ^E: Copy cmd  |  ESC: Quit
+"
+
+# ── 1. Parse aliases directly from files (reliable, no sourcing needed) ────────
+alias_list=$(
+  grep -h "^alias " \
+    ~/.config/zsh/.aliases \
+    ~/.config/zsh/.aliases-functions \
+    ~/.config/zsh/.fedora \
+    2>/dev/null \
+  | sed -E "s/^alias ([^=]+)=['\"]?(.*?)['\"]?$/\1 ➜ \2/" \
+  | while IFS= read -r line; do
+      name="${line%% ➜*}"
+      value="${line#*➜ }"
+      name_lc=$(echo "$name" | tr '[:upper:]' '[:lower:]')
+      value_lc=$(echo "$value" | tr '[:upper:]' '[:lower:]')
+      if [[ -n "$filter" && "$name_lc" != *"$filter_lc"* && "$value_lc" != *"$filter_lc"* ]]; then
+        continue
+      fi
+      echo "$line"
+    done \
+  | sort
+)
+
+if [[ -z "$alias_list" ]]; then
+  echo -e "\n${COLOR_ESC}No aliases found.${RESET_ESC}\n"
+  exit 0
+fi
+
+# ── 2. fzf picker ──────────────────────────────────────────────────────────────
+selected=$(
+  echo "$alias_list" \
+  | column -t -s '➜' \
+  | fzf --ansi \
+      --prompt="  alias > " \
+      --pointer="▶" \
+      --height=60% \
+      --min-height=12 \
+      --border=rounded \
+      --border-label=" Aliases " \
+      --border-label-pos=3 \
+      --margin=2% \
+      --layout=reverse \
+      --info=inline \
+      --header="$HEADER_TEXT" \
+      --header-first \
+      --color="fg:#cdd6f4,fg+:#cba6f7,bg+:#313244,border:#7fb4ca,prompt:#7fb4ca,pointer:#f5c2e7,label:#7fb4ca,header:#a6adc8" \
+      --preview="echo 'Full command:'; echo {2..}" \
+      --preview-window=bottom:3:wrap \
+      --bind "ctrl-y:execute-silent(echo {1} | xclip -selection clipboard 2>/dev/null || echo {1} | pbcopy 2>/dev/null)+abort" \
+      --bind "ctrl-e:execute-silent(echo {2..} | xclip -selection clipboard 2>/dev/null || echo {2..} | pbcopy 2>/dev/null)+abort"
+)
+
+# ── 3. Run selected alias in an interactive zsh (so aliases are known) ─────────
+if [[ -n "$selected" ]]; then
+  alias_name=$(echo "$selected" | awk '{print $1}')
+  clear
+  echo -e "${COLOR_ESC}▶ Running:${RESET_ESC} $alias_name\n"
+  zsh -ic "$alias_name"
+fi
