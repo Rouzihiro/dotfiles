@@ -6,16 +6,16 @@
   <property name="pressureMultiplier" value="1"/>
   <property name="zoomGesturesEnabled" value="true"/>
   <property name="selectedToolbar" value="Portrait"/>
-  <property name="lastSavePath" value="/home/rey/Downloads/nil"/>
-  <property name="lastOpenPath" value="/home/rey/Downloads"/>
+  <property name="lastSavePath" value="/home/rey/Documents/tax-report/2025"/>
+  <property name="lastOpenPath" value="/home/rey/Documents/tax-report/2025"/>
   <property name="lastImagePath" value="/home/rey/Documents/signature"/>
   <property name="edgePanSpeed" value="20"/>
   <property name="edgePanMaxMult" value="5"/>
   <property name="zoomStep" value="10"/>
   <property name="zoomStepScroll" value="2"/>
   <property name="displayDpi" value="72"/>
-  <property name="mainWndWidth" value="839"/>
-  <property name="mainWndHeight" value="1007"/>
+  <property name="mainWndWidth" value="1688"/>
+  <property name="mainWndHeight" value="1023"/>
   <property name="maximized" value="false"/>
   <property name="showToolbar" value="true"/>
   <property name="showSidebar" value="true"/>
@@ -205,7 +205,7 @@
     </data>
   </data>
   <data name="tools">
-    <attribute name="current" type="string" value="text"/>
+    <attribute name="current" type="string" value="eraser"/>
     <data name="drawArrow"/>
     <data name="drawCoordinateSystem"/>
     <data name="drawDoubleArrow"/>
