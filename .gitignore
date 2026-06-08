@@ -19,10 +19,10 @@ google_token
 # -------------------------
 # BLOCK images inside themes/
 # -------------------------
-themes/**/*.jpg
-themes/**/*.jpeg
-themes/**/*.png
-themes/**/*.gif
+# themes/**/*.jpg
+# themes/**/*.jpeg
+# themes/**/*.png
+# themes/**/*.gif
 
 # -------------------------
 # binaries
