@@ -87,16 +87,11 @@ require("marks").setup {
 -- =====================
 -- Theme and color
 -- =====================
-_G.default_color = require("theme").default_color
-local color_group = vim.api.nvim_create_augroup("colors", { clear = true })
-
-vim.api.nvim_create_autocmd("ColorScheme", {
-    group = color_group,
-    callback = function()
-        vim.cmd("colorscheme " .. (_G.default_color or "gruvbox"))
-    end,
-})
-vim.cmd('colorscheme ' .. default_color)
+local theme = require("theme")
+vim.cmd('colorscheme ' .. theme.default_color)
+if theme.set_terminal_colors then
+    theme.set_terminal_colors()
+end
 
 -- =====================
 -- Mason + LSP
