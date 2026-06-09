@@ -1,0 +1,16 @@
+gui:
+  theme:
+    selectedLineBgColor:
+      - reverse   # uses terminal inversion, not a color
+    activeBorderColor:
+      - default
+    inactiveBorderColor:
+      - default
+    optionsTextColor:
+      - default
+    selectedRangeBgColor:
+      - reverse
+
+git:
+  paging:
+    colorArg: always

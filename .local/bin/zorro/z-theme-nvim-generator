@@ -1,0 +1,50 @@
+#!/usr/bin/env bash
+
+KITTY_CONF="$(pwd)/kitty.conf"
+THEME_LUA="$(pwd)/nvim.lua"
+
+if [[ ! -f "$KITTY_CONF" ]]; then
+    echo "Error: kitty.conf not found in current directory"
+    exit 1
+fi
+
+if [[ ! -f "$THEME_LUA" ]]; then
+    echo "Error: theme.lua not found in current directory"
+    exit 1
+fi
+
+# Extract colors 0-15 from kitty.conf
+declare -A colors
+while IFS= read -r line; do
+    if [[ "$line" =~ ^color([0-9]+)[[:space:]]+(#[0-9a-fA-F]+) ]]; then
+        index="${BASH_REMATCH[1]}"
+        hex="${BASH_REMATCH[2]}"
+        if (( index <= 15 )); then
+            colors[$index]="$hex"
+        fi
+    fi
+done < "$KITTY_CONF"
+
+# Build the lua function string
+lua_block="M.set_terminal_colors = function()\n"
+for i in $(seq 0 15); do
+    lua_block+="    vim.g.terminal_color_${i}  = \"${colors[$i]}\"\n"
+done
+lua_block+="end"
+
+python3 - <<EOF
+import re
+
+with open("${THEME_LUA}", "r") as f:
+    content = f.read()
+
+block = """${lua_block}"""
+
+content = re.sub(r'M\.set_terminal_colors = function\(\).*?end\n?', '', content, flags=re.DOTALL)
+content = re.sub(r'(M\.default_color\s*=\s*"[^"]+"\n)', r'\1' + block + '\n', content)
+
+with open("${THEME_LUA}", "w") as f:
+    f.write(content)
+
+print("Done — theme.lua updated")
+EOF
