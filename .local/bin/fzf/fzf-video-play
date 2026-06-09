@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+
+# Collect full paths of video files
+mapfile -t video_files < <(find ~/Videos ~/Downloads -type f \( -iname "*.avi" -o -iname "*.mp4" -o -iname "*.mkv" -o -iname "*.flv" -o -iname "*.webm" \) | sort)
+
+if [ ${#video_files[@]} -eq 0 ]; then
+    notify-send "No video files found in ~/Videos or ~/Downloads."
+    exit 1
+fi
+
+# Show basenames in fzf, resolve back to full path on selection
+video_path=$(printf '%s\n' "${video_files[@]}" \
+    | awk -F/ '{print $NF "\t" $0}' \
+    | fzf --layout=reverse --border=rounded --height=100% \
+          --prompt="Play > " \
+          --with-nth=1 \
+          --delimiter='\t' \
+    | cut -f2)
+
+[ -z "$video_path" ] && exit 0
+
+choice=$(basename "$video_path")
+mpv "$video_path"
+notify-send "Video Player" "Playing: $choice" -i video-x-generic

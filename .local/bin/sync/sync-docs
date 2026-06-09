@@ -1,9 +1,45 @@
 #!/bin/bash
 
-# Set source and destination
 SOURCE="$HOME/Documents/"
 DEST="$HOME/mount/usb/Documents/"
 
-# Run rsync with options
-rsync -avh --delete "$SOURCE" "$DEST"
+echo "=== RSYNC SAFE SYNC ==="
+echo "1) Bidirectional sync (no deletions, safest)"
+echo "2) Mirror Documents -> USB (can delete files on USB)"
+read -rp "Choose mode [1-2]: " choice
 
+bidirectional() {
+    echo "Running bidirectional sync (safe mode)..."
+    rsync -avh --update "$SOURCE" "$DEST"
+    rsync -avh --update "$DEST" "$SOURCE"
+}
+
+mirror() {
+    echo "Preview of changes (DRY RUN):"
+    rsync -avhn --update --delete "$SOURCE" "$DEST"
+
+    echo
+    read -rp "Proceed with MIRROR sync? This may DELETE files on USB [y/N]: " confirm
+
+    if [[ "$confirm" =~ ^[Yy]$ ]]; then
+        rsync -avh --update --delete "$SOURCE" "$DEST"
+        echo "Mirror sync completed."
+    else
+        echo "Aborted."
+    fi
+}
+
+case "$choice" in
+    1)
+        bidirectional
+        ;;
+    2)
+        mirror
+        ;;
+    *)
+        echo "Invalid option."
+        exit 1
+        ;;
+esac
+
+echo "Sync done."
