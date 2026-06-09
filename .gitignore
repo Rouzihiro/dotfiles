@@ -21,7 +21,8 @@ google_token
 # -------------------------
 # themes/**/*.jpg
 # themes/**/*.jpeg
-# themes/**/*.png
+themes/**/rofi.png
+themes/**/color-palette.png
 # themes/**/*.gif
 
 # -------------------------
