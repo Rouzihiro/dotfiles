@@ -1,5 +1,5 @@
 "$schema" = 'https://starship.rs/config-schema.json'
-palette = 'Gruvbox'
+palette = 'Gojira'
 
 format = """
 [](sig1)\
