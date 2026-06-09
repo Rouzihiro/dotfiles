@@ -64,6 +64,7 @@ vim.pack.add({
 		{ src = "https://github.com/mofiqul/dracula.nvim" },
 		{ src = "https://github.com/tanvirtin/monokai.nvim" },
 		{ src = "https://github.com/nyoom-engineering/oxocarbon.nvim" },
+		{ src = "https://github.com/uhs-robert/oasis.nvim" },
 		{ src = "https://github.com/maxmx03/solarized.nvim" },
 
 })
