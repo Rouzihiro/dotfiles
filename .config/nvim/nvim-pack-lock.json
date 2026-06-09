@@ -161,6 +161,10 @@
       "rev": "8dcb311",
       "src": "https://github.com/nvim-tree/nvim-web-devicons"
     },
+    "oasis.nvim": {
+      "rev": "d79e82b72407a78fa43d7c4053390a49cdc93761",
+      "src": "https://github.com/uhs-robert/oasis.nvim"
+    },
     "oil.nvim": {
       "rev": "01cb3a8",
       "src": "https://github.com/stevearc/oil.nvim"
