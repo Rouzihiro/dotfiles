@@ -1,5 +1,4 @@
 #!/bin/bash
-
 set -e
 
 echo "Running fix-mp4..."
@@ -8,25 +7,43 @@ fix-mp4
 echo "Waiting 2 seconds..."
 sleep 2
 
+echo
 echo "Files that will be deleted (everything NOT starting with 'fixed_'):"
 find . -maxdepth 1 -type f ! -name 'fixed_*' -print
-
 echo
-read -p "Do you really want to delete these files? [y/N]: " confirm
 
+# Safety check: every original file must have a fixed_ counterpart
+all_good=true
+while IFS= read -r f; do
+  base="${f#./}"
+  if [[ ! -f "fixed_${base}" ]]; then
+    echo "WARNING: No fixed_ version found for: $base"
+    all_good=false
+  fi
+done < <(find . -maxdepth 1 -type f ! -name 'fixed_*')
+
+if [[ "$all_good" != true ]]; then
+  echo
+  echo "Aborting: one or more files have no fixed_ counterpart."
+  echo "Check that fix-mp4 supports all file types in this directory (e.g. MKV)."
+  exit 1
+fi
+
+read -p "Do you really want to trash these files? [y/N]: " confirm
 if [[ "$confirm" != "y" && "$confirm" != "Y" ]]; then
-  echo "Aborted. No files were deleted."
+  echo "Aborted. No files were trashed."
   exit 0
 fi
 
-echo "Deleting files..."
-find . -maxdepth 1 -type f ! -name 'fixed_*' -delete
+echo "Trashing files..."
+while IFS= read -r f; do
+  trash "$f"
+done < <(find . -maxdepth 1 -type f ! -name 'fixed_*')
 
 echo "Waiting 2 seconds..."
 sleep 2
 
 echo "Renaming fixed_* files..."
-
 shopt -s nullglob
 for f in fixed_*; do
   mv -- "$f" "${f#fixed_}"
