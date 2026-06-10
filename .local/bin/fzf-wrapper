@@ -1,0 +1,80 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+ROOT="${1:-$PWD}"
+
+command -v fzf >/dev/null || exit 1
+command -v fzf-preview.sh >/dev/null || exit 1
+
+CACHE_DIR="/tmp/fzf-fm-cache"
+mkdir -p "$CACHE_DIR"
+
+STATE_FILE="$CACHE_DIR/current_dir"
+echo "$ROOT" > "$STATE_FILE"
+
+# ── fast directory listing (cached per dir) ────────
+list_dir() {
+  local dir="$1"
+  local cache="$CACHE_DIR/$(echo "$dir" | md5sum | cut -d' ' -f1)"
+
+  if [[ ! -f "$cache" ]]; then
+    find "$dir" \
+      -path '*/.git/*' -prune -o \
+      -path '*/node_modules/*' -prune -o \
+      -print 2>/dev/null > "$cache"
+  fi
+
+  cat "$cache"
+}
+
+# ── loop ───────────────────────────────────────────
+while true; do
+  CURRENT_DIR="$(cat "$STATE_FILE")"
+
+  SELECTED=$(
+    list_dir "$CURRENT_DIR" |
+    fzf \
+      --height=100% \
+      --layout=reverse \
+      --prompt="📁 ${CURRENT_DIR} > " \
+      --preview 'fzf-preview.sh {}' \
+      --preview-window='right:60%,border-left' \
+      --bind "backspace:execute(echo $(dirname "$CURRENT_DIR") > $STATE_FILE)+abort" \
+      --bind 'ctrl-/:change-preview-window(hidden|right:60%)'
+  ) || exit 0
+
+  [[ -z "$SELECTED" ]] && continue
+
+  # ── directory navigation ───────────────
+  if [[ -d "$SELECTED" ]]; then
+    echo "$SELECTED" > "$STATE_FILE"
+    continue
+  fi
+
+  # ── action menu ─────────────────────────
+  ACTION=$(printf "open\nxdg-open\nmove\ndelete\ncancel" |
+    fzf --prompt="action > ") || continue
+
+  case "$ACTION" in
+    open)
+      nvim "$SELECTED"
+      ;;
+
+    xdg-open)
+      xdg-open "$SELECTED" >/dev/null 2>&1 & disown
+      ;;
+
+    move)
+      TARGET=$(fzf-wrapper-path "$HOME") || continue
+      mv "$SELECTED" "$TARGET/"
+      ;;
+
+    delete)
+      rm -i "$SELECTED"
+      ;;
+
+    cancel)
+      continue
+      ;;
+  esac
+done
