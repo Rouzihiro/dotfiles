@@ -100,14 +100,8 @@ select_files() {
       --delimiter=$'\t' \
       --with-nth=2.. \
       --prompt="Pick images (ESC=back) > " \
-      --preview='bash -c '"'"'
-printf "\033[2J\033[H"
-path="$1"
-echo "File: $path"
-echo "Size: $(stat -c%s "$path" 2>/dev/null | numfmt --to=iec)"
-echo ""
-chafa -s 50x25 "$path" 2>/dev/null
-'"'"' _ {4}' \
+		  # --preview='fzf-chafa-preview.sh {}' \
+      --preview='fzf-preview.sh {}' \
       --preview-window=right:50%:wrap \
       --header="TAB multi | ESC=back to menu")
   
