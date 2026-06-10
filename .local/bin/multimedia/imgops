@@ -1,14 +1,64 @@
 #!/bin/bash
 
-FILE="$1"
-if [ ! -f "$FILE" ]; then
+# Parse arguments properly
+FILE=""
+OPERATION=""
+CROP_GEOM=""
+WATERMARK_TEXT=""
+
+# First argument is the file
+if [[ -n "$1" ]] && [[ ! "$1" =~ ^-- ]]; then
+    FILE="$1"
+    shift
+fi
+
+# Parse remaining flags
+while [[ $# -gt 0 ]]; do
+    case "$1" in
+        --operation)
+            OPERATION="$2"
+            shift 2
+            ;;
+        --crop-geom)
+            CROP_GEOM="$2"
+            shift 2
+            ;;
+        --watermark-text)
+            WATERMARK_TEXT="$2"
+            shift 2
+            ;;
+        *)
+            shift
+            ;;
+    esac
+done
+
+# Validate file
+if [[ ! -f "$FILE" ]]; then
     echo "Not a valid file: $FILE"
     exit 1
 fi
 
-choice=$(echo -e "↻ Rotate 90°\n↺ Rotate -90°\n🔄 Flip horizontal\n🔄 Flip vertical\n🖼️ Convert to PNG\n📐 Resize 50%\n🌈 Grayscale\n✂️ Crop (interactive)\n💧 Blur\n✨ Sharpen\n🌞 Brighten\n🌑 Darken\n📝 Watermark\n📏 Border\nCancel" | fzf --height=50% --reverse --prompt="Image operation: ")
+# If no operation passed, show menu
+if [[ -z "$OPERATION" ]]; then
+    OPERATION=$(echo -e "↻ Rotate 90°\n↺ Rotate -90°\n🔄 Flip horizontal\n🔄 Flip vertical\n🖼️ Convert to PNG\n📐 Resize 50%\n🌈 Grayscale\n✂️ Crop (interactive)\n💧 Blur\n✨ Sharpen\n🌞 Brighten\n🌑 Darken\n📝 Watermark\n📏 Border\nCancel" | fzf --height=50% --reverse --prompt="Image operation: ")
+    [[ -z "$OPERATION" ]] || [[ "$OPERATION" == "Cancel" ]] && exit 0
+    
+    # Ask for interactive input if needed
+    case "$OPERATION" in
+        "✂️ Crop (interactive)")
+            echo "Enter crop geometry (e.g., 800x600+10+10):"
+            echo "Format: WIDTHxHEIGHT+XOFFSET+YOFFSET"
+            read -p "Geometry: " CROP_GEOM
+            ;;
+        "📝 Watermark")
+            read -p "Enter watermark text: " WATERMARK_TEXT
+            ;;
+    esac
+fi
 
-case "$choice" in
+# Execute operation
+case "$OPERATION" in
     "↻ Rotate 90°") magick "$FILE" -rotate 90 "$FILE" ;;
     "↺ Rotate -90°") magick "$FILE" -rotate -90 "$FILE" ;;
     "🔄 Flip horizontal") magick "$FILE" -flip "$FILE" ;;
@@ -17,23 +67,21 @@ case "$choice" in
     "📐 Resize 50%") magick "$FILE" -resize 50% "$FILE" ;;
     "🌈 Grayscale") magick "$FILE" -colorspace Gray "$FILE" ;;
     "✂️ Crop (interactive)")
-        echo "Enter crop geometry (e.g., 800x600+10+10):"
-        echo "Format: WIDTHxHEIGHT+XOFFSET+YOFFSET"
-        read -p "Geometry: " geometry
-        [ -n "$geometry" ] && magick "$FILE" -crop "$geometry" +repage "$FILE"
+        if [[ -n "$CROP_GEOM" ]]; then
+            magick "$FILE" -crop "$CROP_GEOM" +repage "$FILE"
+        fi
         ;;
     "💧 Blur") magick "$FILE" -blur 0x8 "$FILE" ;;
     "✨ Sharpen") magick "$FILE" -sharpen 0x1 "$FILE" ;;
     "🌞 Brighten") magick "$FILE" -modulate 110 "$FILE" ;;
     "🌑 Darken") magick "$FILE" -modulate 90 "$FILE" ;;
     "📝 Watermark")
-        read -p "Enter watermark text: " watermark
-        magick "$FILE" -pointsize 36 -fill "rgba(255,255,255,0.5)" -gravity southeast -annotate +10+10 "$watermark" "$FILE"
+        if [[ -n "$WATERMARK_TEXT" ]]; then
+            magick "$FILE" -pointsize 36 -fill "rgba(255,255,255,0.5)" -gravity southeast -annotate +10+10 "$WATERMARK_TEXT" "$FILE"
+        fi
         ;;
     "📏 Border") magick "$FILE" -bordercolor black -border 10x10 "$FILE" ;;
-    *) echo "Cancelled" ;;
+    *) echo "Cancelled"; exit 0 ;;
 esac
 
-echo ""
-echo "✓ Image operation complete!"
-sleep 2
+echo "✓ $(basename "$FILE"): $OPERATION completed"
