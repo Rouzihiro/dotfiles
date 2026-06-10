@@ -10,6 +10,9 @@ map({ "n", "v", "x" }, ":", ";", { desc = "Swap : and ;" })
 map("n", "n", "nzzzv", { desc = "Next search result centered" })
 map("n", "N", "Nzzzv", { desc = "Previous search result centered" })
 
+-- Make 'c' (change) not yank the deleted text (send to black hole register "_")
+map("n", "c", '"_c', { desc = "Change without yanking" })
+
 -- =====================
 -- Window management
 -- =====================
@@ -22,15 +25,10 @@ map('n', '<leader>fh', '<Cmd>bot sf #<CR>', { desc = "Horizontal split with alte
 map('n', '<leader>fv', '<Cmd>vert belowright sf #<CR>', { desc = "Vertical split with alternate file" })
 
 -- =====================
--- Tabs
+-- Buffes
 -- =====================
-map("n", "<leader>t", function() end, { desc = "Tabs ▸" })
-map("n", "<leader>to", "<cmd>tabnew<CR>", { desc = "Open new tab" })
-map("n", "<leader>tx", "<cmd>tabclose<CR>", { desc = "Close current tab" })
-map("n", "<leader>tn", "<cmd>tabn<CR>", { desc = "Go to next tab" })
-map("n", "<leader>tp", "<cmd>tabp<CR>", { desc = "Go to previous tab" })
-map("n", "<leader>tf", "<cmd>tabnew %<CR>", { desc = "Open current buffer in new tab" })
-map("n", "<leader>ta", "<cmd>tab all<CR>", { desc = "Open all buffers in tabs" })
+map("n", "<Tab>", "<cmd>bnext<CR>", { desc = "Next buffer" })
+map("n", "<S-Tab>", "<cmd>bprevious<CR>", { desc = "Previous buffer" })
 
 -- =====================
 -- File manager (Oil)
@@ -38,6 +36,32 @@ map("n", "<leader>ta", "<cmd>tab all<CR>", { desc = "Open all buffers in tabs" }
 map("n", "<leader>e", function()
     vim.cmd("Oil --float " .. vim.loop.cwd())
 end, { desc = "Open Oil floating file manager" })
+
+-- =====================
+-- File path helpers
+-- =====================
+map("n", "<leader>fa", function() print(vim.fn.expand("%:p")) end, { desc = "Show absolute path" })
+map("n", "<leader>ft", function() print(vim.fn.expand("%:t")) end, { desc = "Show filename" })
+map("n", "<leader>fr", function() print(vim.fn.fnamemodify(vim.fn.expand("%"), ":.")) end, { desc = "Show relative path" })
+map("n", "<leader>fy", function()
+    local path = vim.fn.fnamemodify(vim.fn.expand("%"), ":.")
+    vim.fn.setreg("+", path)
+    print("yanked: " .. path)
+end, { desc = "Yank relative path" })
+map("n", "<leader>cd", "<cmd>lcd %:p:h<CR>", { desc = "cd to current file's dir" })
+map("n", "<leader>gr", function()
+    local root = vim.fn.systemlist("git rev-parse --show-toplevel")[1]
+    if root and root ~= "" then vim.cmd("cd " .. root) end
+end, { desc = "cd to git root" })
+
+
+-- =====================
+-- Quickfix
+-- =====================
+map("n", "<leader>ho", "<cmd>copen<CR>", { desc = "Open quickfix" })
+map("n", "<leader>hc", "<cmd>cclose<CR>", { desc = "Close quickfix" })
+map("n", "]h", "<cmd>cnext<CR>", { desc = "Next quickfix item" })
+map("n", "[h", "<cmd>cprev<CR>", { desc = "Prev quickfix item" })
 
 -- =====================
 -- Reload / Source
