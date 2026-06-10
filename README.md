@@ -222,6 +222,11 @@ This setup with Sway WM idles at ~600MB RAM with our ultra-efficient stack:
 <td align="center"><img src="https://raw.githubusercontent.com/Rouzihiro/assets/main/4dotfiles/vague.png" width="400"/><br><b>Vague</b></td>
 <td align="center"><img src="https://raw.githubusercontent.com/Rouzihiro/assets/main/4dotfiles/vantablack.png" width="400"/><br><b>Vantablack</b></td>
 </tr>
+
+<tr>
+<td align="center"><img src="https://raw.githubusercontent.com/Rouzihiro/assets/main/4dotfiles/versailles.png" width="400"/><br><b>Versailles</b></td>
+<td align="center"><img src="https://raw.githubusercontent.com/Rouzihiro/assets/main/4dotfiles/gojira.png" width="400"/><br><b>Gojira</b></td>
+</tr>
 </table>
 
 ## Window Managers
