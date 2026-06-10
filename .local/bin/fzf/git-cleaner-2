@@ -1,0 +1,278 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+# ==========================================================
+# CONFIGURATION (EDIT ONLY THIS)
+# ==========================================================
+
+GITHUB_OWNER="Rouzihiro"
+REPO_NAME="assets"
+BRANCH="main"
+
+# default remote preference
+DEFAULT_REMOTE="origin"
+
+# initial static trash (optional)
+TRASH=(
+    "color-palettes/*.png"
+)
+
+# ==========================================================
+# DO NOT TOUCH BELOW
+# ==========================================================
+
+REMOTE_URL="git@github.com:${GITHUB_OWNER}/${REPO_NAME}.git"
+
+# ---------------------------
+# helpers
+# ---------------------------
+
+pick_remote() {
+    echo
+    echo "Detecting remotes..."
+    echo
+
+    mapfile -t remotes < <(git remote)
+
+    if [[ ${#remotes[@]} -eq 0 ]]; then
+        echo "No remotes found."
+        echo "Using default: $REMOTE_URL"
+        echo
+        return
+    fi
+
+    echo "Available remotes:"
+    for r in "${remotes[@]}"; do
+        echo "  - $r"
+    done
+    echo
+
+    if command -v fzf >/dev/null 2>&1; then
+        REMOTE_NAME=$(printf "%s\n" "${remotes[@]}" | fzf --prompt="Select remote > ")
+    else
+        read -rp "Remote name (default: $DEFAULT_REMOTE): " REMOTE_NAME
+        REMOTE_NAME="${REMOTE_NAME:-$DEFAULT_REMOTE}"
+    fi
+
+    if [[ -n "$REMOTE_NAME" ]]; then
+        REMOTE_URL=$(git remote get-url "$REMOTE_NAME")
+    fi
+}
+
+edit_script() {
+    if command -v nvim >/dev/null 2>&1; then
+        exec nvim "$0"
+    elif command -v nano >/dev/null 2>&1; then
+        exec nano "$0"
+    else
+        echo "No editor found."
+        exit 1
+    fi
+}
+
+save_copy() {
+    mkdir -p "$HOME/Downloads"
+    cp "$0" "$HOME/Downloads/git-history-cleaner.sh"
+    chmod +x "$HOME/Downloads/git-history-cleaner.sh"
+
+    echo
+    echo "Saved to:"
+    echo "  $HOME/Downloads/git-history-cleaner.sh"
+    echo
+}
+
+add_trash_interactive() {
+    if ! command -v fzf >/dev/null 2>&1; then
+        echo "fzf not installed."
+        return
+    fi
+
+    echo
+    echo "Select files/folders to remove from history:"
+    echo " (TAB for multi-select, ENTER to confirm)"
+    echo
+
+    while true; do
+        item=$(git ls-files | fzf --multi --prompt="TRASH > ")
+
+        [[ -z "$item" ]] && break
+
+        while IFS= read -r line; do
+            TRASH+=("$line")
+        done <<< "$item"
+
+        read -rp "Add more? [y/N]: " more
+        [[ "$more" =~ ^[Yy] ]] || break
+    done
+}
+
+check_clean() {
+    if ! git diff --quiet || ! git diff --cached --quiet; then
+        echo "ERROR: working tree not clean"
+        exit 1
+    fi
+}
+
+show_trash() {
+    echo
+    echo "Files to remove:"
+    echo
+
+    for i in "${TRASH[@]}"; do
+        echo "  • $i"
+    done
+    echo
+}
+
+confirm_del() {
+    echo
+    echo "════════════════════════════════════"
+    echo "       DANGER: HISTORY REWRITE"
+    echo "════════════════════════════════════"
+    echo
+    echo "Remote : $REMOTE_URL"
+    echo "Branch : $BRANCH"
+    show_trash
+
+    echo "Type 'del' to continue:"
+    read -r confirm
+
+    [[ "$confirm" == "del" ]] || {
+        echo "Aborted."
+        exit 1
+    }
+}
+
+preview_mode() {
+    echo
+    echo "════════ PREVIEW MODE ════════"
+    echo
+
+    echo "Would run:"
+    echo
+
+    args=()
+    for t in "${TRASH[@]}"; do
+        echo "  --path-glob '$t'"
+        args+=(--path-glob "$t")
+    done
+
+    echo
+    echo "Command:"
+    echo "git filter-repo ${args[*]} --invert-paths --force"
+    echo
+
+    echo "NOTE:"
+    echo "- No changes were applied"
+    echo "- This is a simulation only"
+    echo
+}
+
+run_clean() {
+    check_clean
+    pick_remote
+    confirm_del
+
+    if ! command -v git-filter-repo >/dev/null 2>&1; then
+        echo "git-filter-repo missing"
+        exit 1
+    fi
+
+    args=()
+    for t in "${TRASH[@]}"; do
+        args+=(--path-glob "$t")
+    done
+
+    echo
+    echo "Running filter-repo..."
+    echo
+
+    git filter-repo \
+        "${args[@]}" \
+        --invert-paths \
+        --force
+
+    echo
+    echo "Updating .gitignore..."
+    for t in "${TRASH[@]}"; do
+        echo "$t" >> .gitignore
+    done
+
+    git add .gitignore || true
+    git commit -m "Ignore removed history files" || true
+
+    echo
+    echo "Rebuilding remote..."
+    git remote remove origin 2>/dev/null || true
+    git remote add origin "$REMOTE_URL"
+
+    git branch -M "$BRANCH"
+
+    echo
+    echo "Force pushing..."
+    git push -u origin "$BRANCH" --force
+
+    echo
+    echo "DONE"
+}
+
+menu() {
+    if command -v fzf >/dev/null 2>&1; then
+        printf "%s\n" \
+            "Run Cleaner" \
+            "Preview Mode" \
+            "Edit Script" \
+            "Add TRASH (fzf picker)" \
+            "Save to ~/Downloads" \
+            "Quit" | fzf --prompt="Git Cleaner > "
+    else
+        echo "1 Run"
+        echo "2 Preview"
+        echo "3 Edit"
+        echo "4 Add TRASH"
+        echo "5 Save"
+        echo "6 Quit"
+        read -r c
+        case "$c" in
+            1) echo "Run Cleaner" ;;
+            2) echo "Preview Mode" ;;
+            3) echo "Edit Script" ;;
+            4) echo "Add TRASH (fzf picker)" ;;
+            5) echo "Save to ~/Downloads" ;;
+            *) echo "Quit" ;;
+        esac
+    fi
+}
+
+# ---------------------------
+# main loop
+# ---------------------------
+
+while true; do
+    choice=$(menu)
+
+    case "$choice" in
+        "Run Cleaner")
+            run_clean
+            ;;
+        "Preview Mode")
+            preview_mode
+            ;;
+        "Edit Script")
+            edit_script
+            ;;
+        "Add TRASH (fzf picker)")
+            add_trash_interactive
+            ;;
+        "Save to ~/Downloads")
+            save_copy
+            ;;
+        "Quit")
+            exit 0
+            ;;
+        *)
+            echo "Invalid"
+            ;;
+    esac
+done
