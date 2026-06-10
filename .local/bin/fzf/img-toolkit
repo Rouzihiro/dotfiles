@@ -1,0 +1,268 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+TMP_DIR="/tmp/img-toolkit"
+mkdir -p "$TMP_DIR"
+
+# ── YOUR EXTERNAL SCRIPTS (just change these lines!) ─────────────────────────
+SCRIPT1="imgops"                    # Image operations (rotate, flip, crop, etc)
+CAPTION1="📷  Image Operations"
+
+SCRIPT2="img-converter"             # Format conversions  
+CAPTION2="🔄  Convert Images"
+
+SCRIPT3="img-uploader"              # Upload to cloud
+CAPTION3="☁️  Upload to Cloud"
+
+# Add more as needed:
+# SCRIPT4="your-script"
+# CAPTION4="Your Description"
+
+# ── helpers ───────────────────────────────────────────────────────────────────
+die()  { echo "✗ $*" >&2; exit 1; }
+info() { echo "  $*"; }
+
+for cmd in fzf chafa trash numfmt stat magick; do
+  command -v "$cmd" &>/dev/null || die "Required tool not found: $cmd"
+done
+
+# ── compress function (your original) ─────────────────────────────────────────
+compress_image() {
+  local path="$1" mode="$2"
+  [[ -f "$path" ]] || { info "skipping (gone): $path"; return; }
+
+  local base="${path%.*}"
+  local ext="${path##*.}"
+  local out="$path"
+  
+  [[ "$mode" == "new file" ]] && out="${base}-small.${ext}"
+  
+  local tmp="${TMP_DIR}/$(basename "$base")-tmp.${ext}"
+  
+  if [[ "$mode" == "smart" ]]; then
+    case "$ext" in
+      png)
+        magick "$path" -resize 2560x1440\> -strip "$tmp"
+        command -v oxipng &>/dev/null && oxipng -o 4 --strip all "$tmp" >/dev/null || true
+        ;;
+      jpg|jpeg)
+        magick "$path" -resize 2560x1440\> -strip -quality 85 "$tmp"
+        ;;
+      webp)
+        magick "$path" -resize 2560x1440\> -strip -quality 85 "$tmp"
+        ;;
+      *)
+        magick "$path" -resize 2560x1440\> -strip "$tmp"
+        ;;
+    esac
+  else
+    magick "$path" -resize 2560x1440\> -strip "$tmp"
+    if [[ "$ext" == "png" ]]; then
+      command -v oxipng &>/dev/null && oxipng -o 4 --strip all "$tmp" >/dev/null || true
+    fi
+  fi
+  
+  mv "$tmp" "$out"
+  
+  local before=$(stat -c%s "$path")
+  local after=$(stat -c%s "$out")
+  local pct=0
+  [[ "$before" -gt 0 ]] && pct=$(( (before - after) * 100 / before ))
+  info "$(basename "$path")  $(numfmt --to=iec "$before") → $(numfmt --to=iec "$after")  (-${pct}%)"
+  
+  if [[ "$mode" == "trash original" && "$out" != "$path" ]]; then
+    trash "$path"
+    info "  (original trashed)"
+  fi
+}
+
+# ── main browser (YOUR WORKING VERSION with ESC support) ──────────────────────
+main() {
+  echo ""
+  echo "  🖼️  Image Toolkit"
+  echo ""
+  
+  # Show available scripts
+  echo "  Available tools:"
+  
+  # Build arrays for scripts
+  local script_cmds=()
+  local script_captions=()
+  
+  for i in {1..99}; do
+    local caption_var="CAPTION$i"
+    local script_var="SCRIPT$i"
+    if [[ -n "${!caption_var:-}" ]] && [[ -n "${!script_var:-}" ]]; then
+      if command -v "${!script_var}" &>/dev/null; then
+        echo "    ✓ ${!caption_var}"
+        script_captions+=("${!caption_var}")
+        script_cmds+=("${!script_var}")
+      else
+        echo "    ✗ ${!caption_var} (command '${!script_var}' not found)"
+      fi
+    fi
+  done
+  echo "    ✓ Compress images"
+  echo "    ✓ Trash/Delete"
+  echo ""
+
+  # Build menu with scripts + compress options
+  local menu_items=()
+  
+  # Add scripts first
+  for caption in "${script_captions[@]}"; do
+    menu_items+=("$caption")
+  done
+  
+  # Add compress modes
+  menu_items+=("compress:smart" "compress:overwrite" "compress:new file" "compress:trash original")
+  menu_items+=("trash all" "delete all (rm)" "cancel")
+  
+  # Show menu
+  local choice
+  choice=$(printf '%s\n' "${menu_items[@]}" | fzf --prompt="Select action > " --height=40% --reverse)
+  [[ -z "$choice" ]] && exit 0
+  
+  # Determine if it's a script or compress mode
+  local RUN_SCRIPT=""
+  local COMPRESS_MODE=""
+  
+  # Check if choice matches a script
+  for i in "${!script_captions[@]}"; do
+    if [[ "${script_captions[$i]}" == "$choice" ]]; then
+      RUN_SCRIPT="${script_cmds[$i]}"
+      break
+    fi
+  done
+  
+  # Check if it's a compress mode
+  if [[ "$choice" =~ ^compress: ]]; then
+    COMPRESS_MODE="${choice#compress:}"
+  fi
+  
+  # If it's trash/delete
+  if [[ "$choice" == "trash all" ]] || [[ "$choice" == "delete all (rm)" ]]; then
+    COMPRESS_MODE="$choice"
+  fi
+  
+  # If cancel or unknown
+  if [[ "$choice" == "cancel" ]] || [[ -z "$RUN_SCRIPT" && -z "$COMPRESS_MODE" ]]; then
+    exit 0
+  fi
+
+  # File collection (YOUR ORIGINAL)
+  local INPUT
+  INPUT=$(fzf --multi --prompt="Select images/folders > " --walker=dir --preview='file {}')
+  [[ -z "$INPUT" ]] && exit 0
+
+  local FILES=()
+  for t in $INPUT; do
+    if [[ -d "$t" ]]; then
+      while IFS= read -r f; do
+        FILES+=("$f")
+      done < <(find "$t" -type f \( -iname "*.png" -o -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.webp" \))
+    else
+      FILES+=("$t")
+    fi
+  done
+
+  # Build table (YOUR ORIGINAL)
+  local LIST_FILE=$(mktemp)
+  for f in "${FILES[@]}"; do
+    local bytes=$(stat -c%s "$f")
+    local size_h=$(numfmt --to=iec "$bytes")
+    local mb=$((bytes / 1024 / 1024))
+    
+    case "${f##*.}" in
+      png) local est=$((mb / 3)) ;;
+      jpg|jpeg) local est=$((mb / 2)) ;;
+      webp) local est=$((mb / 2)) ;;
+      *) local est=$((mb / 2)) ;;
+    esac
+    
+    printf "%s\t%s\tMB:%s→~%s\t%s\n" "$bytes" "$size_h" "$mb" "$est" "$f"
+  done | sort -nr > "$LIST_FILE"
+
+# FZF picker with preview (force clear)
+local SELECTED
+SELECTED=$(cat "$LIST_FILE" | \
+  fzf --multi \
+    --delimiter=$'\t' \
+    --with-nth=2.. \
+    --prompt="Pick images > " \
+    --preview='bash -c '"'"'
+path="$1"
+# Clear and reset
+printf "\033[2J\033[H"
+echo "File: $path"
+echo "Size: $(stat -c%s "$path" 2>/dev/null | numfmt --to=iec)"
+echo ""
+echo "┌────────────────────────────────────────┐"
+chafa -s 48x20 "$path" 2>/dev/null
+echo "└────────────────────────────────────────┘"
+'"'"' _ {4}' \
+    --preview-window=right:50%:wrap \
+    --header="TAB multi | ESC=back | sorted by size")
+
+
+  local fzf_exit=$?
+  
+  # ESC pressed (130) - go back
+  if [[ $fzf_exit -eq 130 ]]; then
+    rm -f "$LIST_FILE"
+    main  # Go back to mode selection
+    return
+  fi
+  
+  [[ -z "$SELECTED" ]] && exit 0
+
+  # Process based on choice
+  if [[ -n "$RUN_SCRIPT" ]]; then
+    # Run external script on each selected file
+    echo ""
+    while IFS=$'\t' read -r bytes size meta path; do
+      [[ -z "$path" ]] && continue
+      info "── Running $RUN_SCRIPT on $(basename "$path")"
+      "$RUN_SCRIPT" "$path"
+    done <<< "$SELECTED"
+    echo ""
+    info "✓ All done"
+  elif [[ "$COMPRESS_MODE" == "trash all" ]]; then
+    read -rp "  Trash selected files? [y/N] " ans
+    if [[ "$ans" =~ ^[Yy]$ ]]; then
+      while IFS=$'\t' read -r bytes size meta path; do
+        [[ -z "$path" ]] && continue
+        trash "$path"
+        info "trashed: $(basename "$path")"
+      done <<< "$SELECTED"
+    fi
+  elif [[ "$COMPRESS_MODE" == "delete all (rm)" ]]; then
+    read -rp "  Permanently delete selected files? [y/N] " ans
+    if [[ "$ans" =~ ^[Yy]$ ]]; then
+      while IFS=$'\t' read -r bytes size meta path; do
+        [[ -z "$path" ]] && continue
+        rm -- "$path"
+        info "deleted: $(basename "$path")"
+      done <<< "$SELECTED"
+    fi
+  elif [[ -n "$COMPRESS_MODE" ]]; then
+    # Compress mode
+    while IFS=$'\t' read -r bytes size meta path; do
+      [[ -z "$path" ]] && continue
+      compress_image "$path" "$COMPRESS_MODE"
+    done <<< "$SELECTED"
+  fi
+
+  rm -f "$LIST_FILE"
+  echo ""
+  echo "  Done."
+  echo ""
+  
+  # Ask to continue or quit
+  read -rp "  Press Enter to continue or 'q' to quit: " ans
+  if [[ "$ans" != "q" ]]; then
+    main
+  fi
+}
+
+main "$@"
