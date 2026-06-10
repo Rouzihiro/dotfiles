@@ -130,9 +130,25 @@ chafa -s 50x25 "$path" 2>/dev/null
 
 # ── main browser ──────────────────────────────────────────────────────────────
 main() {
+  # Get starting path from argument or use current directory
+  local start_path="${1:-.}"
+  
+  # Convert to absolute path
+  if [[ "$start_path" == "." ]]; then
+    start_path="$(pwd)"
+  elif [[ "$start_path" == "~"* ]]; then
+    start_path="${HOME}${start_path:1}"
+  fi
+  
+  # Validate path exists
+  if [[ ! -d "$start_path" ]]; then
+    die "Directory not found: $start_path"
+  fi
+  
   while true; do
     echo ""
-    echo "  🖼️  Image Toolkit"
+    echo "  🖼️  Image Toolkit - Working in: $(basename "$start_path")"
+    echo "  Path: $start_path"
     echo ""
     
     # Show available tools
@@ -257,10 +273,16 @@ main() {
       esac
     fi
 
-    # File/folder selection with ESC handling
+    # File/folder selection with IMAGE PREVIEW (simplified)
     echo ""
     local INPUT
-    INPUT=$(fzf --multi --prompt="Select images/folders (ESC=back) > " --walker=dir --preview='file {}')
+    INPUT=$(fzf --multi \
+        --prompt="Select images/folders in $(basename "$start_path") (ESC=back) > " \
+        --walker="dir,file" \
+        --walker-root="$start_path" \
+        --preview="if [ -d {} ]; then ls -la {} | head -20; else chafa -s 50x25 {} 2>/dev/null || file {}; fi" \
+        --preview-window=right:50%:wrap)
+    
     local fzf_exit=$?
     
     # ESC pressed
@@ -268,7 +290,7 @@ main() {
       continue  # Go back to operation/tool menu
     fi
 
-    # Build file list
+    # Build file list (respects the starting path)
     local FILES=()
     for t in $INPUT; do
       if [[ -d "$t" ]]; then
@@ -276,7 +298,10 @@ main() {
           FILES+=("$f")
         done < <(find "$t" -type f \( -iname "*.png" -o -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.webp" \))
       else
-        FILES+=("$t")
+        # Only add if it's an image file
+        if [[ "$t" =~ \.(png|jpg|jpeg|webp)$ ]]; then
+          FILES+=("$t")
+        fi
       fi
     done
     

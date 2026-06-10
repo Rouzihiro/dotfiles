@@ -280,6 +280,19 @@ verbs: [
     leave_broot: true
 }
 {
+    invocation: img-toolkit
+    shortcut: tool
+    external: ["img-toolkit", "{directory}"]
+    leave_broot: true
+}
+{
+    invocation: img-ops
+    shortcut: ops
+    external: ["imgops", "{file}"]
+    leave_broot: true
+}
+
+{
     invocation: rr
     shortcut: rr
     apply_to: file
