@@ -100,7 +100,6 @@ select_files() {
       --delimiter=$'\t' \
       --with-nth=2.. \
       --prompt="Pick images (ESC=back) > " \
-		  # --preview='fzf-chafa-preview.sh {}' \
       --preview='fzf-preview.sh {}' \
       --preview-window=right:50%:wrap \
       --header="TAB multi | ESC=back to menu")
@@ -274,7 +273,7 @@ main() {
         --prompt="Select images/folders in $(basename "$start_path") (ESC=back) > " \
         --walker="dir,file" \
         --walker-root="$start_path" \
-        --preview="if [ -d {} ]; then ls -la {} | head -20; else chafa -s 50x25 {} 2>/dev/null || file {}; fi" \
+				--preview="fzf-preview.sh {}" \
         --preview-window=right:50%:wrap)
     
     local fzf_exit=$?
