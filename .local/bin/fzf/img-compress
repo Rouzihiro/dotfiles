@@ -1,0 +1,111 @@
+#!/usr/bin/env bash
+# img-compress — compress images; works standalone or via img-toolkit
+# Usage:
+#   img-compress --toolkit-info
+#   img-compress --operation "smart" file1.jpg file2.png ...
+#   img-compress file1.jpg file2.png ...   (prompts interactively for mode)
+set -euo pipefail
+
+TMP_DIR="/tmp/img-toolkit"
+mkdir -p "$TMP_DIR"
+
+if [[ "${1:-}" == "--toolkit-info" ]]; then
+  cat <<'EOF'
+NO_OP=false
+OPERATIONS=smart|overwrite|new file|trash original
+FILETYPES=png|jpg|jpeg|webp
+EOF
+  exit 0
+fi
+
+die()  { echo "✗ $*" >&2; exit 1; }
+info() { echo "  $*"; }
+
+for cmd in magick stat numfmt; do
+  command -v "$cmd" &>/dev/null || die "Required tool not found: $cmd"
+done
+
+# ── parse args ────────────────────────────────────────────────────────────────
+MODE=""
+FILES=()
+
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+    --operation) MODE="$2"; shift 2 ;;
+    --*)         die "Unknown option: $1" ;;
+    *)           FILES+=("$1"); shift ;;
+  esac
+done
+
+[[ ${#FILES[@]} -eq 0 ]] && die "No files specified."
+
+# ── interactive mode picker ───────────────────────────────────────────────────
+if [[ -z "$MODE" ]]; then
+  if command -v fzf &>/dev/null; then
+    MODE=$(printf 'smart\noverwrite\nnew file\ntrash original\n' | \
+      fzf --prompt="Compression mode > " --height=30% --reverse) || die "Cancelled."
+  else
+    echo "Modes: smart | overwrite | new file | trash original"
+    read -rp "Mode: " MODE
+  fi
+fi
+
+[[ -z "$MODE" ]] && die "No mode selected."
+
+# ── compress single file ──────────────────────────────────────────────────────
+compress_image() {
+  local path="$1" mode="$2"
+  [[ -f "$path" ]] || { info "skipping (not found): $path"; return; }
+
+  local base="${path%.*}"
+  local ext="${path##*.}"
+  local out="$path"
+  local tmp="${TMP_DIR}/$(basename "$base")-tmp.${ext}"
+
+  [[ "$mode" == "new file" ]] && out="${base}-small.${ext}"
+
+  if [[ "$mode" == "smart" ]]; then
+    case "${ext,,}" in
+      png)
+        magick "$path" -resize 2560x1440\> -strip "$tmp"
+        command -v oxipng &>/dev/null && oxipng -o 4 --strip all "$tmp" >/dev/null 2>&1 || true
+        ;;
+      jpg|jpeg)
+        magick "$path" -resize 2560x1440\> -strip -quality 85 "$tmp"
+        ;;
+      webp)
+        magick "$path" -resize 2560x1440\> -strip -quality 85 "$tmp"
+        ;;
+      *)
+        magick "$path" -resize 2560x1440\> -strip "$tmp"
+        ;;
+    esac
+  else
+    magick "$path" -resize 2560x1440\> -strip "$tmp"
+    if [[ "${ext,,}" == "png" ]]; then
+      command -v oxipng &>/dev/null && oxipng -o 4 --strip all "$tmp" >/dev/null 2>&1 || true
+    fi
+  fi
+
+  local before after pct=0
+  before=$(stat -c%s "$path")
+  mv "$tmp" "$out"
+  after=$(stat -c%s "$out")
+  [[ "$before" -gt 0 ]] && pct=$(( (before - after) * 100 / before ))
+
+  info "$(basename "$path")  $(numfmt --to=iec "$before") → $(numfmt --to=iec "$after")  (-${pct}%)"
+
+  if [[ "$mode" == "trash original" && "$out" != "$path" ]]; then
+    command -v trash &>/dev/null && trash "$path" || rm "$path"
+    info "(original trashed)"
+  fi
+}
+
+# ── process all files ─────────────────────────────────────────────────────────
+total=${#FILES[@]}
+i=0
+for f in "${FILES[@]}"; do
+  (( i++ )) || true
+  printf "  (%d/%d) " "$i" "$total"
+  compress_image "$f" "$MODE"
+done
