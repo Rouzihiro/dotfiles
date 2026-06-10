@@ -1,0 +1,192 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+# ==========================================================
+# CONFIGURATION (EDIT ONLY THIS PART)
+# ==========================================================
+
+GITHUB_OWNER="Rouzihiro"
+REPO_NAME="assets"
+BRANCH="main"
+
+# Files / paths to remove from FULL git history
+TRASH=(
+    "color-palettes/*.png"
+)
+
+# ==========================================================
+# DO NOT TOUCH BELOW
+# ==========================================================
+
+REMOTE_URL="git@github.com:${GITHUB_OWNER}/${REPO_NAME}.git"
+
+SCRIPT_PATH="$0"
+
+# ---------------------------
+# UI
+# ---------------------------
+
+menu() {
+    if command -v fzf >/dev/null 2>&1; then
+        printf "%s\n" \
+            "Run Cleaner" \
+            "Edit Script" \
+            "Save Copy to ~/Downloads" \
+            "Quit" | fzf --prompt="Git Cleaner > "
+    else
+        echo "1) Run Cleaner"
+        echo "2) Edit Script"
+        echo "3) Save Copy to ~/Downloads"
+        echo "4) Quit"
+        read -rp "> " choice
+
+        case "$choice" in
+            1) echo "Run Cleaner" ;;
+            2) echo "Edit Script" ;;
+            3) echo "Save Copy to ~/Downloads" ;;
+            *) echo "Quit" ;;
+        esac
+    fi
+}
+
+edit_script() {
+    if command -v nvim >/dev/null 2>&1; then
+        exec nvim "$SCRIPT_PATH"
+    elif command -v nano >/dev/null 2>&1; then
+        exec nano "$SCRIPT_PATH"
+    else
+        echo "No editor found (nvim/nano)."
+        exit 1
+    fi
+}
+
+save_copy() {
+    mkdir -p "$HOME/Downloads"
+    cp "$SCRIPT_PATH" "$HOME/Downloads/git-cleaner.sh"
+    chmod +x "$HOME/Downloads/git-cleaner.sh"
+
+    echo
+    echo "Saved to:"
+    echo "  $HOME/Downloads/git-cleaner.sh"
+    echo
+}
+
+check_repo_clean() {
+    if ! git diff --quiet || ! git diff --cached --quiet; then
+        echo
+        echo "ERROR: You have uncommitted changes."
+        echo "Commit or stash before running filter-repo."
+        exit 1
+    fi
+}
+
+confirm_delete() {
+    echo
+    echo "═══════════════════════════════════════════════"
+    echo "           WARNING: HISTORY REWRITE"
+    echo "═══════════════════════════════════════════════"
+    echo
+    echo "Repo    : $REPO_NAME"
+    echo "Branch  : $BRANCH"
+    echo "Remote  : $REMOTE_URL"
+    echo
+    echo "Items to remove from ALL history:"
+    echo
+
+    for item in "${TRASH[@]}"; do
+        echo "  • $item"
+    done
+
+    echo
+    echo "This will permanently rewrite git history."
+    echo "Everyone else must re-clone the repo."
+    echo
+    read -rp "Type 'del' to continue: " confirm
+
+    [[ "$confirm" == "del" ]] || {
+        echo
+        echo "Aborted."
+        exit 1
+    }
+}
+
+run_cleaner() {
+    check_repo_clean
+    confirm_delete
+
+    if ! command -v git-filter-repo >/dev/null 2>&1; then
+        echo "ERROR: git-filter-repo not installed"
+        exit 1
+    fi
+
+    FILTER_ARGS=()
+
+    for item in "${TRASH[@]}"; do
+        FILTER_ARGS+=(--path-glob "$item")
+    done
+
+    echo
+    echo "Running git filter-repo..."
+    echo
+
+    git filter-repo \
+        "${FILTER_ARGS[@]}" \
+        --invert-paths \
+        --force
+
+    echo
+    echo "Updating .gitignore..."
+
+    for item in "${TRASH[@]}"; do
+        echo "$item" >> .gitignore
+    done
+
+    git add .gitignore || true
+    git commit -m "Ignore removed files" || true
+
+    echo
+    echo "Recreating remote..."
+
+    git remote remove origin 2>/dev/null || true
+    git remote add origin "$REMOTE_URL"
+
+    git branch -M "$BRANCH"
+
+    echo
+    echo "Force pushing..."
+    git push -u origin "$BRANCH" --force
+
+    echo
+    echo "═══════════════════════════════════════════════"
+    echo "DONE"
+    echo "Remote: $REMOTE_URL"
+    echo "═══════════════════════════════════════════════"
+    echo
+}
+
+# ---------------------------
+# MAIN LOOP
+# ---------------------------
+
+while true; do
+    choice=$(menu)
+
+    case "$choice" in
+        "Run Cleaner")
+            run_cleaner
+            ;;
+        "Edit Script")
+            edit_script
+            ;;
+        "Save Copy to ~/Downloads")
+            save_copy
+            ;;
+        "Quit")
+            exit 0
+            ;;
+        *)
+            echo "Invalid option"
+            ;;
+    esac
+done
