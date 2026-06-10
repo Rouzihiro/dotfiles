@@ -1,0 +1,191 @@
+#!/usr/bin/env bash
+# img-toolkit — file browser + plugin launcher
+set -euo pipefail
+
+MANIFEST="$HOME/.local/bin/fzf/scripts.conf"
+
+die()  { echo "✗ $*" >&2; exit 1; }
+info() { echo "  $*"; }
+
+for cmd in fzf numfmt stat; do
+  command -v "$cmd" &>/dev/null || die "Required tool not found: $cmd"
+done
+
+# ── load plugins ──────────────────────────────────────────────────────────────
+load_plugins() {
+  PLUGIN_CMDS=()
+  PLUGIN_CAPTIONS=()
+  PLUGIN_NO_OP=()
+  PLUGIN_OPS=()
+  PLUGIN_FILETYPES=()
+
+  [[ -f "$MANIFEST" ]] || {
+    info "No manifest found at $MANIFEST"
+    info "Create it with lines like:  img-compress   🗜️  Compress Images"
+    return
+  }
+
+  while IFS= read -r line || [[ -n "$line" ]]; do
+    [[ "$line" =~ ^[[:space:]]*# ]] && continue
+    [[ -z "${line// }" ]] && continue
+
+    local cmd caption
+    cmd=$(echo "$line" | awk '{print $1}')
+    caption=$(echo "$line" | cut -d' ' -f2-)
+
+    if ! command -v "$cmd" &>/dev/null; then
+      info "⚠ skipping '$cmd' (not found in PATH)"
+      continue
+    fi
+
+    local no_op="" ops="" filetypes="" info_out=""
+    info_out=$("$cmd" --toolkit-info 2>/dev/null) || true
+
+    if [[ -n "$info_out" ]]; then
+      no_op=$(    echo "$info_out" | grep '^NO_OP='      | cut -d= -f2- || true)
+      ops=$(      echo "$info_out" | grep '^OPERATIONS='  | cut -d= -f2- || true)
+      filetypes=$(echo "$info_out" | grep '^FILETYPES='   | cut -d= -f2- || true)
+    fi
+
+    PLUGIN_CMDS+=("$cmd")
+    PLUGIN_CAPTIONS+=("$caption")
+    PLUGIN_NO_OP+=("${no_op:-true}")
+    PLUGIN_OPS+=("${ops:-}")
+    PLUGIN_FILETYPES+=("${filetypes:-}")
+  done < "$MANIFEST"
+}
+
+# ── fzf menu ──────────────────────────────────────────────────────────────────
+fzf_menu() {
+  local prompt="$1"; shift
+  local choice
+  choice=$(printf '%s\n' "$@" | fzf --prompt="$prompt" --height=40% --reverse) || return 130
+  [[ -z "$choice" ]] && return 130
+  echo "$choice"
+}
+
+# ── file picker — single fzf call ─────────────────────────────────────────────
+pick_files() {
+  local root="$1"
+  local filetypes="${2:-}"
+
+  local find_args=()
+  if [[ -n "$filetypes" ]]; then
+    IFS='|' read -ra exts <<< "$filetypes"
+    for ext in "${exts[@]}"; do
+      [[ ${#find_args[@]} -gt 0 ]] && find_args+=("-o")
+      find_args+=("-iname" "*.${ext}")
+    done
+  fi
+
+  local SELECTED
+  SELECTED=$(fzf --multi \
+    --prompt="Pick files (TAB=multi, ENTER=confirm, ESC=back) > " \
+    --walker="dir,file" \
+    --walker-root="$root" \
+    --preview="fzf-preview.sh {}" \
+    --preview-window=right:50%:wrap \
+    --header="TAB to multi-select | ENTER to confirm | ESC = back") || return 130
+
+  [[ -z "$SELECTED" ]] && return 130
+
+  # Expand dirs, filter by filetype
+  local FILES=()
+  while IFS= read -r t; do
+    if [[ -d "$t" ]]; then
+      local found=()
+      if [[ ${#find_args[@]} -gt 0 ]]; then
+        mapfile -t found < <(find "$t" -type f \( "${find_args[@]}" \))
+      else
+        mapfile -t found < <(find "$t" -type f)
+      fi
+      FILES+=("${found[@]+"${found[@]}"}")
+    else
+      if [[ -n "$filetypes" ]]; then
+        [[ "$t" =~ \.(${filetypes//|/|})$ ]] && FILES+=("$t")
+      else
+        FILES+=("$t")
+      fi
+    fi
+  done <<< "$SELECTED"
+
+  if [[ ${#FILES[@]} -eq 0 ]]; then
+    info "No matching files found."
+    return 130
+  fi
+
+  printf '%s\n' "${FILES[@]}"
+}
+
+# ── main ──────────────────────────────────────────────────────────────────────
+main() {
+  local start_path="${1:-.}"
+  [[ "$start_path" == "." ]] && start_path="$(pwd)"
+  [[ "$start_path" == "~"* ]] && start_path="${HOME}${start_path:1}"
+  [[ -d "$start_path" ]] || die "Directory not found: $start_path"
+
+  load_plugins
+
+  while true; do
+    echo ""
+    echo "  🖼️  Image Toolkit — $(basename "$start_path")"
+    echo "  $start_path"
+    echo ""
+
+    local menu_options=()
+    for caption in "${PLUGIN_CAPTIONS[@]+"${PLUGIN_CAPTIONS[@]}"}"; do
+      menu_options+=("$caption")
+    done
+    menu_options+=("Exit")
+
+    local tool_choice
+    tool_choice=$(fzf_menu "Select tool > " "${menu_options[@]}") || continue
+    [[ "$tool_choice" == "Exit" ]] && { echo "  Bye."; exit 0; }
+
+    # Resolve plugin
+    local RUN_SCRIPT="" NO_OP="true" OPS="" FILETYPES=""
+    for i in "${!PLUGIN_CAPTIONS[@]}"; do
+      if [[ "${PLUGIN_CAPTIONS[$i]}" == "$tool_choice" ]]; then
+        RUN_SCRIPT="${PLUGIN_CMDS[$i]}"
+        NO_OP="${PLUGIN_NO_OP[$i]}"
+        OPS="${PLUGIN_OPS[$i]}"
+        FILETYPES="${PLUGIN_FILETYPES[$i]}"
+        break
+      fi
+    done
+    [[ -z "$RUN_SCRIPT" ]] && continue
+
+    # Operation submenu
+    local OPERATION=""
+    if [[ "$NO_OP" != "true" && -n "$OPS" ]]; then
+      local op_list=()
+      IFS='|' read -ra op_list <<< "$OPS"
+      op_list+=("Back")
+      OPERATION=$(fzf_menu "Select operation > " "${op_list[@]}") || continue
+      [[ "$OPERATION" == "Back" ]] && continue
+    fi
+
+    # Pick files — one fzf call, no confirmation
+    local selected_files=()
+    mapfile -t selected_files < <(pick_files "$start_path" "$FILETYPES") || continue
+    [[ ${#selected_files[@]} -eq 0 ]] && continue
+
+    # Dispatch — all files passed at once
+    echo ""
+    echo "  Running: $tool_choice${OPERATION:+ → $OPERATION} on ${#selected_files[@]} file(s)..."
+    echo ""
+    if [[ -n "$OPERATION" ]]; then
+      "$RUN_SCRIPT" --operation "$OPERATION" "${selected_files[@]}"
+    else
+      "$RUN_SCRIPT" "${selected_files[@]}"
+    fi
+
+    echo ""
+    echo "  ✓ Done (${#selected_files[@]} file(s))"
+    echo ""
+    read -rp "  Press Enter for menu, 'q' to quit: " ans
+    [[ "$ans" == "q" ]] && { echo "  Bye."; exit 0; }
+  done
+}
+
+main "$@"

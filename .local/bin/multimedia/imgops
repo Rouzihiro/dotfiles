@@ -1,87 +1,96 @@
-#!/bin/bash
+#!/usr/bin/env bash
+# imgops — image operations via imagemagick
+# Usage:
+#   imgops --toolkit-info
+#   imgops --operation "↻ Rotate 90°" file1.jpg file2.jpg ...
+#   imgops file1.jpg ...   (prompts interactively)
+set -euo pipefail
 
-# Parse arguments properly
-FILE=""
+if [[ "${1:-}" == "--toolkit-info" ]]; then
+  cat <<'EOF'
+NO_OP=false
+OPERATIONS=↻ Rotate 90°|↺ Rotate -90°|🔄 Flip horizontal|🔄 Flip vertical|🖼️ Convert to PNG|📐 Resize 50%|🌈 Grayscale|💧 Blur|✨ Sharpen|🌞 Brighten|🌑 Darken|📏 Border
+FILETYPES=png|jpg|jpeg|webp
+EOF
+  exit 0
+fi
+
+# ── parse args ────────────────────────────────────────────────────────────────
 OPERATION=""
+FILES=()
+
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+    --operation) OPERATION="$2"; shift 2 ;;
+    --*)         shift ;;
+    *)           FILES+=("$1"); shift ;;
+  esac
+done
+
+[[ ${#FILES[@]} -eq 0 ]] && { echo "No files specified."; exit 1; }
+
+# ── interactive operation picker (standalone use) ─────────────────────────────
+if [[ -z "$OPERATION" ]]; then
+  OPERATION=$(printf '%s\n' \
+    "↻ Rotate 90°" "↺ Rotate -90°" \
+    "🔄 Flip horizontal" "🔄 Flip vertical" \
+    "🖼️ Convert to PNG" "📐 Resize 50%" \
+    "🌈 Grayscale" "💧 Blur" "✨ Sharpen" \
+    "🌞 Brighten" "🌑 Darken" "📏 Border" \
+    "Cancel" | fzf --height=50% --reverse --prompt="Image operation: ") || exit 0
+  [[ -z "$OPERATION" || "$OPERATION" == "Cancel" ]] && exit 0
+fi
+
+# ── operations that need extra input (ask once for the whole batch) ────────────
 CROP_GEOM=""
 WATERMARK_TEXT=""
 
-# First argument is the file
-if [[ -n "$1" ]] && [[ ! "$1" =~ ^-- ]]; then
-    FILE="$1"
-    shift
-fi
-
-# Parse remaining flags
-while [[ $# -gt 0 ]]; do
-    case "$1" in
-        --operation)
-            OPERATION="$2"
-            shift 2
-            ;;
-        --crop-geom)
-            CROP_GEOM="$2"
-            shift 2
-            ;;
-        --watermark-text)
-            WATERMARK_TEXT="$2"
-            shift 2
-            ;;
-        *)
-            shift
-            ;;
-    esac
-done
-
-# Validate file
-if [[ ! -f "$FILE" ]]; then
-    echo "Not a valid file: $FILE"
-    exit 1
-fi
-
-# If no operation passed, show menu
-if [[ -z "$OPERATION" ]]; then
-    OPERATION=$(echo -e "↻ Rotate 90°\n↺ Rotate -90°\n🔄 Flip horizontal\n🔄 Flip vertical\n🖼️ Convert to PNG\n📐 Resize 50%\n🌈 Grayscale\n✂️ Crop (interactive)\n💧 Blur\n✨ Sharpen\n🌞 Brighten\n🌑 Darken\n📝 Watermark\n📏 Border\nCancel" | fzf --height=50% --reverse --prompt="Image operation: ")
-    [[ -z "$OPERATION" ]] || [[ "$OPERATION" == "Cancel" ]] && exit 0
-    
-    # Ask for interactive input if needed
-    case "$OPERATION" in
-        "✂️ Crop (interactive)")
-            echo "Enter crop geometry (e.g., 800x600+10+10):"
-            echo "Format: WIDTHxHEIGHT+XOFFSET+YOFFSET"
-            read -p "Geometry: " CROP_GEOM
-            ;;
-        "📝 Watermark")
-            read -p "Enter watermark text: " WATERMARK_TEXT
-            ;;
-    esac
-fi
-
-# Execute operation
 case "$OPERATION" in
-    "↻ Rotate 90°") magick "$FILE" -rotate 90 "$FILE" ;;
-    "↺ Rotate -90°") magick "$FILE" -rotate -90 "$FILE" ;;
-    "🔄 Flip horizontal") magick "$FILE" -flip "$FILE" ;;
-    "🔄 Flip vertical") magick "$FILE" -flop "$FILE" ;;
-    "🖼️ Convert to PNG") magick "$FILE" "${FILE%.*}.png" ;;
-    "📐 Resize 50%") magick "$FILE" -resize 50% "$FILE" ;;
-    "🌈 Grayscale") magick "$FILE" -colorspace Gray "$FILE" ;;
-    "✂️ Crop (interactive)")
-        if [[ -n "$CROP_GEOM" ]]; then
-            magick "$FILE" -crop "$CROP_GEOM" +repage "$FILE"
-        fi
-        ;;
-    "💧 Blur") magick "$FILE" -blur 0x8 "$FILE" ;;
-    "✨ Sharpen") magick "$FILE" -sharpen 0x1 "$FILE" ;;
-    "🌞 Brighten") magick "$FILE" -modulate 110 "$FILE" ;;
-    "🌑 Darken") magick "$FILE" -modulate 90 "$FILE" ;;
-    "📝 Watermark")
-        if [[ -n "$WATERMARK_TEXT" ]]; then
-            magick "$FILE" -pointsize 36 -fill "rgba(255,255,255,0.5)" -gravity southeast -annotate +10+10 "$WATERMARK_TEXT" "$FILE"
-        fi
-        ;;
-    "📏 Border") magick "$FILE" -bordercolor black -border 10x10 "$FILE" ;;
-    *) echo "Cancelled"; exit 0 ;;
+  "✂️ Crop (interactive)")
+    echo "Enter crop geometry (e.g., 800x600+10+10):"
+    read -rp "Geometry: " CROP_GEOM
+    [[ -z "$CROP_GEOM" ]] && { echo "Cancelled."; exit 0; }
+    ;;
+  "📝 Watermark")
+    read -rp "Watermark text: " WATERMARK_TEXT
+    [[ -z "$WATERMARK_TEXT" ]] && { echo "Cancelled."; exit 0; }
+    ;;
 esac
 
-echo "✓ $(basename "$FILE"): $OPERATION completed"
+# ── process one file ──────────────────────────────────────────────────────────
+process_file() {
+  local FILE="$1"
+  [[ -f "$FILE" ]] || { echo "  skipping (not found): $FILE"; return; }
+
+  case "$OPERATION" in
+    "↻ Rotate 90°")        magick "$FILE" -rotate 90 "$FILE" ;;
+    "↺ Rotate -90°")       magick "$FILE" -rotate -90 "$FILE" ;;
+    "🔄 Flip horizontal")  magick "$FILE" -flip "$FILE" ;;
+    "🔄 Flip vertical")    magick "$FILE" -flop "$FILE" ;;
+    "🖼️ Convert to PNG")   magick "$FILE" "${FILE%.*}.png" ;;
+    "📐 Resize 50%")       magick "$FILE" -resize 50% "$FILE" ;;
+    "🌈 Grayscale")        magick "$FILE" -colorspace Gray "$FILE" ;;
+    "✂️ Crop (interactive)")
+      magick "$FILE" -crop "$CROP_GEOM" +repage "$FILE" ;;
+    "💧 Blur")             magick "$FILE" -blur 0x8 "$FILE" ;;
+    "✨ Sharpen")          magick "$FILE" -sharpen 0x1 "$FILE" ;;
+    "🌞 Brighten")         magick "$FILE" -modulate 110 "$FILE" ;;
+    "🌑 Darken")           magick "$FILE" -modulate 90 "$FILE" ;;
+    "📝 Watermark")
+      magick "$FILE" -pointsize 36 -fill "rgba(255,255,255,0.5)" \
+        -gravity southeast -annotate +10+10 "$WATERMARK_TEXT" "$FILE" ;;
+    "📏 Border")           magick "$FILE" -bordercolor black -border 10x10 "$FILE" ;;
+    *)                     echo "  unknown operation: $OPERATION"; return ;;
+  esac
+
+  echo "  ✓ $(basename "$FILE")"
+}
+
+# ── loop over all files ───────────────────────────────────────────────────────
+total=${#FILES[@]}
+i=0
+for f in "${FILES[@]}"; do
+  (( i++ )) || true
+  printf "  (%d/%d) " "$i" "$total"
+  process_file "$f"
+done

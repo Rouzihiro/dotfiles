@@ -1,52 +1,94 @@
 #!/bin/bash
-set -e
+set -euo pipefail
 
-echo "Running fix-mp4..."
-fix-mp4
-
-echo "Waiting 2 seconds..."
-sleep 2
-
-echo
-echo "Files that will be deleted (everything NOT starting with 'fixed_'):"
-find . -maxdepth 1 -type f ! -name 'fixed_*' -print
-echo
-
-# Safety check: every original file must have a fixed_ counterpart
-all_good=true
-while IFS= read -r f; do
-  base="${f#./}"
-  if [[ ! -f "fixed_${base}" ]]; then
-    echo "WARNING: No fixed_ version found for: $base"
-    all_good=false
-  fi
-done < <(find . -maxdepth 1 -type f ! -name 'fixed_*')
-
-if [[ "$all_good" != true ]]; then
-  echo
-  echo "Aborting: one or more files have no fixed_ counterpart."
-  echo "Check that fix-mp4 supports all file types in this directory (e.g. MKV)."
+if [[ $# -lt 1 ]]; then
+  echo "Usage: $0 <file|dir>..."
+  echo "Example: $0 *.mp4"
   exit 1
 fi
 
-read -p "Do you really want to trash these files? [y/N]: " confirm
-if [[ "$confirm" != "y" && "$confirm" != "Y" ]]; then
-  echo "Aborted. No files were trashed."
-  exit 0
+# ---------------- COLLECT TARGET FILES ----------------
+targets=()
+
+for arg in "$@"; do
+  if [[ -f "$arg" ]]; then
+    targets+=("$arg")
+
+  elif [[ -d "$arg" ]]; then
+    # only top-level files in directory
+    while IFS= read -r f; do
+      targets+=("$f")
+    done < <(find "$arg" -maxdepth 1 -type f)
+
+  else
+    echo "Skipping invalid path: $arg"
+  fi
+done
+
+if [[ ${#targets[@]} -eq 0 ]]; then
+  echo "No valid files found."
+  exit 1
 fi
 
-echo "Trashing files..."
-while IFS= read -r f; do
-  trash "$f"
-done < <(find . -maxdepth 1 -type f ! -name 'fixed_*')
+echo "Running fix-mp4 on:"
+printf ' - %s\n' "${targets[@]}"
+echo
+
+# ---------------- RUN PROCESSOR ----------------
+fix-mp4 "${targets[@]}"
 
 echo "Waiting 2 seconds..."
 sleep 2
 
-echo "Renaming fixed_* files..."
-shopt -s nullglob
-for f in fixed_*; do
-  mv -- "$f" "${f#fixed_}"
+# ---------------- VALIDATE OUTPUTS ----------------
+processed=()
+
+for f in "${targets[@]}"; do
+  dir="$(dirname "$f")"
+  base="$(basename "$f")"
+  fixed="${dir}/fixed_${base}"
+
+  if [[ -f "$fixed" ]]; then
+    processed+=("$f")
+  else
+    echo "WARNING: missing output for $f"
+  fi
+done
+
+if [[ ${#processed[@]} -eq 0 ]]; then
+  echo "No files were successfully processed. Aborting."
+  exit 1
+fi
+
+# ---------------- CONFIRM ----------------
+echo
+echo "The following files will be trashed:"
+printf ' - %s\n' "${processed[@]}"
+echo
+
+read -p "Proceed? [y/N]: " confirm
+if [[ "${confirm,,}" != "y" ]]; then
+  echo "Aborted."
+  exit 0
+fi
+
+# ---------------- TRASH ORIGINALS ----------------
+echo "Trashing originals..."
+for f in "${processed[@]}"; do
+  trash "$f"
+done
+
+echo "Waiting 2 seconds..."
+sleep 2
+
+# ---------------- RESTORE NAMES ----------------
+echo "Renaming processed files..."
+
+for f in "${processed[@]}"; do
+  dir="$(dirname "$f")"
+  base="$(basename "$f")"
+
+  mv -- "${dir}/fixed_${base}" "$f"
 done
 
 echo "Done."
