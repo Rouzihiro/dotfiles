@@ -4,6 +4,15 @@ set -uo pipefail   # no -e: interactive commands (rm -i) may return non-zero int
 PICK_MODE="${PICK_MODE:-0}"
 ROOT="${1:-$PWD}"
 
+# terminal emulator — swap this to taste
+if command -v kitty >/dev/null; then
+  TERM_CMD="kitty"
+elif command -v foot >/dev/null; then
+  TERM_CMD="foot"
+else
+  TERM_CMD=""
+fi
+
 command -v fzf            >/dev/null || { echo "fzf not found";           exit 1; }
 command -v fzf-preview.sh >/dev/null || { echo "fzf-preview.sh not found"; exit 1; }
 command -v rg             >/dev/null || { echo "rg not found";            exit 1; }
@@ -193,7 +202,7 @@ while true; do
   fi
 
   # ── action menu ─────────────────────────────
-  ACTION=$(printf "open\nxdg-open\nmove\ndelete\ncancel" |
+  ACTION=$(printf "open\nxdg-open\nterminal\nmove\ndelete\ncancel" |
     fzf --prompt="action (${#REAL_FILES[@]} file(s)) > ") || continue
 
   case "$ACTION" in
@@ -204,6 +213,18 @@ while true; do
       for f in "${REAL_FILES[@]}"; do
         xdg-open "$f" >/dev/null 2>&1 & disown
       done
+      ;;
+    terminal)
+      if [[ -z "$TERM_CMD" ]]; then
+        echo "No terminal emulator found" >&2
+      else
+        if [[ -d "${REAL_FILES[0]}" ]]; then
+          target_dir="${REAL_FILES[0]}"
+        else
+          target_dir="$(dirname "${REAL_FILES[0]}")"
+        fi
+        $TERM_CMD --directory="$target_dir" >/dev/null 2>&1 & disown
+      fi
       ;;
     move)
       TARGET=$(find "$HOME" -maxdepth 4 -type d 2>/dev/null |
