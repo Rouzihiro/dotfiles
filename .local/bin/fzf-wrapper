@@ -1,87 +1,160 @@
 #!/usr/bin/env bash
-set -euo pipefail
+set -uo pipefail   # no -e: interactive commands (rm -i) may return non-zero intentionally
 
 ROOT="${1:-$PWD}"
 
-command -v fzf >/dev/null || exit 1
-command -v fzf-preview.sh >/dev/null || exit 1
+command -v fzf          >/dev/null || { echo "fzf not found";          exit 1; }
+command -v fzf-preview.sh >/dev/null || { echo "fzf-preview.sh not found"; exit 1; }
+command -v rg           >/dev/null || { echo "rg not found";           exit 1; }
 
 CACHE_DIR="/tmp/fzf-fm-cache"
 mkdir -p "$CACHE_DIR"
 
 STATE_FILE="$CACHE_DIR/current_dir"
-echo "$ROOT" > "$STATE_FILE"
+MODE_FILE="$CACHE_DIR/mode"          # "tree" | "rg"
+echo "$ROOT"  > "$STATE_FILE"
+echo "tree"   > "$MODE_FILE"
 
 # ───────────────────────────────────────────────
-# fast cached directory listing
+# directory listing (cached, ignores noise)
 # ───────────────────────────────────────────────
 list_dir() {
   local dir="$1"
-  local cache="$CACHE_DIR/$(echo "$dir" | md5sum | cut -d' ' -f1)"
-
+  local cache="$CACHE_DIR/$(printf '%s' "$dir" | md5sum | cut -d' ' -f1)"
   if [[ ! -f "$cache" ]]; then
     find "$dir" \
-      -path '*/.git/*' -prune -o \
+      -path '*/.git/*'        -prune -o \
       -path '*/node_modules/*' -prune -o \
       -print 2>/dev/null > "$cache"
   fi
-
   cat "$cache"
 }
 
 # ───────────────────────────────────────────────
-# navigation loop
+# main loop
 # ───────────────────────────────────────────────
 while true; do
   CURRENT_DIR="$(cat "$STATE_FILE")"
+  MODE="$(cat "$MODE_FILE")"
 
-  SELECTED=$(
-    list_dir "$CURRENT_DIR" |
-    fzf \
+  # Build the initial list for this iteration
+  if [[ "$MODE" == "rg" ]]; then
+    INITIAL_CMD="rg --files --hidden --follow \"$CURRENT_DIR\""
+    PROMPT="🔍 ${CURRENT_DIR} > "
+  else
+    INITIAL_CMD="list_dir \"$CURRENT_DIR\""   # handled via process substitution below
+    PROMPT="📁 ${CURRENT_DIR} > "
+  fi
+
+  # ── fzf ─────────────────────────────────────
+  # All bookmark binds write the target dir and set mode=tree, then abort so
+  # the outer while-loop re-enters fzf with the new STATE_FILE value.
+  # ctrl-f toggles between tree-listing and rg --files.
+  # ESC goes up one directory level.
+  #
+  # Key: every execute(...) block that changes state must use the *runtime*
+  # value of CURRENT_DIR sourced from STATE_FILE, not a shell-expansion baked
+  # in at script-parse time.  We do that by reading STATE_FILE inside the
+  # execute block itself.
+
+  FZF_EXIT=0
+  mapfile -t SELECTED < <(
+    {
+      if [[ "$MODE" == "rg" ]]; then
+        rg --files --hidden --follow "$CURRENT_DIR" 2>/dev/null
+      else
+        list_dir "$CURRENT_DIR"
+      fi
+    } | fzf \
       --height=100% \
       --layout=reverse \
-      --prompt="📁 ${CURRENT_DIR} > " \
+      --multi \
+      --prompt="$PROMPT" \
       --preview 'fzf-preview.sh "$(readlink -f {} 2>/dev/null || echo {})"' \
       --preview-window='right:60%,border-left' \
-      --bind "esc:execute(
-          echo \$(dirname \"$CURRENT_DIR\") > \"$STATE_FILE\"
-        )+abort" \
-      --bind 'ctrl-/:change-preview-window(hidden|right:60%)'
-  ) || exit 0
+      --bind 'ctrl-p:toggle-preview' \
+      --bind 'ctrl-/:change-preview-window(hidden|right:60%)' \
+      \
+      --bind "esc:execute-silent(
+               cd=\$(cat \"$STATE_FILE\")
+               parent=\$(dirname \"\$cd\")
+               echo \"\$parent\" > \"$STATE_FILE\"
+               echo tree > \"$MODE_FILE\"
+             )+abort" \
+      \
+      --bind "ctrl-h:execute-silent(echo \"$HOME\"                > \"$STATE_FILE\"; echo tree > \"$MODE_FILE\")+abort" \
+      --bind "ctrl-d:execute-silent(echo \"$HOME/Downloads\"      > \"$STATE_FILE\"; echo tree > \"$MODE_FILE\")+abort" \
+      --bind "ctrl-x:execute-silent(echo \"$HOME/Pictures\"       > \"$STATE_FILE\"; echo tree > \"$MODE_FILE\")+abort" \
+      --bind "ctrl-v:execute-silent(echo \"$HOME/Videos\"         > \"$STATE_FILE\"; echo tree > \"$MODE_FILE\")+abort" \
+      --bind "ctrl-e:execute-silent(echo \"$HOME/Projects\"       > \"$STATE_FILE\"; echo tree > \"$MODE_FILE\")+abort" \
+      --bind "ctrl-s:execute-silent(echo \"$HOME/.local/bin\"     > \"$STATE_FILE\"; echo tree > \"$MODE_FILE\")+abort" \
+      --bind "ctrl-g:execute-silent(echo \"$HOME/dotfiles\"       > \"$STATE_FILE\"; echo tree > \"$MODE_FILE\")+abort" \
+      \
+      --bind "ctrl-f:execute-silent(
+               if [[ \"\$(cat \"$MODE_FILE\")\" == tree ]]; then
+                 echo rg   > \"$MODE_FILE\"
+               else
+                 echo tree > \"$MODE_FILE\"
+               fi
+             )+abort"
+  ); FZF_EXIT=$?
 
-  [[ -z "$SELECTED" ]] && continue
+  # ctrl+c → fzf exits 130; leave immediately
+  [[ $FZF_EXIT -eq 130 ]] && exit 0
 
-  # ── resolve symlinks safely ───────────────
-  REAL_SELECTED="$(readlink -f "$SELECTED" 2>/dev/null || echo "$SELECTED")"
+  # abort from a bind (ESC / bookmark / mode toggle) → fzf exits 1
+  if [[ $FZF_EXIT -ne 0 ]]; then
+    NEW_DIR="$(cat "$STATE_FILE")"
+    NEW_MODE="$(cat "$MODE_FILE")"
+    if [[ "$NEW_DIR" != "$CURRENT_DIR" || "$NEW_MODE" != "$MODE" ]]; then
+      continue   # state changed → re-enter fzf in new dir/mode
+    fi
+    exit 0       # nothing changed → plain quit
+  fi
 
-  # ── enter directory (supports symlinks) ───
-  if [[ -d "$REAL_SELECTED" ]]; then
-    echo "$REAL_SELECTED" > "$STATE_FILE"
+  [[ ${#SELECTED[@]} -eq 0 ]] && continue
+
+  # Resolve symlinks for every selected entry
+  REAL_FILES=()
+  for entry in "${SELECTED[@]}"; do
+    REAL_FILES+=("$(readlink -f "$entry" 2>/dev/null || echo "$entry")")
+  done
+
+  # ── single directory → navigate into it ─────
+  if [[ ${#REAL_FILES[@]} -eq 1 && -d "${REAL_FILES[0]}" ]]; then
+    echo "${REAL_FILES[0]}" > "$STATE_FILE"
+    echo "tree"              > "$MODE_FILE"
     continue
   fi
 
-  # ── action menu ───────────────────────────
+  # ── action menu ─────────────────────────────
   ACTION=$(printf "open\nxdg-open\nmove\ndelete\ncancel" |
-    fzf --prompt="action > ") || continue
+    fzf --prompt="action (${#REAL_FILES[@]} file(s)) > ") || continue
 
   case "$ACTION" in
     open)
-      nvim "$REAL_SELECTED"
+      nvim "${REAL_FILES[@]}"
       ;;
-
     xdg-open)
-      xdg-open "$REAL_SELECTED" >/dev/null 2>&1 & disown
+      for f in "${REAL_FILES[@]}"; do
+        xdg-open "$f" >/dev/null 2>&1 & disown
+      done
       ;;
-
     move)
-      TARGET=$(fzf-wrapper-path "$HOME") || continue
-      mv "$REAL_SELECTED" "$TARGET/"
+      # Pick destination with fzf from a directory listing
+      TARGET=$(find "$HOME" -maxdepth 4 -type d 2>/dev/null |
+        fzf --prompt="move destination > ") || continue
+      mv "${REAL_FILES[@]}" "$TARGET/"
+      # Bust cache for affected dirs
+      rm -f "$CACHE_DIR/$(printf '%s' "$CURRENT_DIR" | md5sum | cut -d' ' -f1)"
+      rm -f "$CACHE_DIR/$(printf '%s' "$TARGET"       | md5sum | cut -d' ' -f1)"
       ;;
-
     delete)
-      rm -i "$REAL_SELECTED"
+      for f in "${REAL_FILES[@]}"; do
+        rm -i "$f" </dev/tty || true   # /dev/tty: interactive prompt even inside a pipeline; || true: "no" won't abort
+      done
+      rm -f "$CACHE_DIR/$(printf '%s' "$CURRENT_DIR" | md5sum | cut -d' ' -f1)"
       ;;
-
     cancel)
       continue
       ;;
