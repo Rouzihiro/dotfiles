@@ -7,12 +7,12 @@ set -euo pipefail
 # ==========================================================
 
 GITHUB_OWNER="Rouzihiro"
-REPO_NAME="assets"
+REPO_NAME="dotfiles"
 BRANCH="main"
 
 # Files / paths to remove from FULL git history
 TRASH=(
-    "color-palettes/*.png"
+    ".config/go"
 )
 
 # ==========================================================
