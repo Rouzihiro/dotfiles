@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 set -uo pipefail   # no -e: interactive commands (rm -i) may return non-zero intentionally
 
+PICK_MODE="${PICK_MODE:-0}"
 ROOT="${1:-$PWD}"
 
 command -v fzf            >/dev/null || { echo "fzf not found";           exit 1; }
@@ -14,21 +15,33 @@ STATE_FILE="$CACHE_DIR/current_dir"
 MODE_FILE="$CACHE_DIR/mode"        # "tree" | "rg"
 FZF_EXIT_FILE="$CACHE_DIR/fzf_exit"
 
+HIDDEN_FILE="$CACHE_DIR/show_hidden"   # "0" | "1"
+
 echo "$ROOT"  > "$STATE_FILE"
 echo "tree"   > "$MODE_FILE"
 echo "0"      > "$FZF_EXIT_FILE"
+echo "0"      > "$HIDDEN_FILE"
 
 # ───────────────────────────────────────────────
 # directory listing (cached, ignores noise)
 # ───────────────────────────────────────────────
 list_dir() {
   local dir="$1"
-  local cache="$CACHE_DIR/$(printf '%s' "$dir" | md5sum | cut -d' ' -f1)"
+  local hidden; hidden="$(cat "$HIDDEN_FILE")"
+  local cache="$CACHE_DIR/$(printf '%s:%s' "$dir" "$hidden" | md5sum | cut -d' ' -f1)"
   if [[ ! -f "$cache" ]]; then
-    find "$dir" \
-      -path '*/.git/*'         -prune -o \
-      -path '*/node_modules/*' -prune -o \
-      -print 2>/dev/null > "$cache"
+    if [[ "$hidden" == "1" ]]; then
+      find "$dir" \
+        -path '*/.git/*'         -prune -o \
+        -path '*/node_modules/*' -prune -o \
+        -print 2>/dev/null > "$cache"
+    else
+      find "$dir" \
+        -path '*/.git/*'         -prune -o \
+        -path '*/node_modules/*' -prune -o \
+        -name '.*'               -prune -o \
+        -print 2>/dev/null > "$cache"
+    fi
   fi
   cat "$cache"
 }
@@ -41,6 +54,7 @@ bust_cache() { rm -f "$CACHE_DIR/$(printf '%s' "$1" | md5sum | cut -d' ' -f1)"; 
 while true; do
   CURRENT_DIR="$(cat "$STATE_FILE")"
   MODE="$(cat "$MODE_FILE")"
+  HIDDEN="$(cat "$HIDDEN_FILE")"
 
   # Shared binds array (navigation + bookmarks + mode toggle)
   # Each bind writes state and aborts; the loop re-enters fzf with new state.
@@ -55,7 +69,6 @@ while true; do
              )+abort"
     --bind "ctrl-h:execute-silent(echo \"$HOME\"            > \"$STATE_FILE\"; echo tree > \"$MODE_FILE\")+abort"
     --bind "ctrl-d:execute-silent(echo \"$HOME/Downloads\"  > \"$STATE_FILE\"; echo tree > \"$MODE_FILE\")+abort"
- 		--bind "ctrl-w:execute-silent(echo \"$HOME/Documents\"  > \"$STATE_FILE\"; echo tree > \"$MODE_FILE\")+abort"
     --bind "ctrl-x:execute-silent(echo \"$HOME/Pictures\"   > \"$STATE_FILE\"; echo tree > \"$MODE_FILE\")+abort"
     --bind "ctrl-v:execute-silent(echo \"$HOME/Videos\"     > \"$STATE_FILE\"; echo tree > \"$MODE_FILE\")+abort"
     --bind "ctrl-e:execute-silent(echo \"$HOME/Projects\"   > \"$STATE_FILE\"; echo tree > \"$MODE_FILE\")+abort"
@@ -66,6 +79,13 @@ while true; do
                  echo rg   > \"$MODE_FILE\"
                else
                  echo tree > \"$MODE_FILE\"
+               fi
+             )+abort"
+    --bind "ctrl-]:execute-silent(
+               if [[ \"\$(cat \"$HIDDEN_FILE\")\" == 0 ]]; then
+                 echo 1 > \"$HIDDEN_FILE\"
+               else
+                 echo 0 > \"$HIDDEN_FILE\"
                fi
              )+abort"
     --bind 'ctrl-p:toggle-preview'
@@ -112,8 +132,9 @@ while true; do
   if [[ $FZF_EXIT -ne 0 ]]; then
     NEW_DIR="$(cat "$STATE_FILE")"
     NEW_MODE="$(cat "$MODE_FILE")"
-    if [[ "$NEW_DIR" != "$CURRENT_DIR" || "$NEW_MODE" != "$MODE" ]]; then
-      continue   # state changed (ctrl-b / bookmark / mode toggle) → loop
+    NEW_HIDDEN="$(cat "$HIDDEN_FILE")"
+    if [[ "$NEW_DIR" != "$CURRENT_DIR" || "$NEW_MODE" != "$MODE" || "$NEW_HIDDEN" != "$HIDDEN" ]]; then
+      continue   # state changed (ctrl-b / bookmark / mode toggle / hidden toggle) → loop
     fi
     exit 0       # ESC or ctrl-c with no state change → quit
   fi
@@ -136,6 +157,12 @@ while true; do
     echo "${REAL_FILES[0]}" > "$STATE_FILE"
     echo "tree"              > "$MODE_FILE"
     continue
+  fi
+
+  # ── pick mode: print to stdout and exit ─────
+  if [[ "$PICK_MODE" == "1" ]]; then
+    printf '%s\n' "${REAL_FILES[@]}"
+    exit 0
   fi
 
   # ── action menu ─────────────────────────────
