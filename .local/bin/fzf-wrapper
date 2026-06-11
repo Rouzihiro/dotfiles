@@ -87,7 +87,7 @@ while true; do
         --prompt="🔍 ${CURRENT_DIR} > " \
         --preview 'f=$(echo {} | cut -d: -f1); fzf-preview.sh "$f"' \
         --preview-window='right:60%,border-left' \
-        --bind "change:reload:rg --line-number --color=always --hidden --follow {q} \"$CURRENT_DIR\" 2>/dev/null || true" \
+        --bind "change:reload:rg --line-number --color=always --hidden --follow --ignore-case {q} \"$CURRENT_DIR\" 2>/dev/null || true" \
         "${BINDS[@]}"
       echo $? > "$FZF_EXIT_FILE"
     )
