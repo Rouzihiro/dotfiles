@@ -88,6 +88,11 @@ while true; do
                  echo 0 > \"$HIDDEN_FILE\"
                fi
              )+abort"
+    --bind "ctrl-r:execute-silent(
+               d=\$(cat \"$STATE_FILE\")
+               h=\$(cat \"$HIDDEN_FILE\")
+               rm -f \"$CACHE_DIR/\$(printf '%s:%s' \"\$d\" \"\$h\" | md5sum | cut -d' ' -f1)\"
+             )+abort"
     --bind 'ctrl-p:toggle-preview'
     --bind 'ctrl-/:change-preview-window(hidden|right:60%)'
   )
