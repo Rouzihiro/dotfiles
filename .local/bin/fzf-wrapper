@@ -12,35 +12,52 @@ CACHE_DIR="/tmp/fzf-fm-cache"
 mkdir -p "$CACHE_DIR"
 
 STATE_FILE="$CACHE_DIR/current_dir"
-MODE_FILE="$CACHE_DIR/mode"        # "tree" | "rg"
+MODE_FILE="$CACHE_DIR/mode"          # "tree" | "rg"
 FZF_EXIT_FILE="$CACHE_DIR/fzf_exit"
-
-HIDDEN_FILE="$CACHE_DIR/show_hidden"   # "0" | "1"
+HIDDEN_FILE="$CACHE_DIR/show_hidden" # "0" | "1"
+SIZES_FILE="$CACHE_DIR/show_sizes"   # "0" | "1"
 
 echo "$ROOT"  > "$STATE_FILE"
 echo "tree"   > "$MODE_FILE"
 echo "0"      > "$FZF_EXIT_FILE"
 echo "0"      > "$HIDDEN_FILE"
+echo "0"      > "$SIZES_FILE"
 
 # ───────────────────────────────────────────────
 # directory listing (cached, ignores noise)
+# when sizes are on, prepend human-readable size to each file line
 # ───────────────────────────────────────────────
 list_dir() {
   local dir="$1"
   local hidden; hidden="$(cat "$HIDDEN_FILE")"
-  local cache="$CACHE_DIR/$(printf '%s:%s' "$dir" "$hidden" | md5sum | cut -d' ' -f1)"
+  local sizes;  sizes="$(cat "$SIZES_FILE")"
+  local cache="$CACHE_DIR/$(printf '%s:%s:%s' "$dir" "$hidden" "$sizes" | md5sum | cut -d' ' -f1)"
   if [[ ! -f "$cache" ]]; then
+    local find_cmd=()
     if [[ "$hidden" == "1" ]]; then
-      find "$dir" \
-        -path '*/.git/*'         -prune -o \
-        -path '*/node_modules/*' -prune -o \
-        -print 2>/dev/null > "$cache"
+      find_cmd=(find "$dir"
+        -path '*/.git/*'         -prune -o
+        -path '*/node_modules/*' -prune -o
+        -print)
     else
-      find "$dir" \
-        -path '*/.git/*'         -prune -o \
-        -path '*/node_modules/*' -prune -o \
-        -name '.*'               -prune -o \
-        -print 2>/dev/null > "$cache"
+      find_cmd=(find "$dir"
+        -path '*/.git/*'         -prune -o
+        -path '*/node_modules/*' -prune -o
+        -name '.*'               -prune -o
+        -print)
+    fi
+
+    if [[ "$sizes" == "1" ]]; then
+      "${find_cmd[@]}" 2>/dev/null | while IFS= read -r f; do
+        if [[ -f "$f" ]]; then
+          local sz; sz=$(du -sh "$f" 2>/dev/null | cut -f1)
+          printf '%-8s %s\n' "$sz" "$f"
+        else
+          printf '%-8s %s\n' "" "$f"
+        fi
+      done > "$cache"
+    else
+      "${find_cmd[@]}" 2>/dev/null > "$cache"
     fi
   fi
   cat "$cache"
@@ -55,11 +72,8 @@ while true; do
   CURRENT_DIR="$(cat "$STATE_FILE")"
   MODE="$(cat "$MODE_FILE")"
   HIDDEN="$(cat "$HIDDEN_FILE")"
+  SIZES="$(cat "$SIZES_FILE")"
 
-  # Shared binds array (navigation + bookmarks + mode toggle)
-  # Each bind writes state and aborts; the loop re-enters fzf with new state.
-  # fzf's exit code is written to FZF_EXIT_FILE from inside the process
-  # substitution because mapfile always returns 0 and swallows it otherwise.
   BINDS=(
     --bind "esc:abort"
     --bind "ctrl-b:execute-silent(
@@ -72,7 +86,7 @@ while true; do
     --bind "ctrl-x:execute-silent(echo \"$HOME/Pictures\"   > \"$STATE_FILE\"; echo tree > \"$MODE_FILE\")+abort"
     --bind "ctrl-v:execute-silent(echo \"$HOME/Videos\"     > \"$STATE_FILE\"; echo tree > \"$MODE_FILE\")+abort"
     --bind "ctrl-e:execute-silent(echo \"$HOME/Projects\"   > \"$STATE_FILE\"; echo tree > \"$MODE_FILE\")+abort"
-    --bind "ctrl-s:execute-silent(echo \"$HOME/.local/bin\" > \"$STATE_FILE\"; echo tree > \"$MODE_FILE\")+abort"
+    --bind "ctrl-l:execute-silent(echo \"$HOME/.local/bin\" > \"$STATE_FILE\"; echo tree > \"$MODE_FILE\")+abort"
     --bind "ctrl-g:execute-silent(echo \"$HOME/dotfiles\"   > \"$STATE_FILE\"; echo tree > \"$MODE_FILE\")+abort"
     --bind "ctrl-f:execute-silent(
                if [[ \"\$(cat \"$MODE_FILE\")\" == tree ]]; then
@@ -88,10 +102,18 @@ while true; do
                  echo 0 > \"$HIDDEN_FILE\"
                fi
              )+abort"
+    --bind "ctrl-s:execute-silent(
+               if [[ \"\$(cat \"$SIZES_FILE\")\" == 0 ]]; then
+                 echo 1 > \"$SIZES_FILE\"
+               else
+                 echo 0 > \"$SIZES_FILE\"
+               fi
+             )+abort"
     --bind "ctrl-r:execute-silent(
                d=\$(cat \"$STATE_FILE\")
                h=\$(cat \"$HIDDEN_FILE\")
-               rm -f \"$CACHE_DIR/\$(printf '%s:%s' \"\$d\" \"\$h\" | md5sum | cut -d' ' -f1)\"
+               s=\$(cat \"$SIZES_FILE\")
+               rm -f \"$CACHE_DIR/\$(printf '%s:%s:%s' \"\$d\" \"\$h\" \"\$s\" | md5sum | cut -d' ' -f1)\"
              )+abort"
     --bind 'ctrl-p:toggle-preview'
     --bind 'ctrl-/:change-preview-window(hidden|right:60%)'
@@ -100,9 +122,6 @@ while true; do
   FZF_EXIT=0
 
   if [[ "$MODE" == "rg" ]]; then
-    # ── live content search ──────────────────────
-    # --disabled: fzf does no fuzzy filtering; rg re-runs on every keystroke.
-    # Results are  file:line:col:text  — preview and open strip to filename.
     mapfile -t SELECTED < <(
       fzf \
         --height=100% \
@@ -118,7 +137,6 @@ while true; do
       echo $? > "$FZF_EXIT_FILE"
     )
   else
-    # ── directory tree ───────────────────────────
     mapfile -t SELECTED < <(
       list_dir "$CURRENT_DIR" | fzf \
         --height=100% \
@@ -138,19 +156,23 @@ while true; do
     NEW_DIR="$(cat "$STATE_FILE")"
     NEW_MODE="$(cat "$MODE_FILE")"
     NEW_HIDDEN="$(cat "$HIDDEN_FILE")"
-    if [[ "$NEW_DIR" != "$CURRENT_DIR" || "$NEW_MODE" != "$MODE" || "$NEW_HIDDEN" != "$HIDDEN" ]]; then
-      continue   # state changed (ctrl-b / bookmark / mode toggle / hidden toggle) → loop
+    NEW_SIZES="$(cat "$SIZES_FILE")"
+    if [[ "$NEW_DIR" != "$CURRENT_DIR" || "$NEW_MODE" != "$MODE" || "$NEW_HIDDEN" != "$HIDDEN" || "$NEW_SIZES" != "$SIZES" ]]; then
+      continue
     fi
-    exit 0       # ESC or ctrl-c with no state change → quit
+    exit 0
   fi
 
   [[ ${#SELECTED[@]} -eq 0 ]] && continue
 
   # In rg mode entries are  file:line:col:text  — extract just the path
+  # In sizes mode entries are  "size   path"    — extract just the path
   REAL_FILES=()
   for entry in "${SELECTED[@]}"; do
     if [[ "$MODE" == "rg" ]]; then
       path="$(echo "$entry" | cut -d: -f1)"
+    elif [[ "$SIZES" == "1" ]]; then
+      path="$(echo "$entry" | awk '{print $2}')"
     else
       path="$entry"
     fi
