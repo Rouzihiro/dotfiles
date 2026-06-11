@@ -67,8 +67,56 @@ fzf_menu() {
 # ── file picker — single fzf call ─────────────────────────────────────────────
 pick_files() {
   local root="$1"
-  PICK_MODE=1 fzf-wrapper "$root"
+  local filetypes="${2:-}"
+
+  local find_args=()
+  if [[ -n "$filetypes" ]]; then
+    IFS='|' read -ra exts <<< "$filetypes"
+    for ext in "${exts[@]}"; do
+      [[ ${#find_args[@]} -gt 0 ]] && find_args+=("-o")
+      find_args+=("-iname" "*.${ext}")
+    done
+  fi
+
+  local SELECTED
+  SELECTED=$(fzf --multi \
+    --prompt="Pick files (TAB=multi, ENTER=confirm, ESC=back) > " \
+    --walker="dir,file" \
+    --walker-root="$root" \
+    --preview="fzf-preview.sh {}" \
+    --preview-window=right:50%:wrap \
+    --header="TAB to multi-select | ENTER to confirm | ESC = back") || return 130
+
+  [[ -z "$SELECTED" ]] && return 130
+
+  # Expand dirs, filter by filetype
+  local FILES=()
+  while IFS= read -r t; do
+    if [[ -d "$t" ]]; then
+      local found=()
+      if [[ ${#find_args[@]} -gt 0 ]]; then
+        mapfile -t found < <(find "$t" -type f \( "${find_args[@]}" \))
+      else
+        mapfile -t found < <(find "$t" -type f)
+      fi
+      FILES+=("${found[@]+"${found[@]}"}")
+    else
+      if [[ -n "$filetypes" ]]; then
+        [[ "$t" =~ \.(${filetypes//|/|})$ ]] && FILES+=("$t")
+      else
+        FILES+=("$t")
+      fi
+    fi
+  done <<< "$SELECTED"
+
+  if [[ ${#FILES[@]} -eq 0 ]]; then
+    info "No matching files found."
+    return 130
+  fi
+
+  printf '%s\n' "${FILES[@]}"
 }
+
 # ── main ──────────────────────────────────────────────────────────────────────
 main() {
   local start_path="${1:-.}"
