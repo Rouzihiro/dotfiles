@@ -92,6 +92,7 @@ while true; do
              )+abort"
     --bind "ctrl-h:execute-silent(echo \"$HOME\"            > \"$STATE_FILE\"; echo tree > \"$MODE_FILE\")+abort"
     --bind "ctrl-d:execute-silent(echo \"$HOME/Downloads\"  > \"$STATE_FILE\"; echo tree > \"$MODE_FILE\")+abort"
+		--bind "ctrl-w:execute-silent(echo \"$HOME/Documents\"  > \"$STATE_FILE\"; echo tree > \"$MODE_FILE\")+abort"
     --bind "ctrl-x:execute-silent(echo \"$HOME/Pictures\"   > \"$STATE_FILE\"; echo tree > \"$MODE_FILE\")+abort"
     --bind "ctrl-v:execute-silent(echo \"$HOME/Videos\"     > \"$STATE_FILE\"; echo tree > \"$MODE_FILE\")+abort"
     --bind "ctrl-e:execute-silent(echo \"$HOME/Projects\"   > \"$STATE_FILE\"; echo tree > \"$MODE_FILE\")+abort"
