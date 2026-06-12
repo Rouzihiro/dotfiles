@@ -1,16 +1,15 @@
 #!/usr/bin/env python3
 """
-Theme compiler (clean + stable version)
+Theme compiler (multi-backend safe version)
 
-Core idea:
-- Theme file stores colors as #hex
-- Script normalizes to hex (NO #)
-- Templates decide formatting:
-    Foot      -> raw hex
-    Hyprland  -> rgb(...)
-    Rofi/Wofi -> #hex
+Supports:
+    {{key}}              -> #hex
+    {{key:hex}}          -> #hex
+    {{key:raw}}          -> hex (no #)   <-- FOOT / HYPR safe base
+    {{key:rgb}}          -> rgb(r g b)
+    {{key:rgb_spaced}}   -> r g b
 
-No transformations beyond normalization.
+All colors stored internally WITHOUT '#'
 """
 
 import re
@@ -23,22 +22,44 @@ except ModuleNotFoundError:
     try:
         import tomli as tomllib
     except ModuleNotFoundError:
-        print("Error: install tomli or use Python 3.11+")
+        print("Install tomli or use Python 3.11+")
         sys.exit(1)
 
 
 TEMPLATES_DIR = Path.home() / "dotfiles" / "templates"
-
-# {{key}} or {{key:format}} (format ignored for simplicity now)
 PLACEHOLDER = re.compile(r"\{\{(\w+)(?::(\w+))?\}\}")
 
 
 # ─────────────────────────────
-# COLOR NORMALIZATION
+# COLOR HELPERS
 # ─────────────────────────────
-def normalize_hex(v: str) -> str:
-    """Strip leading '#' so all backends are consistent."""
+def normalize(v: str) -> str:
     return v.lstrip("#")
+
+
+def to_rgb_triplet(hexv: str) -> str:
+    r = int(hexv[0:2], 16)
+    g = int(hexv[2:4], 16)
+    b = int(hexv[4:6], 16)
+    return f"{r} {g} {b}"
+
+
+def format_color(v: str, fmt: str | None) -> str:
+    v = normalize(v)
+
+    if fmt is None or fmt == "hex":
+        return f"#{v}"
+
+    if fmt == "raw":
+        return v
+
+    if fmt == "rgb":
+        return f"rgb({to_rgb_triplet(v)})"
+
+    if fmt == "rgb_spaced":
+        return to_rgb_triplet(v)
+
+    return f"#{v}"
 
 
 # ─────────────────────────────
@@ -48,12 +69,10 @@ def load_theme(path: Path) -> dict[str, str]:
     with open(path, "rb") as f:
         data = tomllib.load(f)
 
-    colors: dict[str, str] = {}
-
+    colors = {}
     for section in ("palette", "ansi"):
-        raw = data.get(section, {})
-        for k, v in raw.items():
-            colors[k] = normalize_hex(v)
+        for k, v in data.get(section, {}).items():
+            colors[k] = normalize(v)
 
     return colors
 
@@ -61,66 +80,52 @@ def load_theme(path: Path) -> dict[str, str]:
 # ─────────────────────────────
 # TEMPLATE ENGINE
 # ─────────────────────────────
-def apply_template(content: str, colors: dict[str, str]) -> tuple[str, list[str]]:
+def apply_template(content: str, colors: dict[str, str]):
     unknown = []
 
-    def replace(match: re.Match) -> str:
-        key = match.group(1)
+    def repl(m: re.Match) -> str:
+        key = m.group(1)
+        fmt = m.group(2)
 
         if key not in colors:
             unknown.append(key)
-            return match.group(0)
+            return m.group(0)
 
-        return colors[key]
+        return format_color(colors[key], fmt)
 
-    return PLACEHOLDER.sub(replace, content), unknown
+    return PLACEHOLDER.sub(repl, content), unknown
 
 
 # ─────────────────────────────
 # MAIN
 # ─────────────────────────────
-def main() -> None:
+def main():
     if len(sys.argv) != 2:
-        print("Usage: apply_theme.py /path/to/theme.toml")
+        print("Usage: apply_theme.py theme.toml")
         sys.exit(1)
 
     theme_path = Path(sys.argv[1]).resolve()
 
-    if not theme_path.exists():
-        print(f"Theme not found: {theme_path}")
-        sys.exit(1)
-
-    if not TEMPLATES_DIR.exists():
-        print(f"Templates dir not found: {TEMPLATES_DIR}")
-        sys.exit(1)
-
     colors = load_theme(theme_path)
 
-    templates = sorted(
-        p for p in TEMPLATES_DIR.iterdir()
-        if p.is_file()
-    )
+    templates = sorted(TEMPLATES_DIR.iterdir())
 
-    print(f"Loaded {len(colors)} colors from {theme_path.name}")
-    print(f"Processing {len(templates)} templates\n")
+    print(f"Loaded {len(colors)} colors")
+    print(f"Templates: {len(templates)}\n")
 
-    for template in templates:
-        out_path = theme_path.parent / template.name
+    for t in templates:
+        out_path = theme_path.parent / t.name
 
         try:
-            content = template.read_text(encoding="utf-8")
+            content = t.read_text()
         except Exception:
-            print(f"skip {template.name}")
+            print(f"skip {t.name}")
             continue
 
         rendered, unknown = apply_template(content, colors)
-        out_path.write_text(rendered, encoding="utf-8")
+        out_path.write_text(rendered)
 
-        msg = f"ok   {template.name}"
-        if unknown:
-            msg += f"  (unknown: {', '.join(sorted(set(unknown)))})"
-
-        print(msg)
+        print("ok  ", t.name, "unknown:" if unknown else "")
 
     print("\nDone.")
 

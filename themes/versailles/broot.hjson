@@ -1,66 +1,66 @@
 skin: {
 
-    default: d7ccc8 none / 3e2723 none
+    default: #d7ccc8 none / #3e2723 none
 
-    parent: bcaaa4 none / 6b5854 none
+    parent: #bcaaa4 none / #6b5854 none
 
-    directory: bcaaa4 none bold / 543f3b none
+    directory: #bcaaa4 none bold / #543f3b none
 
-    exe: d7ccc8 none
-    link: 543f3b none
+    exe: #d7ccc8 none
+    link: #543f3b none
 
-    pruning: 3e2723 none italic
+    pruning: #3e2723 none italic
 
-    perm__: 3e2723 none
-    perm_r: d7ccc8 none
-    perm_w: bcaaa4 none
-    perm_x: d7ccc8 none
+    perm__: #3e2723 none
+    perm_r: #d7ccc8 none
+    perm_w: #bcaaa4 none
+    perm_x: #d7ccc8 none
 
-    owner: 6b5854 none
-    group: bcaaa4 none
+    owner: #6b5854 none
+    group: #bcaaa4 none
 
-    count: d7ccc8 3e2723
+    count: #d7ccc8 #3e2723
 
-    dates: 3e2723 none
-    sparse: d7ccc8 none
+    dates: #3e2723 none
+    sparse: #d7ccc8 none
 
-    content_extract: 6b5854 none
-    content_match: d7ccc8 none bold
+    content_extract: #6b5854 none
+    content_match: #d7ccc8 none bold
 
-    git_branch: d7ccc8 none
-    git_insertions: d7ccc8 none
-    git_deletions: bcaaa4 none
+    git_branch: #d7ccc8 none
+    git_insertions: #d7ccc8 none
+    git_deletions: #bcaaa4 none
 
-    git_status_current: d7ccc8 none
-    git_status_modified: d7ccc8 none
-    git_status_new: d7ccc8 none bold
-    git_status_ignored: 3e2723 none
-    git_status_conflicted: bcaaa4 none
+    git_status_current: #d7ccc8 none
+    git_status_modified: #d7ccc8 none
+    git_status_new: #d7ccc8 none bold
+    git_status_ignored: #3e2723 none
+    git_status_conflicted: #bcaaa4 none
 
-    selected_line: none 3e2723 / none 3e2723
+    selected_line: none #3e2723 / none #3e2723
 
-    char_match: bcaaa4 none bold
-    file_error: bcaaa4 none bold
+    char_match: #bcaaa4 none bold
+    file_error: #bcaaa4 none bold
 
-    input: d7ccc8 3e2723 / d7ccc8 none
+    input: #d7ccc8 #3e2723 / #d7ccc8 none
 
-    status_error: 3e2723 bcaaa4
-    status_job: d7ccc8 3e2723
+    status_error: #3e2723 #bcaaa4
+    status_job: #d7ccc8 #3e2723
 
-    status_normal: d7ccc8 3e2723
+    status_normal: #d7ccc8 #3e2723
 
-    status_bold: d7ccc8 3e2723 bold
+    status_bold: #d7ccc8 #3e2723 bold
 
-    scrollbar_thumb: 3e2723 none
+    scrollbar_thumb: #3e2723 none
 
-    help_headers: bcaaa4 none bold
+    help_headers: #bcaaa4 none bold
 
-    preview: d7ccc8 3e2723
+    preview: #d7ccc8 #3e2723
 
-    preview_title: bcaaa4 3e2723 bold
+    preview_title: #bcaaa4 #3e2723 bold
 
-    preview_match: none 3e2723
+    preview_match: none #3e2723
 
-    mode_command_mark: 3e2723 bcaaa4 bold
+    mode_command_mark: #3e2723 #bcaaa4 bold
 
 }
