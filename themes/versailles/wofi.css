@@ -1,17 +1,17 @@
 :root {
-    --bg:             3e2723;
-    --bg-subtle:      543f3b;
-    --bg-muted:       6b5854;
+    --bg:             #3e2723;
+    --bg-subtle:      #543f3b;
+    --bg-muted:       #6b5854;
 
-    --fg:             d7ccc8;
-    --fg-dim:         998a86;
+    --fg:             #d7ccc8;
+    --fg-dim:         #998a86;
 
-    --accent:         bcaaa4;
+    --accent:         #bcaaa4;
 
-    --sel-bg:         d7ccc8;
-    --sel-fg:         3e2723;
+    --sel-bg:         #d7ccc8;
+    --sel-fg:         #3e2723;
 
-    --urgent:         bcaaa4;
-    --warning:        d7ccc8;
-    --success:        d7ccc8;
+    --urgent:         #bcaaa4;
+    --warning:        #d7ccc8;
+    --success:        #d7ccc8;
 }
