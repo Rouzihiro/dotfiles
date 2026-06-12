@@ -47,3 +47,10 @@ for_window [con_mark="floaty-small"] floating enable, resize set 800 600, move p
 assign [app_id="^librewolf$"] workspace number 2
 assign [app_id="firefox"] workspace number 2
 assign [title="^JDownloader.*"] workspace number 4
+
+for_window [app_id="dashboard"] {
+    floating enable
+    resize set 1400 800
+    move position center
+    focus
+}
