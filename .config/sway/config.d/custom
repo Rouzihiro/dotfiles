@@ -15,9 +15,10 @@ bindsym $mod+b exec $term2 --title floaty-tiny -e sh -c bookmarks
 bindsym $mod+Mod1+b exec xdg-open https://
 bindsym $mod+Shift+b exec $term2 --title floaty-small -e sh -c bt
 
-bindsym $mod+d exec rofi-aria
-bindsym $mod+Mod1+d exec rofi-docs
-bindsym $mod+Shift+d exec bm-music-downloader
+bindsym $mod+d exec kitty --class dashboard -e bash -c "dashboard-launch.sh"
+bindsym $mod+Mod1+d exec rofi-aria
+bindsym $mod+Shift+d exec rofi-docs
+#bindsym $mod+Shift+d exec bm-music-downloader
 
 bindsym $mod+e exec $fm
 bindsym $mod+Mod1+e exec $tfm
