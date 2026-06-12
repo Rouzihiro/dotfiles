@@ -1,0 +1,66 @@
+skin: {
+
+    default: {{fg}} none / {{bg}} none
+
+    parent: {{accent}} none / {{bg_muted}} none
+
+    directory: {{accent}} none bold / {{bg_subtle}} none
+
+    exe: {{fg}} none
+    link: {{bg_subtle}} none
+
+    pruning: {{bg}} none italic
+
+    perm__: {{bg}} none
+    perm_r: {{fg}} none
+    perm_w: {{accent}} none
+    perm_x: {{success}} none
+
+    owner: {{bg_muted}} none
+    group: {{accent}} none
+
+    count: {{fg}} {{bg}}
+
+    dates: {{bg}} none
+    sparse: {{fg}} none
+
+    content_extract: {{bg_muted}} none
+    content_match: {{fg}} none bold
+
+    git_branch: {{fg}} none
+    git_insertions: {{success}} none
+    git_deletions: {{error}} none
+
+    git_status_current: {{fg}} none
+    git_status_modified: {{warning}} none
+    git_status_new: {{success}} none bold
+    git_status_ignored: {{bg}} none
+    git_status_conflicted: {{error}} none
+
+    selected_line: none {{bg}} / none {{bg}}
+
+    char_match: {{accent}} none bold
+    file_error: {{error}} none bold
+
+    input: {{fg}} {{bg}} / {{fg}} none
+
+    status_error: {{bg}} {{error}}
+    status_job: {{fg}} {{bg}}
+
+    status_normal: {{fg}} {{bg}}
+
+    status_bold: {{fg}} {{bg}} bold
+
+    scrollbar_thumb: {{bg}} none
+
+    help_headers: {{accent}} none bold
+
+    preview: {{fg}} {{bg}}
+
+    preview_title: {{accent}} {{bg}} bold
+
+    preview_match: none {{bg}}
+
+    mode_command_mark: {{bg}} {{accent}} bold
+
+}

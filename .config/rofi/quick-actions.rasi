@@ -7,13 +7,13 @@ configuration {
 
 * {
     background-color: transparent;
-    text-color: @on-sigbg;
+    text-color: @fg;
 }
 
 window {
-    background-color: @sigbg;
+    background-color: @bg-muted;
     border: 2px solid;
-    border-color: @sig1;
+    border-color: @bg;
     border-radius: 16px;
     padding: 16px;
     width: 550px;
@@ -40,8 +40,8 @@ listview {
 }
 
 element {
-    background-color: @sig-surface-high;
-    text-color: @on-sigbg;
+    background-color: @bg-subtle;
+    text-color: @fg;
     border-radius: 12px;
     padding: 16px 20px;
     spacing: 12px;
@@ -55,13 +55,13 @@ element-text {
 }
 
 element selected {
-    background-color: @sig1;
-    text-color: @on-sig1;
+    background-color: @sel-bg;
+    text-color: @sel-fg;
 }
 
 element selected.active {
-    background-color: @sig2;
-    text-color: @on-sig2;
+    background-color: @sel-bg;
+    text-color: @sel-fg;
 }
 
 element-text selected {

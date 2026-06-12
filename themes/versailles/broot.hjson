@@ -1,69 +1,66 @@
-
 skin: {
 
-    default: rgb(215, 204, 200) none / rgb(62, 39, 35) none
+    default: #d7ccc8 none / #3e2723 none
 
-    tree: rgb(62, 39, 35) none / rgb(62, 39, 35) none
-    parent: rgb(188, 170, 164) none / rgb(109, 76, 65) none
+    parent: #bcaaa4 none / #6b5854 none
 
-    file: rgb(215, 204, 200) none / rgb(215, 204, 200) none
-    directory: rgb(188, 170, 164) none bold / rgb(141, 110, 99) none
+    directory: #bcaaa4 none bold / #543f3b none
 
-    exe: rgb(215, 204, 200) none
-    link: rgb(141, 110, 99) none
+    exe: #d7ccc8 none
+    link: #543f3b none
 
-    pruning: rgb(62, 39, 35) none italic
+    pruning: #3e2723 none italic
 
-    perm__: rgb(62, 39, 35) none
-    perm_r: rgb(215, 204, 200) none
-    perm_w: rgb(188, 170, 164) none
-    perm_x: rgb(215, 204, 200) none
+    perm__: #3e2723 none
+    perm_r: #d7ccc8 none
+    perm_w: #bcaaa4 none
+    perm_x: #d7ccc8 none
 
-    owner: rgb(109, 76, 65) none
-    group: rgb(188, 170, 164) none
+    owner: #6b5854 none
+    group: #bcaaa4 none
 
-    count: rgb(215, 204, 200) rgb(62, 39, 35)
+    count: #d7ccc8 #3e2723
 
-    dates: rgb(62, 39, 35) none
-    sparse: rgb(215, 204, 200) none
+    dates: #3e2723 none
+    sparse: #d7ccc8 none
 
-    content_extract: rgb(109, 76, 65) none
-    content_match: rgb(215, 204, 200) none bold
+    content_extract: #6b5854 none
+    content_match: #d7ccc8 none bold
 
-    git_branch: rgb(215, 204, 200) none
-    git_insertions: rgb(215, 204, 200) none
-    git_deletions: rgb(188, 170, 164) none
+    git_branch: #d7ccc8 none
+    git_insertions: #d7ccc8 none
+    git_deletions: #bcaaa4 none
 
-    git_status_current: rgb(215, 204, 200) none
-    git_status_modified: rgb(215, 204, 200) none
-    git_status_new: rgb(215, 204, 200) none bold
-    git_status_ignored: rgb(62, 39, 35) none
-    git_status_conflicted: rgb(188, 170, 164) none
+    git_status_current: #d7ccc8 none
+    git_status_modified: #d7ccc8 none
+    git_status_new: #d7ccc8 none bold
+    git_status_ignored: #3e2723 none
+    git_status_conflicted: #bcaaa4 none
 
-    selected_line: none rgb(62, 39, 35) / none rgb(62, 39, 35)
+    selected_line: none #3e2723 / none #3e2723
 
-    char_match: rgb(188, 170, 164) none bold
-    file_error: rgb(188, 170, 164) none bold
+    char_match: #bcaaa4 none bold
+    file_error: #bcaaa4 none bold
 
-    input: rgb(215, 204, 200) rgb(62, 39, 35) / rgb(215, 204, 200) none
+    input: #d7ccc8 #3e2723 / #d7ccc8 none
 
-    status_error: rgb(62, 39, 35) rgb(188, 170, 164)
-    status_job: rgb(215, 204, 200) rgb(62, 39, 35)
+    status_error: #3e2723 #bcaaa4
+    status_job: #d7ccc8 #3e2723
 
-    status_normal: rgb(215, 204, 200) rgb(62, 39, 35)
+    status_normal: #d7ccc8 #3e2723
 
-    status_bold: rgb(215, 204, 200) rgb(62, 39, 35) bold
+    status_bold: #d7ccc8 #3e2723 bold
 
-    scrollbar_thumb: rgb(62, 39, 35) none
+    scrollbar_thumb: #3e2723 none
 
-    help_headers: rgb(188, 170, 164) none bold
+    help_headers: #bcaaa4 none bold
 
-    preview: rgb(215, 204, 200) rgb(62, 39, 35)
+    preview: #d7ccc8 #3e2723
 
-    preview_title: rgb(188, 170, 164) rgb(62, 39, 35) bold
+    preview_title: #bcaaa4 #3e2723 bold
 
-    preview_match: none rgb(62, 39, 35)
+    preview_match: none #3e2723
 
-    mode_command_mark: rgb(62, 39, 35) rgb(188, 170, 164) bold
+    mode_command_mark: #3e2723 #bcaaa4 bold
 
 }

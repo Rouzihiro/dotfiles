@@ -1,0 +1,17 @@
+:root {
+    --bg:             {{bg}};
+    --bg-subtle:      {{bg_subtle}};
+    --bg-muted:       {{bg_muted}};
+
+    --fg:             {{fg}};
+    --fg-dim:         {{fg_dim}};
+
+    --accent:         {{accent}};
+
+    --sel-bg:         {{sel_bg}};
+    --sel-fg:         {{sel_fg}};
+
+    --urgent:         {{error}};
+    --warning:        {{warning}};
+    --success:        {{success}};
+}
