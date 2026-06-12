@@ -1,0 +1,18 @@
+[sway]
+client.focused          #d7ccc8   #3e2723   #d7ccc8      #d7ccc8   #d7ccc8
+client.focused_inactive #3e2723     #3e2723   #d7ccc8    #d7ccc8   #3e2723
+client.unfocused        #3e2723     #3e2723   #3e2723  #3e2723     #3e2723
+client.urgent           #bcaaa4   #3e2723   #d7ccc8      #bcaaa4   #bcaaa4
+
+[i3block]
+  background #3e2723
+        statusline #d7ccc8
+        separator  #3e2723
+
+        focused_workspace  #d7ccc8 #d7ccc8 #3e2723
+        active_workspace   #d7ccc8 #d7ccc8 #3e2723
+				inactive_workspace #3e2723 #3e2723 #bcaaa4
+        urgent_workspace   #bcaaa4 #bcaaa4 #3e2723
+        binding_mode       #8d6e63 #8d6e63 #3e2723
+
+

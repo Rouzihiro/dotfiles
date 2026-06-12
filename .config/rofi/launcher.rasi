@@ -1,91 +1,91 @@
 @import "colors.rasi"
 
 configuration {
-	modi:				"drun";
-	font:				"Rubik 10";
-	display-drun: 			"";
-	drun-display-format:            "{name}";
-	sidebar-mode: 			false;
+    modi: "drun";
+    font: "Rubik 10";
+    display-drun: "";
+    drun-display-format: "{name}";
+    sidebar-mode: false;
 }
 
 * {
-	button:				@sig1;
-	background-color:		@sigbg;
-	text-color:			@on-sigbg;
+    background-color: @bg;
+    text-color: @fg;
 }
 
 window {
-	width:			    	40%;
-	background-color:               @sigbg;
-	border-radius:                  16px;
+    width: 40%;
+    background-color: @bg;
+    border-radius: 16px;
 }
 
 prompt { enabled: false; }
 
 entry {
-	placeholder:			"Search";
-	placeholder-color:              inherit;
-	expand:                         true;
-	padding:                        1.5%;
-	border-radius:			8px;
-	background-color:               @sig-surface-container;
-	text-color:                     @on-sigbg;
+    placeholder: "Search";
+    placeholder-color: inherit;
+
+    expand: true;
+    padding: 1.5%;
+    border-radius: 8px;
+
+    background-color: @bg-subtle;
+    text-color: @fg;
 }
 
 inputbar {
-	children: 			[ prompt, entry ];
-	background-image:               url("/home/rey/.config/zorro/current/bg-rofi-blur.png", width);
-	expand:                         false;
-	border-radius:                  0px 0px 8px 8px;
-	padding:                        100px 30px 30px 300px;
-	background-color:               transparent;
+    children: [ prompt, entry ];
+
+    background-image: url("/home/rey/.config/zorro/current/bg-rofi-blur.png", width);
+
+    border-radius: 0px 0px 8px 8px;
+    padding: 100px 30px 30px 300px;
+    background-color: transparent;
 }
 
 listview {
-	columns:                        1;
-	lines:	                        4;
-	cycle:                          false;
-	dynamic:                        true;
-	layout:                         vertical;
-	padding:			30px 200px 30px 30px;
-	background-color:               transparent;
+    columns: 1;
+    lines: 4;
+
+    cycle: false;
+    dynamic: true;
+    layout: vertical;
+
+    padding: 30px 200px 30px 30px;
+    background-color: transparent;
 }
 
-mainbox { 
-	children: [ inputbar, listview ]; 
-	background-color:               transparent;
-	spacing:                        0px;
+mainbox {
+    children: [ inputbar, listview ];
+    background-color: transparent;
+    spacing: 0px;
 }
 
 element {
-	orientation:                    vertical;
-	padding:                        1.5% 0% 1.5% 0%;
-	border-radius:			8px;
-	background-color:               transparent;
-	text-color:                     @on-sigbg;
+    orientation: vertical;
+
+    padding: 1.5% 0%;
+    border-radius: 8px;
+
+    background-color: transparent;
+    text-color: @fg;
 }
 
 element normal.active {
-	background-color:               @sig-surface-high;
-	text-color:                     @on-sigbg;
-}
-
-element-text {
-	expand:                         true;
-	vertical-align:                 0.5;
-	margin:                         0.5% 3% 0% 3%;
-	background-color: 		inherit;
-	text-color:       		inherit;
+    background-color: @bg-subtle;
+    text-color: @fg;
 }
 
 element selected {
-	background-color:               @sig1;
-	text-color:                     @on-sig1;
-	border-radius:                  8px;
+    background-color: @bg-subtle;
+    text-color: @fg;
+    border-radius: 8px;
 }
 
-element selected.active {
-	background-color:               @sig1;
-	text-color:                     @on-sig1;
-	border-radius:                  8px;
+element-text {
+    expand: true;
+    vertical-align: 0.5;
+    margin: 0.5% 3%;
+    background-color: inherit;
+    text-color: inherit;
 }

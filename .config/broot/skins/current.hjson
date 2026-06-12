@@ -1,1 +1,68 @@
-/home/rey/.config/zorro/current/theme/broot.hjson
+skin: {
+
+    default: rgb(215, 204, 200) none / rgb(62, 39, 35) none
+
+    tree: rgb(62, 39, 35) none / rgb(62, 39, 35) none
+    parent: #bcaaa4 none / #6b5854 none
+
+    file: rgb(215, 204, 200) none / rgb(215, 204, 200) none
+    directory: #bcaaa4 none bold / #543f3b none
+
+    exe: rgb(215, 204, 200) none
+    link: #543f3b none
+
+    pruning: rgb(62, 39, 35) none italic
+
+    perm__: rgb(62, 39, 35) none
+    perm_r: rgb(215, 204, 200) none
+    perm_w: #bcaaa4 none
+    perm_x: rgb(215, 204, 200) none
+
+    owner: #6b5854 none
+    group: #bcaaa4 none
+
+    count: rgb(215, 204, 200) rgb(62, 39, 35)
+
+    dates: rgb(62, 39, 35) none
+    sparse: rgb(215, 204, 200) none
+
+    content_extract: #6b5854 none
+    content_match: rgb(215, 204, 200) none bold
+
+    git_branch: rgb(215, 204, 200) none
+    git_insertions: rgb(215, 204, 200) none
+    git_deletions: #bcaaa4 none
+
+    git_status_current: rgb(215, 204, 200) none
+    git_status_modified: rgb(215, 204, 200) none
+    git_status_new: rgb(215, 204, 200) none bold
+    git_status_ignored: rgb(62, 39, 35) none
+    git_status_conflicted: #bcaaa4 none
+
+    selected_line: none rgb(62, 39, 35) / none rgb(62, 39, 35)
+
+    char_match: #bcaaa4 none bold
+    file_error: #bcaaa4 none bold
+
+    input: rgb(215, 204, 200) rgb(62, 39, 35) / rgb(215, 204, 200) none
+
+    status_error: rgb(62, 39, 35) #bcaaa4
+    status_job: rgb(215, 204, 200) rgb(62, 39, 35)
+
+    status_normal: rgb(215, 204, 200) rgb(62, 39, 35)
+
+    status_bold: rgb(215, 204, 200) rgb(62, 39, 35) bold
+
+    scrollbar_thumb: rgb(62, 39, 35) none
+
+    help_headers: #bcaaa4 none bold
+
+    preview: rgb(215, 204, 200) rgb(62, 39, 35)
+
+    preview_title: #bcaaa4 rgb(62, 39, 35) bold
+
+    preview_match: none rgb(62, 39, 35)
+
+    mode_command_mark: rgb(62, 39, 35) #bcaaa4 bold
+
+}
