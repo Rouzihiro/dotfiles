@@ -1,0 +1,160 @@
+#!/bin/bash
+
+# Define available targets (including COMPLETE and DELETE_BACKUPS)
+TARGETS=(
+    "COMPLETE"
+    "DELETE_BACKUPS"
+    "alacritty"
+    "bar.py"
+    "broot"
+    "btop"
+    "dircolors"
+    "eza"
+    "foot"
+    "hyprland"
+    "i3blocks"
+    "lazygit"
+    "mako"
+    "rofi"
+    "sway"
+    "tmuxrofi"
+    "waybar"
+    "yazi"
+)
+
+THEMES_DIR=~/dotfiles/themes
+
+# Check if themes directory exists
+if [ ! -d "$THEMES_DIR" ]; then
+    echo "Error: Themes directory not found: $THEMES_DIR"
+    exit 1
+fi
+
+# Function to generate themes for a specific target
+generate_target() {
+    local target="$1"
+    echo "Generating themes for target: $target"
+    echo "================================"
+    
+    cd "$THEMES_DIR" || return 1
+    
+    for theme in */; do
+        theme_name="${theme%/}"
+        echo "Processing: $theme_name"
+        
+        if cd "$theme_name" 2>/dev/null; then
+            python ~/Projects/theme-generator/main.py "$target"
+            cd ..
+        else
+            echo "  Failed to enter $theme_name"
+        fi
+    done
+    
+    echo "================================"
+    echo "Done: $target"
+    echo ""
+}
+
+# Function to delete backup files
+delete_backups() {
+    echo "Deleting backup files from $THEMES_DIR"
+    echo "================================"
+    
+    # Count backups before deletion
+    local count_before=$(find "$THEMES_DIR" -type f \( -name "*.*.backup" -o -name "*.backup.*" -o -name "*.backup" \) 2>/dev/null | wc -l)
+    
+    if [ "$count_before" -eq 0 ]; then
+        echo "No backup files found."
+        return
+    fi
+    
+    echo "Found $count_before backup files to delete:"
+    find "$THEMES_DIR" -type f \( -name "*.*.backup" -o -name "*.backup.*" -o -name "*.backup" \) -exec ls -la {} \; 2>/dev/null
+    echo ""
+    
+    # Perform deletion
+    find "$THEMES_DIR" -type f -name "*.*.backup" -delete 2>/dev/null
+    find "$THEMES_DIR" -type f -name "*.backup.*" -delete 2>/dev/null
+    find "$THEMES_DIR" -type f -name "*.backup" -delete 2>/dev/null
+    
+    # Count after deletion
+    local count_after=$(find "$THEMES_DIR" -type f \( -name "*.*.backup" -o -name "*.backup.*" -o -name "*.backup" \) 2>/dev/null | wc -l)
+    local deleted=$((count_before - count_after))
+    
+    echo "================================"
+    echo "Deleted $deleted backup files."
+}
+
+# Main logic
+if [ -z "$1" ]; then
+    # No argument - show fzf selection
+    echo "Select targets to generate (Tab to select multiple, Enter to confirm):"
+    echo ""
+    
+    selected=$(printf "%s\n" "${TARGETS[@]}" | fzf --multi --prompt="Select targets: " --height=20)
+    
+    if [ -z "$selected" ]; then
+        echo "No targets selected. Exiting."
+        exit 0
+    fi
+    
+    # Check if "COMPLETE" is in the selection
+    if echo "$selected" | grep -q "^COMPLETE$"; then
+        echo "'COMPLETE' selected - generating EVERYTHING!"
+        echo ""
+        for target in "${TARGETS[@]}"; do
+            if [ "$target" != "COMPLETE" ] && [ "$target" != "DELETE_BACKUPS" ]; then
+                generate_target "$target"
+            fi
+        done
+    fi
+    
+    # Check if "DELETE_BACKUPS" is in the selection
+    if echo "$selected" | grep -q "^DELETE_BACKUPS$"; then
+        delete_backups
+        echo ""
+    fi
+    
+    # Generate other selected targets (excluding COMPLETE and DELETE_BACKUPS)
+    echo "$selected" | while read -r target; do
+        if [ -n "$target" ] && [ "$target" != "COMPLETE" ] && [ "$target" != "DELETE_BACKUPS" ]; then
+            generate_target "$target"
+        fi
+    done
+else
+    # Argument provided
+    if [ "$1" = "COMPLETE" ]; then
+        echo "Generating ALL targets..."
+        echo ""
+        for target in "${TARGETS[@]}"; do
+            if [ "$target" != "COMPLETE" ] && [ "$target" != "DELETE_BACKUPS" ]; then
+                generate_target "$target"
+            fi
+        done
+        echo "All targets generated!"
+        exit 0
+    fi
+    
+    if [ "$1" = "DELETE_BACKUPS" ]; then
+        delete_backups
+        exit 0
+    fi
+    
+    # Check if valid target
+    valid=0
+    for target in "${TARGETS[@]}"; do
+        if [ "$1" = "$target" ]; then
+            valid=1
+            break
+        fi
+    done
+    
+    if [ $valid -eq 1 ]; then
+        generate_target "$1"
+    else
+        echo "Error: Invalid target '$1'"
+        echo "Valid targets:"
+        printf "  %s\n" "${TARGETS[@]}"
+        exit 1
+    fi
+fi
