@@ -1,12 +1,16 @@
 #!/usr/bin/env python3
 """
-Apply a theme.toml to all templates in ~/dotfiles/templates/.
-Placeholders in templates use {{key}} syntax, where key is any
-entry from [palette] or [ansi] in theme.toml.
+Theme compiler (clean + stable version)
 
-Usage: python apply_theme.py /path/to/theme.toml
-Output files are written next to theme.toml, mirroring template filenames.
-Templates are never modified.
+Core idea:
+- Theme file stores colors as #hex
+- Script normalizes to hex (NO #)
+- Templates decide formatting:
+    Foot      -> raw hex
+    Hyprland  -> rgb(...)
+    Rofi/Wofi -> #hex
+
+No transformations beyond normalization.
 """
 
 import re
@@ -16,88 +20,107 @@ from pathlib import Path
 try:
     import tomllib
 except ModuleNotFoundError:
-    # Python < 3.11
     try:
         import tomli as tomllib
     except ModuleNotFoundError:
-        print("Error: requires Python 3.11+ or `pip install tomli`")
+        print("Error: install tomli or use Python 3.11+")
         sys.exit(1)
 
+
 TEMPLATES_DIR = Path.home() / "dotfiles" / "templates"
-PLACEHOLDER = re.compile(r"\{\{(\w+)\}\}")
+
+# {{key}} or {{key:format}} (format ignored for simplicity now)
+PLACEHOLDER = re.compile(r"\{\{(\w+)(?::(\w+))?\}\}")
 
 
-def load_theme(toml_path: Path) -> dict[str, str]:
-    """Flatten [palette] and [ansi] into one lookup dict."""
-    with open(toml_path, "rb") as f:
+# ─────────────────────────────
+# COLOR NORMALIZATION
+# ─────────────────────────────
+def normalize_hex(v: str) -> str:
+    """Strip leading '#' so all backends are consistent."""
+    return v.lstrip("#")
+
+
+# ─────────────────────────────
+# LOAD THEME
+# ─────────────────────────────
+def load_theme(path: Path) -> dict[str, str]:
+    with open(path, "rb") as f:
         data = tomllib.load(f)
 
     colors: dict[str, str] = {}
+
     for section in ("palette", "ansi"):
-        colors.update(data.get(section, {}))
+        raw = data.get(section, {})
+        for k, v in raw.items():
+            colors[k] = normalize_hex(v)
+
     return colors
 
 
+# ─────────────────────────────
+# TEMPLATE ENGINE
+# ─────────────────────────────
 def apply_template(content: str, colors: dict[str, str]) -> tuple[str, list[str]]:
-    """
-    Replace all {{key}} placeholders.
-    Returns (rendered_content, list_of_unknown_keys).
-    """
-    unknown: list[str] = []
+    unknown = []
 
     def replace(match: re.Match) -> str:
         key = match.group(1)
-        if key in colors:
-            return colors[key]
-        unknown.append(key)
-        return match.group(0)  # leave unknown placeholders intact
+
+        if key not in colors:
+            unknown.append(key)
+            return match.group(0)
+
+        return colors[key]
 
     return PLACEHOLDER.sub(replace, content), unknown
 
 
+# ─────────────────────────────
+# MAIN
+# ─────────────────────────────
 def main() -> None:
     if len(sys.argv) != 2:
-        print("Usage: python apply_theme.py /path/to/theme.toml")
+        print("Usage: apply_theme.py /path/to/theme.toml")
         sys.exit(1)
 
-    toml_path = Path(sys.argv[1]).resolve()
-    if not toml_path.exists():
-        print(f"Error: {toml_path} not found.")
-        sys.exit(1)
+    theme_path = Path(sys.argv[1]).resolve()
 
-    output_dir = toml_path.parent
+    if not theme_path.exists():
+        print(f"Theme not found: {theme_path}")
+        sys.exit(1)
 
     if not TEMPLATES_DIR.exists():
-        print(f"Error: templates directory not found: {TEMPLATES_DIR}")
+        print(f"Templates dir not found: {TEMPLATES_DIR}")
         sys.exit(1)
 
-    colors = load_theme(toml_path)
-    templates = [p for p in TEMPLATES_DIR.iterdir() if p.is_file()]
+    colors = load_theme(theme_path)
 
-    if not templates:
-        print(f"No files found in {TEMPLATES_DIR}")
-        sys.exit(0)
+    templates = sorted(
+        p for p in TEMPLATES_DIR.iterdir()
+        if p.is_file()
+    )
 
-    print(f"Loaded {len(colors)} color entries from {toml_path.name}")
-    print(f"Processing {len(templates)} template(s) → {output_dir}\n")
+    print(f"Loaded {len(colors)} colors from {theme_path.name}")
+    print(f"Processing {len(templates)} templates\n")
 
-    for template in sorted(templates):
-        out_path = output_dir / template.name
+    for template in templates:
+        out_path = theme_path.parent / template.name
 
         try:
             content = template.read_text(encoding="utf-8")
-        except UnicodeDecodeError:
-            print(f"  skip  {template.name} (binary file)")
+        except Exception:
+            print(f"skip {template.name}")
             continue
 
         rendered, unknown = apply_template(content, colors)
-
         out_path.write_text(rendered, encoding="utf-8")
 
-        status = f"  ok    {template.name}"
+        msg = f"ok   {template.name}"
         if unknown:
-            status += f"  [unknown keys: {', '.join(sorted(set(unknown)))}]"
-        print(status)
+            msg += f"  (unknown: {', '.join(sorted(set(unknown)))})"
+
+        print(msg)
 
     print("\nDone.")
 
