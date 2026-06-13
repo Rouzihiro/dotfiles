@@ -1,0 +1,5 @@
+@define-color background-color {{bg}};
+@define-color border-color {{success}};
+@define-color label {{fg}};
+@define-color image {{fg}};
+@define-color progress {{fg}};
