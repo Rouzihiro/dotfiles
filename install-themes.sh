@@ -16,7 +16,8 @@ mkdir -p ~/.config/btop/themes
 ln -snf ~/.config/zorro/current/theme/btop.theme ~/.config/btop/themes/current.theme
 
 mkdir -p ~/.config/broot/skins
-ln -snf ~/.config/zorro/current/theme/broot.hjson ~/.config/broot/skins/current.hjson
+ln -snf ~/.config/zorro/current/theme/broot.toml ~/.config/broot/skins/current.toml 
+# ln -snf ~/.config/zorro/current/theme/broot.hjson ~/.config/broot/skins/current.hjson
 
 mkdir -p ~/.config/foot
 ln -snf ~/.config/zorro/current/theme/foot.ini ~/.config/foot/current-theme.ini
