@@ -1,23 +1,32 @@
- /* template - colors-waybar */
+@define-color foreground #d7ccc8;
+@define-color background #3e2723;
+@define-color background-alt rgba(62 39 35,0.25);
+@define-color cursor #bcaaa4;
 
- @define-color foreground {{foreground}};
- @define-color background {{background}};
- @define-color background-alt rgba({{background | rgb}},0.25);
- @define-color cursor #bcaaa4;
- 
- @define-color color0 #3e2723;
- @define-color color1 #bcaaa4;
- @define-color color2 #d7ccc8;
- @define-color color3 #d7ccc8;
- @define-color color4 #bcaaa4;
- @define-color color5 #8d6e63;
- @define-color color6 #6d4c41;
- @define-color color7 #d7ccc8;
- @define-color color8 #3e2723;
- @define-color color9 #bcaaa4;
- @define-color color10 #d7ccc8;
- @define-color color11 #d7ccc8;
- @define-color color12 #bcaaa4;
- @define-color color13 #8d6e63;
- @define-color color14 #6d4c41;
- @define-color color15 #d7ccc8; 
+@define-color color0 #3e2723;
+@define-color color1 #bcaaa4;
+@define-color color2 #d7ccc8;
+@define-color color3 #d7ccc8;
+@define-color color4 #bcaaa4;
+@define-color color5 #8d6e63;
+@define-color color6 #6d4c41;
+@define-color color7 #d7ccc8;
+@define-color color8 #3e2723;
+@define-color color9 #bcaaa4;
+@define-color color10 #d7ccc8;
+@define-color color11 #d7ccc8;
+@define-color color12 #bcaaa4;
+@define-color color13 #8d6e63;
+@define-color color14 #6d4c41;
+@define-color color15 #d7ccc8;
+
+/* aliases for style.css */
+@define-color bg #3e2723;
+@define-color fg #d7ccc8;
+@define-color bordercolor #543f3b;
+@define-color highlight #bcaaa4;
+@define-color alert #bcaaa4;
+@define-color activegreen #d7ccc8;
+@define-color disabled #998a86;
+@define-color green #d7ccc8;
+@define-color red #bcaaa4;
