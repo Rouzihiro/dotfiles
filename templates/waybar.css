@@ -1,6 +1,6 @@
 @define-color foreground {{fg}};
 @define-color background {{bg}};
-@define-color background-alt rgba({{bg:rgb_spaced}},0.25);
+@define-color background-alt rgba({{bg:rgb_css}},0.25);
 @define-color cursor {{cursor}};
 
 @define-color color0 {{color0}};
