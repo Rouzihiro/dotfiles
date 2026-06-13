@@ -1,0 +1,1 @@
+export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=$(grep -oP 'fg_dim\s*=\s*"\K#[0-9a-fA-F]+' ~/.config/zorro/current/theme/theme.toml 2>/dev/null || echo '245')"
