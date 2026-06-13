@@ -1,6 +1,6 @@
 @define-color foreground #d7ccc8;
 @define-color background #3e2723;
-@define-color background-alt rgba(62 39 35,0.25);
+@define-color background-alt rgba(62, 39, 35,0.25);
 @define-color cursor #bcaaa4;
 
 @define-color color0 #3e2723;
