@@ -1,0 +1,66 @@
+skin: {
+
+    default: #c0caf5 none / #1a1b26 none
+
+    parent: #7aa2f7 none / #4b4f64 none
+
+    directory: #7aa2f7 none bold / #323545 none
+
+    exe: #c0caf5 none
+    link: #323545 none
+
+    pruning: #1a1b26 none italic
+
+    perm__: #1a1b26 none
+    perm_r: #c0caf5 none
+    perm_w: #7aa2f7 none
+    perm_x: #9ece6a none
+
+    owner: #4b4f64 none
+    group: #7aa2f7 none
+
+    count: #c0caf5 #1a1b26
+
+    dates: #1a1b26 none
+    sparse: #c0caf5 none
+
+    content_extract: #4b4f64 none
+    content_match: #c0caf5 none bold
+
+    git_branch: #c0caf5 none
+    git_insertions: #9ece6a none
+    git_deletions: #f7768e none
+
+    git_status_current: #c0caf5 none
+    git_status_modified: #e0af68 none
+    git_status_new: #9ece6a none bold
+    git_status_ignored: #1a1b26 none
+    git_status_conflicted: #f7768e none
+
+    selected_line: none #1a1b26 / none #1a1b26
+
+    char_match: #7aa2f7 none bold
+    file_error: #f7768e none bold
+
+    input: #c0caf5 #1a1b26 / #c0caf5 none
+
+    status_error: #1a1b26 #f7768e
+    status_job: #c0caf5 #1a1b26
+
+    status_normal: #c0caf5 #1a1b26
+
+    status_bold: #c0caf5 #1a1b26 bold
+
+    scrollbar_thumb: #1a1b26 none
+
+    help_headers: #7aa2f7 none bold
+
+    preview: #c0caf5 #1a1b26
+
+    preview_title: #7aa2f7 #1a1b26 bold
+
+    preview_match: none #1a1b26
+
+    mode_command_mark: #1a1b26 #7aa2f7 bold
+
+}

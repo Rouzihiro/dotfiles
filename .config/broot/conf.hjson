@@ -291,9 +291,10 @@ imports: [
             unknown
         ]
         # (un)comment to choose your preferred skin
+				file: skins/current.toml
 				//file: skins/current.hjson
         //file: skins/dark-blue.hjson
-        file: skins/catppuccin-macchiato.hjson
+        //file: skins/catppuccin-macchiato.hjson
         //file: skins/catppuccin-mocha.hjson
         //file: skins/dark-gruvbox.hjson
         //file: skins/dark-orange.hjson
