@@ -1,0 +1,12 @@
+[palettes.dune]
+base             = '#1b1a17'
+crust            = '#514e46'
+on_sig1          = '#1b1a17'
+on_sig2          = '#d0c8b6'
+on_sigbg         = '#d0c8b6'
+red              = '#c26a4a'
+sig1             = '#6f8fa3'
+sig2             = '#a08a9a'
+sig_bg           = '#1b1a17'
+sig_surface_high = '#36342e'
+text             = '#d0c8b6'
