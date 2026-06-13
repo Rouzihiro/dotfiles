@@ -32,6 +32,9 @@ export SUDO_PROMPT="$fg[red][sudo] $fg[yellow]password for $USER  :$fg[white]"
 zinit light zsh-users/zsh-completions
 zinit light zsh-users/zsh-autosuggestions
 
+# Set autosuggestion color from current theme
+export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=$(grep -oP 'fg_dim\s*=\s*"\K#[0-9a-fA-F]+' ~/.config/zorro/current/theme/theme.toml 2>/dev/null || echo '245')"
+
 #  ╔═╗┌┐┌┬┌─┐┌─┐┌─┐┌┬┐┌─┐
 #  ╚═╗││││├─┘├─┘├┤  │ └─┐
 #  ╚═╝┘└┘┴┴  ┴  └─┘ ┴ └─┘
@@ -282,6 +285,6 @@ done
 # ============================================
 # Sway Autostart
 # ============================================
-[[ "$(tty)" == "/dev/tty1" ]] && exec sway
+# [[ "$(tty)" == "/dev/tty1" ]] && exec sway
 
 source /home/rey/.config/broot/launcher/bash/br
