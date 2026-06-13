@@ -1,0 +1,133 @@
+#!/usr/bin/env bash
+# theme-manager — fzf frontend for theme generation
+
+CONFIG_FILE="${XDG_CONFIG_HOME:-$HOME/.config}/theme-manager.conf"
+DEFAULT_THEMES_DIR="$HOME/dotfiles/themes"
+DEFAULT_TEMPLATES_DIR="$HOME/dotfiles/templates"
+
+# ─────────────────────────────
+# CONFIG LOAD/SAVE
+# ─────────────────────────────
+load_config() {
+    if [[ -f "$CONFIG_FILE" ]]; then
+        source "$CONFIG_FILE"
+    fi
+    THEMES_DIR="${THEMES_DIR:-$DEFAULT_THEMES_DIR}"
+    TEMPLATES_DIR="${TEMPLATES_DIR:-$DEFAULT_TEMPLATES_DIR}"
+}
+
+save_config() {
+    mkdir -p "$(dirname "$CONFIG_FILE")"
+    cat > "$CONFIG_FILE" <<EOF
+THEMES_DIR="$THEMES_DIR"
+TEMPLATES_DIR="$TEMPLATES_DIR"
+EOF
+}
+
+# ─────────────────────────────
+# GENERATE THEME
+# ─────────────────────────────
+generate_theme() {
+    local theme
+    theme=$(find "$THEMES_DIR" -mindepth 1 -maxdepth 1 \( -type d -o -type l \) | sort | \
+        xargs -I{} basename {} | \
+        fzf --prompt="Select theme > " \
+            --header="Generate theme | THEMES: $THEMES_DIR" \
+            --preview="ls $THEMES_DIR/{}" \
+            --preview-window=right:40%)
+
+    [[ -z "$theme" ]] && return
+
+    local theme_path="$THEMES_DIR/$theme"
+
+    if [[ -f "$theme_path/theme.toml" ]]; then
+        echo "→ Running generate-theme-v2.py on $theme..."
+        (cd "$theme_path" && generate-theme-v2.py theme.toml)
+    elif [[ -f "$theme_path/kitty.conf" ]]; then
+        echo "→ No theme.toml found, running kitty_2_theme.py on kitty.conf..."
+        (cd "$theme_path" && kitty_2_theme.py kitty.conf)
+    else
+        echo "✗ Neither theme.toml nor kitty.conf found in $theme_path"
+        read -rp "Press Enter to continue..."
+        return 1
+    fi
+
+    echo ""
+    read -rp "Done. Press Enter to continue..."
+}
+
+# ─────────────────────────────
+# CHANGE THEMES FOLDER
+# ─────────────────────────────
+change_themes_dir() {
+    local new_dir
+    new_dir=$(find "$HOME" -mindepth 1 -maxdepth 4 -type d 2>/dev/null | \
+        fzf --prompt="Select themes folder > " \
+            --header="Current: $THEMES_DIR" \
+            --preview="ls {}" \
+            --preview-window=right:40%)
+
+    [[ -z "$new_dir" ]] && return
+
+    THEMES_DIR="$new_dir"
+    save_config
+    echo "✓ Themes dir set to: $THEMES_DIR"
+    sleep 1
+}
+
+# ─────────────────────────────
+# CHANGE TEMPLATES FOLDER
+# ─────────────────────────────
+change_templates_dir() {
+    local new_dir
+    new_dir=$(find "$HOME" -mindepth 1 -maxdepth 4 -type d 2>/dev/null | \
+        fzf --prompt="Select templates folder > " \
+            --header="Current: $TEMPLATES_DIR" \
+            --preview="ls {}" \
+            --preview-window=right:40%)
+
+    [[ -z "$new_dir" ]] && return
+
+    TEMPLATES_DIR="$new_dir"
+    save_config
+    echo "✓ Templates dir set to: $TEMPLATES_DIR"
+    sleep 1
+}
+
+# ─────────────────────────────
+# RESET DEFAULTS
+# ─────────────────────────────
+reset_defaults() {
+    THEMES_DIR="$DEFAULT_THEMES_DIR"
+    TEMPLATES_DIR="$DEFAULT_TEMPLATES_DIR"
+    save_config
+    echo "✓ Reset to defaults:"
+    echo "  Themes:    $THEMES_DIR"
+    echo "  Templates: $TEMPLATES_DIR"
+    sleep 2
+}
+
+# ─────────────────────────────
+# MAIN MENU
+# ─────────────────────────────
+main_menu() {
+    while true; do
+        local choice
+        choice=$(printf \
+            "1) Generate theme\n2) Change themes folder\n3) Change templates folder\n4) Reset to defaults\n5) Quit" | \
+            fzf --prompt="Theme Manager > " \
+                --header="Themes: $THEMES_DIR | Templates: $TEMPLATES_DIR" \
+                --no-preview)
+
+        case "$choice" in
+            "1) Generate theme")        generate_theme ;;
+            "2) Change themes folder")  change_themes_dir ;;
+            "3) Change templates folder") change_templates_dir ;;
+            "4) Reset to defaults")     reset_defaults ;;
+            "5) Quit"|"")              exit 0 ;;
+        esac
+    done
+}
+
+load_config
+main_menu
