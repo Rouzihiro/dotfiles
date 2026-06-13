@@ -89,6 +89,8 @@ pkill -SIGUSR2 btop &
 z-theme-set-starship
 $HOME/.config/zorro/current/theme/gtk.sh
 z-theme-bg-blur
+export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=$(grep -oP 'fg_dim\s*=\s*"\K#[0-9a-fA-F]+' ~/.config/zorro/current/theme/theme.toml 2>/dev/null || echo '245')"
+export EZA_CONFIG_DIR="$HOME/.config/zorro/current/theme"
 
 # Show notification with palette preview if available
 PALETTE_PREVIEW="$PALETTES_DIR/$THEME_NAME_NORMALIZED.png"
