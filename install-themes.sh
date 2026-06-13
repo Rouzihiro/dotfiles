@@ -41,6 +41,9 @@ ln -snf ~/.config/zorro/current/theme/lazygit.yml ~/.config/lazygit/config.yml
 
 mkdir -p ~/.config/sway/config.d/
 ln -snf ~/.config/zorro/current/theme/sway-theme ~/.config/sway/config.d/theme
+
+mkdir -p ~/.config/eza
+ln -nsf ~/.config/zorro/current/theme/eza.yml ~/.config/eza/theme.yml
 # ln -snf ~/.config/zorro/current/theme/sway-env ~/.config/sway/config.d/environment
 
 # ln -snf $HOME/dotfiles/.config/starship.toml $HOME/.config/starship.toml
