@@ -1,0 +1,6 @@
+@define-color selected-text {{accent}};
+@define-color text {{fg}};
+@define-color base {{bg}};
+@define-color border {{fg}};
+@define-color foreground {{fg}};
+@define-color background {{bg}};
