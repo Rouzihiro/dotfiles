@@ -199,26 +199,59 @@ reset_defaults() {
 }
 
 # ─────────────────────────────
+# FIRST RUN SETUP
+# ─────────────────────────────
+first_run_setup() {
+    local installer="$HOME/dotfiles/install-themes.sh"
+
+    if [[ ! -f "$installer" ]]; then
+        echo "✗ $installer not found"
+        read -rp "Press Enter to continue..."
+        return 1
+    fi
+
+    echo "→ Running install-themes.sh..."
+    bash "$installer"
+
+    echo ""
+    read -rp "Done. Press Enter to continue..."
+}
+
+# ─────────────────────────────
+# SET THEME
+# ─────────────────────────────
+set_theme() {
+    if ! command -v rofi-theme-set &>/dev/null; then
+        echo "✗ rofi-theme-set not found in PATH"
+        read -rp "Press Enter to continue..."
+        return 1
+    fi
+    rofi-theme-set
+}
+
+# ─────────────────────────────
 # MAIN MENU
 # ─────────────────────────────
 main_menu() {
     while true; do
         local choice
         choice=$(printf \
-            "1) Generate theme\n2) Sync starship palettes\n3) Refresh theme list\n4) Generate previews\n5) Change themes folder\n6) Change templates folder\n7) Reset to defaults\n8) Quit" | \
+            "1) Generate theme\n2) Set theme\n3) Sync starship palettes\n4) Refresh theme list\n5) Generate previews\n6) First run setup\n7) Change themes folder\n8) Change templates folder\n9) Reset to defaults\n10) Quit" | \
             fzf --prompt="Theme Manager > " \
                 --header="Themes: $THEMES_DIR | Templates: $TEMPLATES_DIR" \
                 --no-preview)
 
         case "$choice" in
             "1) Generate theme")          generate_theme ;;
-            "2) Sync starship palettes")  sync_starship_palettes ;;
-            "3) Refresh theme list")      refresh_theme_list ;;
-            "4) Generate previews")       generate_previews ;;
-            "5) Change themes folder")    change_themes_dir ;;
-            "6) Change templates folder") change_templates_dir ;;
-            "7) Reset to defaults")       reset_defaults ;;
-            "8) Quit"|"")                exit 0 ;;
+            "2) Set theme")               set_theme ;;
+ 						"3) Refresh theme list")      refresh_theme_list ;;
+            "4) Sync starship palettes")  sync_starship_palettes ;;
+            "5) Generate previews")       generate_previews ;;
+            "6) First run setup")         first_run_setup ;;
+            "7) Change themes folder")    change_themes_dir ;;
+            "8) Change templates folder") change_templates_dir ;;
+            "9) Reset to defaults")       reset_defaults ;;
+            "10) Quit"|"")               exit 0 ;;
         esac
     done
 }

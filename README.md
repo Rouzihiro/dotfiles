@@ -1,5 +1,4 @@
-<h1 align="center" style="display: flex; justify-content: center; align-items: center;">
-<!-- <img src="https://raw.githubusercontent.com/Rouzihiro/assets/main/4dotfiles/Zorro-OS.png" width="500px" style="center" /> -->
+<h1 align="center">
 <br>
 ArchLinux & Fedora Universal Installer for a Lightweight & Beautiful Setup
 <br>
@@ -27,6 +26,7 @@ A simple, efficient, and centralized theme management system for your dotfiles a
 [Jump to Theme Generator Guide](#theme-generator---how-to)
 
 ---
+
 ## Overview
 
 With this setup, you define all your themes **once** inside your dotfiles. Then, using a small script, you can switch themes across all your applications **instantly**.
@@ -54,7 +54,7 @@ Run the installation script:
 
 ```bash
 cd ~/dotfiles
-./install-arch.sh or ./install-fedora.sh 
+./install-arch.sh or ./install-fedora.sh
 ```
 
 The installer will:
@@ -108,29 +108,33 @@ Make sure the following are installed before running the setup:
 
 ```bash
 # Example directory structure
-~/.dotfiles/
+~/dotfiles/
 ├── install-themes.sh
 ├── themes/
 │   ├── theme1/
 │   ├── theme2/
 │   └── ...
-└── .local/bin/rofi/wofi-theme-switcher
+└── .local/bin/rofi/rofi-theme-set
 ```
 
+---
+
 ## 🚀 Great performance for x86 and Apple Silicon M1
-  
-This setup with Sway WM idles at ~600MB RAM with our ultra-efficient stack:  
+
+This setup with Sway WM idles at ~600MB RAM with our ultra-efficient stack:
 
 ✓ **C/Rust-powered tools**
 
 ✓ **Asahi Linux**-tuned kernel
 
-✓ **Battery-optimized** power profiles  
+✓ **Battery-optimized** power profiles
 
-**Why it flies:**  
-- Zero Electron apps  
-- GPU-optimized compositing  
-- Minimal background services  
+**Why it flies:**
+- Zero Electron apps
+- GPU-optimized compositing
+- Minimal background services
+
+---
 
 ## 🌟 Features
 
@@ -147,6 +151,8 @@ This setup with Sway WM idles at ~600MB RAM with our ultra-efficient stack:
   - Various friends/family devices
 - **Included Fixes**: Hardware-specific solutions in `/fixes` directory
 
+---
+
 ## 🛠️ Tested Configurations
 
 | Device | Status | Notes |
@@ -155,6 +161,8 @@ This setup with Sway WM idles at ~600MB RAM with our ultra-efficient stack:
 | Microsoft Surface Pro 2 | ✅ Fully Working | Touchscreen support |
 | Generic Intel Laptops | ✅ Fully Working | Broad compatibility |
 
+---
+
 ## Themes
 
 <table>
@@ -162,78 +170,67 @@ This setup with Sway WM idles at ~600MB RAM with our ultra-efficient stack:
 <td align="center"><img src="https://raw.githubusercontent.com/Rouzihiro/assets/main/4dotfiles/catppuccin.png" width="400"/><br><b>Catppuccin</b></td>
 <td align="center"><img src="https://raw.githubusercontent.com/Rouzihiro/assets/main/4dotfiles/dune.png" width="400"/><br><b>Dune</b></td>
 </tr>
-
 <tr>
 <td align="center"><img src="https://raw.githubusercontent.com/Rouzihiro/assets/main/4dotfiles/etheral.png" width="400"/><br><b>Etheral</b></td>
 <td align="center"><img src="https://raw.githubusercontent.com/Rouzihiro/assets/main/4dotfiles/everforest.png" width="400"/><br><b>Everforest</b></td>
 </tr>
-
 <tr>
 <td align="center"><img src="https://raw.githubusercontent.com/Rouzihiro/assets/main/4dotfiles/flexoki-dark.png" width="400"/><br><b>Flexoki Dark</b></td>
 <td align="center"><img src="https://raw.githubusercontent.com/Rouzihiro/assets/main/4dotfiles/gruvbox.png" width="400"/><br><b>Gruvbox</b></td>
 </tr>
-
 <tr>
 <td align="center"><img src="https://raw.githubusercontent.com/Rouzihiro/assets/main/4dotfiles/gruvbox-material.png" width="400"/><br><b>Gruvbox Material</b></td>
 <td align="center"><img src="https://raw.githubusercontent.com/Rouzihiro/assets/main/4dotfiles/hackerman.png" width="400"/><br><b>Hackerman</b></td>
 </tr>
-
 <tr>
 <td align="center"><img src="https://raw.githubusercontent.com/Rouzihiro/assets/main/4dotfiles/kanagawa-dragon.png" width="400"/><br><b>Kanagawa Dragon</b></td>
 <td align="center"><img src="https://raw.githubusercontent.com/Rouzihiro/assets/main/4dotfiles/last-horizon.png" width="400"/><br><b>Last Horizon</b></td>
 </tr>
-
 <tr>
 <td align="center"><img src="https://raw.githubusercontent.com/Rouzihiro/assets/main/4dotfiles/lumon.png" width="400"/><br><b>Lumon</b></td>
 <td align="center"><img src="https://raw.githubusercontent.com/Rouzihiro/assets/main/4dotfiles/matte-black.png" width="400"/><br><b>Matte Black</b></td>
 </tr>
-
 <tr>
 <td align="center"><img src="https://raw.githubusercontent.com/Rouzihiro/assets/main/4dotfiles/miasma.png" width="400"/><br><b>Miasma</b></td>
 <td align="center"><img src="https://raw.githubusercontent.com/Rouzihiro/assets/main/4dotfiles/nightfox.png" width="400"/><br><b>Nightfox</b></td>
 </tr>
-
 <tr>
 <td align="center"><img src="https://raw.githubusercontent.com/Rouzihiro/assets/main/4dotfiles/nord.png" width="400"/><br><b>Nord</b></td>
 <td align="center"><img src="https://raw.githubusercontent.com/Rouzihiro/assets/main/4dotfiles/osaka.png" width="400"/><br><b>Osaka</b></td>
 </tr>
-
 <tr>
 <td align="center"><img src="https://raw.githubusercontent.com/Rouzihiro/assets/main/4dotfiles/retro-82.png" width="400"/><br><b>Retro 82</b></td>
 <td align="center"><img src="https://raw.githubusercontent.com/Rouzihiro/assets/main/4dotfiles/ristretto.png" width="400"/><br><b>Ristretto</b></td>
 </tr>
-
 <tr>
 <td align="center"><img src="https://raw.githubusercontent.com/Rouzihiro/assets/main/4dotfiles/rosepine.png" width="400"/><br><b>Rosé Pine</b></td>
 <td align="center"><img src="https://raw.githubusercontent.com/Rouzihiro/assets/main/4dotfiles/rosepine-darker.png" width="400"/><br><b>Rosé Pine Darker</b></td>
 </tr>
-
 <tr>
 <td align="center"><img src="https://raw.githubusercontent.com/Rouzihiro/assets/main/4dotfiles/sakura.png" width="400"/><br><b>Sakura</b></td>
 <td align="center"><img src="https://raw.githubusercontent.com/Rouzihiro/assets/main/4dotfiles/solarized-dark.png" width="400"/><br><b>Solarized Dark</b></td>
 </tr>
-
 <tr>
 <td align="center"><img src="https://raw.githubusercontent.com/Rouzihiro/assets/main/4dotfiles/solitude.png" width="400"/><br><b>Solitude</b></td>
 <td align="center"><img src="https://raw.githubusercontent.com/Rouzihiro/assets/main/4dotfiles/tokyonight.png" width="400"/><br><b>Tokyo Night</b></td>
 </tr>
-
 <tr>
 <td align="center"><img src="https://raw.githubusercontent.com/Rouzihiro/assets/main/4dotfiles/vague.png" width="400"/><br><b>Vague</b></td>
 <td align="center"><img src="https://raw.githubusercontent.com/Rouzihiro/assets/main/4dotfiles/vantablack.png" width="400"/><br><b>Vantablack</b></td>
 </tr>
-
 <tr>
 <td align="center"><img src="https://raw.githubusercontent.com/Rouzihiro/assets/main/4dotfiles/versailles.png" width="400"/><br><b>Versailles</b></td>
 <td align="center"><img src="https://raw.githubusercontent.com/Rouzihiro/assets/main/4dotfiles/gojira.png" width="400"/><br><b>Gojira</b></td>
 </tr>
 </table>
 
+---
+
 ## Window Managers
 
 ### Sway Ecosystem
 | Component | Description | Language |
-|-----------|-------------|------------
+|-----------|-------------|----------|
 | [Sway](https://github.com/swaywm/sway) | Window Manager | ![C][c] |
 | [Swaybg](https://github.com/swaywm/swaybg) | Wallpaper manager | ![C][c] |
 | [Swaylock](https://github.com/swaywm/swaylock) | Screen locker | ![C][c] |
@@ -369,7 +366,7 @@ Create a dedicated directory for your markdown notes:
 mkdir -p ~/Documents/Notes
 ```
 
-Inside this directory, create your note files. These files are used by the Rofi bookmark/notes scripts and can be freely customized:
+Inside this directory, create your note files. These files are used by the Rofi bookmark/notes scripts and can be freely customized.
 
 ---
 
@@ -387,6 +384,7 @@ $HOME/Documents/Notes/work.md
 
 Each file acts as a category for quick access via the Rofi notes/bookmark system.
 
+---
 
 ### System Components
 | Component | Description | Language |
@@ -395,8 +393,7 @@ Each file acts as a category for quick access via the Rofi notes/bookmark system
 | [Starship](https://github.com/starship/starship) | Cross-Shell Prompt | ![Rust][rust] |
 | [Dunst](https://dunst-project.org/) | Notification Daemon | ![C][c] |
 | [Rofi-Wayland](https://gitlab.com/dgirault/wofi) | Application Launcher | ![C][c] |
-| [wlr-randr](https://sr.ht/~emersion/wlr-randr/) | Display Output Manager| ![C][c] |
-
+| [wlr-randr](https://sr.ht/~emersion/wlr-randr/) | Display Output Manager | ![C][c] |
 
 ### Applications
 | Component | Description | Language |
@@ -410,7 +407,6 @@ Each file acts as a category for quick access via the Rofi notes/bookmark system
 | [fzf-preview](https://github.com/yuki-yano/fzf-preview.vim) | Fuzzy Finder Preview Plugin | ![TypeScript][ts] |
 | [Lazygit](https://github.com/jesseduffield/lazygit) | Git TUI Client | ![Go][go] |
 | [Neovim](https://neovim.io/) | Text Editor | ![C][c] |
-| [nvim](https://github.com/neovim/neovim) | Neovim | ![C][c] |
 | [Satty](https://github.com/gabm/satty) | Screenshot Annotation Tool | ![Rust][rust] |
 | [Swappy](https://github.com/jtheoof/swappy) | Wayland Screenshot Editor | ![C][c] |
 | [Thunar](https://docs.xfce.org/xfce/thunar/start) | File Manager | ![C][c] |
@@ -419,14 +415,15 @@ Each file acts as a category for quick access via the Rofi notes/bookmark system
 | [Vifm](https://vifm.info/) | Terminal File Manager | ![C][c] |
 | [Zathura](https://github.com/pwmt/zathura) | PDF Reader | ![C][c] |
 
-
 ### Gaming
 | Component | Description | Language |
 |-----------|-------------|-----------|
 | [Steam](https://store.steampowered.com/) | Game Distribution Platform | ![C++][cpp] |
 | [AntimicroX](https://github.com/AntiMicroX/antimicrox) | Gamepad to Keyboard/Mouse Mapper | ![C++][cpp] |
+
 ---
-# Theme Generator - How To
+
+# Theme Generator — How To
 
 A Python-based template compiler that generates theme files for all your applications from a single source of truth: a `theme.toml` palette file.
 
@@ -500,60 +497,38 @@ Templates are provided for:
 
 ---
 
-## Generating a Theme
+## Theme Manager
 
-Use the interactive fzf frontend:
-
-```bash
-fzf-theme-manager
-```
-
-Or run the compiler directly:
+Everything is handled by a single interactive fzf frontend:
 
 ```bash
-cd ~/dotfiles/themes/mytheme
-generate-theme-v2.py theme.toml
+theme-manager
 ```
 
-If no `theme.toml` exists yet, generate one from a Kitty config:
-
-```bash
-cd ~/dotfiles/themes/mytheme
-kitty_2_theme.py kitty.conf
 ```
-
-The manager handles this automatically — it detects which entry point to use based on what's in the folder.
+1) Generate theme          — compile a theme.toml into all app config files
+2) Set theme               — launch the rofi theme switcher
+3) Sync starship palettes  — collect all theme palettes into ~/.config/starship.toml
+4) Refresh theme list      — relink all themes into ~/.config/zorro/themes/
+5) Generate previews       — rebuild palette preview images and thumbnail cache
+6) First run setup         — run install-themes.sh to initialize everything
+7) Change themes folder    — pick a different themes directory
+8) Change templates folder — pick a different templates directory
+9) Reset to defaults       — restore default folder paths
+10) Quit
+```
 
 ---
 
 ## Adding a New Theme
 
 1. Create a folder under `~/dotfiles/themes/mytheme/`
-2. Add a `theme.toml` with your palette (or a `kitty.conf` to bootstrap from)
-3. Run the theme installer script to make the new theme available in your theme selector:
- `$HOME/dotfiles/install-themes.sh`
-3. Run `fzf-theme-manager` and select your theme
-4. Generate Starship Configuration
-Finally, run the Starship generator to create a consistent prompt configuration:
-
-python ~/dotfiles/projects/theme-generator/starship_generator.py
-
-This will create a Starship configuration file that matches your color palette.
-
-5. Generate Palette Files
-Finally, generate the palette files for your theme selector:
-
-$HOME/dotfiles/.local/bin/zorro/z-theme-palettes-gen
-
-6. Switch to it with the theme switcher
-`rofi-theme-set`
-
-## Notes
-- The theme generator reads from `$HOME/dotfiles/themes/theme.toml`
-- Generated files will be placed in their respective application directories
-- Run all scripts whenever you update your color palette to keep everything synchronized
-- Ensure `$HOME/dotfiles/.local/bin` is in your shell PATH for the palette generator to work
-
+2. Add a `theme.toml` with your palette — or drop in a `kitty.conf` and the manager will bootstrap it automatically
+3. Run `theme-manager` → `1) Generate theme` → select your theme
+4. Run `theme-manager` → `3) Sync starship palettes` to add your new palette to Starship
+5. Run `theme-manager` → `4) Refresh theme list` to make it available in the switcher
+6. Run `theme-manager` → `5) Generate previews` to create the palette thumbnail
+7. Switch to it with `theme-manager` → `2) Set theme`
 
 ---
 
@@ -578,9 +553,10 @@ $HOME/dotfiles/.local/bin/zorro/z-theme-palettes-gen
 └── .local/bin/
     ├── generate-theme-v2.py
     ├── kitty_2_theme.py
-    └── fzf-theme-manager
+    └── theme-manager
 ```
 
+---
 
 <!-- Badge Definitions -->
 [rust]: https://img.shields.io/badge/-Rust-DEA584?logo=rust&logoColor=black
@@ -595,5 +571,4 @@ $HOME/dotfiles/.local/bin/zorro/z-theme-palettes-gen
 [py]: https://img.shields.io/badge/-python-blue
 [ts]: https://img.shields.io/badge/-TS-007BCD
 [js]: https://img.shields.io/badge/-javascript-F7DF1E
-[go]: https://img.shields.io/badge/-go-68D7E2
 [nix]: https://img.shields.io/badge/-nix-7e7eff
