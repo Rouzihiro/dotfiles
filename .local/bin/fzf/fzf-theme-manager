@@ -116,6 +116,38 @@ sync_starship_palettes() {
 }
 
 # ─────────────────────────────
+# REFRESH THEME LIST
+# ─────────────────────────────
+refresh_theme_list() {
+    local zorro_themes="$HOME/.config/zorro/themes"
+    mkdir -p "$zorro_themes"
+
+    local count=0
+    for f in "$THEMES_DIR"/*/; do
+        ln -nfs "$f" "$zorro_themes/"
+        ((count++))
+    done
+
+    echo "✓ Linked $count themes from $THEMES_DIR → $zorro_themes"
+    sleep 2
+}
+
+# ─────────────────────────────
+# GENERATE PREVIEWS
+# ─────────────────────────────
+generate_previews() {
+    echo "→ Generating palette previews..."
+    z-theme-palettes-gen
+
+    echo "→ Rebuilding thumbnail cache..."
+    z-theme-cache
+
+    echo "✓ Previews updated"
+    echo ""
+    read -rp "Done. Press Enter to continue..."
+}
+
+# ─────────────────────────────
 # CHANGE THEMES FOLDER
 # ─────────────────────────────
 change_themes_dir() {
@@ -173,7 +205,7 @@ main_menu() {
     while true; do
         local choice
         choice=$(printf \
-            "1) Generate theme\n2) Sync starship palettes\n3) Change themes folder\n4) Change templates folder\n5) Reset to defaults\n6) Quit" | \
+            "1) Generate theme\n2) Sync starship palettes\n3) Refresh theme list\n4) Generate previews\n5) Change themes folder\n6) Change templates folder\n7) Reset to defaults\n8) Quit" | \
             fzf --prompt="Theme Manager > " \
                 --header="Themes: $THEMES_DIR | Templates: $TEMPLATES_DIR" \
                 --no-preview)
@@ -181,10 +213,12 @@ main_menu() {
         case "$choice" in
             "1) Generate theme")          generate_theme ;;
             "2) Sync starship palettes")  sync_starship_palettes ;;
-            "3) Change themes folder")    change_themes_dir ;;
-            "4) Change templates folder") change_templates_dir ;;
-            "5) Reset to defaults")       reset_defaults ;;
-            "6) Quit"|"")                exit 0 ;;
+            "3) Refresh theme list")      refresh_theme_list ;;
+            "4) Generate previews")       generate_previews ;;
+            "5) Change themes folder")    change_themes_dir ;;
+            "6) Change templates folder") change_templates_dir ;;
+            "7) Reset to defaults")       reset_defaults ;;
+            "8) Quit"|"")                exit 0 ;;
         esac
     done
 }
