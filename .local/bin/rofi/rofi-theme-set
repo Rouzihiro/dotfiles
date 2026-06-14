@@ -64,6 +64,7 @@ z-theme-bg-blur &
 # Non-blocking reloads
 tmux source-file ~/.config/tmux/tmux.conf &
 pkill -SIGUSR2 btop &
+# killall -SIGUSR1 kitty 2>/dev/null
 
 # Starship: just update the palette name in starship.toml
 z-theme-set-starship
