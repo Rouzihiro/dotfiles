@@ -1,3 +1,4 @@
+alias dlm=download-manager.sh
 alias ali=fzf-aliases
 alias typst-up="cargo install typst-cli --force"
 alias sf="search-in-file.py"
