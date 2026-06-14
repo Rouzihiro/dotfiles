@@ -1,0 +1,12 @@
+[palettes.solitude]
+base             = '#101315'
+crust            = '#474a4b'
+on_sig1          = '#101315'
+on_sig2          = '#cacccc'
+on_sigbg         = '#cacccc'
+red              = '#565d60'
+sig1             = '#798186'
+sig2             = '#aeaeae'
+sig_bg           = '#101315'
+sig_surface_high = '#2b2e30'
+text             = '#cacccc'

@@ -1,0 +1,12 @@
+[palettes.solarized-dark]
+base             = '#002B36'
+crust            = '#274a52'
+on_sig1          = '#002B36'
+on_sig2          = '#839496'
+on_sigbg         = '#839496'
+red              = '#DC322F'
+sig1             = '#268BD2'
+sig2             = '#D33682'
+sig_bg           = '#002B36'
+sig_surface_high = '#133a44'
+text             = '#839496'

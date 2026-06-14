@@ -1,91 +1,38 @@
-# Generated from kitty.conf
-
-# Colors should be in 6 or 2 character hexadecimal or single spaced rgb decimal: "#RRGGBB", "#BW" or "0-255 0-255 0-255"
-# example for white: "#FFFFFF", "#ff" or "255 255 255".
-
-# All graphs and meters can be gradients
-# For single color graphs leave "mid" and "end" variable empty.
-# Use "start" and "end" variables for two color gradient
-# Use "start", "mid" and "end" for three color gradient
-
-# Main background, empty for terminal default, need to be empty if you want transparent background
 theme[main_bg]="#16242d"
-
-# Main text color
-theme[main_fg]="#304860"
-
-# Title color for boxes
+theme[main_fg]="#d6e2ee"
 theme[title]="#d6e2ee"
-
-# Highlight color for keyboard shortcuts
-theme[hi_fg]="#6fa4c9"
-
-# Background color of selected items
-theme[selected_bg]="#16242d"
-
-# Foreground color of selected items
-theme[selected_fg]="#6fa4c9"
-
-# Color of inactive/disabled text
-theme[inactive_fg]="#16242d"
-
-# Color of text appearing on top of graphs, i.e uptime and current network graph scaling
-theme[graph_text]="#304860"
-
-# Misc colors for processes box including mini cpu graphs, details memory graph and details status text
+theme[hi_fg]="#6fb8e3"
+theme[selected_bg]="#324049"
+theme[selected_fg]="#6fb8e3"
+theme[inactive_fg]="#8996a0"
+theme[graph_text]="#8996a0"
 theme[proc_misc]="#5e95bc"
-
-# Cpu box outline color
-theme[cpu_box]="#304860"
-
-# Memory/disks box outline color
-theme[mem_box]="#304860"
-
-# Net up/down box outline color
-theme[net_box]="#304860"
-
-# Processes box outline color
-theme[proc_box]="#304860"
-
-# Box divider line and small boxes line color
-theme[div_line]="#304860"
-
-# Temperature graph colors
-theme[temp_start]="#6fb8e3"
+theme[cpu_box]="#8996a0"
+theme[mem_box]="#8996a0"
+theme[net_box]="#8996a0"
+theme[proc_box]="#8996a0"
+theme[div_line]="#324049"
+theme[temp_start]="#b4e4f6"
 theme[temp_mid]="#8bc9eb"
-theme[temp_end]="#73a6cb"
-
-# CPU graph colors
+theme[temp_end]="#4d86b0"
 theme[cpu_start]="#5e95bc"
 theme[cpu_mid]="#6fa4c9"
 theme[cpu_end]="#4d86b0"
-
-# Mem/Disk free meter
 theme[free_start]="#5e95bc"
 theme[free_mid]=""
 theme[free_end]="#5e95bc"
-
-# Mem/Disk cached meter
-theme[cached_start]="#6fb8e3"
+theme[cached_start]="#b4e4f6"
 theme[cached_mid]=""
-theme[cached_end]="#f2fcff"
-
-# Mem/Disk available meter
+theme[cached_end]="#b4e4f6"
 theme[available_start]="#6fa4c9"
 theme[available_mid]=""
 theme[available_end]="#6fa4c9"
-
-# Mem/Disk used meter
 theme[used_start]="#4d86b0"
 theme[used_mid]=""
 theme[used_end]="#4d86b0"
-
-# Download graph colors
-theme[download_start]="#b1d8ee"
+theme[download_start]="#8bc9eb"
 theme[download_mid]="#8bc9eb"
 theme[download_end]="#8bc9eb"
-
-# Upload graph colors
-theme[upload_start]="#b1d8ee"
-theme[upload_mid]="#8bc9eb"
-theme[upload_end]="#8bc9eb"
+theme[upload_start]="#6fb8e3"
+theme[upload_mid]="#6fb8e3"
+theme[upload_end]="#6fb8e3"

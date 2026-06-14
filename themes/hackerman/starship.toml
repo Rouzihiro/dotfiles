@@ -1,0 +1,12 @@
+[palettes.hackerman]
+base             = '#00060f'
+crust            = '#004030'
+on_sig1          = '#00060f'
+on_sig2          = '#00ca7d'
+on_sigbg         = '#00ca7d'
+red              = '#c00e0e'
+sig1             = '#004cf1'
+sig2             = '#94058a'
+sig_bg           = '#00060f'
+sig_surface_high = '#00231f'
+text             = '#00ca7d'

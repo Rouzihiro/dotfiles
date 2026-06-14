@@ -1,0 +1,12 @@
+[palettes.gojira]
+base             = '#090d15'
+crust            = '#3c4751'
+on_sig1          = '#090d15'
+on_sig2          = '#b4d0dd'
+on_sigbg         = '#b4d0dd'
+red              = '#6e7b91'
+sig1             = '#97a6bb'
+sig2             = '#6d7b91'
+sig_bg           = '#090d15'
+sig_surface_high = '#222a33'
+text             = '#b4d0dd'

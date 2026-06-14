@@ -46,6 +46,14 @@ generate_theme() {
     elif [[ -f "$theme_path/kitty.conf" ]]; then
         echo "→ No theme.toml found, running kitty_2_theme.py on kitty.conf..."
         (cd "$theme_path" && kitty_2_theme.py kitty.conf)
+        if [[ -f "$theme_path/theme.toml" ]]; then
+            echo "→ theme.toml generated, running generate-theme-v2.py..."
+            (cd "$theme_path" && generate-theme-v2.py theme.toml)
+        else
+            echo "✗ kitty_2_theme.py did not produce a theme.toml"
+            read -rp "Press Enter to continue..."
+            return 1
+        fi
     else
         echo "✗ Neither theme.toml nor kitty.conf found in $theme_path"
         read -rp "Press Enter to continue..."
@@ -59,6 +67,50 @@ generate_theme() {
         echo "✓ Starship palette renamed to [palettes.$theme]"
     fi
 
+    echo ""
+    read -rp "Done. Press Enter to continue..."
+}
+
+# ─────────────────────────────
+# SYNC STARSHIP PALETTES
+# ─────────────────────────────
+sync_starship_palettes() {
+    local starship_config="$HOME/.config/starship.toml"
+
+    if [[ ! -f "$starship_config" ]]; then
+        echo "✗ $starship_config not found"
+        read -rp "Press Enter to continue..."
+        return 1
+    fi
+
+    local config_only
+    config_only=$(sed '/^\[palettes\./,$d' "$starship_config")
+
+    local palettes=""
+    while IFS= read -r -d '' toml; do
+        local block
+        block=$(sed -n '/^\[palettes\./,$p' "$toml")
+        if [[ -n "$block" ]]; then
+            palettes+=$'\n'"$block"$'\n'
+        fi
+    done < <(find "$THEMES_DIR" -mindepth 2 -maxdepth 2 -name "starship.toml" -print0 | sort -z)
+
+    if [[ -z "$palettes" ]]; then
+        echo "✗ No palette blocks found in $THEMES_DIR"
+        read -rp "Press Enter to continue..."
+        return 1
+    fi
+
+    {
+        echo "$config_only"
+        echo ""
+        echo "# ── Palettes (auto-synced by theme-manager) ──"
+        echo "$palettes"
+    } > "$starship_config"
+
+    local count
+    count=$(find "$THEMES_DIR" -mindepth 2 -maxdepth 2 -name "starship.toml" | wc -l)
+    echo "✓ Synced $count starship palettes into $starship_config"
     echo ""
     read -rp "Done. Press Enter to continue..."
 }
@@ -121,17 +173,18 @@ main_menu() {
     while true; do
         local choice
         choice=$(printf \
-            "1) Generate theme\n2) Change themes folder\n3) Change templates folder\n4) Reset to defaults\n5) Quit" | \
+            "1) Generate theme\n2) Sync starship palettes\n3) Change themes folder\n4) Change templates folder\n5) Reset to defaults\n6) Quit" | \
             fzf --prompt="Theme Manager > " \
                 --header="Themes: $THEMES_DIR | Templates: $TEMPLATES_DIR" \
                 --no-preview)
 
         case "$choice" in
-            "1) Generate theme")        generate_theme ;;
-            "2) Change themes folder")  change_themes_dir ;;
-            "3) Change templates folder") change_templates_dir ;;
-            "4) Reset to defaults")     reset_defaults ;;
-            "5) Quit"|"")              exit 0 ;;
+            "1) Generate theme")          generate_theme ;;
+            "2) Sync starship palettes")  sync_starship_palettes ;;
+            "3) Change themes folder")    change_themes_dir ;;
+            "4) Change templates folder") change_templates_dir ;;
+            "5) Reset to defaults")       reset_defaults ;;
+            "6) Quit"|"")                exit 0 ;;
         esac
     done
 }

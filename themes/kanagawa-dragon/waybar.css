@@ -1,22 +1,32 @@
-@define-color foreground 	#c5c9c5;
-@define-color background 	#181616;
-@define-color bg 				#181616;
-@define-color fg 				#c5c9c5;
-@define-color bordercolor #a6a69c;
-@define-color highlight 	#c4b28a;
-@define-color alert 			#c4746e;
+@define-color foreground #c5c9c5;
+@define-color background #181616;
+@define-color background-alt rgba(24, 22, 22,0.25);
+@define-color cursor #C8C093;
+
+@define-color color0 #0d0c0c;
+@define-color color1 #c4746e;
+@define-color color2 #8a9a7b;
+@define-color color3 #c4b28a;
+@define-color color4 #8ba4b0;
+@define-color color5 #a292a3;
+@define-color color6 #8ea4a2;
+@define-color color7 #C8C093;
+@define-color color8 #a6a69c;
+@define-color color9 #E46876;
+@define-color color10 #87a987;
+@define-color color11 #E6C384;
+@define-color color12 #7FB4CA;
+@define-color color13 #938AA9;
+@define-color color14 #7AA89F;
+@define-color color15 #c5c9c5;
+
+/* aliases for style.css */
+@define-color bg #181616;
+@define-color fg #c5c9c5;
+@define-color bordercolor #313030;
+@define-color highlight #8ba4b0;
+@define-color alert #c4746e;
 @define-color activegreen #8a9a7b;
-@define-color disabled    #0d0c0c;
-
-@define-color bg_alt      #0d0c0c;
-@define-color border      #a6a69c;
-
-@define-color red         #c4746e;
-@define-color green       #8a9a7b;
-@define-color yellow      #c4b28a;
-@define-color blue        #8ba4b0;
-@define-color purple      #a292a3;
-@define-color aqua        #8ea4a2;
-
-@define-color orange      #b6927b;
-@define-color gray        #a6a69c;
+@define-color disabled #7f817e;
+@define-color green #8a9a7b;
+@define-color red #c4746e;

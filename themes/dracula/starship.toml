@@ -1,0 +1,12 @@
+[palettes.dracula]
+base             = '#282a36'
+crust            = '#66676e'
+on_sig1          = '#282a36'
+on_sig2          = '#f8f8f2'
+on_sigbg         = '#f8f8f2'
+red              = '#ff5555'
+sig1             = '#bd93f9'
+sig2             = '#ff79c6'
+sig_bg           = '#282a36'
+sig_surface_high = '#474852'
+text             = '#f8f8f2'

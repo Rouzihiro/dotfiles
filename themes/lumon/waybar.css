@@ -1,2 +1,32 @@
 @define-color foreground #d6e2ee;
-@define-color background #213442;
+@define-color background #16242d;
+@define-color background-alt rgba(22, 36, 45,0.25);
+@define-color cursor #f2fcff;
+
+@define-color color0 #1b2d40;
+@define-color color1 #4d86b0;
+@define-color color2 #5e95bc;
+@define-color color3 #6fa4c9;
+@define-color color4 #6fb8e3;
+@define-color color5 #8bc9eb;
+@define-color color6 #b4e4f6;
+@define-color color7 #d6e2ee;
+@define-color color8 #304860;
+@define-color color9 #73a6cb;
+@define-color color10 #86b7d8;
+@define-color color11 #9dcae5;
+@define-color color12 #f2fcff;
+@define-color color13 #b1d8ee;
+@define-color color14 #d1eef8;
+@define-color color15 #ffffff;
+
+/* aliases for style.css */
+@define-color bg #16242d;
+@define-color fg #d6e2ee;
+@define-color bordercolor #324049;
+@define-color highlight #6fb8e3;
+@define-color alert #4d86b0;
+@define-color activegreen #5e95bc;
+@define-color disabled #8996a0;
+@define-color green #5e95bc;
+@define-color red #4d86b0;

@@ -1,0 +1,12 @@
+[palettes.vantablack]
+base             = '#000000'
+crust            = '#4c4c4c'
+on_sig1          = '#000000'
+on_sig2          = '#ffffff'
+on_sigbg         = '#ffffff'
+red              = '#a4a4a4'
+sig1             = '#8d8d8d'
+sig2             = '#9b9b9b'
+sig_bg           = '#000000'
+sig_surface_high = '#262626'
+text             = '#ffffff'

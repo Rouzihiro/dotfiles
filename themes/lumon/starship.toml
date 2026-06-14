@@ -1,0 +1,12 @@
+[palettes.lumon]
+base             = '#16242d'
+crust            = '#4f5d66'
+on_sig1          = '#16242d'
+on_sig2          = '#d6e2ee'
+on_sigbg         = '#d6e2ee'
+red              = '#4d86b0'
+sig1             = '#6fb8e3'
+sig2             = '#8bc9eb'
+sig_bg           = '#16242d'
+sig_surface_high = '#324049'
+text             = '#d6e2ee'

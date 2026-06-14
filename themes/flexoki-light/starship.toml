@@ -1,0 +1,12 @@
+[palettes.flexoki-light]
+base             = '#FFFCF0'
+crust            = '#b7b4ac'
+on_sig1          = '#FFFCF0'
+on_sig2          = '#100F0F'
+on_sigbg         = '#100F0F'
+red              = '#D14D41'
+sig1             = '#4385BE'
+sig2             = '#CE5D97'
+sig_bg           = '#FFFCF0'
+sig_surface_high = '#dbd8ce'
+text             = '#100F0F'

@@ -1,0 +1,12 @@
+[palettes.oxocarbon]
+base             = '#161616'
+crust            = '#585859'
+on_sig1          = '#161616'
+on_sig2          = '#f2f4f8'
+on_sigbg         = '#f2f4f8'
+red              = '#ee5396'
+sig1             = '#33b1ff'
+sig2             = '#ff7eb6'
+sig_bg           = '#161616'
+sig_surface_high = '#373737'
+text             = '#f2f4f8'

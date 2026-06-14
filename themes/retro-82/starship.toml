@@ -1,0 +1,12 @@
+[palettes.retro-82]
+base             = '#05182e'
+crust            = '#4d5253'
+on_sig1          = '#05182e'
+on_sig2          = '#f6dcac'
+on_sigbg         = '#f6dcac'
+red              = '#f85525'
+sig1             = '#faa968'
+sig2             = '#3f8f8a'
+sig_bg           = '#05182e'
+sig_surface_high = '#293540'
+text             = '#f6dcac'

@@ -1,0 +1,12 @@
+[palettes.gruvbox]
+base             = '#282828'
+crust            = '#625d51'
+on_sig1          = '#282828'
+on_sig2          = '#ebdbb2'
+on_sigbg         = '#ebdbb2'
+red              = '#cc241d'
+sig1             = '#458588'
+sig2             = '#b16286'
+sig_bg           = '#282828'
+sig_surface_high = '#45423c'
+text             = '#ebdbb2'

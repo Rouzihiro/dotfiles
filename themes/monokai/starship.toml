@@ -1,0 +1,12 @@
+[palettes.monokai]
+base             = '#0c0c0c'
+crust            = '#494949'
+on_sig1          = '#0c0c0c'
+on_sig2          = '#d9d9d9'
+on_sigbg         = '#d9d9d9'
+red              = '#f4005f'
+sig1             = '#9d65ff'
+sig2             = '#f4005f'
+sig_bg           = '#0c0c0c'
+sig_surface_high = '#2a2a2a'
+text             = '#d9d9d9'

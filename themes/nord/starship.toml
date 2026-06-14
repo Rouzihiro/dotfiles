@@ -1,0 +1,12 @@
+[palettes.nord]
+base             = '#2E3440'
+crust            = '#616772'
+on_sig1          = '#2E3440'
+on_sig2          = '#D8DEE9'
+on_sigbg         = '#D8DEE9'
+red              = '#BF616A'
+sig1             = '#81A1C1'
+sig2             = '#B48EAD'
+sig_bg           = '#2E3440'
+sig_surface_high = '#474d59'
+text             = '#D8DEE9'

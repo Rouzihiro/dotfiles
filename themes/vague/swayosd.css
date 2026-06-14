@@ -1,5 +1,5 @@
-.osd {
-  background-color: #141415;
-  color: #cdcdcd;
-  border-color: #6e94b2;
-}
+@define-color background-color #141415;
+@define-color border-color #7fa563;
+@define-color label #cdcdcd;
+@define-color image #cdcdcd;
+@define-color progress #cdcdcd;

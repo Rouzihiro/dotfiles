@@ -1,0 +1,12 @@
+[palettes.last-horizon]
+base             = '#0c0b0c'
+crust            = '#535353'
+on_sig1          = '#0c0b0c'
+on_sig2          = '#FAFCFB'
+on_sigbg         = '#FAFCFB'
+red              = '#c38b7b'
+sig1             = '#b59790'
+sig2             = '#c4d8e2'
+sig_bg           = '#0c0b0c'
+sig_surface_high = '#2f2f2f'
+text             = '#FAFCFB'

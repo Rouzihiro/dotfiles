@@ -1,158 +1,85 @@
-# : Manager [[[
-
 [mgr]
 cwd = { fg = "#FAFCFB" }
-
-# Find
 find_keyword = { fg = "#c38b7b", bold = true, italic = true, underline = true }
 find_position = { fg = "#c38b7b", bold = true, italic = true }
-
-# Marker
-marker_copied = { fg = "#87a9b0", bg = "#87a9b0" }
-marker_cut = { fg = "#e2dddc", bg = "#e2dddc" }
+marker_copied = { fg = "#c4d8e2", bg = "#c4d8e2" }
+marker_cut = { fg = "#9a9b9b", bg = "#9a9b9b" }
 marker_marked = { fg = "#b59790", bg = "#b59790" }
-marker_selected = { fg = "#3c3b3c", bg = "#3c3b3c" }
-
-# Count
-count_copied = { fg = "#0c0b0c", bg = "#e2dddc" }
-count_cut = { fg = "#0c0b0c", bg = "#e2dddc" }
-count_selected = { fg = "#0c0b0c", bg = "#3c3b3c" }
-
-# Border
+marker_selected = { fg = "#87a9b0", bg = "#87a9b0" }
+count_copied = { fg = "#0c0b0c", bg = "#9a9b9b" }
+count_cut = { fg = "#0c0b0c", bg = "#9a9b9b" }
+count_selected = { fg = "#0c0b0c", bg = "#87a9b0" }
 border_symbol = " "
 border_style = { fg = "#b59790" }
-
-# : ]]]
-
-
-# : Status [[[
 
 [status]
 sep_left = { open = "", close = "🭠" }
 sep_right = { open = "🭁", close = "" }
-
-# Permissions
 perm_type = { fg = "#b59790" }
 perm_read = { fg = "#FAFCFB" }
-perm_write = { fg = "#3c3b3c" }
-perm_exec = { fg = "#87a9b0" }
-perm_sep = { fg = "#e2dddc" }
-
-# Progress
+perm_write = { fg = "#87a9b0" }
+perm_exec = { fg = "#c4d8e2" }
+perm_sep = { fg = "#9a9b9b" }
 progress_label = { bold = true }
-progress_normal = { fg = "#b59790", bg = "#0c0b0c" }
-progress_error = { fg = "#87a9b0", bg = "#0c0b0c" }
+progress_normal = { fg = "#b59790", bg = "#2f2f2f" }
+progress_error = { fg = "#c4d8e2", bg = "#2f2f2f" }
 
 [mode]
 normal_main = { bg = "#b59790", fg = "#0c0b0c", bold = true }
-normal_alt  = { bg = "#0c0b0c", fg = "#FAFCFB" }
-
-select_main = { bg = "#e2dddc", fg = "#0c0b0c", bold = true }
-select_alt  = { bg = "#0c0b0c", fg = "#FAFCFB" }
-
-unset_main = { bg = "#3c3b3c", fg = "#0c0b0c", bold = true }
-unset_alt  = { bg = "#0c0b0c", fg = "#FAFCFB" }
-
-# : ]]]
-
-
-# : Select [[[
+normal_alt  = { bg = "#2f2f2f", fg = "#FAFCFB" }
+select_main = { bg = "#9a9b9b", fg = "#0c0b0c", bold = true }
+select_alt  = { bg = "#2f2f2f", fg = "#FAFCFB" }
+unset_main = { bg = "#87a9b0", fg = "#0c0b0c", bold = true }
+unset_alt  = { bg = "#2f2f2f", fg = "#FAFCFB" }
 
 [select]
 border = { fg = "#b59790" }
-active = { fg = "#3c3b3c", bold = true }
-
-# : ]]]
-
-
-# : Input [[[
+active = { fg = "#87a9b0", bold = true }
 
 [input]
 border = { fg = "#b59790" }
 value = { fg = "#FAFCFB" }
 
-# : ]]]
-
-
-# : Tabs [[[
-
 [tabs]
 active = { fg = "#b59790", bold = true, bg = "#0c0b0c" }
-inactive = { fg = "#e2dddc", bg = "#0c0b0c" }
+inactive = { fg = "#9a9b9b", bg = "#0c0b0c" }
 sep_inner = { open = "[", close = "]" }
 
-# : ]]]
-
-
-# : Completion [[[
-
 [cmp]
-border = { fg = "#b59790", bg = "#584e51" }
-
-# : ]]]
-
-
-# : Tasks [[[
+border = { fg = "#b59790", bg = "#2f2f2f" }
 
 [tasks]
 border = { fg = "#b59790" }
 title = {}
-hovered = { fg = "#e2dddc", underline = true }
-
-# : ]]]
-
-
-# : Which [[[
+hovered = { fg = "#9a9b9b", underline = true }
 
 [which]
 cols = 3
-mask = { bg = "#0c0b0c" }
+mask = { bg = "#2f2f2f" }
 cand = { fg = "#b59790" }
 rest = { fg = "#0c0b0c" }
 desc = { fg = "#FAFCFB" }
 separator = " ▶ "
 separator_style = { fg = "#FAFCFB" }
 
-# : ]]]
-
-
-# : Help [[[
-
 [help]
 on = { fg = "#FAFCFB" }
 run = { fg = "#FAFCFB" }
-footer = { fg = "#0c0b0c", bg = "#e2dddc" }
-
-# : ]]]
-
-
-# : Notify [[[
+footer = { fg = "#0c0b0c", bg = "#9a9b9b" }
 
 [notify]
-title_info = { fg = "#3c3b3c" }
+title_info = { fg = "#87a9b0" }
 title_warn = { fg = "#b59790" }
-title_error = { fg = "#87a9b0" }
-
-# : ]]]
-
-
-# : File-specific styles [[[
+title_error = { fg = "#c4d8e2" }
 
 [filetype]
-
 rules = [
-    { mime = "image/*", fg = "#3c3b3c" },
+    { mime = "image/*", fg = "#87a9b0" },
     { mime = "{audio,video}/*", fg = "#b59790" },
-
-    { mime = "application/{zip,rar,7z*,tar,gzip,xz,zstd,bzip*,lzma,compress,archive,cpio,arj,xar,ms-cab*}", fg = "#e2dddc" },
-
+    { mime = "application/{zip,rar,7z*,tar,gzip,xz,zstd,bzip*,lzma,compress,archive,cpio,arj,xar,ms-cab*}", fg = "#9a9b9b" },
     { mime = "application/{pdf,doc,rtf}", fg = "#FAFCFB" },
-
-    { url = "*", is = "orphan", bg = "#87a9b0" },
-    { url = "*", is = "exec", fg = "#e2dddc" },
-
+    { url = "*", is = "orphan", bg = "#c4d8e2" },
+    { url = "*", is = "exec", fg = "#9a9b9b" },
     { url = "*", fg = "#FAFCFB" },
     { url = "*/", fg = "#b59790" },
 ]
-
-# : ]]]

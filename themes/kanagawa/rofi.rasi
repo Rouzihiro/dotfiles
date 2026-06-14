@@ -1,56 +1,17 @@
-/*
- * Rofi Color Theme
- * Generated with WCAG-compliant color science
- */
+ * {
+    bg:             #1f1f28;
+    bg-subtle:      #3b3a3d;
+    bg-muted:       #575653;
 
-* {
-    /* Base colors */
-    background: #1f1f28;      /* background */
-    foreground: #dcd7ba;      /* foreground */
-    selection-background: #2d4f67;  /* selection bg */
-    selection-foreground: #c8c093;  /* selection fg */
-    border-color: #2d4f67;    /* border */
-    
-    /* Signature colors - interactive selection */
-    sigbg: @color8;           /* signature background */
-    sig1: @color12;            /* signature color 1 */
-    sig2: @color11;            /* signature color 2 */
-    sig3: @color14;            /* signature color 3 */
+    fg:             #dcd7ba;
+    fg-dim:         #908d7f;
 
-    /* WCAG-compliant contrast colors */
-    on-sigbg: @color15;    /* text on signature background */
-    on-sig1: @color0;      /* text on signature color 1 */
-    on-sig2: @color0;      /* text on signature color 2 */
-    on-sig3: @color0;      /* text on signature color 3 */
+    accent:         #7e9cd8;
 
-    /* Harmonious surface colors with transparency */
-    sig-surface: #49494eCC;        /* surface with 80% opacity */
-    sig-surface-container: #59595f40;  /* surface container 25% */
-    sig-surface-high: #8e8d8780;       /* high surface 50% */
+    sel-bg:         #2d4f67;
+    sel-fg:         #c8c093;
 
-    /* Text color reference */
-    text-color: @on-sigbg;
-
-    /* Standard 16-color palette */
-    color0: #16161d;          /* black */
-    color1: #c34043;          /* red */
-    color2: #76946a;          /* green */
-    color3: #c0a36e;          /* yellow */
-    color4: #7e9cd8;          /* blue */
-    color5: #957fb8;          /* magenta */
-    color6: #6a9589;          /* cyan */
-    color7: #c8c093;          /* white */
-
-    color8: #727169;          /* bright black */
-    color9: #e82424;          /* bright red */
-    color10: #98bb6c;         /* bright green */
-    color11: #e6c384;         /* bright yellow */
-    color12: #7fb4ca;         /* bright blue */
-    color13: #938aa9;         /* bright magenta */
-    color14: #7aa89f;         /* bright cyan */
-    color15: #dcd7ba;         /* bright white */
-
-    /* Extended colors (if present in theme) */
-    color16: #ffa066;          /* orange */
-    color17: #ff5d62;          /* peach */
+    urgent:         #c34043;
+    warning:        #c0a36e;
+    success:        #76946a;
 }

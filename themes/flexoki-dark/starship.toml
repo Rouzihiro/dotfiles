@@ -1,0 +1,12 @@
+[palettes.flexoki-dark]
+base             = '#100F0F'
+crust            = '#494845'
+on_sig1          = '#100F0F'
+on_sig2          = '#CECDC3'
+on_sigbg         = '#CECDC3'
+red              = '#AF3029'
+sig1             = '#205EA6'
+sig2             = '#A02F6F'
+sig_bg           = '#100F0F'
+sig_surface_high = '#2c2b2a'
+text             = '#CECDC3'
