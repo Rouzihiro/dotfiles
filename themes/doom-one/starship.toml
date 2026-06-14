@@ -1,0 +1,12 @@
+[palettes.doom-one]
+base             = '#282c34'
+crust            = '#545962'
+on_sig1          = '#282c34'
+on_sig2          = '#bbc2cf'
+on_sigbg         = '#bbc2cf'
+red              = '#ff6c6b'
+sig1             = '#a9a1e1'
+sig2             = '#c678dd'
+sig_bg           = '#282c34'
+sig_surface_high = '#3e424b'
+text             = '#bbc2cf'

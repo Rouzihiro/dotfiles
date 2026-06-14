@@ -1,0 +1,12 @@
+[palettes.catppuccin-latte]
+base             = '#EFF1F5'
+crust            = '#bec0cb'
+on_sig1          = '#EFF1F5'
+on_sig2          = '#4C4F69'
+on_sigbg         = '#4C4F69'
+red              = '#D20F39'
+sig1             = '#1E66F5'
+sig2             = '#EA76CB'
+sig_bg           = '#EFF1F5'
+sig_surface_high = '#d6d8e0'
+text             = '#4C4F69'

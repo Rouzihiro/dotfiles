@@ -1,0 +1,17 @@
+ * {
+    bg:             #EFF1F5;
+    bg-subtle:      #d6d8e0;
+    bg-muted:       #bec0cb;
+
+    fg:             #4C4F69;
+    fg-dim:         #8d8fa1;
+
+    accent:         #1E66F5;
+
+    sel-bg:         #DC8A78;
+    sel-fg:         #EFF1F5;
+
+    urgent:         #D20F39;
+    warning:        #DF8E1D;
+    success:        #40A02B;
+}

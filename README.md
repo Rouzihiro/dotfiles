@@ -426,53 +426,160 @@ Each file acts as a category for quick access via the Rofi notes/bookmark system
 | [Steam](https://store.steampowered.com/) | Game Distribution Platform | ![C++][cpp] |
 | [AntimicroX](https://github.com/AntiMicroX/antimicrox) | Gamepad to Keyboard/Mouse Mapper | ![C++][cpp] |
 ---
-
 # Theme Generator - How To
 
-## Overview
-This project generates consistent theme files across multiple applications based on a single Kitty terminal color palette configuration.
+A Python-based template compiler that generates theme files for all your applications from a single source of truth: a `theme.toml` palette file.
 
-## Prerequisites
-- Python 3.x installed
-- `$HOME/dotfiles/themes` directory exists
-- `$HOME/dotfiles/.local/bin` in your shell PATH
+---
 
-## Setup Instructions
+## How It Works
 
-### 1. Create Your Kitty Configuration
-First, create a `kitty.conf` file in your themes directory with your desired color palette:
-Create the file at `$HOME/dotfiles/themes/kitty.conf` with the following content:
+Each theme lives in its own folder under `~/dotfiles/themes/`. Inside, a `theme.toml` defines the full color palette. Running the generator compiles that palette into ready-to-use config files for every supported application — using a template system with multiple color format outputs.
 
+The generator is non-destructive: it writes directly into the theme folder, which your switcher picks up via symlink.
 
-### 2. Generate Theme Files
-After creating your `kitty.conf` file, run the theme generator:
+---
 
-python ~/dotfiles/projects/theme-generator/main.py
+## Palette Format
 
-This will parse your Kitty color palette and generate theme files for various applications (Vim, terminal, etc.) in the appropriate directories.
+```toml
+[palette]
+bg        = "#3e2723"
+bg_subtle = "#543f3b"
+bg_muted  = "#6b5854"
+fg        = "#d7ccc8"
+fg_dim    = "#998a86"
+accent    = "#bcaaa4"
+cursor    = "#bcaaa4"
+error     = "#bcaaa4"
+warning   = "#d7ccc8"
+success   = "#d7ccc8"
+sel_bg    = "#d7ccc8"
+sel_fg    = "#3e2723"
 
-### 3. Generate Starship Configuration
+[ansi]
+color0  = "#3e2723"
+color1  = "#bcaaa4"
+# ... color2–color15
+```
+
+---
+
+## Template Syntax
+
+Templates live in `~/dotfiles/templates/`. Use `{{key}}` placeholders — the generator replaces them with the correct color format per application:
+
+| Syntax | Output | Use case |
+|---|---|---|
+| `{{key}}` | `#rrggbb` | Default — most apps |
+| `{{key:hex}}` | `#rrggbb` | Explicit hex |
+| `{{key:raw}}` | `rrggbb` | Foot, Hyprland |
+| `{{key:rgb}}` | `rgb(r g b)` | CSS (space-separated) |
+| `{{key:rgb_spaced}}` | `r g b` | Inline RGB values |
+| `{{key:rgb_css}}` | `r, g, b` | GTK / Waybar `rgba()` |
+
+Example template line:
+```css
+@define-color background rgba({{bg:rgb_css}}, 0.25);
+```
+
+---
+
+## Supported Applications
+
+Templates are provided for:
+
+- **Terminals** — Kitty, Foot, Alacritty
+- **Compositor** — Hyprland, Sway (borders + bar)
+- **Bar** — Waybar (CSS + color aliases)
+- **Notifications** — Mako, SwayNC
+- **Shell** — Starship prompt palette
+- **File managers** — Yazi, Broot
+- **Tools** — Btop, Lazygit, Eza, Walker, SwayOSD
+- **WM extras** — i3blocks, Tmux colors
+
+---
+
+## Generating a Theme
+
+Use the interactive fzf frontend:
+
+```bash
+fzf-theme-manager
+```
+
+Or run the compiler directly:
+
+```bash
+cd ~/dotfiles/themes/mytheme
+generate-theme-v2.py theme.toml
+```
+
+If no `theme.toml` exists yet, generate one from a Kitty config:
+
+```bash
+cd ~/dotfiles/themes/mytheme
+kitty_2_theme.py kitty.conf
+```
+
+The manager handles this automatically — it detects which entry point to use based on what's in the folder.
+
+---
+
+## Adding a New Theme
+
+1. Create a folder under `~/dotfiles/themes/mytheme/`
+2. Add a `theme.toml` with your palette (or a `kitty.conf` to bootstrap from)
+3. Run the theme installer script to make the new theme available in your theme selector:
+ `$HOME/dotfiles/install-themes.sh`
+3. Run `fzf-theme-manager` and select your theme
+4. Generate Starship Configuration
 Finally, run the Starship generator to create a consistent prompt configuration:
 
 python ~/dotfiles/projects/theme-generator/starship_generator.py
 
 This will create a Starship configuration file that matches your color palette.
 
-### 4. Install and Apply Themes
-Run the theme installer script to make the new theme available in your theme selector:
-
-$HOME/dotfiles/install-themes.sh
-
-### 5. Generate Palette Files
+5. Generate Palette Files
 Finally, generate the palette files for your theme selector:
 
 $HOME/dotfiles/.local/bin/zorro/z-theme-palettes-gen
 
+6. Switch to it with the theme switcher
+`rofi-theme-set`
+
 ## Notes
-- The theme generator reads from `$HOME/dotfiles/themes/kitty.conf`
+- The theme generator reads from `$HOME/dotfiles/themes/theme.toml`
 - Generated files will be placed in their respective application directories
 - Run all scripts whenever you update your color palette to keep everything synchronized
 - Ensure `$HOME/dotfiles/.local/bin` is in your shell PATH for the palette generator to work
+
+
+---
+
+## Directory Structure
+
+```bash
+~/dotfiles/
+├── templates/           # One template per application
+│   ├── foot.ini
+│   ├── waybar.css
+│   ├── starship-palette
+│   ├── eza.yml
+│   └── ...
+├── themes/
+│   ├── sakura/
+│   │   ├── theme.toml   # Source palette
+│   │   ├── foot.ini     # Generated
+│   │   ├── waybar.css   # Generated
+│   │   └── ...
+│   └── kanagawa/
+│       └── ...
+└── .local/bin/
+    ├── generate-theme-v2.py
+    ├── kitty_2_theme.py
+    └── fzf-theme-manager
+```
 
 
 <!-- Badge Definitions -->
