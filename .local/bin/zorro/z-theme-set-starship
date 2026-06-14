@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 
 # Get the current theme and format the name
-THEME_NAME=$(basename "$(realpath "$HOME/.config/zorro/current/theme")" | sed -E 's/(^|-)([a-z])/\1\u\2/g; s/-/ /g; s/ /_/g')
+# THEME_NAME=$(basename "$(realpath "$HOME/.config/zorro/current/theme")" | sed -E 's/(^|-)([a-z])/\1\u\2/g; s/-/ /g; s/ /_/g')
+THEME_NAME=$(basename "$(realpath "$HOME/.config/zorro/current/theme")")
 
 # Check if theme was retrieved successfully
 if [ -z "$THEME_NAME" ]; then

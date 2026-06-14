@@ -52,6 +52,13 @@ generate_theme() {
         return 1
     fi
 
+    # Update starship palette name to match theme
+    local starship_out="$theme_path/starship.toml"
+    if [[ -f "$starship_out" ]]; then
+        sed -i "s/\[palettes\.zorro\]/[palettes.$theme]/" "$starship_out"
+        echo "✓ Starship palette renamed to [palettes.$theme]"
+    fi
+
     echo ""
     read -rp "Done. Press Enter to continue..."
 }
