@@ -17,7 +17,6 @@ ln -snf ~/.config/zorro/current/theme/btop.theme ~/.config/btop/themes/current.t
 
 mkdir -p ~/.config/broot/skins
 ln -snf ~/.config/zorro/current/theme/broot.toml ~/.config/broot/skins/current.toml 
-# ln -snf ~/.config/zorro/current/theme/broot.hjson ~/.config/broot/skins/current.hjson
 
 mkdir -p ~/.config/foot
 ln -snf ~/.config/zorro/current/theme/foot.ini ~/.config/foot/current-theme.ini
@@ -44,7 +43,6 @@ ln -snf ~/.config/zorro/current/theme/sway-theme ~/.config/sway/config.d/theme
 
 mkdir -p ~/.config/eza
 ln -nsf ~/.config/zorro/current/theme/eza.yml ~/.config/eza/theme.yml
-# ln -snf ~/.config/zorro/current/theme/sway-env ~/.config/sway/config.d/environment
 
 # ln -snf $HOME/dotfiles/.config/starship.toml $HOME/.config/starship.toml
 
