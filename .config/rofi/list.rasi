@@ -6,7 +6,7 @@
   margin: 0px;
   border-radius: 0.5em;
   background-color: transparent;
-  text-color: @on-sigbg;
+  text-color: @fg;
   font: "JetBrainsMono Nerd Font 12";
 }
 
@@ -20,11 +20,11 @@ window {
   margin: 0px;
   padding: 0px;
   border: 2px solid;
-  border-color: @sig1;
+  border-color: @bg;
   border-radius: 0.5em;
   spacing: 0.1em;
   children: [ mainbox ];
-  background-color: @sigbg;
+  background-color: @bg-subtle;
 }
 
 mainbox {
@@ -34,44 +34,26 @@ mainbox {
   padding: 0px;
 }
 
-/* Make inputbar invisible but functional */
 inputbar {
-  spacing: 0.1em;
-  padding: 0px;
-  margin: 0px;
-  children: [ textbox-prompt-colon, entry ];
+  height: 24px;
   background-color: transparent;
-  border-radius: 0px;
-  border: 0px;
-  height: 0px;
+  padding: 0px 12px;
 }
 
 textbox-prompt-colon {
-  expand: false;
-  padding: 0px;
-  margin: 0px;
-  border-radius: 0px;
   str: "";
-  background-color: transparent;
   text-color: transparent;
-  font: "JetBrainsMono Nerd Font Bold 0";
 }
 
 entry {
-  placeholder: "";
-  placeholder-color: transparent;
-  padding: 0px;
-  margin: 0px;
-  border-radius: 0px;
+  text-color: @fg;
   background-color: transparent;
-  text-color: transparent;
-  font: "JetBrainsMono Nerd Font Bold 0";
+  font: "JetBrainsMono Nerd Font 12";
 }
-
 mode-switcher {
   spacing: 0.1em;
   orientation: horizontal;
-  background-color: @sig-surface-container;
+  background-color: @bg-blur;
   padding: 6px 12px;
   border-radius: 0.5em 0.5em 0px 0px;
 }
@@ -80,13 +62,13 @@ button {
   padding: 6px 12px;
   border-radius: 0.5em;
   background-color: transparent;
-  text-color: @on-sigbg;
+  text-color: @fg;
   font: "JetBrainsMono Nerd Font 12"; 
 }
 
 button selected {
-  background-color: @sig1;
-  text-color: @on-sig1;
+  background-color: @sel-bg;
+  text-color: @sel-fg;
 }
 
 listview {
@@ -101,7 +83,7 @@ listview {
   padding: 4px 0px;
   border: 0px;
   border-radius: 0px 0px 0.5em 0.5em;
-  background-color: @sig-surface-container;
+  background-color: @bg-blur;
 }
 
 element {
@@ -112,38 +94,38 @@ element {
   orientation: horizontal;
   vertical-align: 0.5;
   background-color: transparent;
-  text-color: @on-sigbg;
+  text-color: @fg;
   font: "JetBrainsMono Nerd Font 12";
 }
 
 element normal.normal {
   background-color: transparent;
-  text-color: @on-sigbg;
+  text-color: @fg;
 }
 
 element normal.active {
-  background-color: @sig-surface-high;
-  text-color: @on-sigbg;
+  background-color: @bg-subtle;
+  text-color: @fg;
 }
 
 element selected.normal {
-  background-color: @sig1;
-  text-color: @on-sig1;
+  background-color: @sel-bg;
+  text-color: @sel-fg;
 }
 
 element selected.active {
-  background-color: @sig1;
-  text-color: @on-sig1;
+  background-color: @sel-bg;
+  text-color: @sel-fg;
 }
 
 element alternate.normal {
   background-color: transparent;
-  text-color: @on-sigbg;
+  text-color: @fg;
 }
 
 element alternate.active {
-  background-color: @sig-surface-high;
-  text-color: @on-sigbg;
+  background-color: @bg-subtle;
+  text-color: @fg;
 }
 
 element-text {
@@ -162,8 +144,8 @@ element-icon {
 
 scrollbar {
   width: 4px;
-  background-color: @sig-surface-high;
-  handle-color: @sig1;
+  background-color: @bg-subtle;
+  handle-color: @sel-bg;
   handle-width: 4px;
   border-radius: 2px;
 }
