@@ -289,7 +289,7 @@ cmd_ui() {
                 --prompt="dlm › " \
                 --header="$header" \
                 --header-first \
-                --height=80% \
+                --height=100% \
                 --layout=reverse \
                 --preview='
                     url=$(echo {} | cut -d"|" -f2)
