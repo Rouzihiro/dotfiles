@@ -1,27 +1,29 @@
 /* Rofi Config for Google Search) */
-
-@import "~/.config/rofi/config.rasi"  
+/* Rofi Config for Google Search */
+@import "~/.config/rofi/config.rasi"
+@import "~/.config/rofi/colors.rasi"
 
 /* ---- Window ---- */
 window {
-	width: 40%;
-	orientation: horizontal;
-	height: inherit;
+    width: 40%;
+    orientation: horizontal;
+    height: inherit;
     y-offset: 50px;
     location: north;
     children: [ "entry", "message" ];
     border: 2px;
-    border-color: white/25%;
+    border-color: @accent;
+    background-color: @bg;
 }
 
-/* ---- Entry ---- */ 
+/* ---- Entry ---- */
 entry {
-	expand: true;
-	placeholder: " 🔎 Google Search";
-	horizontal-align: 0.5;
-	padding: 15px;
-	border-radius: inherit;
-}
-window{
-    background-color: rgba(25, 25, 25, 0.90);
+    expand: true;
+    placeholder: " 🔎 Google Search";
+    horizontal-align: 0.5;
+    padding: 15px;
+    border-radius: inherit;
+    background-color: transparent;
+    text-color: @fg;
+    placeholder-color: @fg-dim;
 }

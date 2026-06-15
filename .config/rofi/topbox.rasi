@@ -23,7 +23,7 @@ window {
   border-radius: 1em;
   spacing: 0.1em;
   children: [ mainbox ];
-  background-color: @bg-muted;
+  background-color: @bg-subtle;
 }
 
 mainbox {
