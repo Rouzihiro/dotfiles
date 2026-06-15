@@ -83,18 +83,36 @@ case "$url" in
         url="https://$url"
         ;;
 esac
+
 # --------------------------
-# Open browser via swaymsg exec
+# Detect compositor dispatch
+# --------------------------
+dispatch_exec() {
+    cmd="$1"
+    if [ -n "${SWAYSOCK:-}" ]; then
+        swaymsg exec "'$cmd'"
+    elif [ -n "${HYPRLAND_INSTANCE_SIGNATURE:-}" ]; then
+        hyprctl dispatch exec "$cmd"
+    else
+        # bare fallback (works when launched from a terminal directly)
+        eval "$cmd" &
+    fi
+}
+
+# --------------------------
+# Open browser via compositor exec
 # so it works from keybinds too
 # --------------------------
 open_with() {
     browser="$1"
     [ -n "$browser" ] || return 1
-    swaymsg exec "'$browser' '$url'" && exit 0
+    dispatch_exec "'$browser' '$url'" && exit 0
 }
+
 case "$tag" in
     work) open_with "$BRAVE" ;;
     *)    open_with "$BRAVE" ;;
 esac
+
 # Final fallback
-swaymsg exec "'$FALLBACK' '$url'"
+dispatch_exec "'$FALLBACK' '$url'"
