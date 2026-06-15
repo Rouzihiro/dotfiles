@@ -6,7 +6,7 @@
   margin:        0px;
   border-radius: 1em;
   background-color: transparent;
-  text-color: @on-sigbg;
+  text-color: @fg;
 }
 
 window {
@@ -19,11 +19,11 @@ window {
   margin: 0px;
   padding: 0px;
   border: 2px solid;
-  border-color: @sig1;
+  border-color: @bg;
   border-radius: 1em;
   spacing: 0.1em;
   children: [ mainbox ];
-  background-color: @sigbg;
+  background-color: @bg-subtle;
 }
 
 mainbox {
@@ -69,7 +69,7 @@ entry {
 mode-switcher {
   spacing: 0.1em;
   orientation: horizontal;
-  background-color: @sig-surface-container;
+  background-color: @bg-subtle;
   padding: 8px 16px;
   border-radius: 1em 1em 0px 0px;
 }
@@ -78,12 +78,12 @@ button {
   padding: 8px 16px;
   border-radius: 1em;
   background-color: transparent;
-  text-color: @on-sigbg;
+  text-color: @fg;
 }
 
 button selected {
-  background-color: @sig1;
-  text-color: @on-sig1;
+  background-color: @sel-bg;
+  text-color: @sel-fg;
 }
 
 listview {
@@ -98,7 +98,7 @@ listview {
   padding: 8px 0px;
   border: 0px;
   border-radius: 0px 0px 1em 1em;
-  background-color: @sig-surface-container;
+  background-color: @bg-subtle;
 }
 
 element {
@@ -109,37 +109,37 @@ element {
   orientation: horizontal;
   vertical-align: 0.5;
   background-color: transparent;
-  text-color: @on-sigbg;
+  text-color: @sel-fg;
 }
 
 element normal.normal {
   background-color: transparent;
-  text-color: @on-sigbg;
+  text-color: @sel-fg;
 }
 
 element normal.active {
-  background-color: @sig-surface-high;
-  text-color: @on-sigbg;
+  background-color: @bg-muted;
+  text-color: @sel-fg;
 }
 
 element selected.normal {
-  background-color: @sig1;
-  text-color: @on-sig1;
+  background-color: @sel-bg;
+  text-color: @sel-fg;
 }
 
 element selected.active {
-  background-color: @sig1;
-  text-color: @on-sig1;
+  background-color: @sel-bg;
+  text-color: @sel-fg;
 }
 
 element alternate.normal {
   background-color: transparent;
-  text-color: @on-sigbg;
+  text-color: @fg;
 }
 
 element alternate.active {
-  background-color: @sig-surface-high;
-  text-color: @on-sigbg;
+  background-color: @bg-muted;
+  text-color: @fg;
 }
 
 element-text {

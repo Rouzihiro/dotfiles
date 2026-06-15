@@ -53,7 +53,7 @@ entry {
 mode-switcher {
   spacing: 0.1em;
   orientation: horizontal;
-  background-color: @bg-blur;
+  background-color: @bg-subtle;
   padding: 6px 12px;
   border-radius: 0.5em 0.5em 0px 0px;
 }
@@ -83,7 +83,7 @@ listview {
   padding: 4px 0px;
   border: 0px;
   border-radius: 0px 0px 0.5em 0.5em;
-  background-color: @bg-blur;
+  background-color: @bg-subtle;
 }
 
 element {
