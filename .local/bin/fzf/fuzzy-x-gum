@@ -1,0 +1,199 @@
+#!/usr/bin/env bash
+
+TERMINAL="foot"
+FM_TUI="yazi"
+FM_GUI="thunar"
+TRACKING_FILE="$HOME/Downloads/recent-opened-xdg.md"
+
+# Pre-check all required commands
+for cmd in fzf bat nvim gum; do
+  command -v "$cmd" >/dev/null 2>&1 || { 
+    gum style --foreground 196 --bold "$cmd not found, please install it."
+    exit 1
+  }
+done
+
+# Configuration variables
+FZF_PREVIEW_CMD='bat --color=always --style=numbers --line-range=:500 {}'
+FZF_PREVIEW_WINDOW='up:60%'
+
+# Add folders to blacklist here
+BLACKLIST_DIRS=(
+  "$HOME/.config/BraveSoftware/"
+  "$HOME/.config/BraveSoftware/Brave-Browser/"
+)
+
+# Function to track opened files - simplified version
+track_xdg_open() {
+  local file="$1"
+  local full_path=$(realpath "$file")
+  
+  # Simply append the full path to the tracking file
+  echo "$full_path" >> "$TRACKING_FILE"
+  
+  gum style --foreground 45 "📝 Tracked in: $(basename "$TRACKING_FILE")"
+}
+
+# Function to build find command with exclusions
+build_find_command() {
+  local find_excludes=()
+  for dir in "${BLACKLIST_DIRS[@]}"; do
+    if [[ -d "$dir" ]]; then
+      if [[ "$dir" == /* ]]; then
+        rel_dir=$(realpath --relative-to="." "$dir" 2>/dev/null || echo "$dir")
+        find_excludes+=(-path "./$rel_dir" -prune -o)
+      else
+        find_excludes+=(-path "$dir" -prune -o)
+      fi
+    fi
+  done
+  
+  # Use -printf for better performance if available
+  if find --help 2>&1 | grep -q "\-printf"; then
+    find . "${find_excludes[@]}" \( -type f -o -type l \) -printf '%P\n' 2>/dev/null
+  else
+    find . "${find_excludes[@]}" \( -type f -o -type l \) -print 2>/dev/null
+  fi
+}
+
+# Function to open terminal with directory
+open_terminal() {
+  local dir_path="$1"
+  local terminal_cmd="$2"
+  
+  if command -v "$terminal_cmd" >/dev/null 2>&1; then
+    case "$terminal_cmd" in
+      gnome-terminal) "$terminal_cmd" --working-directory="$dir_path" & ;;
+      kitty) "$terminal_cmd" --directory="$dir_path" & ;;
+      alacritty) "$terminal_cmd" --working-directory "$dir_path" & ;;
+      foot) "$terminal_cmd" -D "$dir_path" & ;;
+      *) "$terminal_cmd" -e bash -c "cd '$dir_path'; exec bash" & ;;
+    esac
+    gum style --foreground 45 "💻 Opened $terminal_cmd in: $dir_path"
+    return 0
+  else
+    gum style --foreground 196 "❌ Terminal not found: $terminal_cmd"
+    return 1
+  fi
+}
+
+# Function to open TUI file manager in terminal
+open_tui_file_manager() {
+  local dir_path="$1"
+  local fm_tui="$2"
+  local terminal_cmd="$3"
+  
+  if command -v "$fm_tui" >/dev/null 2>&1 && command -v "$terminal_cmd" >/dev/null 2>&1; then
+    case "$terminal_cmd" in
+      gnome-terminal) "$terminal_cmd" --working-directory="$dir_path" -- "$fm_tui" & ;;
+      kitty) "$terminal_cmd" --directory="$dir_path" "$fm_tui" & ;;
+      alacritty) "$terminal_cmd" --working-directory "$dir_path" -e "$fm_tui" & ;;
+      foot) "$terminal_cmd" -D "$dir_path" -e "$fm_tui" & ;;
+      *) "$terminal_cmd" -e "$fm_tui" "$dir_path" & ;;
+    esac
+    gum style --foreground 51 "📊 Opened $fm_tui in: $dir_path"
+    return 0
+  else
+    gum style --foreground 196 "❌ TUI file manager or terminal not found"
+    return 1
+  fi
+}
+
+# Function to show file actions menu
+show_actions_menu() {
+  gum style --foreground 45 --border rounded --border-foreground 45 --padding "1 2" -- "
+$(gum style --foreground 86 --bold 'Quick Actions:')
+
+$(gum style --foreground 245 '  1 / Enter  📂 Open with xdg-open')
+$(gum style --foreground 245 '  2 / e      📝 Edit with nvim')
+$(gum style --foreground 245 '  3 / x      ⚡ Execute')
+$(gum style --foreground 245 '  4 / s      💻 Open in terminal')
+$(gum style --foreground 245 '  5 / t      📊 Open in TUI file manager')
+$(gum style --foreground 245 '  6 / g      🖼️  Open in GUI file manager')
+$(gum style --foreground 245 '  7 / d      📁 Show directory')
+$(gum style --foreground 245 '  8 / c      ❌ Cancel')
+"
+}
+
+# Function to handle file execution
+execute_file() {
+  local file="$1"
+  if [[ -x "$file" ]]; then
+    gum style --foreground 214 "⚡ Executing..."
+    (cd "$(dirname "$file")" && "./$(basename "$file")")
+  else
+    gum style --foreground 214 "⚡ Making executable and running..."
+    chmod +x "$file"
+    (cd "$(dirname "$file")" && "./$(basename "$file")")
+  fi
+}
+
+# Function to read single character without Enter
+read_char() {
+  stty -icanon -echo
+  char=$(dd bs=1 count=1 2>/dev/null)
+  stty icanon echo
+  echo "$char"
+}
+
+# Main loop
+while true; do
+  gum style --foreground 212 --bold "🔍 Searching files..."
+
+  # Run find excluding blacklisted dirs
+  file=$(build_find_command | fzf --ansi \
+    --preview "$FZF_PREVIEW_CMD" \
+    --preview-window="$FZF_PREVIEW_WINDOW" \
+    --bind '?:toggle-preview')
+
+  [[ -z "$file" ]] && break
+
+  gum style --foreground 86 "Selected: $file"
+  show_actions_menu
+
+  # Read single character without requiring Enter
+  gum style --foreground 214 --bold "➤ Press action key (1-8) or letter..."
+  choice=$(read_char)
+  echo
+
+  case "${choice,,}" in
+    ""|1|o)
+      xdg-open "$file" 2>/dev/null && {
+        gum style --foreground 46 "✅ Opened successfully"
+        track_xdg_open "$file"
+      } || gum style --foreground 196 "❌ Failed to open with xdg-open"
+      ;;
+    2|e)
+      nvim "$file"
+      ;;
+    3|x)
+      execute_file "$file"
+      ;;
+    4|s)
+      open_terminal "$(dirname "$file")" "$TERMINAL"
+      ;;
+    5|t)
+      open_tui_file_manager "$(dirname "$file")" "$FM_TUI" "$TERMINAL"
+      ;;
+    6|g)
+      command -v "$FM_GUI" >/dev/null 2>&1 && {
+        dir_path=$(dirname "$file")
+        "$FM_GUI" "$dir_path" &
+        gum style --foreground 51 "🖼️ Opened $FM_GUI in: $dir_path"
+      } || gum style --foreground 196 "❌ GUI file manager not found: $FM_GUI"
+      ;;
+    7|d)
+      dir_path=$(dirname "$file")
+      gum style --foreground 87 "📁 Directory: $dir_path"
+      open_terminal "$dir_path" "$TERMINAL"
+      ;;
+    8|c|$'\e'|*)
+      gum style --foreground 245 "⏭️  Continuing..."
+      continue
+      ;;
+  esac
+
+  gum style --foreground 245 --italic "Press any key to continue..."
+  read -r -n1 -t 3
+  echo
+done

@@ -8,7 +8,7 @@ if pidof rofi > /dev/null; then
 fi
 
 # Define the config files
-KEYBINDS_CONF="$HOME/.config/hypr/components/binds.conf"
+KEYBINDS_CONF="$HOME/.config/hypr/_keybinds.conf"
 
 # Combine the contents of the keybinds files and filter for keybinds
 KEYBINDS=$(grep -E '^(bind|bindl|binde|bindm)' "$KEYBINDS_CONF" \

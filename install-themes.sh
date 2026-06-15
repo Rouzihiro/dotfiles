@@ -35,6 +35,12 @@ mkdir -p ~/.config/tmux
 mkdir -p ~/.config/yazi
 ln -snf ~/.config/zorro/current/theme/yazi.toml ~/.config/yazi/theme.toml
 
+mkdir -p ~/.config/walker
+ln -nsf ~/.config/zorro/current/theme/walker.css ~/.config/walker/walker.css
+
+mkdir -p ~/.config/wofi
+ln -nsf ~/.config/zorro/current/theme/walker.css ~/.config/wofi/walker.css
+
 mkdir -p ~/.config/lazygit
 ln -snf ~/.config/zorro/current/theme/lazygit.yml ~/.config/lazygit/config.yml
 

@@ -71,4 +71,4 @@ window {
   -gtk-icon-transform: scale(0.6);
 }
 
-@import ".config/zorro/current/theme/walker.css";
+@import ".config/wofi/walker.css";
