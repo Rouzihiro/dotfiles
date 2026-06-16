@@ -230,28 +230,67 @@ set_theme() {
 }
 
 # ─────────────────────────────
+# GENERATE ALL THEMES
+# ─────────────────────────────
+generate_all_themes() {
+    local failed=0
+    local count=0
+
+    while IFS= read -r -d '' theme_path; do
+        local theme
+        theme=$(basename "$theme_path")
+        echo "→ Processing $theme..."
+
+        if [[ -f "$theme_path/theme.toml" ]]; then
+            (cd "$theme_path" && generate-theme-v2.py theme.toml) || { echo "✗ Failed: $theme"; ((failed++)); continue; }
+        elif [[ -f "$theme_path/kitty.conf" ]]; then
+            (cd "$theme_path" && kitty_2_theme.py kitty.conf) || { echo "✗ kitty_2_theme failed: $theme"; ((failed++)); continue; }
+            [[ -f "$theme_path/theme.toml" ]] || { echo "✗ No theme.toml produced: $theme"; ((failed++)); continue; }
+            (cd "$theme_path" && generate-theme-v2.py theme.toml) || { echo "✗ Failed: $theme"; ((failed++)); continue; }
+        else
+            echo "✗ Skipping $theme (no theme.toml or kitty.conf)"
+            ((failed++))
+            continue
+        fi
+
+        local starship_out="$theme_path/starship.toml"
+        if [[ -f "$starship_out" ]]; then
+            sed -i "s/\[palettes\.zorro\]/[palettes.$theme]/" "$starship_out"
+        fi
+
+        ((count++))
+    done < <(find "$THEMES_DIR" -mindepth 1 -maxdepth 1 \( -type d -o -type l \) -print0 | sort -z)
+
+    echo ""
+    echo "✓ Done: $count succeeded, $failed failed"
+    read -rp "Press Enter to continue..."
+}
+
+# ─────────────────────────────
 # MAIN MENU
 # ─────────────────────────────
 main_menu() {
     while true; do
         local choice
-        choice=$(printf \
-            "1) Generate theme\n2) Set theme\n3) Sync starship palettes\n4) Refresh theme list\n5) Generate previews\n6) First run setup\n7) Change themes folder\n8) Change templates folder\n9) Reset to defaults\n10) Quit" | \
+
+choice=$(printf \
+"1) Generate theme\n2) Generate all themes\n3) Set theme\n4) Sync starship palettes\n5) Refresh theme list\n6) Generate previews\n7) First run setup\n8) Change themes folder\n9) Change templates folder\n10) Reset to defaults\n11) Quit" | \
             fzf --prompt="Theme Manager > " \
                 --header="Themes: $THEMES_DIR | Templates: $TEMPLATES_DIR" \
                 --no-preview)
 
         case "$choice" in
             "1) Generate theme")          generate_theme ;;
-            "2) Set theme")               set_theme ;;
- 						"3) Refresh theme list")      refresh_theme_list ;;
-            "4) Sync starship palettes")  sync_starship_palettes ;;
-            "5) Generate previews")       generate_previews ;;
-            "6) First run setup")         first_run_setup ;;
-            "7) Change themes folder")    change_themes_dir ;;
-            "8) Change templates folder") change_templates_dir ;;
-            "9) Reset to defaults")       reset_defaults ;;
-            "10) Quit"|"")               exit 0 ;;
+						"2) Generate all themes")     generate_all_themes ;;
+            "3) Set theme")               set_theme ;;
+						"4) Sync starship palettes")  sync_starship_palettes ;;
+						"5) Refresh theme list")      refresh_theme_list ;;
+            "6) Generate previews")       generate_previews ;;
+            "7) First run setup")         first_run_setup ;;
+            "8) Change themes folder")    change_themes_dir ;;
+            "9) Change templates folder") change_templates_dir ;;
+            "10) Reset to defaults")       reset_defaults ;;
+            "11) Quit"|"")               exit 0 ;;
         esac
     done
 }
