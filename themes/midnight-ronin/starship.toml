@@ -1,10 +1,10 @@
-[palettes.tokyonight]
+[palettes.midnight-ronin]
 bg               = '#1a1b26'
 bg_subtle        = '#323545'
 bg_muted         = '#4b4f64'
 fg               = '#c0caf5'
 fg_dim           = '#7d84a2'
-sel_bg           = '#283457'
+sel_bg           = '#33467c'
 sel_fg           = '#c0caf5'
 error            = '#f7768e'
 accent           = '#7aa2f7'

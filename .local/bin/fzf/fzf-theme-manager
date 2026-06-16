@@ -84,7 +84,7 @@ sync_starship_palettes() {
     fi
 
     local config_only
-    config_only=$(sed '/^\[palettes\./,$d' "$starship_config")
+		config_only=$(sed '/^# ── Palettes/,$d' "$starship_config")
 
     local palettes=""
     while IFS= read -r -d '' toml; do
@@ -93,10 +93,10 @@ sync_starship_palettes() {
         if [[ -n "$block" ]]; then
             palettes+=$'\n'"$block"$'\n'
         fi
-    done < <(find "$THEMES_DIR" -mindepth 2 -maxdepth 2 -name "starship.toml" -print0 | sort -z)
 
-    if [[ -z "$palettes" ]]; then
-        echo "✗ No palette blocks found in $THEMES_DIR"
+		done < <(find "$THEMES_DIR" -mindepth 2 -maxdepth 2 -name "starship.toml" -print0 | sort -z)
+			if [[ -z "$palettes" ]]; then
+    	echo "✗ No palette blocks found in $THEMES_DIR"
         read -rp "Press Enter to continue..."
         return 1
     fi
