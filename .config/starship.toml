@@ -1,5 +1,5 @@
 "$schema" = 'https://starship.rs/config-schema.json'
-palette = 'vague'
+palette = 'gruvbox'
 
 format = """
 [](sig1)\
@@ -22,6 +22,7 @@ $python\
 $conda\
 [](bg:sig1 fg:sig1)\
 $time\
+$battery\
 [ ](fg:sig1)\
 $cmd_duration\
 $line_break\
@@ -57,6 +58,26 @@ show_always = true
 style_user = "bg:sig1 fg:on_sig1"
 style_root = "bg:sig1 fg:on_sig1"
 format = '[ $user]($style)'
+
+[battery]
+full_symbol = '󰁹 '
+charging_symbol = '󰂄 '
+discharging_symbol = '󰂃 '
+unknown_symbol = '󰁽 '
+empty_symbol = '󰂎 '
+format = '[[$symbol$percentage ](fg:on_sig1 bg:sig1)]($style)'
+
+[[battery.display]]
+threshold = 15
+style = "bg:sig1 fg:red"
+
+[[battery.display]]
+threshold = 30
+style = "bg:sig1 fg:yellow"
+
+[[battery.display]]
+threshold = 100
+style = "bg:sig1 fg:on_sig1"
 
 [directory]
 style = "bg:sig2 fg:on_sig2"
