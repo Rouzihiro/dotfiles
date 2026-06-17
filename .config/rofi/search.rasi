@@ -1,5 +1,4 @@
-/* Rofi Config for Google Search) */
-/* Rofi Config for Google Search */
+/* Rofi Config for Duckduckgo Search */
 @import "~/.config/rofi/config.rasi"
 @import "~/.config/rofi/colors.rasi"
 
@@ -19,7 +18,7 @@ window {
 /* ---- Entry ---- */
 entry {
     expand: true;
-    placeholder: " 🔎 Google Search";
+    placeholder: " 🔎 Duckduckgo Search";
     horizontal-align: 0.5;
     padding: 15px;
     border-radius: inherit;
