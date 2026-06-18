@@ -1,10 +1,10 @@
 [alias]
     # graph: aesthetic log with relative dates
-    l = "log --graph --pretty=format:'%C(#7ab0df)%h%C(reset) -%C(#7ab0df)%d%C(reset) %s %C(#7ab0df)(%cr)%C(reset) %C(#79dcaa)<%an>%C(reset)' --abbrev-commit"
+    l = "log --graph --pretty=format:'%C(#bd93f9)%h%C(reset) -%C(#bd93f9)%d%C(reset) %s %C(#bd93f9)(%cr)%C(reset) %C(#50fa7b)<%an>%C(reset)' --abbrev-commit"
 
     # reflog: head movement tracking
-    rf = "reflog --pretty=format:'%C(#7ab0df)%h%C(reset) %C(cyan)%gd%C(reset) %gs %C(#7ab0df)(%cr)%C(reset)'"
+    rf = "reflog --pretty=format:'%C(#bd93f9)%h%C(reset) %C(cyan)%gd%C(reset) %gs %C(#bd93f9)(%cr)%C(reset)'"
 
     # show: word-level diff with flavor colors
-    sh = "show --pretty=format:'%C(#7ab0df)%h%C(reset) %s %C(#79dcaa)<%an>%C(reset)' --color-words"
+    sh = "show --pretty=format:'%C(#bd93f9)%h%C(reset) %s %C(#50fa7b)<%an>%C(reset)' --color-words"
     

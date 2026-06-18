@@ -1,15 +1,15 @@
 /* sway-theme.j2 - Generated from flavors */
 # Client colors
 #                    border          background     text           indicator     child_border
-client.focused          7ab0df   121212   e0e0e0   7ab0df   7ab0df
-client.focused_inactive 121212       121212   79dcaa   79dcaa   121212
-client.unfocused        121212       121212   8d8d8d   121212       121212
-client.urgent           f87070    121212   e0e0e0   f87070    f87070
+client.focused          bd93f9   282a36   f8f8f2   bd93f9   bd93f9
+client.focused_inactive 282a36       282a36   50fa7b   50fa7b   282a36
+client.unfocused        282a36       282a36   a4a5a6   282a36       282a36
+client.urgent           ff5555    282a36   f8f8f2   ff5555    ff5555
 
 # Client titlebar colors
 #                    border          background     text
-client.background    121212
-client.placeholder   121212   121212   8d8d8d
+client.background    282a36
+client.placeholder   282a36   282a36   a4a5a6
 
 # Window borders
 default_border pixel 2

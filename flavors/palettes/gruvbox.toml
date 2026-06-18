@@ -1,5 +1,3 @@
-kitty_selection_bg = "d65d0e"
-
 [palette]
 bg = "#282828"
 bg_subtle = "#45423c"

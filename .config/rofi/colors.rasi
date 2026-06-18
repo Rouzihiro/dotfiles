@@ -1,17 +1,17 @@
  * {
-    bg:             #121212;
-    bg-subtle:      #303030;
-    bg-muted:       #4f4f4f;
+    bg:             #282a36;
+    bg-subtle:      #474852;
+    bg-muted:       #66676e;
 
-    fg:             #e0e0e0;
-    fg-dim:         #8d8d8d;
+    fg:             #f8f8f2;
+    fg-dim:         #a4a5a6;
 
-    accent:         #7ab0df;
+    accent:         #bd93f9;
 
-    sel-bg:         #7ab0df;
-    sel-fg:         #121212;
+    sel-bg:         #44475a;
+    sel-fg:         #ffffff;
 
-    urgent:         #f87070;
-    warning:        #ffe16b;
-    success:        #79dcaa;
+    urgent:         #ff5555;
+    warning:        #f1fa8c;
+    success:        #50fa7b;
 }
