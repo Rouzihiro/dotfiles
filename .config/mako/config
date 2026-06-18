@@ -6,11 +6,11 @@ border-radius=14
 width=407
 height=150
 font=Inter Medium 11
-background-color=#2f272bcc
-text-color=#f0eaed
-border-color=#E85F6F
+background-color=#36342ecc
+text-color=#d0c8b6
+border-color=#c26a4a
 border-size=3
-progress-color=#D4A882
+progress-color=#c2a46a
 
 icons=1
 max-icon-size=56
@@ -20,28 +20,28 @@ max-history=60
 max-visible=5
 markup=1
 text-alignment=left
-format=<span foreground="#f0eaed" weight="bold">%s</span>\n<span foreground="#f0eaed">%b</span>
+format=<span foreground="#d0c8b6" weight="bold">%s</span>\n<span foreground="#d0c8b6">%b</span>
 
 default-timeout=6500
 ignore-timeout=0
 
 [urgency=low]
-background-color=#f0eaedcc
-text-color=#f0eaed
-border-color=#E85F6F
-progress-color=#D4A882
+background-color=#b7a37acc
+text-color=#d0c8b6
+border-color=#c26a4a
+progress-color=#c2a46a
 default-timeout=3500
 
 [urgency=normal]
-background-color=#2f272bcc
-text-color=#f0eaed
-border-color=#E85F6F
-progress-color=#D4A882
+background-color=#36342ecc
+text-color=#d0c8b6
+border-color=#c26a4a
+progress-color=#c2a46a
 
 [urgency=critical]
-background-color=#2f272bcc
-text-color=#f0eaed
-border-color=#E85F6F
-progress-color=#E85F6F
+background-color=#36342ecc
+text-color=#d0c8b6
+border-color=#c26a4a
+progress-color=#c26a4a
 default-timeout=0
 ignore-timeout=1
