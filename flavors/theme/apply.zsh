@@ -221,7 +221,7 @@ _osyx_apply_theme() {
  	_osyx_reload_swaync &! 
   _osyx_reload_mako &!
   _osyx_apply_wallpaper "$theme" &!
-	_osyx-rofi-blur "$theme" &!
+	_osyx_rofi_blur "$theme" &!
 
   _osyx_reload_tmux &!
   _osyx_reload_nvim &!

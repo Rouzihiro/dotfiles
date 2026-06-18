@@ -1,19 +1,21 @@
 #!/usr/bin/env zsh
 
-BACKGROUNDS_DIR="$HOME/dotfiles/flavors/backgrounds"
-OUTPUT="$HOME/.cache/osyx/bg-rofi-blur.png"
-THEME="${1:-$(cat "${XDG_STATE_HOME:-$HOME/.local/state}/osyx/current" 2>/dev/null)}"
+_osyx_rofi_blur() {
+  local theme="${1:-$(cat "${XDG_STATE_HOME:-$HOME/.local/state}/osyx/current" 2>/dev/null)}"
+  local backgrounds_dir="$_OSYX_BACKGROUNDS_DIR"
+  local output="$HOME/.cache/osyx/bg-rofi-blur.png"
+  local wallpaper=""
 
-mkdir -p "${OUTPUT:h}"
+  mkdir -p "${output:h}"
 
-wallpaper=""
-for ext in jpg png webp; do
-    f="$BACKGROUNDS_DIR/$THEME.$ext"
+  for ext in jpg png webp; do
+    local f="$backgrounds_dir/$theme.$ext"
     [[ -f "$f" || -L "$f" ]] && wallpaper="$f" && break
-done
+  done
 
-[[ -z "$wallpaper" ]] && exit 1
+  [[ -z "$wallpaper" ]] && { _osyx_log "rofi-blur: no wallpaper found for $theme"; return 1 }
 
-magick "$(readlink -f "$wallpaper")" \
+  magick "$(readlink -f "$wallpaper")" \
     -resize 1366x768^ -gravity center -extent 1366x768 -blur 0x8 \
-    "$OUTPUT"
+    "$output"
+}
