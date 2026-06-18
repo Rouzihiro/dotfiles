@@ -1,5 +1,5 @@
 local M = {}
 
-M.default_color = "catppuccin"
+M.default_color = "solarized"
 
 return M
