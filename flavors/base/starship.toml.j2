@@ -16,9 +16,40 @@ $vscode\
 $python\
 $php\
 [](fg:#{{ palette_bg_muted }} bg:#{{ palette_bg }})\
-$time\
-[ ](fg:#{{ palette_bg }})\
 \n$character"""
+
+right_format = """
+[](#{{ palette_fg_dim }})\
+$battery\
+[](fg:#{{ palette_fg_dim }} bg:#{{ palette_fg_dim }})\
+$time\
+[](fg:#{{ palette_fg_dim }})"""
+
+[battery]
+full_symbol = "󰁹 "
+charging_symbol = "󰂄 "
+discharging_symbol = "󰂃 "
+unknown_symbol = "󰁽 "
+empty_symbol = "󰂎 "
+format = '[[$symbol$percentage ](fg:#{{ palette_fg }} bg:#{{ palette_fg_dim }})]($style)'
+
+[[battery.display]]
+threshold = 80
+style = "bg:#{{ palette_success }} fg:#{{ palette_bg }}"
+
+[[battery.display]]
+threshold = 50
+style = "bg:#{{ palette_warning }} fg:#{{ palette_bg }}"
+
+[[battery.display]]
+threshold = 20
+style = "bg:#{{ palette_error }} fg:#{{ palette_bg }}"
+
+[time]
+disabled = false
+format = '[[ $time ](fg:#{{ palette_fg }} bg:#{{ palette_fg_dim }})]($style)'
+style = "bg:#{{ palette_fg_dim }} fg:#{{ palette_fg_on_accent }}"
+time_format = "%b %d %H:%M"
 
 [directory]
 style = "fg:#{{ palette_bg }} bg:#{{ starship_dir_bg }}"
@@ -79,12 +110,6 @@ format = '[[ $symbol ($version) ](fg:#{{ palette_fg_dim }} bg:#{{ palette_bg_mut
 symbol = ""
 style  = "bg:#{{ palette_bg_muted }}"
 format = '[[ $symbol ($version) ](fg:#{{ palette_fg_dim }} bg:#{{ palette_bg_muted }})]($style)'
-
-[time]
-disabled    = false
-time_format = "%R"
-style       = "bg:#{{ palette_bg }}"
-format      = '[[ $time ](fg:#{{ palette_fg }} bg:#{{ palette_bg }})]($style)'
 
 [os]
 disabled = false
