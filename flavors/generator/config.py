@@ -25,7 +25,7 @@ OUTPUTS = {
     "rofi.rasi.j2":      str(Path.home() / ".config/rofi/colors.rasi"),
     "starship.toml.j2":  str(Path.home() / ".config/starship.toml"),
     "sway-osd.css.j2":   str(Path.home() / ".config/swayosd/colors.css"),
-    "sway-theme.j2":     str(Path.home() / ".config/sway/confi.g/theme"),
+    "sway-theme.j2":     str(Path.home() / ".config/sway/config.d/theme"),
     "swaync.css.j2":     str(Path.home() / ".config/swaync/style.css"),
     "tmux.conf.j2":      str(Path.home() / ".config/tmux/tmux-colors.conf"),
     "waybar.css.j2":     str(Path.home() / ".config/waybar/colors.css"),
