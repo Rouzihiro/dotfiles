@@ -7,7 +7,7 @@
 window {
   margin: 0px;
   border-radius: 20px;
-  border: 2px solid rgba(188, 170, 164, 0.4);
+  border: 2px solid rgba(214, 93, 14, 0.4);
   /* Premium Dark/Blackish Gray Universal Background */
   background-color: rgba(18, 18, 22, 0.85);
   box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.5);
@@ -23,19 +23,19 @@ window {
   margin: 0px 0px 20px 0px;
   padding: 16px 20px;
   border-radius: 12px;
-  border: 1px solid rgba(188, 170, 164, 0.3);
+  border: 1px solid rgba(214, 93, 14, 0.3);
   /* Slightly lighter dark background for the search bar */
   background-color: rgba(30, 30, 35, 0.6);
-  color: #bcaaa4;
-  caret-color: #bcaaa4;
+  color: #d65d0e;
+  caret-color: #d65d0e;
   font-size: 16px;
   font-weight: 500;
   box-shadow: inset 0px 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 #input:focus {
-  border: 1px solid rgba(188, 170, 164, 0.8);
-  box-shadow: 0px 0px 15px rgba(188, 170, 164, 0.3), inset 0px 2px 4px rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(214, 93, 14, 0.8);
+  box-shadow: 0px 0px 15px rgba(214, 93, 14, 0.3), inset 0px 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 #scroll {
@@ -68,20 +68,20 @@ window {
 
 #entry:selected {
   /* Use the theme's highlight color for the background, but keep it translucent */
-  background-color: rgba(188, 170, 164, 0.25);
-  border: 1px solid rgba(188, 170, 164, 0.5);
+  background-color: rgba(214, 93, 14, 0.25);
+  border: 1px solid rgba(214, 93, 14, 0.5);
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
 }
 
 #entry:selected #text {
   /* When selected, text becomes the bright theme color */
-  color: #bcaaa4;
+  color: #d65d0e;
   font-weight: 600;
 }
 
 * > b, #text b {
   /* Highlighted matched characters in search */
-  color: #bcaaa4;
+  color: #d65d0e;
   font-weight: 800;
 }
 
@@ -90,7 +90,7 @@ window {
   background: transparent;
 }
 #scroll slider {
-  background-color: rgba(188, 170, 164, 0.3);
+  background-color: rgba(214, 93, 14, 0.3);
   border-radius: 10px;
   min-height: 30px;
 }

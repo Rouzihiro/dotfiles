@@ -189,11 +189,9 @@ _osyx_reload_swaync() {
             sleep 0.2
             swaync & disown 2>/dev/null
         }
-        _osyx_log "swaync reloaded"
     else
         # Start swaync if not running
         swaync & disown 2>/dev/null
-        _osyx_log "swaync started"
     fi
 }
 
@@ -226,8 +224,7 @@ _osyx_apply_theme() {
 
   _osyx_reload_tmux &!
   _osyx_reload_nvim &!
-  _osyx_reload_yazi &!
-  _osyx_reload_waybar &!
+  # _osyx_reload_waybar &!
 	_osyx_reload_btop &!
   _osyx_reload_all >/dev/null 2>&1 &!
   _osyx_update_thyx "$theme" &!
