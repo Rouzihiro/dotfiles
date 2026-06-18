@@ -1,47 +1,17 @@
-[starship]
-os_bg = "018a83"
-os_fg = "00140e"
-dir_bg = "01736c"
-dir_fg = "00140e"
-git_branch_bg = "002a24"
-git_branch_fg = "8ed7cf"
-git_status_bg = "002a24"
-git_status_fg = "8ed7cf"
-langs_bg = "001e16"
-langs_fg = "8ed7cf"
-time_bg = "00140e"
-time_fg = "01736c"
-success = "01736c"
-error = "ff4d6d"
-
-[tmux]
-pane_border = "001e16"
-pane_active_border = "00aaa4"
-message_bg = "00aaa4"
-message_fg = "00140e"
-git_bg = "002a24"
-git_fg = "bdf5ef"
-host_bg = "001e16"
-host_fg = "bdf5ef"
-time_bg = "00140e"
-time_fg = "018a83"
-
-[hyprland]
-active_border = "018a83"
-inactive_border = "002a24"
-
-[mako]
-bg = "001811"
-text = "bdf5ef"
-border = "00aaa4"
-progress = "018a83"
-
-[kitty]
+[palette]
 bg = "00140e"
+bg_subtle = "001e16"
+bg_muted = "002a24"
 fg = "8ed7cf"
+fg_dim = "01736c"
+accent = "018a83"
+fg_on_accent = "00140e"
+success = "01736c"
+warning = "00aaa4"
+error = "ff4d6d"
 cursor = "018a83"
-selection_bg = "01736c"
-selection_fg = "00140e"
+sel_bg = "01736c"
+sel_fg = "00140e"
 color0 = "00140e"
 color1 = "ff4d6d"
 color2 = "01736c"
@@ -58,6 +28,11 @@ color12 = "018a83"
 color13 = "002a24"
 color14 = "001e16"
 color15 = "8ed7cf"
+
+[starship]
+os_bg = "018a83"      # accent
+os_fg = "00140e"      # bg
+dir_bg = "01736c"     # fg_dim
 
 [wofi]
 bg = "00140e"

@@ -36,4 +36,4 @@ os_fg = "282a36"      # bg - Dark background for contrast
 dir_bg = "50fa7b"     # success - Green for directory background
 
 [nvim]
-colorscheme = "dracula"
+colorscheme = "dracula-soft"

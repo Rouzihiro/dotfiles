@@ -1,47 +1,17 @@
-[starship]
-os_bg = "ca9395"
-os_fg = "12080a"
-dir_bg = "b97074"
-dir_fg = "12080a"
-git_branch_bg = "4f2d29"
-git_branch_fg = "ca9395"
-git_status_bg = "4f2d29"
-git_status_fg = "ca9395"
-langs_bg = "261c17"
-langs_fg = "ca9395"
-time_bg = "12080a"
-time_fg = "b97074"
-success = "ca9395"
-error = "cf2c3c"
-
-[tmux]
-pane_border = "261c17"
-pane_active_border = "ca9395"
-message_bg = "ca9395"
-message_fg = "12080a"
-git_bg = "4f2d29"
-git_fg = "f0dde1"
-host_bg = "261c17"
-host_fg = "f0dde1"
-time_bg = "12080a"
-time_fg = "b97074"
-
-[hyprland]
-active_border = "ca9395"
-inactive_border = "4f2d29"
-
-[mako]
+[palette]
 bg = "12080a"
-text = "f0dde1"
-border = "ca9395"
-progress = "b97074"
-
-[kitty]
-bg = "12080a"
+bg_subtle = "261c17"
+bg_muted = "4f2d29"
 fg = "ca9395"
+fg_dim = "b97074"
+accent = "ca9395"
+fg_on_accent = "12080a"
+success = "ca9395"
+warning = "b97074"
+error = "cf2c3c"
 cursor = "ca9395"
-selection_bg = "b97074"
-selection_fg = "12080a"
+sel_bg = "b97074"
+sel_fg = "12080a"
 color0 = "12080a"
 color1 = "cf2c3c"
 color2 = "ca9395"
@@ -59,14 +29,10 @@ color13 = "4f2d29"
 color14 = "261c17"
 color15 = "ca9395"
 
-[wofi]
-bg = "12080a"
-border = "ca9395"
-input_bg = "261c17"
-input_border = "4f2d29"
-text = "ca9395"
-selected_bg = "b97074"
-selected_text = "12080a"
+[starship]
+os_bg = "ca9395"      # accent
+os_fg = "12080a"      # bg
+dir_bg = "b97074"     # fg_dim
 
 [nvim]
 colorscheme = "everforest"

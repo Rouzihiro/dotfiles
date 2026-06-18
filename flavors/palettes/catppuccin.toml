@@ -35,4 +35,4 @@ os_fg = "1E1E2E"      # bg - Dark background for contrast
 dir_bg = "87B0F9"     # accent - Blue accent for directory background
 
 [nvim]
-colorscheme = "catppuccin"
+colorscheme = "catppuccin-mocha"
