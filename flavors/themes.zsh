@@ -4,6 +4,7 @@ source "$_OSYX_THEME_ROOT/theme/config.zsh"
 source "$_OSYX_THEME_ROOT/theme/reload.zsh"
 source "$_OSYX_THEME_ROOT/theme/select.zsh"
 source "$_OSYX_THEME_ROOT/theme/apply.zsh"
+source "$_OSYX_THEME_ROOT/theme/osyx-rofi-blur.zsh"
 
 _osyx_apply_dircolors "init"
 _osyx_register_autoreload
