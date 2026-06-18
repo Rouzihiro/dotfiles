@@ -1,13 +1,13 @@
 format = """
-[](#6fb8e3)\
+[](#f0a8bc)\
 $os\
-[](bg:#6fb8e3 fg:#16242d)\
-[](bg:#5e95bc fg:#6fb8e3)\
+[](bg:#f0a8bc fg:#080e18)\
+[](bg:#e08098 fg:#f0a8bc)\
 $directory\
-[](fg:#5e95bc bg:#324049)\
+[](fg:#e08098 bg:#2f272b)\
 $git_branch\
 $git_status\
-[](fg:#324049 bg:#4f5d66)\
+[](fg:#2f272b bg:#51494d)\
 $nodejs\
 $rust\
 $golang\
@@ -15,13 +15,13 @@ $zsh\
 $vscode\
 $python\
 $php\
-[](fg:#4f5d66 bg:#16242d)\
+[](fg:#51494d bg:#0d0509)\
 $time\
-[ ](fg:#16242d)\
+[ ](fg:#0d0509)\
 \n$character"""
 
 [directory]
-style = "fg:#16242d bg:#5e95bc"
+style = "fg:#0d0509 bg:#e08098"
 format = "[ $path ]($style)"
 truncation_length = 3
 truncation_symbol = "…/"
@@ -33,12 +33,12 @@ truncation_symbol = "…/"
 "Pictures"  = " "
 
 [git_branch]
-style = "bg:#324049"
-format = '[[ $symbol $branch ](fg:#d6e2ee bg:#324049)]($style)'
+style = "bg:#2f272b"
+format = '[[ $symbol $branch ](fg:#f0eaed bg:#2f272b)]($style)'
 
 [git_status]
-style = "fg:#d6e2ee bg:#324049"
-format = '[[($all_status$ahead_behind )](fg:#d6e2ee bg:#324049)]($style)'
+style = "fg:#f0eaed bg:#2f272b"
+format = '[[($all_status$ahead_behind )](fg:#f0eaed bg:#2f272b)]($style)'
 conflicted = "‼"
 ahead      = "⇡"
 behind     = "⇣"
@@ -47,48 +47,48 @@ up_to_date = "✓"
 untracked  = ""
 stashed    = " "
 modified   = "●"
-staged     = "[++\\($count\\)](fg:#6fb8e3)"
+staged     = "[++\\($count\\)](fg:#f0a8bc)"
 renamed    = "➜"
 deleted    = "✖"
 
 [character]
-success_symbol = "[✔](fg:#6fb8e3)"
-error_symbol   = "[✖](fg:#4d86b0)"
+success_symbol = "[✔](fg:#f0a8bc)"
+error_symbol   = "[✖](fg:#E85F6F)"
 
 [nodejs]
 symbol = ""
-style  = "bg:#4f5d66"
-format = '[[ $symbol ($version) ](fg:#8996a0 bg:#4f5d66)]($style)'
+style  = "bg:#51494d"
+format = '[[ $symbol ($version) ](fg:#958e91 bg:#51494d)]($style)'
 
 [rust]
 symbol = ""
-style  = "bg:#4f5d66"
-format = '[[ $symbol ($version) ](fg:#8996a0 bg:#4f5d66)]($style)'
+style  = "bg:#51494d"
+format = '[[ $symbol ($version) ](fg:#958e91 bg:#51494d)]($style)'
 
 [golang]
 symbol = ""
-style  = "bg:#4f5d66"
-format = '[[ $symbol ($version) ](fg:#8996a0 bg:#4f5d66)]($style)'
+style  = "bg:#51494d"
+format = '[[ $symbol ($version) ](fg:#958e91 bg:#51494d)]($style)'
 
 [python]
 symbol = ""
-style  = "bg:#4f5d66"
-format = '[[ $symbol ($version) ](fg:#8996a0 bg:#4f5d66)]($style)'
+style  = "bg:#51494d"
+format = '[[ $symbol ($version) ](fg:#958e91 bg:#51494d)]($style)'
 
 [php]
 symbol = ""
-style  = "bg:#4f5d66"
-format = '[[ $symbol ($version) ](fg:#8996a0 bg:#4f5d66)]($style)'
+style  = "bg:#51494d"
+format = '[[ $symbol ($version) ](fg:#958e91 bg:#51494d)]($style)'
 
 [time]
 disabled    = false
 time_format = "%R"
-style       = "bg:#16242d"
-format      = '[[ $time ](fg:#d6e2ee bg:#16242d)]($style)'
+style       = "bg:#0d0509"
+format      = '[[ $time ](fg:#f0eaed bg:#0d0509)]($style)'
 
 [os]
 disabled = false
-style    = "fg:#16242d bg:#6fb8e3"
+style    = "fg:#080e18 bg:#f0a8bc"
 
 [os.symbols]
 Windows           = "󰍲"
