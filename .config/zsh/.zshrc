@@ -277,6 +277,7 @@ fi
 
 
 source "$HOME/dotfiles/flavors/themes.zsh"
+export EZA_CONFIG_DIR="$HOME/.config/eza"
 
 # ============================================
 # Load Aliases
