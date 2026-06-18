@@ -1,10 +1,10 @@
 # ================= Theme =================
 
 # borders and messages
-set -g pane-border-style         "fg=#{{ tmux_pane_border }}"
-set -g pane-active-border-style  "fg=#{{ tmux_pane_active_border }}"
-set -g message-style             "bg=#{{ tmux_message_bg }},fg=#{{ tmux_message_fg }}"
-set -g message-command-style     "bg=#{{ tmux_message_bg }},fg=#{{ tmux_message_fg }}"
+set -g pane-border-style         "fg=#{{ palette_bg_muted }}"
+set -g pane-active-border-style  "fg=#{{ starship_os_bg }}"
+set -g message-style             "bg=#{{ starship_os_bg }},fg=#{{ starship_os_fg }}"
+set -g message-command-style     "bg=#{{ starship_os_bg }},fg=#{{ starship_os_fg }}"
 
 # statusline base
 set -g status on
@@ -13,18 +13,18 @@ set -g status-position bottom
 set -g status-justify left
 set -g status-left-length 80
 set -g status-right-length 160
-set -g status-style "bg=default,fg=#{{ tmux_pane_active_border }}"
+set -g status-style "bg=default,fg=#{{ starship_os_bg }}"
 
 # left bubble: session
-set -g status-left "#[fg=#{{ tmux_pane_active_border }}]#[bg=#{{ tmux_pane_active_border }}]#[fg=#{{ tmux_message_fg }}]#[bold]   #S #[nobold]#[fg=#{{ tmux_pane_active_border }}]#[bg=default] "
+set -g status-left "#[fg=#{{ starship_os_bg }}]#[bg=#{{ starship_os_bg }}]#[fg=#{{ starship_os_fg }}]#[bold]   #S #[nobold]#[fg=#{{ starship_os_bg }}]#[bg=default] "
 
 # right bubbles: prefix, git branch, host, time
-set -g status-right '#{?client_prefix,#[fg=#{{ tmux_git_bg }}]#[bg=#{{ tmux_git_bg }}]#[fg=#{{ tmux_git_fg }}]#[bold] ⏽ PREFIX #[nobold]#[fg=#{{ tmux_git_bg }}]#[bg=default] ,}#[fg=#{{ tmux_git_bg }}]#[bg=#{{ tmux_git_bg }}]#[fg=#{{ tmux_git_fg }}]  #(cd #{pane_current_path}; git rev-parse --abbrev-ref HEAD 2>/dev/null || echo "-") #[fg=#{{ tmux_git_bg }}]#[bg=default] #[fg=#{{ tmux_host_bg }}]#[bg=#{{ tmux_host_bg }}]#[fg=#{{ tmux_host_fg }}] #H #[fg=#{{ tmux_host_bg }}]#[bg=default] #[fg=#{{ tmux_time_bg }}]#[bg=#{{ tmux_time_bg }}]#[fg=#{{ tmux_time_fg }}] %Y-%m-%d %H:%M #[fg=#{{ tmux_time_bg }}]#[bg=default]'
+set -g status-right '#{?client_prefix,#[fg=#{{ palette_bg_subtle }}]#[bg=#{{ palette_bg_subtle }}]#[fg=#{{ palette_fg }}]#[bold] ⏽ PREFIX #[nobold]#[fg=#{{ palette_bg_subtle }}]#[bg=default] ,}#[fg=#{{ palette_bg_subtle }}]#[bg=#{{ palette_bg_subtle }}]#[fg=#{{ palette_fg }}]  #(cd #{pane_current_path}; git rev-parse --abbrev-ref HEAD 2>/dev/null || echo "-") #[fg=#{{ palette_bg_subtle }}]#[bg=default] #[fg=#{{ palette_bg_muted }}]#[bg=#{{ palette_bg_muted }}]#[fg=#{{ palette_fg }}] #H #[fg=#{{ palette_bg_muted }}]#[bg=default] #[fg=#{{ palette_bg }}]#[bg=#{{ palette_bg }}]#[fg=#{{ palette_fg }}] %Y-%m-%d %H:%M #[fg=#{{ palette_bg }}]#[bg=default]'
 
 # window tabs
 set -g window-status-separator ""
-set -g window-status-format         " #[fg=#{{ tmux_host_bg }}]#I #[fg=#{{ tmux_host_fg }}]#W "
-set -g window-status-current-format "#[fg=#{{ tmux_pane_active_border }}]#[bg=#{{ tmux_pane_active_border }}]#[fg=#{{ tmux_message_fg }}]#[bold] #I: #W #[nobold]#[fg=#{{ tmux_pane_active_border }}]#[bg=default]"
+set -g window-status-format         " #[fg=#{{ palette_bg_muted }}]#I #[fg=#{{ palette_fg }}]#W "
+set -g window-status-current-format "#[fg=#{{ starship_os_bg }}]#[bg=#{{ starship_os_bg }}]#[fg=#{{ starship_os_fg }}]#[bold] #I: #W #[nobold]#[fg=#{{ starship_os_bg }}]#[bg=default]"
 
 # nuke the entire right side of the status bar, it's annoying with starship
 set -g status-right ""

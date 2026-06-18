@@ -33,3 +33,6 @@ color15 = "#A1A8C9"
 os_bg = "CDD6F4"      # fg - Light foreground for OS icon background
 os_fg = "1E1E2E"      # bg - Dark background for contrast
 dir_bg = "87B0F9"     # accent - Blue accent for directory background
+
+[nvim]
+colorscheme = "catppuccin"
