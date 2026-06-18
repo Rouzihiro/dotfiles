@@ -4,10 +4,10 @@ $os\
 [](bg:#{{ starship_os_bg }} fg:#{{ starship_os_fg }})\
 [](bg:#{{ starship_dir_bg }} fg:#{{ starship_os_bg }})\
 $directory\
-[](fg:#{{ starship_dir_bg }} bg:#{{ starship_git_branch_bg }})\
+[](fg:#{{ starship_dir_bg }} bg:#{{ palette_bg_subtle }})\
 $git_branch\
 $git_status\
-[](fg:#{{ starship_git_branch_bg }} bg:#{{ starship_langs_bg }})\
+[](fg:#{{ palette_bg_subtle }} bg:#{{ palette_bg_muted }})\
 $nodejs\
 $rust\
 $golang\
@@ -15,13 +15,13 @@ $zsh\
 $vscode\
 $python\
 $php\
-[](fg:#{{ starship_langs_bg }} bg:#{{ starship_time_bg }})\
+[](fg:#{{ palette_bg_muted }} bg:#{{ palette_bg }})\
 $time\
-[ ](fg:#{{ starship_time_bg }})\
+[ ](fg:#{{ palette_bg }})\
 \n$character"""
 
 [directory]
-style = "fg:#{{ starship_dir_fg }} bg:#{{ starship_dir_bg }}"
+style = "fg:#{{ palette_bg }} bg:#{{ starship_dir_bg }}"
 format = "[ $path ]($style)"
 truncation_length = 3
 truncation_symbol = "…/"
@@ -33,12 +33,12 @@ truncation_symbol = "…/"
 "Pictures"  = " "
 
 [git_branch]
-style = "bg:#{{ starship_git_branch_bg }}"
-format = '[[ $symbol $branch ](fg:#{{ starship_git_branch_fg }} bg:#{{ starship_git_branch_bg }})]($style)'
+style = "bg:#{{ palette_bg_subtle }}"
+format = '[[ $symbol $branch ](fg:#{{ palette_fg }} bg:#{{ palette_bg_subtle }})]($style)'
 
 [git_status]
-style = "fg:#{{ starship_git_status_fg }} bg:#{{ starship_git_branch_bg }}"
-format = '[[($all_status$ahead_behind )](fg:#{{ starship_git_status_fg }} bg:#{{ starship_git_branch_bg }})]($style)'
+style = "fg:#{{ palette_fg }} bg:#{{ palette_bg_subtle }}"
+format = '[[($all_status$ahead_behind )](fg:#{{ palette_fg }} bg:#{{ palette_bg_subtle }})]($style)'
 conflicted = "‼"
 ahead      = "⇡"
 behind     = "⇣"
@@ -47,44 +47,44 @@ up_to_date = "✓"
 untracked  = ""
 stashed    = " "
 modified   = "●"
-staged     = "[++\\($count\\)](fg:#{{ starship_success }})"
+staged     = "[++\\($count\\)](fg:#{{ starship_os_bg }})"
 renamed    = "➜"
 deleted    = "✖"
 
 [character]
-success_symbol = "[✔](fg:#{{ starship_success }})"
-error_symbol   = "[✖](fg:#{{ starship_error }})"
+success_symbol = "[✔](fg:#{{ starship_os_bg }})"
+error_symbol   = "[✖](fg:#{{ palette_error }})"
 
 [nodejs]
 symbol = ""
-style  = "bg:#{{ starship_langs_bg }}"
-format = '[[ $symbol ($version) ](fg:#{{ starship_langs_fg }} bg:#{{ starship_langs_bg }})]($style)'
+style  = "bg:#{{ palette_bg_muted }}"
+format = '[[ $symbol ($version) ](fg:#{{ palette_fg_dim }} bg:#{{ palette_bg_muted }})]($style)'
 
 [rust]
 symbol = ""
-style  = "bg:#{{ starship_langs_bg }}"
-format = '[[ $symbol ($version) ](fg:#{{ starship_langs_fg }} bg:#{{ starship_langs_bg }})]($style)'
+style  = "bg:#{{ palette_bg_muted }}"
+format = '[[ $symbol ($version) ](fg:#{{ palette_fg_dim }} bg:#{{ palette_bg_muted }})]($style)'
 
 [golang]
 symbol = ""
-style  = "bg:#{{ starship_langs_bg }}"
-format = '[[ $symbol ($version) ](fg:#{{ starship_langs_fg }} bg:#{{ starship_langs_bg }})]($style)'
+style  = "bg:#{{ palette_bg_muted }}"
+format = '[[ $symbol ($version) ](fg:#{{ palette_fg_dim }} bg:#{{ palette_bg_muted }})]($style)'
 
 [python]
 symbol = ""
-style  = "bg:#{{ starship_langs_bg }}"
-format = '[[ $symbol ($version) ](fg:#{{ starship_langs_fg }} bg:#{{ starship_langs_bg }})]($style)'
+style  = "bg:#{{ palette_bg_muted }}"
+format = '[[ $symbol ($version) ](fg:#{{ palette_fg_dim }} bg:#{{ palette_bg_muted }})]($style)'
 
 [php]
 symbol = ""
-style  = "bg:#{{ starship_langs_bg }}"
-format = '[[ $symbol ($version) ](fg:#{{ starship_langs_fg }} bg:#{{ starship_langs_bg }})]($style)'
+style  = "bg:#{{ palette_bg_muted }}"
+format = '[[ $symbol ($version) ](fg:#{{ palette_fg_dim }} bg:#{{ palette_bg_muted }})]($style)'
 
 [time]
 disabled    = false
 time_format = "%R"
-style       = "bg:#{{ starship_time_bg }}"
-format      = '[[ $time ](fg:#{{ starship_time_fg }} bg:#{{ starship_time_bg }})]($style)'
+style       = "bg:#{{ palette_bg }}"
+format      = '[[ $time ](fg:#{{ palette_fg }} bg:#{{ palette_bg }})]($style)'
 
 [os]
 disabled = false

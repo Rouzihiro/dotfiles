@@ -30,20 +30,9 @@ color14 = "#8ec07c"
 color15 = "#fbf1c7"
 
 [starship]
-os_bg = "3c3836"
-os_fg = "ebdbb2"
-dir_bg = "cc241d"
-dir_fg = "ebdbb2"
-git_branch_bg = "282828"
-git_branch_fg = "ebdbb2"
-git_status_bg = "282828"
-git_status_fg = "ebdbb2"
-langs_bg = "32302f"
-langs_fg = "ebdbb2"
-time_bg = "1d2021"
-time_fg = "d65d0e"
-success = "98971a"
-error = "cc241d"
+os_bg = "a89984"      # Gruvbox gray
+os_fg = "282828"      # Dark background
+dir_bg = "458588"     # Blue accent
 
 [tmux]
 pane_border = "282828"
