@@ -1,5 +1,5 @@
 local M = {}
 
-M.default_color = "kanagawa-dragon"
+M.default_color = "lumon"
 
 return M

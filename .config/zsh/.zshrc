@@ -213,8 +213,8 @@ fi
 source "$_zoxide_cache"
 unset _zoxide_cache
 
-eval "$(dircolors -b ${HOME}/.config/zsh/.dircolors 2>/dev/null || dircolors -b)"
-
+# eval "$(dircolors -b ${HOME}/.config/zsh/.dircolors 2>/dev/null || dircolors -b)"
+#
 
 # ============================================
 # FZF
