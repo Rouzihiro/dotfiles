@@ -16,7 +16,7 @@ OUTPUTS = {
     "foot.ini.j2":       str(Path.home() / ".config/foot/current-theme.ini"),
     "gitconfig.j2":      str(Path.home() / ".gitconfig.d/theme"),
     "hyprland.conf.j2":  str(Path.home() / ".config/hypr/theme.conf"),
-    "i3bar.j2":          str(Path.home() / ".config/sway/confi.g/bar"),
+    "i3bar.j2":          str(Path.home() / ".config/sway/config.d/bar"),
     "i3blocks.conf.j2":  str(Path.home() / ".config/i3blocks/config"),
     "kitty.conf.j2":     str(Path.home() / ".config/kitty/colors.conf"),
     "lazygit.yml.j2":    str(Path.home() / ".config/lazygit/config.yml"),
