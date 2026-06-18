@@ -1,13 +1,13 @@
-@define-color bg 282828;
-@define-color fg ebdbb2;
-@define-color bordercolor 45423c;
-@define-color highlight 458588;
-@define-color alert cc241d;
-@define-color activegreen 98971a;
-@define-color disabled 9d937a;
-@define-color green 98971a;
-@define-color red cc241d;
-@define-color activegreen 458588;
+@define-color bg 1E1E2E;
+@define-color fg CDD6F4;
+@define-color bordercolor 38394b;
+@define-color highlight 87B0F9;
+@define-color alert F38BA8;
+@define-color activegreen A6E3A1;
+@define-color disabled 878ca4;
+@define-color green A6E3A1;
+@define-color red F38BA8;
+@define-color activegreen 87B0F9;
 
 /* swaync-specific variables */
 @define-color noti-border-color @bordercolor;
