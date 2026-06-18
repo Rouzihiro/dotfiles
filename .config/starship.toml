@@ -1,750 +1,112 @@
-"$schema" = 'https://starship.rs/config-schema.json'
-palette = 'doom-one'
-
 format = """
-[](fg_dim)\
+[](#bcaaa4)\
 $os\
-[](bg:fg_dim fg:fg_dim)\
+[](bg:#bcaaa4 fg:#090c0c)\
+[](bg:#d7ccc8 fg:#bcaaa4)\
 $directory\
-[](fg:fg_dim bg:accent)\
+[](fg:#d7ccc8 bg:#8d6e63)\
 $git_branch\
 $git_status\
-$git_state\
-$git_metrics\
-[](fg:accent bg:bg_muted)\
-$c\
-$cpp\
+[](fg:#8d6e63 bg:#6d4c41)\
+$nodejs\
 $rust\
 $golang\
-$nodejs\
+$zsh\
+$vscode\
 $python\
-$package\
-[](fg:bg_muted bg:fg_dim)\
-$kubernetes\
-$docker_context\
-$conda\
-[](fg:fg_dim)\
-$cmd_duration\
-$line_break$character"""
-
-add_newline = false
-right_format = """
-[](fg_dim)\
-$battery\
-[](bg:fg_dim fg:fg_dim)\
+$php\
+[](fg:#6d4c41 bg:#3e2723)\
 $time\
-[](fg:fg_dim)"""
-
-scan_timeout = 35
-command_timeout = 700
-
-[time]
-disabled = false
-format = "[$time]($style)"
-style = "bg:fg_dim fg:fg_on_accent"
-time_format = "%H:%M"  # Use %I:%M %p for 12-hour format with AM/PM
-# Add date if you want: time_format = "%b %d %H:%M" (e.g., "Jan 15 14:30")
-
-[os]
-disabled = false
-style = "bg:fg_dim fg:fg_on_accent"
-
-[os.symbols]
-Windows = "󰍲"
-Ubuntu = "󰕈"
-SUSE = ""
-Raspbian = "󰐿"
-Mint = "󰣭"
-Macos = "󰀵"
-Manjaro = ""
-Linux = "󰌽"
-Gentoo = "󰣨"
-Fedora = "󰣛"
-Alpine = ""
-Amazon = ""
-Android = ""
-Arch = "󰣇"
-Artix = "󰣇"
-EndeavourOS = ""
-CentOS = ""
-Debian = "󰣚"
-Redhat = "󱄛"
-RedHatEnterprise = "󱄛"
-Pop = ""
+[ ](fg:#3e2723)\
+\n$character"""
 
 [directory]
-style = "fg:fg bg:fg_dim"
+style = "fg:#3e2723 bg:#d7ccc8"
 format = "[ $path ]($style)"
 truncation_length = 3
-truncation_symbol = " "
-truncate_to_repo = true
-read_only = " "
-read_only_style = "fg:fg bg:warning"
+truncation_symbol = "…/"
 
 [directory.substitutions]
 "Documents" = "󰈙 "
 "Downloads" = " "
-"Music" = "󰝚 "
-"Pictures" = " "
-"Developer" = "󰲋 "
-"Code" = "󰲋 "
+"Music"     = " "
+"Pictures"  = " "
 
 [git_branch]
-symbol = ""
-style = "bg:bg_subtle"
-format = '[[ $symbol $branch ](fg:fg_on_accent bg:accent)]($style)'
-truncation_length = 24
+style = "bg:#8d6e63"
+format = '[[ $symbol $branch ](fg:#d7ccc8 bg:#8d6e63)]($style)'
 
 [git_status]
-style = "bg:accent"
-format = '[[($all_status$ahead_behind )](fg:fg_on_accent bg:accent)]($style)'
+style = "fg:#bcaaa4 bg:#8d6e63"
+format = '[[($all_status$ahead_behind )](fg:#bcaaa4 bg:#8d6e63)]($style)'
+conflicted = "‼"
+ahead      = "⇡"
+behind     = "⇣"
+diverged   = "↕"
+up_to_date = "✓"
+untracked  = ""
+stashed    = " "
+modified   = "●"
+staged     = "[++\\($count\\)](fg:#d7ccc8)"
+renamed    = "➜"
+deleted    = "✖"
 
-[git_state]
-style = "bg:accent"
-format = '[[ $state( $progress_current/$progress_total) ](fg:fg_on_accent bg:accent)]($style)'
-
-[git_metrics]
-disabled = false
-added_style = "fg:fg_on_accent bg:accent"
-deleted_style = "fg:fg_on_accent bg:accent"
-format = '[[+$added]($added_style)/[-$deleted]($deleted_style) ](fg:fg_on_accent bg:accent)'
+[character]
+success_symbol = "[✔](fg:#d7ccc8)"
+error_symbol   = "[✖](fg:#bcaaa4)"
 
 [nodejs]
-symbol = ""
-style = "bg:color_blue"
-format = '[[ $symbol ](fg:color_fg0 bg:color_blue)]($style)'
-
-[c]
-symbol = " "
-style = "bg:color_blue"
-format = '[[ $symbol ](fg:color_fg0 bg:color_blue)]($style)'
-
-[cpp]
-symbol = " "
-style = "bg:color_blue"
-format = '[[ $symbol ](fg:color_fg0 bg:color_blue)]($style)'
+symbol = ""
+style  = "bg:#6d4c41"
+format = '[[ $symbol ($version) ](fg:#d7ccc8 bg:#6d4c41)]($style)'
 
 [rust]
 symbol = ""
-style = "bg:color_blue"
-format = '[[ $symbol ](fg:color_fg0 bg:color_blue)]($style)'
+style  = "bg:#6d4c41"
+format = '[[ $symbol ($version) ](fg:#d7ccc8 bg:#6d4c41)]($style)'
 
 [golang]
-symbol = "󰟓"
-style = "bg:color_blue"
-format = '[[ $symbol ](fg:color_fg0 bg:color_blue)]($style)'
+symbol = ""
+style  = "bg:#6d4c41"
+format = '[[ $symbol ($version) ](fg:#d7ccc8 bg:#6d4c41)]($style)'
 
 [python]
 symbol = ""
-style = "bg:color_blue"
-format = '[[ $symbol ](fg:color_fg0 bg:color_blue)]($style)'
+style  = "bg:#6d4c41"
+format = '[[ $symbol ($version) ](fg:#d7ccc8 bg:#6d4c41)]($style)'
 
-[package]
+[php]
+symbol = ""
+style  = "bg:#6d4c41"
+format = '[[ $symbol ($version) ](fg:#d7ccc8 bg:#6d4c41)]($style)'
+
+[time]
+disabled    = false
+time_format = "%R"
+style       = "bg:#3e2723"
+format      = '[[ $time ](fg:#bcaaa4 bg:#3e2723)]($style)'
+
+[os]
 disabled = false
-symbol = "󰏗"
-style = "bg:color_blue"
-format = '[[ $symbol $version ](fg:color_fg0 bg:color_blue)]($style)'
+style    = "fg:#090c0c bg:#bcaaa4"
 
-[line_break]
-disabled = false
-
-[character]
-disabled = false
-success_symbol = '[](bold fg:success)'
-error_symbol = '[](bold fg:error)'
-vimcmd_symbol = '[](bold fg:color_bright_green)'
-vimcmd_replace_one_symbol = '[](bold fg:warning)'
-vimcmd_replace_symbol = '[](bold fg:warning)'
-vimcmd_visual_symbol = '[](bold fg:warning)'
-
-[status]
-disabled = false
-style = "bg:fg_dim"
-format = '[[ ✖ $status ](fg:fg_on_accent bg:fg_dim)]($style)'
-map_symbol = true
-recognize_signal_code = true
-
-[cmd_duration]
-min_time = 2000
-style = "bg:fg_dim"
-format = '[[  $duration ](fg:fg_on_accent bg:fg_dim)]($style)'
-
-[jobs]
-threshold = 1
-symbol = ""
-style = "bg:accent"
-format = '[[ $symbol $number ](fg:fg_on_accent bg:accent)]($style)'
-
-[battery]
-full_symbol = '󰁹 '
-charging_symbol = '󰂄 '
-discharging_symbol = '󰂃 '
-unknown_symbol = '󰁽 '
-empty_symbol = '󰂎 '
-format = '[[$symbol$percentage ](fg:fg bg:fg_dim)]($style)'
-
-[[battery.display]]
-threshold = 15
-style = "bg:accent fg:fg_on_accent"
-
-[[battery.display]]
-threshold = 30
-style = "bg:accent fg:fg_on_accent"
-
-[[battery.display]]
-threshold = 100
-style = "bg:accent fg:fg_on_accent"
-
-# ── Palettes (auto-synced by theme-manager) ──
-
-[palettes.catppuccin-latte]
-bg               = '#EFF1F5'
-bg_subtle        = '#d6d8e0'
-bg_muted         = '#bec0cb'
-fg               = '#4C4F69'
-fg_dim           = '#8d8fa1'
-sel_bg           = '#DC8A78'
-sel_fg           = '#EFF1F5'
-error            = '#D20F39'
-accent           = '#1E66F5'
-fg_on_accent     = '#4C4F69'
-success          = '#40A02B'
-warning          = '#DF8E1D'
-cursor           = '#DC8A78'
-
-[palettes.catppuccin]
-bg               = '#1E1E2E'
-bg_subtle        = '#38394b'
-bg_muted         = '#525569'
-fg               = '#CDD6F4'
-fg_dim           = '#878ca4'
-sel_bg           = '#F5E0DC'
-sel_fg           = '#1E1E2E'
-error            = '#F38BA8'
-accent           = '#87B0F9'
-fg_on_accent     = '#CDD6F4'
-success          = '#A6E3A1'
-warning          = '#F9E2AF'
-cursor           = '#F5E0DC'
-
-[palettes.doom-one]
-bg               = '#282c34'
-bg_subtle        = '#3e424b'
-bg_muted         = '#545962'
-fg               = '#bbc2cf'
-fg_dim           = '#808691'
-sel_bg           = '#42444b'
-sel_fg           = '#bbc2cf'
-error            = '#ff6c6b'
-accent           = '#a9a1e1'
-fg_on_accent     = '#bbc2cf'
-success          = '#98be65'
-warning          = '#ecbe7b'
-cursor           = '#bbc2cf'
-
-[palettes.dracula]
-bg               = '#282a36'
-bg_subtle        = '#474852'
-bg_muted         = '#66676e'
-fg               = '#f8f8f2'
-fg_dim           = '#a4a5a6'
-sel_bg           = '#44475a'
-sel_fg           = '#ffffff'
-error            = '#ff5555'
-accent           = '#bd93f9'
-fg_on_accent     = '#f8f8f2'
-success          = '#50fa7b'
-warning          = '#f1fa8c'
-cursor           = '#f8f8f2'
-
-[palettes.dune]
-bg               = '#1b1a17'
-bg_subtle        = '#36342e'
-bg_muted         = '#514e46'
-fg               = '#d0c8b6'
-fg_dim           = '#878276'
-sel_bg           = '#b7a37a'
-sel_fg           = '#1b1a17'
-error            = '#c26a4a'
-accent           = '#6f8fa3'
-fg_on_accent     = '#d0c8b6'
-success          = '#8a9a7b'
-warning          = '#c2a46a'
-cursor           = '#d0c8b6'
-
-[palettes.ethereal]
-bg               = '#060B1E'
-bg_subtle        = '#2b2833'
-bg_muted         = '#504548'
-fg               = '#ffcead'
-fg_dim           = '#9b8073'
-sel_bg           = '#ffcead'
-sel_fg           = '#060B1E'
-error            = '#ED5B5A'
-accent           = '#7d82d9'
-fg_on_accent     = '#ffcead'
-success          = '#92a593'
-warning          = '#E9BB4F'
-cursor           = '#ffcead'
-
-[palettes.everforest]
-bg               = '#272e33'
-bg_subtle        = '#404444'
-bg_muted         = '#5a5b56'
-fg               = '#d3c6aa'
-fg_dim           = '#8e897a'
-sel_bg           = '#464e53'
-sel_fg           = '#9da9a0'
-error            = '#e67e80'
-accent           = '#7fbbb3'
-fg_on_accent     = '#d3c6aa'
-success          = '#a7c080'
-warning          = '#dbbc7f'
-cursor           = '#d3c6aa'
-
-[palettes.flexoki-dark]
-bg               = '#100F0F'
-bg_subtle        = '#2c2b2a'
-bg_muted         = '#494845'
-fg               = '#CECDC3'
-fg_dim           = '#82817b'
-sel_bg           = '#403E3C'
-sel_fg           = '#CECDC3'
-error            = '#AF3029'
-accent           = '#205EA6'
-fg_on_accent     = '#CECDC3'
-success          = '#66800B'
-warning          = '#AD8301'
-cursor           = '#CECDC3'
-
-[palettes.flexoki-light]
-bg               = '#FFFCF0'
-bg_subtle        = '#dbd8ce'
-bg_muted         = '#b7b4ac'
-fg               = '#100F0F'
-fg_dim           = '#6f6d69'
-sel_bg           = '#CECDC3'
-sel_fg           = '#100F0F'
-error            = '#D14D41'
-accent           = '#4385BE'
-fg_on_accent     = '#100F0F'
-success          = '#879A39'
-warning          = '#D0A215'
-cursor           = '#100F0F'
-
-[palettes.gojira]
-bg               = '#090d15'
-bg_subtle        = '#222a33'
-bg_muted         = '#3c4751'
-fg               = '#b4d0dd'
-fg_dim           = '#6f828d'
-sel_bg           = '#97a6bb'
-sel_fg           = '#090d15'
-error            = '#6e7b91'
-accent           = '#97a6bb'
-fg_on_accent     = '#b4d0dd'
-success          = '#667e8c'
-warning          = '#7e96a5'
-cursor           = '#b4d0dd'
-
-[palettes.gruvbox-material]
-bg               = '#282828'
-bg_subtle        = '#413e38'
-bg_muted         = '#5b5549'
-fg               = '#d4be98'
-fg_dim           = '#8f826b'
-sel_bg           = '#e78a4e'
-sel_fg           = '#d4be98'
-error            = '#ea6962'
-accent           = '#458588'
-fg_on_accent     = '#d4be98'
-success          = '#a9b665'
-warning          = '#d8a657'
-cursor           = '#b8a383'
-
-[palettes.gruvbox]
-bg               = '#282828'
-bg_subtle        = '#45423c'
-bg_muted         = '#625d51'
-fg               = '#ebdbb2'
-fg_dim           = '#9d937a'
-sel_bg           = '#d65d0e'
-sel_fg           = '#ebdbb2'
-error            = '#cc241d'
-accent           = '#458588'
-fg_on_accent     = '#ebdbb2'
-success          = '#98971a'
-warning          = '#d79921'
-cursor           = '#bdae93'
-
-[palettes.hackerman]
-bg               = '#00060f'
-bg_subtle        = '#00231f'
-bg_muted         = '#004030'
-fg               = '#00ca7d'
-fg_dim           = '#007b51'
-sel_bg           = '#5900ff'
-sel_fg           = '#00ca7d'
-error            = '#c00e0e'
-accent           = '#004cf1'
-fg_on_accent     = '#00ca7d'
-success          = '#0059ff'
-warning          = '#1a1b03'
-cursor           = '#00ca7d'
-
-[palettes.kanagawa-dragon]
-base             = '#181616'
-crust            = '#4b4b4a'
-on_sig1          = '#181616'
-on_sig2          = '#c5c9c5'
-on_sigbg         = '#c5c9c5'
-red              = '#c4746e'
-sig1             = '#8ba4b0'
-sig2             = '#a292a3'
-sig_bg           = '#181616'
-sig_surface_high = '#313030'
-text             = '#c5c9c5'
-
-[palettes.kanagawa]
-bg               = '#1f1f28'
-bg_subtle        = '#3b3a3d'
-bg_muted         = '#575653'
-fg               = '#dcd7ba'
-fg_dim           = '#908d7f'
-sel_bg           = '#2d4f67'
-sel_fg           = '#c8c093'
-error            = '#c34043'
-accent           = '#7e9cd8'
-fg_on_accent     = '#dcd7ba'
-success          = '#76946a'
-warning          = '#c0a36e'
-cursor           = '#c8c093'
-
-[palettes.last-horizon]
-bg               = '#0c0b0c'
-bg_subtle        = '#2f2f2f'
-bg_muted         = '#535353'
-fg               = '#FAFCFB'
-fg_dim           = '#9a9b9b'
-sel_bg           = '#FAFCFB'
-sel_fg           = '#0c0b0c'
-error            = '#c38b7b'
-accent           = '#b59790'
-fg_on_accent     = '#FAFCFB'
-success          = '#87a9b0'
-warning          = '#6B5E73'
-cursor           = '#e2dddc'
-
-[palettes.lavender]
-bg               = '#11111b'
-bg_subtle        = '#2d2e3b'
-bg_muted         = '#494c5c'
-fg               = '#cdd6f4'
-fg_dim           = '#81879d'
-sel_bg           = '#cba6f7'
-sel_fg           = '#cdd6f4'
-error            = '#f38ba8'
-accent           = '#89b4fa'
-fg_on_accent     = '#cdd6f4'
-success          = '#a6e3a1'
-warning          = '#f9e2af'
-cursor           = '#cba6f7'
-
-[palettes.lumon]
-bg               = '#16242d'
-bg_subtle        = '#324049'
-bg_muted         = '#4f5d66'
-fg               = '#d6e2ee'
-fg_dim           = '#8996a0'
-sel_bg           = '#4d9ed3'
-sel_fg           = '#1b2d40'
-error            = '#4d86b0'
-accent           = '#6fb8e3'
-fg_on_accent     = '#d6e2ee'
-success          = '#5e95bc'
-warning          = '#6fa4c9'
-cursor           = '#f2fcff'
-
-[palettes.matte-black]
-bg               = '#121212'
-bg_subtle        = '#303030'
-bg_muted         = '#4f4f4f'
-fg               = '#e0e0e0'
-fg_dim           = '#8d8d8d'
-sel_bg           = '#7ab0df'
-sel_fg           = '#121212'
-error            = '#f87070'
-accent           = '#7ab0df'
-fg_on_accent     = '#e0e0e0'
-success          = '#79dcaa'
-warning          = '#ffe16b'
-cursor           = '#e0e0e0'
-
-[palettes.miasma]
-bg               = '#222222'
-bg_subtle        = '#3a3a37'
-bg_muted         = '#52524c'
-fg               = '#c2c2b0'
-fg_dim           = '#828277'
-sel_bg           = '#78824b'
-sel_fg           = '#c2c2b0'
-error            = '#685742'
-accent           = '#78824b'
-fg_on_accent     = '#c2c2b0'
-success          = '#5f875f'
-warning          = '#b36d43'
-cursor           = '#c7c7c7'
-
-[palettes.midnight-ronin]
-bg               = '#1a1b26'
-bg_subtle        = '#323545'
-bg_muted         = '#4b4f64'
-fg               = '#c0caf5'
-fg_dim           = '#7d84a2'
-sel_bg           = '#33467c'
-sel_fg           = '#c0caf5'
-error            = '#f7768e'
-accent           = '#7aa2f7'
-fg_on_accent     = '#c0caf5'
-success          = '#9ece6a'
-warning          = '#e0af68'
-cursor           = '#c0caf5'
-
-[palettes.monokai]
-bg               = '#0c0c0c'
-bg_subtle        = '#2a2a2a'
-bg_muted         = '#494949'
-fg               = '#d9d9d9'
-fg_dim           = '#878787'
-sel_bg           = '#343434'
-sel_fg           = '#ffffff'
-error            = '#f4005f'
-accent           = '#9d65ff'
-fg_on_accent     = '#d9d9d9'
-success          = '#98e024'
-warning          = '#fd971f'
-cursor           = '#d9d9d9'
-
-[palettes.nightfox]
-bg               = '#192330'
-bg_subtle        = '#343c47'
-bg_muted         = '#4f565f'
-fg               = '#cdcecf'
-fg_dim           = '#85898f'
-sel_bg           = '#2b3b51'
-sel_fg           = '#cdcecf'
-error            = '#c94f6d'
-accent           = '#719cd6'
-fg_on_accent     = '#cdcecf'
-success          = '#81b29a'
-warning          = '#dbc074'
-cursor           = '#cdcecf'
-
-[palettes.nord]
-bg               = '#2E3440'
-bg_subtle        = '#474d59'
-bg_muted         = '#616772'
-fg               = '#D8DEE9'
-fg_dim           = '#949aa5'
-sel_bg           = '#FFFACD'
-sel_fg           = '#000000'
-error            = '#BF616A'
-accent           = '#81A1C1'
-fg_on_accent     = '#D8DEE9'
-success          = '#A3BE8C'
-warning          = '#EBCB8B'
-cursor           = '#81A1C1'
-
-[palettes.osaka]
-bg               = '#111C18'
-bg_subtle        = '#2b352b'
-bg_muted         = '#454e3e'
-fg               = '#C1C497'
-fg_dim           = '#7a8064'
-sel_bg           = '#C1C497'
-sel_fg           = '#111C18'
-error            = '#FF5345'
-accent           = '#509475'
-fg_on_accent     = '#C1C497'
-success          = '#549E6A'
-warning          = '#459451'
-cursor           = '#D7C995'
-
-[palettes.oxocarbon]
-bg               = '#161616'
-bg_subtle        = '#373737'
-bg_muted         = '#585859'
-fg               = '#f2f4f8'
-fg_dim           = '#9a9b9d'
-sel_bg           = '#f2f4f8'
-sel_fg           = '#161616'
-error            = '#ee5396'
-accent           = '#33b1ff'
-fg_on_accent     = '#f2f4f8'
-success          = '#42be65'
-warning          = '#82cfff'
-cursor           = '#f2f4f8'
-
-[palettes.retro-82]
-bg               = '#05182e'
-bg_subtle        = '#293540'
-bg_muted         = '#4d5253'
-fg               = '#f6dcac'
-fg_dim           = '#958d79'
-sel_bg           = '#faa968'
-sel_fg           = '#00172e'
-error            = '#f85525'
-accent           = '#faa968'
-fg_on_accent     = '#f6dcac'
-success          = '#028391'
-warning          = '#e97b3c'
-cursor           = '#f6dcac'
-
-[palettes.ristretto]
-bg               = '#2c2525'
-bg_subtle        = '#474040'
-bg_muted         = '#635b5b'
-fg               = '#e6d9db'
-fg_dim           = '#9b9192'
-sel_bg           = '#403e41'
-sel_fg           = '#e6d9db'
-error            = '#fd6883'
-accent           = '#f38d70'
-fg_on_accent     = '#e6d9db'
-success          = '#adda78'
-warning          = '#f9cc6c'
-cursor           = '#c3b7b8'
-
-[palettes.rosepine-darker]
-bg               = '#191724'
-bg_subtle        = '#363443'
-bg_muted         = '#545262'
-fg               = '#e0def4'
-fg_dim           = '#908ea0'
-sel_bg           = '#403d52'
-sel_fg           = '#e0def4'
-error            = '#eb6f92'
-accent           = '#9ccfd8'
-fg_on_accent     = '#191724'
-success          = '#31748f'
-warning          = '#f6c177'
-cursor           = '#524f67'
-
-[palettes.rosepine]
-bg               = '#faf4ed'
-bg_subtle        = '#e1dbdb'
-bg_muted         = '#c9c3ca'
-fg               = '#575279'
-fg_dim           = '#9892a7'
-sel_bg           = '#dfdad9'
-sel_fg           = '#575279'
-error            = '#b4637a'
-accent           = '#56949f'
-fg_on_accent     = '#575279'
-success          = '#286983'
-warning          = '#ea9d34'
-cursor           = '#cecacd'
-
-[palettes.sakura]
-bg               = '#0d0509'
-bg_subtle        = '#2f272b'
-bg_muted         = '#51494d'
-fg               = '#f0eaed'
-fg_dim           = '#958e91'
-sel_bg           = '#f0eaed'
-sel_fg           = '#0d0509'
-error            = '#E85F6F'
-accent           = '#D9A56C'
-fg_on_accent     = '#f0eaed'
-success          = '#F29B9A'
-warning          = '#D4A882'
-cursor           = '#f0eaed'
-
-[palettes.solarized-dark]
-bg               = '#002B36'
-bg_subtle        = '#133a44'
-bg_muted         = '#274a52'
-fg               = '#839496'
-fg_dim           = '#4e6a6f'
-sel_bg           = '#073642'
-sel_fg           = '#93A1A1'
-error            = '#DC322F'
-accent           = '#268BD2'
-fg_on_accent     = '#839496'
-success          = '#859900'
-warning          = '#B58900'
-cursor           = '#586E75'
-
-[palettes.solitude]
-bg               = '#101315'
-bg_subtle        = '#2b2e30'
-bg_muted         = '#474a4b'
-fg               = '#cacccc'
-fg_dim           = '#7f8282'
-sel_bg           = '#798186'
-sel_fg           = '#101315'
-error            = '#565d60'
-accent           = '#798186'
-fg_on_accent     = '#cacccc'
-success          = '#9fa5a9'
-warning          = '#d9dbdc'
-cursor           = '#cacccc'
-
-[palettes.tokyonight]
-bg               = '#1a1b26'
-bg_subtle        = '#323545'
-bg_muted         = '#4b4f64'
-fg               = '#c0caf5'
-fg_dim           = '#7d84a2'
-sel_bg           = '#283457'
-sel_fg           = '#c0caf5'
-error            = '#f7768e'
-accent           = '#7aa2f7'
-fg_on_accent     = '#c0caf5'
-success          = '#9ece6a'
-warning          = '#e0af68'
-cursor           = '#c0caf5'
-
-[palettes.vague]
-bg               = '#141415'
-bg_subtle        = '#2f2f30'
-bg_muted         = '#4b4b4c'
-fg               = '#cdcdcd'
-fg_dim           = '#838383'
-sel_bg           = '#6e94b2'
-sel_fg           = '#141415'
-error            = '#d8647e'
-accent           = '#6e94b2'
-fg_on_accent     = '#cdcdcd'
-success          = '#7fa563'
-warning          = '#f3be7c'
-cursor           = '#cdcdcd'
-
-[palettes.vantablack]
-base             = '#000000'
-crust            = '#4c4c4c'
-on_sig1          = '#000000'
-on_sig2          = '#ffffff'
-on_sigbg         = '#ffffff'
-red              = '#a4a4a4'
-sig1             = '#8d8d8d'
-sig2             = '#9b9b9b'
-sig_bg           = '#000000'
-sig_surface_high = '#262626'
-text             = '#ffffff'
-
-[palettes.versailles]
-bg               = '#3e2723'
-bg_subtle        = '#543f3b'
-bg_muted         = '#6b5854'
-fg               = '#d7ccc8'
-fg_dim           = '#998a86'
-sel_bg           = '#d7ccc8'
-sel_fg           = '#3e2723'
-error            = '#bcaaa4'
-accent           = '#bcaaa4'
-fg_on_accent     = '#d7ccc8'
-success          = '#d7ccc8'
-warning          = '#d7ccc8'
-cursor           = '#bcaaa4'
-
+[os.symbols]
+Windows           = "󰍲"
+Ubuntu            = "󰌽 "
+SUSE              = ""
+Raspbian          = "󰐿"
+Mint              = "󰣭"
+Macos             = ""
+Manjaro           = ""
+Linux             = "󰌽"
+Gentoo            = "󰣨"
+Fedora            = "󰣛"
+Alpine            = ""
+Amazon            = ""
+Android           = ""
+Arch              = "󰣇"
+Artix             = "󰣇"
+CentOS            = ""
+Debian            = "󰣚"
+Redhat            = "󱄛"
+RedHatEnterprise  = "󱄛"

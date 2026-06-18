@@ -1,11 +1,13 @@
-/* Import Waybar Color Scheme Directly */
-@define-color bordercolor #89b4fa;   /* Blue */
-@define-color bg         #1e1e2e;   /* Base */
-@define-color fg         #cdd6f4;   /* Text */
-@define-color highlight  #f5c2e7;   /* Pink */
-@define-color alert      #f38ba8;   /* Red */
-@define-color disabled   #a5a5a5;
-@define-color activegreen #a6e3a1;  /* Green */
+@define-color bg 3e2723;
+@define-color fg d7ccc8;
+@define-color bordercolor 543f3b;
+@define-color highlight bcaaa4;
+@define-color alert bcaaa4;
+@define-color activegreen d7ccc8;
+@define-color disabled 998a86;
+@define-color green d7ccc8;
+@define-color red bcaaa4;
+@define-color activegreen bcaaa4;
 
 /* swaync-specific variables */
 @define-color noti-border-color @bordercolor;
@@ -187,4 +189,3 @@
     background: @alert;
     border-radius: 10px;
 }
-

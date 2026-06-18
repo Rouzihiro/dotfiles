@@ -1,1 +1,5 @@
-/home/rey/.config/zorro/current/theme/nvim.lua
+local M = {}
+
+M.default_color = "gruvbox"
+
+return M

@@ -1,85 +1,85 @@
 [mgr]
-cwd = { fg = "{{ palette_fg }}" }
-find_keyword = { fg = "{{ palette_error }}", bold = true, italic = true, underline = true }
-find_position = { fg = "{{ palette_error }}", bold = true, italic = true }
-marker_copied = { fg = "{{ palette_color5 }}", bg = "{{ palette_color5 }}" }
-marker_cut = { fg = "{{ palette_fg_dim }}", bg = "{{ palette_fg_dim }}" }
-marker_marked = { fg = "{{ palette_accent }}", bg = "{{ palette_accent }}" }
-marker_selected = { fg = "{{ palette_color2 }}", bg = "{{ palette_color2 }}" }
-count_copied = { fg = "{{ palette_bg }}", bg = "{{ palette_fg_dim }}" }
-count_cut = { fg = "{{ palette_bg }}", bg = "{{ palette_fg_dim }}" }
-count_selected = { fg = "{{ palette_bg }}", bg = "{{ palette_color2 }}" }
+cwd = { fg = "#{{ palette_fg }}" }
+find_keyword = { fg = "#{{ palette_error }}", bold = true, italic = true, underline = true }
+find_position = { fg = "#{{ palette_error }}", bold = true, italic = true }
+marker_copied = { fg = "#{{ palette_color5 }}", bg = "#{{ palette_color5 }}" }
+marker_cut = { fg = "#{{ palette_fg_dim }}", bg = "#{{ palette_fg_dim }}" }
+marker_marked = { fg = "#{{ palette_accent }}", bg = "#{{ palette_accent }}" }
+marker_selected = { fg = "#{{ palette_color2 }}", bg = "#{{ palette_color2 }}" }
+count_copied = { fg = "#{{ palette_bg }}", bg = "#{{ palette_fg_dim }}" }
+count_cut = { fg = "#{{ palette_bg }}", bg = "#{{ palette_fg_dim }}" }
+count_selected = { fg = "#{{ palette_bg }}", bg = "#{{ palette_color2 }}" }
 border_symbol = " "
-border_style = { fg = "{{ palette_accent }}" }
+border_style = { fg = "#{{ palette_accent }}" }
 
 [status]
 sep_left = { open = "", close = "🭠" }
 sep_right = { open = "🭁", close = "" }
-perm_type = { fg = "{{ palette_accent }}" }
-perm_read = { fg = "{{ palette_fg }}" }
-perm_write = { fg = "{{ palette_color2 }}" }
-perm_exec = { fg = "{{ palette_color5 }}" }
-perm_sep = { fg = "{{ palette_fg_dim }}" }
+perm_type = { fg = "#{{ palette_accent }}" }
+perm_read = { fg = "#{{ palette_fg }}" }
+perm_write = { fg = "#{{ palette_color2 }}" }
+perm_exec = { fg = "#{{ palette_color5 }}" }
+perm_sep = { fg = "#{{ palette_fg_dim }}" }
 progress_label = { bold = true }
-progress_normal = { fg = "{{ palette_accent }}", bg = "{{ palette_bg_subtle }}" }
-progress_error = { fg = "{{ palette_color5 }}", bg = "{{ palette_bg_subtle }}" }
+progress_normal = { fg = "#{{ palette_accent }}", bg = "#{{ palette_bg_subtle }}" }
+progress_error = { fg = "#{{ palette_color5 }}", bg = "#{{ palette_bg_subtle }}" }
 
 [mode]
-normal_main = { bg = "{{ palette_accent }}", fg = "{{ palette_bg }}", bold = true }
-normal_alt  = { bg = "{{ palette_bg_subtle }}", fg = "{{ palette_fg }}" }
-select_main = { bg = "{{ palette_fg_dim }}", fg = "{{ palette_bg }}", bold = true }
-select_alt  = { bg = "{{ palette_bg_subtle }}", fg = "{{ palette_fg }}" }
-unset_main = { bg = "{{ palette_color2 }}", fg = "{{ palette_bg }}", bold = true }
-unset_alt  = { bg = "{{ palette_bg_subtle }}", fg = "{{ palette_fg }}" }
+normal_main = { bg = "#{{ palette_accent }}", fg = "#{{ palette_bg }}", bold = true }
+normal_alt  = { bg = "#{{ palette_bg_subtle }}", fg = "#{{ palette_fg }}" }
+select_main = { bg = "#{{ palette_fg_dim }}", fg = "#{{ palette_bg }}", bold = true }
+select_alt  = { bg = "#{{ palette_bg_subtle }}", fg = "#{{ palette_fg }}" }
+unset_main = { bg = "#{{ palette_color2 }}", fg = "#{{ palette_bg }}", bold = true }
+unset_alt  = { bg = "#{{ palette_bg_subtle }}", fg = "#{{ palette_fg }}" }
 
 [select]
-border = { fg = "{{ palette_accent }}" }
-active = { fg = "{{ palette_color2 }}", bold = true }
+border = { fg = "#{{ palette_accent }}" }
+active = { fg = "#{{ palette_color2 }}", bold = true }
 
 [input]
-border = { fg = "{{ palette_accent }}" }
-value = { fg = "{{ palette_fg }}" }
+border = { fg = "#{{ palette_accent }}" }
+value = { fg = "#{{ palette_fg }}" }
 
 [tabs]
-active = { fg = "{{ palette_accent }}", bold = true, bg = "{{ palette_bg }}" }
-inactive = { fg = "{{ palette_fg_dim }}", bg = "{{ palette_bg }}" }
+active = { fg = "#{{ palette_accent }}", bold = true, bg = "#{{ palette_bg }}" }
+inactive = { fg = "#{{ palette_fg_dim }}", bg = "#{{ palette_bg }}" }
 sep_inner = { open = "[", close = "]" }
 
 [cmp]
-border = { fg = "{{ palette_accent }}", bg = "{{ palette_bg_subtle }}" }
+border = { fg = "#{{ palette_accent }}", bg = "#{{ palette_bg_subtle }}" }
 
 [tasks]
-border = { fg = "{{ palette_accent }}" }
+border = { fg = "#{{ palette_accent }}" }
 title = {}
-hovered = { fg = "{{ palette_fg_dim }}", underline = true }
+hovered = { fg = "#{{ palette_fg_dim }}", underline = true }
 
 [which]
 cols = 3
-mask = { bg = "{{ palette_bg_subtle }}" }
-cand = { fg = "{{ palette_accent }}" }
-rest = { fg = "{{ palette_bg }}" }
-desc = { fg = "{{ palette_fg }}" }
+mask = { bg = "#{{ palette_bg_subtle }}" }
+cand = { fg = "#{{ palette_accent }}" }
+rest = { fg = "#{{ palette_bg }}" }
+desc = { fg = "#{{ palette_fg }}" }
 separator = " ▶ "
-separator_style = { fg = "{{ palette_fg }}" }
+separator_style = { fg = "#{{ palette_fg }}" }
 
 [help]
-on = { fg = "{{ palette_fg }}" }
-run = { fg = "{{ palette_fg }}" }
-footer = { fg = "{{ palette_bg }}", bg = "{{ palette_fg_dim }}" }
+on = { fg = "#{{ palette_fg }}" }
+run = { fg = "#{{ palette_fg }}" }
+footer = { fg = "#{{ palette_bg }}", bg = "#{{ palette_fg_dim }}" }
 
 [notify]
-title_info = { fg = "{{ palette_color2 }}" }
-title_warn = { fg = "{{ palette_accent }}" }
-title_error = { fg = "{{ palette_color5 }}" }
+title_info = { fg = "#{{ palette_color2 }}" }
+title_warn = { fg = "#{{ palette_accent }}" }
+title_error = { fg = "#{{ palette_color5 }}" }
 
 [filetype]
 rules = [
-    { mime = "image/*", fg = "{{ palette_color2 }}" },
-    { mime = "{audio,video}/*", fg = "{{ palette_accent }}" },
-    { mime = "application/{zip,rar,7z*,tar,gzip,xz,zstd,bzip*,lzma,compress,archive,cpio,arj,xar,ms-cab*}", fg = "{{ palette_fg_dim }}" },
-    { mime = "application/{pdf,doc,rtf}", fg = "{{ palette_fg }}" },
-    { url = "*", is = "orphan", bg = "{{ palette_color5 }}" },
-    { url = "*", is = "exec", fg = "{{ palette_fg_dim }}" },
-    { url = "*", fg = "{{ palette_fg }}" },
-    { url = "*/", fg = "{{ palette_accent }}" },
+    { mime = "image/*", fg = "#{{ palette_color2 }}" },
+    { mime = "{audio,video}/*", fg = "#{{ palette_accent }}" },
+    { mime = "application/{zip,rar,7z*,tar,gzip,xz,zstd,bzip*,lzma,compress,archive,cpio,arj,xar,ms-cab*}", fg = "#{{ palette_fg_dim }}" },
+    { mime = "application/{pdf,doc,rtf}", fg = "#{{ palette_fg }}" },
+    { url = "*", is = "orphan", bg = "#{{ palette_color5 }}" },
+    { url = "*", is = "exec", fg = "#{{ palette_fg_dim }}" },
+    { url = "*", fg = "#{{ palette_fg }}" },
+    { url = "*/", fg = "#{{ palette_accent }}" },
 ]

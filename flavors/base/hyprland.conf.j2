@@ -1,10 +1,15 @@
-$background = rgb({{ palette_bg_raw }})
-$foreground = rgb({{ palette_fg_raw }})
-$accent     = rgb({{ palette_accent_raw }})
-$bg_subtle  = rgb({{ palette_bg_subtle_raw }})
-$bg_muted   = rgb({{ palette_bg_muted_raw }})
+$background = rgba({{ palette_bg_rgb }}, ff)
+$foreground = rgba({{ palette_fg_rgb }}, ff)
+$accent     = rgba({{ palette_accent_rgb }}, ff)
+$bg_subtle  = rgba({{ palette_bg_subtle_rgb }}, ff)
+$bg_muted   = rgba({{ palette_bg_muted_rgb }}, ff)
 
-$active_border   = $accent
-$inactive_border = $bg_muted
-$focus_border    = $accent
+$active_border   = rgba({{ palette_accent_rgb }}, ff)
+$inactive_border = rgba({{ palette_bg_muted_rgb }}, ff)
+$focus_border    = rgba({{ palette_accent_rgb }}, ff)
+
 $shadow_color    = rgba(0 0 0 55)
+
+# Optional: Add transparency variants
+$background_transparent = rgba({{ palette_bg_rgb }}, 99)  # 60% opacity
+$accent_transparent     = rgba({{ palette_accent_rgb }}, 66)  # 40% opacity

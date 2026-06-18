@@ -11,9 +11,6 @@ export DOTFILES_DIR="$HOME/dotfiles"
 export PROJECTS_DIR="$HOME/Projects"
 export SUCKLESS_DIR="$HOME/suckless"
 
-#Theme orchestrator (dircolors, live reload, themes function)
-source "$HOME/dotfiles/flavors/themes.zsh"
-
 # ─────────────────────────────
 # PATH (set here so subshells inherit it without re-running loops)
 # ─────────────────────────────

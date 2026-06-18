@@ -1,74 +1,96 @@
-/* Colors are defined by theme file and can be referenced via @base, @text, @selected-text, and @border */
-
 * {
-  font-family: monospace;
-  font-size: 16px;
+  font-family: "JetBrainsMono Nerd Font", "Inter", sans-serif;
+  font-size: 15px;
+  transition: all 0.2s ease-in-out;
 }
 
 window {
-  margin: 0;
-  padding: 0;
-  background-color: @base;
-  opacity: 0.95;
-}
-
-#inner-box {
-  margin: 0;
-  padding: 0;
-  border: none;
-  background-color: @base;
+  margin: 0px;
+  border-radius: 20px;
+  border: 2px solid rgba(188, 170, 164, 0.4);
+  /* Premium Dark/Blackish Gray Universal Background */
+  background-color: rgba(18, 18, 22, 0.85);
+  box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.5);
 }
 
 #outer-box {
-  margin: 0;
-  padding: 10px 20px;
-  border: none;
-  background-color: @base;
-  border: 1px solid @border;
-}
-
-#scroll {
-  margin: 0;
-  padding: 0;
-  border: none;
-  background-color: @base;
+  margin: 0px;
+  padding: 24px;
+  background: transparent;
 }
 
 #input {
-  margin: 0;
-  padding: 3px;
-  border: none;
-  background-color: @base;
-  color: @text;
+  margin: 0px 0px 20px 0px;
+  padding: 16px 20px;
+  border-radius: 12px;
+  border: 1px solid rgba(188, 170, 164, 0.3);
+  /* Slightly lighter dark background for the search bar */
+  background-color: rgba(30, 30, 35, 0.6);
+  color: #bcaaa4;
+  caret-color: #bcaaa4;
+  font-size: 16px;
+  font-weight: 500;
+  box-shadow: inset 0px 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 #input:focus {
-  outline: none;
-  box-shadow: none;
-  border: none;
+  border: 1px solid rgba(188, 170, 164, 0.8);
+  box-shadow: 0px 0px 15px rgba(188, 170, 164, 0.3), inset 0px 2px 4px rgba(0, 0, 0, 0.2);
 }
 
-#text {
-  margin: 3px;
-  border: none;
-  color: @text;
+#scroll {
+  margin: 0px;
+}
+
+#inner-box {
+  background: transparent;
+  padding: 0px;
 }
 
 #entry {
-  background-color: @base;
+  margin: 4px 0px;
+  padding: 12px 16px;
+  border-radius: 10px;
+  background-color: transparent;
+  border: 1px solid transparent;
+}
+
+#img {
+  margin-right: 14px;
+  background: transparent;
+}
+
+#text {
+  /* Default text color is a soft grey so it isn't overwhelmingly themed */
+  color: #D8DEE9;
+  font-weight: 500;
 }
 
 #entry:selected {
-  outline: none;
-  border: none;
+  /* Use the theme's highlight color for the background, but keep it translucent */
+  background-color: rgba(188, 170, 164, 0.25);
+  border: 1px solid rgba(188, 170, 164, 0.5);
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
 }
 
 #entry:selected #text {
-  color: @selected-text;
+  /* When selected, text becomes the bright theme color */
+  color: #bcaaa4;
+  font-weight: 600;
 }
 
-#entry image {
-  -gtk-icon-transform: scale(0.6);
+* > b, #text b {
+  /* Highlighted matched characters in search */
+  color: #bcaaa4;
+  font-weight: 800;
 }
 
-@import ".config/wofi/walker.css";
+/* Scrollbar styling for a modern floating look */
+#scroll trough {
+  background: transparent;
+}
+#scroll slider {
+  background-color: rgba(188, 170, 164, 0.3);
+  border-radius: 10px;
+  min-height: 30px;
+}

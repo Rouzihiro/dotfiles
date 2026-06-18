@@ -1,1 +1,85 @@
-/home/rey/.config/zorro/current/theme/yazi.toml
+[mgr]
+cwd = { fg = "#d7ccc8" }
+find_keyword = { fg = "#bcaaa4", bold = true, italic = true, underline = true }
+find_position = { fg = "#bcaaa4", bold = true, italic = true }
+marker_copied = { fg = "#8d6e63", bg = "#8d6e63" }
+marker_cut = { fg = "#998a86", bg = "#998a86" }
+marker_marked = { fg = "#bcaaa4", bg = "#bcaaa4" }
+marker_selected = { fg = "#d7ccc8", bg = "#d7ccc8" }
+count_copied = { fg = "#3e2723", bg = "#998a86" }
+count_cut = { fg = "#3e2723", bg = "#998a86" }
+count_selected = { fg = "#3e2723", bg = "#d7ccc8" }
+border_symbol = " "
+border_style = { fg = "#bcaaa4" }
+
+[status]
+sep_left = { open = "", close = "🭠" }
+sep_right = { open = "🭁", close = "" }
+perm_type = { fg = "#bcaaa4" }
+perm_read = { fg = "#d7ccc8" }
+perm_write = { fg = "#d7ccc8" }
+perm_exec = { fg = "#8d6e63" }
+perm_sep = { fg = "#998a86" }
+progress_label = { bold = true }
+progress_normal = { fg = "#bcaaa4", bg = "#543f3b" }
+progress_error = { fg = "#8d6e63", bg = "#543f3b" }
+
+[mode]
+normal_main = { bg = "#bcaaa4", fg = "#3e2723", bold = true }
+normal_alt  = { bg = "#543f3b", fg = "#d7ccc8" }
+select_main = { bg = "#998a86", fg = "#3e2723", bold = true }
+select_alt  = { bg = "#543f3b", fg = "#d7ccc8" }
+unset_main = { bg = "#d7ccc8", fg = "#3e2723", bold = true }
+unset_alt  = { bg = "#543f3b", fg = "#d7ccc8" }
+
+[select]
+border = { fg = "#bcaaa4" }
+active = { fg = "#d7ccc8", bold = true }
+
+[input]
+border = { fg = "#bcaaa4" }
+value = { fg = "#d7ccc8" }
+
+[tabs]
+active = { fg = "#bcaaa4", bold = true, bg = "#3e2723" }
+inactive = { fg = "#998a86", bg = "#3e2723" }
+sep_inner = { open = "[", close = "]" }
+
+[cmp]
+border = { fg = "#bcaaa4", bg = "#543f3b" }
+
+[tasks]
+border = { fg = "#bcaaa4" }
+title = {}
+hovered = { fg = "#998a86", underline = true }
+
+[which]
+cols = 3
+mask = { bg = "#543f3b" }
+cand = { fg = "#bcaaa4" }
+rest = { fg = "#3e2723" }
+desc = { fg = "#d7ccc8" }
+separator = " ▶ "
+separator_style = { fg = "#d7ccc8" }
+
+[help]
+on = { fg = "#d7ccc8" }
+run = { fg = "#d7ccc8" }
+footer = { fg = "#3e2723", bg = "#998a86" }
+
+[notify]
+title_info = { fg = "#d7ccc8" }
+title_warn = { fg = "#bcaaa4" }
+title_error = { fg = "#8d6e63" }
+
+[filetype]
+rules = [
+    { mime = "image/*", fg = "#d7ccc8" },
+    { mime = "{audio,video}/*", fg = "#bcaaa4" },
+    { mime = "application/{zip,rar,7z*,tar,gzip,xz,zstd,bzip*,lzma,compress,archive,cpio,arj,xar,ms-cab*}", fg = "#998a86" },
+    { mime = "application/{pdf,doc,rtf}", fg = "#d7ccc8" },
+    { url = "*", is = "orphan", bg = "#8d6e63" },
+    { url = "*", is = "exec", fg = "#998a86" },
+    { url = "*", fg = "#d7ccc8" },
+    { url = "*/", fg = "#bcaaa4" },
+]
