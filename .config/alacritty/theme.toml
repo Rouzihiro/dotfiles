@@ -1,34 +1,34 @@
 [colors.primary]
-background = "002B36"
-foreground = "839496"
+background = "2c2525"
+foreground = "e6d9db"
 
 [colors.cursor]
-text   = "002B36"
-cursor = "586E75"
+text   = "2c2525"
+cursor = "c3b7b8"
 
 [colors.selection]
-text       = "93A1A1"
-background = "073642"
+text       = "e6d9db"
+background = "403e41"
 
 [colors.normal]
-black   = "073642"
-red     = "DC322F"
-green   = "859900"
-yellow  = "B58900"
-blue    = "268BD2"
-magenta = "D33682"
-cyan    = "2AA198"
-white   = "eee8d5"
+black   = "72696a"
+red     = "fd6883"
+green   = "adda78"
+yellow  = "f9cc6c"
+blue    = "f38d70"
+magenta = "a8a9eb"
+cyan    = "85dacc"
+white   = "e6d9db"
 
 [colors.bright]
-black   = "002731"
-red     = "CB4B16"
-green   = "364725"
-yellow  = "3C342C"
-blue    = "0B4764"
-magenta = "6C71C4"
-cyan    = "0C4E53"
-white   = "eee8d5"
+black   = "948a8b"
+red     = "ff8297"
+green   = "c8e292"
+yellow  = "fcd675"
+blue    = "f8a788"
+magenta = "bebffd"
+cyan    = "9bf1e1"
+white   = "e6d9db"
 
 # [window]
 # opacity = 0.95

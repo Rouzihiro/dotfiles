@@ -31,3 +31,11 @@ color12 = "#9ccfd8"
 color13 = "#c4a7e7"
 color14 = "#ebbcba"
 color15 = "#e0def4"
+
+[starship]
+os_bg = "9ccfd8"      # Teal accent for OS icon
+os_fg = "191724"      # Dark background for contrast
+dir_bg = "31748f"     # Blue for directory background
+
+[nvim]
+colorscheme = "rose-pine"

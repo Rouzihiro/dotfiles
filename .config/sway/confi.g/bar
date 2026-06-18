@@ -6,14 +6,14 @@ bar {
     font pango:DroidSansM Nerd Font 10
     
     colors {
-        background 002B36
-        statusline 839496
-        separator  002B36
+        background 2c2525
+        statusline e6d9db
+        separator  2c2525
         
-        focused_workspace  839496      839496      002B36
-        active_workspace   839496      839496      002B36
-        inactive_workspace 002B36      002B36      268BD2
-        urgent_workspace   268BD2  268BD2  002B36
-        binding_mode       D33682  D33682  002B36
+        focused_workspace  e6d9db      e6d9db      2c2525
+        active_workspace   e6d9db      e6d9db      2c2525
+        inactive_workspace 2c2525      2c2525      f38d70
+        urgent_workspace   f38d70  f38d70  2c2525
+        binding_mode       a8a9eb  a8a9eb  2c2525
     }
 }

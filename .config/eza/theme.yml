@@ -1,93 +1,93 @@
 filekinds:
-  normal: { foreground: "839496" }
-  directory: { foreground: "268BD2" }
-  symlink: { foreground: "2AA198" }
-  pipe: { foreground: "002731" }
-  block_device: { foreground: "B58900" }
-  char_device: { foreground: "B58900" }
-  socket: { foreground: "002731" }
-  special: { foreground: "D33682" }
-  executable: { foreground: "859900" }
-  mount_point: { foreground: "0C4E53" }
+  normal: { foreground: "e6d9db" }
+  directory: { foreground: "f38d70" }
+  symlink: { foreground: "85dacc" }
+  pipe: { foreground: "948a8b" }
+  block_device: { foreground: "f9cc6c" }
+  char_device: { foreground: "f9cc6c" }
+  socket: { foreground: "948a8b" }
+  special: { foreground: "a8a9eb" }
+  executable: { foreground: "adda78" }
+  mount_point: { foreground: "9bf1e1" }
 
 perms:
-  user_read: { foreground: "2AA198" }
-  user_write: { foreground: "D33682" }
-  user_execute_file: { foreground: "859900" }
-  user_execute_other: { foreground: "859900" }
-  group_read: { foreground: "2AA198" }
-  group_write: { foreground: "B58900" }
-  group_execute: { foreground: "859900" }
-  other_read: { foreground: "2AA198" }
-  other_write: { foreground: "CB4B16" }
-  other_execute: { foreground: "859900" }
-  special_user_file: { foreground: "CB4B16" }
-  special_other: { foreground: "DC322F" }
-  attribute: { foreground: "002731" }
+  user_read: { foreground: "85dacc" }
+  user_write: { foreground: "a8a9eb" }
+  user_execute_file: { foreground: "adda78" }
+  user_execute_other: { foreground: "adda78" }
+  group_read: { foreground: "85dacc" }
+  group_write: { foreground: "f9cc6c" }
+  group_execute: { foreground: "adda78" }
+  other_read: { foreground: "85dacc" }
+  other_write: { foreground: "ff8297" }
+  other_execute: { foreground: "adda78" }
+  special_user_file: { foreground: "ff8297" }
+  special_other: { foreground: "fd6883" }
+  attribute: { foreground: "948a8b" }
 
 size:
-  major: { foreground: "2AA198" }
-  minor: { foreground: "D33682" }
-  number_byte: { foreground: "839496" }
-  number_kilo: { foreground: "2AA198" }
-  number_mega: { foreground: "0C4E53" }
-  number_giga: { foreground: "B58900" }
-  number_huge: { foreground: "CB4B16" }
-  unit_byte: { foreground: "839496" }
-  unit_kilo: { foreground: "0C4E53" }
-  unit_mega: { foreground: "2AA198" }
-  unit_giga: { foreground: "B58900" }
-  unit_huge: { foreground: "CB4B16" }
+  major: { foreground: "85dacc" }
+  minor: { foreground: "a8a9eb" }
+  number_byte: { foreground: "e6d9db" }
+  number_kilo: { foreground: "85dacc" }
+  number_mega: { foreground: "9bf1e1" }
+  number_giga: { foreground: "f9cc6c" }
+  number_huge: { foreground: "ff8297" }
+  unit_byte: { foreground: "e6d9db" }
+  unit_kilo: { foreground: "9bf1e1" }
+  unit_mega: { foreground: "85dacc" }
+  unit_giga: { foreground: "f9cc6c" }
+  unit_huge: { foreground: "ff8297" }
 
 users:
-  user_you: { foreground: "268BD2" }
-  user_root: { foreground: "D33682" }
-  user_other: { foreground: "2AA198" }
-  group_yours: { foreground: "0C4E53" }
-  group_root: { foreground: "D33682" }
-  group_other: { foreground: "839496" }
+  user_you: { foreground: "f38d70" }
+  user_root: { foreground: "a8a9eb" }
+  user_other: { foreground: "85dacc" }
+  group_yours: { foreground: "9bf1e1" }
+  group_root: { foreground: "a8a9eb" }
+  group_other: { foreground: "e6d9db" }
 
 links:
-  normal: { foreground: "0C4E53" }
-  multi_link_file: { foreground: "2AA198" }
+  normal: { foreground: "9bf1e1" }
+  multi_link_file: { foreground: "85dacc" }
 
 git:
-  new: { foreground: "859900" }
-  modified: { foreground: "D33682" }
-  deleted: { foreground: "DC322F" }
-  renamed: { foreground: "2AA198" }
-  typechange: { foreground: "2AA198" }
-  ignored: { foreground: "002731" }
-  conflicted: { foreground: "B58900" }
+  new: { foreground: "adda78" }
+  modified: { foreground: "a8a9eb" }
+  deleted: { foreground: "fd6883" }
+  renamed: { foreground: "85dacc" }
+  typechange: { foreground: "85dacc" }
+  ignored: { foreground: "948a8b" }
+  conflicted: { foreground: "f9cc6c" }
 
 git_repo:
-  branch_main: { foreground: "002731" }
-  branch_other: { foreground: "0C4E53" }
-  git_clean: { foreground: "002B36" }
-  git_dirty: { foreground: "D33682" }
+  branch_main: { foreground: "948a8b" }
+  branch_other: { foreground: "9bf1e1" }
+  git_clean: { foreground: "2c2525" }
+  git_dirty: { foreground: "a8a9eb" }
 
 file_type:
-  image: { foreground: "0C4E53" }
-  video: { foreground: "2AA198" }
-  music: { foreground: "859900" }
-  lossless: { foreground: "2AA198" }
-  crypto: { foreground: "DC322F" }
-  document: { foreground: "839496" }
-  compressed: { foreground: "B58900" }
-  temp: { foreground: "002731" }
-  compiled: { foreground: "002731" }
-  build: { foreground: "859900" }
-  source: { foreground: "D33682" }
+  image: { foreground: "9bf1e1" }
+  video: { foreground: "85dacc" }
+  music: { foreground: "adda78" }
+  lossless: { foreground: "85dacc" }
+  crypto: { foreground: "fd6883" }
+  document: { foreground: "e6d9db" }
+  compressed: { foreground: "f9cc6c" }
+  temp: { foreground: "948a8b" }
+  compiled: { foreground: "948a8b" }
+  build: { foreground: "adda78" }
+  source: { foreground: "a8a9eb" }
 
-punctuation: { foreground: "002731" }
-date: { foreground: "B58900" }
-inode: { foreground: "002731" }
-blocks: { foreground: "002731" }
-header: { foreground: "839496" }
-octal: { foreground: "B58900" }
-flags: { foreground: "D33682" }
+punctuation: { foreground: "948a8b" }
+date: { foreground: "f9cc6c" }
+inode: { foreground: "948a8b" }
+blocks: { foreground: "948a8b" }
+header: { foreground: "e6d9db" }
+octal: { foreground: "f9cc6c" }
+flags: { foreground: "a8a9eb" }
 
-symlink_path: { foreground: "0C4E53" }
-control_char: { foreground: "B58900" }
-broken_symlink: { foreground: "CB4B16" }
-broken_path_overlay: { foreground: "CB4B16" }
+symlink_path: { foreground: "9bf1e1" }
+control_char: { foreground: "f9cc6c" }
+broken_symlink: { foreground: "ff8297" }
+broken_path_overlay: { foreground: "ff8297" }

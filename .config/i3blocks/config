@@ -5,121 +5,121 @@ separator_block_width=10
 [weather]
 command=weather-short
 interval=1000
-color=839496
+color=e6d9db
 
 [separator]
 full_text="⟨"
-color=133a44
+color=474040
 
 [bandwidth]
 command=bandwith
 interval=1
 label=   
-color=2AA198
+color=85dacc
 
 [separator]
 full_text="⟨"
-color=133a44
+color=474040
 
 [disk]
 label=  
 instance=/
 command=df -h / | awk 'NR==2 {print $3 "/" $2}'
 interval=30
-color=268BD2
+color=f38d70
 
 [separator]
 full_text="⟨"
-color=133a44
+color=474040
 
 [memory]
 label=  
 command=memory
 interval=2
-color=268BD2
+color=f38d70
 
 [separator]
 full_text="⟨"
-color=133a44
+color=474040
 
 [cpu_usage]
 label=  
 command=cpu-usage
 interval=2
-color=DC322F
+color=fd6883
 
 [separator]
 full_text="⟨"
-color=133a44
+color=474040
 
 [wifi]
 command=wifi-status
 interval=30
-color=839496
+color=e6d9db
 
 [separator]
 full_text="⟨"
-color=133a44
+color=474040
 
 [volume]
 command=sb-volume
 interval=1
-color=B58900
+color=f9cc6c
 
 [separator]
 full_text="⟨"
-color=133a44
+color=474040
 
 [power-profile]
 command=power-wrapper
 interval=5
 signal=10
-color=839496
+color=e6d9db
 
 [separator]
 full_text="⟨"
-color=133a44
+color=474040
 
 [brightness]
 command=sb-brightness
 interval=5
 label=   
-color=839496
+color=e6d9db
 
 [separator]
 full_text="⟨"
-color=133a44
+color=474040
 
 [time]
 interval=1
 command=timer
 separator_block_width=10
 label=  
-color=268BD2
+color=f38d70
 
 [separator]
 full_text="⟨"
-color=133a44
+color=474040
 
 [keymap]
 command=kb-layout
 interval=2
-color=268BD2
+color=f38d70
 
 [separator]
 full_text="⟨"
-color=133a44
+color=474040
 
 [battery]
 command=battery
 interval=30
-color=2AA198
+color=85dacc
 
 [separator]
 full_text="⟨"
-color=133a44
+color=474040
 
 [shutdown_menu]
 full_text=
 command=powermenu
-color=DC322F
+color=fd6883
