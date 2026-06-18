@@ -1,0 +1,93 @@
+filekinds:
+  normal: { foreground: "{{ palette_fg }}" }
+  directory: { foreground: "{{ palette_accent }}" }
+  symlink: { foreground: "{{ palette_color6 }}" }
+  pipe: { foreground: "{{ palette_color8 }}" }
+  block_device: { foreground: "{{ palette_warning }}" }
+  char_device: { foreground: "{{ palette_warning }}" }
+  socket: { foreground: "{{ palette_color8 }}" }
+  special: { foreground: "{{ palette_color5 }}" }
+  executable: { foreground: "{{ palette_success }}" }
+  mount_point: { foreground: "{{ palette_color14 }}" }
+
+perms:
+  user_read: { foreground: "{{ palette_color6 }}" }
+  user_write: { foreground: "{{ palette_color5 }}" }
+  user_execute_file: { foreground: "{{ palette_success }}" }
+  user_execute_other: { foreground: "{{ palette_success }}" }
+  group_read: { foreground: "{{ palette_color6 }}" }
+  group_write: { foreground: "{{ palette_warning }}" }
+  group_execute: { foreground: "{{ palette_success }}" }
+  other_read: { foreground: "{{ palette_color6 }}" }
+  other_write: { foreground: "{{ palette_color9 }}" }
+  other_execute: { foreground: "{{ palette_success }}" }
+  special_user_file: { foreground: "{{ palette_color9 }}" }
+  special_other: { foreground: "{{ palette_error }}" }
+  attribute: { foreground: "{{ palette_color8 }}" }
+
+size:
+  major: { foreground: "{{ palette_color6 }}" }
+  minor: { foreground: "{{ palette_color5 }}" }
+  number_byte: { foreground: "{{ palette_fg }}" }
+  number_kilo: { foreground: "{{ palette_color6 }}" }
+  number_mega: { foreground: "{{ palette_color14 }}" }
+  number_giga: { foreground: "{{ palette_warning }}" }
+  number_huge: { foreground: "{{ palette_color9 }}" }
+  unit_byte: { foreground: "{{ palette_fg }}" }
+  unit_kilo: { foreground: "{{ palette_color14 }}" }
+  unit_mega: { foreground: "{{ palette_color6 }}" }
+  unit_giga: { foreground: "{{ palette_warning }}" }
+  unit_huge: { foreground: "{{ palette_color9 }}" }
+
+users:
+  user_you: { foreground: "{{ palette_color4 }}" }
+  user_root: { foreground: "{{ palette_color5 }}" }
+  user_other: { foreground: "{{ palette_color6 }}" }
+  group_yours: { foreground: "{{ palette_color14 }}" }
+  group_root: { foreground: "{{ palette_color5 }}" }
+  group_other: { foreground: "{{ palette_fg }}" }
+
+links:
+  normal: { foreground: "{{ palette_color14 }}" }
+  multi_link_file: { foreground: "{{ palette_color6 }}" }
+
+git:
+  new: { foreground: "{{ palette_success }}" }
+  modified: { foreground: "{{ palette_color5 }}" }
+  deleted: { foreground: "{{ palette_error }}" }
+  renamed: { foreground: "{{ palette_color6 }}" }
+  typechange: { foreground: "{{ palette_color6 }}" }
+  ignored: { foreground: "{{ palette_color8 }}" }
+  conflicted: { foreground: "{{ palette_warning }}" }
+
+git_repo:
+  branch_main: { foreground: "{{ palette_color8 }}" }
+  branch_other: { foreground: "{{ palette_color14 }}" }
+  git_clean: { foreground: "{{ palette_bg }}" }
+  git_dirty: { foreground: "{{ palette_color5 }}" }
+
+file_type:
+  image: { foreground: "{{ palette_color14 }}" }
+  video: { foreground: "{{ palette_color6 }}" }
+  music: { foreground: "{{ palette_success }}" }
+  lossless: { foreground: "{{ palette_color6 }}" }
+  crypto: { foreground: "{{ palette_error }}" }
+  document: { foreground: "{{ palette_fg }}" }
+  compressed: { foreground: "{{ palette_warning }}" }
+  temp: { foreground: "{{ palette_color8 }}" }
+  compiled: { foreground: "{{ palette_color8 }}" }
+  build: { foreground: "{{ palette_success }}" }
+  source: { foreground: "{{ palette_color5 }}" }
+
+punctuation: { foreground: "{{ palette_color8 }}" }
+date: { foreground: "{{ palette_warning }}" }
+inode: { foreground: "{{ palette_color8 }}" }
+blocks: { foreground: "{{ palette_color8 }}" }
+header: { foreground: "{{ palette_fg }}" }
+octal: { foreground: "{{ palette_warning }}" }
+flags: { foreground: "{{ palette_color5 }}" }
+
+symlink_path: { foreground: "{{ palette_color14 }}" }
+control_char: { foreground: "{{ palette_warning }}" }
+broken_symlink: { foreground: "{{ palette_color9 }}" }
+broken_path_overlay: { foreground: "{{ palette_color9 }}" }

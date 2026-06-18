@@ -1,0 +1,125 @@
+separator=false
+markup=pango
+separator_block_width=10
+
+[weather]
+command=weather-short
+interval=1000
+color={{ palette_fg }}
+
+[separator]
+full_text="⟨"
+color={{ palette_bg_subtle }}
+
+[bandwidth]
+command=bandwith
+interval=1
+label=   
+color={{ palette_color6 }}
+
+[separator]
+full_text="⟨"
+color={{ palette_bg_subtle }}
+
+[disk]
+label=  
+instance=/
+command=df -h / | awk 'NR==2 {print $3 "/" $2}'
+interval=30
+color={{ palette_accent }}
+
+[separator]
+full_text="⟨"
+color={{ palette_bg_subtle }}
+
+[memory]
+label=  
+command=memory
+interval=2
+color={{ palette_accent }}
+
+[separator]
+full_text="⟨"
+color={{ palette_bg_subtle }}
+
+[cpu_usage]
+label=  
+command=cpu-usage
+interval=2
+color={{ palette_color1 }}
+
+[separator]
+full_text="⟨"
+color={{ palette_bg_subtle }}
+
+[wifi]
+command=wifi-status
+interval=30
+color={{ palette_fg }}
+
+[separator]
+full_text="⟨"
+color={{ palette_bg_subtle }}
+
+[volume]
+command=sb-volume
+interval=1
+color={{ palette_color3 }}
+
+[separator]
+full_text="⟨"
+color={{ palette_bg_subtle }}
+
+[power-profile]
+command=power-wrapper
+interval=5
+signal=10
+color={{ palette_fg }}
+
+[separator]
+full_text="⟨"
+color={{ palette_bg_subtle }}
+
+[brightness]
+command=sb-brightness
+interval=5
+label=   
+color={{ palette_fg }}
+
+[separator]
+full_text="⟨"
+color={{ palette_bg_subtle }}
+
+[time]
+interval=1
+command=timer
+separator_block_width=10
+label=  
+color={{ palette_accent }}
+
+[separator]
+full_text="⟨"
+color={{ palette_bg_subtle }}
+
+[keymap]
+command=kb-layout
+interval=2
+color={{ palette_accent }}
+
+[separator]
+full_text="⟨"
+color={{ palette_bg_subtle }}
+
+[battery]
+command=battery
+interval=30
+color={{ palette_color6 }}
+
+[separator]
+full_text="⟨"
+color={{ palette_bg_subtle }}
+
+[shutdown_menu]
+full_text=
+command=powermenu
+color={{ palette_color1 }}

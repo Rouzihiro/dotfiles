@@ -1,0 +1,16 @@
+/* sway-theme.j2 - Generated from flavors */
+# Client colors
+#                    border          background     text           indicator     child_border
+client.focused          {{ palette_accent }}   {{ palette_bg }}   {{ palette_fg }}   {{ palette_accent }}   {{ palette_accent }}
+client.focused_inactive {{ palette_bg }}       {{ palette_bg }}   {{ palette_success }}   {{ palette_success }}   {{ palette_bg }}
+client.unfocused        {{ palette_bg }}       {{ palette_bg }}   {{ palette_fg_dim }}   {{ palette_bg }}       {{ palette_bg }}
+client.urgent           {{ palette_error }}    {{ palette_bg }}   {{ palette_fg }}   {{ palette_error }}    {{ palette_error }}
+
+# Client titlebar colors
+#                    border          background     text
+client.background    {{ palette_bg }}
+client.placeholder   {{ palette_bg }}   {{ palette_bg }}   {{ palette_fg_dim }}
+
+# Window borders
+default_border pixel 2
+default_floating_border pixel 2

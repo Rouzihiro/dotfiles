@@ -1,0 +1,10 @@
+[alias]
+    # graph: aesthetic log with relative dates
+    l = "log --graph --pretty=format:'%C(#{{ starship_os_bg }})%h%C(reset) -%C(#{{ starship_os_bg }})%d%C(reset) %s %C(#{{ starship_os_bg }})(%cr)%C(reset) %C(#{{ starship_dir_bg }})<%an>%C(reset)' --abbrev-commit"
+
+    # reflog: head movement tracking
+    rf = "reflog --pretty=format:'%C(#{{ starship_os_bg }})%h%C(reset) %C(cyan)%gd%C(reset) %gs %C(#{{ starship_os_bg }})(%cr)%C(reset)'"
+
+    # show: word-level diff with flavor colors
+    sh = "show --pretty=format:'%C(#{{ starship_os_bg }})%h%C(reset) %s %C(#{{ starship_dir_bg }})<%an>%C(reset)' --color-words"
+    

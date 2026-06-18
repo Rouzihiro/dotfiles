@@ -1,0 +1,55 @@
+# ─────────────────────────────
+# Basic setup
+# ─────────────────────────────
+
+set -g status-position top
+set -g status-style "fg={{ palette_fg }},bg={{ palette_bg }}"
+set -g base-index 1
+set -g renumber-windows on
+
+# ─────────────────────────────
+# Pane borders
+# ─────────────────────────────
+
+set -g pane-active-border-style "fg={{ palette_accent }}"
+set -g pane-border-style "fg={{ palette_bg_muted }}"
+
+# ─────────────────────────────
+# Status bar
+# ─────────────────────────────
+
+set -g status-left ""
+set -g status-right ""
+
+# ─────────────────────────────
+# Window tabs (PILL RESTORED)
+# ─────────────────────────────
+
+set -g window-status-separator " "
+
+set -g window-status-format \
+"#[fg={{ palette_bg_muted }},bg=default]#[fg={{ palette_fg }},bg={{ palette_bg_muted }}] #I:#W #[fg={{ palette_bg_muted }},bg=default]"
+
+set -g window-status-current-format \
+"#[fg={{ palette_accent }},bg=default]#[fg={{ palette_bg }},bg={{ palette_accent }}] #I:#W #[fg={{ palette_accent }},bg=default]"
+
+# ─────────────────────────────
+# Message styling
+# ─────────────────────────────
+
+set -g message-style "fg={{ palette_bg }},bg={{ palette_accent }}"
+set -g message-command-style "fg={{ palette_fg }},bg={{ palette_bg }}"
+
+# ─────────────────────────────
+# Mode styling
+# ─────────────────────────────
+
+set -g mode-style "fg={{ palette_bg }},bg={{ palette_accent }}"
+set -g status-justify left
+
+# ─────────────────────────────
+# Copy mode
+# ─────────────────────────────
+
+set -g copy-mode-match-style "fg={{ palette_fg_dim }},bg={{ palette_bg_muted }}"
+set -g copy-mode-current-match-style "fg={{ palette_bg }},bg={{ palette_accent }}"

@@ -1,0 +1,191 @@
+@define-color bg {{ palette_bg }};
+@define-color fg {{ palette_fg }};
+@define-color bordercolor {{ palette_bg_subtle }};
+@define-color highlight {{ palette_accent }};
+@define-color alert {{ palette_error }};
+@define-color activegreen {{ palette_success }};
+@define-color disabled {{ palette_fg_dim }};
+@define-color green {{ palette_success }};
+@define-color red {{ palette_error }};
+@define-color activegreen {{ palette_accent }};
+
+/* swaync-specific variables */
+@define-color noti-border-color @bordercolor;
+@define-color noti-bg rgba(255, 255, 255, 0.9); /* @bg with alpha */
+@define-color noti-bg-alt rgba(255, 255, 255, 0.9);
+@define-color noti-bg-hover rgba(255, 255, 255, 0.9);
+@define-color text-color @fg;
+
+* {
+    font-family: "JetBrainsMono Nerd Font";
+    font-weight: bold;
+}
+
+/* Hover row */
+.control-center .notification-row:focus,
+.control-center .notification-row:hover {
+    opacity: 1;
+    background: @noti-bg-hover;
+    border-radius: 10px;
+}
+
+.notification-row {
+    outline: none;
+    margin: 0px;
+}
+
+/* Notification box */
+.notification {
+    border-radius: 10px;
+}
+
+.notification-content {
+    background: @noti-bg;
+    padding: 3px 10px 3px 6px;
+    border-radius: 10px;
+    border: 1px solid @noti-border-color;
+    color: @text-color;
+}
+
+/* Buttons */
+.close-button {
+    background: @alert;
+    color: @noti-bg;
+    text-shadow: none;
+    border-radius: 10px;
+    margin: 5px;
+}
+.close-button:hover {
+    background: @alert;
+    transition: all .15s ease-in-out;
+}
+
+/* Action Buttons */
+.notification-action,
+.notification-default-action {
+    border: 1px solid @noti-border-color;
+    border-radius: 10px;
+    background: @noti-bg-alt;
+    margin: 5px;
+}
+.notification-default-action:hover,
+.notification-action:hover {
+    background: @noti-bg-hover;
+    color: @text-color;
+}
+
+/* Reply */
+.inline-reply-entry {
+    background: @noti-bg;
+    color: @text-color;
+    caret-color: @text-color;
+    border: 1px solid @noti-border-color;
+    border-radius: 10px;
+}
+.inline-reply-button {
+    background: @noti-bg-alt;
+    border: 1px solid @noti-border-color;
+    color: @text-color;
+    border-radius: 10px;
+}
+.inline-reply-button:hover {
+    background: @noti-bg-hover;
+}
+
+/* Text Styling */
+.summary, .time, .body {
+    color: @text-color;
+    background: transparent;
+    font-size: 1rem;
+    text-shadow: none;
+}
+
+/* Control Center */
+.control-center {
+    background: @noti-bg;
+    border: 1px solid @noti-border-color;
+    color: @text-color;
+    border-radius: 10px;
+}
+.control-center-list {
+    background: transparent;
+}
+
+/* Widget Headers */
+.widget-title {
+    background: @noti-bg-alt;
+    color: @text-color;
+    padding: 3px 6px;
+    margin: 5px;
+    border-radius: 10px;
+}
+.widget-title>button {
+    font-size: 0.75rem;
+    background: transparent;
+    color: @text-color;
+    border: 0.5px solid @noti-border-color;
+    border-radius: 10px;
+}
+.widget-title>button:hover {
+    background: @text-color;
+    color: red;
+}
+
+/* DND */
+.widget-dnd {
+    background: @noti-bg-alt;
+    color: @bordercolor;
+    padding: 3px 6px;
+    margin: 5px;
+    border-radius: 10px;
+}
+.widget-dnd>switch {
+    background: @bordercolor;
+    border: 1px solid @bordercolor;
+}
+.widget-dnd>switch:checked {
+    background: @alert;
+    border: 1px solid @alert;
+}
+.widget-dnd>switch slider {
+    background: @noti-bg;
+}
+
+/* Misc Widgets */
+.widget-volume,
+.widget-backlight {
+    background: @noti-bg-alt;
+    color: @text-color;
+    padding: 5px;
+    margin: 10px;
+    border-radius: 10px;
+    font-size: x-large;
+}
+.per-app-volume {
+    background: @noti-bg;
+    color: @text-color;
+    padding: 8px;
+    margin: 8px;
+    border-radius: 10px;
+}
+.widget-buttons-grid {
+    background: @noti-bg-alt;
+    color: @bordercolor;
+    padding: 5px;
+    margin: 5px;
+    border-radius: 10px;
+}
+.widget-buttons-grid>flowbox>flowboxchild>button:hover {
+    background: @text-color;
+    color: @noti-bg;
+}
+
+/* Urgency levels */
+.low, .normal {
+    background: @text-color;
+    border-radius: 10px;
+}
+.critical {
+    background: @alert;
+    border-radius: 10px;
+}

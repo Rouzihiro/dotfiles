@@ -1,0 +1,126 @@
+# ===================================================================
+# Terminal filters
+# ===================================================================
+COLORTERM ?*
+TERM *color*
+TERM *direct*
+TERM xterm*
+TERM screen*
+TERM tmux*
+TERM rxvt*
+TERM st
+TERM linux
+TERM konsole
+TERM kitty
+TERM foot
+TERM gnome
+TERM wezterm
+
+# ===================================================================
+# Basic file attributes
+# ===================================================================
+
+RESET 0
+
+
+DIR 01;38;2;{{ dircolors_dir_ansi }}
+LINK 01;38;2;{{ dircolors_link_ansi }}
+MULTIHARDLINK 00
+FIFO 48;2;{{ dircolors_bg_ansi }};38;2;{{ dircolors_dir_ansi }}
+SOCK 01;38;2;{{ dircolors_fg_ansi }}
+DOOR 01;38;2;{{ dircolors_fg_ansi }}
+BLK  48;2;{{ dircolors_bg_ansi }};38;2;{{ dircolors_link_ansi }};01
+CHR  48;2;{{ dircolors_bg_ansi }};38;2;{{ dircolors_link_ansi }};01
+ORPHAN 48;2;{{ dircolors_bg_ansi }};38;2;{{ dircolors_orphan_ansi }};01
+MISSING 00
+SETUID 38;2;{{ dircolors_fg_ansi }};48;2;{{ dircolors_orphan_ansi }}
+SETGID 38;2;{{ dircolors_bg_ansi }};48;2;{{ dircolors_dir_ansi }}
+CAPABILITY 00
+STICKY_OTHER_WRITABLE 38;2;{{ dircolors_bg_ansi }};48;2;{{ dircolors_link_ansi }}
+OTHER_WRITABLE       38;2;{{ dircolors_fg_ansi }};48;2;{{ dircolors_link_ansi }}
+STICKY               38;2;{{ dircolors_fg_ansi }};48;2;{{ dircolors_dir_ansi }}
+EXEC 01;38;2;{{ dircolors_exec_ansi }}
+
+# ===================================================================
+# Archives & compressed
+# ===================================================================
+.7z   01;38;2;{{ dircolors_archive_ansi }}
+.ace  01;38;2;{{ dircolors_archive_ansi }}
+.apk  01;38;2;{{ dircolors_archive_ansi }}
+.bz   01;38;2;{{ dircolors_archive_ansi }}
+.bz2  01;38;2;{{ dircolors_archive_ansi }}
+.deb  01;38;2;{{ dircolors_archive_ansi }}
+.dmg  01;38;2;{{ dircolors_archive_ansi }}
+.gz   01;38;2;{{ dircolors_archive_ansi }}
+.iso  01;38;2;{{ dircolors_archive_ansi }}
+.jar  01;38;2;{{ dircolors_archive_ansi }}
+.rar  01;38;2;{{ dircolors_archive_ansi }}
+.rpm  01;38;2;{{ dircolors_archive_ansi }}
+.tar  01;38;2;{{ dircolors_archive_ansi }}
+.tgz  01;38;2;{{ dircolors_archive_ansi }}
+.txz  01;38;2;{{ dircolors_archive_ansi }}
+.xz   01;38;2;{{ dircolors_archive_ansi }}
+.zip  01;38;2;{{ dircolors_archive_ansi }}
+.zst  01;38;2;{{ dircolors_archive_ansi }}
+
+# ===================================================================
+# Images & video 
+# ===================================================================
+.avif 01;38;2;{{ dircolors_media_ansi }}
+.bmp  01;38;2;{{ dircolors_media_ansi }}
+.gif  01;38;2;{{ dircolors_media_ansi }}
+.jpg  01;38;2;{{ dircolors_media_ansi }}
+.jpeg 01;38;2;{{ dircolors_media_ansi }}
+.png  01;38;2;{{ dircolors_media_ansi }}
+.svg  01;38;2;{{ dircolors_media_ansi }}
+.webp 01;38;2;{{ dircolors_media_ansi }}
+
+.mp4  01;38;2;{{ dircolors_media_ansi }}
+.mkv  01;38;2;{{ dircolors_media_ansi }}
+.webm 01;38;2;{{ dircolors_media_ansi }}
+.mov  01;38;2;{{ dircolors_media_ansi }}
+
+.mp3  00;38;2;{{ dircolors_media_ansi }}
+.flac 00;38;2;{{ dircolors_media_ansi }}
+.wav  00;38;2;{{ dircolors_media_ansi }}
+.ogg  00;38;2;{{ dircolors_media_ansi }}
+.opus 00;38;2;{{ dircolors_media_ansi }}
+
+# ===================================================================
+# Documents, configs, code
+# ===================================================================
+.md    00;38;2;{{ dircolors_fg_ansi }}
+.txt   00;38;2;{{ dircolors_fg_ansi }}
+.rst   00;38;2;{{ dircolors_fg_ansi }}
+.log   00;38;2;{{ dircolors_fg_ansi }}
+
+.json  00;38;2;{{ dircolors_source_ansi }}
+.yaml  00;38;2;{{ dircolors_source_ansi }}
+.yml   00;38;2;{{ dircolors_source_ansi }}
+.toml  00;38;2;{{ dircolors_source_ansi }}
+.conf  00;38;2;{{ dircolors_source_ansi }}
+
+.py    00;38;2;{{ dircolors_source_ansi }}
+.rs    00;38;2;{{ dircolors_source_ansi }}
+.ts    00;38;2;{{ dircolors_source_ansi }}
+.js    00;38;2;{{ dircolors_source_ansi }}
+.go    00;38;2;{{ dircolors_source_ansi }}
+
+.sh    00;38;2;{{ dircolors_exec_ansi }}
+.zsh   00;38;2;{{ dircolors_exec_ansi }}
+.bash  00;38;2;{{ dircolors_exec_ansi }}
+
+.sql     00;38;2;{{ dircolors_source_ansi }}
+.csv     00;38;2;{{ dircolors_source_ansi }}
+
+.pdf   01;38;2;{{ dircolors_source_ansi }}
+
+# ===================================================================
+# Temp, backups, partials
+# ===================================================================
+*~        00;38;2;{{ dircolors_ignored_ansi }}
+*#        00;38;2;{{ dircolors_ignored_ansi }}
+.bak      00;38;2;{{ dircolors_ignored_ansi }}
+.old      00;38;2;{{ dircolors_ignored_ansi }}
+.swp      00;38;2;{{ dircolors_ignored_ansi }}
+.tmp      00;38;2;{{ dircolors_ignored_ansi }}

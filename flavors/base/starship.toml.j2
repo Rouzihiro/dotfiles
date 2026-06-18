@@ -1,0 +1,112 @@
+format = """
+[](#{{ starship_os_bg }})\
+$os\
+[](bg:#{{ starship_os_bg }} fg:#{{ starship_os_fg }})\
+[](bg:#{{ starship_dir_bg }} fg:#{{ starship_os_bg }})\
+$directory\
+[](fg:#{{ starship_dir_bg }} bg:#{{ starship_git_branch_bg }})\
+$git_branch\
+$git_status\
+[](fg:#{{ starship_git_branch_bg }} bg:#{{ starship_langs_bg }})\
+$nodejs\
+$rust\
+$golang\
+$zsh\
+$vscode\
+$python\
+$php\
+[](fg:#{{ starship_langs_bg }} bg:#{{ starship_time_bg }})\
+$time\
+[ ](fg:#{{ starship_time_bg }})\
+\n$character"""
+
+[directory]
+style = "fg:#{{ starship_dir_fg }} bg:#{{ starship_dir_bg }}"
+format = "[ $path ]($style)"
+truncation_length = 3
+truncation_symbol = "…/"
+
+[directory.substitutions]
+"Documents" = "󰈙 "
+"Downloads" = " "
+"Music"     = " "
+"Pictures"  = " "
+
+[git_branch]
+style = "bg:#{{ starship_git_branch_bg }}"
+format = '[[ $symbol $branch ](fg:#{{ starship_git_branch_fg }} bg:#{{ starship_git_branch_bg }})]($style)'
+
+[git_status]
+style = "fg:#{{ starship_git_status_fg }} bg:#{{ starship_git_branch_bg }}"
+format = '[[($all_status$ahead_behind )](fg:#{{ starship_git_status_fg }} bg:#{{ starship_git_branch_bg }})]($style)'
+conflicted = "‼"
+ahead      = "⇡"
+behind     = "⇣"
+diverged   = "↕"
+up_to_date = "✓"
+untracked  = ""
+stashed    = " "
+modified   = "●"
+staged     = "[++\\($count\\)](fg:#{{ starship_success }})"
+renamed    = "➜"
+deleted    = "✖"
+
+[character]
+success_symbol = "[✔](fg:#{{ starship_success }})"
+error_symbol   = "[✖](fg:#{{ starship_error }})"
+
+[nodejs]
+symbol = ""
+style  = "bg:#{{ starship_langs_bg }}"
+format = '[[ $symbol ($version) ](fg:#{{ starship_langs_fg }} bg:#{{ starship_langs_bg }})]($style)'
+
+[rust]
+symbol = ""
+style  = "bg:#{{ starship_langs_bg }}"
+format = '[[ $symbol ($version) ](fg:#{{ starship_langs_fg }} bg:#{{ starship_langs_bg }})]($style)'
+
+[golang]
+symbol = ""
+style  = "bg:#{{ starship_langs_bg }}"
+format = '[[ $symbol ($version) ](fg:#{{ starship_langs_fg }} bg:#{{ starship_langs_bg }})]($style)'
+
+[python]
+symbol = ""
+style  = "bg:#{{ starship_langs_bg }}"
+format = '[[ $symbol ($version) ](fg:#{{ starship_langs_fg }} bg:#{{ starship_langs_bg }})]($style)'
+
+[php]
+symbol = ""
+style  = "bg:#{{ starship_langs_bg }}"
+format = '[[ $symbol ($version) ](fg:#{{ starship_langs_fg }} bg:#{{ starship_langs_bg }})]($style)'
+
+[time]
+disabled    = false
+time_format = "%R"
+style       = "bg:#{{ starship_time_bg }}"
+format      = '[[ $time ](fg:#{{ starship_time_fg }} bg:#{{ starship_time_bg }})]($style)'
+
+[os]
+disabled = false
+style    = "fg:#{{ starship_os_fg }} bg:#{{ starship_os_bg }}"
+
+[os.symbols]
+Windows           = "󰍲"
+Ubuntu            = "󰌽 "
+SUSE              = ""
+Raspbian          = "󰐿"
+Mint              = "󰣭"
+Macos             = ""
+Manjaro           = ""
+Linux             = "󰌽"
+Gentoo            = "󰣨"
+Fedora            = "󰣛"
+Alpine            = ""
+Amazon            = ""
+Android           = ""
+Arch              = "󰣇"
+Artix             = "󰣇"
+CentOS            = ""
+Debian            = "󰣚"
+Redhat            = "󱄛"
+RedHatEnterprise  = "󱄛"

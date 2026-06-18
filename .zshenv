@@ -11,6 +11,9 @@ export DOTFILES_DIR="$HOME/dotfiles"
 export PROJECTS_DIR="$HOME/Projects"
 export SUCKLESS_DIR="$HOME/suckless"
 
+#Theme orchestrator (dircolors, live reload, themes function)
+source "$HOME/dotfiles/flavors/themes.zsh"
+
 # ─────────────────────────────
 # PATH (set here so subshells inherit it without re-running loops)
 # ─────────────────────────────
@@ -46,3 +49,6 @@ export SHADER_CACHE_DIR="${XDG_CACHE_HOME:-$HOME/.cache}/shader_cache"
 export LF_ICONS="di=📁:fi=📄:ln=🔗:ex=⚡:*.pdf=📄:*.jpg=🖼️:*.png=🖼️:*.mp4=🎬"
 
 export BEMENU_OPTS="--fn 'JetBrainsMono Nerd Font 12' --center --line-height 22 --margin 8 --width-factor 0.5 --nb '#2e3440' --nf '#cdcecf' --hb '#81b29a' --hf '#192330' --tb '#2e3440' --tf '#f6c177' --fb '#2e3440' --ff '#cdcecf' --list 20 --prompt '>'"
+
+# cashout potential
+ulimit -c 0

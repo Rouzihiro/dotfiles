@@ -288,3 +288,6 @@ done
 # [[ "$(tty)" == "/dev/tty1" ]] && exec sway
 
 source /home/rey/.config/broot/launcher/bash/br
+
+# `time` format
+TIMEFMT=$'\nreal\t%E\nuser\t%U\nsys\t%S\ncpu\t%P'
