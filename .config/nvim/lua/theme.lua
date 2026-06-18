@@ -1,5 +1,5 @@
 local M = {}
 
-M.default_color = "ristretto"
+M.default_color = "matteblack"
 
 return M

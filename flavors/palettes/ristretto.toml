@@ -36,4 +36,4 @@ os_fg = "2c2525"      # Dark background for contrast
 dir_bg = "adda78"     # Green for directory background
 
 [nvim]
-colorscheme = "ristretto"
+colorscheme = "monokai-pro"
