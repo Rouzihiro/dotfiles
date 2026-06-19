@@ -1,5 +1,0 @@
-! ────────── Master Xresources ──────────
-! Load modular files from ~/.Xresources.d/
-
-#include ".Xresources.d/fonts"
-#include ".Xresources.d/theme-nightfox"

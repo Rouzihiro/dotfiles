@@ -9,7 +9,7 @@ NC := \033[0m # No Color
 
 # Script directory and paths
 SCRIPT_DIR := $(shell pwd)
-INSTALL_DIR := $(SCRIPT_DIR)/.github/dots-bootstrap.sh
+INSTALL_DIR := $(SCRIPT_DIR)/bootstrap.sh
 THEME_SCRIPT := $(SCRIPT_DIR)/install-themes.sh
 
 # Additional scripts in .local/bin

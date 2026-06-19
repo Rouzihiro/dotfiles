@@ -1,0 +1,133 @@
+.TH NOICE 1
+.SH SYNOPSIS
+.B noice
+.RB [ \-ct ]
+.RB [ \-f
+.RB SAVE_FILE]
+.RB [ DIR ]
+.SH DESCRIPTION
+\fBnoice\fR is a simple and efficient file manager that gets out of your way
+as much as possible.
+.P
+\fBdir\fR defaults to the current working directory when not specified.
+Additionally, if \fBdir\fR is a relative path \fBnoice\fR
+will not go back beyond the first component of the path using standard
+navigation binds.
+.SH OPTIONS
+.TP
+.B \-c
+Enables colour mode.
+.TP
+.B \-t
+Enables tilde home.
+.TP
+.B \-f
+Use an alternate save file.
+.SH KEYBINDINGS
+.TP
+\fIk\fR or \fI[Up]\fR
+Move to the previous entry.
+.TP
+\fIj\fR or \fI[Down]\fR
+Move to the next entry.
+.TP
+\fIC-u\fR or \fI[PageUp]\fR
+Scroll up half a page.
+.TP
+\fIC-d\fR or \fI[PageDown]\fR
+Scroll down half a page.
+.TP
+\fIgg\fR or \fI[Home]\fR
+Move to the first entry.
+.TP
+\fIG\fR or \fI[End]\fR
+Move to the last entry.
+.TP
+\fIl\fR, \fI[Right]\fR or \fI[Return]\fR
+Open current file or directory.
+.TP
+\fIh\fR, \fI[Left]\fR or \fI[Backspace]\fR
+Back up one directory.
+.TP
+\fI/\fR
+Change filter.
+.TP
+\fIc\fR
+Change directory.
+.TP
+\fIg<key>\fR or \fI'<key>\fR
+Jump to directory matching <key> in the config.
+.TP
+\fIg'\fR or \fI''\fR
+Jump to directory before last used jump or cd.
+.TP
+\fInf\fR and \fInd\fR
+Make a new file or directory, creates leading directories if needed.
+.TP
+\fI[Space]\fR
+Toggle mark state on the current entry.
+.TP
+\fIy\fR
+Yank marked entries or the current if none are marked.
+.TP
+\fIp\fR
+Copy yanked entries to the current directory.
+.TP
+\fIm\fR
+Move yanked entries to the current directory.
+.TP
+\fIL\fR
+Link yanked entries to the current directory.
+.TP
+\fIr\fR
+Rename marked entries or the current if none are marked.
+.TP
+\fIDD\fR
+Delete marked entries or the current if none are marked.
+.TP
+\fIS\fR
+Toggle showing file size.
+.TP
+\fIC-h\fR or \fI.\fR
+Toggle showing hidden files (.dotfiles).
+.TP
+\fId\fR
+Toggle sorting by directories first.
+.TP
+\fIt\fR
+Toggle sorting by last modified time.
+.TP
+\fIv\fR
+Toggle sorting by version number.
+.TP
+\fIs\fR
+Toggle sorting by size.
+.TP
+\fIC-l\fR
+Force a redraw.
+.TP
+\fI!\fR
+Spawn a shell in current directory.
+.TP
+\fIz\fR
+Spawn top system monitor.
+.TP
+\fIe\fR
+Open selected entry with the EDITOR or vi.
+.TP
+\fIM\fR
+Open selected entry with mpv.
+.TP
+\fIq\fR
+Quit noice.
+.SH FILTERS
+Filters allow you to use a regex to display only the matched entries
+in the current directory view. This enables searching for a particular
+entry or entries. Filters do not stack, they are applied individually.
+To reset the filter, input an empty filter expression.
+.SH CONFIGURATION
+\fBnoice\fR is configured by editing the noice.h header and recompiling the source code.
+.P
+The \fBSHELL\fR and \fBEDITOR\fR environment variables take precedence when using the \fI!\fR, \fIr\fR, and \fIe\fR commands
+.SH AUTHORS
+Lazaros Koromilas <\fIlostd@2f30.org\fR>, Dimitris Papastamos <\fIsin@2f30.org\fR>, Nathaniel Maia <\fInatemaia10@gmail.com\fR>

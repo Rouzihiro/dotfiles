@@ -1,4 +1,0 @@
-client.focused          #1E66F5   #EFF1F5   #4C4F69         #1E66F5   #1E66F5
-client.focused_inactive #EFF1F5       #EFF1F5   #40A02B    #40A02B  #EFF1F5
-client.unfocused        #EFF1F5       #EFF1F5   #8d8fa1     #EFF1F5       #EFF1F5
-client.urgent           #D20F39    #EFF1F5   #4C4F69         #D20F39    #D20F39

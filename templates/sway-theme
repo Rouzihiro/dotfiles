@@ -1,4 +1,0 @@
-client.focused          {{accent}}   {{bg}}   {{fg}}         {{accent}}   {{accent}}
-client.focused_inactive {{bg}}       {{bg}}   {{success}}    {{success}}  {{bg}}
-client.unfocused        {{bg}}       {{bg}}   {{fg_dim}}     {{bg}}       {{bg}}
-client.urgent           {{error}}    {{bg}}   {{fg}}         {{error}}    {{error}}

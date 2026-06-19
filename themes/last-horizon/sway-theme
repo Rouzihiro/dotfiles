@@ -1,4 +1,0 @@
-client.focused          #b59790   #0c0b0c   #FAFCFB         #b59790   #b59790
-client.focused_inactive #0c0b0c       #0c0b0c   #87a9b0    #87a9b0  #0c0b0c
-client.unfocused        #0c0b0c       #0c0b0c   #9a9b9b     #0c0b0c       #0c0b0c
-client.urgent           #c38b7b    #0c0b0c   #FAFCFB         #c38b7b    #c38b7b

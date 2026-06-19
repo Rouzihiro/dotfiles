@@ -1,4 +1,0 @@
-client.focused          #33b1ff   #161616   #f2f4f8         #33b1ff   #33b1ff
-client.focused_inactive #161616       #161616   #42be65    #42be65  #161616
-client.unfocused        #161616       #161616   #9a9b9d     #161616       #161616
-client.urgent           #ee5396    #161616   #f2f4f8         #ee5396    #ee5396

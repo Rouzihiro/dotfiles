@@ -1,4 +1,0 @@
-client.focused          #268BD2   #002B36   #839496         #268BD2   #268BD2
-client.focused_inactive #002B36       #002B36   #859900    #859900  #002B36
-client.unfocused        #002B36       #002B36   #4e6a6f     #002B36       #002B36
-client.urgent           #DC322F    #002B36   #839496         #DC322F    #DC322F
