@@ -5,6 +5,7 @@ source "$_OSYX_THEME_ROOT/theme/reload.zsh"
 source "$_OSYX_THEME_ROOT/theme/select.zsh"
 source "$_OSYX_THEME_ROOT/theme/apply.zsh"
 source "$_OSYX_THEME_ROOT/theme/osyx_rofi-blur.zsh"
+source "$_OSYX_THEME_ROOT/theme/rofi-picker.zsh"
 
 _osyx_register_autoreload
 

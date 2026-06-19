@@ -60,7 +60,7 @@ bindsym $mod+Shift+r reload
 bindsym $mod+s exec rofi-screenshot
 bindsym $mod+mod1+s exec rofi-screenshot-fs
 
-bindsym $mod+t exec rofi-theme-set
+bindsym $mod+t exec "zsh -ic '_osyx_rofi_theme_picker'"
 bindsym $mod+mod1+t exec rofi-timewarrior
 bindsym $mod+Shift+t exec $term2 --app-id=runner_floating -e runner
 
