@@ -1,6 +1,5 @@
 TRAPUSR1() {
   [[ -o zle ]] && zle -I
-  _osyx_apply_dircolors "TRAPUSR1"
   clear
   [[ -o zle ]] && zle reset-prompt 2>/dev/null || true
 }
@@ -13,7 +12,6 @@ _osyx_autoreload() {
   [[ "$stamp" == "${_OSYX_LAST_RELOAD:-}" ]] && return 0
 
   _OSYX_LAST_RELOAD="$stamp"
-  _osyx_apply_dircolors "autoreload"
   clear
   [[ -o zle ]] && zle reset-prompt 2>/dev/null || true
 }
@@ -23,7 +21,31 @@ _osyx_register_autoreload() {
   precmd_functions+=(_osyx_autoreload)
 }
 
+_osyx_signal_theme_pid() {
+  local pid="$1"
+
+  [[ "$pid" == <-> ]] || return 0
+  [[ "$pid" == "$$" ]] && return 0
+
+  kill -0 "$pid" 2>/dev/null || return 0
+  kill -USR1 "$pid" 2>/dev/null || true
+}
+
+_osyx_signal_idle_zsh() {
+  command -v ps >/dev/null 2>&1 || return 0
+
+  ps -u "$USER" -o pid= -o pgid= -o tpgid= -o tty= -o comm= 2>/dev/null \
+    | while read -r pid pgid tpgid tty comm; do
+        [[ "$tty" != "?" ]] || continue
+        [[ "$pgid" == "$tpgid" ]] || continue
+        [[ "$comm" == "zsh" || "$comm" == "-zsh" ]] || continue
+        _osyx_signal_theme_pid "$pid"
+      done
+}
+
 _osyx_reload_all() {
   mkdir -p "${_OSYX_RELOAD_FILE:h}"
   print -r -- "$(date +%s%N)" >| "$_OSYX_RELOAD_FILE"
+
+  _osyx_signal_idle_zsh
 }

@@ -50,6 +50,15 @@ _osyx_choose_theme() {
     return $?
   fi
 
+  if [[ -n "$mode" ]]; then
+    if [[ -f "$_OSYX_PALETTES_DIR/$mode.toml" ]]; then
+      print -r -- "$mode"
+      return 0
+    fi
+    print -ru2 -- "theme not found: $mode"
+    return 1
+  fi
+
   if ! command -v fzf >/dev/null 2>&1; then
     print -ru2 -- "fzf not found."
     return 1
