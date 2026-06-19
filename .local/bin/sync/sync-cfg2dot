@@ -1,0 +1,187 @@
+#!/usr/bin/env zsh
+# sync-config-to-dotfiles.zsh
+#
+# Lets you pick files from ~/.config via plain fzf (multi-select), then
+# copies the selected files into ~/dotfiles/.config, preserving relative paths.
+# Only shows files that differ from (or are new compared to) dotfiles.
+# If a target folder doesn't exist yet, asks whether to create it.
+# Remembers "no" answers for the session so it won't re-ask for the same folder.
+
+SOURCE_ROOT="$HOME/.config"
+TARGET_ROOT="$HOME/dotfiles/.config"
+
+# folders under ~/.config to exclude entirely from the picker
+EXCLUDE_DIRS=(
+  "dconf"
+  "tinymist"
+  "waypaper"
+  "zorro"
+  "glib-2.0"
+  "enchant"
+  "glow"
+  "noctalia"
+  "transmission"
+  "xdg-desktop-portal"
+  "kritadisplayrc"
+  "bat"
+  "go"
+  "swappy"
+  "typlite"
+  "xdg-terminal-exec"
+  "kritarc"
+  "BraveSoftware"
+  "evolution"
+  "golazo"
+  "libfm"
+  "xfce4"
+  "kwalletrc"
+  "eza"
+  "libreoffice"
+  "procps"
+  "xm1"
+  "pulse"
+  "xournalpp"
+  "pavucontrol.ini"
+  "matplotlib"
+  "pywal"
+  "QtProject.conf"
+  "qalculate"
+  "systemd"
+  "voxtype"
+  "coc"
+  "qBittorrent"
+  "Thunar"
+  "colors"
+  "geary"
+  "ibus"
+  "ripgrep"
+)
+
+if [[ ! -d "$TARGET_ROOT" ]]; then
+  print -ru2 -- "target dotfiles dir not found: $TARGET_ROOT"
+  exit 1
+fi
+
+if ! command -v fzf >/dev/null 2>&1; then
+  print -ru2 -- "fzf not found"
+  exit 1
+fi
+
+# build -path exclusion args for find
+typeset -a exclude_args
+for ex in "${EXCLUDE_DIRS[@]}"; do
+  exclude_args+=(-path "$SOURCE_ROOT/$ex" -prune -o)
+done
+
+# list all files under ~/.config (excluding noise + excluded dirs), as relative paths
+typeset -a all_files
+all_files=("${(@f)$(
+  find "$SOURCE_ROOT" -mindepth 1 \
+    "${exclude_args[@]}" \
+    -path '*/.git/*'         -prune -o \
+    -path '*/node_modules/*' -prune -o \
+    -type f -print \
+  | sed "s|^$SOURCE_ROOT/||"
+)}")
+
+if (( ${#all_files[@]} == 0 )); then
+  print -r -- "No files found under $SOURCE_ROOT"
+  exit 0
+fi
+
+# filter down to only files that are new or differ from dotfiles
+typeset -a diff_files
+for rel in "${all_files[@]}"; do
+  src="$SOURCE_ROOT/$rel"
+  tgt="$TARGET_ROOT/$rel"
+
+  if [[ ! -f "$tgt" ]]; then
+    diff_files+=("$rel")
+    continue
+  fi
+
+  # mtime quick filter, then content compare to avoid false positives
+  if [[ "$src" -nt "$tgt" ]]; then
+    if ! cmp -s "$src" "$tgt"; then
+      diff_files+=("$rel")
+    fi
+  fi
+done
+
+if (( ${#diff_files[@]} == 0 )); then
+  print -r -- "Everything already in sync."
+  exit 0
+fi
+
+# multi-select: Tab to mark, Enter to confirm
+typeset -a selected
+selected=("${(@f)$(
+  printf '%s\n' "${diff_files[@]}" \
+    | fzf --multi --height=80% --layout=reverse \
+          --prompt="select files to sync > " \
+          --header="TAB to select, ENTER to confirm  (only changed/new files shown)"
+)}")
+
+if (( ${#selected[@]} == 0 )); then
+  print -r -- "Nothing selected."
+  exit 0
+fi
+
+typeset -a to_copy
+typeset -A declined_dirs   # remembers folders the user said "no" to creating
+
+for rel in "${selected[@]}"; do
+  src="$SOURCE_ROOT/$rel"
+  tgt="$TARGET_ROOT/$rel"
+  tgt_dir="${tgt:h}"
+
+  if [[ -d "$tgt_dir" ]]; then
+    to_copy+=("$rel")
+    continue
+  fi
+
+  if [[ -n "${declined_dirs[$tgt_dir]:-}" ]]; then
+    print -r -- "skipping (folder declined): $rel"
+    continue
+  fi
+
+  print -rn -- "Folder doesn't exist in dotfiles: ${tgt_dir#$TARGET_ROOT/}. Create it? [y/N] "
+  read -r answer
+
+  if [[ "$answer" == "y" || "$answer" == "Y" ]]; then
+    mkdir -p "$tgt_dir"
+    to_copy+=("$rel")
+  else
+    declined_dirs[$tgt_dir]=1
+    print -r -- "skipping: $rel"
+  fi
+done
+
+if (( ${#to_copy[@]} == 0 )); then
+  print -r -- "Nothing to copy."
+  exit 0
+fi
+
+print -r -- ""
+print -r -- "The following files will be copied to dotfiles:"
+print -r -- ""
+for f in "${to_copy[@]}"; do
+  print -r -- "  $f"
+done
+print -r -- ""
+print -r -- "${#to_copy[@]} file(s) total."
+print -rn -- "Proceed? [y/N] "
+read -r confirm
+
+if [[ "$confirm" != "y" && "$confirm" != "Y" ]]; then
+  print -r -- "Aborted."
+  exit 0
+fi
+
+for f in "${to_copy[@]}"; do
+  src="$SOURCE_ROOT/$f"
+  tgt="$TARGET_ROOT/$f"
+  cp -- "$src" "$tgt" && print -r -- "copied: $f"
+done
+
+print -r -- "Done."

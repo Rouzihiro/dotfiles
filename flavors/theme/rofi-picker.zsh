@@ -31,6 +31,6 @@ _osyx_rofi_theme_picker() {
 
   rofi -show theme \
     -modi "theme:$_OSYX_THEME_ROOT/theme/rofi-picker-mode.zsh" \
-    -theme ~/.config/rofi/grid-small.rasi \
+    -theme ~/.config/rofi/grid.rasi \
     -theme-str 'element-icon { size: 6em; }'
 }
