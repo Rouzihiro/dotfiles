@@ -7,7 +7,7 @@ if [ ! -d Install-Logs ]; then
 fi
 
 # Log file
-LOG="Install-Logs/install.log"
+LOG="$HOME/.logs/Global.txt"
 
 # Set some colors for output messages
 OK="$(tput setaf 2)[OK]$(tput sgr0)"

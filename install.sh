@@ -132,7 +132,7 @@ ask_yn() {
 # ───────────────────────────────────────────────
 
 install_config() {
-  local src_root="$DOTFILES_ROOT/.config"
+  local src_root="$DOTFILES_ROOT/config/.config"
   local tgt_root="$HOME/.config"
 
   if [[ ! -d "$src_root" ]]; then
@@ -200,7 +200,7 @@ install_flavors() {
 # ───────────────────────────────────────────────
 
 install_local_bin() {
-  local src_root="$DOTFILES_ROOT/.local/bin"
+  local src_root="$DOTFILES_ROOT/config/.local/bin"
   local tgt_root="$HOME/.local/bin"
 
   if [[ ! -d "$src_root" ]]; then
@@ -243,7 +243,7 @@ install_local_bin() {
 
 install_shell_file() {
   local name="$1"
-  local src="$DOTFILES_ROOT/$name"
+  local src="$DOTFILES_ROOT/config/$name"
   local tgt="$HOME/$name"
 
   if [[ ! -f "$src" ]]; then
