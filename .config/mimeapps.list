@@ -66,5 +66,5 @@ application/schema+json=nvim.desktop;
 text/x-csrc=nvim.desktop;
 text/css=nvim.desktop;
 image/png=imv-dir.desktop;feh.desktop;
-image/jpeg=imv-dir.desktop;feh.desktop;
+image/jpeg=imagemagick-display.desktop;imv-dir.desktop;feh.desktop;
 application/pdf=org.gnome.Evince.desktop;mupdf-gl.desktop;mupdf.desktop;org.pwmt.zathura-pdf-mupdf.desktop;org.pwmt.zathura.desktop;

@@ -4,6 +4,7 @@
 # Lets you pick files from ~/.config via plain fzf (multi-select), then
 # copies the selected files into ~/dotfiles/.config, preserving relative paths.
 # Only shows files that differ from (or are new compared to) dotfiles.
+# Shows a live delta diff preview on the right panel.
 # If a target folder doesn't exist yet, asks whether to create it.
 # Remembers "no" answers for the session so it won't re-ask for the same folder.
 
@@ -57,6 +58,32 @@ EXCLUDE_DIRS=(
   "ripgrep"
 )
 
+# specific files (relative to ~/.config) to exclude — typically theme-generated
+# output that's regenerated on every theme switch, no need to sync to dotfiles
+EXCLUDE_FILES=(
+  "starship.toml"
+  "alacritty/theme.toml"
+  "btop/themes/current.theme"
+  "foot/current-theme.ini"
+  "i3blocks/config"
+  "kitty/colors.conf"
+  "lazygit/config.yml"
+  "nvim/lua/theme.lua"
+  "sway/config.d/bar"
+  "sway/config.d/theme"
+  "swaync/style.css"
+  "tmux/tmux-colors.conf"
+  "yazi/yazi-2.toml"
+  "yazi/theme.toml"
+  "swayosd/colors.css"
+  "mako/config"
+  "waybar/colors.css"
+  "rofi/colors.rasi"
+  "rofi/launcher.rasi"
+  "broot/skins/current.toml"
+  "evince/print-settings"
+)
+
 if [[ ! -d "$TARGET_ROOT" ]]; then
   print -ru2 -- "target dotfiles dir not found: $TARGET_ROOT"
   exit 1
@@ -67,7 +94,7 @@ if ! command -v fzf >/dev/null 2>&1; then
   exit 1
 fi
 
-# build -path exclusion args for find
+# build -path exclusion args for find (dirs)
 typeset -a exclude_args
 for ex in "${EXCLUDE_DIRS[@]}"; do
   exclude_args+=(-path "$SOURCE_ROOT/$ex" -prune -o)
@@ -89,9 +116,26 @@ if (( ${#all_files[@]} == 0 )); then
   exit 0
 fi
 
+# drop individually excluded files
+typeset -A exclude_files_set
+for ex in "${EXCLUDE_FILES[@]}"; do
+  exclude_files_set[$ex]=1
+done
+
+typeset -a filtered_files
+for rel in "${all_files[@]}"; do
+  [[ -n "${exclude_files_set[$rel]:-}" ]] && continue
+  filtered_files+=("$rel")
+done
+
+if (( ${#filtered_files[@]} == 0 )); then
+  print -r -- "No files left after exclusions."
+  exit 0
+fi
+
 # filter down to only files that are new or differ from dotfiles
 typeset -a diff_files
-for rel in "${all_files[@]}"; do
+for rel in "${filtered_files[@]}"; do
   src="$SOURCE_ROOT/$rel"
   tgt="$TARGET_ROOT/$rel"
 
@@ -100,7 +144,6 @@ for rel in "${all_files[@]}"; do
     continue
   fi
 
-  # mtime quick filter, then content compare to avoid false positives
   if [[ "$src" -nt "$tgt" ]]; then
     if ! cmp -s "$src" "$tgt"; then
       diff_files+=("$rel")
@@ -113,13 +156,29 @@ if (( ${#diff_files[@]} == 0 )); then
   exit 0
 fi
 
+# preview command: diff dotfiles version against live config version via delta
+PREVIEW_CMD='
+  rel={}
+  src="'"$SOURCE_ROOT"'/$rel"
+  tgt="'"$TARGET_ROOT"'/$rel"
+  if [[ -f "$tgt" ]]; then
+    diff -u "$tgt" "$src" | delta --paging=never
+  else
+    echo "NEW FILE (not yet in dotfiles)"
+    echo ""
+    diff -u /dev/null "$src" | delta --paging=never
+  fi
+'
+
 # multi-select: Tab to mark, Enter to confirm
 typeset -a selected
 selected=("${(@f)$(
   printf '%s\n' "${diff_files[@]}" \
-    | fzf --multi --height=80% --layout=reverse \
+    | fzf --multi --height=90% --layout=reverse \
           --prompt="select files to sync > " \
-          --header="TAB to select, ENTER to confirm  (only changed/new files shown)"
+          --header="TAB to select, ENTER to confirm  (only changed/new files shown)" \
+          --preview="$PREVIEW_CMD" \
+          --preview-window='right:60%,border-left'
 )}")
 
 if (( ${#selected[@]} == 0 )); then
