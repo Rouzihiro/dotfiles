@@ -18,4 +18,4 @@ unset DXVK_ASYNC
 export PROTON_NO_ESYNC=1
 export PROTON_NO_FSYNC=1
 
-umu-run "$HOME/Games/Ascension/resources/epoch-live/Ascension.exe"
+umu-run "$HOME/Games/WoW/Wow.exe"

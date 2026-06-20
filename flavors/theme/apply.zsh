@@ -165,7 +165,7 @@ _osyx_apply_theme() {
   _osyx_reload_kitty &!
   _osyx_reload_hyprland &!
   _osyx_reload_sway &!
-  _osyx_reload_swaync &!
+  # _osyx_reload_swaync &!
   _osyx_reload_mako &!
   _osyx_apply_wallpaper "$theme" &!
   _osyx_rofi_blur "$theme" &!

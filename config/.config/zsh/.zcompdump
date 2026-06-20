@@ -1,4 +1,4 @@
-#files: 1407	version: 5.9
+#files: 1412	version: 5.9
 
 _comps=(
 '-' '_precommand'
@@ -31,7 +31,6 @@ _comps=(
 'afew' '_afew'
 'age' '_age'
 'age-keygen' '_age'
-'alacritty' '_alacritty'
 'ali' '_mh'
 'alias' '_alias'
 'amaya' '_webbrowser'
@@ -499,6 +498,7 @@ _comps=(
 'fixwwps' '_psutils'
 'flac' '_flac'
 'flameshot' '_flameshot'
+'flatpak' '_flatpak'
 'flex' '_flex'
 'flex++' '_flex'
 'flipdiff' '_patchutils'
@@ -796,7 +796,7 @@ _comps=(
 'infocmp' '_terminals'
 'initctl' '_initctl'
 'initdb' '_postgresql'
-'insmod' '_modutils'
+'insmod' '_insmod'
 'install' '_install'
 'install-info' '_texinfo'
 'installpkg' '_pkgtool'
@@ -938,7 +938,7 @@ _comps=(
 'lslogins' '_lslogins'
 'lslv' '_lslv'
 'lsmem' '_lsmem'
-'lsmod' '_modutils'
+'lsmod' '_lsmod'
 'lsns' '_lsns'
 'lsof' '_lsof'
 'lspv' '_lspv'
@@ -1408,7 +1408,7 @@ _comps=(
 'rmlint' '_rmlint'
 'rmlint.sh' '_rmlint'
 'rmm' '_mh'
-'rmmod' '_modutils'
+'rmmod' '_rmmod'
 'route' '_route'
 'rpm' '_rpm'
 'rpmbuild' '_rpm'
@@ -1597,8 +1597,6 @@ _comps=(
 'swayidle' '_swayidle'
 'swaylock' '_swaylock'
 'swaymsg' '_swaymsg'
-'swaync' '_swaync'
-'swaync-client' '_swaync-client'
 'swift' '_swift'
 'swiftc' '_swift'
 'sw_vers' '_sw_vers'
@@ -1618,6 +1616,8 @@ _comps=(
 'systemd-cgtop' '_systemd'
 'systemd-delta' '_systemd-delta'
 'systemd-detect-virt' '_systemd'
+'systemd-hwdb' '_systemd-hwdb'
+'systemd-id128' '_systemd-id128'
 'systemd-inhibit' '_systemd-inhibit'
 'systemd-machine-id-setup' '_systemd'
 'systemd-notify' '_systemd'
@@ -1767,6 +1767,7 @@ _comps=(
 'usbconfig' '_usbconfig'
 'uscan' '_uscan'
 'useradd' '_user_admin'
+'userdbctl' '_userdbctl'
 'userdel' '_users'
 'usermod' '_user_admin'
 'uuidd' '_uuidd'
@@ -1786,6 +1787,8 @@ _comps=(
 '-value-,CMAKE_GENERATOR,-default-' '_cmake'
 '-value-,CPPFLAGS,-default-' '_gcc'
 '-value-,CXXFLAGS,-default-' '_gcc'
+'-value-,DBUS_SESSION_BUS_ADDRESS,-default-' '_sd_bus_address'
+'-value-,DBUS_SYSTEM_BUS_ADDRESS,-default-' '_sd_bus_address'
 '-value-,-default-,-command-' '_zargs'
 '-value-,-default-,-default-' '_value'
 '-value-,DISPLAY,-default-' '_x_display'
@@ -2180,20 +2183,21 @@ autoload -Uz _afew _age _android _archlinux-java _artisan \
             _uuidd _uuidgen _uuidparse _vipw _virtualbox \
             _vnstat _wdctl _wemux _wg-quick _xsel \
             _yamllint _yarn _zcash-cli _zinit _zramctl \
-            _alacritty _bat _bluetoothctl _bootctl _busctl \
-            _bwrap _cargo _coredumpctl _curl _delta \
-            _dunst _dunstctl _dunstify _eza _fastfetch \
-            _fd _firewalld _flameshot _foot _footclient \
+            _bat _bluetoothctl _bootctl _busctl _bwrap \
+            _cargo _coredumpctl _curl _delta _dunst \
+            _dunstctl _dunstify _eza _fastfetch _fd \
+            _firewalld _flameshot _flatpak _foot _footclient \
             _fuzzel _gum _hg _highlight _hostnamectl \
-            _hyprctl _hyprpm _img2sixel _journalctl _kernel-install \
-            _libinput _localectl _loginctl _mako _makoctl \
-            _mpv _networkctl _oomctl _p11-kit _playerctl \
-            _powerprofilesctl _pulseaudio _resolvectl _rg _run0 \
-            _rustup _sd_hosts_or_user_at_host _sd_machines _sd_outputmodes _sd_unit_files \
-            _sway _swayidle _swaylock _swaymsg _swaync \
-            _swaync-client _swww _systemctl _systemd _systemd-analyze \
-            _systemd-delta _systemd-inhibit _systemd-path _systemd-run _systemd-tmpfiles \
-            _timedatectl _trust _udevadm _udisks2 _upower \
+            _hyprctl _hyprpm _img2sixel _insmod _journalctl \
+            _kernel-install _libinput _localectl _loginctl _lsmod \
+            _mako _makoctl _mpv _networkctl _oomctl \
+            _p11-kit _playerctl _powerprofilesctl _pulseaudio _resolvectl \
+            _rg _rmmod _run0 _rustup _sd_bus_address \
+            _sd_hosts_or_user_at_host _sd_machines _sd_outputmodes _sd_unit_files _sway \
+            _swayidle _swaylock _swaymsg _swww _systemctl \
+            _systemd _systemd-analyze _systemd-delta _systemd-hwdb _systemd-id128 \
+            _systemd-inhibit _systemd-path _systemd-run _systemd-tmpfiles _timedatectl \
+            _trust _udevadm _udisks2 _upower _userdbctl \
             _varlinkctl _vifm _wl-copy _wl-paste _wpctl \
             _ya _yazi _yt-dlp _zoxide _a2ps \
             _a2utils _aap _abcde _absolute_command_paths _ack \
