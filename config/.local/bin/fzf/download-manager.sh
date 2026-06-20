@@ -31,14 +31,28 @@ log() { echo "[$(date '+%Y-%m-%d %H:%M:%S')] $*" >> "$LOG_FILE"; }
 notify() { notify-send --expire-time=5000 "$1" "$2" 2>/dev/null || true; }
 
 # ── URL validation ────────────────────────────────────────────────────────────
-# Strict: must be http(s), must have a dot in the host, min length 12
+# Flexible: must be http(s), has hostname, min length 8
 is_valid_url() {
     local url="$1"
-    [[ "$url" =~ ^https?://[a-zA-Z0-9._-]+\.[a-zA-Z]{2,}(/|$) ]] || return 1
-    # Reject clipboard junk: file paths, localhost, IPs-only, one-word blobs
-    [[ "$url" =~ ^https?://localhost ]] && return 1
-    [[ "$url" =~ ^https?://127\. ]]    && return 1
-    [[ ${#url} -lt 12 ]]               && return 1
+    # Basic scheme check
+    [[ "$url" =~ ^https?:// ]] || return 1
+    
+    # Extract hostname (remove protocol, path, query, port)
+    local hostname
+    hostname=$(echo "$url" | sed -E 's#^https?://([^/:]+).*$#\1#')
+    
+    # Must have a dot in hostname (or be localhost/IP - reject those)
+    [[ "$hostname" == "localhost" ]] && return 1
+    [[ "$hostname" =~ ^127\.[0-9]+\.[0-9]+\.[0-9]+$ ]] && return 1
+    
+    # Reject if hostname is just one word without dots (but allow if it has ports)
+    if [[ ! "$hostname" =~ \. ]]; then
+        return 1
+    fi
+    
+    # Minimum reasonable length
+    [[ ${#url} -lt 8 ]] && return 1
+    
     return 0
 }
 

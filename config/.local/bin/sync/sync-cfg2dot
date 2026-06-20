@@ -1,17 +1,21 @@
 #!/usr/bin/env zsh
 # sync-config-to-dotfiles.zsh
 #
-# Lets you pick files from ~/.config via plain fzf (multi-select), then
-# copies the selected files into ~/dotfiles/.config, preserving relative paths.
-# Only shows files that differ from (or are new compared to) dotfiles.
-# Shows a live delta diff preview on the right panel.
-# If a target folder doesn't exist yet, asks whether to create it.
-# Remembers "no" answers for the session so it won't re-ask for the same folder.
+# Syncs selected changed files from ~/.config into ~/dotfiles/config/.config.
+# Uses fzf multi-select with live delta diff preview.
+#
+# Also syncs ~/.local/bin subdirectories into:
+# ~/dotfiles/config/.local/bin
+#
+# Root-level files in ~/.local/bin are ignored intentionally.
+# This avoids syncing manually built binaries.
 
 SOURCE_ROOT="$HOME/.config"
-TARGET_ROOT="$HOME/dotfiles/.config"
+TARGET_ROOT="$HOME/dotfiles/config/.config"
 
-# folders under ~/.config to exclude entirely from the picker
+BIN_SOURCE="$HOME/.local/bin"
+BIN_TARGET="$HOME/dotfiles/config/.local/bin"
+
 EXCLUDE_DIRS=(
   "dconf"
   "tinymist"
@@ -44,7 +48,7 @@ EXCLUDE_DIRS=(
   "xournalpp"
   "pavucontrol.ini"
   "matplotlib"
-	"menus"
+  "menus"
   "pywal"
   "QtProject.conf"
   "qalculate"
@@ -59,84 +63,77 @@ EXCLUDE_DIRS=(
   "ripgrep"
 )
 
-# specific files (relative to ~/.config) to exclude — typically theme-generated
-# output that's regenerated on every theme switch, no need to sync to dotfiles
 EXCLUDE_FILES=(
-  "starship.toml"
   "alacritty/theme.toml"
+  "broot/skins/current.toml"
   "btop/themes/current.theme"
+  "evince/print-settings"
   "foot/current-theme.ini"
+  "hypr/theme.conf"
   "i3blocks/config"
   "kitty/colors.conf"
   "lazygit/config.yml"
+  "mako/config"
   "nvim/lua/theme.lua"
+  "rofi/colors.rasi"
+  "rofi/launcher.rasi"
+  "starship.toml"
   "sway/config.d/bar"
   "sway/config.d/theme"
   "swaync/style.css"
-  "tmux/tmux-colors.conf"
-  "yazi/yazi-2.toml"
-  "yazi/theme.toml"
   "swayosd/colors.css"
-  "mako/config"
+  "tmux/tmux-colors.conf"
   "waybar/colors.css"
-  "rofi/colors.rasi"
-  "rofi/launcher.rasi"
-  "broot/skins/current.toml"
-  "evince/print-settings"
+  "yazi/theme.toml"
+  "yazi/yazi-2.toml"
 )
 
-if [[ ! -d "$TARGET_ROOT" ]]; then
-  print -ru2 -- "target dotfiles dir not found: $TARGET_ROOT"
+[[ -d "$TARGET_ROOT" ]] || {
+  print -ru2 -- "Missing target: $TARGET_ROOT"
   exit 1
-fi
+}
 
-if ! command -v fzf >/dev/null 2>&1; then
+command -v fzf >/dev/null || {
   print -ru2 -- "fzf not found"
   exit 1
-fi
+}
 
-# build -path exclusion args for find (dirs)
+# ─────────────────────────────────────────────
+# CONFIG SYNC
+# ─────────────────────────────────────────────
+
 typeset -a exclude_args
+
 for ex in "${EXCLUDE_DIRS[@]}"; do
-  exclude_args+=(-path "$SOURCE_ROOT/$ex" -prune -o)
+  exclude_args+=(
+    -path "$SOURCE_ROOT/$ex"
+    -prune
+    -o
+  )
 done
 
-# list all files under ~/.config (excluding noise + excluded dirs), as relative paths
 typeset -a all_files
+
 all_files=("${(@f)$(
   find "$SOURCE_ROOT" -mindepth 1 \
     "${exclude_args[@]}" \
-    -path '*/.git/*'         -prune -o \
+    -path '*/.git/*' -prune -o \
     -path '*/node_modules/*' -prune -o \
-    -type f -print \
-  | sed "s|^$SOURCE_ROOT/||"
+    -type f -print |
+    sed "s|^$SOURCE_ROOT/||"
 )}")
 
-if (( ${#all_files[@]} == 0 )); then
-  print -r -- "No files found under $SOURCE_ROOT"
-  exit 0
-fi
+typeset -A excluded
 
-# drop individually excluded files
-typeset -A exclude_files_set
 for ex in "${EXCLUDE_FILES[@]}"; do
-  exclude_files_set[$ex]=1
+  excluded[$ex]=1
 done
 
-typeset -a filtered_files
-for rel in "${all_files[@]}"; do
-  [[ -n "${exclude_files_set[$rel]:-}" ]] && continue
-  filtered_files+=("$rel")
-done
-
-if (( ${#filtered_files[@]} == 0 )); then
-  print -r -- "No files left after exclusions."
-  exit 0
-fi
-
-# filter down to only files that are new or differ from dotfiles
 typeset -a diff_files
-for rel in "${filtered_files[@]}"; do
+
+for rel in "${all_files[@]}"; do
+  [[ -n "${excluded[$rel]:-}" ]] && continue
+
   src="$SOURCE_ROOT/$rel"
   tgt="$TARGET_ROOT/$rel"
 
@@ -145,103 +142,142 @@ for rel in "${filtered_files[@]}"; do
     continue
   fi
 
-  if [[ "$src" -nt "$tgt" ]]; then
-    if ! cmp -s "$src" "$tgt"; then
-      diff_files+=("$rel")
-    fi
+  if ! cmp -s "$src" "$tgt"; then
+    diff_files+=("$rel")
   fi
 done
 
-if (( ${#diff_files[@]} == 0 )); then
-  print -r -- "Everything already in sync."
-  exit 0
-fi
+if (( ${#diff_files[@]} > 0 )); then
+  PREVIEW_CMD='
+rel={}
+src="'"$SOURCE_ROOT"'/$rel"
+tgt="'"$TARGET_ROOT"'/$rel"
 
-# preview command: diff dotfiles version against live config version via delta
-PREVIEW_CMD='
-  rel={}
-  src="'"$SOURCE_ROOT"'/$rel"
-  tgt="'"$TARGET_ROOT"'/$rel"
-  if [[ -f "$tgt" ]]; then
-    diff -u "$tgt" "$src" | delta --paging=never
-  else
-    echo "NEW FILE (not yet in dotfiles)"
-    echo ""
-    diff -u /dev/null "$src" | delta --paging=never
-  fi
+if [[ -f "$tgt" ]]; then
+  diff -u "$tgt" "$src" | delta --paging=never
+else
+  echo "NEW FILE"
+  echo
+  diff -u /dev/null "$src" | delta --paging=never
+fi
 '
 
-# multi-select: Tab to mark, Enter to confirm
-typeset -a selected
-selected=("${(@f)$(
-  printf '%s\n' "${diff_files[@]}" \
-    | fzf --multi --height=90% --layout=reverse \
-          --prompt="select files to sync > " \
-          --header="TAB to select, ENTER to confirm  (only changed/new files shown)" \
-          --preview="$PREVIEW_CMD" \
-          --preview-window='right:60%,border-left'
-)}")
+  typeset -a selected
 
-if (( ${#selected[@]} == 0 )); then
-  print -r -- "Nothing selected."
-  exit 0
-fi
+  selected=("${(@f)$(
+    printf "%s\n" "${diff_files[@]}" |
+    fzf \
+      --multi \
+      --height=90% \
+      --layout=reverse \
+      --prompt="select config files > " \
+      --header="TAB select / ENTER confirm" \
+      --preview="$PREVIEW_CMD" \
+      --preview-window='right:60%,border-left'
+  )}")
 
-typeset -a to_copy
-typeset -A declined_dirs   # remembers folders the user said "no" to creating
+  if (( ${#selected[@]} > 0 )); then
+    typeset -A declined_dirs
+    typeset -a to_copy
 
-for rel in "${selected[@]}"; do
-  src="$SOURCE_ROOT/$rel"
-  tgt="$TARGET_ROOT/$rel"
-  tgt_dir="${tgt:h}"
+    for rel in "${selected[@]}"; do
+      src="$SOURCE_ROOT/$rel"
+      tgt="$TARGET_ROOT/$rel"
+      dir="${tgt:h}"
 
-  if [[ -d "$tgt_dir" ]]; then
-    to_copy+=("$rel")
-    continue
-  fi
+      if [[ ! -d "$dir" ]]; then
+        if [[ -n "${declined_dirs[$dir]:-}" ]]; then
+          continue
+        fi
 
-  if [[ -n "${declined_dirs[$tgt_dir]:-}" ]]; then
-    print -r -- "skipping (folder declined): $rel"
-    continue
-  fi
+        print -rn -- "Create ${dir#$TARGET_ROOT/}? [y/N] "
+        read -r ans
 
-  print -rn -- "Folder doesn't exist in dotfiles: ${tgt_dir#$TARGET_ROOT/}. Create it? [y/N] "
-  read -r answer
+        if [[ "$ans" =~ ^[Yy]$ ]]; then
+          mkdir -p "$dir"
+        else
+          declined_dirs[$dir]=1
+          continue
+        fi
+      fi
 
-  if [[ "$answer" == "y" || "$answer" == "Y" ]]; then
-    mkdir -p "$tgt_dir"
-    to_copy+=("$rel")
+      to_copy+=("$rel")
+    done
+
+    if (( ${#to_copy[@]} > 0 )); then
+      print -r -- ""
+      print -r -- "Files to copy:"
+      print -r -- ""
+
+      for f in "${to_copy[@]}"; do
+        print -r -- "  $f"
+      done
+
+      print -r -- ""
+      print -rn -- "Proceed? [y/N] "
+      read -r confirm
+
+      if [[ "$confirm" =~ ^[Yy]$ ]]; then
+        for f in "${to_copy[@]}"; do
+          cp -- "$SOURCE_ROOT/$f" "$TARGET_ROOT/$f"
+          print -r -- "copied: $f"
+        done
+        print -r -- "Config sync done."
+      else
+        print -r -- "Config sync aborted."
+      fi
+    else
+      print -r -- "Nothing selected."
+    fi
   else
-    declined_dirs[$tgt_dir]=1
-    print -r -- "skipping: $rel"
+    print -r -- "Config files already in sync."
   fi
-done
+fi
 
-if (( ${#to_copy[@]} == 0 )); then
-  print -r -- "Nothing to copy."
+# ─────────────────────────────────────────────
+# LOCAL BIN SYNC
+# ─────────────────────────────────────────────
+
+print -r -- ""
+print -r -- "━━━ Syncing ~/.local/bin subdirectories ━━━"
+
+if [[ ! -d "$BIN_SOURCE" ]]; then
+  print -r -- "Missing source: $BIN_SOURCE"
   exit 0
 fi
 
-print -r -- ""
-print -r -- "The following files will be copied to dotfiles:"
-print -r -- ""
-for f in "${to_copy[@]}"; do
-  print -r -- "  $f"
-done
-print -r -- ""
-print -r -- "${#to_copy[@]} file(s) total."
-print -rn -- "Proceed? [y/N] "
-read -r confirm
+mkdir -p "$BIN_TARGET"
 
-if [[ "$confirm" != "y" && "$confirm" != "Y" ]]; then
-  print -r -- "Aborted."
-  exit 0
+typeset -a bin_dirs
+
+for dir in "$BIN_SOURCE"/*(/N); do
+  bin_dirs+=("${dir:t}")
+done
+
+if (( ${#bin_dirs[@]} == 0 )); then
+  print -r -- "No ~/.local/bin subdirectories found."
+else
+  print -r -- ""
+  print -r -- "Subdirectories to sync:"
+  print -r -- ""
+
+  for d in "${bin_dirs[@]}"; do
+    print -r -- "  $d/"
+  done
+
+  print -r -- ""
+  print -rn -- "Proceed? [y/N] "
+  read -r bin_confirm
+
+  if [[ "$bin_confirm" =~ ^[Yy]$ ]]; then
+    for dir in "$BIN_SOURCE"/*(/N); do
+      name="${dir:t}"
+      mkdir -p "$BIN_TARGET/$name"
+      rsync -a "$dir/" "$BIN_TARGET/$name/"
+      print -r -- "synced: $name/"
+    done
+    print -r -- "Bin sync done."
+  else
+    print -r -- "Bin sync aborted."
+  fi
 fi
-
-for f in "${to_copy[@]}"; do
-  src="$SOURCE_ROOT/$f"
-  tgt="$TARGET_ROOT/$f"
-  cp -- "$src" "$tgt" && print -r -- "copied: $f"
-done
-
-print -r -- "Done."
