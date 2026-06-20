@@ -34,6 +34,10 @@ empty_symbol = "󰂎 "
 format = '[[$symbol$percentage ](fg:#{{ palette_fg }} bg:#{{ palette_fg_dim }})]($style)'
 
 [[battery.display]]
+threshold = 100
+style = "bg:#{{ palette_success }} fg:#{{ palette_bg }}"
+
+[[battery.display]]
 threshold = 80
 style = "bg:#{{ palette_success }} fg:#{{ palette_bg }}"
 
