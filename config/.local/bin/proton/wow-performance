@@ -28,4 +28,4 @@ export WINEDLLOVERRIDES="mscoree,mshtml="
 echo "🎮 Launching WoW with performance optimizations..."
 
 # Use OpenGL backend for better compatibility
-wine "$HOME/Games/Frostmourne/Wow.exe" -opengl -windowed $@
+wine "$HOME/Games/WoW/Wow.exe" -opengl -windowed $@
