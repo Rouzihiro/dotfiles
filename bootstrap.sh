@@ -14,7 +14,7 @@ detect_distro() {
             arch|endeavouros|garuda|manjaro)
                 echo "arch"
                 ;;
-            fedora|risi|nobara|ultramarine)
+            fedora|fedora-asahi-remix|risi|nobara|ultramarine)
                 echo "fedora"
                 ;;
             *)
@@ -101,21 +101,21 @@ dispatch_installer() {
     local target="$1"
     case "$target" in
         arch)
-            echo "Launching arch/install-arch.sh ..."
+            echo "Launching install-arch.sh ..."
             sleep 1
-            if [ -f "$HOME/dotfiles/arch/install-arch.sh" ]; then
-                bash "$HOME/dotfiles/arch/install-arch.sh"
+            if [ -f "$HOME/dotfiles/install/arch/install-arch.sh" ]; then
+                bash "$HOME/dotfiles/install/arch/install-arch.sh"
             else
                 echo "arch/install-arch.sh not found."
             fi
             ;;
         fedora)
-            echo "Launching fedora/install-fedora.sh ..."
+            echo "Launching install-fedora.sh ..."
             sleep 1
-            if [ -f "$HOME/dotfiles/fedora/install-fedora.sh" ]; then
-                bash "$HOME/dotfiles/fedora/install-fedora.sh"
+            if [ -f "$HOME/dotfiles/install/fedora/install-fedora.sh" ]; then
+                bash "$HOME/dotfiles/install/fedora/install-fedora.sh"
             else
-                echo "fedora/install-fedora.sh not found."
+                echo "install/fedora/install-fedora.sh not found."
             fi
             ;;
         *)
@@ -139,7 +139,7 @@ if [ -d "$HOME/dotfiles" ]; then
                     *)            echo "Skipping installer. Run manually later if needed." ;;
                 esac
             else
-                echo "fzf not available — cannot prompt for distro choice. Run fedora/install-fedora.sh or arch/install-arch.sh manually."
+                echo "fzf not available — cannot prompt for distro choice. Run install-fedora.sh or install-arch.sh manually."
             fi
             ;;
     esac
