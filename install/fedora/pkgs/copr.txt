@@ -1,5 +1,11 @@
-atim/starship
-sneexy/zen-browser
-atim/lazygit
 che/nerd-fonts
-solopasha/hyprland
+agriffis/neovim-nightly
+alternateved/eza
+atim/lazygit
+atim/starship
+# erikreider/SwayNotificationCenter
+errornointernet/packages
+# lihaohong/yazi
+lionheartp/Hyprland
+oleastre/fonts
+sneexy/zen-browser
