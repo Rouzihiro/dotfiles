@@ -1,0 +1,38 @@
+[palette]
+bg = "#020f14"
+bg_subtle = "#03161d"
+bg_muted = "#0a202b"
+fg = "#a7d4e3"
+fg_dim = "#55727c"
+accent = "#72b4c9"
+fg_on_accent = "#020f14"
+success = "#a7d4e3"
+warning = "#1687ad"
+error = "#ff5d7a"
+cursor = "#72b4c9"
+sel_bg = "#1687ad"
+sel_fg = "#020f14"
+color0 = "#020f14"
+color1 = "#ff5d7a"
+color2 = "#a7d4e3"
+color3 = "#1687ad"
+color4 = "#72b4c9"
+color5 = "#075b82"
+color6 = "#07324a"
+color7 = "#a7d4e3"
+color8 = "#0a202b"
+color9 = "#ff5d7a"
+color10 = "#bde4ef"
+color11 = "#2096bd"
+color12 = "#86c5d7"
+color13 = "#0a6d9a"
+color14 = "#0b3f59"
+color15 = "#d6eef4"
+
+[starship]
+os_bg = "72b4c9"           # accent - OS icon segment background
+os_fg = "020f14"           # bg - dark text for contrast
+dir_bg = "1687ad"          # color3/sel_bg - directory segment background
+
+[nvim]
+colorscheme = "tokyonight"

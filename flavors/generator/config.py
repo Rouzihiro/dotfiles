@@ -5,7 +5,7 @@ from pathlib import Path
 SCRIPT_DIR = Path(__file__).resolve().parents[1]
 ROOT_DIR = SCRIPT_DIR.parent
 FLAVORS_DIR = ROOT_DIR / "flavors"
-BASE_DIR = FLAVORS_DIR / "base"
+TEMPLATES_DIR = FLAVORS_DIR / "templates"
 PALETTES_DIR = FLAVORS_DIR / "palettes"
 
 OUTPUTS = {

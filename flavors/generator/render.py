@@ -7,7 +7,7 @@ try:
 except ModuleNotFoundError as exc:  # pragma: no cover - import-time dependency guard
     raise RuntimeError("Jinja2 not found. Install it with: sudo apt install python3-jinja2") from exc
 
-from .config import BASE_DIR, OUTPUTS, PALETTES_DIR, ROOT_DIR
+from .config import OUTPUTS, PALETTES_DIR, ROOT_DIR, TEMPLATES_DIR
 from .palette import build_mapping, load_palette
 
 
@@ -22,7 +22,7 @@ def generate_theme(theme_name: str) -> None:
         raise ThemeError(f"theme file not found: {theme_file}")
 
     mapping = build_mapping(load_palette(theme_file))
-    env = _jinja_env(BASE_DIR)
+    env = _jinja_env(TEMPLATES_DIR)
 
     print(f"Generating theme: {theme_name}")
 
@@ -36,7 +36,7 @@ def render_template(
     rel_out_path: str,
     mapping: dict[str, str],
 ) -> None:
-    template_path = BASE_DIR / template_name
+    template_path = TEMPLATES_DIR / template_name
 
     if not template_path.exists():
         print(f"Warning: template not found: {template_path}")
