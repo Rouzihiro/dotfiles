@@ -1,4 +1,3 @@
 # Changes require a relaunch of Hyprland to take effect.
-
 export TERMINAL=foot
 export EDITOR=nvim
