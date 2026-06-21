@@ -72,7 +72,8 @@ yt-dlp
 
 # Development tools
 git-delta
-java-latest-openjdk
+pre-commit
+# java-latest-openjdk
 lazygit
 nodejs
 zstd
@@ -81,7 +82,7 @@ zstd
 vulkan-tools
 
 # Applications
-claws-mail
+geary
 evince
 foliate
 xournalpp

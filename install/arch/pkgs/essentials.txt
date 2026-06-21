@@ -60,7 +60,7 @@ zathura
 zathura-cb
 zathura-pdf-mupdf
 xournalpp
-# neovim
+neovim
 swww
 geary
 ca-certificates

@@ -1,10 +1,11 @@
 # Development
 lazygit
 git-delta
+pre-commit
 openssh
 tinymist
 typst
-jdk-openjdk
+# jdk-openjdk
 nodejs
 npm
 clang

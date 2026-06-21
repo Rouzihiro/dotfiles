@@ -1,6 +1,6 @@
 # Hyprland Window Manager and essentials
 hyprland
-hyprpaper
+#hyprpaper
 hyprlock
 hypridle
 xdg-desktop-portal-hyprland

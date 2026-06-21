@@ -1,6 +1,6 @@
 # Theme essentials
-gtk-engine-murrine
-gtk-engines
-darkman
+#gtk-engine-murrine
+#gtk-engines
+#darkman
 #yaru-icon-theme
 #bibata-cursor-theme
