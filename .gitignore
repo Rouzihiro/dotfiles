@@ -1,32 +1,80 @@
 # -------------------------
-# system / misc
+# System / OS
 # -------------------------
-.mypy_cache/
 .DS_Store
 *.log
 *.bak
+
+# -------------------------
+# Python / Development
+# -------------------------
+__pycache__/
+*.py[codz]
+*$py.class
+*.so
+.Python
+*.egg
+*.egg-info/
+.installed.cfg
+*.manifest
+*.spec
+.pdm-python
+.pdm-build/
+__pypackages__/
+
+# Python build directories
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+.pybuilder/
+target/
+
+# Python virtual environments
+.env
+.envrc
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# -------------------------
+# Node.js / JavaScript
+# -------------------------
 node_modules/
+
+# -------------------------
+# Archives
+# -------------------------
 *.zip
+
+# -------------------------
+# Cache / Temporary files
+# -------------------------
+.mypy_cache/
+
+# -------------------------
+# App-specific / Config
+# -------------------------
 .config/go
-# -------------------------
-# apps / sync
-# -------------------------
 .config/nvim/lazy-lock.json
 .config/vdirsyncer/google_token
 google_token
 .config/BraveSoftware/
 
 # -------------------------
-# BLOCK images inside themes/
-# -------------------------
-# themes/**/*.jpg
-# themes/**/*.jpeg
-themes/**/rofi.png
-themes/**/color-palette.png
-# themes/**/*.gif
-
-# -------------------------
-# binaries
+# Binaries
 # -------------------------
 .local/bin/bob
 .local/bin/f2py
@@ -41,3 +89,10 @@ themes/**/color-palette.png
 .local/bin/tifffile
 .local/bin/imageio_download_bin
 .local/bin/imageio_remove_bin
+
+# -------------------------
+# Theme images
+# -------------------------
+# flavors/backgrounds/*.jpg
+# flavors/backgrounds/*.jpeg
+# flavors/backgrounds/*.png
