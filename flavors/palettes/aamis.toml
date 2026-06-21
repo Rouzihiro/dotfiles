@@ -1,0 +1,38 @@
+[palette]
+bg = "#0f0f0f"
+bg_subtle = "#403d3d"
+bg_muted = "#706a6a"
+fg = "#eadccc"
+fg_dim = "#988f85"
+accent = "#e2be8a"
+fg_on_accent = "#eadccc"
+success = "#cea37f"
+warning = "#f4bb54"
+error = "#e25d6c"
+cursor = "#eadccc"
+sel_bg = "#e2be8a"
+sel_fg = "#eadccc"
+color0 = "#0f0f0f"
+color1 = "#e25d6c"
+color2 = "#cea37f"
+color3 = "#f4bb54"
+color4 = "#e2be8a"
+color5 = "#ede4c8"
+color6 = "#e8ab3b"
+color7 = "#e6caab"
+color8 = "#706a6a"
+color9 = "#e9838f"
+color10 = "#cea37f"
+color11 = "#edb95a"
+color12 = "#eacea7"
+color13 = "#ede4c8"
+color14 = "#ecb95c"
+color15 = "#eadccc"
+
+[starship]
+os_bg = "e2be8a"           # accent - OS icon segment background
+os_fg = "0f0f0f"           # bg - dark text for contrast
+dir_bg = "f4bb54"          # color3/warning - directory segment background
+
+[nvim]
+colorscheme = "aether"
