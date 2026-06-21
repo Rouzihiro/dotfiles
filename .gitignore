@@ -156,9 +156,4 @@ google_token
 .local/bin/tifffile
 .local/bin/imageio_download_bin
 .local/bin/imageio_remove_bin
-flavors/backgrounds/*.jpg
-flavors/backgrounds/*.jpeg
-flavors/backgrounds/*.png
-themes/**/rofi.png
-themes/**/color-palette.png
 .config/go
