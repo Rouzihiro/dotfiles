@@ -3,7 +3,7 @@ repos:
     rev: v6.0.0
     hooks:
       - id: check-json
-        exclude: \.jsonc$
+        exclude: \.jsonc$|config/\.config/swaync/config\.json$
       - id: check-yaml
       - id: check-xml
       - id: check-toml
@@ -20,12 +20,12 @@ repos:
         entry: bash -lc 'jq empty "$@"' --
         language: system
         files: \.json$
-        exclude: \.jsonc$
+        exclude: \.jsonc$|config/\.config/swaync/config\.json$
       - id: jsonc-node
         name: validate jsonc (node)
-        entry: node -e "process.argv.slice(1).forEach(f => JSON.parse(require('fs').readFileSync(f, 'utf8')))"
+        entry: node .hooks/validate-jsonc.js
         language: system
-        files: \.jsonc$
+        files: \.jsonc$|config/\.config/swaync/config\.json$
         pass_filenames: true
       - id: desktop-file-validate
         name: validate .desktop files
