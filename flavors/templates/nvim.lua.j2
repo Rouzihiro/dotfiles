@@ -1,5 +1,44 @@
 local M = {}
-
 M.default_color = "{{ nvim_colorscheme | default('gruvbox') }}"
+
+{% if nvim_colors_bg is defined %}
+function M.pre_setup()
+  require("aether").setup({
+    colors = {
+      bg         = "#{{ nvim_colors_bg }}",
+      dark_bg    = "#{{ nvim_colors_dark_bg | default(nvim_colors_bg) }}",
+      darker_bg  = "#{{ nvim_colors_darker_bg | default(nvim_colors_bg) }}",
+      lighter_bg = "#{{ nvim_colors_lighter_bg | default(nvim_colors_muted) }}",
+      bg_highlight = "#{{ nvim_colors_bg_highlight | default(nvim_colors_muted) }}",
+      fg         = "#{{ nvim_colors_fg }}",
+      dark_fg    = "#{{ nvim_colors_dark_fg | default(nvim_colors_fg) }}",
+      light_fg   = "#{{ nvim_colors_light_fg | default(nvim_colors_fg) }}",
+      bright_fg  = "#{{ nvim_colors_bright_fg | default(nvim_colors_fg) }}",
+      muted      = "#{{ nvim_colors_muted | default(nvim_colors_bg) }}",
+      red        = "#{{ nvim_colors_red }}",
+      yellow     = "#{{ nvim_colors_yellow }}",
+      orange     = "#{{ nvim_colors_orange | default(nvim_colors_red) }}",
+      green      = "#{{ nvim_colors_green }}",
+      cyan       = "#{{ nvim_colors_cyan }}",
+      blue       = "#{{ nvim_colors_blue }}",
+      purple     = "#{{ nvim_colors_purple }}",
+      brown      = "#{{ nvim_colors_brown | default(nvim_colors_yellow) }}",
+      bright_red    = "#{{ nvim_colors_bright_red | default(nvim_colors_red) }}",
+      bright_yellow = "#{{ nvim_colors_bright_yellow | default(nvim_colors_yellow) }}",
+      bright_green  = "#{{ nvim_colors_bright_green | default(nvim_colors_green) }}",
+      bright_cyan   = "#{{ nvim_colors_bright_cyan | default(nvim_colors_cyan) }}",
+      bright_blue   = "#{{ nvim_colors_bright_blue | default(nvim_colors_blue) }}",
+      bright_purple = "#{{ nvim_colors_bright_purple | default(nvim_colors_purple) }}",
+      accent               = "#{{ nvim_colors_accent | default(accent) }}",
+      cursor               = "#{{ nvim_colors_cursor | default(cursor) }}",
+      foreground           = "#{{ nvim_colors_foreground | default(nvim_colors_fg) }}",
+      background           = "#{{ nvim_colors_background | default(nvim_colors_bg) }}",
+      selection            = "#{{ nvim_colors_selection | default(nvim_colors_bg) }}",
+      selection_foreground = "#{{ nvim_colors_selection_foreground | default(nvim_colors_fg) }}",
+      selection_background = "#{{ nvim_colors_selection_background | default(nvim_colors_bg) }}",
+    },
+  })
+end
+{% endif %}
 
 return M
