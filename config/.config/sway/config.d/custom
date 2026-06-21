@@ -11,7 +11,8 @@ bindsym $mod+ctrl+space exec rofi-scripts
 bindsym $mod+a exec $term2 -e btop
 bindsym $mod+Mod1+a exec $term2 --title floaty-small -e sh -c ncdu
 
-bindsym $mod+b exec $term2 --title floaty-tiny -e sh -c bookmarks
+# bindsym $mod+b exec $term2 --title floaty-tiny -e sh -c bookmarks
+bindsym $mod+b exec rofi-bookmarks 
 bindsym $mod+Mod1+b exec xdg-open https://
 bindsym $mod+Shift+b exec $term2 --title floaty-small -e sh -c bt
 
