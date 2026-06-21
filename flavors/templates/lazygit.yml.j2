@@ -6,23 +6,21 @@ gui:
     inactiveBorderColor:
       - '{{ palette_bg_muted }}'
     optionsTextColor:
-      - '{{ palette_color6 }}'
+      - '{{ palette_fg_dim }}'
     selectedLineBgColor:
-      - '{{ palette_bg_subtle }}'
+      - '{{ palette_sel_bg }}'
     cherryPickedCommitBgColor:
-      - '{{ palette_bg }}'
-    cherryPickedCommitFgColor:
       - '{{ palette_accent }}'
+    cherryPickedCommitFgColor:
+      - '{{ palette_fg_on_accent }}'
     unstagedChangesColor:
       - '{{ palette_error }}'
     defaultFgColor:
       - '{{ palette_fg }}'
     searchingActiveBorderColor:
       - '{{ palette_warning }}'
-
   authorColors:
     '*': '{{ palette_success }}'
-
   nerdFontsVersion: "3"
   showFileTree: true
   showIcons: true
@@ -30,7 +28,6 @@ gui:
   expandFocusedSidePanel: true
   mouseEvents: true
   editor: "nvim"
-
   git:
     paging:
       colorArg: always
@@ -41,5 +38,4 @@ gui:
       signOff: false
     log:
       showGraph: true
-
 notARepository: "quit"
