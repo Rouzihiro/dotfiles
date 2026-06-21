@@ -1,44 +1,91 @@
 local M = {}
 M.default_color = "{{ nvim_colorscheme | default('gruvbox') }}"
 
-{% if nvim_colors_bg is defined %}
 function M.pre_setup()
-  require("aether").setup({
-    colors = {
-      bg         = "#{{ nvim_colors_bg }}",
-      dark_bg    = "#{{ nvim_colors_dark_bg | default(nvim_colors_bg) }}",
-      darker_bg  = "#{{ nvim_colors_darker_bg | default(nvim_colors_bg) }}",
-      lighter_bg = "#{{ nvim_colors_lighter_bg | default(nvim_colors_muted) }}",
-      bg_highlight = "#{{ nvim_colors_bg_highlight | default(nvim_colors_muted) }}",
-      fg         = "#{{ nvim_colors_fg }}",
-      dark_fg    = "#{{ nvim_colors_dark_fg | default(nvim_colors_fg) }}",
-      light_fg   = "#{{ nvim_colors_light_fg | default(nvim_colors_fg) }}",
-      bright_fg  = "#{{ nvim_colors_bright_fg | default(nvim_colors_fg) }}",
-      muted      = "#{{ nvim_colors_muted | default(nvim_colors_bg) }}",
-      red        = "#{{ nvim_colors_red }}",
-      yellow     = "#{{ nvim_colors_yellow }}",
-      orange     = "#{{ nvim_colors_orange | default(nvim_colors_red) }}",
-      green      = "#{{ nvim_colors_green }}",
-      cyan       = "#{{ nvim_colors_cyan }}",
-      blue       = "#{{ nvim_colors_blue }}",
-      purple     = "#{{ nvim_colors_purple }}",
-      brown      = "#{{ nvim_colors_brown | default(nvim_colors_yellow) }}",
-      bright_red    = "#{{ nvim_colors_bright_red | default(nvim_colors_red) }}",
-      bright_yellow = "#{{ nvim_colors_bright_yellow | default(nvim_colors_yellow) }}",
-      bright_green  = "#{{ nvim_colors_bright_green | default(nvim_colors_green) }}",
-      bright_cyan   = "#{{ nvim_colors_bright_cyan | default(nvim_colors_cyan) }}",
-      bright_blue   = "#{{ nvim_colors_bright_blue | default(nvim_colors_blue) }}",
-      bright_purple = "#{{ nvim_colors_bright_purple | default(nvim_colors_purple) }}",
-      accent               = "#{{ nvim_colors_accent | default(accent) }}",
-      cursor               = "#{{ nvim_colors_cursor | default(cursor) }}",
-      foreground           = "#{{ nvim_colors_foreground | default(nvim_colors_fg) }}",
-      background           = "#{{ nvim_colors_background | default(nvim_colors_bg) }}",
-      selection            = "#{{ nvim_colors_selection | default(nvim_colors_bg) }}",
-      selection_foreground = "#{{ nvim_colors_selection_foreground | default(nvim_colors_fg) }}",
-      selection_background = "#{{ nvim_colors_selection_background | default(nvim_colors_bg) }}",
-    },
-  })
+  if M.default_color == "aether" then
+    local ok, aether = pcall(require, "aether")
+    if ok then
+      aether.setup({
+        colors = {
+          bg         = "#{{ palette_bg }}",
+          dark_bg    = "#{{ palette_bg }}",
+          darker_bg  = "#{{ palette_bg }}",
+          lighter_bg = "#{{ palette_bg_muted }}",
+          bg_highlight = "#{{ palette_bg_subtle }}",
+          fg         = "#{{ palette_fg }}",
+          dark_fg    = "#{{ palette_color7 }}",
+          light_fg   = "#{{ palette_fg }}",
+          bright_fg  = "#{{ palette_color7 }}",
+          muted      = "#{{ palette_bg_subtle }}",
+          red        = "#{{ palette_error }}",
+          yellow     = "#{{ palette_warning }}",
+          orange     = "#{{ palette_color9 }}",
+          green      = "#{{ palette_success }}",
+          cyan       = "#{{ palette_color6 }}",
+          blue       = "#{{ palette_accent }}",
+          purple     = "#{{ palette_color5 }}",
+          brown      = "#{{ palette_color11 }}",
+          bright_red    = "#{{ palette_error }}",
+          bright_yellow = "#{{ palette_warning }}",
+          bright_green  = "#{{ palette_success }}",
+          bright_cyan   = "#{{ palette_color6 }}",
+          bright_blue   = "#{{ palette_accent }}",
+          bright_purple = "#{{ palette_color5 }}",
+          accent        = "#{{ palette_accent }}",
+          cursor        = "#{{ palette_cursor }}",
+          foreground    = "#{{ palette_fg }}",
+          background    = "#{{ palette_bg }}",
+          selection     = "#{{ palette_bg }}",
+          selection_foreground = "#{{ palette_sel_fg }}",
+          selection_background = "#{{ palette_sel_bg }}",
+        },
+      })
+    end
+  end
+
+  local ok_catppuccin, catppuccin = pcall(require, "catppuccin")
+  if ok_catppuccin and M.default_color:match("^catppuccin") then
+    catppuccin.setup({
+      transparent_background = true,
+      integrations = {
+        treesitter = true,
+        native_lsp = { enabled = true },
+      },
+    })
+  end
+
+  local ok_kanagawa, kanagawa = pcall(require, "kanagawa")
+  if ok_kanagawa and M.default_color:match("^kanagawa") then
+    kanagawa.setup({
+      transparent = true,
+    })
+  end
+
+  local ok_rosepine, rosepine = pcall(require, "rose-pine")
+  if ok_rosepine and M.default_color:match("^rose%-pine") then
+    rosepine.setup({
+      styles = {
+        transparency = true,
+      },
+    })
+  end
+
+  local ok_tokyonight, tokyonight = pcall(require, "tokyonight")
+  if ok_tokyonight and M.default_color:match("^tokyonight") then
+    tokyonight.setup({
+      transparent = true,
+    })
+  end
+
+  if M.default_color:match("everforest") then
+    vim.g.everforest_transparent_background = 2
+  end
+
+  if M.default_color == "gruvbox" then
+    vim.g.gruvbox_contrast_dark = "medium"
+    vim.g.gruvbox_invert_selection = 0
+    vim.g.gruvbox_transparent_bg = 1
+  end
 end
-{% endif %}
 
 return M
