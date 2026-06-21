@@ -89,11 +89,16 @@ require("marks").setup {
 -- Theme and color
 -- =====================
 local theme = require("theme")
+
+if theme.pre_setup then
+    theme.pre_setup()
+end
+
 vim.cmd('colorscheme ' .. theme.default_color)
+
 if theme.set_terminal_colors then
     theme.set_terminal_colors()
 end
-
 -- =====================
 -- Mason + LSP
 -- =====================
