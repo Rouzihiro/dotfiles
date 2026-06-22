@@ -1,3 +1,4 @@
+# zmodload zsh/zprof
 # Auto-install zinit if not present
 ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
 ZINIT_ZSH="${ZINIT_HOME}/zinit.zsh"
@@ -33,7 +34,9 @@ zinit light zsh-users/zsh-completions
 zinit light zsh-users/zsh-autosuggestions
 
 # Set autosuggestion color from current theme
-export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=$(grep -oP 'fg_dim\s*=\s*"\K#[0-9a-fA-F]+' ~/.config/zorro/current/theme/theme.toml 2>/dev/null || echo '245')"
+ if [[ -f ~/.config/rofi/colors.rasi ]]; then
+   export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=$(grep -oP 'fg-dim:\s*\K#[0-9a-fA-F]+' ~/.config/rofi/colors.rasi)"
+ fi
 
 #  ╔═╗┌┐┌┬┌─┐┌─┐┌─┐┌┬┐┌─┐
 #  ╚═╗││││├─┘├─┘├┤  │ └─┐
@@ -66,23 +69,36 @@ else
 fi
 
 # Load syntax highlighting last so it doesn't interfere with completions
+ZSH_HIGHLIGHT_HIGHLIGHTERS=(main)
+zinit ice wait lucid
 zinit light zsh-users/zsh-syntax-highlighting
 
 #  ╔═╗┌─┐┌┬┐┌─┐┬  ┌─┐┌┬┐┬┌─┐┌┐┌   ┬   ╦  ┌─┐┌─┐┌┬┐┬┌┐┌┌─┐  ╔═╗┌┐┌┌─┐┬┌┐┌┌─┐
 #  ║  │ ││││├─┘│  ├┤  │ ││ ││││  ┌┼─  ║  │ │├─┤ │││││││ ┬  ║╣ ││││ ┬││││├┤ 
 #  ╚═╝└─┘┴ ┴┴  ┴─┘└─┘ ┴ ┴└─┘┘└┘  └┘   ╩═╝└─┘┴ ┴─┴┘┴┘└┘└─┘  ╚═╝┘└┘└─┘┴┘└┘└─┘
 autoload -Uz compinit
-
-# Only regenerate dump if it's older than 24h, otherwise skip security check (faster)
-if [[ -n ${ZDOTDIR:-$HOME/.config/zsh}/.zcompdump(#qN.mh+24) ]]; then
-    compinit -d "${ZDOTDIR:-$HOME/.config/zsh}/.zcompdump"
+local zcd="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/zcompdump"
+mkdir -p "${zcd:h}"
+if [[ -n ${zcd}(#qN.mh+24) ]]; then
+  compinit -d "$zcd"      # dump missing or >24h old -> full audit
 else
-    compinit -C -d "${ZDOTDIR:-$HOME/.config/zsh}/.zcompdump"
+  compinit -C -d "$zcd"   # fresh dump -> skip audit, just load it
 fi
 
-autoload -Uz vcs_info
-precmd () { vcs_info }
-_comp_options+=(globdots)
+
+
+# autoload -Uz compinit
+
+# Only regenerate dump if it's older than 24h, otherwise skip security check (faster)
+# if [[ -n ${ZDOTDIR:-$HOME/.config/zsh}/.zcompdump(#qN.mh+24) ]]; then
+#     compinit -d "${ZDOTDIR:-$HOME/.config/zsh}/.zcompdump"
+# else
+#     compinit -C -d "${ZDOTDIR:-$HOME/.config/zsh}/.zcompdump"
+# fi
+#
+# autoload -Uz vcs_info
+# precmd () { vcs_info }
+# _comp_options+=(globdots)
 
 #  ╔═╗┌─┐┌┬┐┌─┐┬  ┌─┐┌┬┐┬┌─┐┌┐┌┌─┐  ╔═╗┌┬┐┬ ┬┬  ┌─┐
 #  ║  │ ││││├─┘│  ├┤  │ ││ ││││└─┐  ╚═╗ │ └┬┘│  ├┤ 
@@ -149,14 +165,14 @@ setopt PUSHD_SILENT
 #  ╔═╗┌─┐┌┐┌  ╔═╗┬─┐┌─┐┌┬┐┌─┐┌┬┐
 #  ╔═╝├┤ │││  ╠═╝├┬┘│ ││││├─┘ │ 
 #  ╚═╝└─┘┘└┘  ╩  ┴└─└─┘┴ ┴┴   ┴ 
-function dir_icon {
-  if [[ "$PWD" == "$HOME" ]]; then
-    echo "%B%F{cyan}%f%b"
-  else
-    echo "%B%F{cyan}%f%b"
-  fi
-}
-PS1='%B%F{green}%f%b  %B%F{magenta}%n%f%b $(dir_icon)  %B%F{red}%~%f%b${vcs_info_msg_0_} %(?.%B%F{green}.%F{red})%f%b '
+# function dir_icon {
+#   if [[ "$PWD" == "$HOME" ]]; then
+#     echo "%B%F{cyan}%f%b"
+#   else
+#     echo "%B%F{cyan}%f%b"
+#   fi
+# }
+# PS1='%B%F{green}%f%b  %B%F{magenta}%n%f%b $(dir_icon)  %B%F{red}%~%f%b${vcs_info_msg_0_} %(?.%B%F{green}.%F{red})%f%b '
 
 export BAT_THEME=ansi
 export LESS="-R --RAW-CONTROL-CHARS"
@@ -213,9 +229,6 @@ fi
 source "$_zoxide_cache"
 unset _zoxide_cache
 
-# eval "$(dircolors -b ${HOME}/.config/zsh/.dircolors 2>/dev/null || dircolors -b)"
-#
-
 # ============================================
 # FZF
 # ============================================
@@ -252,15 +265,24 @@ bindkey "^G" git_commit_with_message
 # ============================================
 # SSH Agent Setup
 # ============================================
+# export SSH_AUTH_SOCK="${XDG_RUNTIME_DIR}/ssh-agent.socket"
+# if ! pgrep -u "$USER" ssh-agent >/dev/null 2>&1; then
+#     eval "$(ssh-agent -a "$SSH_AUTH_SOCK")" >/dev/null
+# fi
+# if ! ssh-add -l >/dev/null 2>&1; then
+#     ssh-add ~/.ssh/id_github 2>/dev/null
+#     ssh-add ~/.ssh/id_ftp 2>/dev/null
+#     ssh-add ~/.ssh/id_openweather 2>/dev/null
+# fi
+#
 export SSH_AUTH_SOCK="${XDG_RUNTIME_DIR}/ssh-agent.socket"
-if ! pgrep -u "$USER" ssh-agent >/dev/null 2>&1; then
+
+if [[ ! -S "$SSH_AUTH_SOCK" ]]; then
     eval "$(ssh-agent -a "$SSH_AUTH_SOCK")" >/dev/null
+    ssh-add ~/.ssh/id_github ~/.ssh/id_ftp ~/.ssh/id_openweather 2>/dev/null
 fi
-if ! ssh-add -l >/dev/null 2>&1; then
-    ssh-add ~/.ssh/id_github 2>/dev/null
-    ssh-add ~/.ssh/id_ftp 2>/dev/null
-    ssh-add ~/.ssh/id_openweather 2>/dev/null
-fi
+
+
 
 # ============================================
 # Starship Prompt
@@ -295,3 +317,4 @@ source /home/rey/.config/broot/launcher/bash/br
 
 # `time` format
 TIMEFMT=$'\nreal\t%E\nuser\t%U\nsys\t%S\ncpu\t%P'
+# zprof
