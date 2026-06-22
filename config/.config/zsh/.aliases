@@ -1,4 +1,4 @@
-alias pc=pre-commit run --all-files
+alias pc="pre-commit run --all-files"
 alias dlm=download-manager.sh
 alias ali=fzf-aliases
 alias typst-up="cargo install typst-cli --force"
