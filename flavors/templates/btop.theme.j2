@@ -1,38 +1,89 @@
-theme[main_bg]="{{ palette_bg }}"
-theme[main_fg]="{{ palette_fg }}"
-theme[title]="{{ palette_fg }}"
-theme[hi_fg]="{{ palette_accent }}"
-theme[selected_bg]="{{ palette_bg_subtle }}"
-theme[selected_fg]="{{ palette_accent }}"
-theme[inactive_fg]="{{ palette_fg_dim }}"
-theme[graph_text]="{{ palette_fg_dim }}"
-theme[proc_misc]="{{ palette_success }}"
-theme[cpu_box]="{{ palette_fg_dim }}"
-theme[mem_box]="{{ palette_fg_dim }}"
-theme[net_box]="{{ palette_fg_dim }}"
-theme[proc_box]="{{ palette_fg_dim }}"
-theme[div_line]="{{ palette_bg_subtle }}"
-theme[temp_start]="{{ palette_color6 }}"
-theme[temp_mid]="{{ palette_color5 }}"
-theme[temp_end]="{{ palette_error }}"
-theme[cpu_start]="{{ palette_success }}"
-theme[cpu_mid]="{{ palette_warning }}"
-theme[cpu_end]="{{ palette_error }}"
-theme[free_start]="{{ palette_success }}"
+# ==============================================================================
+# THEME TEMPLATE - Map palette colors to theme variables
+# ==============================================================================
+
+# Main background, empty for terminal default, need to be empty if you want transparent background
+theme[main_bg]="#{{ palette_bg }}"
+
+# Main text color
+theme[main_fg]="#{{ palette_fg }}"
+
+# Title color for boxes
+theme[title]="#{{ palette_fg }}"
+
+# Highlight color for keyboard shortcuts
+theme[hi_fg]="#{{ palette_accent }}"
+
+# Background color of selected item in processes box
+theme[selected_bg]="#{{ palette_bg_subtle }}"
+
+# Foreground color of selected item in processes box
+theme[selected_fg]="#{{ palette_accent }}"
+
+# Color of inactive/disabled text
+theme[inactive_fg]="#{{ palette_fg_dim }}"
+
+# Graph text color
+theme[graph_text]="#{{ palette_fg_dim }}"
+
+# Misc colors for processes box including mini cpu graphs, details memory graph and details status text
+theme[proc_misc]="#{{ palette_success }}"
+
+# Box outline and divider line color
+theme[cpu_box]="#{{ palette_fg_dim }}"
+theme[mem_box]="#{{ palette_fg_dim }}"
+theme[net_box]="#{{ palette_fg_dim }}"
+theme[proc_box]="#{{ palette_fg_dim }}"
+theme[div_line]="#{{ palette_bg_subtle }}"
+
+# ------------------------------------------------------------------------------
+# TEMPERATURE METER GRADIENTS
+# ------------------------------------------------------------------------------
+theme[temp_start]="#{{ palette_color6 }}"
+theme[temp_mid]="#{{ palette_color5 }}"
+theme[temp_end]="#{{ palette_error }}"
+
+# ------------------------------------------------------------------------------
+# CPU METER GRADIENTS
+# ------------------------------------------------------------------------------
+theme[cpu_start]="#{{ palette_success }}"
+theme[cpu_mid]="#{{ palette_warning }}"
+theme[cpu_end]="#{{ palette_error }}"
+
+# ------------------------------------------------------------------------------
+# MEMORY METER GRADIENTS
+# ------------------------------------------------------------------------------
+
+# Free memory gradient
+theme[free_start]="#{{ palette_success }}"
 theme[free_mid]=""
-theme[free_end]="{{ palette_success }}"
-theme[cached_start]="{{ palette_color6 }}"
+theme[free_end]="#{{ palette_success }}"
+
+# Cached memory gradient
+theme[cached_start]="#{{ palette_color6 }}"
 theme[cached_mid]=""
-theme[cached_end]="{{ palette_color6 }}"
-theme[available_start]="{{ palette_warning }}"
+theme[cached_end]="#{{ palette_color6 }}"
+
+# Available memory gradient
+theme[available_start]="#{{ palette_warning }}"
 theme[available_mid]=""
-theme[available_end]="{{ palette_warning }}"
-theme[used_start]="{{ palette_error }}"
+theme[available_end]="#{{ palette_warning }}"
+
+# Used memory gradient
+theme[used_start]="#{{ palette_error }}"
 theme[used_mid]=""
-theme[used_end]="{{ palette_error }}"
-theme[download_start]="{{ palette_color5 }}"
-theme[download_mid]="{{ palette_color5 }}"
-theme[download_end]="{{ palette_color5 }}"
-theme[upload_start]="{{ palette_color4 }}"
-theme[upload_mid]="{{ palette_color4 }}"
-theme[upload_end]="{{ palette_color4 }}"
+theme[used_end]="#{{ palette_error }}"
+
+# ------------------------------------------------------------------------------
+# NETWORK METER GRADIENTS
+# ------------------------------------------------------------------------------
+
+# Download gradient
+theme[download_start]="#{{ palette_color5 }}"
+theme[download_mid]="#{{ palette_color5 }}"
+theme[download_end]="#{{ palette_color5 }}"
+
+# Upload gradient
+theme[upload_start]="#{{ palette_color4 }}"
+theme[upload_mid]="#{{ palette_color4 }}"
+theme[upload_end]="#{{ palette_color4 }}"
