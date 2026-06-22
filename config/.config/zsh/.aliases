@@ -1,5 +1,6 @@
+alias p="python3 -m"
 alias pc="pre-commit run --all-files"
-alias dlm=download-manager.sh
+alias x="chmod +x"
 alias ali=fzf-aliases
 alias typst-up="cargo install typst-cli --force"
 alias sf="search-in-file.py"
@@ -34,6 +35,7 @@ alias se="sudoedit"
 # File and directory management
 alias :q="exit"
 alias ls="eza -G --icons --color=always --group-directories-first"
+alias lsd="eza -G --icons --color=always --group-directories-first --sort=modified"
 alias lsh="eza -G --long --icons --color=always --no-permissions --no-user --no-time --group-directories-first 2>/dev/null"
 alias lsa="eza -G --long --icons --color=always --no-permissions --no-user --group-directories-first 2>/dev/null"
 alias lsp="eza -l --color=always --git --no-filesize --icons=always --no-time --no-user --group-directories-first"
@@ -59,8 +61,8 @@ alias tr='trash-restore'
 alias te='rm -rfv ~/.local/share/vifm/Trash/*; trash-empty'
 
 # Navigation
-alias cda="cd && cd assets"
-alias cdc="cd && cd Projects"
+alias cdc="cd && cd .config"
+alias cde="cd && cd Projects"
 alias cdd="cd && cd Downloads"
 alias cdp="cd && cd Pictures"
 alias cdw="cd && cd Documents"
@@ -73,13 +75,12 @@ alias .3='cd ../../..'
 alias .4='cd ../../../..'
 alias .5='cd ../../../../..'
 
-alias fm='yazi'
-alias fex='muvm -ti FEXBash'
+alias fex='muvm bash'
 
 # Editors
 alias v='nvim'
-alias vi="nvim -c \"lua require('fzf-lua').oldfiles()\""
-alias vim='nvim -c "lua require('\''fzf-lua'\'').files()"'
+alias vo="nvim -c \"lua require('fzf-lua').oldfiles()\""
+alias vi='nvim -c "lua require('\''fzf-lua'\'').files()"'
 alias vdiff="nvim -d"
 alias sv="sudo -E nvim"
 
@@ -108,8 +109,8 @@ alias startup='clear && systemctl list-unit-files --type=service | grep enabled'
 
 # Miscellaneous
 alias class='xprop | grep WM_CLASS'
-alias sb='source ~/.bashrc'
-alias sz='source "$ZDOTDIR/.zshrc" && echo "Zsh config reloaded ✅"'
+alias reload-bash='source ~/.bashrc'
+alias reload='source "$ZDOTDIR/.zshrc" && echo "Zsh config reloaded ✅"'
 alias xx='exit'
 alias c='clear'
 alias t='tmux'
