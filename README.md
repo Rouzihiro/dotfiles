@@ -9,79 +9,189 @@ ArchLinux & Fedora Universal Installer for a Lightweight & Beautiful Setup
 ### 🖥️ Automatic Installation:
 ```bash
 git clone https://github.com/Rouzihiro/dotfiles ~/dotfiles
-bash ~/dotfiles/.github/dots_bootstrap.sh
-bash ~/dotfiles/.github/assets.sh
+bash bootstrap.sh
+bash ~/dotfiles/install/assets.sh
 ```
 
 ### Theme Switcher Demo
 
 https://github.com/user-attachments/assets/75b108d7-b7f5-4757-b0a9-b01c8b649eb5
 
-# Blazing Fast Theme Switcher
+---
 
-A simple, efficient, and centralized theme management system for your dotfiles and applications.
+## 🚀 Great performance for x86 and Apple Silicon M1
+
+This setup with Sway WM idles at ~600MB RAM with our ultra-efficient stack:
+
+✓ **C/Rust-powered tools** &nbsp; ✓ **Asahi Linux**-tuned kernel &nbsp; ✓ **Battery-optimized** power profiles
+
+**Why it flies:** Zero Electron apps · GPU-optimized compositing · Minimal background services
 
 ---
 
-[Jump to Theme Generator Guide](#theme-generator---how-to)
+## 🌟 Features
+
+- **Cross-Platform**: x86_64 PCs, Apple Silicon (M1/M2) via Asahi Linux, Surface devices, consumer laptops
+- **40+ themes** — instantly switchable, live across all apps
+- **Modular Design** — select only the packages you need
+- **Proven Stability** — MacBook Air M1, Surface Pro 2, various Intel laptops
 
 ---
 
-## Overview
+# Flavors — Theme System
 
-With this setup, you define all your themes **once** inside your dotfiles. Then, using a small script, you can switch themes across all your applications **instantly**.
-
-The magic? **Symlinks.** Instead of moving files or copying themes around, the script updates a single symlink pointing to the currently active theme folder. All your apps source their color schemes from that symlink, making theme switching:
-
-- **Blazing fast**
-- **Safe** (no file duplication or accidental overwrites)
-- **Centralized** (one place to manage all themes)
+A centralized, Python-driven theming pipeline. One palette file per theme. One command to apply it everywhere, live, with no symlinking.
 
 ---
 
-## Features
+## How It Works
 
-- Centralized theme definitions in your dotfiles
-- Instant theme switching across all apps
-- Minimal disk operations (symlink only)
-- Compatible with Nvim, Wofi, multiple Terminals, Tmux, Starship and other tools that read theme files
+Each theme is defined by a single `palettes/<theme>.toml` file. When you switch themes, a Python generator compiles that palette into config files for every supported application using Jinja2 templates. A set of zsh scripts then reloads each running app in parallel — no restarts, no file copying, no symlinks.
+
+```
+palettes/sakura.toml  →  generate.py  →  app configs  →  apply.zsh  →  live reload
+```
+
+The flow in `apply.zsh`:
+
+1. `generate.py <theme>` — renders all `.j2` templates against the palette
+2. State is written to `$_OSYX_STATE_FILE` so the current theme survives reboots
+3. Thyx preset is copied if one exists for the theme
+4. All app reloads fire in parallel (`&!`) — kitty, hyprland/sway, mako, tmux, nvim, btop, wallpaper
+
+---
+
+## Directory Structure
+
+```
+flavors/
+├── palettes/            # One <theme>.toml per theme — source of truth
+├── templates/           # Jinja2 .j2 templates, one per application
+├── generator/           # Python package (cli, colors, palette, render)
+├── generate.py          # Entry point: python3 generate.py <theme>
+├── generate-all.sh      # Compile every palette at once
+├── backgrounds/         # Per-theme wallpaper symlinks → ~/assets/wallpapers/
+├── theme/               # zsh scripts: apply, select, reload, config, pickers
+├── themes.zsh           # Main entry point sourced by your shell
+└── thyx-map.conf        # Theme → thyx preset mapping
+```
+
+---
+
+## Palette Format
+
+```toml
+[palette]
+bg        = "#3e2723"
+bg_subtle = "#543f3b"
+bg_muted  = "#6b5854"
+fg        = "#d7ccc8"
+fg_dim    = "#998a86"
+accent    = "#bcaaa4"
+cursor    = "#bcaaa4"
+error     = "#bcaaa4"
+warning   = "#d7ccc8"
+success   = "#d7ccc8"
+sel_bg    = "#d7ccc8"
+sel_fg    = "#3e2723"
+color0  = "#3e2723"
+color1  = "#bcaaa4"
+# color2–color15 ...
+```
+
+---
+
+## Template Syntax
+
+Templates live in `templates/` as `<app>.j2`. Use `{{key}}` placeholders — the generator resolves them into the correct color format per application:
+
+| Syntax | Output | Use case |
+|---|---|---|
+| `{{key}}` | `#rrggbb` | Default — most apps |
+| `{{key:hex}}` | `#rrggbb` | Explicit hex |
+| `{{key:raw}}` | `rrggbb` | Foot, Hyprland |
+| `{{key:rgb}}` | `rgb(r g b)` | CSS (space-separated) |
+| `{{key:rgb_spaced}}` | `r g b` | Inline RGB values |
+| `{{key:rgb_css}}` | `r, g, b` | GTK / Waybar `rgba()` |
+
+Example:
+```css
+@define-color background rgba({{bg:rgb_css}}, 0.25);
+```
+
+---
+
+## Supported Applications
+
+Templates are provided for:
+
+- **Terminals** — Kitty, Foot
+- **Compositor** — Hyprland, Sway (borders + bar)
+- **Bar** — Waybar (CSS + color aliases), i3blocks
+- **Notifications** — Mako, SwayNC
+- **Shell** — Starship prompt
+- **File managers** — Yazi, Broot
+- **Tools** — Btop, Lazygit, Eza, Rofi, Wofi, Walker, SwayOSD
+- **Multiplexer** — Tmux
+- **Editor** — Neovim
+
+---
+
+## Adding a New Theme
+
+1. Create `palettes/mytheme.toml` with your color palette
+2. Optionally add a wallpaper symlink in `backgrounds/mytheme.jpg`
+3. Run the generator:
+   ```bash
+   python3 generate.py mytheme
+   ```
+4. Switch to it:
+   ```bash
+   # via the interactive picker
+   themes.zsh
+   # or
+   bind = $mod, T, exec, uwsm app -- zsh -ic 'source ~/dotfiles/flavors/themes.zsh; _osyx_rofi_theme_picker'
+   bindsym $mod+t exec zsh -ic 'source ~/dotfiles/flavors/themes.zsh; _osyx_rofi_theme_picker'
+   ```
+
+To regenerate all themes at once:
+```bash
+bash generate-all.sh
+```
+
+---
+
+## Live Reload
+
+When a theme is applied, the following happen in parallel:
+
+| App | Reload method |
+|-----|--------------|
+| Kitty | `SIGUSR1` to all kitty pids |
+| Hyprland | `hyprctl reload` |
+| Sway | `swaymsg reload` |
+| Mako | `makoctl reload` |
+| Tmux | `tmux source-file ~/.tmux.conf` |
+| Neovim | `OsyxFlip` via `--remote-send` over socket |
+| Btop | `SIGUSR1` |
+| Wallpaper | `wallpaper set` / `waypaper` |
 
 ---
 
 ## Manual Installation
 
-Run the installation script:
-
 ```bash
-cd ~/dotfiles
-./install-arch.sh or ./install-fedora.sh
+cd ~/dotfiles/install/install.sh
 ```
 
-The installer will:
-- Symlink `~/dotfiles/.local/bin` → `~/.local/bin`
-- Set up configuration files and themes
-- Prepare required scripts and utilities
+The installer symlinks `~/dotfiles/.local/bin` → `~/.local/bin` and sets up all config files.
 
----
-
-## PATH Configuration
-
-This setup uses a hierarchical `~/.local/bin` structure, including subdirectories.
-
-To ensure all tools are available, add the following to your shell configuration (`.bashrc`, `.zshrc`, etc.):
-
+Add to your shell config:
 ```bash
 export PATH="$HOME/.local/bin:$PATH"
 ```
 
-> Note: The directory is structured with multiple subfolders that need to be added to `$PATH`.
-
----
-
-## Assets
-
-Clone the required assets repository into your home directory:
-
+Clone the assets repository:
 ```bash
 git clone https://github.com/Rouzihiro/assets.git ~/assets
 ```
@@ -90,66 +200,9 @@ git clone https://github.com/Rouzihiro/assets.git ~/assets
 
 ## Prerequisites
 
-Make sure the following are installed before running the setup:
-
-- Git
-- Python 3.x
-- A compatible shell (bash/zsh/fish)
-- Required desktop environment / compositor dependencies (Sway/Wayland stack if used)
-
----
-
-## Notes
-
-- The installation script manages all symlinks automatically
-- No manual copying of scripts is required
-- Themes are expected in: `~/dotfiles/themes`
-- Assets including wallpapers and icons are expected in: `~/assets`
-
-```bash
-# Example directory structure
-~/dotfiles/
-├── install-themes.sh
-├── themes/
-│   ├── theme1/
-│   ├── theme2/
-│   └── ...
-└── .local/bin/rofi/rofi-theme-set
-```
-
----
-
-## 🚀 Great performance for x86 and Apple Silicon M1
-
-This setup with Sway WM idles at ~600MB RAM with our ultra-efficient stack:
-
-✓ **C/Rust-powered tools**
-
-✓ **Asahi Linux**-tuned kernel
-
-✓ **Battery-optimized** power profiles
-
-**Why it flies:**
-- Zero Electron apps
-- GPU-optimized compositing
-- Minimal background services
-
----
-
-## 🌟 Features
-
-- **Cross-Platform Compatibility**: Works on:
-  - All standard x86_64 PCs
-  - Apple Silicon (M1/M2) via Asahi Linux
-  - Microsoft Surface devices
-  - Various consumer laptops (HP, Dell, Lenovo, etc.)
-- **Modular Design**: Select only the packages you need
-- **Proven Stability**: Successfully installed on:
-  - MacBook Air M1 (8GB)
-  - MacBook Pro (Intel)
-  - Microsoft Surface Pro 2
-  - Various friends/family devices
-- **Included Fixes**: Hardware-specific solutions in `/fixes` directory
+- Git, Python 3.x, a compatible shell (bash/zsh)
+- Wayland compositor (Sway or Hyprland)
+- Relevant desktop stack dependencies per your distro
 
 ---
 
@@ -358,34 +411,6 @@ See `.config/sway/config.d/keybindings.conf` for the complete configuration.
 
 ---
 
-## Notes & Bookmarks Setup
-
-Create a dedicated directory for your markdown notes:
-
-```bash
-mkdir -p ~/Documents/Notes
-```
-
-Inside this directory, create your note files. These files are used by the Rofi bookmark/notes scripts and can be freely customized.
-
----
-
-## Bookmark File Configuration
-
-Define the files used by your Rofi bookmark script in your configuration:
-
-```bash
-BOOKMARK_FILES="
-$HOME/Documents/Notes/gaming.md
-$HOME/Documents/Notes/coding.md
-$HOME/Documents/Notes/work.md
-"
-```
-
-Each file acts as a category for quick access via the Rofi notes/bookmark system.
-
----
-
 ### System Components
 | Component | Description | Language |
 |-----------|-------------|-----------|
@@ -404,7 +429,6 @@ Each file acts as a category for quick access via the Rofi notes/bookmark system
 | [Fastfetch](https://github.com/fastfetch-cli/fastfetch) | System Information Tool | ![C][c] |
 | [Foot](https://codeberg.org/dnkl/foot) | Terminal Emulator | ![C][c] |
 | [Fuzzel](https://codeberg.org/dnkl/fuzzel) | Wayland Application Launcher | ![C][c] |
-| [fzf-preview](https://github.com/yuki-yano/fzf-preview.vim) | Fuzzy Finder Preview Plugin | ![TypeScript][ts] |
 | [Lazygit](https://github.com/jesseduffield/lazygit) | Git TUI Client | ![Go][go] |
 | [Neovim](https://neovim.io/) | Text Editor | ![C][c] |
 | [Satty](https://github.com/gabm/satty) | Screenshot Annotation Tool | ![Rust][rust] |
@@ -423,152 +447,29 @@ Each file acts as a category for quick access via the Rofi notes/bookmark system
 
 ---
 
-# Theme Generator — How To
-
-A Python-based template compiler that generates theme files for all your applications from a single source of truth: a `theme.toml` palette file.
-
----
-
-## How It Works
-
-Each theme lives in its own folder under `~/dotfiles/themes/`. Inside, a `theme.toml` defines the full color palette. Running the generator compiles that palette into ready-to-use config files for every supported application — using a template system with multiple color format outputs.
-
-The generator is non-destructive: it writes directly into the theme folder, which your switcher picks up via symlink.
-
----
-
-## Palette Format
-
-```toml
-[palette]
-bg        = "#3e2723"
-bg_subtle = "#543f3b"
-bg_muted  = "#6b5854"
-fg        = "#d7ccc8"
-fg_dim    = "#998a86"
-accent    = "#bcaaa4"
-cursor    = "#bcaaa4"
-error     = "#bcaaa4"
-warning   = "#d7ccc8"
-success   = "#d7ccc8"
-sel_bg    = "#d7ccc8"
-sel_fg    = "#3e2723"
-
-[ansi]
-color0  = "#3e2723"
-color1  = "#bcaaa4"
-# ... color2–color15
-```
-
----
-
-## Template Syntax
-
-Templates live in `~/dotfiles/templates/`. Use `{{key}}` placeholders — the generator replaces them with the correct color format per application:
-
-| Syntax | Output | Use case |
-|---|---|---|
-| `{{key}}` | `#rrggbb` | Default — most apps |
-| `{{key:hex}}` | `#rrggbb` | Explicit hex |
-| `{{key:raw}}` | `rrggbb` | Foot, Hyprland |
-| `{{key:rgb}}` | `rgb(r g b)` | CSS (space-separated) |
-| `{{key:rgb_spaced}}` | `r g b` | Inline RGB values |
-| `{{key:rgb_css}}` | `r, g, b` | GTK / Waybar `rgba()` |
-
-Example template line:
-```css
-@define-color background rgba({{bg:rgb_css}}, 0.25);
-```
-
----
-
-## Supported Applications
-
-Templates are provided for:
-
-- **Terminals** — Kitty, Foot, Alacritty
-- **Compositor** — Hyprland, Sway (borders + bar)
-- **Bar** — Waybar (CSS + color aliases)
-- **Notifications** — Mako, SwayNC
-- **Shell** — Starship prompt palette
-- **File managers** — Yazi, Broot
-- **Tools** — Btop, Lazygit, Eza, Walker, SwayOSD
-- **WM extras** — i3blocks, Tmux colors
-
----
-
-## Theme Manager
-
-Everything is handled by a single interactive fzf frontend:
+## Notes & Bookmarks Setup
 
 ```bash
-theme-manager
+mkdir -p ~/Documents/Notes
 ```
 
-```
-1) Generate theme          — compile a theme.toml into all app config files
-2) Set theme               — launch the rofi theme switcher
-3) Sync starship palettes  — collect all theme palettes into ~/.config/starship.toml
-4) Refresh theme list      — relink all themes into ~/.config/zorro/themes/
-5) Generate previews       — rebuild palette preview images and thumbnail cache
-6) First run setup         — run install-themes.sh to initialize everything
-7) Change themes folder    — pick a different themes directory
-8) Change templates folder — pick a different templates directory
-9) Reset to defaults       — restore default folder paths
-10) Quit
-```
-
----
-
-## Adding a New Theme
-
-1. Create a folder under `~/dotfiles/themes/mytheme/`
-2. Add a `theme.toml` with your palette — or drop in a `kitty.conf` and the manager will bootstrap it automatically
-3. Run `theme-manager` → `1) Generate theme` → select your theme
-4. Run `theme-manager` → `3) Sync starship palettes` to add your new palette to Starship
-5. Run `theme-manager` → `4) Refresh theme list` to make it available in the switcher
-6. Run `theme-manager` → `5) Generate previews` to create the palette thumbnail
-7. Switch to it with `theme-manager` → `2) Set theme`
-
----
-
-## Directory Structure
+Define files used by the bookmark script:
 
 ```bash
-~/dotfiles/
-├── templates/           # One template per application
-│   ├── foot.ini
-│   ├── waybar.css
-│   ├── starship-palette
-│   ├── eza.yml
-│   └── ...
-├── themes/
-│   ├── sakura/
-│   │   ├── theme.toml   # Source palette
-│   │   ├── foot.ini     # Generated
-│   │   ├── waybar.css   # Generated
-│   │   └── ...
-│   └── kanagawa/
-│       └── ...
-└── .local/bin/
-    ├── generate-theme-v2.py
-    ├── kitty_2_theme.py
-    └── theme-manager
+BOOKMARK_FILES="
+$HOME/Documents/Notes/gaming.md
+$HOME/Documents/Notes/coding.md
+$HOME/Documents/Notes/work.md
+"
 ```
 
 ---
 
 <!-- Badge Definitions -->
 [rust]: https://img.shields.io/badge/-Rust-DEA584?logo=rust&logoColor=black
-[nim]: https://img.shields.io/badge/-nim-%23ffe953
-[sh]: https://img.shields.io/badge/-shell-green
 [go]: https://img.shields.io/badge/-go-68D7E2
 [cpp]: https://img.shields.io/badge/-c%2B%2B-red
 [c]: https://img.shields.io/badge/-c-lightgrey
-[z]: https://img.shields.io/badge/-zig-yellow
-[va]: https://img.shields.io/badge/-vala-blueviolet
-[da]: https://img.shields.io/badge/-dart-02D3B3
 [py]: https://img.shields.io/badge/-python-blue
 [ts]: https://img.shields.io/badge/-TS-007BCD
 [js]: https://img.shields.io/badge/-javascript-F7DF1E
-[nix]: https://img.shields.io/badge/-nix-7e7eff

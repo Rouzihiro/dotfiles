@@ -72,8 +72,7 @@ bindsym $mod+Shift+v exec rofi-video-tool
 bindsym $mod+w exec rofi-wall
 bindsym $mod+mod1+w exec wall-random
 
-bindsym $mod+x exec voxtype record start
-bindsym --release $mod+x exec voxtype record stop
+bindsym $mod+x exec asryx
 
 bindsym $mod+z exec z-menu-keybindings-sway-soft
 
