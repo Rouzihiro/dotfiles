@@ -45,4 +45,4 @@ f = fullscreen
 a = zoom actual
 r = reset
 
-w = set_wallpaper
+# w = set_wallpaper
