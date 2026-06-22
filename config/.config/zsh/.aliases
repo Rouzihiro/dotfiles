@@ -58,7 +58,7 @@ alias ls-fontsf='fc-list :spacing=100 -f "%{family}: %{style}\n" | grep -v -iE "
 alias tp='trash-put'
 alias tl='trash-list | fzf | xargs -r trash-info'
 alias tr='trash-restore'
-alias te='rm -rfv ~/.local/share/vifm/Trash/*; trash-empty'
+alias te='trash-empty -v && echo "Trash emptied"'
 
 # Navigation
 alias cdc="cd && cd .config"
