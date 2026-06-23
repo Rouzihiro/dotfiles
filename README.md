@@ -131,7 +131,7 @@ Templates are provided for:
 - **Notifications** — Mako, SwayNC
 - **Shell** — Starship prompt
 - **File managers** — Yazi, Broot
-- **Tools** — Btop, Lazygit, Eza, Rofi, Wofi, Walker, SwayOSD
+- **Tools** — Btop, Lazygit, Eza, Rofi, SwayOSD
 - **Multiplexer** — Tmux
 - **Editor** — Neovim
 
@@ -428,15 +428,12 @@ See `.config/sway/config.d/keybindings.conf` for the complete configuration.
 | [Btop](https://github.com/aristocratos/btop) | System Monitor | ![C++][cpp] |
 | [Fastfetch](https://github.com/fastfetch-cli/fastfetch) | System Information Tool | ![C][c] |
 | [Foot](https://codeberg.org/dnkl/foot) | Terminal Emulator | ![C][c] |
-| [Fuzzel](https://codeberg.org/dnkl/fuzzel) | Wayland Application Launcher | ![C][c] |
 | [Lazygit](https://github.com/jesseduffield/lazygit) | Git TUI Client | ![Go][go] |
 | [Neovim](https://neovim.io/) | Text Editor | ![C][c] |
 | [Satty](https://github.com/gabm/satty) | Screenshot Annotation Tool | ![Rust][rust] |
 | [Swappy](https://github.com/jtheoof/swappy) | Wayland Screenshot Editor | ![C][c] |
 | [Thunar](https://docs.xfce.org/xfce/thunar/start) | File Manager | ![C][c] |
-| [Yazi](https://github.com/sxyazi/yazi) | Terminal File Manager | ![Rust][rust] |
 | [Broot](https://github.com/Canop/broot) | Terminal File Manager | ![Rust][rust] |
-| [Vifm](https://vifm.info/) | Terminal File Manager | ![C][c] |
 | [Zathura](https://github.com/pwmt/zathura) | PDF Reader | ![C][c] |
 
 ### Gaming
