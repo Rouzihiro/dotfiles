@@ -12,7 +12,6 @@ error = "#c26a4a"
 cursor = "#d0c8b6"
 sel_bg = "#b7a37a"
 sel_fg = "#1b1a17"
-
 color0 = "#1b1a17"
 color1 = "#c26a4a"
 color2 = "#8a9a7b"
@@ -31,9 +30,9 @@ color14 = "#95b8b5"
 color15 = "#e6dccb"
 
 [starship]
-os_bg = "6f8fa3"      # accent - Muted blue-gray for OS icon background
-os_fg = "1b1a17"      # bg - Dark background for contrast
-dir_bg = "8a9a7b"     # success - Muted green for directory background
+os_bg = "6f8fa3"
+os_fg = "1b1a17"
+dir_bg = "8a9a7b"
 
 [nvim]
 colorscheme = "dune"

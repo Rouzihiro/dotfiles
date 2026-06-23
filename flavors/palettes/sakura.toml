@@ -34,54 +34,5 @@ os_bg = "f0a8bc"
 os_fg = "080e18"
 dir_bg = "e08098"
 
-[tmux]
-pane_border = "1e3040"
-pane_active_border = "f0a8bc"
-message_bg = "f0a8bc"
-message_fg = "080e18"
-git_bg = "1e3040"
-git_fg = "fcd8e4"
-host_bg = "172535"
-host_fg = "fcd8e4"
-time_bg = "080e18"
-time_fg = "f0a8bc"
-
-[hyprland]
-active_border = "f0a8bc"
-inactive_border = "1e3040"
-
-[mako]
-bg = "080e18"
-text = "f0a8bc"
-border = "e08098"
-progress = "e08098"
-
-[wofi]
-bg = "080e18"
-border = "f0a8bc"
-input_bg = "172535"
-input_border = "1e3040"
-text = "fcd8e4"
-selected_bg = "e08098"
-selected_text = "080e18"
-
 [nvim]
 colorscheme = "kanagawa-dragon"
-bg = "080e18"
-fg = "fcd8e4"
-accent = "f0a8bc"
-muted = "172535"
-border = "1e3040"
-cursorline = "0d1a28"
-
-[dircolors]
-dir = "fcd8e4"
-link = "f0a8bc"
-archive = "d08840"
-media = "e08098"
-source = "f0a8bc"
-exec = "f0a8bc"
-ignored = "263848"
-bg = "0d1a28"
-fg = "fcd8e4"
-orphan = "803050"

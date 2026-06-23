@@ -17,6 +17,21 @@ ls-man () {
     man "${manpage_select}" "${manpage_name}" || return 1
 }
 
+ren() {
+    local file="$(wl-paste)"
+    if [ -z "$file" ]; then
+        echo "Error: No file path in clipboard"
+        return 1
+    fi
+    if [ ! -f "$file" ]; then
+        echo "Error: File doesn't exist: $file"
+        return 1
+    fi
+    local dir="$(dirname "$file")"
+    mv "$file" "$dir/$1"
+    echo "Renamed to: $dir/$1"
+}
+
 
 # Restart a program.
 refresh () {

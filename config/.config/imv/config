@@ -1,5 +1,3 @@
-# github.com/pahasara/HyprDots
-
 [options]
 # Suppress built-in key bindings, and specify them explicitly in this config file.
 suppress_default_binds = true
@@ -34,15 +32,28 @@ i = zoom 2
 o = zoom -2
 
 # Rotate Clockwise by 90 degrees
-<Ctrl+r> = rotate by 90
+r = rotate by 90
 
 # Other commands
+y = exec echo -n "$imv_current_file" | xclip -sel c && notify-send "Copied" "$imv_current_file"
 x = close
 c = center
 s = scaling next
 f = fullscreen
 <Shift+S> = upscaling next
 a = zoom actual
-r = reset
+R = reset
 
 # w = set_wallpaper
+
+# Print the current image file
+# <Ctrl+p> = exec lp "$imv_current_file"
+
+# Trash the current image and quit the viewer (recoverable from Trash)
+<Ctrl+X> = exec trash-put -- "$imv_current_file"; quit
+
+# Trash the current image and move to the next one
+<Ctrl+x> = exec trash-put -- "$imv_current_file"; close
+
+# Edit the current image in Satty and quit the viewer
+# <Ctrl+e> = exec satty --filename "$imv_current_file" & ; quit
