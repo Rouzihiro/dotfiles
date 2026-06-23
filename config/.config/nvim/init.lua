@@ -21,9 +21,9 @@ vim.g.mapleader = " "
 -- =====================
 vim.pack.add({
 		{ src = "https://github.com/ibhagwan/fzf-lua" },
-    { src = "https://github.com/chentoast/marks.nvim" },
-    { src = "https://github.com/stevearc/oil.nvim" },
-    { src = "https://github.com/nvim-tree/nvim-web-devicons" },
+    -- { src = "https://github.com/chentoast/marks.nvim" },
+    -- { src = "https://github.com/stevearc/oil.nvim" },
+    -- { src = "https://github.com/nvim-tree/nvim-web-devicons" },
     { src = "https://github.com/aznhe21/actions-preview.nvim" },
     { src = "https://github.com/nvim-treesitter/nvim-treesitter", version = "main" },
     { src = "https://github.com/nvim-lua/plenary.nvim" },
@@ -36,6 +36,7 @@ vim.pack.add({
     { src = "https://github.com/hrsh7th/cmp-buffer" },
     { src = "https://github.com/hrsh7th/cmp-nvim-lsp" },
     { src = "https://github.com/nvim-mini/mini.clue" },
+		{ src = "https://github.com/aohoyd/broot.nvim" },
     -- Themes
     { src = "https://github.com/ellisonleao/gruvbox.nvim" },
 		{ src = "https://github.com/sainnhe/gruvbox-material" },
@@ -74,16 +75,18 @@ require("typst-cheatsheet")
 require("fzf_config")
 require("keymaps")
 require("plugins.cmp")
-require("plugins.oil")
+-- require("plugins.oil")
 require("plugins.mini-clue")
 require("luasnip").setup({ enable_autosnippets = true })
 require("luasnip.loaders.from_lua").load({ paths = "~/.config/nvim/snippets/" })
 
-require("marks").setup {
-    builtin_marks = { "<", ">", "^" },
-    refresh_interval = 250,
-    sign_priority = { lower = 10, upper = 15, builtin = 8, bookmark = 20 },
-}
+-- require("marks").setup {
+--     builtin_marks = { "<", ">", "^" },
+--     refresh_interval = 250,
+--     sign_priority = { lower = 10, upper = 15, builtin = 8, bookmark = 20 },
+-- }
+
+require("broot").setup({})
 
 -- =====================
 -- Theme and color
@@ -114,7 +117,7 @@ vim.lsp.enable({
 -- Set path to only your specified directories
 vim.opt.path = {
 		os.getenv("HOME") .. "/.config/**",
-		os.getenv("HOME") .. "/dotfiles/**",
+	  os.getenv("HOME") .. "/dotfiles/**",
 		os.getenv("HOME") .. "/Downloads/**",
 		os.getenv("HOME") .. "/Documents/**",
 }

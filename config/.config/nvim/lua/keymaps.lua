@@ -16,27 +16,43 @@ map("n", "c", '"_c', { desc = "Change without yanking" })
 -- =====================
 -- Window management
 -- =====================
--- map("n", "<leader>sv", "<C-w>v", { desc = "Split window vertically" })
--- map("n", "<leader>sh", "<C-w>s", { desc = "Split window horizontally" })
-map("n", "<leader>fe", "<C-w>=", { desc = "Make splits equal size" })
-map("n", "<leader>fx", "<cmd>close<CR>", { desc = "Close current split" })
-map('n', '<leader>B', '<Cmd>e #<CR>', { desc = "Edit alternate file" })
-map('n', '<leader>fh', '<Cmd>bot sf #<CR>', { desc = "Horizontal split with alternate file" })
-map('n', '<leader>fv', '<Cmd>vert belowright sf #<CR>', { desc = "Vertical split with alternate file" })
+map("n", "<leader>s|", "<C-w>v", { desc = "Split window vertically" })
+map("n", "<leader>s-", "<C-w>s", { desc = "Split window horizontally" })
+map("n", "<leader>se", "<C-w>=", { desc = "Make splits equal size" })
+map("n", "<leader>sx", "<cmd>close<CR>", { desc = "Close current split" })
+map('n', '<leader>sh', '<Cmd>bot sf #<CR>', { desc = "Horizontal split with alternate file" })
+map('n', '<leader>sv', '<Cmd>vert belowright sf #<CR>', { desc = "Vertical split with alternate file" })
 
 -- =====================
 -- Buffes
 -- =====================
 map("n", "<Tab>", "<cmd>bnext<CR>", { desc = "Next buffer" })
-map("n", "<S-Tab>", "<cmd>bprevious<CR>", { desc = "Previous buffer" })
+map("n", "<S-Tab>", "<C-w>w", { desc = "Cycle through splits" })
+
+-- map("n", "<S-Tab>", "<cmd>bprevious<CR>", { desc = "Previous buffer" })
 
 -- =====================
--- File manager (Oil)
+-- File manager (Broot)
 -- =====================
+map("n", "<leader>bc", function()
+    require('broot').open("$HOME/.config")
+end, { desc = "Open broot in ~/.config" })
+
 map("n", "<leader>e", function()
-    vim.cmd("Oil --float " .. vim.loop.cwd())
-end, { desc = "Open Oil floating file manager" })
+    require('broot').open("$HOME/.config")
+end, { desc = "Open broot in ~/.config" })
 
+map("n", "<leader>bf", function()
+    require('broot').open()
+end, { desc = "Open broot in current directory" })
+
+map("n", "<leader>bh", function()
+    require('broot').open("~")
+end, { desc = "Open broot in home" })
+
+map("n", "<leader>bn", function()
+    require('broot').open("~/.config/nvim")
+end, { desc = "Open broot in nvim config" })
 -- =====================
 -- File path helpers
 -- =====================
@@ -121,7 +137,7 @@ map('n', '[[', function() vim.diagnostic.jump({ count = -1, on_jump = function()
 -- Misc
 -- =====================
 map('i', '<c-Space>', function() vim.lsp.completion.get() end, { desc = "Trigger LSP completion" })
-map('n', '<leader>tt', '<Cmd>Open .<CR>', { desc = "Open current folder in file manager" })
+map('n', '<leader>tt', '<Cmd>Open .<CR>', { desc = "Open current folder in terminal" })
 map('n', '<leader>vc', '<Cmd>e $MYVIMRC<CR>', { desc = "Edit init.lua" })
 map('n', '<leader>vv', '<Cmd>e ~/.config/nvim/lua/keymaps.lua<CR>', { desc = "Edit keymaps.lua" })
 map('n', '<leader>zc', '<Cmd>e ~/.config/zsh/.aliases<CR>', { desc = "Edit zsh aliases" })

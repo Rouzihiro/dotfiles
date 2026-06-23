@@ -24,6 +24,10 @@
       "rev": "3be3cd82cd31acfcab9a41bad853d9c68d30478d",
       "src": "https://github.com/chriskempson/base16-vim"
     },
+    "broot.nvim": {
+      "rev": "d8db32bc1f91044235ebd272b4228113b3bf6b70",
+      "src": "https://github.com/aohoyd/broot.nvim"
+    },
     "cmp-buffer": {
       "rev": "b74fab3",
       "src": "https://github.com/hrsh7th/cmp-buffer"
@@ -92,10 +96,6 @@
       "rev": "f8ce95213e57b379089da23abc36a1fc39936b63",
       "src": "https://github.com/omacom-io/lumon.nvim"
     },
-    "marks.nvim": {
-      "rev": "f353e8c",
-      "src": "https://github.com/chentoast/marks.nvim"
-    },
     "mason-lspconfig.nvim": {
       "rev": "0b9bb925c000ae649ff7e7149c8cd00031f4b539",
       "src": "https://github.com/williamboman/mason-lspconfig.nvim"
@@ -157,17 +157,9 @@
       "src": "https://github.com/nvim-treesitter/nvim-treesitter",
       "version": "'main'"
     },
-    "nvim-web-devicons": {
-      "rev": "8dcb311",
-      "src": "https://github.com/nvim-tree/nvim-web-devicons"
-    },
     "oasis.nvim": {
       "rev": "d79e82b72407a78fa43d7c4053390a49cdc93761",
       "src": "https://github.com/uhs-robert/oasis.nvim"
-    },
-    "oil.nvim": {
-      "rev": "01cb3a8",
-      "src": "https://github.com/stevearc/oil.nvim"
     },
     "oxocarbon.nvim": {
       "rev": "cf49e389c22dab56224e43ae16422ddcd5b61b28",
