@@ -31,6 +31,4 @@ OUTPUTS = {
     "waybar.css.j2":     str(Path.home() / ".config/waybar/colors.css"),
     "yazi.toml.j2":      str(Path.home() / ".config/yazi/theme.toml"),
     # "dircolors.j2":    str(Path.home() / ".dircolors"),
-    # "hypr.conf.j2":    str(Path.home() / ".config/hypr/theme.conf"),
-    # "wofi.css.j2":     str(Path.home() / ".config/wofi/style.css"),
 }
