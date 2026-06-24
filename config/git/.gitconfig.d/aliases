@@ -35,4 +35,6 @@
     amend = commit --amend
     
     # interactive addition
+		fzf = !fzf-git-show
+		sh = !fzf-git-show
     fa = 'add $(git ls-files --modified | fzf -m --preview "git diff --color -- {1}")'
