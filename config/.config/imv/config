@@ -35,7 +35,7 @@ o = zoom -2
 r = rotate by 90
 
 # Other commands
-y = exec echo -n "$imv_current_file" | xclip -sel c && notify-send "Copied" "$imv_current_file"
+y = exec echo -n "$imv_current_file" | wl-copy && notify-send "Copied" "$imv_current_file"
 x = close
 c = center
 s = scaling next
