@@ -14,7 +14,7 @@ OUTPUTS = {
     "btop.theme.j2":     str(Path.home() / ".config/btop/themes/current.theme"),
     "eza.yml.j2":        str(Path.home() / ".config/eza/theme.yml"),
     "foot.ini.j2":       str(Path.home() / ".config/foot/current-theme.ini"),
-    "gitconfig.j2":      str(Path.home() / ".gitconfig.d/theme"),
+    "gitconfig.j2":      str(Path.home() / "/git/.gitconfig.d/theme"),
     "hyprland.conf.j2":  str(Path.home() / ".config/hypr/theme.conf"),
     "i3bar.j2":          str(Path.home() / ".config/sway/config.d/bar"),
     "i3blocks.conf.j2":  str(Path.home() / ".config/i3blocks/config"),
