@@ -17,3 +17,6 @@
 
 [interactive]
     diffFilter = delta --color-only
+
+[include]
+    path = ~/.config/git/.gitconfig

@@ -1,0 +1,89 @@
+# ===================================================================
+root = true
+# -------------------------------------------------
+# Global defaults (safe, strict, boring)
+# -------------------------------------------------
+[*]
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+indent_style = space
+indent_size = 2
+max_line_length = 100
+
+# -------------------------------------------------
+# Shell / Zsh / Bash / Env
+# -------------------------------------------------
+[*.{sh,zsh,bash,env}]
+indent_style = tab
+indent_size = 4
+max_line_length = off
+
+# -------------------------------------------------
+# Makefiles MUST use tabs
+# -------------------------------------------------
+[Makefile]
+indent_style = tab
+
+# -------------------------------------------------
+# Python
+# -------------------------------------------------
+[*.py]
+indent_style = space
+indent_size = 4
+max_line_length = 88
+
+# -------------------------------------------------
+# JS / TS / JSON / YAML / TOML
+# -------------------------------------------------
+[*.{js,jsx,ts,tsx,json,jsonc,yml,yaml,toml}]
+indent_style = space
+indent_size = 2
+
+# -------------------------------------------------
+# Rust
+# rustfmt is the huncho, but this keeps editors sane
+# -------------------------------------------------
+[*.rs]
+indent_style = space
+indent_size = 4
+max_line_length = 100
+
+# -------------------------------------------------
+# Go
+# gofmt owns everything
+# -------------------------------------------------
+[*.go]
+indent_style = tab
+indent_size = 4
+
+# -------------------------------------------------
+# Markdown
+# No trimming. Trailing spaces are semantic.
+# -------------------------------------------------
+[*.md]
+trim_trailing_whitespace = false
+max_line_length = off
+
+# -------------------------------------------------
+# Git / Ignore / Attributes
+# -------------------------------------------------
+[*.{gitignore,gitattributes,gitmodules}]
+indent_style = space
+indent_size = 2
+
+# -------------------------------------------------
+# Config files that break if touched
+# -------------------------------------------------
+[*.{conf,ini}]
+indent_style = space
+indent_size = 2
+
+# -------------------------------------------------
+# Binary-ish or generated stuff — hands off
+# -------------------------------------------------
+[*.{png,jpg,jpeg,webp,svg,ico,woff,woff2,ttf,otf}]
+trim_trailing_whitespace = false
+insert_final_newline = false
+

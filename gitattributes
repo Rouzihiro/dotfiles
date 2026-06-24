@@ -1,0 +1,33 @@
+# default: text files use lf
+* text=auto eol=lf
+
+# shell and config files are always text
+*.sh      text
+*.zsh     text
+*.conf    text
+*.toml    text
+*.yaml    text
+*.yml     text
+*.json    text
+*.jsonc  text
+*.ini     text
+*.md      text
+*.txt     text
+
+# binary assets, never diff
+*.png     binary
+*.jpg     binary
+*.jpeg    binary
+*.gif     binary
+*.webp    binary
+*.ico     binary
+*.woff    binary
+*.woff2   binary
+*.ttf     binary
+*.otf     binary
+
+# encrypted or opaque blobs
+*.gpg     binary
+*.age     binary
+*.enc     binary
+

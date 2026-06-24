@@ -1,0 +1,20 @@
+[user]
+		email = ryossj@gmail.com
+		name = Rouzihiro
+
+[core]
+		pager = delta
+
+[color]
+		ui = auto
+
+[delta]
+		syntax-theme = none
+		light = false
+		dark = true
+		line-numbers = true
+		navigate = true
+
+[interactive]
+		diffFilter = delta --color-only
+

@@ -5,6 +5,15 @@ linux
 linux-firmware
 linux-headers
 networkmanager
+polkit-gnome
+power-profiles-daemon
+wayland-utils
+wlr-randr
+wev
+xdg-desktop-portal-wlr
+xdg-desktop-portal
+xdg-desktop-portal-gtk
+zen-browser-bin
 broot
 neovim
 git
