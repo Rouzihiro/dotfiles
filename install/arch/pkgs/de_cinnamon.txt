@@ -1,0 +1,10 @@
+cinnamon
+cinnamon-translations
+nemo
+nemo-fileroller
+gnome-terminal
+lightdm
+lightdm-gtk-greeter
+file-roller
+eog
+evince

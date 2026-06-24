@@ -1,0 +1,6 @@
+gnome
+gnome-tweaks
+gnome-shell-extensions
+gdm
+nautilus
+gnome-terminal

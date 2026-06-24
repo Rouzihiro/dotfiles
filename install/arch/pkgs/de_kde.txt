@@ -1,0 +1,5 @@
+plasma-meta
+kde-applications-meta
+sddm
+konsole
+dolphin

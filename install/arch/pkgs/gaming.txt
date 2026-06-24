@@ -1,8 +1,11 @@
-# Future Packages 
-#lutris
+heroic-games-launcher-bin
+steam
+lutris
+wine
+wine-mono
+wine-gecko
+winetricks
 gamemode
 lib32-gamemode
-winetricks
-heroic-games-launcher-bin
-#protonup-qt
-
+mangohud
+lib32-mangohud

@@ -1,0 +1,4 @@
+xorg-server
+xorg-xinit
+xorg-xrandr
+xorg-xsetroot

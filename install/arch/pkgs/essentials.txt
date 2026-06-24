@@ -1,4 +1,11 @@
 # Terminal & Shell
+base
+base-devel
+linux
+linux-firmware
+linux-headers
+networkmanager
+broot
 neovim
 git
 dialog
@@ -17,7 +24,7 @@ ncdu
 highlight
 wl-clipboard
 ps_mem
-jdownloader2
+#jdownloader2
 sdl2_sound
 
 # File Management

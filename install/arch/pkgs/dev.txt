@@ -3,6 +3,8 @@ lazygit
 git-delta
 pre-commit
 openssh
+python
+python-pip
 tinymist
 typst
 # jdk-openjdk

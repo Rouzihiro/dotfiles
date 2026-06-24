@@ -1,0 +1,17 @@
+sway
+swaylock
+swayidle
+#waybar
+#wofi
+i3blocks
+autotiling-rs
+rofi-wayland
+foot
+kitty
+mako
+wl-clipboard
+satty
+grim
+slurp
+swww
+xdg-desktop-portal-wlr
