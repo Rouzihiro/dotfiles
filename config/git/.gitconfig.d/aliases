@@ -1,0 +1,38 @@
+[alias]
+    # state management
+    ss = "reset --soft HEAD~2"
+    nuke = reset --hard HEAD
+    unadd = reset HEAD
+    unstage = reset HEAD --
+    whoops = reset HEAD~1 --soft
+    
+    # workflow shortcuts
+    mt = 'mergetool'
+    b = 'branch'
+    a = add .
+    st = status
+    s = status
+    df = diff
+    ck = checkout
+    cl = clone
+    
+    # remote operations
+    p = push origin
+    pu = pull origin
+    pprune = pull --prune
+    lsr = ls-remote
+    
+    # inspection & logging
+    w = whatchanged --abbrev-commit
+    ls = ls-files
+    last = log -1 HEAD
+    review = log -p --max-count=1
+    
+    # commit & rebase
+    c = commit -am
+    ci = commit -s
+    r = rebase -i
+    amend = commit --amend
+    
+    # interactive addition
+    fa = 'add $(git ls-files --modified | fzf -m --preview "git diff --color -- {1}")'

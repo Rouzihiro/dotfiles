@@ -32,11 +32,12 @@ i = zoom 2
 o = zoom -2
 
 # Rotate Clockwise by 90 degrees
-r = rotate by 90
+r = exec mogrify -rotate 90 "$imv_current_file"
+# r = rotate by 90
 
 # Other commands
 y = exec echo -n "$imv_current_file" | wl-copy && notify-send "Copied" "$imv_current_file"
-x = close
+q = close
 c = center
 s = scaling next
 f = fullscreen
@@ -54,6 +55,7 @@ R = reset
 
 # Trash the current image and move to the next one
 <Ctrl+x> = exec trash-put -- "$imv_current_file"; close
+X = exec trash-put -- "$imv_current_file"; close
 
 # Edit the current image in Satty and quit the viewer
 # <Ctrl+e> = exec satty --filename "$imv_current_file" & ; quit

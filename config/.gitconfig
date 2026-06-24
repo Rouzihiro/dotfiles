@@ -1,9 +1,8 @@
+[user]
+	name = Rouzihiro
+	email = ryossj@gmail.com
+[core]
+	pager = delta
+
 [include]
-    # modularized core config
-    path = .gitconfig.d/config
-    # global aliases
-    path = .gitconfig.d/aliases
-    # dynamic flavor-driven theme
-    path = .gitconfig.d/theme
-    # private/personal identity (GPG signing)
-    path = .gitconfig.d/_user
+    path = ~/git/.gitconfig

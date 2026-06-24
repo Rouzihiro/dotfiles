@@ -15,7 +15,7 @@ $HOME/Documents/Notes/torrent.md
 # Browser fallback
 # --------------------------
 BRAVE="$(command -v brave || command -v brave-browser || true)"
-FALLBACK="$(command -v xdg-open || echo librewolf)"
+FALLBACK="$(command -v xdg-open || echo zen-browser)"
 # --------------------------
 # Emit bookmark lines
 # Format:

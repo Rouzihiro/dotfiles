@@ -9,12 +9,21 @@
 #
 # Root-level files in ~/.local/bin are ignored intentionally.
 # This avoids syncing manually built binaries.
+#
+# Also syncs ~/git/ and ~/.gitconfig into:
+# ~/dotfiles/config/git/ and ~/dotfiles/config/.gitconfig
 
 SOURCE_ROOT="$HOME/.config"
 TARGET_ROOT="$HOME/dotfiles/config/.config"
 
 BIN_SOURCE="$HOME/.local/bin"
 BIN_TARGET="$HOME/dotfiles/config/.local/bin"
+
+GIT_SRC="$HOME/git"
+GIT_TGT="$HOME/dotfiles/config/git"
+
+GITCONFIG_SRC="$HOME/.gitconfig"
+GITCONFIG_TGT="$HOME/dotfiles/config/.gitconfig"
 
 EXCLUDE_DIRS=(
 "bat"
@@ -283,5 +292,102 @@ else
     print -r -- "Bin sync done."
   else
     print -r -- "Bin sync aborted."
+  fi
+fi
+
+# ─────────────────────────────────────────────
+# GIT CONFIG SYNC
+# ─────────────────────────────────────────────
+
+print -r -- ""
+print -r -- "━━━ Syncing git config ━━━"
+
+typeset -a git_diff_files=()
+
+# ~/.gitconfig
+if [[ -f "$GITCONFIG_SRC" ]]; then
+  if [[ ! -f "$GITCONFIG_TGT" ]] || ! cmp -s "$GITCONFIG_SRC" "$GITCONFIG_TGT"; then
+    git_diff_files+=(".gitconfig")
+  fi
+fi
+
+# ~/git/ tree
+if [[ -d "$GIT_SRC" ]]; then
+  while IFS= read -r -d '' f; do
+    rel="${f#$GIT_SRC/}"
+    tgt="$GIT_TGT/$rel"
+
+    if [[ ! -f "$tgt" ]] || ! cmp -s "$f" "$tgt"; then
+      git_diff_files+=("$rel")
+    fi
+  done < <(find "$GIT_SRC" -type f -print0)
+fi
+
+if (( ${#git_diff_files[@]} == 0 )); then
+  print -r -- "Git config already in sync."
+else
+  GIT_PREVIEW_CMD='
+rel={}
+if [[ "$rel" == ".gitconfig" ]]; then
+  src="'"$GITCONFIG_SRC"'"
+  tgt="'"$GITCONFIG_TGT"'"
+else
+  src="'"$GIT_SRC"'/$rel"
+  tgt="'"$GIT_TGT"'/$rel"
+fi
+
+if [[ -f "$tgt" ]]; then
+  diff -u "$tgt" "$src" | delta --paging=never
+else
+  echo "NEW FILE"
+  echo
+  diff -u /dev/null "$src" | delta --paging=never
+fi
+'
+
+  typeset -a git_selected=()
+
+  git_selected=("${(@f)$(
+    printf "%s\n" "${git_diff_files[@]}" |
+    fzf \
+      --multi \
+      --height=90% \
+      --layout=reverse \
+      --prompt="select git files > " \
+      --header="TAB select / ENTER confirm" \
+      --preview="$GIT_PREVIEW_CMD" \
+      --preview-window='right:60%,border-left'
+  )}")
+
+  if (( ${#git_selected[@]} > 0 )); then
+    print -r -- ""
+    print -r -- "Files to copy:"
+    print -r -- ""
+
+    for f in "${git_selected[@]}"; do
+      print -r -- "  $f"
+    done
+
+    print -r -- ""
+    print -rn -- "Proceed? [y/N] "
+    read -r git_confirm
+
+    if [[ "$git_confirm" =~ ^[Yy]$ ]]; then
+      for f in "${git_selected[@]}"; do
+        if [[ "$f" == ".gitconfig" ]]; then
+          cp -- "$GITCONFIG_SRC" "$GITCONFIG_TGT"
+        else
+          tgt="$GIT_TGT/$f"
+          mkdir -p "${tgt:h}"
+          cp -- "$GIT_SRC/$f" "$tgt"
+        fi
+        print -r -- "copied: $f"
+      done
+      print -r -- "Git sync done."
+    else
+      print -r -- "Git sync aborted."
+    fi
+  else
+    print -r -- "Git config already in sync."
   fi
 fi

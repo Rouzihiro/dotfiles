@@ -20,18 +20,19 @@ ls-man () {
 ren() {
     local file="$(wl-paste)"
     if [ -z "$file" ]; then
-        echo "Error: No file path in clipboard"
+        echo "Error: No file path in clipboard" >&2
         return 1
     fi
     if [ ! -f "$file" ]; then
-        echo "Error: File doesn't exist: $file"
+        echo "Error: File doesn't exist: $file" >&2
         return 1
     fi
     local dir="$(dirname "$file")"
-    mv "$file" "$dir/$1"
-    echo "Renamed to: $dir/$1"
+    local ext="${file##*.}"
+    local new="$1"
+    [[ "$new" != *.* ]] && new="$new.$ext"
+    mv "$file" "$dir/$new"
 }
-
 
 # Restart a program.
 refresh () {
