@@ -14,8 +14,8 @@ $HOME/Documents/Notes/torrent.md
 # --------------------------
 # Browser fallback
 # --------------------------
-BRAVE="$(command -v brave || command -v brave-browser || true)"
-FALLBACK="$(command -v xdg-open || echo zen-browser)"
+ZEN="$(command -v zen-browser || command -v zen || true)"
+FALLBACK="$(command -v brave || command -v brave-browser || echo xdg-open)"
 # --------------------------
 # Emit bookmark lines
 # Format:
@@ -90,7 +90,7 @@ esac
 dispatch_exec() {
     cmd="$1"
     if [ -n "${SWAYSOCK:-}" ]; then
-        swaymsg exec "'$cmd'"
+        swaymsg exec "$cmd"
     elif [ -n "${HYPRLAND_INSTANCE_SIGNATURE:-}" ]; then
         hyprctl dispatch exec "$cmd"
     else
@@ -106,13 +106,16 @@ dispatch_exec() {
 open_with() {
     browser="$1"
     [ -n "$browser" ] || return 1
-    dispatch_exec "'$browser' '$url'" && exit 0
+    # Build the command properly - no extra quotes!
+    dispatch_exec "$browser '$url'" && exit 0
 }
 
-case "$tag" in
-    work) open_with "$BRAVE" ;;
-    *)    open_with "$BRAVE" ;;
-esac
+# Try Zen Browser first, fallback to Brave
+if [ -n "$ZEN" ]; then
+    open_with "$ZEN"
+else
+    open_with "$FALLBACK"
+fi
 
 # Final fallback
-dispatch_exec "'$FALLBACK' '$url'"
+dispatch_exec "$FALLBACK '$url'"
