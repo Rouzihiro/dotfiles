@@ -158,3 +158,5 @@ google_token
 .local/bin/imageio_download_bin
 .local/bin/imageio_remove_bin
 .config/go
+config/gitconfig.d/theme
+.config/go
