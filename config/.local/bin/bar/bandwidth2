@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+NET_IF="wlan0"
+CACHE="/tmp/slstatus_net"
+
+rx_now=$(cat /sys/class/net/$NET_IF/statistics/rx_bytes)
+if [ -f "$CACHE" ]; then
+  prev_rx=$(cat "$CACHE")
+else
+  prev_rx=$rx_now
+fi
+echo "$rx_now" > "$CACHE"
+
+rx_rate=$(echo "scale=1; ($rx_now - $prev_rx)/1024/1024" | bc)
+echo "${rx_rate}MB/s"

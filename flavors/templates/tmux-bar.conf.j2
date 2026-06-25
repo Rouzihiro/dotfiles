@@ -19,7 +19,7 @@ set -g status-style "bg=default,fg=#{{ starship_os_bg }}"
 set -g status-left "#[fg=#{{ starship_os_bg }}]#[bg=#{{ starship_os_bg }}]#[fg=#{{ starship_os_fg }}]#[bold]   #S #[nobold]#[fg=#{{ starship_os_bg }}]#[bg=default]"
 
 # right side with consistent styling
-set -g status-right "#[align=right]#[fg=green]#(bandwidth)#[default] | #[fg=yellow]#(df -h / | awk 'NR==2 {print $3 \"/\" $2}')#[default] | #[fg=cyan]#(cpu-usage)#[default] | #[fg=magenta]#(memory)#[default] | #[fg=blue]#(wifi-status)#[default] | #[fg=white]#(kb-layout)#[default] | #[fg=#{{ palette_fg }}]%H:%M"
+set -g status-right "#[align=right]#[fg=#{{ palette_accent }}]#(bandwidth)#[default] | #[fg=#{{ palette_fg }}]#(df -h / | awk 'NR==2 {print $3 \"/\" $2}')#[default] | #[fg=cyan]#(cpu-usage)#[default] | #[fg=#{{ palette_accent }}]#(memory)#[default] | #[fg=blue]#(wifi-status)#[default] | #[fg=white]#(kb-layout)#[default] | #[fg=#{{ palette_fg }}]%H:%M"
 
 # window tabs
 set -g window-status-separator ""
