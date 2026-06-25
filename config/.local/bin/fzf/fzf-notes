@@ -31,7 +31,7 @@ options="$(printf '📄 Create New Note\n🗑️ Delete Note\n%s' "$entries")"
 
 # Launch fzf
 selection=$(printf '%s\n' "$options" | fzf \
-    --height=40% \
+    --height=100% \
     --layout=reverse \
     --border \
     --prompt='🗒 Notes> ')
@@ -40,7 +40,7 @@ selection=$(printf '%s\n' "$options" | fzf \
 
 if [[ "$selection" == "📄 Create New Note" ]]; then
     new_name=$(printf '' | fzf \
-        --height=40% \
+        --height=100% \
         --layout=reverse \
         --border \
         --prompt='New note name (no .md): ' \
@@ -54,14 +54,14 @@ fi
 
 if [[ "$selection" == "🗑️ Delete Note" ]]; then
     delete_target=$(find "$DIR" -maxdepth 1 -type f -name "*.md" -printf "📝 %f\n" | sort | fzf \
-        --height=40% \
+        --height=100% \
         --layout=reverse \
         --border \
         --prompt='🗑 Select note to delete: ')
     [ -z "$delete_target" ] && exit
     filename="${delete_target#📝 }"
     confirm=$(printf 'No\nYes' | fzf \
-        --height=40% \
+        --height=100% \
         --layout=reverse \
         --border \
         --prompt="Delete $filename? ")
