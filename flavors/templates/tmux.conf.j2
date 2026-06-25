@@ -23,7 +23,7 @@ set -g status-right '#{?client_prefix,#[fg=#{{ palette_bg_subtle }}]#[bg=#{{ 
 
 # window tabs
 set -g window-status-separator ""
-set -g window-status-format         " #[fg=#{{ palette_bg_muted }}]#I #[fg=#{{ palette_fg_dim }}]#W "
+set -g window-status-format         " #[fg=#{{ palette_bg_muted }}]#I #[fg=#{{ palette_fg }}]#W "
 set -g window-status-current-format "#[fg=#{{ starship_os_bg }}]#[bg=#{{ starship_os_bg }}]#[fg=#{{ starship_os_fg }}]#[bold] #I: #W #[nobold]#[fg=#{{ starship_os_bg }}]#[bg=default]"
 
 # nuke the entire right side of the status bar, it's annoying with starship
