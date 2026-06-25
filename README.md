@@ -15,7 +15,7 @@ bash ~/dotfiles/install/assets.sh
 
 ### Theme Switcher Demo
 
-https://github.com/user-attachments/assets/75b108d7-b7f5-4757-b0a9-b01c8b649eb5
+<video src="https://raw.githubusercontent.com/Rouzihiro/assets/main/4dotfiles/theme.mp4" controls width="800" />
 
 ---
 
