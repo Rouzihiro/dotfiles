@@ -96,6 +96,7 @@ google_token
 # flavors/backgrounds/*.jpg
 # flavors/backgrounds/*.jpeg
 # flavors/backgrounds/*.png
+config/.gitconfig.d/theme
 __pycache__
 *.pyc
 *.pyo
