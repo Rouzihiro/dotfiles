@@ -159,3 +159,6 @@ config/.local/bin/tifffile
 config/.local/bin/imageio_download_bin
 config/.local/bin/imageio_remove_bin
 config/.config/go
+config/git/gitconfig.d/theme
+config/gitconfig.d/theme
+bm-run
