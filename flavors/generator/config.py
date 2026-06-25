@@ -28,6 +28,7 @@ OUTPUTS = {
     "sway-theme.j2":     str(Path.home() / ".config/sway/config.d/theme"),
     "swaync.css.j2":     str(Path.home() / ".config/swaync/style.css"),
     "tmux.conf.j2":      str(Path.home() / ".config/tmux/tmux-colors.conf"),
+    "tmux-bar.conf.j2":  str(Path.home() / ".config/tmux/tmux-bar.conf"),
     "waybar.css.j2":     str(Path.home() / ".config/waybar/colors.css"),
     "yazi.toml.j2":      str(Path.home() / ".config/yazi/theme.toml"),
     "bemenu.j2":         str(Path.home() / ".local/bin/bemenu/bm-run"),
