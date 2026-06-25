@@ -170,3 +170,8 @@ config/gitconfig.d/theme
 config/.local/bin/bemenu/bm-run
 .local/bin/bemenu/bm-run
 bm-run
+config/git/.gitconfig.d/theme
+config/.gitconfig.d/theme
+config/.local/bin/bemenu/bm-run
+.local/bin/bemenu/bm-run
+bm-run
