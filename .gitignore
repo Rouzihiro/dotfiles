@@ -162,3 +162,6 @@ config/.config/go
 config/git/gitconfig.d/theme
 config/gitconfig.d/theme
 bm-run
+config/git/gitconfig.d/theme
+config/gitconfig.d/theme
+bm-run
