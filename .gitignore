@@ -67,28 +67,29 @@ node_modules/
 # -------------------------
 # App-specific / Config
 # -------------------------
-.config/go
-.config/nvim/lazy-lock.json
-.config/vdirsyncer/google_token
+config/.config/go
+config/.config/nvim/lazy-lock.json
+config/.config/vdirsyncer/google_token
 google_token
-.config/BraveSoftware/
+config/.config/BraveSoftware/
 
 # -------------------------
 # Binaries
 # -------------------------
-.local/bin/bob
-.local/bin/f2py
-.local/bin/numpy-config
-.local/bin/fonttools
-.local/bin/pyftmerge
-.local/bin/pyftsubset
-.local/bin/ttx
-.local/bin/lsm2bin
-.local/bin/tiff2fsspec
-.local/bin/tiffcomment
-.local/bin/tifffile
-.local/bin/imageio_download_bin
-.local/bin/imageio_remove_bin
+config/.local/bin/bemenu/bm-run
+config/.local/bin/bob
+config/.local/bin/f2py
+config/.local/bin/numpy-config
+config/.local/bin/fonttools
+config/.local/bin/pyftmerge
+config/.local/bin/pyftsubset
+config/.local/bin/ttx
+config/.local/bin/lsm2bin
+config/.local/bin/tiff2fsspec
+config/.local/bin/tiffcomment
+config/.local/bin/tifffile
+config/.local/bin/imageio_download_bin
+config/.local/bin/imageio_remove_bin
 
 # -------------------------
 # Theme images
@@ -96,7 +97,7 @@ google_token
 # flavors/backgrounds/*.jpg
 # flavors/backgrounds/*.jpeg
 # flavors/backgrounds/*.png
-config/.gitconfig.d/theme
+theme
 __pycache__
 *.pyc
 *.pyo
@@ -139,24 +140,22 @@ venv.bak
 *.zip
 node_modules
 .mypy_cache
-.config/go
-.config/nvim/lazy-lock.json
-.config/vdirsyncer/google_token
+config/.config/go
+config/.config/nvim/lazy-lock.json
+config/.config/vdirsyncer/google_token
 google_token
-.config/BraveSoftware
-.local/bin/bob
-.local/bin/f2py
-.local/bin/numpy-config
-.local/bin/fonttools
-.local/bin/pyftmerge
-.local/bin/pyftsubset
-.local/bin/ttx
-.local/bin/lsm2bin
-.local/bin/tiff2fsspec
-.local/bin/tiffcomment
-.local/bin/tifffile
-.local/bin/imageio_download_bin
-.local/bin/imageio_remove_bin
-.config/go
-config/gitconfig.d/theme
-.config/go
+config/.config/BraveSoftware
+config/.local/bin/bob
+config/.local/bin/f2py
+config/.local/bin/numpy-config
+config/.local/bin/fonttools
+config/.local/bin/pyftmerge
+config/.local/bin/pyftsubset
+config/.local/bin/ttx
+config/.local/bin/lsm2bin
+config/.local/bin/tiff2fsspec
+config/.local/bin/tiffcomment
+config/.local/bin/tifffile
+config/.local/bin/imageio_download_bin
+config/.local/bin/imageio_remove_bin
+config/.config/go
