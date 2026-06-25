@@ -9,7 +9,8 @@ else
     IM_COMMAND="convert"
 fi
 GS_COMMAND="gs"
-bemenu="bemenu -c -i -l 15 -p"
+bemenu="${HOME}/.local/bin/bemenu/bm-run -c -i -l 15"
+
 
 # Get all images in current directory
 get_images() {

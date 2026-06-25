@@ -1,8 +1,7 @@
 #!/bin/sh
 set -eu
-
 # --------------------------
-# Bookmark files (adjust paths as needed)
+# Bookmark files
 # --------------------------
 BOOKMARK_FILES="
 $HOME/Documents/Notes/gaming.md
@@ -12,18 +11,15 @@ $HOME/Documents/Notes/movies.md
 $HOME/Documents/Notes/work.md
 $HOME/Documents/Notes/torrent.md
 "
-
 # --------------------------
 # dmenu appearance
 # --------------------------
-DMENU_OPTS="-l 30 -p 'links:'"
-
+DMENU_OPTS="-l 30 -p links:"
 # --------------------------
-# Browser fallback
+# Browser
 # --------------------------
-BRAVE="$(command -v brave || command -v brave-browser || true)"
-FALLBACK="$(command -v xdg-open || echo librewolf)"
-
+BROWSER="$(command -v zen-browser || true)"
+FALLBACK="$(command -v xdg-open || echo zen-browser)"
 # --------------------------
 # Emit bookmark lines (hide URLs, skip comments)
 # --------------------------
@@ -31,12 +27,9 @@ emit() {
     tag="$1"
     file="$2"
     [ -f "$file" ] || return 0
-
-    # skip lines starting with # or empty lines
     grep -vE '^\s*(#|$)' "$file" | while IFS= read -r line; do
         case "$line" in
             *"::"*)
-                # explicit title :: URL
                 title="${line%%::*}"
                 url="${line#*::}"
                 title="$(printf '%s' "$title" | sed 's/^[[:space:]]*//; s/[[:space:]]*$//')"
@@ -44,73 +37,47 @@ emit() {
                 ;;
             *)
                 url="$line"
-                # derive title from URL
                 title="$(printf '%s' "$url" | sed -E 's#https?://##; s#^www\.##; s#/.*$##; s/\.(com|org|net|de|io|co)$//')"
                 ;;
         esac
-
-        # Format: "[tag] [title]" (URL hidden)
         printf '[%s] [%s]\t%s\n' "$tag" "$title" "$url"
     done
 }
-
 # --------------------------
-# Build combined list and show dmenu (only show tag+title)
+# Build combined list and show bemenu
 # --------------------------
 choice="$({
     for f in $BOOKMARK_FILES; do
         tag="$(basename "$f" .md)"
-        tag="$(basename "$tag" .txt)"  # just in case
         emit "$tag" "$f"
     done
-	} | sort | cut -f1 | ~/.local/bin/bemenu/bm-run || true)"
+} | sort | cut -f1 | ~/.local/bin/bemenu/bm-run $DMENU_OPTS || true)"
 
 [ -n "$choice" ] || exit 0
-
 # --------------------------
-# Find full line with URL for chosen tag+title
+# Find full line with URL for chosen entry
+# --------------------------
 full_line="$({
     for f in $BOOKMARK_FILES; do
         tag="$(basename "$f" .md)"
-        tag="$(basename "$tag" .txt)"
         emit "$tag" "$f"
     done
 } | sort | grep -F "$choice" || true)"
 
 [ -n "$full_line" ] || exit 1
 
-# Extract URL (3rd tab-separated field)
 url="$(printf '%s' "$full_line" | cut -f2-)"
-
-# Clean URL: strip comments, trailing spaces
 url="$(printf '%s' "$url" \
     | sed -e 's/[[:space:]]\+#.*$//' -e 's/[[:space:]]\/\/.*$//' \
           -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//')"
 
-# Extract tag (from [tag] [title])
 tag="$(printf '%s' "$choice" | sed -n 's/\[\(.*\)\] \[.*\]/\1/p')"
 
-# Ensure URL scheme
 case "$url" in
-    http://*|https://*|file://*|about:*|chrome:*) ;;
+    http://*|https://*|file://*|about:*) ;;
     *) url="https://$url" ;;
 esac
-
 # --------------------------
-# Open in browser
+# Open in zen-browser
 # --------------------------
-open_with() {
-    cmd="$1"
-    if [ -n "$cmd" ]; then
-        nohup "$cmd" "$url" >/dev/null 2>&1 &
-        exit 0
-    fi
-}
-
-case "$tag" in
-    work) open_with "$BRAVE" ;;
-    *)    open_with "$BRAVE" ;;
-esac
-
-# fallback if browser failed to open
-nohup $FALLBACK "$url" >/dev/null 2>&1 &
+nohup "$BROWSER" "$url" >/dev/null 2>&1 &

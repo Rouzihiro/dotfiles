@@ -14,7 +14,7 @@ OUTPUTS = {
     "btop.theme.j2":     str(Path.home() / ".config/btop/themes/current.theme"),
     "eza.yml.j2":        str(Path.home() / ".config/eza/theme.yml"),
     "foot.ini.j2":       str(Path.home() / ".config/foot/current-theme.ini"),
-    "gitconfig.j2":      str(Path.home() / "/git/.gitconfig.d/theme"),
+    "gitconfig.j2":      str(Path.home() / "git/.gitconfig.d/theme"),
     "hyprland.conf.j2":  str(Path.home() / ".config/hypr/theme.conf"),
     "i3bar.j2":          str(Path.home() / ".config/sway/config.d/bar"),
     "i3blocks.conf.j2":  str(Path.home() / ".config/i3blocks/config"),
@@ -30,5 +30,6 @@ OUTPUTS = {
     "tmux.conf.j2":      str(Path.home() / ".config/tmux/tmux-colors.conf"),
     "waybar.css.j2":     str(Path.home() / ".config/waybar/colors.css"),
     "yazi.toml.j2":      str(Path.home() / ".config/yazi/theme.toml"),
+    "bemenu.j2":         str(Path.home() / ".local/bin/bemenu/bm-run"),
     # "dircolors.j2":    str(Path.home() / ".dircolors"),
 }

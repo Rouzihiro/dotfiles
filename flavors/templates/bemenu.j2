@@ -1,0 +1,9 @@
+#!/bin/sh
+exec /usr/bin/bemenu \
+  --tb '#{{ palette_bg }}'        --tf '#{{ palette_accent }}' \
+  --fb '#{{ palette_bg }}'        --ff '#{{ palette_fg }}' \
+  --nb '#{{ palette_bg }}'        --nf '#{{ palette_fg }}' \
+  --hb '#{{ palette_accent }}'    --hf '#{{ palette_bg }}' \
+  --sb '#{{ palette_bg_subtle }}' --sf '#{{ palette_fg }}' \
+  --ab '#{{ palette_bg }}'        --af '#{{ palette_fg_dim }}' \
+  "$@"

@@ -155,6 +155,10 @@ _osyx_reload_nvim() {
 #   fi
 # }
 
+_osyx_reload_bemenu() {
+  chmod +x "$HOME/.local/bin/bemenu/bm-run" 2>/dev/null || true
+}
+
 _osyx_apply_theme() {
   local theme="$1"
 
@@ -172,6 +176,7 @@ _osyx_apply_theme() {
   _osyx_reload_tmux &!
   _osyx_reload_nvim &!
   _osyx_reload_btop &!
+	_osyx_reload_bemenu &!
   # _osyx_reload_waybar &!
 
   _osyx_reload_all
