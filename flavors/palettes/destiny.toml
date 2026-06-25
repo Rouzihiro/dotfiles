@@ -1,0 +1,42 @@
+[palette]
+bg = "#0C1319"
+bg_subtle = "#1A242D"
+bg_muted = "#443E39"
+fg = "#D1D2D7"
+fg_dim = "#748496"
+
+# Traveler / Light accent
+accent = "#F5C993"
+fg_on_accent = "#0C1319"
+
+# Semantic colors
+success = "#698CAF"
+warning = "#F5C993"
+error = "#B8845C"
+cursor = "#ECD5BB"
+sel_bg = "#F5C993"
+sel_fg = "#0C1319"
+color0  = "#0C1319"
+color1  = "#B8845C"
+color2  = "#698CAF"
+color3  = "#F5C993"
+color4  = "#698CAF"
+color5  = "#725E4E"
+color6  = "#748496"
+color7  = "#D1D2D7"
+color8  = "#443E39"
+color9  = "#F5C993"
+color10 = "#ECD5BB"
+color11 = "#F5C993"
+color12 = "#698CAF"
+color13 = "#B8845C"
+color14 = "#D1D2D7"
+color15 = "#ECD5BB"
+
+[starship]
+os_bg = "F5C993"
+os_fg = "0C1319"
+dir_bg = "698CAF"
+
+[nvim]
+colorscheme = "kanagawa-dragon"
