@@ -96,6 +96,7 @@ EXCLUDE_FILES=(
   "swaync/style.css"
   "swayosd/colors.css"
   "tmux/tmux-colors.conf"
+	"tmux/tmux-bar.conf"
   "waybar/colors.css"
   "yazi/theme.toml"
   "yazi/yazi-2.toml"
