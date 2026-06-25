@@ -39,4 +39,4 @@ os_fg = "0C1319"
 dir_bg = "698CAF"
 
 [nvim]
-colorscheme = "kanagawa-dragon"
+colorscheme = "destiny"
