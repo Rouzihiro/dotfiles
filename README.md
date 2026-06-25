@@ -4,8 +4,6 @@ ArchLinux & Fedora Universal Installer for a Lightweight & Beautiful Setup
 <br>
 </h1>
 
-![Banner](https://raw.githubusercontent.com/Rouzihiro/assets/main/4dotfiles/banner.png)
-
 ### 🖥️ Automatic Installation:
 ```bash
 git clone https://github.com/Rouzihiro/dotfiles ~/dotfiles
@@ -15,7 +13,7 @@ bash ~/dotfiles/install/assets.sh
 
 ### Theme Switcher Demo
 
-<video src="https://raw.githubusercontent.com/Rouzihiro/assets/main/4dotfiles/theme.mp4" controls width="800" />
+[![Theme Switcher Demo](https://raw.githubusercontent.com/Rouzihiro/assets/main/4dotfiles/banner.png)](https://raw.githubusercontent.com/Rouzihiro/assets/main/4dotfiles/theme.mp4)
 
 ---
 
