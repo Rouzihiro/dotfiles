@@ -287,15 +287,16 @@ fi
 # Starship Prompt
 # ============================================
 # Cache starship init — invalidate by deleting the cache file after upgrades
-if command -v starship >/dev/null 2>&1; then
+if [[ -z "$NO_STARSHIP" ]] && command -v starship >/dev/null 2>&1; then
     _starship_cache="${ZSH_CACHE_DIR:-$HOME/.cache/zsh}/starship_init.zsh"
     if [[ ! -f "$_starship_cache" || "$commands[starship]" -nt "$_starship_cache" ]]; then
         starship init zsh >| "$_starship_cache"
     fi
     source "$_starship_cache"
     unset _starship_cache
+else
+    PROMPT=' '
 fi
-
 
 source "$HOME/dotfiles/flavors/themes.zsh"
 export EZA_CONFIG_DIR="$HOME/.config/eza"

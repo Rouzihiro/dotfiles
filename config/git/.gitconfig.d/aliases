@@ -37,6 +37,6 @@
     # interactive addition
 		fzf = !fzf-git-show
 		sh = !fzf-git-show
-    fa = 'add $(git ls-files --modified | fzf -m --preview "git diff --color -- {1}")'
-
-    tree = "!clear && git status --porcelain | grep '^ M' | awk '{print $2}' | sed 's|/|/\\n|g' | sort -u | awk '{print \"├── \" $0}'"
+		fa = "!git add $(git ls-files --modified | fzf -m --preview 'git diff --color -- {1}')"
+		fa2 = "!git ls-files --modified | fzf -m --preview 'git diff --color -- {}' | xargs -r git add"
+		tree = "!clear && git diff --name-only | sed 's|/|/\\n  │  |g; s|^|  └── |'"
