@@ -1,0 +1,134 @@
+#!/usr/bin/env bash
+
+# =========================
+# CONFIG
+# =========================
+YEAR="2026"
+OUT="$HOME/cal.ical"
+
+# =========================
+# helpers
+# =========================
+make_date() {
+    echo "${YEAR}${1}"
+}
+
+fix_time() {
+    echo "${1}00"
+}
+
+make_uid() {
+    date +%s%N
+}
+
+# RFC 5545 minimal sanitizer (critical fix)
+sanitize() {
+    echo "$1" | sed 's/\\/\\\\/g; s/,/\\,/g; s/;/\\;/g'
+}
+
+echo "=== iCal Creator ==="
+echo
+
+# =========================
+# INPUT
+# =========================
+read -rp "Title: " TITLE
+read -rp "Location (optional): " LOCATION
+read -rp "Notes (optional): " NOTES
+echo
+
+echo "Event type:"
+echo "1) Single-day event"
+echo "2) Multi-day event"
+read -rp "Choose (1/2): " TYPE
+
+echo
+echo "All-day event?"
+echo "1) Yes"
+echo "2) No (with time)"
+read -rp "Choose (1/2): " ALLDAY
+
+echo
+
+# =========================
+# BUILD EVENT
+# =========================
+if [[ "$TYPE" == "1" ]]; then
+
+    read -rp "Date (MMDD): " MD
+    DATE=$(make_date "$MD")
+
+    if [[ "$ALLDAY" == "1" ]]; then
+        DTSTART="DTSTART;VALUE=DATE:$DATE"
+        DTEND=""
+    else
+        read -rp "Start time (HHMM): " ST
+        read -rp "End time (HHMM): " ET
+
+        ST=$(fix_time "$ST")
+        ET=$(fix_time "$ET")
+
+        DTSTART="DTSTART:${DATE}T${ST}"
+        DTEND="DTEND:${DATE}T${ET}"
+    fi
+
+else
+
+    read -rp "Start (MMDD): " START_MD
+    read -rp "End (MMDD): " END_MD
+
+    START=$(make_date "$START_MD")
+    END=$(make_date "$END_MD")
+
+    if [[ "$ALLDAY" == "1" ]]; then
+        DTSTART="DTSTART;VALUE=DATE:$START"
+        DTEND="DTEND;VALUE=DATE:$END"
+    else
+        read -rp "Start time (HHMM): " ST
+        read -rp "End time (HHMM): " ET
+
+        ST=$(fix_time "$ST")
+        ET=$(fix_time "$ET")
+
+        DTSTART="DTSTART:${START}T${ST}"
+        DTEND="DTEND:${END}T${ET}"
+    fi
+fi
+
+# =========================
+# WRITE FILE (overwrite)
+# =========================
+EVENT_UID=$(make_uid)
+
+{
+echo "BEGIN:VCALENDAR"
+echo "VERSION:2.0"
+echo "PRODID:-//rey-cli-ical//EN"
+echo "BEGIN:VEVENT"
+echo "$DTSTART"
+[[ -n "$DTEND" ]] && echo "$DTEND"
+echo "SUMMARY:$TITLE"
+
+# FIXED: safe location + description
+[[ -n "$LOCATION" ]] && echo "LOCATION:$(sanitize "$LOCATION")"
+[[ -n "$NOTES" ]] && echo "DESCRIPTION:$(sanitize "$NOTES")"
+
+echo "UID:$EVENT_UID"
+echo "END:VEVENT"
+echo "END:VCALENDAR"
+} > "$OUT"
+
+echo
+echo "✔ Written to $OUT"
+
+# =========================
+# AUTO IMPORT
+# =========================
+if command -v calcurse >/dev/null 2>&1; then
+    calcurse -i "$OUT" >/dev/null 2>&1
+    echo "✔ Imported into calcurse"
+else
+    echo "⚠ calcurse not found, skipping import"
+fi
+
+echo "Done."

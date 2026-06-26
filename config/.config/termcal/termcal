@@ -1,0 +1,191 @@
+#!/usr/bin/zsh
+
+DB_DIR="$HOME/.config/termcal"
+DB_FILE="$DB_DIR/events.tsv"
+mkdir -p "$DB_DIR"
+[[ ! -f "$DB_FILE" ]] && touch "$DB_FILE"
+
+current_year=$(date '+%Y')
+current_month=$(date '+%m')
+current_day=$(date '+%d')
+current_datetime=$(date '+%Y-%m-%d %H:%M')
+
+# Standalone helper to feed the fzf preview pane with a clean task overview
+if [[ "$1" == "--preview" ]]; then
+    c_m="$2"
+    c_y="$3"
+    echo "   Tasks for ${c_y}-${c_m}"
+    echo "└─────────────────────┘"
+    if [[ -f "$DB_FILE" ]]; then
+        sort -k1,1 "$DB_FILE" | while IFS=$'\t' read -r r_date r_title r_notified; do
+            if [[ "$r_date" =~ ^${c_y}-${c_m}- ]]; then
+                local d_num=$(echo "$r_date" | awk -F'[-]' '{print $3}' | awk '{print $1}')
+                local t_str=$(echo "$r_date" | awk '{print $2}')
+                local dow=$(date -d "${c_y}-${c_m}-${d_num}" '+%a' 2>/dev/null)
+                
+                # Color based on past/future
+                if [[ "$r_date" < "$(date '+%Y-%m-%d %H:%M')" ]]; then
+                    echo -e "\033[32m $dow ${d_num}/${c_m} @ $t_str: $r_title\033[0m" | fold -s -w 60
+                else
+                    echo -e "\033[31m $dow ${d_num}/${c_m} @ $t_str: $r_title\033[0m" | fold -s -w 60
+                fi
+                echo "-------------------------------------------------------------------"
+            fi
+        done
+    fi
+    exit 0
+fi
+
+
+manage_day() {
+    local day=$1
+    local day_padded=$(printf "%02d" "$day")
+    local day_date_str="${current_year}-${current_month}-${day_padded}"
+    
+    while true; do
+        clear
+        echo "=== Tasks for $day_date_str ==="
+        local -a day_tasks=()
+        local -a day_dates=()
+        if [[ -f "$DB_FILE" ]]; then
+            local idx=1
+            # Sort timeline views inside management submenus
+            sort -k1,1 "$DB_FILE" | while IFS=$'\t' read -r r_date r_title r_notified; do
+                if [[ "$r_date" =~ ^$day_date_str ]]; then
+                    local t_str=$(echo "$r_date" | awk '{print $2}')
+                    
+                    # Color based on past/future
+                    if [[ "$r_date" < "$current_datetime" ]]; then
+                        echo -e "\033[32m[$idx] ($t_str) $r_title\033[0m"
+                    else
+                        echo -e "\033[31m[$idx] ($t_str) $r_title\033[0m"
+                    fi
+                    day_tasks+=("$r_title")
+                    day_dates+=("$r_date")
+                    ((idx++))
+                fi
+            done
+            [[ $idx -eq 1 ]] && echo "(No tasks planned)"
+        fi
+        echo "=============================="
+        echo ""
+
+        local actions=(
+            "[a] Add Task"
+            "[e] Edit Task"
+            "[d] Delete Task"
+            "[b] Back to Month View"
+        )
+        
+        local choice=$(print -l "${actions[@]}" | fzf --prompt="Action: " --height=20% --layout=reverse --no-info --border=rounded)
+        [[ -z "$choice" || "$choice" == *"[b]"* ]] && break
+
+        if [[ "$choice" == *"[a]"* ]]; then
+            echo -n "Enter time (HH:MM, e.g., 14:30): "
+            read task_time
+            if [[ ! "$task_time" =~ ^[0-2][0-9]:[0-5][0-9]$ ]]; then
+                echo "Invalid time format. Using 12:00."
+                task_time="12:00"
+                sleep 1
+            fi
+            
+            echo -n "Enter task description: "
+            read new_t
+            if [[ -n "${new_t// /}" ]]; then
+                # Store structural key string using composite intervals token trackers
+                print "${day_date_str} ${task_time}\t${new_t}\tnone" >> "$DB_FILE"
+            fi
+        elif [[ "$choice" == *"[d]"* && ${#day_tasks} > 0 ]]; then
+            echo -n "Enter index number to delete: "
+            read del_idx
+            if [[ "$del_idx" =~ ^[0-9]+$ ]] && (( del_idx >= 1 && del_idx <= ${#day_tasks} )); then
+                local target_title="${day_tasks[del_idx]}"
+                local target_date="${day_dates[del_idx]}"
+                local tmp=$(mktemp)
+                local skipped=false
+                while IFS=$'\t' read -r r_date r_title r_notified; do
+                    if [[ "$r_date" == "$target_date" && "$r_title" == "$target_title" && "$skipped" == "false" ]]; then
+                        skipped=true
+                        continue
+                    fi
+                    print "${r_date}\t${r_title}\t${r_notified}" >> "$tmp"
+                done < "$DB_FILE"
+                mv "$tmp" "$DB_FILE"
+            fi
+        elif [[ "$choice" == *"[e]"* && ${#day_tasks} > 0 ]]; then
+            echo -n "Enter index number to edit: "
+            read edit_idx
+            if [[ "$edit_idx" =~ ^[0-9]+$ ]] && (( edit_idx >= 1 && edit_idx <= ${#day_tasks} )); then
+                local target_title="${day_tasks[edit_idx]}"
+                local target_date="${day_dates[edit_idx]}"
+                
+                local orig_time=$(echo "$target_date" | awk '{print $2}')
+                echo -n "Enter updated time (HH:MM) [$orig_time]: "
+                read mod_time
+                [[ -z "$mod_time" ]] && mod_time="$orig_time"
+                
+                echo -n "Enter updated text: "
+                read mod_t
+                if [[ -n "${mod_t// /}" ]]; then
+                    local tmp=$(mktemp)
+                    while IFS=$'\t' read -r r_date r_title r_notified; do
+                        if [[ "$r_date" == "$target_date" && "$r_title" == "$target_title" ]]; then
+                            print "${day_date_str} ${mod_time}\t${mod_t}\tnone" >> "$tmp"
+                        else
+                            print "${r_date}\t${r_title}\t${r_notified}" >> "$tmp"
+                        fi
+                    done < "$DB_FILE"
+                    mv "$tmp" "$DB_FILE"
+                fi
+            fi
+        fi
+    done
+}
+
+while true; do
+    local raw_cal=$(cal "$current_month" "$current_year")
+    
+    local menu_options=(
+        "[s] Select Day Number"
+        "[n] Next Month"
+        "[p] Previous Month"
+        "[q] Quit"
+    )
+
+    local selection=$(print -l "${menu_options[@]}" | fzf \
+       --header="$raw_cal" \
+       --prompt="Choose action: " \
+       --height=50% \
+       --layout=reverse \
+       --no-info \
+       --border=rounded \
+       --margin=1,2 \
+       --padding=1 \
+       --color="header:#565f89,prompt:#565f89" \
+       --preview="$0 --preview ${current_month} ${current_year}" \
+       --preview-window=right:65%:border-rounded)
+
+    [[ -z "$selection" || "$selection" == *"[q]"* ]] && break
+
+    if [[ "$selection" == *"[n]"* ]]; then
+        if [[ "$current_month" == "12" ]]; then
+            current_month="01"
+            current_year=$((current_year + 1))
+        else
+            current_month=$(printf "%02d" $((10#$current_month + 1)))
+        fi
+    elif [[ "$selection" == *"[p]"* ]]; then
+        if [[ "$current_month" == "01" ]]; then
+            current_month="12"
+            current_year=$((current_year - 1))
+        else
+            current_month=$(printf "%02d" $((10#$current_month - 1)))
+        fi
+    elif [[ "$selection" == *"[s]"* ]]; then
+        echo -n "Enter day number: "
+        read input_day
+        if [[ "$input_day" =~ ^[0-9]+$ ]] && (( input_day >= 1 && input_day <= 31 )); then
+            manage_day $((10#$input_day))
+        fi
+    fi
+done

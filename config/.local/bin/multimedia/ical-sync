@@ -2,23 +2,104 @@
 
 set -e
 
-vdirsyncer sync
+# Colors for better output
+GREEN='\033[0;32m'
+RED='\033[0;31m'
+YELLOW='\033[1;33m'
+NC='\033[0m' # No Color
+
+echo "========================================="
+echo "  Calcurse Sync Script"
+echo "========================================="
+echo ""
+echo "Options:"
+echo "  1) Run normal sync (use existing token)"
+echo "  2) Create new token (run vdirsyncer discover)"
+echo ""
+read -p "Choose option (1 or 2): " choice
+
+case $choice in
+    1)
+        echo -e "${YELLOW}Running normal sync with existing token...${NC}"
+        vdirsyncer sync
+        ;;
+    2)
+        echo -e "${YELLOW}Creating new OAuth token...${NC}"
+        echo -e "${YELLOW}This will open a browser for Google authentication.${NC}"
+        vdirsyncer discover
+        
+        # Check if token was created successfully
+        if [ -f ~/.vdirsyncer/google_token ]; then
+            echo -e "${GREEN}✓ New token created successfully!${NC}"
+        else
+            echo -e "${RED}✗ Failed to create token. Please check your configuration.${NC}"
+            exit 1
+        fi
+        ;;
+    *)
+        echo -e "${RED}Invalid option. Please run again and choose 1 or 2.${NC}"
+        exit 1
+        ;;
+esac
+
+# Continue with the rest of the script
+echo ""
+echo -e "${YELLOW}Processing calendar files...${NC}"
 
 STATE_DIR="$HOME/.cache/calcurse-sync"
 mkdir -p "$STATE_DIR"
 STATE_FILE="$STATE_DIR/imported.txt"
-
 touch "$STATE_FILE"
+
+# Track imported files count
+IMPORTED_COUNT=0
 
 find ~/.local/share/calcurse/calendars \
   -name "*.ics" | while read -r file; do
-
-    # skip already imported files
     if grep -qF "$file" "$STATE_FILE"; then
         continue
     fi
-
     calcurse -i "$file"
     echo "$file" >> "$STATE_FILE"
-
+    IMPORTED_COUNT=$((IMPORTED_COUNT + 1))
 done
+
+if [ $IMPORTED_COUNT -gt 0 ]; then
+    echo -e "${GREEN}✓ Imported $IMPORTED_COUNT new calendar file(s)${NC}"
+else
+    echo -e "${YELLOW}No new calendar files to import${NC}"
+fi
+
+# Export calcurse → ical → TSV (current month and future only)
+echo -e "${YELLOW}Exporting calendar to TSV...${NC}"
+
+calcurse --export > ~/.config/termcal/calcurse.ical
+
+if [ -f ~/.config/termcal/calcurse.ical ] && [ -s ~/.config/termcal/calcurse.ical ]; then
+    echo -e "${GREEN}✓ Calendar exported to ~/.config/termcal/calcurse.ical${NC}"
+else
+    echo -e "${RED}✗ Failed to export calendar.ics file is empty or missing${NC}"
+    exit 1
+fi
+
+# Run the conversion script
+if zsh ~/.config/termcal/ical2tsv.zsh ~/.config/termcal/calcurse.ical \
+   | awk -F'\t' -v cutoff="$(date +%Y-%m)" '$1 >= cutoff' \
+   | sort -u > ~/.config/termcal/events.tsv; then
+    
+    if [ -f ~/.config/termcal/events.tsv ] && [ -s ~/.config/termcal/events.tsv ]; then
+        EVENT_COUNT=$(wc -l < ~/.config/termcal/events.tsv)
+        echo -e "${GREEN}✓ events.tsv created successfully with $EVENT_COUNT events${NC}"
+    else
+        echo -e "${RED}✗ events.tsv is empty or was not created${NC}"
+        exit 1
+    fi
+else
+    echo -e "${RED}✗ Failed to create events.tsv${NC}"
+    exit 1
+fi
+
+echo ""
+echo -e "${GREEN}=========================================${NC}"
+echo -e "${GREEN}✓ Sync completed successfully!${NC}"
+echo -e "${GREEN}=========================================${NC}"
