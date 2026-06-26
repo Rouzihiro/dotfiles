@@ -301,6 +301,18 @@ fi
 source "$HOME/dotfiles/flavors/themes.zsh"
 export EZA_CONFIG_DIR="$HOME/.config/eza"
 
+
+# ─────────────────────────────
+# Editors / Apps
+# ─────────────────────────────
+
+export TERMINAL="kitty" 
+export TERM="kitty" 
+export BROWSER="zen-browser"
+export EDITOR="nvim"
+export SUDO_EDITOR="$EDITOR"
+export VISUAL="$EDITOR"
+
 # ============================================
 # Load Aliases
 # ============================================

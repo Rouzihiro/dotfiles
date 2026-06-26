@@ -10,19 +10,14 @@ fi
 
 open_in_term() {
     local file="$1"
-    # Use hyprctl for Hyprland
     if command -v hyprctl >/dev/null 2>&1; then
-        # Hyprland: Use hyprctl dispatch exec
-        hyprctl dispatch exec "'$term' --title floaty-medium -e nvim '$file'"
+        hyprctl dispatch exec "kitty --title floaty-medium -e nvim '$file'"
     elif command -v swaymsg >/dev/null 2>&1; then
-        # Sway fallback
-        swaymsg exec "'$term' --title floaty-medium -e nvim '$file'"
+        swaymsg exec "kitty --title floaty-medium -e nvim '$file'"
     else
-        # Fallback to just running in current terminal or background
-        "$term" --title floaty-medium -e nvim "$file" &
+        kitty --title floaty-medium -e nvim "$file" &
     fi
 }
-
 # Get list of .md files
 entries=$(find "$DIR" -maxdepth 1 -type f -name "*.md" -printf "📝 %f\n" | sort)
 
