@@ -1,0 +1,50 @@
+# mandalorian.toml
+# Palette derived from a Mandalorian wallpaper.
+# Beskar steel, desert dust, burnt iron, and the void between stars.
+
+[palette]
+bg          = "#080808"   # black — the void
+bg_subtle   = "#141210"   # lifted void, barely visible
+bg_muted    = "#504036"   # taupe — cracked desert earth
+fg          = "#DCCAB3"   # pale oak — parchment / desert sand
+fg_dim      = "#998272"   # dusty taupe — aged leather
+fg_faint    = "#6C7D87"   # slate grey — distant beskar sheen
+
+# Beskar / main accent
+accent      = "#DCCAB3"   # pale oak — warm parchment highlight
+fg_on_accent = "#080808"  # black on light backgrounds
+
+# Semantic colors
+success     = "#6C7D87"   # slate grey — beskar steel
+warning     = "#8B705B"   # faded copper — worn armor
+error       = "#7C3B1C"   # saddle brown — burnt iron / blood rust
+cursor      = "#DCCAB3"   # pale oak
+sel_bg      = "#504036"   # taupe — dusty selection
+sel_fg      = "#DCCAB3"   # pale oak
+
+# Terminal colors (ANSI 0–15)
+color0  = "#080808"   # black
+color1  = "#7C3B1C"   # saddle brown — red substitute (burnt iron)
+color2  = "#6C7D87"   # slate grey — green substitute (beskar)
+color3  = "#8B705B"   # faded copper — yellow substitute
+color4  = "#5F5B56"   # charcoal — blue substitute (dark steel)
+color5  = "#504036"   # taupe — magenta substitute
+color6  = "#969992"   # grey olive — cyan substitute
+color7  = "#B3B3AC"   # silver
+color8  = "#504036"   # taupe — bright black
+color9  = "#8B705B"   # faded copper — bright red
+color10 = "#969992"   # grey olive — bright green
+color11 = "#DCCAB3"   # pale oak — bright yellow
+color12 = "#6C7D87"   # slate grey — bright blue
+color13 = "#998272"   # dusty taupe — bright magenta
+color14 = "#B3B3AC"   # silver — bright cyan
+color15 = "#DCCAB3"   # pale oak — bright white
+
+[starship]
+os_bg   = "504036"    # taupe
+os_fg   = "DCCAB3"    # pale oak
+dir_bg  = "6C7D87"    # slate grey (beskar)
+dir_fg  = "080808"    # black
+
+[nvim]
+colorscheme = "mandalorian"
