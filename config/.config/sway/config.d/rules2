@@ -1,0 +1,123 @@
+# =============================================================================
+# rules.conf — Sway
+# =============================================================================
+# Dropped: focus/unfocus opacity split (not natively supported in sway),
+# `suppress_event maximize`, and the XWayland no_focus drag-fix —
+# none of these have a sway equivalent.
+
+set $NewOpacity 0.90
+
+for_window [app_id=".*"] opacity $NewOpacity
+
+# Browsers
+for_window [app_id="^(firefox|brave|chromium|librewolf|qutebrowser|zen-browser)$"] opacity $NewOpacity
+for_window [class="^(firefox|brave|chromium|librewolf|qutebrowser|zen-browser)$"] opacity $NewOpacity
+
+# Spotify / Discord / Telegram / Neovim / Thunar or Nemo by title
+for_window [title=".*Spotify.*"] opacity $NewOpacity
+for_window [title=".*Discord.*"] opacity $NewOpacity
+for_window [title=".*Telegram.*"] opacity $NewOpacity
+for_window [title=".*Neovim.*"] opacity $NewOpacity
+for_window [title=".*neovim.*"] opacity $NewOpacity
+for_window [title=".*(Thunar|nemo).*"] opacity $NewOpacity
+
+# Lunar Client fullscreen (static effect)
+for_window [class="^Lunar Client.*$"] fullscreen enable
+
+# -----------------------------------------------------------------------------
+# Opacity
+# -----------------------------------------------------------------------------
+
+for_window [title="^(JDownloader.*)$"] opacity 0.90
+
+# -----------------------------------------------------------------------------
+# dashboard scratchpad
+# -----------------------------------------------------------------------------
+
+for_window [app_id="^dashboard-calcurse$"] floating enable
+for_window [app_id="^dashboard-calcurse$"] resize set 1017 904
+for_window [app_id="^dashboard-calcurse$"] move position 1515 668
+
+for_window [app_id="^dashboard-termcal$"] floating enable
+for_window [app_id="^dashboard-termcal$"] resize set 1420 906
+for_window [app_id="^dashboard-termcal$"] move position 50 668
+
+for_window [app_id="^dashboard-git$"] floating enable
+for_window [app_id="^dashboard-git$"] resize set 400 582
+for_window [app_id="^dashboard-git$"] move position 1900 800
+
+# -----------------------------------------------------------------------------
+# Scratchpad
+# -----------------------------------------------------------------------------
+
+for_window [title="^(floaty-scratchpad)$"] floating enable
+for_window [title="^(floaty-scratchpad)$"] resize set 1200 1000
+for_window [title="^(floaty-scratchpad)$"] move position center
+
+# -----------------------------------------------------------------------------
+# Idle inhibit
+# -----------------------------------------------------------------------------
+
+for_window [app_id=".*"] inhibit_idle fullscreen
+for_window [app_id="^(transmission-gtk)$"] inhibit_idle focus
+for_window [class="^(transmission-gtk)$"] inhibit_idle focus
+
+# -----------------------------------------------------------------------------
+# runner_floating
+# -----------------------------------------------------------------------------
+
+for_window [app_id="^(runner_floating)$"] floating enable
+for_window [app_id="^(runner_floating)$"] move position center
+for_window [app_id="^(runner_floating)$"] resize set 800 600
+for_window [app_id="^(runner_floating)$"] opacity 0.80
+
+# -----------------------------------------------------------------------------
+# floaty-small
+# -----------------------------------------------------------------------------
+
+for_window [title="^(floaty-small)$"] floating enable
+for_window [title="^(floaty-small)$"] move position center
+for_window [title="^(floaty-small)$"] resize set 800 600
+for_window [title="^(floaty-small)$"] opacity 0.80
+
+# -----------------------------------------------------------------------------
+# floaty-medium
+# -----------------------------------------------------------------------------
+
+for_window [title="^(floaty-medium)$"] floating enable
+for_window [title="^(floaty-medium)$"] move position center
+for_window [title="^(floaty-medium)$"] resize set 1000 800
+for_window [title="^(floaty-medium)$"] opacity 0.80
+
+# -----------------------------------------------------------------------------
+# floaty-tiny
+# -----------------------------------------------------------------------------
+
+for_window [title="^(floaty-tiny)$"] floating enable
+for_window [title="^(floaty-tiny)$"] move position center
+for_window [title="^(floaty-tiny)$"] resize set 500 350
+for_window [title="^(floaty-tiny)$"] opacity 0.80
+
+# -----------------------------------------------------------------------------
+# WoW Wine windows
+# -----------------------------------------------------------------------------
+
+for_window [title="^(Wow-SF-64\.exe - Wine Desktop)$"] floating enable
+for_window [title="^(Wow-SF-64\.exe - Wine Desktop)$"] move position center
+
+for_window [title="^(Wow-SF\.exe - Wine Desktop)$"] floating enable
+for_window [title="^(Wow-SF\.exe - Wine Desktop)$"] move position center
+
+# -----------------------------------------------------------------------------
+# Floating apps
+# -----------------------------------------------------------------------------
+
+for_window [app_id="^(com\.saivert\.pwvucontrol)$"] floating enable
+
+# -----------------------------------------------------------------------------
+# Workspace assignments
+# -----------------------------------------------------------------------------
+
+for_window [app_id="^(zen-browser)$"] move to workspace number 2
+for_window [class="^(zen-browser)$"] move to workspace number 2
+for_window [title="^(JDownloader.*)$"] move to workspace number 4
