@@ -1,0 +1,50 @@
+# gilded.toml
+# A palette of ancient gold, ember amber, and aged parchment.
+# Illuminated manuscripts, candlelight, molten metal.
+
+[palette]
+bg          = "#0B0D0A"   # near-black with a green-black undertone
+bg_subtle   = "#17140E"   # lifted dark — aged vellum shadow
+bg_muted    = "#2A2318"   # deeper amber-tinged dark
+fg          = "#EFE2C7"   # pale parchment
+fg_dim      = "#B86A22"   # warm amber — aged ink
+fg_faint    = "#5C4A2A"   # dark amber-brown — faded inscription
+
+# Gold / main accent
+accent      = "#D19A45"   # gilded gold
+fg_on_accent = "#0B0D0A"  # near-black on gold
+
+# Semantic colors
+success     = "#CA8732"   # amber — warm success
+warning     = "#D19A45"   # gold — caution
+error       = "#A15C1D"   # burnt sienna — danger
+cursor      = "#D19A45"   # gilded gold
+sel_bg      = "#D19A45"   # gold selection
+sel_fg      = "#0B0D0A"   # black on gold
+
+# Terminal colors (ANSI 0–15) — mirrored from kitty config
+color0  = "#0B0D0A"   # black
+color1  = "#A15C1D"   # burnt sienna — red
+color2  = "#CA8732"   # amber — green
+color3  = "#D19A45"   # gold — yellow
+color4  = "#CA8732"   # amber — blue
+color5  = "#A15C1D"   # burnt sienna — magenta
+color6  = "#894418"   # deep ember — cyan
+color7  = "#EFE2C7"   # parchment — white
+color8  = "#17140E"   # dark vellum — bright black
+color9  = "#C86B2B"   # ember orange — bright red
+color10 = "#D19A45"   # gold — bright green
+color11 = "#F0BF6B"   # bright gold — bright yellow
+color12 = "#D19A45"   # gold — bright blue
+color13 = "#CA8732"   # amber — bright magenta
+color14 = "#B86A22"   # warm amber — bright cyan
+color15 = "#FFF1CF"   # cream — bright white
+
+[starship]
+os_bg   = "D19A45"    # gilded gold
+os_fg   = "0B0D0A"    # near-black
+dir_bg  = "894418"    # deep ember
+dir_fg  = "EFE2C7"    # parchment
+
+[nvim]
+colorscheme = "gilded"
