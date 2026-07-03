@@ -37,6 +37,7 @@ vim.pack.add({
     { src = "https://github.com/hrsh7th/cmp-nvim-lsp" },
     { src = "https://github.com/nvim-mini/mini.clue" },
 		{ src = "https://github.com/aohoyd/broot.nvim" },
+{ src = "https://github.com/NvChad/nvim-colorizer.lua" },
     -- Themes
     { src = "https://github.com/ellisonleao/gruvbox.nvim" },
 		{ src = "https://github.com/sainnhe/gruvbox-material" },
@@ -87,6 +88,21 @@ require("luasnip.loaders.from_lua").load({ paths = "~/.config/nvim/snippets/" })
 -- }
 
 require("broot").setup({})
+
+-- =====================
+-- Colorizer (toml files)
+-- =====================
+require("colorizer").setup({
+    filetypes = { "toml" },
+    user_default_options = {
+        RGB = true,
+        RRGGBB = true,
+        RRGGBBAA = true,
+        names = false,
+        mode = "background",
+    },
+})
+
 
 -- =====================
 -- Theme and color
