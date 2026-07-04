@@ -1,5 +1,4 @@
 ### Startup programs
-### Startup programs
 exec autotiling-rs
 exec wl-paste -t text --watch clipman store --no-persist
 
@@ -14,4 +13,4 @@ exec --no-startup-id dbus-update-activation-environment --systemd --all
 exec --no-startup-id dbus-update-activation-environment --systemd XDG_CURRENT_DESKTOP=sway
 
 exec_always swww-daemon
-exec_always scale-auto
+exec_always scale 1.0

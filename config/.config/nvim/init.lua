@@ -37,7 +37,7 @@ vim.pack.add({
     { src = "https://github.com/hrsh7th/cmp-nvim-lsp" },
     { src = "https://github.com/nvim-mini/mini.clue" },
 		{ src = "https://github.com/aohoyd/broot.nvim" },
-{ src = "https://github.com/NvChad/nvim-colorizer.lua" },
+		{ src = "https://github.com/NvChad/nvim-colorizer.lua" },
     -- Themes
     { src = "https://github.com/ellisonleao/gruvbox.nvim" },
 		{ src = "https://github.com/sainnhe/gruvbox-material" },

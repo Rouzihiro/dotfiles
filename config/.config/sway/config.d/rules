@@ -1,56 +1,170 @@
-### Window rules
-for_window [app_id=".*"] inhibit_idle fullscreen
+# =============================================================================
+# rules.conf — Sway
+# =============================================================================
 
-#for_window [app_id="runner_floating"] floating enable, move position center, move scratchpad
+set $NewOpacity 0.90
 
-for_window [app_id="runner_floating"] floating enable
-for_window [app_id="runner_floating"] move position center
-for_window [app_id="runner_floating"] resize set 800 600
-for_window [app_id="runner_floating"] opacity 0.8
+# -----------------------------------------------------------------------------
+# Global
+# -----------------------------------------------------------------------------
 
-for_window [title="floaty-small"] floating enable
-for_window [title="floaty-small"] move position center
-for_window [title="floaty-small"] resize set 800 600
-for_window [title="floaty-small"] opacity 0.8
+for_window [app_id=".*"] {
+    inhibit_idle fullscreen
+    opacity $NewOpacity
+}
 
-for_window [title="floaty-medium"] floating enable
-for_window [title="floaty-medium"] move position center
-for_window [title="floaty-medium"] resize set 1000 800
-for_window [title="floaty-medium"] border pixel 2
-for_window [title="floaty-medium"] opacity 0.8
+# -----------------------------------------------------------------------------
+# Browsers
+# -----------------------------------------------------------------------------
 
-for_window [title="floaty-tiny"] floating enable
-for_window [title="floaty-tiny"] move position center
-for_window [title="floaty-tiny"] resize set 500 350
-for_window [title="floaty-tiny"] opacity 0.8
+for_window [app_id="^(firefox|brave|chromium|librewolf|qutebrowser|zen-browser)$"] opacity $NewOpacity
+for_window [class="^(firefox|brave|chromium|librewolf|qutebrowser|zen-browser)$"] opacity $NewOpacity
 
+# -----------------------------------------------------------------------------
+# Title-based opacity
+# -----------------------------------------------------------------------------
 
+for_window [title=".*Spotify.*"] opacity $NewOpacity
+for_window [title=".*Discord.*"] opacity $NewOpacity
+for_window [title=".*Telegram.*"] opacity $NewOpacity
+for_window [title=".*Neovim.*"] opacity $NewOpacity
+for_window [title=".*neovim.*"] opacity $NewOpacity
+for_window [title=".*(Thunar|nemo).*"] opacity $NewOpacity
+for_window [title="^(JDownloader.*)$"] opacity 0.90
 
-### Gaps and borders
+# -----------------------------------------------------------------------------
+# Lunar Client
+# -----------------------------------------------------------------------------
+
+for_window [class="^Lunar Client.*$"] fullscreen enable
+
+# -----------------------------------------------------------------------------
+# Dashboard scratchpad
+# -----------------------------------------------------------------------------
+
+for_window [app_id="^dashboard-calcurse$"] {
+    floating enable
+    resize set 1017 904
+    move position 1515 668
+}
+
+for_window [app_id="^dashboard-termcal$"] {
+    floating enable
+    resize set 1420 906
+    move position 50 668
+}
+
+for_window [app_id="^dashboard-git$"] {
+    floating enable
+    resize set 400 582
+    move position 1900 800
+}
+
+# -----------------------------------------------------------------------------
+# Scratchpad
+# -----------------------------------------------------------------------------
+
+for_window [title="^floaty-scratchpad$"] {
+    floating enable
+    resize set 1200 1000
+    move position center
+}
+
+# -----------------------------------------------------------------------------
+# Idle inhibit
+# -----------------------------------------------------------------------------
+
+for_window [app_id="^(transmission-gtk)$"] inhibit_idle focus
+for_window [class="^(transmission-gtk)$"] inhibit_idle focus
+
+# -----------------------------------------------------------------------------
+# runner_floating
+# -----------------------------------------------------------------------------
+
+for_window [app_id="^runner_floating$"] {
+    floating enable
+    move position center
+    resize set 800 600
+    opacity 0.80
+}
+
+# -----------------------------------------------------------------------------
+# floaty-big
+# -----------------------------------------------------------------------------
+
+for_window [title="^floaty-big$"] {
+    floating enable
+    move position center
+    resize set 1400 1000
+    opacity 0.80
+}
+
+# -----------------------------------------------------------------------------
+# floaty-small
+# -----------------------------------------------------------------------------
+
+for_window [title="^floaty-small$"] {
+    floating enable
+    move position center
+    resize set 800 600
+    opacity 0.80
+}
+
+# -----------------------------------------------------------------------------
+# floaty-medium
+# -----------------------------------------------------------------------------
+
+for_window [title="^floaty-medium$"] {
+    floating enable
+    move position center
+    resize set 1000 800
+    opacity 0.80
+}
+
+# -----------------------------------------------------------------------------
+# floaty-tiny
+# -----------------------------------------------------------------------------
+
+for_window [title="^floaty-tiny$"] {
+    floating enable
+    move position center
+    resize set 500 350
+    opacity 0.80
+}
+
+# -----------------------------------------------------------------------------
+# WoW Wine windows
+# -----------------------------------------------------------------------------
+
+for_window [title="^(Wow-SF-64\\.exe - Wine Desktop)$"] {
+    floating enable
+    move position center
+}
+
+for_window [title="^(Wow-SF\\.exe - Wine Desktop)$"] {
+    floating enable
+    move position center
+}
+
+# -----------------------------------------------------------------------------
+# Floating apps
+# -----------------------------------------------------------------------------
+
+for_window [app_id="^com\\.saivert\\.pwvucontrol$"] floating enable
+
+# -----------------------------------------------------------------------------
+# Workspace assignments
+# -----------------------------------------------------------------------------
+
+for_window [app_id="^zen-browser$"] move to workspace number 2
+for_window [class="^zen-browser$"] move to workspace number 2
+for_window [title="^(JDownloader.*)$"] move to workspace number 4
+
+# -----------------------------------------------------------------------------
+# Gaps & borders
+# -----------------------------------------------------------------------------
+
 gaps inner 5
 gaps outer 2
 default_border pixel 2
 default_floating_border pixel 2
-
-### Opacity settings
-for_window [app_id="foot"] opacity 0.9
-for_window [title="^JDownloader.*"] opacity 0.9
-for_window [title="^Wow-SF-64.exe - Wine Desktop$"] floating enable, move position center
-for_window [title="^Wow-SF.exe - Wine Desktop$"] floating enable, move position center
-
-### Floating windows
-floating_modifier $mod
-for_window [app_id="^com.saivert.pwvucontrol$"] floating enable
-for_window [con_mark="floaty-small"] floating enable, resize set 800 600, move position center
-
-### Assign applications to workspaces
-assign [app_id="^librewolf$"] workspace number 2
-assign [app_id="firefox"] workspace number 2
-assign [title="^JDownloader.*"] workspace number 4
-
-for_window [app_id="dashboard"] {
-    floating enable
-    resize set 1400 800
-    move position center
-    focus
-}

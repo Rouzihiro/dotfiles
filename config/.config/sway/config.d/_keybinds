@@ -1,0 +1,81 @@
+bindsym $mod+Escape exec rofi-power
+
+bindsym $mod+Return exec $term2
+bindsym $mod+mod1+Return exec $term2 -T 'floaty-big'
+bindsym $mod+Shift+Return exec $term
+
+bindsym ALT+r exec zsh -ic 'themes rotate'
+
+bindsym $mod+space exec $launcher
+bindsym $mod+mod1+space exec quick-actions
+bindsym $mod+ctrl+space exec rofi-scripts
+
+bindsym $mod+a exec $term2 -e btop
+bindsym $mod+Mod1+a exec $term2 --title floaty-big -e sh -c ncdu
+
+# bindsym $mod+b exec $term2 --title floaty-tiny -e sh -c bookmarks
+bindsym $mod+b exec rofi-bookmarks 
+bindsym $mod+Mod1+b exec xdg-open https://
+bindsym $mod+Shift+b exec $term2 --title floaty-big -e sh -c bt
+
+bindsym $mod+d exec ~/.config/sway/scripts/dashboard-cal.sh
+bindsym $mod+Mod1+d exec rofi-aria
+bindsym $mod+Shift+d exec rofi-docs
+#bindsym $mod+Shift+d exec bm-music-downloader
+
+bindsym $mod+e exec $fm
+bindsym $mod+Mod1+e exec $tfm
+bindsym $mod+Shift+e exec $files
+
+bindsym $mod+f fullscreen
+bindsym $mod+Shift+f floating toggle
+
+bindsym $mod+g exec ~/.config/sway/scripts/dashboard-git.sh
+bindsym $mod+mod1+g exec $term2 --title floaty-big -e zsh -ic "fzf-aliases; exec zsh"
+
+bindsym $mod+i exec $term2 --title floaty-medium -e sh -c fzf-wifi
+bindsym $mod+mod1+i exec rofi-wifi
+
+bindsym $mod+mod1+l exec $lockscreen
+
+bindsym $mod+m exec rofi-mount-usb
+bindsym $mod+mod1+m exec rofi-monitor-switch
+bindsym $mod+shift+m exec $term2 -T 'floaty-big' -e bash -c 'sudo ps_mem; echo ""; read -rp "Press Enter to close..."'
+
+bindsym $mod+n exec $term2 --title floaty-small -e sh -c fzf-notes
+bindsym $mod+mod1+n exec $editor
+bindsym $mod+Shift+n exec rofi-notes
+
+bindsym $mod+o exec ocr
+bindsym $mod+mod1+o exec sh -c text-picker
+
+bindsym $mod+p scratchpad show
+bindsym $mod+mod1+p floating enable, resize set width 1200 height 1000, move scratchpad
+bindsym $mod+Shift+p exec rofi-power-profile
+
+bindsym $mod+q kill
+bindsym $mod+Ctrl+q exec swaymsg exit
+
+bindsym $mod+r exec z-cmd-screenrecord 
+bindsym $mod+mod1+r exec rofi-screenrecord
+bindsym $mod+Shift+r reload
+
+bindsym $mod+s exec rofi-screenshot
+bindsym $mod+mod1+s exec rofi-screenshot-fs
+
+bindsym $mod+t exec zsh -ic 'source ~/dotfiles/flavors/themes.zsh; _osyx_rofi_theme_picker'
+bindsym $mod+mod1+t exec rofi-timewarrior
+bindsym $mod+Shift+t exec $term2 --app-id=runner_floating -e runner
+
+bindsym $mod+v exec $term2 --title floaty-small -e sh fzf-video-play
+bindsym $mod+Mod1+v exec $term2 --title floaty-tiny -e sh fzf-video-tool
+bindsym $mod+Shift+v exec rofi-video-tool
+
+bindsym $mod+w exec rofi-wall
+bindsym $mod+mod1+w exec wall-random
+
+bindsym $mod+x exec asryx
+
+bindsym $mod+z exec z-menu-keybindings-sway-soft
+
+bindsym $mod+grave exec list-sway-window
