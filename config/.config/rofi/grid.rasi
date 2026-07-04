@@ -3,7 +3,7 @@
 configuration {
     show-icons: true;
     icon-theme: "Numix-Circle";
-    font: "JetBrainsMono Nerd Font 12";
+    font: "JetBrainsMono Nerd Font 16";
 }
 
 * {

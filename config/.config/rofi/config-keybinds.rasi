@@ -44,5 +44,5 @@ element-text {
   vertical-align: 0.5;
   margin: 0px;
   padding: 0px;
-  font: "CaskaydiaCove Nerd Font Mono 11";
+  font: "CaskaydiaCove Nerd Font Mono 16";
 }
