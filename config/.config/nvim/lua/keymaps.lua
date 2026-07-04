@@ -38,7 +38,7 @@ map("n", "<leader>bc", function()
     require('broot').open("$HOME/.config")
 end, { desc = "Open broot in ~/.config" })
 
-map("n", "<leader>e", function()
+map("n", "<leader>br", function()
     require('broot').open("$HOME/.config")
 end, { desc = "Open broot in ~/.config" })
 
@@ -64,11 +64,23 @@ map("n", "<leader>fy", function()
     vim.fn.setreg("+", path)
     print("yanked: " .. path)
 end, { desc = "Yank relative path" })
-map("n", "<leader>cd", "<cmd>lcd %:p:h<CR>", { desc = "cd to current file's dir" })
+
+map("n", "<leader>cc", "<cmd>lcd %:p:h<CR>", { desc = "cd to current file's dir" })
+
+-- CWD change
+map("n", "<leader>cd", function()
+    local new_dir = vim.fn.input("Change to directory: ", vim.fn.getcwd(), "dir")
+    if new_dir and new_dir ~= "" then
+        vim.cmd("cd " .. new_dir)
+        vim.notify("Changed to: " .. new_dir, vim.log.levels.INFO)
+    end
+end, { desc = "Interactive cd" })
+
 map("n", "<leader>gr", function()
     local root = vim.fn.systemlist("git rev-parse --show-toplevel")[1]
     if root and root ~= "" then vim.cmd("cd " .. root) end
 end, { desc = "cd to git root" })
+
 
 
 -- =====================
@@ -193,3 +205,12 @@ map("n", "<leader>za", 'ggVG"+y')
 -- map("n", "z=", "z=1<CR>", { silent = true, desc = "Accept 1st suggestion" })
 --
 map("n", "<leader>tv", ":TypstPreview<CR>", { buffer = 0, desc = "Typst Preview" })
+
+
+-- Add this to your keymaps.lua or init.lua
+local ls = require("luasnip")
+
+-- LuaSnip keybindings
+map({ "i", "s" }, "<C-e>", function() ls.expand_or_jump(1) end, { silent = true, desc = "Expand or jump in snippet" })
+map({ "i", "s" }, "<C-J>", function() ls.jump(1) end, { silent = true, desc = "Jump forward in snippet" })
+map({ "i", "s" }, "<C-K>", function() ls.jump(-1) end, { silent = true, desc = "Jump backward in snippet" })
