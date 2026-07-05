@@ -70,6 +70,7 @@ vlc
 yt-dlp
 
 # Development tools
+python3-jinja2
 git-delta
 pre-commit
 # java-latest-openjdk
