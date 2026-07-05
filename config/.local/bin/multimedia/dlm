@@ -267,12 +267,14 @@ process_file() {
 cleanup() {
     [ "$IS_TTY" = "1" ] && tput cnorm
 }
-trap cleanup EXIT INT TERM
+trap cleanup EXIT
+trap 'cleanup; exit 130' INT TERM
 
 if [ "$IS_TTY" = "1" ]; then
     tput civis
     clear
-    printf "📥 Download Manager — watching clipboard for links\n\n"
+printf "📥 Download Manager — watching clipboard for links\n"
+printf "Keys: q = quit (downloads keep running)   Q = quit and cancel all downloads\n\n"
 fi
 
 # Initial run: queue URLs from the file (non-blocking)
@@ -305,5 +307,11 @@ while true; do
     fi
 
     render_dashboard
-    sleep 1
+
+    key=""
+    read -t 1 -n 1 -s key
+    case "$key" in
+        q) break ;;
+        Q) kill $(jobs -rp) 2>/dev/null; break ;;
+    esac
 done
