@@ -1,6 +1,6 @@
 #!/bin/bash
 # =====================================================
-# Fedora ARM Setup Script (Dotfiles Installer)
+# Fedora Setup Script (Dotfiles Installer)
 # Compatible with Fedora Workstation/Asahi/ARM
 # =====================================================
 
@@ -194,6 +194,24 @@ setup_groups_and_uinput() {
     [[ "$answer" =~ ^[Yy]$ ]] && sudo modprobe uinput && log "uinput loaded."
 }
 
+install_broot() {
+    log "Installing broot dependencies (libxcb)..."
+    sudo dnf install -y libxcb 2>&1 | tee -a "$LOG_FILE"
+
+    if ! command -v cargo &>/dev/null; then
+        error "cargo not found. Install Rust (e.g. via rustup) before installing broot."
+        return
+    fi
+
+    log "Installing broot via cargo (with clipboard feature)..."
+    if ! cargo install --locked --features clipboard broot 2>&1 | tee -a "$LOG_FILE"; then
+        error "broot installation failed."
+        return
+    fi
+
+    log "broot installed successfully!"
+}
+
 # -------------------------------
 # Menu
 # -------------------------------
@@ -202,6 +220,7 @@ OPTIONS=(
     "Install packages"
     "Enable COPR repos"
     "Install COPR packages"
+		"Install broot"
     "Link configs/dotfiles"
     "Setup Zsh + plugins"
     "Switch Git remote (HTTPS <-> SSH)"
@@ -216,6 +235,7 @@ while true; do
         "Install packages") install_packages ;;
         "Enable COPR repos") enable_copr_repos ;;
         "Install COPR packages") install_copr_packages ;;
+				"Install broot") install_broot ;;
         "Link configs/dotfiles") link_configs ;;
         "Setup Zsh + plugins") setup_zsh ;;
         "Switch Git remote (HTTPS <-> SSH)") switch_git_remote ;;

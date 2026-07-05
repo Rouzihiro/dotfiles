@@ -70,7 +70,6 @@ vlc
 yt-dlp
 
 # Development tools
-python3-jinja2
 git-delta
 pre-commit
 # java-latest-openjdk
@@ -86,3 +85,10 @@ geary
 evince
 foliate
 xournalpp
+
+# Themes / Flavors
+waypaper
+python3-jinja2
+
+# Broot
+libxcb
