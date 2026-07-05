@@ -97,13 +97,24 @@ make_bar() {
 
 parse_progress() {
     local raw="$1"
-    local last
-    last=$(tail -c 4000 "$raw" 2>/dev/null | tr '\r' '\n' | grep -E '%' | tail -1)
-    if [ -z "$last" ]; then
+    local tail_chunk
+    tail_chunk=$(tail -c 4000 "$raw" 2>/dev/null | tr '\r' '\n')
+
+    # Find whichever came last: a real progress line, or aria2c's completion summary
+    local last_relevant
+    last_relevant=$(echo "$tail_chunk" | grep -E '%|Download Results:' | tail -1)
+
+    if [ -z "$last_relevant" ]; then
         echo "0|-|-"
         return
     fi
 
+    if [[ "$last_relevant" == *"Download Results:"* ]]; then
+        echo "100|-|-"
+        return
+    fi
+
+    local last="$last_relevant"
     local pct speed eta
     pct=$(echo "$last" | grep -oE '[0-9]{1,3}(\.[0-9]+)?%' | head -1 | tr -d '%')
     speed=$(echo "$last" | grep -oE '[0-9.]+[KMGT]i?B/s' | head -1)
