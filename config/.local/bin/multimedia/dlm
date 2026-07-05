@@ -127,7 +127,7 @@ render_dashboard() {
     shopt -u nullglob
 
     if [ "${#metas[@]}" -eq 0 ]; then
-        frame="💤 Idle — watching clipboard for links...\n"
+        frame=$'💤 Idle — watching clipboard for links...\n'
         printed=1
     else
         for meta in "${metas[@]}"; do
@@ -140,7 +140,7 @@ render_dashboard() {
 
             if [ -f "$done_file" ]; then
                 local ticks; ticks=$(cat "$done_file" 2>/dev/null); [ -z "$ticks" ] && ticks=0
-                frame+="$(printf "✅ %-40s complete\n" "${name:0:40}")"
+                frame+="$(printf "✅ %-40s complete" "${name:0:40}")"$'\n'
                 ticks=$((ticks - 1))
                 if [ "$ticks" -le 0 ]; then
                     rm -f "$done_file" "$meta" "$raw_file"
@@ -149,7 +149,7 @@ render_dashboard() {
                 fi
             elif [ -f "$failed_file" ]; then
                 local ticks; ticks=$(cat "$failed_file" 2>/dev/null); [ -z "$ticks" ] && ticks=0
-                frame+="$(printf "❌ %-40s failed\n" "${name:0:40}")"
+                frame+="$(printf "❌ %-40s failed" "${name:0:40}")"$'\n'
                 ticks=$((ticks - 1))
                 if [ "$ticks" -le 0 ]; then
                     rm -f "$failed_file" "$meta" "$raw_file"
@@ -163,35 +163,31 @@ render_dashboard() {
                 speed=$(echo "$info" | cut -d'|' -f2)
                 eta=$(echo "$info" | cut -d'|' -f3)
                 bar=$(make_bar "$pct")
-                frame+="$(printf "⬇️  %-30s %s %3s%%  %10s  ETA %s\n" "${name:0:30}" "$bar" "$pct" "$speed" "$eta")"
+                frame+="$(printf "⬇️  %-30s %s %3s%%  %10s  ETA %s" "${name:0:30}" "$bar" "$pct" "$speed" "$eta")"$'\n'
             fi
             printed=$((printed + 1))
         done
     fi
 
-    # Build cursor-move prefix and emit the whole frame atomically
     local move_up=""
     if [ "$LAST_LINES" -gt 0 ]; then
         move_up="$(tput cuu "$LAST_LINES")"
     fi
     printf "%s%s" "$move_up" "$frame"
 
-    # If new frame is shorter, overwrite leftover lines with blanks then reposition
     local leftover=$(( LAST_LINES - printed ))
     if [ "$leftover" -gt 0 ]; then
         local blank
-        blank=$(printf '%-*s\n' "${COLUMNS:-80}" '')
+        blank="$(printf '%-*s' "${COLUMNS:-80}" '')"
         for (( i=0; i<leftover; i++ )); do
-            printf "%s" "$blank"
+            printf "%s\n" "$blank"
         done
-        # Move back up to just after the real content
         tput cuu "$leftover"
         tput cud "$printed"
     fi
 
     LAST_LINES=$printed
 }
-
 # Function to download a link (runs in background)
 download_link() {
     url="$1"
