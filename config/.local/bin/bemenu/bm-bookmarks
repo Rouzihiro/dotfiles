@@ -5,6 +5,7 @@ set -eu
 # --------------------------
 BOOKMARK_FILES="
 $HOME/Documents/Notes/gaming.md
+$HOME/Documents/Notes/links.md
 $HOME/Documents/Notes/xxx.md
 $HOME/Documents/Notes/coding.md
 $HOME/Documents/Notes/movies.md

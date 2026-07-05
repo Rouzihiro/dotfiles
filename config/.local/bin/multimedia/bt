@@ -43,7 +43,7 @@ Select Bluetooth Device ESC to quit
 "
 
 # Step 1: Pick the Device (Displaying only the name)
-selected_device=$(echo "$devices" | fzf --height 40% \
+selected_device=$(echo "$devices" | fzf --height 100% \
     --reverse \
     --border rounded \
     --margin=1,2 \
@@ -61,7 +61,7 @@ name=$(echo "$selected_device" | awk -F ' | ' '{print $1}')
 
 # Step 2: Pick the Action
 action=$(echo -e "Connect\nDisconnect\nTrust\nRemove" | \
-    fzf --height 20% --reverse --border rounded --margin=1,2 \
+    fzf --height 100% --reverse --border rounded --margin=1,2 \
         --header "Action for $name" --info inline \
         --color="bg+:-1,bg:-1,hl:3,fg:7,header:3,info:4,pointer:3,marker:3,prompt:3")
 
