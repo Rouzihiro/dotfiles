@@ -50,19 +50,19 @@ wayland-utils
 wlr-randr
 yad
 btop
-NetworkManager
-NetworkManager-tui
+network-manager
+network-manager-tui
 power-profiles-daemon
 
 # Language support
-hunspell-de
+hunspell-de-de
 tesseract
-tesseract-langpack-deu
-tesseract-langpack-eng
+tesseract-ocr-deu
+tesseract-ocr-eng
 
 # Multimedia
 ffmpegthumbs
-ImageMagick
+imagemagick
 imv
 mpv
 pamixer
