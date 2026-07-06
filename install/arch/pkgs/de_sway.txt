@@ -13,5 +13,5 @@ wl-clipboard
 satty
 grim
 slurp
-swww
+#swww
 xdg-desktop-portal-wlr

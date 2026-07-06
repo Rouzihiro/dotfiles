@@ -5,6 +5,7 @@ pre-commit
 openssh
 python
 python-pip
+python3-jinja2
 tinymist
 typst
 # jdk-openjdk
@@ -16,3 +17,4 @@ python-gobject #used for power-profile
 #n8n
 #texlive-latexextra
 #texmaker
+
