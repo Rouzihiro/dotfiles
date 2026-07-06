@@ -117,11 +117,14 @@ enable_third_party_repos() {
 		while IFS='|' read -r deb_line key_url keyring_name || [[ -n "$deb_line" ]]; do
 				[[ -z "$deb_line" || "$deb_line" =~ ^[[:space:]]*# ]] && continue
 
-				if [[ -n "$key_url" ]]; then
-						keyring_name="${keyring_name:-$(echo "$deb_line" | md5sum | cut -d' ' -f1).gpg}"
-						log "Fetching GPG key for repo: $key_url"
-						curl -fsSL "$key_url" | sudo gpg --dearmor -o "/usr/share/keyrings/$keyring_name" 2>&1 | tee -a "$LOG_FILE"
-				fi
+		if [[ -n "$key_url" ]]; then
+    if [[ -z "$keyring_name" ]]; then
+        keyring_name="$(echo "$deb_line" | md5sum | cut -d' ' -f1).gpg"
+    fi
+
+    log "Fetching GPG key for repo: $key_url"
+    curl -fsSL "$key_url" | sudo gpg --dearmor -o "/usr/share/keyrings/$keyring_name"
+fi
 
 				local list_name="$(echo "$deb_line" | md5sum | cut -d' ' -f1).list"
 				log "Adding repo: $deb_line"
