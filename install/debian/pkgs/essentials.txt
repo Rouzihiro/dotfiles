@@ -2,7 +2,7 @@
 bat
 brightnessctl
 duf
-fd
+fd-find
 fastfetch
 foot
 fzf
@@ -51,12 +51,11 @@ wlr-randr
 yad
 btop
 network-manager
-network-manager-tui
 power-profiles-daemon
 
 # Language support
 hunspell-de-de
-tesseract
+tesseract-ocr
 tesseract-ocr-deu
 tesseract-ocr-eng
 
@@ -91,4 +90,4 @@ waypaper
 python3-jinja2
 
 # Broot
-libxcb
+libxcb1-dev
