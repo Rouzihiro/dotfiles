@@ -1,0 +1,2 @@
+deb https://debian.griffo.io/apt $(lsb_release -sc) main|https://debian.griffo.io/EA0F721D231FDD3A0A17B9AC7808B4DD62C41256.asc|griffo-yazi.gpg
+deb [signed-by=/usr/share/keyrings/azlux-archive-keyring.gpg] http://packages.azlux.fr/debian/ trixie main|https://azlux.fr/repo.gpg|azlux.gpg
