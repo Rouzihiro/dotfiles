@@ -1,5 +1,71 @@
 hyprland
-hyprpaper
 hyprlock
 hypridle
-xdg-desktop-portal-hyprland
+wayland-protocols
+xdg-desktop-portal
+xdg-desktop-portal-wlr
+xwayland
+dbus-user-session
+seatd
+polkitd
+kitty
+waybar
+wofi
+mako-notifier
+grim
+slurp
+wl-clipboard
+libgl1-mesa-dev
+libegl1-mesa-dev
+libgles2-mesa-dev
+mesa-common-dev
+libdrm-dev
+libgbm-dev
+wayland-protocols 
+libwayland-dev
+glslang-dev 
+glslang-tools
+libshaderc-dev 
+glslc
+libpugixml-dev
+libseat-dev
+libinput-dev
+libudev-dev
+libdisplay-info-dev
+hwdata
+libzip-dev
+librsvg2-dev
+libtomlplusplus-dev
+libmagic-dev
+meson ninja-build pkg-config
+
+
+libxkbcommon-dev \
+libxcursor-dev \
+libinput-dev \
+libre2-dev \
+libmuparser-dev \
+liblcms2-dev \
+libzip-dev \
+libgbm-dev \
+libdrm-dev \
+libpixman-1-dev \
+libcairo2-dev \
+pango1.0-tools \
+libpangocairo-1.0-0 \
+libglib2.0-dev \
+libegl1-mesa-dev \
+libgles2-mesa-dev \
+mesa-common-dev
+
+build-dep libinput
+
+libliftoff-dev
+
+libxcb-util-dev \
+libxcb-xfixes0-dev \
+libxcb-icccm4-dev \
+libxcb-composite0-dev \
+libxcb-res0-dev \
+libxcb-ewmh2 \
+lbxcb-ewmh-dev

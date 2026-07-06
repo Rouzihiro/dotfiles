@@ -1,7 +1,4 @@
-#Processing triggers for initramfs-tools (0.148.4) ...
-update-initramfs: Generating /boot/initrd.img-6.12.95+deb13-amd64
-W: /sbin/fsck.btrfs doesn't exist, can't install to initramfs
-rey@debian:~/dotfiles$ Terminal and shell
+eza
 bat
 brightnessctl
 duf
@@ -86,8 +83,4 @@ foliate
 xournalpp
 
 # Themes / Flavors
-waypaper
 python3-jinja2
-
-# Broot
-libxcb1-dev

@@ -99,16 +99,36 @@ install_packages() {
 		fi
 }
 
-# -------------------------------
-# Debian has no COPR equivalent. Third-party repos are added as
-# raw "deb ..." source-list entries instead of enabled by name.
-#
-# Expected format for pkgs/repos.txt, one repo per line, pipe-separated:
-#   <deb-line>|<optional-gpg-key-url>|<optional-keyring-filename>
-#
-# Example:
-#   deb [signed-by=/usr/share/keyrings/example.gpg] https://example.com/debian stable main|https://example.com/key.gpg|example.gpg
-# -------------------------------
+
+install_waypaper() {
+    log "Installing Waypaper dependencies..."
+
+    sudo apt-get install -y \
+        python3-jinja2 \
+        python3-gi \
+        python3-pip \
+        python3-platformdirs \
+        python3-importlib-metadata \
+        pkg-config \
+        libcairo2-dev \
+        libgirepository1.0-dev \
+        gir1.2-gtk-3.0 \
+        python3-gi-cairo \
+        build-essential \
+        libgirepository-2.0-dev \
+        gobject-introspection \
+        pipx 2>&1 | tee -a "$LOG_FILE"
+
+    log "Installing Waypaper via pipx..."
+
+    pipx ensurepath 2>&1 | tee -a "$LOG_FILE"
+
+    pipx install waypaper 2>&1 | tee -a "$LOG_FILE"
+
+    log "Waypaper installed successfully!"
+}
+
+
 enable_third_party_repos() {
 		local repo_file="$PKGS_DIR/repos.txt"
 		[[ ! -f "$repo_file" ]] && { log "No repos.txt found, skipping third-party repos."; return; }
@@ -223,28 +243,6 @@ setup_groups_and_uinput() {
 		[[ "$answer" =~ ^[Yy]$ ]] && sudo modprobe uinput && log "uinput loaded."
 }
 
-install_broot() {
-		# NOTE: Fedora's "libxcb" meta-package doesn't map 1:1 onto Debian.
-		# libxcb1-dev is the closest analog for the clipboard feature's build
-		# requirements, but confirm this against your actual Debian/Ubuntu
-		# release (package names have shifted across recent versions).
-		log "Installing broot dependencies (libxcb1-dev)..."
-		sudo apt-get install -y libxcb1-dev 2>&1 | tee -a "$LOG_FILE"
-
-		if ! command -v cargo &>/dev/null; then
-				error "cargo not found. Install Rust (e.g. via rustup) before installing broot."
-				return
-		fi
-
-		log "Installing broot via cargo (with clipboard feature)..."
-		if ! cargo install --locked --features clipboard broot 2>&1 | tee -a "$LOG_FILE"; then
-				error "broot installation failed."
-				return
-		fi
-
-		log "broot installed successfully!"
-}
-
 # -------------------------------
 # Menu
 # -------------------------------
@@ -253,7 +251,7 @@ OPTIONS=(
 		"Install packages"
 		"Enable third-party repos"
 		"Install third-party packages"
-		"Install broot"
+		"Install Waypaper"
 		"Link configs/dotfiles"
 		"Setup Zsh + plugins"
 		"Switch Git remote (HTTPS <-> SSH)"
@@ -268,7 +266,7 @@ while true; do
 				"Install packages") install_packages ;;
 				"Enable third-party repos") enable_third_party_repos ;;
 				"Install third-party packages") install_third_party_packages ;;
-				"Install broot") install_broot ;;
+				"Install Waypaper") install_waypaper ;;
 				"Link configs/dotfiles") link_configs ;;
 				"Setup Zsh + plugins") setup_zsh ;;
 				"Switch Git remote (HTTPS <-> SSH)") switch_git_remote ;;
