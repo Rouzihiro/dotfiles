@@ -18,9 +18,7 @@ zsh
 exfatprogs
 ntfs-3g
 parted
-thunar
 xdg-user-dirs
-# vifm
 
 # Utilities
 aria2
