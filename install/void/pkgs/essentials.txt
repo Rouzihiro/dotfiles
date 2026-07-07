@@ -77,7 +77,6 @@ foliate
 xournalpp
 
 # Themes / Flavors
-waypaper
 python3-Jinja2
 
 # Broot
