@@ -63,7 +63,7 @@ vlc
 yt-dlp
 
 # Development tools
-git-delta
+#git-delta
 pre-commit
 # openjdk
 lazygit
