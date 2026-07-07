@@ -32,7 +32,6 @@ grim
 jq
 mediainfo
 poppler-utils
-rofi-wayland
 rsync
 slurp
 swappy
