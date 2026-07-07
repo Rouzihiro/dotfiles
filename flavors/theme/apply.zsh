@@ -44,6 +44,13 @@ _osyx_apply_wallpaper() {
   elif command -v waypaper >/dev/null 2>&1; then
     waypaper --wallpaper "$wallpaper_file" >/dev/null 2>&1 \
       || _osyx_log "waypaper failed for $wallpaper_file"
+  elif command -v hyprctl >/dev/null 2>&1 && command -v hyprpaper >/dev/null 2>&1; then
+    hyprctl hyprpaper reload ",$wallpaper_file" >/dev/null 2>&1 \
+      || _osyx_log "hyprpaper reload failed for $wallpaper_file"
+  elif command -v swaybg >/dev/null 2>&1; then
+    pkill -x swaybg >/dev/null 2>&1
+    setsid swaybg -i "$wallpaper_file" -m fill >/dev/null 2>&1 &
+    disown
   else
     _osyx_log "no wallpaper tool found, skipping"
   fi

@@ -79,5 +79,3 @@ xournalpp
 neovim
 geary
 ca-certificates
-
-
