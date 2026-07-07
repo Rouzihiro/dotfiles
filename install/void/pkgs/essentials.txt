@@ -16,7 +16,6 @@ zsh
 
 # File management
 exfatprogs
-gdisk
 ntfs-3g
 parted
 thunar
