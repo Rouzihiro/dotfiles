@@ -38,7 +38,10 @@ _osyx_apply_wallpaper() {
     return 0
   }
 
-  if command -v wallpaper >/dev/null 2>&1; then
+  if command -v awww >/dev/null 2>&1 && pgrep -x awww-daemon >/dev/null 2>&1; then
+    awww img "$wallpaper_file" >/dev/null 2>&1 \
+      || _osyx_log "awww img failed for $wallpaper_file"
+  elif command -v wallpaper >/dev/null 2>&1; then
     wallpaper set "$wallpaper_file" >/dev/null 2>&1 \
       || _osyx_log "wallpaper set failed for $wallpaper_file"
   elif command -v waypaper >/dev/null 2>&1; then
