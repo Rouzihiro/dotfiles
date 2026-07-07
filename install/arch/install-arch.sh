@@ -60,6 +60,20 @@ if ! command -v zsh &>/dev/null; then
 fi
 
 # -------------------------------
+# Helper: sanitize a raw line from a pkgs file into a clean package name
+# Strips CRLF, inline comments, and leading/trailing whitespace.
+# Returns empty string if the line has nothing left to install.
+# -------------------------------
+sanitize_pkg_line() {
+    local pkg="$1"
+    pkg="${pkg%$'\r'}"          # strip trailing CR (CRLF files)
+    pkg="${pkg%%#*}"            # strip inline comments
+    pkg="${pkg#"${pkg%%[![:space:]]*}"}"  # trim leading whitespace
+    pkg="${pkg%"${pkg##*[![:space:]]}"}"  # trim trailing whitespace
+    printf '%s' "$pkg"
+}
+
+# -------------------------------
 # Functions
 # -------------------------------
 update_system() {
@@ -79,15 +93,32 @@ install_packages() {
 
     PACKAGES=()
     while IFS= read -r file; do
-        while IFS= read -r pkg || [[ -n "$pkg" ]]; do
-            [[ -z "$pkg" || "$pkg" =~ ^[[:space:]]*# ]] && continue
+        while IFS= read -r raw_line || [[ -n "$raw_line" ]]; do
+            pkg=$(sanitize_pkg_line "$raw_line")
+            [[ -z "$pkg" ]] && continue
             PACKAGES+=("$pkg")
         done < "$file"
     done <<< "$SELECTED"
 
+    if [[ ${#PACKAGES[@]} -eq 0 ]]; then
+        error "No valid package names resolved from selected files. Check for empty/comment-only files."
+        return
+    fi
+
+    # De-duplicate while preserving order
+    declare -A seen
+    UNIQUE_PACKAGES=()
+    for p in "${PACKAGES[@]}"; do
+        [[ -n "${seen[$p]}" ]] && continue
+        seen[$p]=1
+        UNIQUE_PACKAGES+=("$p")
+    done
+
+    log "Resolved ${#UNIQUE_PACKAGES[@]} package(s): ${UNIQUE_PACKAGES[*]}"
+
     log "Installing selected packages..."
-    if ! sudo pacman -S --needed --noconfirm "${PACKAGES[@]}" 2>&1 | tee -a "$LOG_FILE"; then
-        error "Some packages failed to install."
+    if ! sudo pacman -S --needed --noconfirm "${UNIQUE_PACKAGES[@]}" 2>&1 | tee -a "$LOG_FILE"; then
+        error "Some packages failed to install. Check names above against 'pacman -Ss <name>'."
     fi
 }
 
@@ -95,9 +126,15 @@ install_aur_packages() {
     local aur_file="$PKGS_DIR/aur.txt"
     [[ ! -f "$aur_file" ]] && { log "No aur.txt found, skipping AUR packages."; return; }
 
+    if ! command -v paru &>/dev/null && ! command -v yay &>/dev/null; then
+        error "No AUR helper (paru/yay) found. Use 'Install AUR helper (paru/yay)' first."
+        return
+    fi
+
     log "Installing AUR packages..."
-    while IFS= read -r pkg || [[ -n "$pkg" ]]; do
-        [[ -z "$pkg" || "$pkg" =~ ^[[:space:]]*# ]] && continue
+    while IFS= read -r raw_line || [[ -n "$raw_line" ]]; do
+        pkg=$(sanitize_pkg_line "$raw_line")
+        [[ -z "$pkg" ]] && continue
         install_aur_package "$pkg"
     done < "$aur_file"
 }
@@ -177,6 +214,71 @@ setup_groups_and_uinput() {
 }
 
 # -------------------------------
+# AUR helper: install / remove paru or yay
+# -------------------------------
+install_aur_helper() {
+    if command -v paru &>/dev/null; then
+        log "paru is already installed."
+        return
+    fi
+    if command -v yay &>/dev/null; then
+        log "yay is already installed."
+        return
+    fi
+
+    log "Which AUR helper do you want to install?"
+    HELPER=$(printf '%s\n' "paru" "yay" "Cancel" | fzf --prompt="AUR helper: " --height=8 --reverse)
+    [[ -z "$HELPER" || "$HELPER" == "Cancel" ]] && { log "Cancelled."; return; }
+
+    log "Installing base-devel and git (required to build $HELPER)..."
+    sudo pacman -S --needed --noconfirm base-devel git 2>&1 | tee -a "$LOG_FILE"
+
+    local build_dir
+    build_dir=$(mktemp -d)
+    local repo_url="https://aur.archlinux.org/${HELPER}.git"
+
+    log "Cloning $HELPER from AUR..."
+    if ! git clone "$repo_url" "$build_dir" 2>&1 | tee -a "$LOG_FILE"; then
+        error "Failed to clone $repo_url"
+        rm -rf "$build_dir"
+        return
+    fi
+
+    log "Building and installing $HELPER (this will prompt for your password)..."
+    if (cd "$build_dir" && makepkg -si --noconfirm) 2>&1 | tee -a "$LOG_FILE"; then
+        log "$HELPER installed successfully."
+    else
+        error "Failed to build/install $HELPER."
+    fi
+
+    rm -rf "$build_dir"
+}
+
+remove_aur_helper() {
+    local installed=()
+    command -v paru &>/dev/null && installed+=("paru")
+    command -v yay &>/dev/null && installed+=("yay")
+
+    if [[ ${#installed[@]} -eq 0 ]]; then
+        log "Neither paru nor yay is currently installed."
+        return
+    fi
+
+    log "Select AUR helper to remove:"
+    HELPER=$(printf '%s\n' "${installed[@]}" "Cancel" | fzf --prompt="Remove: " --height=8 --reverse)
+    [[ -z "$HELPER" || "$HELPER" == "Cancel" ]] && { log "Cancelled."; return; }
+
+    read -p "Remove $HELPER and its unneeded dependencies? (y/N): " answer
+    [[ ! "$answer" =~ ^[Yy]$ ]] && { log "Cancelled."; return; }
+
+    if sudo pacman -Rns --noconfirm "$HELPER" 2>&1 | tee -a "$LOG_FILE"; then
+        log "$HELPER removed."
+    else
+        error "Failed to remove $HELPER."
+    fi
+}
+
+# -------------------------------
 # Menu
 # -------------------------------
 OPTIONS=(
@@ -187,6 +289,8 @@ OPTIONS=(
     "Setup Zsh + plugins"
     "Switch Git remote (HTTPS <-> SSH)"
     "Setup user groups + uinput"
+    "Install AUR helper (paru/yay)"
+    "Remove AUR helper (paru/yay)"
     "Quit"
 )
 
@@ -200,6 +304,8 @@ while true; do
         "Setup Zsh + plugins") setup_zsh ;;
         "Switch Git remote (HTTPS <-> SSH)") switch_git_remote ;;
         "Setup user groups + uinput") setup_groups_and_uinput ;;
+        "Install AUR helper (paru/yay)") install_aur_helper ;;
+        "Remove AUR helper (paru/yay)") remove_aur_helper ;;
         "Quit") log "Goodbye!"; break ;;
         *) error "Invalid choice";;
     esac
