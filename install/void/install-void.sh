@@ -14,13 +14,6 @@ BACKUP_DIR="$HOME/.bkp_config_$(date +%Y%m%d_%H%M%S)"
 LOG_FILE="$HOME/.logs/installer-log.txt"
 PKGS_DIR="$SCRIPT_DIR/pkgs"
 
-# Try sourcing from PATH first, then fall back to the shared root-level copy
-if ! source Global_functions.sh 2>/dev/null; then
-    if ! source "$DOTFILES_ROOT/Global_functions.sh"; then
-        echo "Failed to source Global_functions.sh"
-        exit 1
-    fi
-fi
 
 # -------------------------------
 # Logging
