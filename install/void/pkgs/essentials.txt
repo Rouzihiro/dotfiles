@@ -1,4 +1,8 @@
 # Terminal and shell
+curl 
+wget 
+git 
+base-devel
 bat
 brightnessctl
 duf
