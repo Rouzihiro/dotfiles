@@ -4,8 +4,8 @@
 # Entry point for setting up this dotfiles repo on a fresh machine.
 # Detects distro, installs git/zsh/fzf/xdg-user-dirs if needed, clones
 # (or reuses) the dotfiles repo, then dispatches to fedora/install-fedora.sh,
-# arch/install-arch.sh, or debian/install-debian.sh based on the detected
-# (or fzf-selected) distro.
+# arch/install-arch.sh, debian/install-debian.sh, or void/install-void.sh
+# based on the detected (or fzf-selected) distro.
 
 # --- Detect Distro ---
 detect_distro() {
@@ -20,6 +20,9 @@ detect_distro() {
                 ;;
             debian|ubuntu|raspbian|linuxmint|pop|elementary|zorin|kali|neon)
                 echo "debian"
+                ;;
+            void)
+                echo "void"
                 ;;
             *)
                 echo "unknown"
@@ -49,8 +52,13 @@ elif [ "$DISTRO" = "debian" ]; then
         sudo apt-get update
         sudo apt-get install -y git zsh fzf xdg-user-dirs
     fi
+elif [ "$DISTRO" = "void" ]; then
+    if ! command -v git >/dev/null || ! command -v zsh >/dev/null || ! command -v fzf >/dev/null || ! xbps-query xdg-user-dirs >/dev/null 2>/dev/null; then
+        echo "Installing required packages (Void)..."
+        sudo xbps-install -Sy git zsh fzf xdg-user-dirs
+    fi
 else
-    echo "⚠️  Could not detect Arch, Fedora, or Debian automatically."
+    echo "⚠️  Could not detect Arch, Fedora, Debian, or Void automatically."
     echo "You'll be prompted to choose manually, and you'll need git, zsh, and fzf installed."
 fi
 
@@ -137,6 +145,15 @@ dispatch_installer() {
                 echo "install/debian/install-debian.sh not found."
             fi
             ;;
+        void)
+            echo "Launching install-void.sh ..."
+            sleep 1
+            if [ -f "$HOME/dotfiles/install/void/install-void.sh" ]; then
+                bash "$HOME/dotfiles/install/void/install-void.sh"
+            else
+                echo "install/void/install-void.sh not found."
+            fi
+            ;;
         *)
             echo "Skipping installer. Run manually later if needed."
             ;;
@@ -145,21 +162,22 @@ dispatch_installer() {
 
 if [ -d "$HOME/dotfiles" ]; then
     case "$DISTRO" in
-        arch|fedora|debian)
+        arch|fedora|debian|void)
             echo "Detected: $DISTRO"
             dispatch_installer "$DISTRO"
             ;;
         *)
             if command -v fzf >/dev/null; then
-                CHOICE=$(printf 'Arch Linux\nFedora\nDebian\nSkip installation' | fzf --prompt="Which installer? > " --height=10 --reverse)
+                CHOICE=$(printf 'Arch Linux\nFedora\nDebian\nVoid Linux\nSkip installation' | fzf --prompt="Which installer? > " --height=10 --reverse)
                 case "$CHOICE" in
-                    "Arch Linux") dispatch_installer "arch" ;;
-                    "Fedora")     dispatch_installer "fedora" ;;
-                    "Debian")     dispatch_installer "debian" ;;
-                    *)            echo "Skipping installer. Run manually later if needed." ;;
+                    "Arch Linux")  dispatch_installer "arch" ;;
+                    "Fedora")      dispatch_installer "fedora" ;;
+                    "Debian")      dispatch_installer "debian" ;;
+                    "Void Linux")  dispatch_installer "void" ;;
+                    *)             echo "Skipping installer. Run manually later if needed." ;;
                 esac
             else
-                echo "fzf not available — cannot prompt for distro choice. Run install-fedora.sh, install-arch.sh, or install-debian.sh manually."
+                echo "fzf not available — cannot prompt for distro choice. Run install-fedora.sh, install-arch.sh, install-debian.sh, or install-void.sh manually."
             fi
             ;;
     esac

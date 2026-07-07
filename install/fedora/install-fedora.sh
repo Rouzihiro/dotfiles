@@ -61,6 +61,19 @@ if ! command -v zsh &>/dev/null; then
 fi
 
 # -------------------------------
+# Helper: sanitize a raw line from a pkgs/copr file into a clean value.
+# Strips CRLF, inline comments, and leading/trailing whitespace.
+# -------------------------------
+sanitize_pkg_line() {
+    local pkg="$1"
+    pkg="${pkg%$'\r'}"          # strip trailing CR (CRLF files)
+    pkg="${pkg%%#*}"            # strip inline comments
+    pkg="${pkg#"${pkg%%[![:space:]]*}"}"  # trim leading whitespace
+    pkg="${pkg%"${pkg##*[![:space:]]}"}"  # trim trailing whitespace
+    printf '%s' "$pkg"
+}
+
+# -------------------------------
 # Functions
 # -------------------------------
 update_system() {
@@ -80,15 +93,32 @@ install_packages() {
 
     PACKAGES=()
     while IFS= read -r file; do
-        while IFS= read -r pkg || [[ -n "$pkg" ]]; do
-            [[ -z "$pkg" || "$pkg" =~ ^[[:space:]]*# ]] && continue
+        while IFS= read -r raw_line || [[ -n "$raw_line" ]]; do
+            pkg=$(sanitize_pkg_line "$raw_line")
+            [[ -z "$pkg" ]] && continue
             PACKAGES+=("$pkg")
         done < "$file"
     done <<< "$SELECTED"
 
+    if [[ ${#PACKAGES[@]} -eq 0 ]]; then
+        error "No valid package names resolved from selected files. Check for empty/comment-only files."
+        return
+    fi
+
+    # De-duplicate while preserving order
+    declare -A seen
+    UNIQUE_PACKAGES=()
+    for p in "${PACKAGES[@]}"; do
+        [[ -n "${seen[$p]}" ]] && continue
+        seen[$p]=1
+        UNIQUE_PACKAGES+=("$p")
+    done
+
+    log "Resolved ${#UNIQUE_PACKAGES[@]} package(s): ${UNIQUE_PACKAGES[*]}"
+
     log "Installing selected packages..."
-    if ! sudo dnf install -y "${PACKAGES[@]}" 2>&1 | tee -a "$LOG_FILE"; then
-        error "Some packages failed to install."
+    if ! sudo dnf install -y "${UNIQUE_PACKAGES[@]}" 2>&1 | tee -a "$LOG_FILE"; then
+        error "Some packages failed to install. Check names above against 'dnf search <name>'."
     fi
 }
 
@@ -97,8 +127,9 @@ enable_copr_repos() {
     [[ ! -f "$copr_file" ]] && { log "No copr.txt found, skipping COPR repos."; return; }
 
     log "Enabling COPR repos..."
-    while IFS= read -r repo || [[ -n "$repo" ]]; do
-        [[ -z "$repo" || "$repo" =~ ^[[:space:]]*# ]] && continue
+    while IFS= read -r raw_line || [[ -n "$raw_line" ]]; do
+        repo=$(sanitize_pkg_line "$raw_line")
+        [[ -z "$repo" ]] && continue
         log "Enabling COPR repo: $repo"
         sudo dnf copr enable -y "$repo" 2>&1 | tee -a "$LOG_FILE"
     done < "$copr_file"
@@ -109,8 +140,9 @@ install_copr_packages() {
     [[ ! -f "$copr_file" ]] && { log "No copr.txt found, skipping COPR packages."; return; }
 
     log "Installing packages from COPR..."
-    while IFS= read -r repo || [[ -n "$repo" ]]; do
-        [[ -z "$repo" || "$repo" =~ ^[[:space:]]*# ]] && continue
+    while IFS= read -r raw_line || [[ -n "$raw_line" ]]; do
+        repo=$(sanitize_pkg_line "$raw_line")
+        [[ -z "$repo" ]] && continue
         log "Enabling COPR repo: $repo"
         sudo dnf copr enable -y "$repo" 2>&1 | tee -a "$LOG_FILE"
 
@@ -120,13 +152,34 @@ install_copr_packages() {
     done < "$copr_file"
 }
 
-link_configs() {
-    log "Launching install.sh for config/dotfiles placement..."
-    if [[ -f "$DOTFILES_ROOT/install.sh" ]]; then
-        bash "$DOTFILES_ROOT/install.sh" 2>&1 | tee -a "$LOG_FILE"
-    else
-        error "install.sh not found at $DOTFILES_ROOT/install.sh"
+copy_dotfiles_config() {
+    local CONFIG_SRC="$DOTFILES_ROOT/config"
+
+    if [[ ! -d "$CONFIG_SRC" ]]; then
+        error "Config source directory '$CONFIG_SRC' not found."
+        return
     fi
+
+    log "Copying everything from $CONFIG_SRC into \$HOME (existing items will be backed up first)..."
+    mkdir -p "$BACKUP_DIR"
+
+    shopt -s dotglob nullglob
+    for item in "$CONFIG_SRC"/*; do
+        local name target
+        name="$(basename "$item")"
+        target="$HOME/$name"
+
+        if [[ -e "$target" || -L "$target" ]]; then
+            log "Backing up existing \$HOME/$name -> $BACKUP_DIR/$name"
+            mv -f "$target" "$BACKUP_DIR/$name" 2>&1 | tee -a "$LOG_FILE"
+        fi
+
+        cp -a "$item" "$HOME/" 2>&1 | tee -a "$LOG_FILE"
+        log "Copied $name -> \$HOME/$name"
+    done
+    shopt -u dotglob nullglob
+
+    log "Copy complete. Backups (if any) are in $BACKUP_DIR"
 }
 
 setup_zsh() {
@@ -220,8 +273,8 @@ OPTIONS=(
     "Install packages"
     "Enable COPR repos"
     "Install COPR packages"
-		"Install broot"
-    "Link configs/dotfiles"
+    "Install broot"
+    "Copy .config and system files"
     "Setup Zsh + plugins"
     "Switch Git remote (HTTPS <-> SSH)"
     "Setup user groups + uinput"
@@ -235,8 +288,8 @@ while true; do
         "Install packages") install_packages ;;
         "Enable COPR repos") enable_copr_repos ;;
         "Install COPR packages") install_copr_packages ;;
-				"Install broot") install_broot ;;
-        "Link configs/dotfiles") link_configs ;;
+        "Install broot") install_broot ;;
+        "Copy .config and system files") copy_dotfiles_config ;;
         "Setup Zsh + plugins") setup_zsh ;;
         "Switch Git remote (HTTPS <-> SSH)") switch_git_remote ;;
         "Setup user groups + uinput") setup_groups_and_uinput ;;
