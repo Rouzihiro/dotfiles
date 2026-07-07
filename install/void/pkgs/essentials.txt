@@ -70,9 +70,6 @@ lazygit
 nodejs
 zstd
 
-# Graphics/GPU
-vulkan-tools
-
 # Applications
 geary
 evince
