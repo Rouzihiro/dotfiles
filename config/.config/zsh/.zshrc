@@ -334,7 +334,10 @@ done
 # ============================================
 # [[ "$(tty)" == "/dev/tty1" ]] && exec sway
 
-source /home/rey/.config/broot/launcher/bash/br
+
+if [[ -f "$HOME/.config/broot/launcher/bash/br" ]]; then
+    source "$HOME/.config/broot/launcher/bash/br"
+fi
 
 # `time` format
 TIMEFMT=$'\nreal\t%E\nuser\t%U\nsys\t%S\ncpu\t%P'
