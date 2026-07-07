@@ -9,18 +9,11 @@ set -o pipefail
 # Variables
 # -------------------------------
 SCRIPT_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
-DOTFILES_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
+DOTFILES_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
 BACKUP_DIR="$HOME/.bkp_config_$(date +%Y%m%d_%H%M%S)"
 LOG_FILE="$HOME/.logs/installer-log.txt"
 PKGS_DIR="$SCRIPT_DIR/pkgs"
 
-# Try sourcing from PATH first, then fall back to the shared root-level copy
-if ! source Global_functions.sh 2>/dev/null; then
-    if ! source "$DOTFILES_ROOT/Global_functions.sh"; then
-        echo "Failed to source Global_functions.sh"
-        exit 1
-    fi
-fi
 
 # -------------------------------
 # Logging
@@ -131,11 +124,18 @@ install_aur_packages() {
         return
     fi
 
-    log "Installing AUR packages..."
+    local helper=""
+    command -v paru &>/dev/null && helper="paru"
+    [[ -z "$helper" ]] && command -v yay &>/dev/null && helper="yay"
+
+    log "Installing AUR packages with $helper..."
     while IFS= read -r raw_line || [[ -n "$raw_line" ]]; do
         pkg=$(sanitize_pkg_line "$raw_line")
         [[ -z "$pkg" ]] && continue
-        install_aur_package "$pkg"
+        log "Installing AUR package: $pkg"
+        if ! "$helper" -S --needed --noconfirm "$pkg" 2>&1 | tee -a "$LOG_FILE"; then
+            error "Failed to install AUR package: $pkg"
+        fi
     done < "$aur_file"
 }
 
