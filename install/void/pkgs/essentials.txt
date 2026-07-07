@@ -40,7 +40,6 @@ trash-cli
 unzip
 yazi
 wf-recorder
-waybar
 wayland-utils
 wlr-randr
 yad
