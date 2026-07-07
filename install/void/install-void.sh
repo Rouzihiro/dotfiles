@@ -9,7 +9,7 @@ set -o pipefail
 # Variables
 # -------------------------------
 SCRIPT_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
-DOTFILES_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
+DOTFILES_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
 BACKUP_DIR="$HOME/.bkp_config_$(date +%Y%m%d_%H%M%S)"
 LOG_FILE="$HOME/.logs/installer-log.txt"
 PKGS_DIR="$SCRIPT_DIR/pkgs"
