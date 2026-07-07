@@ -44,27 +44,39 @@ zinit light zsh-users/zsh-autosuggestions
 zinit snippet OMZP::sudo
 zinit snippet OMZP::command-not-found
 
-# Detect distribution and load the appropriate plugin
 if [[ -f /etc/os-release ]]; then
-    . /etc/os-release
-    case ${ID} in
+    source /etc/os-release
+
+    case "${ID}" in
         arch)
             zinit snippet OMZP::archlinux
             ;;
+
         fedora|fedora-asahi-remix)
             local fedora_file="${ZDOTDIR:-$HOME/.config/zsh}/.fedora"
+
             if [[ -f "$fedora_file" ]]; then
                 source "$fedora_file"
             else
-                echo "⚠️  Fedora detected but .fedora file not found at: $fedora_file"
+                echo "⚠️ Fedora detected but .fedora file not found: $fedora_file"
             fi
             ;;
+
+        void)
+            local void_file="${ZDOTDIR:-$HOME/.config/zsh}/.void"
+
+            if [[ -f "$void_file" ]]; then
+                source "$void_file"
+            else
+                echo "⚠️ Void detected but .void file not found: $void_file"
+            fi
+            ;;
+
         *)
-            echo "Unsupported distribution: ${ID}"
             ;;
     esac
 else
-    echo "Cannot detect distribution: /etc/os-release not found"
+    echo "⚠️ Cannot detect distribution: /etc/os-release not found"
 fi
 
 # Load syntax highlighting last so it doesn't interfere with completions

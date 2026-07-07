@@ -1,0 +1,104 @@
+# ===== Void Linux =====
+
+# System update
+alias update="sudo xbps-install -Su && notify-send 'Void Linux' 'System updated successfully ✨' -a System -u low"
+
+# Full system upgrade (same as above)
+alias upgrade="sudo xbps-install -Su"
+
+# Clean up unused packages (orphans) & notify
+alias void-clean="sudo xbps-remove -oO && notify-send 'Void Linux' 'Removed unused packages 🧹' -a System -u low"
+
+# XBPS shorthand aliases
+alias pm="sudo xbps-install -S"                         # Install package
+alias pmr="sudo xbps-remove"                            # Remove package
+alias pms="xbps-query -Rs"                              # Search package in repositories
+alias pmi="xbps-query -R"                               # Package info
+alias pmq="xbps-query -l"                               # List installed packages
+alias pmc="sudo xbps-remove -O"                         # Clean package cache
+
+# Troubleshooting & Maintenance
+alias unlock="sudo rm -f /var/db/xbps/lock.plist"       # Remove XBPS lock file if stuck
+
+# Repository / Package management
+alias repo="ls /etc/xbps.d"                             # List XBPS configs
+alias mirrors="xbps-query -L"                           # Show active repositories
+
+# ===== Runit Service Management =====
+
+# Show service status
+alias services="sv status /var/service/*"
+
+# List available services
+alias servicelist="ls /etc/sv"
+
+# Enable a service
+service-enable() {
+    if [ -z "$1" ]; then
+        echo "Usage: service-enable <service>"
+        return 1
+    fi
+
+    sudo ln -s /etc/sv/"$1" /var/service/
+    echo "Enabled: $1"
+}
+
+# Disable a service
+service-disable() {
+    if [ -z "$1" ]; then
+        echo "Usage: service-disable <service>"
+        return 1
+    fi
+
+    sudo rm -f /var/service/"$1"
+    echo "Disabled: $1"
+}
+
+# Restart a service
+service-restart() {
+    if [ -z "$1" ]; then
+        echo "Usage: service-restart <service>"
+        return 1
+    fi
+
+    sudo sv restart "$1"
+}
+
+# Stop a service
+service-stop() {
+    if [ -z "$1" ]; then
+        echo "Usage: service-stop <service>"
+        return 1
+    fi
+
+    sudo sv stop "$1"
+}
+
+# Start a service
+service-start() {
+    if [ -z "$1" ]; then
+        echo "Usage: service-start <service>"
+        return 1
+    fi
+
+    sudo sv start "$1"
+}
+
+# Show service logs
+service-logs() {
+    if [ -z "$1" ]; then
+        echo "Usage: service-logs <service>"
+        return 1
+    fi
+
+    sudo svlogtail /var/service/"$1"
+}
+
+# Hardware / system info
+alias disks="lsblk -f"
+alias mounts="findmnt"
+alias kernel="uname -r"
+
+# System fetch summary
+# alias fetch='clear && fastfetch && echo "Install Date: $(lsblk -o MOUNTPOINT,UUID | grep "/ " | cut -d " " -f 2)"'
+alias fetch='clear && fastfetch'
