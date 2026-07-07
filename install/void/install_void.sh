@@ -1,6 +1,6 @@
 #!/bin/bash
 # =====================================================
-# Arch Linux Setup Script (Dotfiles Installer)
+# Void Linux Setup Script (Dotfiles Installer)
 # =====================================================
 
 set -o pipefail
@@ -48,7 +48,7 @@ fi
 # -------------------------------
 if ! command -v fzf &>/dev/null; then
     log "fzf not found, installing..."
-    sudo pacman -Sy --needed --noconfirm fzf 2>&1 | tee -a "$LOG_FILE"
+    sudo xbps-install -Sy --yes fzf 2>&1 | tee -a "$LOG_FILE"
 fi
 
 # -------------------------------
@@ -56,13 +56,12 @@ fi
 # -------------------------------
 if ! command -v zsh &>/dev/null; then
     log "zsh not found, installing..."
-    sudo pacman -Sy --needed --noconfirm zsh 2>&1 | tee -a "$LOG_FILE"
+    sudo xbps-install -Sy --yes zsh 2>&1 | tee -a "$LOG_FILE"
 fi
 
 # -------------------------------
 # Helper: sanitize a raw line from a pkgs file into a clean package name
 # Strips CRLF, inline comments, and leading/trailing whitespace.
-# Returns empty string if the line has nothing left to install.
 # -------------------------------
 sanitize_pkg_line() {
     local pkg="$1"
@@ -77,8 +76,8 @@ sanitize_pkg_line() {
 # Functions
 # -------------------------------
 update_system() {
-    log "Updating system..."
-    sudo pacman -Syu --noconfirm 2>&1 | tee -a "$LOG_FILE"
+    log "Syncing repo index and updating system..."
+    sudo xbps-install -Su --yes 2>&1 | tee -a "$LOG_FILE"
 }
 
 install_packages() {
@@ -117,26 +116,9 @@ install_packages() {
     log "Resolved ${#UNIQUE_PACKAGES[@]} package(s): ${UNIQUE_PACKAGES[*]}"
 
     log "Installing selected packages..."
-    if ! sudo pacman -S --needed --noconfirm "${UNIQUE_PACKAGES[@]}" 2>&1 | tee -a "$LOG_FILE"; then
-        error "Some packages failed to install. Check names above against 'pacman -Ss <name>'."
+    if ! sudo xbps-install -Sy --yes "${UNIQUE_PACKAGES[@]}" 2>&1 | tee -a "$LOG_FILE"; then
+        error "Some packages failed to install. Check names above against 'xbps-query -Rs <name>'."
     fi
-}
-
-install_aur_packages() {
-    local aur_file="$PKGS_DIR/aur.txt"
-    [[ ! -f "$aur_file" ]] && { log "No aur.txt found, skipping AUR packages."; return; }
-
-    if ! command -v paru &>/dev/null && ! command -v yay &>/dev/null; then
-        error "No AUR helper (paru/yay) found. Use 'Install AUR helper (paru/yay)' first."
-        return
-    fi
-
-    log "Installing AUR packages..."
-    while IFS= read -r raw_line || [[ -n "$raw_line" ]]; do
-        pkg=$(sanitize_pkg_line "$raw_line")
-        [[ -z "$pkg" ]] && continue
-        install_aur_package "$pkg"
-    done < "$aur_file"
 }
 
 copy_dotfiles_config() {
@@ -218,7 +200,7 @@ switch_git_remote() {
 }
 
 setup_groups_and_uinput() {
-    groups=("scanner" "wheel" "audio" "input" "lp" "storage" "video" "fuse" "docker")
+    groups=("wheel" "audio" "input" "lp" "storage" "video" "fuse" "docker" "cdrom")
     read -p "Enter the username to add to groups: " username
     [[ ! $(id "$username" 2>/dev/null) ]] && { error "User $username does not exist."; return; }
     for group in "${groups[@]}"; do
@@ -235,68 +217,47 @@ setup_groups_and_uinput() {
 }
 
 # -------------------------------
-# AUR helper: install / remove paru or yay
+# void-packages (xbps-src) build environment
+# Void's closest equivalent to the AUR: a git repo of build
+# templates you compile locally with xbps-src, rather than a
+# helper that fetches prebuilt binaries.
 # -------------------------------
-install_aur_helper() {
-    if command -v paru &>/dev/null; then
-        log "paru is already installed."
-        return
-    fi
-    if command -v yay &>/dev/null; then
-        log "yay is already installed."
-        return
-    fi
+setup_void_packages() {
+    local VOID_PACKAGES_DIR="${HOME}/void-packages"
 
-    log "Which AUR helper do you want to install?"
-    HELPER=$(printf '%s\n' "paru" "yay" "Cancel" | fzf --prompt="AUR helper: " --height=8 --reverse)
-    [[ -z "$HELPER" || "$HELPER" == "Cancel" ]] && { log "Cancelled."; return; }
-
-    log "Installing base-devel and git (required to build $HELPER)..."
-    sudo pacman -S --needed --noconfirm base-devel git 2>&1 | tee -a "$LOG_FILE"
-
-    local build_dir
-    build_dir=$(mktemp -d)
-    local repo_url="https://aur.archlinux.org/${HELPER}.git"
-
-    log "Cloning $HELPER from AUR..."
-    if ! git clone "$repo_url" "$build_dir" 2>&1 | tee -a "$LOG_FILE"; then
-        error "Failed to clone $repo_url"
-        rm -rf "$build_dir"
-        return
-    fi
-
-    log "Building and installing $HELPER (this will prompt for your password)..."
-    if (cd "$build_dir" && makepkg -si --noconfirm) 2>&1 | tee -a "$LOG_FILE"; then
-        log "$HELPER installed successfully."
+    if [[ -d "$VOID_PACKAGES_DIR" ]]; then
+        log "void-packages already cloned at $VOID_PACKAGES_DIR. Updating..."
+        (cd "$VOID_PACKAGES_DIR" && git pull) 2>&1 | tee -a "$LOG_FILE"
     else
-        error "Failed to build/install $HELPER."
+        log "Cloning void-packages..."
+        git clone https://github.com/void-linux/void-packages.git "$VOID_PACKAGES_DIR" 2>&1 | tee -a "$LOG_FILE"
     fi
 
-    rm -rf "$build_dir"
+    log "Installing xbps-src build dependencies..."
+    sudo xbps-install -Sy --yes base-devel 2>&1 | tee -a "$LOG_FILE"
+
+    log "Bootstrapping xbps-src (masterdir)..."
+    (cd "$VOID_PACKAGES_DIR" && ./xbps-src binary-bootstrap) 2>&1 | tee -a "$LOG_FILE"
+
+    log "void-packages ready. Build a template with:"
+    log "  cd $VOID_PACKAGES_DIR && ./xbps-src pkg <template-name>"
+    log "Then install the resulting binary with:"
+    log "  sudo xbps-install --repository=$VOID_PACKAGES_DIR/hostdir/binpkgs <template-name>"
 }
 
-remove_aur_helper() {
-    local installed=()
-    command -v paru &>/dev/null && installed+=("paru")
-    command -v yay &>/dev/null && installed+=("yay")
+remove_void_packages() {
+    local VOID_PACKAGES_DIR="${HOME}/void-packages"
 
-    if [[ ${#installed[@]} -eq 0 ]]; then
-        log "Neither paru nor yay is currently installed."
+    if [[ ! -d "$VOID_PACKAGES_DIR" ]]; then
+        log "void-packages is not present at $VOID_PACKAGES_DIR."
         return
     fi
 
-    log "Select AUR helper to remove:"
-    HELPER=$(printf '%s\n' "${installed[@]}" "Cancel" | fzf --prompt="Remove: " --height=8 --reverse)
-    [[ -z "$HELPER" || "$HELPER" == "Cancel" ]] && { log "Cancelled."; return; }
-
-    read -p "Remove $HELPER and its unneeded dependencies? (y/N): " answer
+    read -p "Remove void-packages checkout at $VOID_PACKAGES_DIR? (y/N): " answer
     [[ ! "$answer" =~ ^[Yy]$ ]] && { log "Cancelled."; return; }
 
-    if sudo pacman -Rns --noconfirm "$HELPER" 2>&1 | tee -a "$LOG_FILE"; then
-        log "$HELPER removed."
-    else
-        error "Failed to remove $HELPER."
-    fi
+    rm -rf "$VOID_PACKAGES_DIR"
+    log "void-packages removed."
 }
 
 # -------------------------------
@@ -305,13 +266,12 @@ remove_aur_helper() {
 OPTIONS=(
     "Update system"
     "Install packages"
-    "Install AUR packages"
     "Copy .config and system files"
     "Setup Zsh + plugins"
     "Switch Git remote (HTTPS <-> SSH)"
     "Setup user groups + uinput"
-    "Install AUR helper (paru/yay)"
-    "Remove AUR helper (paru/yay)"
+    "Setup void-packages (xbps-src build env)"
+    "Remove void-packages checkout"
     "Quit"
 )
 
@@ -320,13 +280,12 @@ while true; do
     case $CHOICE in
         "Update system") update_system ;;
         "Install packages") install_packages ;;
-        "Install AUR packages") install_aur_packages ;;
         "Copy .config and system files") copy_dotfiles_config ;;
         "Setup Zsh + plugins") setup_zsh ;;
         "Switch Git remote (HTTPS <-> SSH)") switch_git_remote ;;
         "Setup user groups + uinput") setup_groups_and_uinput ;;
-        "Install AUR helper (paru/yay)") install_aur_helper ;;
-        "Remove AUR helper (paru/yay)") remove_aur_helper ;;
+        "Setup void-packages (xbps-src build env)") setup_void_packages ;;
+        "Remove void-packages checkout") remove_void_packages ;;
         "Quit") log "Goodbye!"; break ;;
         *) error "Invalid choice";;
     esac
