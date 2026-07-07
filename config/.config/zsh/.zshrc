@@ -15,7 +15,7 @@ if [[ -f "${ZINIT_ZSH}" ]]; then
 
     # Load annexes (only needed when installing/updating plugins)
     zinit light-mode for \
-        zdharma-continuum/zinit-annex-bin-gem-node \
+        zdharma-continuum/zinit-annex-bin-gem-node 
 fi
 
 
