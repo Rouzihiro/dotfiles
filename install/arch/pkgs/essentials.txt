@@ -1,4 +1,5 @@
 # Terminal & Shell
+imagemagick
 eza
 starship
 base
