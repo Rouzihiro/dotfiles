@@ -12,7 +12,6 @@ wev
 xdg-desktop-portal-wlr
 xdg-desktop-portal
 xdg-desktop-portal-gtk
-zen-browser-bin
 broot
 neovim
 git
