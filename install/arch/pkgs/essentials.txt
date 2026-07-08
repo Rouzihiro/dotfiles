@@ -1,8 +1,3 @@
-# Terminal & Shell
-jq
-imagemagick
-eza
-starship
 base
 base-devel
 linux
@@ -38,13 +33,11 @@ highlight
 wl-clipboard
 #jdownloader2
 
-# File Management
 ntfs-3g
 thunar
 xdg-user-dirs
 rsync
 
-# Utilities
 btop
 aria2
 brightnessctl
@@ -59,13 +52,11 @@ yad
 antimicrox
 zenity
 
-# Language Support
 hunspell-de
 tesseract
 tesseract-data-eng
 tesseract-data-deu
 
-# Multimedia
 ffmpegthumbs
 imagemagick
 imv
@@ -73,7 +64,6 @@ mpv
 yt-dlp
 pamixer
 
-# Applications
 zathura
 zathura-cb
 zathura-pdf-mupdf
