@@ -1,70 +1,18 @@
 #!/usr/bin/env bash
 # ~/.local/bin/wallpaper
 #
-# Drop-in for the "wallpaper" CLI that _osyx_apply_wallpaper() (apply.zsh)
-# looks for first, before falling back to waypaper.
-#
-# Auto-detects whichever of awww or swww is installed (they're the same
-# tool under the hood -- awww is the renamed continuation of swww by the
-# same author), starts the matching daemon if it isn't already running,
-# and sets the wallpaper with an animated transition.
+# Assumes swww-daemon or awww-daemon is already running (you start it
+# manually / via exec-once). Just picks whichever client is installed
+# and tells it to set the image with a transition.
 #
 # Usage: wallpaper set /path/to/image.jpg
-#
-# Tunables (export before calling, or set in your shell rc):
-#   OSYX_WALLPAPER_TRANSITION  (default: wipe)   -- see `swww img --help` / `awww img --help`
-#   OSYX_WALLPAPER_FPS         (default: 60)
-#   OSYX_WALLPAPER_STEP        (default: 90)
 
-set -euo pipefail
+[[ "$1" == "set" ]] || { echo "usage: wallpaper set <path>" >&2; exit 1; }
 
-usage() {
-  echo "usage: wallpaper set <path/to/image>" >&2
-  exit 1
-}
-
-[[ "${1:-}" == "set" ]] || usage
-IMAGE="${2:-}"
-[[ -n "$IMAGE" && -f "$IMAGE" ]] || {
-  echo "wallpaper: file not found: $IMAGE" >&2
-  exit 1
-}
-
-TRANSITION_TYPE="${OSYX_WALLPAPER_TRANSITION:-wipe}"
-TRANSITION_FPS="${OSYX_WALLPAPER_FPS:-60}"
-TRANSITION_STEP="${OSYX_WALLPAPER_STEP:-90}"
-
-# Prefer awww (the current name); fall back to swww for older distro packages.
 if command -v awww >/dev/null 2>&1; then
   BIN=awww
-  DAEMON_BIN=awww-daemon
-elif command -v swww >/dev/null 2>&1; then
-  BIN=swww
-  DAEMON_BIN=swww-daemon
 else
-  echo "wallpaper: neither awww nor swww found on PATH" >&2
-  exit 1
+  BIN=swww
 fi
 
-# The daemon must be running before the client can set anything.
-# Start it if it isn't already up (covers the case where it wasn't
-# launched at compositor startup, e.g. right after login/reboot).
-if ! pgrep -x "$DAEMON_BIN" >/dev/null 2>&1; then
-  "$DAEMON_BIN" >/dev/null 2>&1 &
-  disown
-
-  # Give it a moment to come up before the first `img` call.
-  for _ in 1 2 3 4 5 6 7 8 9 10; do
-    "$BIN" query >/dev/null 2>&1 && break
-    sleep 0.2
-  done
-fi
-
-"$BIN" img "$IMAGE" \
-  --transition-type "$TRANSITION_TYPE" \
-  --transition-fps "$TRANSITION_FPS" \
-  --transition-step "$TRANSITION_STEP" \
-  >/dev/null 2>&1 || {
-    echo "wallpaper: $BIN img failed for $IMAGE" >&2
-    exit 1
-  }
+"$BIN" img "$2" --transition-type wipe --transition-fps 60
