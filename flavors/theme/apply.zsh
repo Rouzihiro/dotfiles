@@ -151,30 +151,34 @@ _osyx_reload_nvim() {
 _osyx_reload_bemenu() {
   chmod +x "$HOME/.local/bin/bemenu/bm-run" 2>/dev/null || true
 }
-
 _osyx_apply_theme() {
   local theme="$1"
 
-_osyx_generate_theme_files "$theme"
-_osyx_write_theme_state "$theme"
-_osyx_apply_thyx "$theme"
+  # Generate files first
+  _osyx_generate_theme_files "$theme"
+  _osyx_write_theme_state "$theme"
+  # _osyx_apply_thyx "$theme"
 
-_osyx_apply_wallpaper "$theme"
+  # Wallpaper first, let animation run
+  _osyx_apply_wallpaper "$theme"
 
-sleep 0.15
+  # Give swww/awww time to start transition
+  sleep 0.3
 
-_osyx_reload_kitty &!
-_osyx_reload_tmux &!
-_osyx_reload_btop &!
-_osyx_reload_bemenu &!
-_osyx_reload_mako &!
-_osyx_reload_nvim &!
-_osyx_rofi_blur "$theme" &!
+  # Lightweight reloads
+  _osyx_reload_kitty &!
+  _osyx_reload_mako &!
+  _osyx_reload_tmux &!
+  _osyx_reload_btop &!
+  _osyx_reload_bemenu &!
 
-sleep 0.1
+  # These can wait
+  _osyx_reload_nvim &!
+  _osyx_rofi_blur "$theme" &!
 
-_osyx_reload_hyprland &!
+  # Only if absolutely needed
+  # _osyx_reload_sway &!
+  # _osyx_reload_hyprland &!
 
-_osyx_reload_all
-
+  _osyx_reload_all
 }
