@@ -30,18 +30,24 @@ _osyx_wallpaper_file() {
 }
 
 _osyx_apply_wallpaper() {
-    local theme="$1"
-    local wallpaper_file
+  local theme="$1"
+  local wallpaper_file
 
-    wallpaper_file="$(_osyx_wallpaper_file "$theme")" || return
+  wallpaper_file="$(_osyx_wallpaper_file "$theme")" || {
+    _osyx_log "no wallpaper found for $theme, skipping"
+    return 0
+  }
 
-    echo "Before: $(date +%T.%3N)"
-
-    wallpaper set "$wallpaper_file"
-
-    echo "After : $(date +%T.%3N)"
+  if command -v wallpaper >/dev/null 2>&1; then
+    wallpaper set "$wallpaper_file" >/dev/null 2>&1 \
+      || _osyx_log "wallpaper set failed for $wallpaper_file"
+  elif command -v waypaper >/dev/null 2>&1; then
+    waypaper --wallpaper "$wallpaper_file" >/dev/null 2>&1 \
+      || _osyx_log "waypaper failed for $wallpaper_file"
+  else
+    _osyx_log "no wallpaper tool found, skipping"
+  fi
 }
-
 _osyx_apply_thyx() {
   local theme="$1"
 
