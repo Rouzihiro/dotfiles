@@ -38,16 +38,21 @@ _osyx_apply_wallpaper() {
     return 0
   }
 
-  if command -v wallpaper >/dev/null 2>&1; then
-    wallpaper set "$wallpaper_file" >/dev/null 2>&1 \
-      || _osyx_log "wallpaper set failed for $wallpaper_file"
-  elif command -v waypaper >/dev/null 2>&1; then
-    waypaper --wallpaper "$wallpaper_file" >/dev/null 2>&1 \
-      || _osyx_log "waypaper failed for $wallpaper_file"
-  else
-    _osyx_log "no wallpaper tool found, skipping"
-  fi
+  [[ -f "$wallpaper_file" ]] || {
+    _osyx_log "wallpaper not found: $wallpaper_file"
+    return 1
+  }
+
+  local bin="swww"
+
+  command -v awww >/dev/null 2>&1 && bin="awww"
+
+  "$bin" img "$wallpaper_file" \
+    --transition-type wipe \
+    --transition-fps 60 \
+    --transition-duration 1.5
 }
+
 _osyx_apply_thyx() {
   local theme="$1"
 
@@ -165,6 +170,9 @@ _osyx_apply_theme() {
   # _osyx_apply_thyx "$theme"
 
   _osyx_apply_wallpaper "$theme"
+
+	sleep 1.6
+
   _osyx_reload_kitty &!
   _osyx_reload_mako &!
   _osyx_reload_tmux &!
@@ -173,8 +181,11 @@ _osyx_apply_theme() {
   _osyx_reload_nvim &!
   _osyx_rofi_blur "$theme" &!
 
-  _osyx_reload_sway
-  _osyx_reload_hyprland
+  if [[ -n "$SWAYSOCK" ]]; then
+    _osyx_reload_sway
+  elif [[ -n "$HYPRLAND_INSTANCE_SIGNATURE" ]]; then
+    _osyx_reload_hyprland
+  fi
 
   _osyx_reload_all
 }
