@@ -5,7 +5,7 @@ pre-commit
 openssh
 python
 python-pip
-python3-jinja
+python-jinja
 tinymist
 typst
 # jdk-openjdk
