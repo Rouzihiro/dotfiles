@@ -160,31 +160,21 @@ _osyx_reload_bemenu() {
 _osyx_apply_theme() {
   local theme="$1"
 
-  # Generate files first
   _osyx_generate_theme_files "$theme"
   _osyx_write_theme_state "$theme"
   # _osyx_apply_thyx "$theme"
 
-  # Wallpaper first, let animation run
   _osyx_apply_wallpaper "$theme"
-
-  # Give swww/awww time to start transition
-  sleep 0.3
-
-  # Lightweight reloads
   _osyx_reload_kitty &!
   _osyx_reload_mako &!
   _osyx_reload_tmux &!
   _osyx_reload_btop &!
   _osyx_reload_bemenu &!
-
-  # These can wait
   _osyx_reload_nvim &!
   _osyx_rofi_blur "$theme" &!
 
-  # Only if absolutely needed
-  # _osyx_reload_sway &!
-  # _osyx_reload_hyprland &!
+  _osyx_reload_sway
+  _osyx_reload_hyprland
 
   _osyx_reload_all
 }

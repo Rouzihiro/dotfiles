@@ -17,4 +17,5 @@ command -v awww >/dev/null && BIN=awww
 
 exec "$BIN" img "$2" \
     --transition-type wipe \
-    --transition-fps 60
+    --transition-fps 60 \
+		--transition-duration 1.5
