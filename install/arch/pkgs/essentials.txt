@@ -32,9 +32,7 @@ duf
 ncdu
 highlight
 wl-clipboard
-ps_mem
 #jdownloader2
-sdl2_sound
 
 # File Management
 ntfs-3g
