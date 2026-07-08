@@ -1,4 +1,5 @@
 # Terminal & Shell
+jq
 imagemagick
 eza
 starship

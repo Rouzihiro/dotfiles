@@ -39,32 +39,37 @@ zinit light zsh-users/zsh-autosuggestions
 zinit snippet OMZP::sudo
 zinit snippet OMZP::command-not-found
 
+load_distro_config() {
+    local distro="$1"
+    local config_file="${ZDOTDIR:-$HOME/.config/zsh}/.${distro}"
+
+    if [[ -f "$config_file" ]]; then
+        source "$config_file"
+    else
+        echo "⚠️ ${distro} detected but config file not found: $config_file"
+    fi
+}
+
+
 if [[ -f /etc/os-release ]]; then
     source /etc/os-release
 
     case "${ID}" in
         arch)
             zinit snippet OMZP::archlinux
+            load_distro_config "arch"
             ;;
 
         fedora|fedora-asahi-remix)
-            local fedora_file="${ZDOTDIR:-$HOME/.config/zsh}/.fedora"
-
-            if [[ -f "$fedora_file" ]]; then
-                source "$fedora_file"
-            else
-                echo "⚠️ Fedora detected but .fedora file not found: $fedora_file"
-            fi
+            load_distro_config "fedora"
             ;;
 
         void)
-            local void_file="${ZDOTDIR:-$HOME/.config/zsh}/.void"
+            load_distro_config "void"
+            ;;
 
-            if [[ -f "$void_file" ]]; then
-                source "$void_file"
-            else
-                echo "⚠️ Void detected but .void file not found: $void_file"
-            fi
+        debian|ubuntu)
+            load_distro_config "debian"
             ;;
 
         *)
@@ -73,7 +78,6 @@ if [[ -f /etc/os-release ]]; then
 else
     echo "⚠️ Cannot detect distribution: /etc/os-release not found"
 fi
-
 # Load syntax highlighting last so it doesn't interfere with completions
 ZSH_HIGHLIGHT_HIGHLIGHTERS=(main)
 zinit ice wait lucid
