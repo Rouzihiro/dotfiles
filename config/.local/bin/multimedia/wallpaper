@@ -1,18 +1,20 @@
 #!/usr/bin/env bash
-# ~/.local/bin/wallpaper
-#
-# Assumes swww-daemon or awww-daemon is already running (you start it
-# manually / via exec-once). Just picks whichever client is installed
-# and tells it to set the image with a transition.
-#
-# Usage: wallpaper set /path/to/image.jpg
 
-[[ "$1" == "set" ]] || { echo "usage: wallpaper set <path>" >&2; exit 1; }
+set -e
 
-if command -v awww >/dev/null 2>&1; then
-  BIN=awww
-else
-  BIN=swww
-fi
+[[ "$1" == "set" ]] || {
+    echo "Usage: wallpaper set <image>"
+    exit 1
+}
 
-"$BIN" img "$2" --transition-type wipe --transition-fps 60
+[[ -f "$2" ]] || {
+    echo "Wallpaper not found: $2"
+    exit 1
+}
+
+BIN=swww
+command -v awww >/dev/null && BIN=awww
+
+exec "$BIN" img "$2" \
+    --transition-type wipe \
+    --transition-fps 60

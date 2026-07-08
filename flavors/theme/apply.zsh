@@ -162,22 +162,26 @@ _osyx_reload_bemenu() {
 _osyx_apply_theme() {
   local theme="$1"
 
-  _osyx_generate_theme_files "$theme"
-  _osyx_write_theme_state "$theme"
-  _osyx_apply_thyx "$theme"
+_osyx_generate_theme_files "$theme"
+_osyx_write_theme_state "$theme"
+_osyx_apply_thyx "$theme"
 
-  _osyx_reload_kitty &!
-  _osyx_reload_hyprland &!
-  _osyx_reload_sway &!
-  # _osyx_reload_swaync &!
-  _osyx_reload_mako &!
-  _osyx_apply_wallpaper "$theme" &!
-  _osyx_rofi_blur "$theme" &!
-  _osyx_reload_tmux &!
-  _osyx_reload_nvim &!
-  _osyx_reload_btop &!
-	_osyx_reload_bemenu &!
-  # _osyx_reload_waybar &!
+_osyx_apply_wallpaper "$theme"
 
-  _osyx_reload_all
+sleep 0.15
+
+_osyx_reload_kitty &!
+_osyx_reload_tmux &!
+_osyx_reload_btop &!
+_osyx_reload_bemenu &!
+_osyx_reload_mako &!
+_osyx_reload_nvim &!
+_osyx_rofi_blur "$theme" &!
+
+sleep 0.1
+
+_osyx_reload_hyprland &!
+
+_osyx_reload_all
+
 }
