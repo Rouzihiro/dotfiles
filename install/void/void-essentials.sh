@@ -35,11 +35,11 @@ esac
 
 echo "==> Installing packages"
 sudo xbps-install -Sy \
-  NetworkManager dbus elogind polkitd \
+  NetworkManager dbus elogind polkitd power-profiles-daemon \
   $GPU_PKGS
 
 echo "==> Linking runit services (skip if already linked)"
-for svc in dbus elogind polkitd NetworkManager; do
+for svc in dbus elogind polkitd NetworkManager power-profiles-daemon; do
   if [ ! -e /var/service/$svc ]; then
     sudo ln -s /etc/sv/$svc /var/service/$svc
   else
@@ -52,7 +52,12 @@ sudo pkill -HUP runsvdir
 sleep 2
 
 echo "==> Service status"
-sv status dbus elogind polkitd NetworkManager
+sudo sv status \
+  dbus \
+  elogind \
+  polkitd \
+  NetworkManager \
+  power-profiles-daemon
 
 echo "==> Wheel group check (needed for polkit + NM permissions)"
 if ! groups | grep -q wheel; then
