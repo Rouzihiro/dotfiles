@@ -1,4 +1,9 @@
 # Terminal and shell
+eza
+neovim
+wireplumber
+pipewire
+ncurses-term
 curl 
 wget 
 git 
@@ -83,5 +88,5 @@ xournalpp
 # Themes / Flavors
 python3-Jinja2
 
-# Broot
+broot
 libxcb

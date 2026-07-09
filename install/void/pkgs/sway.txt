@@ -4,3 +4,7 @@ swaylock
 dunst
 #swaync
 swaybg
+swww
+i3blocks
+rofi
+kitty

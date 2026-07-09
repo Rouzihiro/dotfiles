@@ -9,7 +9,7 @@ tmux has-session -t $SESSION_NAME 2>/dev/null || {
   # -------------------------
   tmux new-session -d -s $SESSION_NAME -n "work"
 
-  tmux send-keys -t $SESSION_NAME:1.1 'cd ~ && br' C-m
+  tmux send-keys -t $SESSION_NAME:1.1 'cd ~ && broot' C-m
 
   tmux split-window -v -t $SESSION_NAME:1 -p 20
 
