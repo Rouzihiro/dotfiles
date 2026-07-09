@@ -41,3 +41,8 @@
     # prune stale remote refs
     prune = true
     pruneTags = true
+
+[include]
+    path = ~/git/.gitconfig.d/_user
+    path = ~/git/.gitconfig.d/aliases
+    path = ~/git/.gitconfig.d/theme

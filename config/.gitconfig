@@ -5,4 +5,4 @@
 	pager = delta
 
 [include]
-    path = ~/git/.gitconfig
+    path = ~/git/.gitconfig.d/config
