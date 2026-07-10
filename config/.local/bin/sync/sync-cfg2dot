@@ -267,26 +267,34 @@ command -v delta >/dev/null && typeset -i BIN_HAS_DELTA=1 || typeset -i BIN_HAS_
 mkdir -p "$BIN_TARGET"
 
 typeset -a bin_dirs
+typeset -a bin_changed
 
 for dir in "$BIN_SOURCE"/*(/N); do
-  bin_dirs+=("${dir:t}")
+  name="${dir:t}"
+  bin_dirs+=("$name")
+
+  if [[ ! -d "$BIN_TARGET/$name" ]] || ! diff -rq "$BIN_TARGET/$name" "$dir" >/dev/null 2>&1; then
+    bin_changed+=("$name")
+  fi
 done
 
 if (( ${#bin_dirs[@]} == 0 )); then
   print -r -- "No ~/.local/bin subdirectories found."
+elif (( ${#bin_changed[@]} == 0 )); then
+  print -r -- "~/.local/bin subdirectories already in sync."
 else
   print -r -- ""
   print -r -- "Subdirectories to sync:"
   print -r -- ""
 
-  for d in "${bin_dirs[@]}"; do
+  for d in "${bin_changed[@]}"; do
     print -r -- "  $d/"
   done
 
   print -r -- ""
   print -r -- "━━━ Diffs ━━━"
 
-  for d in "${bin_dirs[@]}"; do
+  for d in "${bin_changed[@]}"; do
     print -r -- ""
     print -r -- "── $d/ ──"
     if [[ -d "$BIN_TARGET/$d" ]]; then
@@ -305,10 +313,9 @@ else
   read -r bin_confirm
 
   if [[ "$bin_confirm" =~ ^[Yy]$ ]]; then
-    for dir in "$BIN_SOURCE"/*(/N); do
-      name="${dir:t}"
+    for name in "${bin_changed[@]}"; do
       mkdir -p "$BIN_TARGET/$name"
-      rsync -a "$dir/" "$BIN_TARGET/$name/"
+      rsync -a "$BIN_SOURCE/$name/" "$BIN_TARGET/$name/"
       print -r -- "synced: $name/"
     done
     print -r -- "Bin sync done."

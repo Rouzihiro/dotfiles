@@ -108,6 +108,8 @@ map("n", "x", "\"_x", { desc = "Delete character without cutting" })
 map("n", "X", "d$", { desc = "Cut to end of line" }) 
 map("n", "<leader>y", "yt#", { noremap = true, silent = true, desc = "Yank until #" })
 
+map("n", "<leader>cw", ":%s/\\s\\+$//e<CR>", { desc = "Clean trailing whitespace" })
+
 map({ "n" }, "P", "mzA<space><esc>p`z", { desc = "Paste to end of line" })
 map({"n"}, "A", "mzI<space><esc>P`z", { desc = "Paste at start of line" })
 map("n", "<leader>za", 'ggVG"+y', { desc = "Yank entire buffer" })
