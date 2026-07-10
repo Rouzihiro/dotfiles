@@ -2,7 +2,7 @@
 
 configuration {
     show-icons: false;
-    font: "JetBrainsMono Nerd Font 16";
+    font: "FantasqueSansM Nerd Font Mono 16";
 }
 
 * {

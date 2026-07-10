@@ -7,7 +7,7 @@
     background-color:      Black;
     border-color:          White;
     text-color:           White;
-    font:            "AvantGarde Medium 16";
+    font:            "FantasqueSansM Nerd Font Mono 16";
 }
 window {
     anchor:     north;

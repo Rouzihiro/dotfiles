@@ -1,7 +1,7 @@
 @import "colors.rasi"
 
 * {
-    font: "JetBrainsMono Nerd Font 16";
+    font: "FantasqueSansM Nerd Font Mono 16";
     background-color: transparent;
     text-color: @fg;
 }
@@ -34,7 +34,7 @@ inputbar {
 prompt {
     background-color: transparent;
     text-color: @sel-bg;
-    font: "JetBrainsMono Nerd Font Bold 14";
+    font: "FantasqueSansM Nerd Font Mono Bold 14";
     padding: 4px 0px;
 }
 

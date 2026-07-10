@@ -52,7 +52,7 @@ textbox-prompt-colon {
   str: "";
   background-color: transparent;
   text-color: transparent;
-  font: "JetBrainsMono Nerd Font Bold 0";
+  font: "FantasqueSansM Nerd Font Mono 0";
 }
 
 entry {
@@ -63,7 +63,7 @@ entry {
   border-radius: 0px;
   background-color: transparent;
   text-color: transparent;
-  font: "JetBrainsMono Nerd Font Bold 0";
+  font: "FantasqueSansM Nerd Font Mono 0";
 }
 
 mode-switcher {
