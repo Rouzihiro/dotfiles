@@ -262,6 +262,8 @@ if [[ ! -d "$BIN_SOURCE" ]]; then
   exit 0
 fi
 
+command -v delta >/dev/null && typeset -i BIN_HAS_DELTA=1 || typeset -i BIN_HAS_DELTA=0
+
 mkdir -p "$BIN_TARGET"
 
 typeset -a bin_dirs
@@ -279,6 +281,23 @@ else
 
   for d in "${bin_dirs[@]}"; do
     print -r -- "  $d/"
+  done
+
+  print -r -- ""
+  print -r -- "━━━ Diffs ━━━"
+
+  for d in "${bin_dirs[@]}"; do
+    print -r -- ""
+    print -r -- "── $d/ ──"
+    if [[ -d "$BIN_TARGET/$d" ]]; then
+      if (( BIN_HAS_DELTA )); then
+        diff -ru "$BIN_TARGET/$d" "$BIN_SOURCE/$d" | delta --paging=never
+      else
+        diff -ru "$BIN_TARGET/$d" "$BIN_SOURCE/$d"
+      fi
+    else
+      print -r -- "NEW DIRECTORY"
+    fi
   done
 
   print -r -- ""
