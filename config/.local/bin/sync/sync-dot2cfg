@@ -1,29 +1,30 @@
 #!/usr/bin/env zsh
-# sync-config-to-dotfiles.zsh
+# sync-dot2cfg.zsh
 #
-# Syncs selected changed files from ~/.config into ~/dotfiles/config/.config.
+# Reverse of sync-config-to-dotfiles.zsh.
+# Syncs selected changed files FROM ~/dotfiles/config/.config INTO ~/.config.
 # Uses fzf multi-select with live delta diff preview.
 #
-# Also syncs ~/.local/bin subdirectories into:
-# ~/dotfiles/config/.local/bin
+# Also syncs ~/dotfiles/config/.local/bin subdirectories into:
+# ~/.local/bin
 #
-# Root-level files in ~/.local/bin are ignored intentionally.
-# This avoids syncing manually built binaries.
+# Root-level files in ~/dotfiles/config/.local/bin are ignored intentionally.
+# This mirrors the forward sync's behavior of only handling subdirectories.
 #
-# Also syncs ~/git/ and ~/.gitconfig into:
-# ~/dotfiles/config/git/ and ~/dotfiles/config/.gitconfig
+# Also syncs ~/dotfiles/config/git/ and ~/dotfiles/config/.gitconfig into:
+# ~/git/ and ~/.gitconfig
 
-SOURCE_ROOT="$HOME/.config"
-TARGET_ROOT="$HOME/dotfiles/config/.config"
+SOURCE_ROOT="$HOME/dotfiles/config/.config"
+TARGET_ROOT="$HOME/.config"
 
-BIN_SOURCE="$HOME/.local/bin"
-BIN_TARGET="$HOME/dotfiles/config/.local/bin"
+BIN_SOURCE="$HOME/dotfiles/config/.local/bin"
+BIN_TARGET="$HOME/.local/bin"
 
-GIT_SRC="$HOME/git"
-GIT_TGT="$HOME/dotfiles/config/git"
+GIT_SRC="$HOME/dotfiles/config/git"
+GIT_TGT="$HOME/git"
 
-GITCONFIG_SRC="$HOME/.gitconfig"
-GITCONFIG_TGT="$HOME/dotfiles/config/.gitconfig"
+GITCONFIG_SRC="$HOME/dotfiles/config/.gitconfig"
+GITCONFIG_TGT="$HOME/.gitconfig"
 
 EXCLUDE_DIRS=(
 "bat"
@@ -35,7 +36,6 @@ EXCLUDE_DIRS=(
 "evolution"
 "eza"
 "geary"
-"GIMP"
 "glib-2.0"
 "glow"
 "go"
@@ -49,7 +49,6 @@ EXCLUDE_DIRS=(
 "matplotlib"
 "micro"
 "menus"
-"mozilla"
 "noctalia"
 "pavucontrol.ini"
 "procps"
@@ -103,6 +102,11 @@ EXCLUDE_FILES=(
   "yazi/theme.toml"
   "yazi/yazi-2.toml"
 )
+
+[[ -d "$SOURCE_ROOT" ]] || {
+  print -ru2 -- "Missing source: $SOURCE_ROOT"
+  exit 1
+}
 
 [[ -d "$TARGET_ROOT" ]] || {
   print -ru2 -- "Missing target: $TARGET_ROOT"
@@ -271,7 +275,7 @@ for dir in "$BIN_SOURCE"/*(/N); do
 done
 
 if (( ${#bin_dirs[@]} == 0 )); then
-  print -r -- "No ~/.local/bin subdirectories found."
+  print -r -- "No ~/dotfiles/config/.local/bin subdirectories found."
 else
   print -r -- ""
   print -r -- "Subdirectories to sync:"
