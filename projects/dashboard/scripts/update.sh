@@ -7,15 +7,34 @@ cd "$DASHBOARD_DIR" || exit 1
 
 mkdir -p data
 
+
 while true; do
 
-    ./scripts/system.sh
-    ./scripts/network.sh
-    ./scripts/git.sh
-    ./scripts/hardware.sh
-    ./scripts/services.sh
- 		./scripts/git-tree.sh
+
+    for script in "$SCRIPT_DIR"/*.sh; do
+
+        name="$(basename "$script")"
+
+
+        # Skip internal scripts
+        case "$name" in
+            update.sh|build-dashboard.sh|update-theme.sh)
+                continue
+                ;;
+        esac
+
+
+        if [ -x "$script" ]; then
+            "$script"
+        fi
+
+
+    done
+
+		./scripts/build-data-index.sh
+
 
     sleep 5
+
 
 done

@@ -1,255 +1,132 @@
 //
-// Clock
+// Dashboard automatic data loader
 //
 
-function updateClock() {
 
-    const now = new Date();
+function updateClock(){
 
     document.getElementById("clock").textContent =
-        now.toLocaleTimeString();
+        new Date().toLocaleTimeString();
 
 }
 
-setInterval(updateClock, 1000);
+
+
+async function updateFile(file){
+
+
+    try {
+
+
+        const data =
+            await fetch(
+                "data/" + file + "?" + Date.now()
+            )
+            .then(r => r.json());
+
+
+
+        for(const key in data){
+
+
+            const element =
+                document.getElementById(key);
+
+
+
+            if(element){
+
+                element.textContent =
+                    data[key];
+
+            }
+
+
+        }
+
+
+    }
+
+
+    catch(error){
+
+        console.log(
+            "Unable to load",
+            file
+        );
+
+    }
+
+
+}
+
+
+
+async function updateDashboard(){
+
+
+    try {
+
+
+        const files =
+            await fetch(
+                "data/index.json?" + Date.now()
+            )
+            .then(r => r.json());
+
+
+
+        for(const file of files){
+
+            updateFile(file);
+
+        }
+
+
+    }
+
+
+    catch(error){
+
+        console.log(
+            "Data index unavailable"
+        );
+
+    }
+
+
+}
+
+
+
 
 updateClock();
 
 
+setInterval(
+    updateClock,
+    1000
+);
 
 
 
-//
-// System information
-//
-
-async function updateSystem() {
-
-    try {
-
-        const data = await fetch("data/system.json?" + Date.now())
-            .then(r => r.json());
+updateDashboard();
 
 
-        document.getElementById("cpu").textContent =
-            data.cpu;
-
-        document.getElementById("ram").textContent =
-            data.ram;
-
-        document.getElementById("disk").textContent =
-            data.disk;
-
-        document.getElementById("uptime").textContent =
-            data.uptime;
+setInterval(
+    updateDashboard,
+    5000
+);
 
 
-    } catch (error) {
 
-        console.log("System data unavailable", error);
 
-    }
+// Launcher bridge
+
+function openApp(app){
+
+    fetch(
+        "http://localhost:9999/" + app
+    );
 
 }
-
-
-
-
-
-//
-// Network information
-//
-
-async function updateNetwork() {
-
-    try {
-
-        const data = await fetch("data/network.json?" + Date.now())
-            .then(r => r.json());
-
-
-        document.getElementById("ssid").textContent =
-            data.ssid;
-
-        document.getElementById("signal").textContent =
-            data.signal;
-
-        document.getElementById("download").textContent =
-            data.download;
-
-        document.getElementById("upload").textContent =
-            data.upload;
-
-
-    } catch (error) {
-
-        console.log("Network data unavailable", error);
-
-    }
-
-}
-
-
-
-
-
-//
-// Git information
-//
-
-async function updateGit() {
-
-    try {
-
-        const data = await fetch("data/git.json?" + Date.now())
-            .then(r => r.json());
-
-
-        document.getElementById("git-status").textContent =
-            data.branch + " • " + data.status;
-
-
-    } catch(error) {
-
-        console.log("Git data unavailable", error);
-
-    }
-
-}
-
-
-async function updateGitTree(){
-
-    try {
-
-        const data = await fetch(
-            "data/git-tree.txt?" + Date.now()
-        ).then(r => r.text());
-
-
-        document.getElementById("git-tree").textContent =
-            data;
-
-
-    } catch(error){
-
-        console.log("Git tree unavailable");
-
-    }
-
-}
-
-
-//
-// Hardware information
-//
-
-async function updateHardware(){
-
-    try {
-
-        const data = await fetch("data/hardware.json?" + Date.now())
-            .then(r => r.json());
-
-
-        document.getElementById("temperature").textContent =
-            data.temperature;
-
-
-        document.getElementById("battery").textContent =
-            data.battery;
-
-
-    } catch(error) {
-
-        console.log("Hardware data unavailable", error);
-
-    }
-
-}
-
-
-
-
-
-//
-// Services information
-//
-
-async function updateServices(){
-
-    try {
-
-        const data = await fetch("data/services.json?" + Date.now())
-            .then(r => r.json());
-
-
-        document.getElementById("ssh-status").textContent =
-            data.ssh;
-
-
-        document.getElementById("pipewire-status").textContent =
-            data.pipewire;
-
-
-        document.getElementById("wireplumber-status").textContent =
-            data.wireplumber;
-
-
-        document.getElementById("sway-status").textContent =
-            data.sway;
-
-
-    } catch(error) {
-
-        console.log("Services data unavailable", error);
-
-    }
-
-}
-
-
-
-
-
-//
-// Launch TUI applications
-//
-
-function openApp(app) {
-
-    fetch("http://localhost:9999/" + app);
-
-}
-
-
-
-
-
-//
-// Initial load
-//
-
-updateSystem();
-updateNetwork();
-updateGit();
-updateGitTree();
-updateHardware();
-updateServices();
-
-
-
-
-
-
-
-//
-// Refresh
-//
-
-setInterval(updateSystem, 5000);
-setInterval(updateNetwork, 5000);
-setInterval(updateGit, 5000);
-setInterval(updateGitTree,5000);
-setInterval(updateHardware, 5000);
-setInterval(updateServices, 5000);

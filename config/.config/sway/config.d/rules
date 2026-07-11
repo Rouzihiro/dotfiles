@@ -30,7 +30,7 @@ for_window [title=".*Telegram.*"] opacity $NewOpacity
 for_window [title=".*Neovim.*"] opacity $NewOpacity
 for_window [title=".*neovim.*"] opacity $NewOpacity
 for_window [title=".*(Thunar|nemo).*"] opacity $NewOpacity
-for_window [title="^(JDownloader.*)$"] opacity 0.90
+for_window [title="^(JDownloader.*)$"] opacity $NewOpacity
 
 # -----------------------------------------------------------------------------
 # Lunar Client

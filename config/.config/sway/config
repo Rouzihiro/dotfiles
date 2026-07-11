@@ -4,7 +4,7 @@ set $opacity 0.9
 set $term foot
 set $term2 kitty
 set $launcher rofi -show drun -theme ~/.config/rofi/launcher.rasi
-set $browser librewolf
+set $browser firefox
 set $files thunar
 set $fm $term -e superb
 set $tfm $term -e yazi
