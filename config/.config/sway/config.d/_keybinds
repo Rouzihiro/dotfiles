@@ -18,9 +18,9 @@ bindsym $mod+b exec rofi-bookmarks
 bindsym $mod+Mod1+b exec xdg-open https://
 bindsym $mod+Shift+b exec $term2 --title floaty-big -e sh -c bt
 
-bindsym $mod+d exec ~/.config/sway/scripts/dashboard-cal.sh
-bindsym $mod+Mod1+d exec rofi-aria
-bindsym $mod+Shift+d exec rofi-docs
+bindsym $mod+d exec sh -c '~/dashboard/start-dashboard.sh && notify-send "Dashboard" "Started"'
+bindsym $mod+Mod1+d exec sh -c '~/dashboard/stop-dashboard.sh && notify-send "Dashboard" "Stopped"'
+bindsym $mod+Shift+d exec dlm
 #bindsym $mod+Shift+d exec bm-music-downloader
 
 bindsym $mod+e exec $fm

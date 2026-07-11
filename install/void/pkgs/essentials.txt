@@ -24,6 +24,7 @@ foot
 fzf
 geary
 git
+git-filter-repo
 grim
 gum
 highlight
