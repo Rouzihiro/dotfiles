@@ -1,6 +1,7 @@
 #!/bin/sh
 
 cd "$HOME/dashboard" || exit 1
+mkdir -p data
 
 
 # Start live data updater
