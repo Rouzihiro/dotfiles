@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<title>Dashboard</title>
+<link rel="stylesheet" href="style.css">
+</head>
+
+
+<body>
+
+<div class="hud">
+
+
+<header>
+
+<div>
+<span class="label">SYSTEM</span>
+<h1>Dashboard</h1>
+</div>
+
+<div class="clock" id="clock">
+00:00:00
+</div>
+
+</header>
+
+
+
+<main>
+
+
+<section class="card">
+
+<h2>󰊢 DOTFILES</h2>
+
+<div class="repo">
+
+<span>Repository</span>
+
+<b>
+<a href="https://github.com/Rouzihiro/dotfiles" target="_blank">
+GitHub
+</a>
+</b>
+
+</div>
+
+
+<div class="repo">
+
+<span>Status</span>
+
+<b id="git-status">
+--
+</b>
+
+</div>
+
+
+<pre id="git-tree">
+loading...
+</pre>
+
+
+</section>
+
+
+
+
+
+<section class="card">
+
+<h2>󰍛 SYSTEM</h2>
+
+<div class="stat">
+<span>CPU</span>
+<b id="cpu">--</b>
+</div>
+
+
+<div class="stat">
+<span>RAM</span>
+<b id="ram">--</b>
+</div>
+
+
+<div class="stat">
+<span>DISK</span>
+<b id="disk">--</b>
+</div>
+
+
+<div class="stat">
+<span>UPTIME</span>
+<b id="uptime">--</b>
+</div>
+
+
+<div class="stat">
+<span>TEMP</span>
+<b id="temperature">--</b>
+</div>
+
+
+<div class="stat">
+<span>BATTERY</span>
+<b id="battery">--</b>
+</div>
+
+</section>
+
+
+
+
+
+<section class="card">
+
+<h2>󰖩 NETWORK</h2>
+
+
+<div class="stat">
+<span>SSID</span>
+<b id="ssid">--</b>
+</div>
+
+
+<div class="stat">
+<span>SIGNAL</span>
+<b id="signal">--</b>
+</div>
+
+
+<div class="stat">
+<span>DOWNLOAD</span>
+<b id="download">--</b>
+</div>
+
+
+<div class="stat">
+<span>UPLOAD</span>
+<b id="upload">--</b>
+</div>
+
+
+</section>
+
+
+
+
+
+<section class="card">
+
+<h2>󰆍 TOOLS</h2>
+
+
+<button onclick="openApp('calcurse')">
+󰃭 Calcurse
+</button>
+
+
+<button onclick="openApp('termcal')">
+󰥔 Termcal
+</button>
+
+
+<button onclick="openApp('foot')">
+ Terminal
+</button>
+
+
+</section>
+
+
+
+
+
+<section class="card">
+
+<h2>󰃭 CALENDAR</h2>
+
+
+<div class="repo">
+
+<span>Today</span>
+
+<b id="calendar">
+--
+</b>
+
+</div>
+
+
+<button onclick="openApp('calcurse')">
+Open Calendar
+</button>
+
+
+</section>
+
+
+
+
+
+<section class="card">
+
+<h2>󰒓 SERVICES</h2>
+
+
+<div class="stat">
+
+<span>SSH</span>
+
+<b id="ssh-status">
+--
+</b>
+
+</div>
+
+
+<div class="stat">
+
+<span>PipeWire</span>
+
+<b id="pipewire-status">
+--
+</b>
+
+</div>
+
+
+<div class="stat">
+
+<span>Sway</span>
+
+<b id="sway-status">
+RUNNING
+</b>
+
+</div>
+
+
+</section>
+
+
+
+</main>
+
+
+</div>
+
+
+<script src="script.js"></script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,352 @@
+@font-face {
+
+    font-family: Fantasque;
+
+    src: local("FantasqueSansM Nerd Font Mono");
+
+    font-weight: normal;
+
+}
+
+
+@font-face {
+
+    font-family: Fantasque;
+
+    src: local("FantasqueSansM Nerd Font Mono");
+
+    font-weight: bold;
+
+}
+
+
+/* COLORS */
+
+:root {
+
+    --bg: #0C1319;
+
+    --panel: #141D26;
+
+    --border: #443E39;
+
+    --cream: #ECD5BB;
+
+    --gold: #F5C993;
+
+    --blue: #698CAF;
+
+    --muted: #748496;
+
+    --green: #8FAF7B;
+
+}
+
+
+
+/* GLOBAL */
+
+* {
+
+    box-sizing: border-box;
+
+}
+
+
+
+body {
+
+    margin: 0;
+
+    background: var(--bg);
+
+    color: var(--cream);
+
+    font-family: Fantasque, "FantasqueSansM Nerd Font Mono", monospace;
+
+}
+
+
+
+/* MAIN CONTAINER */
+
+.hud {
+
+    width: 95vw;
+
+    max-width: 1800px;
+
+    margin: 40px auto;
+
+}
+
+
+
+/* HEADER */
+
+header {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    border-bottom: 1px solid var(--border);
+
+    padding-bottom: 20px;
+
+    margin-bottom: 25px;
+
+}
+
+
+
+.label {
+
+    color: var(--muted);
+
+    font-size: 14px;
+
+}
+
+
+
+h1 {
+
+    margin: 5px 0;
+
+    color: var(--gold);
+
+    letter-spacing: 1px;
+
+}
+
+
+
+.clock {
+
+    font-size: 32px;
+
+    color: var(--blue);
+
+}
+
+
+
+/* AUTOMATIC CARD GRID */
+
+main {
+
+    display: grid;
+
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+
+    gap: 20px;
+
+    width: 100%;
+
+    align-items: start;
+
+}
+
+
+
+/* ALL CARDS */
+
+.card {
+
+    min-width: 0;
+
+    height: fit-content;
+
+    background: var(--panel);
+
+    border: 1px solid var(--border);
+
+    border-radius: 12px;
+
+    padding: 25px;
+
+}
+
+
+
+h2 {
+
+    margin-top: 0;
+
+    color: var(--gold);
+
+    font-size: 18px;
+
+}
+
+
+
+/* INFORMATION ROWS */
+
+.stat,
+.repo {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    gap: 20px;
+
+    padding: 10px 0;
+
+    border-bottom: 1px solid #24303b;
+
+}
+
+
+
+.stat span,
+.repo span {
+
+    color: var(--muted);
+
+}
+
+
+
+.stat b,
+.repo b {
+
+    text-align: right;
+
+}
+
+
+
+/* STATUS */
+
+.online {
+
+    color: var(--green);
+
+}
+
+
+
+.warn {
+
+    color: var(--gold);
+
+}
+
+
+
+/* BUTTONS */
+
+button {
+
+    width: 100%;
+
+    margin: 6px 0;
+
+    padding: 12px;
+
+    background: #1d2a36;
+
+    border: 1px solid var(--border);
+
+    color: var(--cream);
+
+    border-radius: 8px;
+
+    font-family: inherit;
+
+    font-size: 16px;
+
+    text-align: left;
+
+    cursor: pointer;
+
+}
+
+
+
+button:hover {
+
+    background: #24384b;
+
+    color: var(--gold);
+
+}
+
+
+
+/* LINKS */
+
+a {
+
+    color: var(--blue);
+
+    text-decoration: none;
+
+}
+
+
+
+a:hover {
+
+    color: var(--gold);
+
+}
+
+
+
+/* GIT TREE / PRE TEXT */
+
+pre {
+
+    margin: 0;
+
+    font-family: inherit;
+
+    font-size: 14px;
+
+    color: var(--cream);
+
+    white-space: pre-wrap;
+
+    overflow-wrap: break-word;
+
+}
+
+
+
+/* SMALL SCREENS */
+
+@media (max-width: 700px) {
+
+    .hud {
+
+        width: 95vw;
+
+    }
+
+
+    header {
+
+        flex-direction: column;
+
+        align-items: flex-start;
+
+        gap: 15px;
+
+    }
+
+
+    .clock {
+
+        font-size: 22px;
+
+    }
+
+}
