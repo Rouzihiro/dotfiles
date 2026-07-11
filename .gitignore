@@ -165,3 +165,4 @@ config/.local/bin/bemenu/bm-run
 bm-run
 calcurse.ical
 events.tsv
+projects/dashboard/data
