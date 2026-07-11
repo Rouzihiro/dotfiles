@@ -12,7 +12,7 @@ BRANCH="main"
 
 # Files / paths to remove from FULL git history
 TRASH=(
-    ".config/go"
+    "projects/dashboard/data"
 )
 
 # ==========================================================
@@ -115,10 +115,10 @@ run_cleaner() {
     check_repo_clean
     confirm_delete
 
-    if ! command -v git-filter-repo >/dev/null 2>&1; then
-        echo "ERROR: git-filter-repo not installed"
-        exit 1
-    fi
+  if ! git filter-repo --help >/dev/null 2>&1; then
+    echo "ERROR: git-filter-repo not installed"
+    exit 1
+fi
 
     FILTER_ARGS=()
 
