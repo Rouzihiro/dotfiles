@@ -3,16 +3,28 @@
 SCRIPT_DIR="$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)"
 DASHBOARD_DIR="$(dirname "$SCRIPT_DIR")"
 
-mkdir -p "$DASHBOARD_DIR/data"
+OUTPUT="$DASHBOARD_DIR/data/lsblk.json"
 
 
-lsblk -o NAME,SIZE,TYPE,FSTYPE,MOUNTPOINTS \
-    | sed 's/$/<br>/' \
-    > "$DASHBOARD_DIR/data/lsblk.txt"
+CONTENT=$(lsblk -o NAME,SIZE,TYPE,FSTYPE,MOUNTPOINTS)
 
 
-cat > "$DASHBOARD_DIR/data/lsblk.json" <<EOF
-{
-    "lsblk-output": "$(sed ':a;N;$!ba;s/\n/\\n/g;s/"/\\"/g' "$DASHBOARD_DIR/data/lsblk.txt")"
-}
-EOF
+python3 - "$OUTPUT" "$CONTENT" <<'PY'
+
+import json
+import sys
+
+output = sys.argv[1]
+content = sys.argv[2]
+
+
+with open(output, "w") as f:
+    json.dump(
+        {
+            "lsblk-output": content
+        },
+        f,
+        indent=4
+    )
+
+PY
