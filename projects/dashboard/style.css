@@ -1,3 +1,6 @@
+@import url("color.css");
+
+
 @font-face {
 
     font-family: Fantasque;
@@ -20,31 +23,10 @@
 }
 
 
-/* COLORS */
 
-:root {
-
-    --bg: #0C1319;
-
-    --panel: #141D26;
-
-    --border: #443E39;
-
-    --cream: #ECD5BB;
-
-    --gold: #F5C993;
-
-    --blue: #698CAF;
-
-    --muted: #748496;
-
-    --green: #8FAF7B;
-
-}
-
-
-
-/* GLOBAL */
+/* ---------------------------------------------------------
+   GLOBAL
+--------------------------------------------------------- */
 
 * {
 
@@ -53,14 +35,21 @@
 }
 
 
-
+html,
 body {
 
     margin: 0;
 
+    padding: 0;
+
+}
+
+
+body {
+
     background: var(--bg);
 
-    color: var(--cream);
+    color: var(--fg);
 
     font-family: Fantasque, "FantasqueSansM Nerd Font Mono", monospace;
 
@@ -68,7 +57,9 @@ body {
 
 
 
-/* MAIN CONTAINER */
+/* ---------------------------------------------------------
+   MAIN CONTAINER
+--------------------------------------------------------- */
 
 .hud {
 
@@ -82,7 +73,9 @@ body {
 
 
 
-/* HEADER */
+/* ---------------------------------------------------------
+   HEADER
+--------------------------------------------------------- */
 
 header {
 
@@ -92,49 +85,48 @@ header {
 
     align-items: center;
 
-    border-bottom: 1px solid var(--border);
+    margin-bottom: 25px;
 
     padding-bottom: 20px;
 
-    margin-bottom: 25px;
+    border-bottom: 1px solid var(--border);
 
 }
 
 
-
 .label {
 
-    color: var(--muted);
+    color: var(--fg-dim);
 
     font-size: 14px;
 
 }
 
 
-
 h1 {
 
     margin: 5px 0;
 
-    color: var(--gold);
+    color: var(--accent);
 
     letter-spacing: 1px;
 
 }
 
 
-
 .clock {
 
     font-size: 32px;
 
-    color: var(--blue);
+    color: var(--accent);
 
 }
 
 
 
-/* AUTOMATIC CARD GRID */
+/* ---------------------------------------------------------
+   GRID
+--------------------------------------------------------- */
 
 main {
 
@@ -144,15 +136,15 @@ main {
 
     gap: 20px;
 
-    width: 100%;
-
     align-items: start;
 
 }
 
 
 
-/* ALL CARDS */
+/* ---------------------------------------------------------
+   CARDS
+--------------------------------------------------------- */
 
 .card {
 
@@ -166,17 +158,18 @@ main {
 
     border-radius: 12px;
 
-    padding: 25px;
+    padding: 24px;
 
 }
-
 
 
 h2 {
 
     margin-top: 0;
 
-    color: var(--gold);
+    margin-bottom: 18px;
+
+    color: var(--accent);
 
     font-size: 18px;
 
@@ -184,7 +177,9 @@ h2 {
 
 
 
-/* INFORMATION ROWS */
+/* ---------------------------------------------------------
+   DATA ROWS
+--------------------------------------------------------- */
 
 .stat,
 .repo {
@@ -199,19 +194,17 @@ h2 {
 
     padding: 10px 0;
 
-    border-bottom: 1px solid #24303b;
+    border-bottom: 1px solid var(--border);
 
 }
-
 
 
 .stat span,
 .repo span {
 
-    color: var(--muted);
+    color: var(--fg-dim);
 
 }
-
 
 
 .stat b,
@@ -219,109 +212,127 @@ h2 {
 
     text-align: right;
 
+    font-weight: bold;
+
 }
 
 
 
-/* STATUS */
+/* ---------------------------------------------------------
+   STATUS
+--------------------------------------------------------- */
 
 .online {
 
-    color: var(--green);
+    color: var(--success);
 
 }
-
 
 
 .warn {
 
-    color: var(--gold);
+    color: var(--warning);
+
+}
+
+
+.error {
+
+    color: var(--urgent);
 
 }
 
 
 
-/* BUTTONS */
+/* ---------------------------------------------------------
+   BUTTONS
+--------------------------------------------------------- */
 
 button {
 
     width: 100%;
 
-    margin: 6px 0;
+    margin-top: 8px;
 
     padding: 12px;
 
-    background: #1d2a36;
+    background: var(--bg-subtle);
 
     border: 1px solid var(--border);
 
-    color: var(--cream);
-
     border-radius: 8px;
 
-    font-family: inherit;
-
-    font-size: 16px;
-
-    text-align: left;
+    color: var(--fg);
 
     cursor: pointer;
 
-}
+    font-family: inherit;
 
+    font-size: 15px;
+
+    text-align: left;
+
+    transition: 0.15s ease;
+
+}
 
 
 button:hover {
 
-    background: #24384b;
+    background: var(--bg-muted);
 
-    color: var(--gold);
+    color: var(--accent);
 
 }
 
 
 
-/* LINKS */
+/* ---------------------------------------------------------
+   LINKS
+--------------------------------------------------------- */
 
 a {
 
-    color: var(--blue);
+    color: var(--accent);
 
     text-decoration: none;
 
 }
 
 
-
 a:hover {
 
-    color: var(--gold);
+    text-decoration: underline;
 
 }
 
 
 
-/* GIT TREE / PRE TEXT */
+/* ---------------------------------------------------------
+   GIT TREE
+--------------------------------------------------------- */
 
 pre {
 
     margin: 0;
 
+    color: var(--fg);
+
     font-family: inherit;
 
     font-size: 14px;
 
-    color: var(--cream);
-
     white-space: pre-wrap;
 
-    overflow-wrap: break-word;
+    overflow-wrap: anywhere;
 
 }
 
 
 
-/* SMALL SCREENS */
+/* ---------------------------------------------------------
+   RESPONSIVE
+--------------------------------------------------------- */
 
 @media (max-width: 700px) {
 
