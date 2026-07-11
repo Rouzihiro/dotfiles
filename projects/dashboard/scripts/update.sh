@@ -1,7 +1,11 @@
 #!/bin/sh
 
-cd "$HOME/dashboard" || exit 1
+SCRIPT_DIR="$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)"
+DASHBOARD_DIR="$(dirname "$SCRIPT_DIR")"
 
+cd "$DASHBOARD_DIR" || exit 1
+
+mkdir -p data
 
 while true; do
 

@@ -1,8 +1,10 @@
 #!/bin/sh
 
-SOURCE="$HOME/.config/waybar/colors.css"
-TARGET="$HOME/dashboard/color.css"
+SCRIPT_DIR="$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)"
+DASHBOARD_DIR="$(dirname "$SCRIPT_DIR")"
 
+SOURCE="$HOME/.config/waybar/colors.css"
+TARGET="$DASHBOARD_DIR/color.css"
 
 if [ ! -f "$SOURCE" ]; then
     echo "Waybar colors.css not found"
