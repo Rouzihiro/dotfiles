@@ -1,27 +1,50 @@
 #!/bin/sh
 
-OUTPUT="$HOME/dashboard/data/git-tree.txt"
+SCRIPT_DIR="$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)"
+DASHBOARD_DIR="$(dirname "$SCRIPT_DIR")"
 
-cd "$HOME/dotfiles" || exit 1
+OUTPUT="$DASHBOARD_DIR/data/git-tree.txt"
+REPO="$HOME/dotfiles"
+
+mkdir -p "$(dirname "$OUTPUT")"
+
+cd "$REPO" || exit 1
+
+
+CHANGES=$(git status --short)
+
+
+if [ -z "$CHANGES" ]; then
+
+    cat > "$OUTPUT" <<EOF
+󰊢 DOTFILES
+
+✓ Working tree clean
+
+Nothing to commit.
+EOF
+
+    exit 0
+
+fi
 
 
 TMP=$(mktemp)
 
-
-git status --short | awk '{print $2}' > "$TMP"
+printf "%s\n" "$CHANGES" | awk '{print $2}' > "$TMP"
 
 
 {
-echo "󰊢 DOTFILES CHANGES"
-echo ""
+    echo "󰊢 DOTFILES CHANGES"
+    echo ""
 
-tree --fromfile < "$TMP"
+    tree --fromfile < "$TMP"
 
-echo ""
-echo "----------------"
-echo ""
+    echo ""
+    echo "----------------"
+    echo ""
 
-git status --short
+    printf "%s\n" "$CHANGES"
 
 } > "$OUTPUT"
 
