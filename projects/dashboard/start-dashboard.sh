@@ -21,9 +21,7 @@ if ! pgrep -f "http.server 8080" >/dev/null; then
 fi
 
 
-# Give services a moment to start
 sleep 1
 
 
-# Open dashboard in default browser
-xdg-open http://localhost:8080
+xdg-open http://localhost:8080 >/dev/null 2>&1
