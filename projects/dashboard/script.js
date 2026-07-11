@@ -3,14 +3,32 @@
 //
 
 
+// Clock
+
 function updateClock(){
 
-    document.getElementById("clock").textContent =
-        new Date().toLocaleTimeString();
+    const clock =
+        document.getElementById("clock");
+
+
+    if(clock){
+
+        clock.textContent =
+            new Date().toLocaleTimeString();
+
+    }
 
 }
 
 
+
+// Prevent multiple updates running at once
+
+let updating = false;
+
+
+
+// Load one JSON file
 
 async function updateFile(file){
 
@@ -18,11 +36,14 @@ async function updateFile(file){
     try {
 
 
-        const data =
+        const response =
             await fetch(
                 "data/" + file + "?" + Date.now()
-            )
-            .then(r => r.json());
+            );
+
+
+        const data =
+            await response.json();
 
 
 
@@ -34,7 +55,26 @@ async function updateFile(file){
 
 
 
-            if(element){
+            if(!element){
+
+                console.log(
+                    "Missing element:",
+                    key
+                );
+
+                continue;
+
+            }
+
+
+
+            if(element.tagName === "PRE"){
+
+                element.textContent =
+                    data[key];
+
+            }
+            else {
 
                 element.textContent =
                     data[key];
@@ -46,13 +86,12 @@ async function updateFile(file){
 
 
     }
-
-
     catch(error){
 
         console.log(
-            "Unable to load",
-            file
+            "Unable to load:",
+            file,
+            error
         );
 
     }
@@ -62,7 +101,20 @@ async function updateFile(file){
 
 
 
+// Load all available data
+
 async function updateDashboard(){
+
+
+    if(updating){
+
+        return;
+
+    }
+
+
+    updating = true;
+
 
 
     try {
@@ -78,27 +130,31 @@ async function updateDashboard(){
 
         for(const file of files){
 
-            updateFile(file);
+            await updateFile(file);
 
         }
 
 
     }
-
-
     catch(error){
 
         console.log(
-            "Data index unavailable"
+            "Data index unavailable",
+            error
         );
 
     }
 
 
+
+    updating = false;
+
 }
 
 
 
+
+// Clock
 
 updateClock();
 
@@ -109,6 +165,8 @@ setInterval(
 );
 
 
+
+// Data
 
 updateDashboard();
 
