@@ -60,6 +60,7 @@ tmux
 trash-cli
 tree
 unzip
+vdirsyncer
 vlc
 wayland-utils
 wget

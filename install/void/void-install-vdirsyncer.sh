@@ -52,12 +52,11 @@ fi
 # Install packages
 # -----------------------------------------
 
-echo -e "${YELLOW}Installing vdirsyncer and OAuth support...${NC}"
+echo -e "${YELLOW}Installing OAuth support...${NC}"
 
 "$VENV_DIR/bin/pip" install --upgrade pip
 
 "$VENV_DIR/bin/pip" install \
-    vdirsyncer \
     aiohttp-oauthlib
 
 
