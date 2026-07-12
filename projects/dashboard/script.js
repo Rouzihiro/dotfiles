@@ -5,21 +5,31 @@
 
 // Clock
 
-function updateClock(){
+function updateClock() {
+    const clock = document.getElementById("clock");
 
-    const clock =
-        document.getElementById("clock");
+    if (clock) {
+        const now = new Date();
 
+        const day = now.toLocaleDateString("en-GB", {
+            weekday: "long"
+        });
 
-    if(clock){
+        const date = now.toLocaleDateString("de-DE", {
+            day: "2-digit",
+            month: "2-digit",
+            year: "2-digit"
+        });
 
-        clock.textContent =
-            new Date().toLocaleTimeString();
+        const time = now.toLocaleTimeString("en-GB", {
+            hour: "2-digit",
+            minute: "2-digit",
+            second: "2-digit"
+        });
 
+        clock.textContent = `${day} ${date} ${time}`;
     }
-
 }
-
 
 
 // Prevent multiple updates running at once
