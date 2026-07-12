@@ -29,7 +29,13 @@ class Handler(BaseHTTPRequestHandler):
 
             "foot": [
                 "foot"
-            ]
+            ],
+"Void-Services": [
+    "foot",
+    "--title=floaty-big",
+    "-e",
+    "/home/rey/.local/bin/fzf/void-svc.sh"
+],
         }
 
         app = self.path[1:]

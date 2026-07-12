@@ -6,9 +6,11 @@
 // Clock
 
 function updateClock() {
+
     const clock = document.getElementById("clock");
 
     if (clock) {
+
         const now = new Date();
 
         const day = now.toLocaleDateString("en-GB", {
@@ -27,9 +29,13 @@ function updateClock() {
             second: "2-digit"
         });
 
-        clock.textContent = `${day} ${date} ${time}`;
+        clock.textContent =
+            `${day} ${date} ${time}`;
+
     }
+
 }
+
 
 
 // Prevent multiple updates running at once
@@ -40,11 +46,9 @@ let updating = false;
 
 // Load one JSON file
 
-async function updateFile(file){
-
+async function updateFile(file) {
 
     try {
-
 
         const response =
             await fetch(
@@ -57,15 +61,14 @@ async function updateFile(file){
 
 
 
-        for(const key in data){
-
+        for (const key in data) {
 
             const element =
                 document.getElementById(key);
 
 
 
-            if(!element){
+            if (!element) {
 
                 console.log(
                     "Missing element:",
@@ -78,7 +81,7 @@ async function updateFile(file){
 
 
 
-            if(element.tagName === "PRE"){
+            if (element.tagName === "PRE") {
 
                 element.textContent =
                     data[key];
@@ -91,12 +94,11 @@ async function updateFile(file){
 
             }
 
-
         }
 
 
     }
-    catch(error){
+    catch(error) {
 
         console.log(
             "Unable to load:",
@@ -106,17 +108,109 @@ async function updateFile(file){
 
     }
 
+}
+
+
+
+// Services card
+
+async function updateServices() {
+
+    try {
+
+        const container =
+            document.getElementById(
+                "services-list"
+            );
+
+
+        if (!container) {
+
+            return;
+
+        }
+
+
+
+        const response =
+            await fetch(
+                "data/services.json?" + Date.now()
+            );
+
+
+        const data =
+            await response.json();
+
+
+
+        container.innerHTML = "";
+
+
+
+        if (!data.services || data.services.length === 0) {
+
+            container.textContent =
+                "No services found";
+
+            return;
+
+        }
+
+
+
+        for (const service of data.services) {
+
+
+            const row =
+                document.createElement("div");
+
+
+            row.className =
+                "service-row";
+
+
+
+            row.innerHTML = `
+
+                <span class="service-name">
+                    ${service.name}
+                </span>
+
+                <span class="service-status">
+                    ${service.status}
+                </span>
+
+            `;
+
+
+
+            container.appendChild(row);
+
+
+        }
+
+
+
+    }
+    catch(error) {
+
+        console.log(
+            "Unable to load services:",
+            error
+        );
+
+    }
 
 }
 
 
 
-// Load all available data
+// Load all available dashboard data
 
-async function updateDashboard(){
+async function updateDashboard() {
 
 
-    if(updating){
+    if (updating) {
 
         return;
 
@@ -134,39 +228,51 @@ async function updateDashboard(){
             await fetch(
                 "data/index.json?" + Date.now()
             )
-            .then(r => r.json());
+            .then(
+                r => r.json()
+            );
 
 
 
-        for(const file of files){
+        for (const file of files) {
 
             await updateFile(file);
 
         }
 
 
+
     }
-    catch(error){
+    catch(error) {
+
 
         console.log(
             "Data index unavailable",
             error
         );
 
+
     }
 
 
 
+    await updateServices();
+
+
+
     updating = false;
+
 
 }
 
 
 
 
-// Clock
+
+// Initial clock
 
 updateClock();
+
 
 
 setInterval(
@@ -176,9 +282,12 @@ setInterval(
 
 
 
-// Data
+
+
+// Initial data load
 
 updateDashboard();
+
 
 
 setInterval(
@@ -189,9 +298,10 @@ setInterval(
 
 
 
+
 // Launcher bridge
 
-function openApp(app){
+function openApp(app) {
 
     fetch(
         "http://localhost:9999/" + app
