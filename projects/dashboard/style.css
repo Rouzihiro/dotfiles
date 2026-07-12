@@ -307,25 +307,42 @@ a:hover {
 }
 
 
-
+.terminal-output {
+    margin: 0;
+    padding: 0;
+    overflow-x: auto;
+    white-space: pre;
+    font-family: inherit;
+    font-size: 14px;
+    line-height: 1.4;
+}
 /* ---------------------------------------------------------
    GIT TREE
 --------------------------------------------------------- */
 
+/* pre { */
+/**/
+/*     margin: 0; */
+/**/
+/*     color: var(--fg); */
+/**/
+/*     font-family: inherit; */
+/**/
+/*     font-size: 14px; */
+/**/
+/*     white-space: pre-wrap; */
+/**/
+/*     overflow-wrap: anywhere; */
+/**/
+/* } */
+
 pre {
-
     margin: 0;
-
-    color: var(--fg);
-
     font-family: inherit;
-
     font-size: 14px;
-
-    white-space: pre-wrap;
-
-    overflow-wrap: anywhere;
-
+    color: var(--fg);
+    white-space: pre;
+    overflow-x: auto;
 }
 
 
