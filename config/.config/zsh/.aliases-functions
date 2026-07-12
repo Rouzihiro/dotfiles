@@ -239,5 +239,5 @@ keytest() {
 
 # git diff before commit
 brg() {
-    br --conf ~/.config/broot/git-diff-conf.toml --git-status
+    broot --conf ~/.config/broot/git-diff-conf.toml --git-status
 }
