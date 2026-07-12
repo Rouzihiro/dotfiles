@@ -1,0 +1,170 @@
+#!/usr/bin/env bash
+
+set -e
+
+# =========================================
+# Calcurse Sync Script
+# =========================================
+
+# Colors
+GREEN='\033[0;32m'
+RED='\033[0;31m'
+YELLOW='\033[1;33m'
+NC='\033[0m'
+
+# vdirsyncer from dedicated venv
+VDSYNC="$HOME/.venvs/vdirsyncer/bin/vdirsyncer"
+
+# Paths
+CAL_DIR="$HOME/.local/share/calcurse/calendars"
+STATE_DIR="$HOME/.cache/calcurse-sync"
+STATE_FILE="$STATE_DIR/imported.txt"
+
+TERMCal_DIR="$HOME/.config/termcal"
+ICAL_FILE="$TERMCal_DIR/calcurse.ical"
+EVENTS_FILE="$TERMCal_DIR/events.tsv"
+
+# =========================================
+# Check dependencies
+# =========================================
+
+if [ ! -x "$VDSYNC" ]; then
+    echo -e "${RED}✗ vdirsyncer venv not found:${NC}"
+    echo "$VDSYNC"
+    exit 1
+fi
+
+for cmd in calcurse awk zsh sort date; do
+    if ! command -v "$cmd" >/dev/null 2>&1; then
+        echo -e "${RED}✗ Missing dependency:${NC} $cmd"
+        exit 1
+    fi
+done
+
+mkdir -p "$STATE_DIR"
+mkdir -p "$TERMCal_DIR"
+touch "$STATE_FILE"
+
+# =========================================
+# Sync menu
+# =========================================
+
+echo "========================================="
+echo "  Calcurse Sync Script"
+echo "========================================="
+echo ""
+echo "Options:"
+echo "  1) Run normal sync (use existing token)"
+echo "  2) Create new token (run vdirsyncer discover)"
+echo ""
+
+read -p "Choose option (1 or 2): " choice
+
+case $choice in
+    1)
+        echo -e "${YELLOW}Running normal sync with existing token...${NC}"
+        "$VDSYNC" sync
+        ;;
+
+    2)
+        echo -e "${YELLOW}Creating new OAuth token...${NC}"
+        echo -e "${YELLOW}This will open a browser for Google authentication.${NC}"
+
+        "$VDSYNC" discover
+
+        echo -e "${GREEN}✓ Discover completed${NC}"
+        ;;
+
+    *)
+        echo -e "${RED}Invalid option.${NC}"
+        exit 1
+        ;;
+esac
+
+
+# =========================================
+# Import ICS files into calcurse
+# =========================================
+
+echo ""
+echo -e "${YELLOW}Processing calendar files...${NC}"
+
+IMPORTED_COUNT=0
+
+if [ -d "$CAL_DIR" ]; then
+
+    while IFS= read -r file; do
+
+        if grep -qF "$file" "$STATE_FILE"; then
+            continue
+        fi
+
+        echo "Importing: $file"
+
+        calcurse -i "$file"
+
+        echo "$file" >> "$STATE_FILE"
+        IMPORTED_COUNT=$((IMPORTED_COUNT + 1))
+
+    done < <(find "$CAL_DIR" -name "*.ics")
+
+fi
+
+
+if [ "$IMPORTED_COUNT" -gt 0 ]; then
+    echo -e "${GREEN}✓ Imported $IMPORTED_COUNT new calendar file(s)${NC}"
+else
+    echo -e "${YELLOW}No new calendar files to import${NC}"
+fi
+
+
+# =========================================
+# Export calcurse calendar
+# =========================================
+
+echo -e "${YELLOW}Exporting calendar to iCal...${NC}"
+
+calcurse --export > "$ICAL_FILE"
+
+
+if [ -f "$ICAL_FILE" ] && [ -s "$ICAL_FILE" ]; then
+    echo -e "${GREEN}✓ Calendar exported:${NC}"
+    echo "$ICAL_FILE"
+else
+    echo -e "${RED}✗ Calendar export failed${NC}"
+    exit 1
+fi
+
+
+# =========================================
+# Convert iCal -> TSV
+# =========================================
+
+echo -e "${YELLOW}Creating events.tsv...${NC}"
+
+if zsh "$TERMCal_DIR/ical2tsv.zsh" "$ICAL_FILE" \
+    | awk -F'\t' -v cutoff="$(date +%Y-%m)" '$1 >= cutoff' \
+    | sort -u > "$EVENTS_FILE"; then
+
+
+    if [ -f "$EVENTS_FILE" ] && [ -s "$EVENTS_FILE" ]; then
+
+        EVENT_COUNT=$(wc -l < "$EVENTS_FILE")
+
+        echo -e "${GREEN}✓ events.tsv created with $EVENT_COUNT events${NC}"
+
+    else
+        echo -e "${RED}✗ events.tsv is empty${NC}"
+        exit 1
+    fi
+
+else
+    echo -e "${RED}✗ Failed creating events.tsv${NC}"
+    exit 1
+fi
+
+
+echo ""
+echo -e "${GREEN}=========================================${NC}"
+echo -e "${GREEN}✓ Sync completed successfully!${NC}"
+echo -e "${GREEN}=========================================${NC}"

@@ -8,7 +8,7 @@ if pidof rofi > /dev/null; then
 fi
 
 # Define the config files
-KEYBINDS_CONF="$HOME/.config/sway/config.d/custom"
+KEYBINDS_CONF="$HOME/.config/sway/config.d/_keybinds"
 
 # Combine the contents of the keybinds files and filter for keybinds
 KEYBINDS=$(grep -E '^bindsym' "$KEYBINDS_CONF" \

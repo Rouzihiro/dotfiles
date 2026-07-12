@@ -79,6 +79,7 @@ EXCLUDE_DIRS=(
 )
 
 EXCLUDE_FILES=(
+	"bm-run"
   "alacritty/theme.toml"
   "broot/skins/current.toml"
   "btop/themes/current.theme"

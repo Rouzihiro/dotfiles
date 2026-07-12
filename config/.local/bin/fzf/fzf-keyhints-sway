@@ -1,7 +1,7 @@
 #!/bin/bash
 # keyhints-fzf - show sway keybindings using fzf
 
-SWAY_CONFIG="$HOME/.config/sway/config.d/custom"
+SWAY_CONFIG="$HOME/.config/sway/config.d/_keybinds"
 
 # Generate the keybindings list with tabular formatting
 bindings=$(grep -rE '^\s*bindsym\s+' "$SWAY_CONFIG" | \

@@ -12,7 +12,7 @@ BRANCH="main"
 
 # Files / paths to remove from FULL git history
 TRASH=(
-    "projects/dashboard/data"
+    "projects/dashboard/color.css"
 )
 
 # ==========================================================

@@ -1,45 +1,9 @@
 #!/usr/bin/env bash
 
-# Rofi dmenu mode, -i make search case-insensitive, -l is the number of line
+# Rofi dmenu mode, -i makes search case-insensitive
 rofi_command() {
   rofi -dmenu -i -p "Power" -config "$HOME/.config/rofi/topbox.rasi"
 }
-
-shutdown=" 󰐥 | Shutdown"
-reboot="  | Restart"
-lock="  | Lock"
-suspend=" 󰤄 | Suspend"
-logout=" 󰍂 | Logout"
-
-chosen=$(echo -e "$shutdown\n$reboot\n$logout\n$suspend\n$lock" | rofi_command)
-
-case "$chosen" in
-"$shutdown")
-  poweroff
-  ;;
-"$reboot")
-  reboot
-  ;;
-"$lock")
-  if command -v gtklock &>/dev/null; then
-    gtklock
-  elif command -v swaylock &>/dev/null; then
-    swaylock -fF -i "~/Pictures/lockscreen/VIM.png" 
-  elif command -v hyprlock &>/dev/null; then
-    hyprlock
-  else
-    notify-send -t 1500 "Error: No lock utility found."
-  fi
-  ;;
-"$suspend")
-  mpc -q pause
-  amixer set Master mute
-  systemctl suspend
-  ;;
-"$logout")
-  handle_logout
-  ;;
-esac
 
 handle_logout() {
   case "$DESKTOP_SESSION" in
@@ -73,3 +37,43 @@ handle_logout() {
     ;;
   esac
 }
+
+shutdown=" 󰐥 | Shutdown"
+reboot="  | Restart"
+lock="  | Lock"
+suspend=" 󰤄 | Suspend"
+logout=" 󰍂 | Logout"
+
+chosen=$(echo -e "$shutdown\n$reboot\n$logout\n$suspend\n$lock" | rofi_command)
+
+case "$chosen" in
+"$shutdown")
+  loginctl poweroff
+  ;;
+
+"$reboot")
+  loginctl reboot
+  ;;
+
+"$lock")
+  if command -v gtklock &>/dev/null; then
+    gtklock
+  elif command -v swaylock &>/dev/null; then
+    swaylock -fF -i "$HOME/Pictures/lockscreen/VIM.png"
+  elif command -v hyprlock &>/dev/null; then
+    hyprlock
+  else
+    notify-send -t 1500 "Error: No lock utility found."
+  fi
+  ;;
+
+"$suspend")
+  mpc -q pause
+  amixer set Master mute
+  loginctl suspend
+  ;;
+
+"$logout")
+  handle_logout
+  ;;
+esac
