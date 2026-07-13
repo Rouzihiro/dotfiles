@@ -1,24 +1,69 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
-# Display options
-echo "Choose an option:"
-echo "1 - Mount NAS"
-echo "2 - Unmount NAS"
-read option
+SERVER="192.168.178.1"
+SHARE="FRITZ.NAS"
+MOUNTPOINT="$HOME/mount/nas"
+CREDENTIALS="$HOME/.ssh/fritznas.credentials"
 
-case $option in
-    1)
-	  curlftpfs -o user="$(awk -F= '/username/ {print $2}' ~/.ssh/id_ftp):$(awk -F= '/password/ {print $2}' ~/.ssh/id_ftp)",allow_other,uid=$(id -u rey),gid=$(id -g rey),umask=0000 ftp://192.168.178.1/ ~/mount/nas
+# Colors (only if terminal supports it)
+if [ -t 1 ]; then
+    GREEN="\033[0;32m"
+    RED="\033[0;31m"
+    RESET="\033[0m"
+else
+    GREEN=""
+    RED=""
+    RESET=""
+fi
 
-       echo "NAS mounted at ~/mount/nas/"
-        ;;
-    2)
-        # Unmount the NAS
-        fusermount -u ~/mount/nas/
-        echo "NAS unmounted from ~/mount/nas/"
-        ;;
-    *)
-        echo "Invalid option. Please enter 1 for mount or 2 for unmount."
-        ;;
-esac
+# Check for cifs support
+if ! command -v mount.cifs >/dev/null 2>&1; then
+    echo -e "${RED}✗ mount.cifs not found${RESET}"
+    echo
+    echo "Install cifs-utils:"
+    echo "  Arch / Asahi Fedora:"
+    echo "    sudo pacman -S cifs-utils"
+    echo
+    echo "  Fedora:"
+    echo "    sudo dnf install cifs-utils"
+    echo
+    echo "  Void:"
+    echo "    sudo xbps-install -S cifs-utils"
+    exit 1
+fi
 
+# Create mount point
+mkdir -p "$MOUNTPOINT"
+
+# Check credentials
+if [ ! -f "$CREDENTIALS" ]; then
+    echo -e "${RED}✗ Credentials file missing:${RESET}"
+    echo "$CREDENTIALS"
+    exit 1
+fi
+
+# Secure permissions
+chmod 600 "$CREDENTIALS"
+
+# Already mounted?
+if mountpoint -q "$MOUNTPOINT"; then
+    echo -e "${GREEN}✓ FRITZ.NAS already mounted:${RESET}"
+    echo "$MOUNTPOINT"
+    exit 0
+fi
+
+echo "Mounting FRITZ.NAS..."
+
+sudo mount -t cifs \
+    "//$SERVER/$SHARE" \
+    "$MOUNTPOINT" \
+    -o credentials="$CREDENTIALS",uid="$(id -u)",gid="$(id -g)",iocharset=utf8,vers=3.0
+
+# Verify
+if mountpoint -q "$MOUNTPOINT"; then
+    echo -e "${GREEN}✓ FRITZ.NAS mounted:${RESET}"
+    echo "$MOUNTPOINT"
+else
+    echo -e "${RED}✗ Mount failed${RESET}"
+    exit 1
+fi
