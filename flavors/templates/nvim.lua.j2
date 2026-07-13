@@ -1,48 +1,6 @@
 local M = {}
 M.default_color = "{{ nvim_colorscheme | default('gruvbox') }}"
-
 function M.pre_setup()
-  if M.default_color == "aether" then
-    local ok, aether = pcall(require, "aether")
-    if ok then
-      aether.setup({
-        colors = {
-          bg         = "#{{ palette_bg }}",
-          dark_bg    = "#{{ palette_bg }}",
-          darker_bg  = "#{{ palette_bg }}",
-          lighter_bg = "#{{ palette_bg_muted }}",
-          bg_highlight = "#{{ palette_bg_subtle }}",
-          fg         = "#{{ palette_fg }}",
-          dark_fg    = "#{{ palette_color7 }}",
-          light_fg   = "#{{ palette_fg }}",
-          bright_fg  = "#{{ palette_color7 }}",
-          muted      = "#{{ palette_bg_muted }}",
-          red        = "#{{ palette_error }}",
-          yellow     = "#{{ palette_warning }}",
-          orange     = "#{{ palette_color9 }}",
-          green      = "#{{ palette_success }}",
-          cyan       = "#{{ palette_color6 }}",
-          blue       = "#{{ palette_accent }}",
-          purple     = "#{{ palette_color5 }}",
-          brown      = "#{{ palette_color11 }}",
-          bright_red    = "#{{ palette_error }}",
-          bright_yellow = "#{{ palette_warning }}",
-          bright_green  = "#{{ palette_success }}",
-          bright_cyan   = "#{{ palette_color6 }}",
-          bright_blue   = "#{{ palette_accent }}",
-          bright_purple = "#{{ palette_color5 }}",
-          accent        = "#{{ palette_accent }}",
-          cursor        = "#{{ palette_cursor }}",
-          foreground    = "#{{ palette_fg }}",
-          background    = "#{{ palette_bg }}",
-          selection     = "#{{ palette_bg_muted }}",
-          selection_foreground = "#{{ palette_sel_fg }}",
-          selection_background = "#{{ palette_sel_bg }}",
-        },
-      })
-    end
-  end
-
   local ok_catppuccin, catppuccin = pcall(require, "catppuccin")
   if ok_catppuccin and M.default_color:match("^catppuccin") then
     catppuccin.setup({
@@ -53,14 +11,12 @@ function M.pre_setup()
       },
     })
   end
-
   local ok_kanagawa, kanagawa = pcall(require, "kanagawa")
   if ok_kanagawa and M.default_color:match("^kanagawa") then
     kanagawa.setup({
       transparent = true,
     })
   end
-
   local ok_rosepine, rosepine = pcall(require, "rose-pine")
   if ok_rosepine and M.default_color:match("^rose%-pine") then
     rosepine.setup({
@@ -69,23 +25,27 @@ function M.pre_setup()
       },
     })
   end
-
   local ok_tokyonight, tokyonight = pcall(require, "tokyonight")
   if ok_tokyonight and M.default_color:match("^tokyonight") then
     tokyonight.setup({
       transparent = true,
     })
   end
-
   if M.default_color:match("everforest") then
     vim.g.everforest_transparent_background = 2
   end
-
   if M.default_color == "gruvbox" then
     vim.g.gruvbox_contrast_dark = "medium"
     vim.g.gruvbox_invert_selection = 0
     vim.g.gruvbox_transparent_bg = 1
   end
 end
-
+function M.reload()
+  M.pre_setup()
+  local ok = pcall(vim.cmd.colorscheme, M.default_color)
+  if not ok then
+    vim.notify("colorscheme failed: " .. M.default_color, vim.log.levels.WARN)
+  end
+end
+vim.api.nvim_create_user_command("OsyxFlip", M.reload, { desc = "Reload osyx theme" })
 return M
