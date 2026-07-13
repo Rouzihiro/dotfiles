@@ -1,0 +1,98 @@
+# noir.toml
+
+[palette]
+bg          = "#080909"
+bg_subtle   = "#111312"
+bg_muted    = "#2B2D2B"
+fg          = "#D0D0CA"
+fg_dim      = "#858983"
+fg_faint    = "#444743"
+
+accent      = "#B8BAB4"
+fg_on_accent = "#080909"
+
+success     = "#B8BAB4"
+warning     = "#A19369"
+error       = "#A64A40"
+cursor      = "#B8BAB4"
+sel_bg      = "#3D403C"
+sel_fg      = "#E8E7E0"
+
+color0  = "#080909"
+color1  = "#A64A40"
+color2  = "#87917B"
+color3  = "#A19369"
+color4  = "#707D82"
+color5  = "#86747B"
+color6  = "#708684"
+color7  = "#C6C7C1"
+color8  = "#3A3D39"
+color9  = "#C45D52"
+color10 = "#A6B197"
+color11 = "#C0AD75"
+color12 = "#8D9BA0"
+color13 = "#A28B94"
+color14 = "#8CA3A0"
+color15 = "#E4E3DC"
+
+[starship]
+os_bg          = "B8BAB4"
+os_fg          = "080909"
+dir_bg         = "858983"
+dir_fg         = "080909"
+git_branch_bg  = "444743"
+git_branch_fg  = "D9D9D3"
+git_status_bg  = "2B2D2B"
+git_status_fg  = "B8BAB4"
+langs_bg       = "191B1A"
+langs_fg       = "A9ACA6"
+time_bg        = "0B0C0C"
+time_fg        = "858983"
+success        = "B8BAB4"
+error          = "A64A40"
+
+[tmux]
+pane_border        = "2B2D2B"
+pane_active_border = "B8BAB4"
+message_bg         = "B8BAB4"
+message_fg         = "080909"
+git_bg             = "444743"
+git_fg             = "E1E0DA"
+host_bg            = "242624"
+host_fg            = "C6C7C1"
+time_bg            = "0B0C0C"
+time_fg            = "959992"
+
+[hyprland]
+active_border   = "B8BAB4"
+inactive_border = "3B3E3A"
+
+[mako]
+bg       = "0B0C0C"
+text     = "D9D9D3"
+border   = "9FA29C"
+progress = "737871"
+
+[wofi]
+bg            = "080909"
+border        = "9FA29C"
+input_bg      = "171918"
+input_border  = "3B3E3A"
+text          = "D0D0CA"
+selected_bg   = "858983"
+selected_text = "080909"
+
+[dircolors]
+dir      = "B8BAB4"
+link     = "8F9891"
+archive  = "A64A40"
+media    = "A19369"
+source   = "D0D0CA"
+exec     = "87917B"
+ignored  = "4E514D"
+bg       = "080909"
+fg       = "D0D0CA"
+orphan   = "C45D52"
+
+[nvim]
+colorscheme = "noir"
