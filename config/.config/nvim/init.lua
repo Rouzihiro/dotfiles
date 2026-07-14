@@ -25,7 +25,7 @@ vim.pack.add({
     -- { src = "https://github.com/stevearc/oil.nvim" },
     -- { src = "https://github.com/nvim-tree/nvim-web-devicons" },
     { src = "https://github.com/aznhe21/actions-preview.nvim" },
-    { src = "https://github.com/nvim-treesitter/nvim-treesitter", version = "main" },
+    { src = "https://github.com/nvim-treesitter/nvim-treesitter" },
     { src = "https://github.com/nvim-lua/plenary.nvim" },
     { src = "https://github.com/chomosuke/typst-preview.nvim" },
     { src = "https://github.com/neovim/nvim-lspconfig" },

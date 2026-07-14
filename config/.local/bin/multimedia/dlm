@@ -180,25 +180,14 @@ render_dashboard() {
         done
     fi
 
-    local move_up=""
+local move_up=""
     if [ "$LAST_LINES" -gt 0 ]; then
-        move_up="$(tput cuu "$LAST_LINES")"
+        move_up="$(tput cuu "$LAST_LINES")$(tput ed)"
     fi
     printf "%s%s" "$move_up" "$frame"
 
-    local leftover=$(( LAST_LINES - printed ))
-    if [ "$leftover" -gt 0 ]; then
-        local blank
-        blank="$(printf '%-*s' "${COLUMNS:-80}" '')"
-        for (( i=0; i<leftover; i++ )); do
-            printf "%s\n" "$blank"
-        done
-        tput cuu "$leftover"
-        tput cud "$printed"
-    fi
-
     LAST_LINES=$printed
-}
+   }
 # Function to download a link (runs in background)
 download_link() {
     url="$1"
