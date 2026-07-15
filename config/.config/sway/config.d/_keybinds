@@ -56,7 +56,7 @@ bindsym $mod+Shift+p exec $HOME/.config/rofi/scripts/rofi-power-profile
 bindsym $mod+q kill
 bindsym $mod+Ctrl+q exec swaymsg exit
 
-bindsym $mod+r exec z-cmd-screenrecord 
+bindsym $mod+r exec screenrecord 
 bindsym $mod+mod1+r exec $HOME/.config/rofi/scripts/rofi-screenrecord
 bindsym $mod+Shift+r reload
 
