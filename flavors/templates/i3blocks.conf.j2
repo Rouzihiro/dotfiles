@@ -3,7 +3,7 @@ markup=pango
 separator_block_width=10
 
 [weather]
-command=weather-short
+command=$HOME/scripts/bar/weather-short
 interval=1000
 color={{ palette_fg }}
 
@@ -12,7 +12,7 @@ full_text="⟨"
 color={{ palette_bg_subtle }}
 
 [bandwidth]
-command=bandwidth
+command=$HOME/scripts/bar/bandwidth
 interval=1
 label=
 color={{ palette_color6 }}
@@ -34,7 +34,7 @@ color={{ palette_bg_subtle }}
 
 [memory]
 label=
-command=memory
+command=$HOME/scripts/bar/memory
 interval=2
 color={{ palette_accent }}
 
@@ -44,7 +44,7 @@ color={{ palette_bg_subtle }}
 
 [cpu_usage]
 label=
-command=cpu-usage
+command=$HOME/scripts/bar/cpu-usage
 interval=2
 color={{ palette_color1 }}
 
@@ -53,7 +53,7 @@ full_text="⟨"
 color={{ palette_bg_subtle }}
 
 [wifi]
-command=wifi-status
+command=$HOME/scripts/bar/wifi-status
 interval=30
 color={{ palette_fg }}
 
@@ -62,7 +62,7 @@ full_text="⟨"
 color={{ palette_bg_subtle }}
 
 [volume]
-command=sb-volume
+command=$HOME/scripts/statusbar/sb-volume
 interval=1
 color={{ palette_color3 }}
 
@@ -71,7 +71,7 @@ full_text="⟨"
 color={{ palette_bg_subtle }}
 
 [power-profile]
-command=power-wrapper
+command=$HOME/scripts/bar/power-wrapper
 interval=5
 signal=10
 color={{ palette_fg }}
@@ -81,7 +81,7 @@ full_text="⟨"
 color={{ palette_bg_subtle }}
 
 [brightness]
-command=sb-brightness
+command=$HOME/scripts/statusbar/sb-brightness
 interval=5
 label=
 color={{ palette_fg }}
@@ -92,7 +92,7 @@ color={{ palette_bg_subtle }}
 
 [time]
 interval=1
-command=timer
+command=$HOME/scripts/bar/timer
 separator_block_width=10
 label=
 color={{ palette_accent }}
@@ -102,7 +102,7 @@ full_text="⟨"
 color={{ palette_bg_subtle }}
 
 [keymap]
-command=kb-layout
+command=$HOME/scripts/bar/kb-layout
 interval=2
 color={{ palette_accent }}
 
@@ -111,7 +111,7 @@ full_text="⟨"
 color={{ palette_bg_subtle }}
 
 [battery]
-command=battery
+command=$HOME/scripts/bar/battery
 interval=30
 color={{ palette_color6 }}
 
@@ -121,5 +121,5 @@ color={{ palette_bg_subtle }}
 
 [shutdown_menu]
 full_text=
-command=powermenu
+command=$HOME/scripts/bar/powermenu
 color={{ palette_color1 }}

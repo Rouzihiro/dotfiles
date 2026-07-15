@@ -86,6 +86,7 @@ for_window [app_id="^runner_floating$"] {
     move position center
     resize set 800 600
     opacity 0.80
+		focus
 }
 
 # -----------------------------------------------------------------------------

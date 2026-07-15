@@ -1,3 +1,0 @@
-#!/bin/bash
-cmd="$*"
-setsid kitty --app-id="runner_floating" -e bash -c "z-show-logo; $*; z-show-done" >/dev/null 2>&1 &

@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+if [ "$#" -lt 1 ]; then
+    echo "Usage: $0 <command> [args...]"
+    exit 1
+fi
+
+CMD="$1"
+shift
+
+setsid foot --app-id runner_floating -e "$CMD" "$@" >/dev/null 2>&1 &

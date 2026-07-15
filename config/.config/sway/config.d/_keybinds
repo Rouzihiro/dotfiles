@@ -20,8 +20,7 @@ bindsym $mod+Shift+b exec $term2 --title floaty-big -e sh -c bt
 
 bindsym $mod+d exec sh -c '~/Projects/dashboard/start-dashboard.sh && notify-send "Dashboard" "Started"'
 bindsym $mod+Mod1+d exec sh -c '~/Projects/dashboard/stop-dashboard.sh && notify-send "Dashboard" "Stopped"'
-bindsym $mod+Shift+d exec $term dlm
-#bindsym $mod+Shift+d exec bm-music-downloader
+bindsym $mod+Shift+d exec run-tui download-manager.sh
 
 bindsym $mod+e exec $fm
 bindsym $mod+Mod1+e exec $tfm
@@ -72,10 +71,10 @@ bindsym $mod+Mod1+v exec $term2 --title floaty-tiny -e sh fzf-video-tool
 bindsym $mod+Shift+v exec $HOME/.config/rofi/scripts/rofi-video-tool
 
 bindsym $mod+w exec $HOME/.config/rofi/scripts/rofi-wall
-bindsym $mod+mod1+w exec wall-random
+bindsym $mod+mod1+w exec $HOME/scripts/wallwaper-random.sh
 
 bindsym $mod+x exec asryx
 
-bindsym $mod+z exec z-menu-keybindings-sway-soft
+bindsym $mod+z exec $HOME/scripts/sway/keybindings-sway
 
-bindsym $mod+grave exec list-sway-window
+bindsym $mod+grave exec $HOME/scripts/sway/list-sway-window

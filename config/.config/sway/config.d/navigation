@@ -16,16 +16,13 @@ bindsym $mod+Ctrl+k resize grow height 49px
 bindsym $mod+Ctrl+l resize grow width 49px
 
 # Media and brightness
-bindsym XF86MonBrightnessDown exec $HOME/.local/bin/multimedia/brightness.sh down
-bindsym XF86MonBrightnessUp exec $HOME/.local/bin/multimedia/brightness.sh up
+bindsym XF86MonBrightnessDown exec $HOME/.config/sway/scripts/brightness.sh down
+bindsym XF86MonBrightnessUp exec $HOME/.config/sway/scripts/brightness.sh up
 
-bindsym XF86AudioLowerVolume exec $HOME/.local/bin/multimedia/volume.sh down
-bindsym XF86AudioRaiseVolume exec $HOME/.local/bin/multimedia/volume.sh up
-bindsym XF86AudioMute exec $HOME/.local/bin/multimedia/volume.sh mute
+bindsym XF86AudioLowerVolume exec $HOME/.config/sway/scripts/volume.sh down
+bindsym XF86AudioRaiseVolume exec $HOME/.config/sway/scripts/volume.sh up
+bindsym XF86AudioMute exec $HOME/.config/sway/scripts/volume.sh mute
 
-#bindsym XF86AudioLowerVolume exec wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%-
-#bindsym XF86AudioRaiseVolume exec wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+
-#bindsym XF86AudioMute exec wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
 bindsym XF86AudioPlay exec playerctl play-pause
 bindsym XF86AudioPrev exec playerctl previous
 bindsym XF86AudioNext exec playerctl next

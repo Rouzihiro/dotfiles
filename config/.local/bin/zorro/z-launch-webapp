@@ -1,4 +1,0 @@
-#!/bin/bash
-
-# Launch the argument(s) in the default browser
-xdg-open "$1" >/dev/null 2>&1 &
