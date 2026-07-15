@@ -55,6 +55,7 @@ rsync
 slurp
 starship
 swappy
+tesseract
 tesseract-ocr
 tesseract-ocr-deu
 tesseract-ocr-eng
