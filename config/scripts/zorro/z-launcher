@@ -1,0 +1,319 @@
+#!/bin/bash
+
+# TTY Launcher - App Launcher + File Browser for terminal
+# Usage: ./tty-launcher.sh [apps|files]
+
+TTY_LAUNCHER_HOME="${HOME}"
+CURRENT_DIR="${HOME}"
+CURRENT_TAB="${1:-apps}"
+
+# Colors for better TTY experience
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+BLUE='\033[0;34m'
+CYAN='\033[0;36m'
+WHITE='\033[1;37m'
+NC='\033[0m' # No Color
+
+# Check if fzf is installed
+if ! command -v fzf &>/dev/null; then
+    echo -e "${RED}Error: fzf is required${NC}"
+    echo "Install with: sudo pacman -S fzf (Arch) or sudo dnf install fzf (Fedora)"
+    exit 1
+fi
+
+# Function to get installed applications
+get_apps() {
+    local apps_file="/tmp/tty-launcher-apps-$$"
+    
+    # Find all .desktop files
+    find /usr/share/applications ~/.local/share/applications -name "*.desktop" 2>/dev/null | \
+    while read -r desktop; do
+        # Skip if not readable
+        [[ ! -r "$desktop" ]] && continue
+        
+        # Extract name and exec
+        name=$(grep -E '^Name=' "$desktop" 2>/dev/null | head -1 | cut -d= -f2)
+        exec_cmd=$(grep -E '^Exec=' "$desktop" 2>/dev/null | head -1 | cut -d= -f2 | sed 's/%[a-zA-Z]//g')
+        
+        # Skip if no name or exec
+        [[ -z "$name" || -z "$exec_cmd" ]] && continue
+        
+        # Skip if should not show
+        if grep -q "NoDisplay=true\|Hidden=true" "$desktop" 2>/dev/null; then
+            continue
+        fi
+        
+        echo "$name|$exec_cmd"
+    done | sort -u | head -100 > "$apps_file"
+    
+    cat "$apps_file"
+    rm -f "$apps_file"
+}
+
+# Function to get file/directory list
+get_files() {
+    local dir="$1"
+    local show_hidden="${2:-false}"
+    
+    if [[ ! -d "$dir" ]]; then
+        return 1
+    fi
+    
+    # List directories first, then files
+    (
+        # Directories
+        find "$dir" -maxdepth 1 -type d ! -path "$dir" 2>/dev/null | \
+            while read -r d; do
+                basename=$(basename "$d")
+                [[ "$show_hidden" == "false" && "$basename" == .* ]] && continue
+                echo "📁 $basename|dir|$d"
+            done | sort -f
+        
+        # Files
+        find "$dir" -maxdepth 1 -type f 2>/dev/null | \
+            while read -r f; do
+                basename=$(basename "$f")
+                [[ "$show_hidden" == "false" && "$basename" == .* ]] && continue
+                
+                # Get file icon based on extension
+                ext="${basename##*.}"
+                icon="📄"
+                case "$ext" in
+                    py|sh|js|ts|go|rs) icon="💻";;
+                    jpg|jpeg|png|gif|webp) icon="🖼️";;
+                    mp4|mkv|avi|mov) icon="🎬";;
+                    mp3|flac|wav|ogg) icon="🎵";;
+                    pdf) icon="📕";;
+                    zip|tar|gz|bz2) icon="📦";;
+                    md|txt) icon="📝";;
+                    conf|cfg|ini) icon="⚙️";;
+                    *) icon="📄";;
+                esac
+                echo "$icon $basename|file|$f"
+            done | sort -f
+    )
+}
+
+# Function to open file with default application
+open_file() {
+    local file="$1"
+    
+    if [[ -d "$file" ]]; then
+        CURRENT_DIR="$file"
+        show_files
+    elif [[ -f "$file" ]]; then
+        # Try to open with xdg-open if in GUI, otherwise suggest editor
+        if [[ -n "$DISPLAY" ]] || [[ -n "$WAYLAND_DISPLAY" ]]; then
+            xdg-open "$file" 2>/dev/null &
+        else
+            echo -e "${YELLOW}Opening in TTY...${NC}"
+            ${EDITOR:-nano} "$file"
+        fi
+    fi
+}
+
+# Function to launch application
+launch_app() {
+    local exec_cmd="$1"
+    
+    if [[ -n "$DISPLAY" ]] || [[ -n "$WAYLAND_DISPLAY" ]]; then
+        # In GUI environment, launch normally
+        eval "$exec_cmd &" 2>/dev/null
+    else
+        # In TTY, show warning
+        echo -e "${YELLOW}Warning: GUI app may not display in TTY${NC}"
+        echo -e "Command: ${CYAN}$exec_cmd${NC}"
+        read -p "Launch anyway? [y/N]: " -n 1 -r
+        echo
+        if [[ $REPLY =~ ^[Yy]$ ]]; then
+            eval "$exec_cmd &" 2>/dev/null
+        fi
+    fi
+}
+
+# Show apps menu
+show_apps() {
+    clear
+    echo -e "${CYAN}════════════════════════════════════════════════════${NC}"
+    echo -e "${WHITE}         📱 APP LAUNCHER - TTY Edition${NC}"
+    echo -e "${CYAN}════════════════════════════════════════════════════${NC}"
+    echo -e "${YELLOW}↑/↓${NC}: Navigate  ${YELLOW}Enter${NC}: Launch  ${YELLOW}Ctrl+C${NC}: Exit"
+    echo -e "${CYAN}────────────────────────────────────────────────────${NC}"
+    
+    # Get apps and format for fzf
+    local apps=$(get_apps)
+    
+    if [[ -z "$apps" ]]; then
+        echo -e "${RED}No applications found!${NC}"
+        sleep 2
+        return
+    fi
+    
+    # Use fzf for selection
+    local selected=$(echo "$apps" | fzf \
+        --prompt="🔍 Search apps: " \
+        --height=40% \
+        --border \
+        --cycle \
+        --delimiter='|' \
+        --with-nth=1 \
+        --preview='echo -e "Command: {2}\n\nPress Enter to launch"' \
+        --preview-window=bottom:3:wrap)
+    
+    if [[ -n "$selected" ]]; then
+        local exec_cmd=$(echo "$selected" | cut -d'|' -f2-)
+        launch_app "$exec_cmd"
+    fi
+}
+
+# Show files browser
+show_files() {
+    while true; do
+        clear
+        echo -e "${CYAN}════════════════════════════════════════════════════${NC}"
+        echo -e "${WHITE}         📂 FILE BROWSER - $(pwd)${NC}"
+        echo -e "${CYAN}════════════════════════════════════════════════════${NC}"
+        echo -e "${YELLOW}↑/↓${NC}: Navigate  ${YELLOW}Enter${NC}: Open  ${YELLOW}Ctrl+C${NC}: Exit  ${YELLOW}Alt+H${NC}: Toggle hidden"
+        echo -e "${CYAN}────────────────────────────────────────────────────${NC}"
+        
+        # Get current directory contents
+        local show_hidden="false"
+        local files=$(get_files "$CURRENT_DIR" "$show_hidden")
+        
+        # Add navigation options
+        local nav_options=""
+        if [[ "$CURRENT_DIR" != "/" ]]; then
+            nav_options="🔙 ..|dir|$(dirname "$CURRENT_DIR")\n"
+        fi
+        nav_options="${nav_options}🏠 Home|dir|${HOME}\n"
+        nav_options="${nav_options}⭐ Bookmarks|bookmark|\n"
+        
+        local all_options="${nav_options}${files}"
+        
+        # Use fzf for selection
+        local selected=$(echo -e "$all_options" | fzf \
+            --prompt="📁 $(basename "$CURRENT_DIR") > " \
+            --height=60% \
+            --border \
+            --cycle \
+            --delimiter='|' \
+            --with-nth=1 \
+            --preview='if [[ {2} == "dir" ]]; then ls -la {3} 2>/dev/null | head -20; elif [[ {2} == "file" ]]; then file {3} 2>/dev/null; fi' \
+            --preview-window=right:40%:wrap)
+        
+        if [[ -z "$selected" ]]; then
+            break
+        fi
+        
+        local type=$(echo "$selected" | cut -d'|' -f2)
+        local path=$(echo "$selected" | cut -d'|' -f3-)
+        
+        case "$type" in
+            "dir")
+                if [[ "$path" == "bookmark" ]]; then
+                    show_bookmarks
+                else
+                    CURRENT_DIR="$path"
+                fi
+                ;;
+            "file")
+                open_file "$path"
+                [[ -f "$path" ]] && break  # Exit after opening file
+                ;;
+        esac
+    done
+}
+
+# Show bookmarks
+show_bookmarks() {
+    local bookmarks_file="${HOME}/.config/tty-launcher-bookmarks"
+    
+    # Create default bookmarks if none exist
+    if [[ ! -f "$bookmarks_file" ]]; then
+        cat > "$bookmarks_file" << EOF
+Documents|${HOME}/Documents
+Downloads|${HOME}/Downloads
+Pictures|${HOME}/Pictures
+Videos|${HOME}/Videos
+Music|${HOME}/Music
+Desktop|${HOME}/Desktop
+Config|${HOME}/.config
+EOF
+    fi
+    
+    local selected=$(cat "$bookmarks_file" | fzf \
+        --prompt="📚 Select bookmark: " \
+        --height=30% \
+        --border \
+        --delimiter='|' \
+        --with-nth=1)
+    
+    if [[ -n "$selected" ]]; then
+        local path=$(echo "$selected" | cut -d'|' -f2)
+        CURRENT_DIR="$path"
+    fi
+}
+
+# Show main menu
+show_main_menu() {
+    while true; do
+        clear
+        echo -e "${CYAN}════════════════════════════════════════════════════${NC}"
+        echo -e "${WHITE}              🚀 TTY LAUNCHER${NC}"
+        echo -e "${CYAN}════════════════════════════════════════════════════${NC}"
+        echo -e "  ${GREEN}1)${NC} 📱 Launch Application"
+        echo -e "  ${GREEN}2)${NC} 📂 Browse Files"
+        echo -e "  ${GREEN}3)${NC} ⚙️  Settings"
+        echo -e "  ${GREEN}4)${NC} ❌ Exit"
+        echo -e "${CYAN}════════════════════════════════════════════════════${NC}"
+        echo -n -e "${YELLOW}Select option [1-4]: ${NC}"
+        
+        read -r choice
+        case $choice in
+            1) show_apps;;
+            2) show_files;;
+            3) show_settings;;
+            4) exit 0;;
+            *) echo -e "${RED}Invalid option${NC}"; sleep 1;;
+        esac
+    done
+}
+
+# Settings menu
+show_settings() {
+    clear
+    echo -e "${CYAN}════════════════════════════════════════════════════${NC}"
+    echo -e "${WHITE}              ⚙️  SETTINGS${NC}"
+    echo -e "${CYAN}════════════════════════════════════════════════════${NC}"
+    echo -e "  ${GREEN}1)${NC} Default Editor: ${YELLOW}${EDITOR:-nano}${NC}"
+    echo -e "  ${GREEN}2)${NC} Edit Bookmarks"
+    echo -e "  ${GREEN}3)${NC} Back"
+    echo -e "${CYAN}════════════════════════════════════════════════════${NC}"
+    
+    read -r choice
+    case $choice in
+        1)
+            echo -n "Enter default editor command (e.g., vim, nano, emacs): "
+            read -r editor
+            export EDITOR="$editor"
+            echo "export EDITOR='$editor'" >> ~/.bashrc
+            ;;
+        2)
+            ${EDITOR:-nano} "${HOME}/.config/tty-launcher-bookmarks"
+            ;;
+    esac
+}
+
+# Create config directory
+mkdir -p "${HOME}/.config"
+
+# Main execution
+if [[ "$CURRENT_TAB" == "apps" ]]; then
+    show_apps
+elif [[ "$CURRENT_TAB" == "files" ]]; then
+    show_files
+else
+    show_main_menu
+fi

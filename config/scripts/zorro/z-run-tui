@@ -1,0 +1,14 @@
+#!/bin/bash
+# z-run-tui: launch any TUI app in foot, detached, floating medium style
+
+if [ "$#" -lt 1 ]; then
+  echo "Usage: $0 <command> [args...]"
+  echo "Example: $0 nmtui"
+  exit 1
+fi
+
+CMD="$1"
+shift  # remaining args
+
+# Set app_id so Sway rules apply
+FOOT_APP_ID="runner_floating" setsid foot -e "$CMD" "$@" >/dev/null 2>&1 &

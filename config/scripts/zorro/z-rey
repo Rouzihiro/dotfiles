@@ -1,0 +1,642 @@
+#!/bin/bash
+# zorro menu launcher - TTY version with fzf
+export PATH="$HOME/.local/share/bin:$PATH"
+export XDG_CONFIG_HOME="$HOME/.config"
+
+BACK_TO_EXIT=false
+
+### Utility functions
+back_to() {
+    local parent_menu="$1"
+    if [[ "$BACK_TO_EXIT" == "true" ]]; then
+        exit 0
+    elif [[ -n "$parent_menu" ]]; then
+        "$parent_menu"
+    else
+        show_main_menu
+    fi
+}
+
+# New fzf-based menu function (replaces wofi)
+menu() {
+    local prompt="$1"
+    local options="$2"
+    local preselect="$3"
+    
+    # Convert newlines to fzf format
+    local fzf_options="--prompt=\"$prompt: \" --height=40% --border --cycle"
+    
+    # Add preselect if provided
+    if [[ -n "$preselect" ]]; then
+        fzf_options="$fzf_options --query=\"$preselect\""
+    fi
+    
+    # Use fzf to select option
+    echo -e "$options" | eval "fzf $fzf_options" | sed 's/^[[:space:]]*//;s/[[:space:]]*$//'
+}
+
+# TTY-friendly terminal launcher
+terminal() {
+    if [[ -n "$DISPLAY" ]] || [[ -n "$WAYLAND_DISPLAY" ]]; then
+        xdg-terminal-exec --app-id=zorro "$@"
+    else
+        # In pure TTY, just run in current terminal
+        "$@"
+    fi
+}
+
+# Present terminal with optional message (adapted for TTY)
+present_terminal() {
+    local cmd="$1"
+    if [[ -n "$DISPLAY" ]] || [[ -n "$WAYLAND_DISPLAY" ]]; then
+        z-launch-floating-terminal-with-presentation "$cmd"
+    else
+        echo "Running in TTY mode..."
+        eval "$cmd"
+        echo "Press Enter to continue..."
+        read
+    fi
+}
+
+# Editor for TTY
+open_in_editor() {
+    echo "Editing: $1"
+    if [[ -n "$DISPLAY" ]] || [[ -n "$WAYLAND_DISPLAY" ]]; then
+        notify-send "Editing config file" "$1"
+        z-launch-editor "$1"
+    else
+        # Use terminal editor in TTY
+        ${EDITOR:-nano} "$1"
+    fi
+}
+
+# Detect distro
+if command -v pacman >/dev/null 2>&1; then
+    DISTRO="ARCH"
+elif command -v dnf >/dev/null 2>&1; then
+    DISTRO="FEDORA"
+else
+    echo "Unsupported distro"
+    exit 1
+fi
+
+install() {
+    local name="$1"
+    local pkg="$2"
+    if [[ "$DISTRO" == "ARCH" ]]; then
+        present_terminal "echo 'Installing $name...'; sudo pacman -S --noconfirm $pkg"
+    else
+        present_terminal "echo 'Installing $name...'; sudo dnf install -y $pkg"
+    fi
+}
+
+install_and_launch() {
+    local name="$1"
+    local pkg="$2"
+    local app="$3"
+    if [[ "$DISTRO" == "ARCH" ]]; then
+        present_terminal "echo 'Installing $name...'; sudo pacman -S --noconfirm $pkg && setsid gtk-launch $app"
+    else
+        present_terminal "echo 'Installing $name...'; sudo dnf install -y $pkg && setsid gtk-launch $app"
+    fi
+}
+
+install_font() {
+    local name="$1"
+    local pkg="$2"
+    local font="$3"
+    if [[ "$DISTRO" == "ARCH" ]]; then
+        present_terminal "echo 'Installing $name...'; sudo pacman -S --noconfirm --needed $pkg && sleep 2 && z-font-set '$font'"
+    else
+        present_terminal "echo 'Installing $name...'; sudo dnf install -y $pkg && sleep 2 && z-font-set '$font'"
+    fi
+}
+
+install_terminal() {
+    present_terminal "z-install-terminal $1"
+}
+
+show_learn_menu() {
+  choice=$(menu "Learn" "Keybindings\nHyprland\nArch\nNeovim\nBash\nBack")
+  case "$choice" in
+  "Keybindings") show_keybindings_submenu ;;
+  "Hyprland") z-launch-webapp "https://wiki.hypr.land/" ;;
+  "Arch") z-launch-webapp "https://wiki.archlinux.org/title/Main_page" ;;
+  "Bash") z-launch-webapp "https://devhints.io/bash" ;;
+  "Neovim") z-launch-webapp "https://www.lazyvim.org/keymaps" ;;
+  "Back"|*) show_main_menu ;;
+  esac
+}
+
+show_keybindings_submenu() {
+  choice=$(menu "Keybindings" "Sway Keybindings (Hard)\nSway Keybindings (Soft)\nZsh Aliases & Keybindings\nBack")
+  case "$choice" in
+  "Sway Keybindings (Hard)") 
+    if command -v z-menu-keybindings-sway-hard &>/dev/null; then
+      z-menu-keybindings-sway-hard
+    else
+      echo "z-menu-keybindings-sway-hard not found"
+      sleep 2
+      show_keybindings_submenu
+    fi
+    ;;
+  "Sway Keybindings (Soft)") 
+    if command -v z-menu-keybindings-sway-soft &>/dev/null; then
+      z-menu-keybindings-sway-soft
+    else
+      echo "z-menu-keybindings-sway-soft not found"
+      sleep 2
+      show_keybindings_submenu
+    fi
+    ;;
+  "Zsh Aliases & Keybindings") 
+    if command -v show-aliases &>/dev/null; then
+      show-aliases
+    else
+      echo "show-aliases not found"
+      sleep 2
+      show_keybindings_submenu
+    fi
+    ;;
+  "Back"|*) show_learn_menu ;;
+  esac
+}
+
+show_trigger_menu() {
+  choice=$(menu "Trigger" "Capture\nShare\nToggle\nBack")
+  case "$choice" in
+  "Capture") show_capture_menu ;;
+  "Share") show_share_menu ;;
+  "Toggle") show_toggle_menu ;;
+  "Back"|*) show_main_menu ;;
+  esac
+}
+
+show_capture_menu() {
+  choice=$(menu "Capture" "Screenshot\nScreenrecord\nColor\nBack")
+  case "$choice" in
+  "Screenshot") show_screenshot_menu ;;
+  "Screenrecord") show_screenrecord_menu ;;
+  "Color") 
+    if command -v hyprpicker &>/dev/null; then
+      pkill hyprpicker || hyprpicker -a
+    else
+      echo "hyprpicker not available in TTY"
+      sleep 2
+    fi
+    ;;
+  "Back"|*) show_trigger_menu ;;
+  esac
+}
+
+show_screenshot_menu() {
+  choice=$(menu "Screenshot" "Snap with Editing\nStraight to Clipboard\nBack")
+  case "$choice" in
+  "Snap with Editing") z-cmd-screenshot smart ;;
+  "Straight to Clipboard") z-cmd-screenshot smart clipboard ;;
+  "Back"|*) show_capture_menu ;;
+  esac
+}
+
+show_screenrecord_menu() {
+  choice=$(menu "Screenrecord" "Region\nRegion + Audio\nDisplay\nDisplay + Audio\nDisplay + Webcam\nBack")
+  case "$choice" in
+  "Region + Audio") z-cmd-screenrecord region --with-audio ;;
+  "Region") z-cmd-screenrecord ;;
+  "Display + Audio") z-cmd-screenrecord output --with-audio ;;
+  "Display + Webcam") z-cmd-screenrecord output --with-audio --with-webcam ;;
+  "Display") z-cmd-screenrecord output ;;
+  "Back"|*) back_to show_capture_menu ;;
+  esac
+}
+
+show_share_menu() {
+  choice=$(menu "Share" "Clipboard\nFile\nFolder\nBack")
+  case "$choice" in
+  "Clipboard") terminal bash -c "z-cmd-share clipboard" ;;
+  "File") terminal bash -c "z-cmd-share file" ;;
+  "Folder") terminal bash -c "z-cmd-share folder" ;;
+  "Back"|*) back_to show_trigger_menu ;;
+  esac
+}
+
+show_toggle_menu() {
+  choice=$(menu "Toggle" "Nightlight\nIdle Lock\nTop Bar\nBack")
+  case "$choice" in
+  "Nightlight") z-toggle-nightlight ;;
+  "Idle Lock") z-toggle-idle ;;
+  "Top Bar") z-toggle-waybar ;;
+  "Back"|*) show_trigger_menu ;;
+  esac
+}
+
+show_style_menu() {
+  choice=$(menu "Style" "Theme\nFont\nBackground\nHyprland\nScreensaver\nAbout\nBack")
+  case "$choice" in
+  "Theme") show_theme_menu ;;
+  "Font") show_font_menu ;;
+  "Background") z-theme-bg-next ;;
+  "Hyprland") open_in_editor ~/.config/hypr/looknfeel.conf ;;
+  "Screensaver") open_in_editor ~/.config/z/branding/screensaver.txt ;;
+  "About") open_in_editor ~/.config/z/branding/about.txt ;;
+  "Back"|*) show_main_menu ;;
+  esac
+}
+
+show_theme_menu() {
+  theme_list=$(z-theme-list 2>/dev/null)
+  if [[ -z "$theme_list" ]]; then
+    echo "No themes found"
+    sleep 2
+    back_to show_style_menu
+    return
+  fi
+  
+  theme=$(menu "Theme" "$theme_list\nBack" "$(z-theme-current 2>/dev/null)")
+  if [[ "$theme" == "Back" || -z "$theme" ]]; then
+    back_to show_style_menu
+  else
+    z-theme-set "$theme"
+  fi
+}
+
+show_font_menu() {
+  font_list=$(z-font-list 2>/dev/null)
+  if [[ -z "$font_list" ]]; then
+    echo "No fonts found"
+    sleep 2
+    back_to show_style_menu
+    return
+  fi
+  
+  font=$(menu "Font" "$font_list\nBack" "$(z-font-current 2>/dev/null)")
+  if [[ "$font" == "Back" || -z "$font" ]]; then
+    back_to show_style_menu
+  else
+    z-font-set "$font"
+  fi
+}
+
+show_setup_menu() {
+  local options="Audio\nWifi\nBluetooth\nPower Profile\nMonitors"
+  [ -f ~/.config/hypr/bindings.conf ] && options="$options\nKeybindings"
+  [ -f ~/.config/hypr/input.conf ] && options="$options\nInput"
+  options="$options\nDefaults\nDNS\nSecurity\nConfig\nBack"
+  
+  choice=$(menu "Setup" "$options")
+  case "$choice" in
+  "Audio") audio-switch ;;
+  "Wifi")
+    rfkill unblock wifi
+		wifi
+    ;;
+  "Bluetooth")
+    rfkill unblock bluetooth
+    bt
+    ;;
+  "Power Profile") show_setup_power_menu ;;
+  "Monitors") open_in_editor ~/.config/hypr/monitors.conf ;;
+  "Keybindings") open_in_editor ~/.config/hypr/bindings.conf ;;
+  "Input") open_in_editor ~/.config/hypr/input.conf ;;
+  "Defaults") open_in_editor ~/.config/uwsm/default ;;
+  "DNS") present_terminal z-setup-dns ;;
+  "Security") show_setup_security_menu ;;
+  "Config") show_setup_config_menu ;;
+  "Back"|*) show_main_menu ;;
+  esac
+}
+
+show_setup_power_menu() {
+  profile_list=$(z-powerprofiles-list 2>/dev/null)
+  if [[ -z "$profile_list" ]]; then
+    echo "No power profiles found"
+    sleep 2
+    back_to show_setup_menu
+    return
+  fi
+  
+  profile=$(menu "Power Profile" "$profile_list\nBack" "$(powerprofilesctl get 2>/dev/null)")
+  if [[ "$profile" == "Back" || -z "$profile" ]]; then
+    back_to show_setup_menu
+  else
+    powerprofilesctl set "$profile"
+  fi
+}
+
+show_setup_config_menu() {
+  choice=$(menu "Config Files" "Hyprland\nHypridle\nHyprlock\nHyprsunset\nSwayosd\nWalker\nWaybar\nXCompose\nBack")
+  case "$choice" in
+  "Hyprland") open_in_editor ~/.config/hypr/hyprland.conf ;;
+  "Hypridle") open_in_editor ~/.config/hypr/hypridle.conf && z-restart-hypridle ;;
+  "Hyprlock") open_in_editor ~/.config/hypr/hyprlock.conf ;;
+  "Hyprsunset") open_in_editor ~/.config/hypr/hyprsunset.conf && z-restart-hyprsunset ;;
+  "Swayosd") open_in_editor ~/.config/swayosd/config.toml && z-restart-swayosd ;;
+  "Walker") open_in_editor ~/.config/walker/config.toml && z-restart-walker ;;
+  "Waybar") open_in_editor ~/.config/waybar/config.jsonc && z-restart-waybar ;;
+  "XCompose") open_in_editor ~/.XCompose && z-restart-xcompose ;;
+  "Back"|*) show_setup_menu ;;
+  esac
+}
+
+show_setup_security_menu() {
+  choice=$(menu "Security" "Fingerprint\nFido2\nBack")
+  case "$choice" in
+  "Fingerprint") present_terminal z-setup-fingerprint ;;
+  "Fido2") present_terminal z-setup-fido2 ;;
+  "Back"|*) show_setup_menu ;;
+  esac
+}
+
+show_install_menu() {
+  choice=$(menu "Install" "Package\nAUR\nWeb App\nTUI\nService\nStyle\nDevelopment\nEditor\nTerminal\nAI\nWindows\nGaming\nBack")
+  case "$choice" in
+  "Package") terminal z-pkg-install ;;
+  "AUR") terminal z-pkg-aur-install ;;
+  "Web") present_terminal z-webapp-install ;;
+  "TUI") present_terminal z-tui-install ;;
+  "Service") show_install_service_menu ;;
+  "Style") show_install_style_menu ;;
+  "Development") show_install_development_menu ;;
+  "Editor") show_install_editor_menu ;;
+  "Terminal") show_install_terminal_menu ;;
+  "AI") show_install_ai_menu ;;
+  "Windows") present_terminal "z-windows-vm install" ;;
+  "Gaming") show_install_gaming_menu ;;
+  "Back"|*) show_main_menu ;;
+  esac
+}
+
+show_install_service_menu() {
+  choice=$(menu "Install Service" "Dropbox\nTailscale\nBitwarden\nChromium Account\nBack")
+  case "$choice" in
+  "Dropbox") present_terminal z-install-dropbox ;;
+  "Tailscale") present_terminal z-install-tailscale ;;
+  "Bitwarden") install_and_launch "Bitwarden" "bitwarden bitwarden-cli" "bitwarden" ;;
+  "Chromium Account") present_terminal z-install-chromium-google-account ;;
+  "Back"|*) show_install_menu ;;
+  esac
+}
+
+show_install_editor_menu() {
+  choice=$(menu "Install Editor" "VSCode\nCursor\nZed\nSublime Text\nHelix\nEmacs\nBack")
+  case "$choice" in
+  "VSCode") present_terminal z-install-vscode ;;
+  "Cursor") install_and_launch "Cursor" "cursor-bin" "cursor" ;;
+  "Zed") install_and_launch "Zed" "zed" "dev.zed.Zed" ;;
+  "Sublime Text") install_and_launch "Sublime Text" "sublime-text-4" "sublime_text" ;;
+  "Helix") install "Helix" "helix" ;;
+  "Emacs") install "Emacs" "emacs-wayland" && systemctl --user enable --now emacs.service ;;
+  "Back"|*) show_install_menu ;;
+  esac
+}
+
+show_install_terminal_menu() {
+  choice=$(menu "Install Terminal" "Alacritty\nGhostty\nKitty\nBack")
+  case "$choice" in
+  "Alacritty") install_terminal "alacritty" ;;
+  "Ghostty") install_terminal "ghostty" ;;
+  "Kitty") install_terminal "kitty" ;;
+  "Back"|*) show_install_menu ;;
+  esac
+}
+
+show_install_ai_menu() {
+  ollama_pkg=$(
+    (command -v nvidia-smi &>/dev/null && echo ollama-cuda) ||
+      (command -v rocminfo &>/dev/null && echo ollama-rocm) ||
+      echo ollama
+  )
+  
+  choice=$(menu "Install AI" "Claude Code\nCursor CLI\nGemini\nOpenAI Codex\nLM Studio\nOllama\nCrush\nopencode\nBack")
+  case "$choice" in
+  "Claude Code") install "Claude Code" "claude-code" ;;
+  "Cursor CLI") install "Cursor CLI" "cursor-cli" ;;
+  "OpenAI Codex") install "OpenAI Codex" "openai-codex-bin" ;;
+  "Gemini") install "Gemini" "gemini-cli" ;;
+  "LM Studio") install "LM Studio" "lmstudio" ;;
+  "Ollama") install "Ollama" $ollama_pkg ;;
+  "Crush") install "Crush" "crush-bin" ;;
+  "opencode") install "opencode" "opencode" ;;
+  "Back"|*) show_install_menu ;;
+  esac
+}
+
+show_install_gaming_menu() {
+  choice=$(menu "Install Gaming" "Steam\nRetroArch [AUR]\nMinecraft\nBack")
+  case "$choice" in
+  "Steam") present_terminal z-install-steam ;;
+  "RetroArch [AUR]") present_terminal "yay -S retroarch retroarch-assets libretro libretro-fbneo" ;;
+  "Minecraft") install_and_launch "Minecraft" "minecraft-launcher" "minecraft-launcher" ;;
+  "Back"|*) show_install_menu ;;
+  esac
+}
+
+show_install_style_menu() {
+  choice=$(menu "Install Style" "Theme\nBackground\nFont\nBack")
+  case "$choice" in
+  "Theme") present_terminal z-theme-install ;;
+  "Background") nautilus ~/.config/z/current/theme/backgrounds ;;
+  "Font") show_install_font_menu ;;
+  "Back"|*) show_install_menu ;;
+  esac
+}
+
+show_install_font_menu() {
+  choice=$(menu "Install Font" "Meslo LG Mono\nFira Code\nVictor Code\nBistream Vera Mono\nBack")
+  case "$choice" in
+  "Meslo LG Mono") install_font "Meslo LG Mono" "ttf-meslo-nerd" "MesloLGL Nerd Font" ;;
+  "Fira Code") install_font "Fira Code" "ttf-firacode-nerd" "FiraCode Nerd Font" ;;
+  "Victor Code") install_font "Victor Code" "ttf-victor-mono-nerd" "VictorMono Nerd Font" ;;
+  "Bistream Vera Mono") install_font "Bistream Vera Code" "ttf-bitstream-vera-mono-nerd" "BitstromWera Nerd Font" ;;
+  "Back"|*) show_install_menu ;;
+  esac
+}
+
+show_install_development_menu() {
+  choice=$(menu "Install Development" "Ruby on Rails\nDocker DB\nJavaScript\nGo\nPHP\nPython\nElixir\nZig\nRust\nJava\n.NET\nOCaml\nClojure\nBack")
+  case "$choice" in
+  "Ruby on Rails") present_terminal "z-install-dev-env ruby" ;;
+  "Docker DB") present_terminal z-install-docker-dbs ;;
+  "JavaScript") show_install_javascript_menu ;;
+  "Go") present_terminal "z-install-dev-env go" ;;
+  "PHP") show_install_php_menu ;;
+  "Python") present_terminal "z-install-dev-env python" ;;
+  "Elixir") show_install_elixir_menu ;;
+  "Zig") present_terminal "z-install-dev-env zig" ;;
+  "Rust") present_terminal "z-install-dev-env rust" ;;
+  "Java") present_terminal "z-install-dev-env java" ;;
+  ".NET") present_terminal "z-install-dev-env dotnet" ;;
+  "OCaml") present_terminal "z-install-dev-env ocaml" ;;
+  "Clojure") present_terminal "z-install-dev-env clojure" ;;
+  "Back"|*) show_install_menu ;;
+  esac
+}
+
+show_install_javascript_menu() {
+  choice=$(menu "Install JavaScript" "Node.js\nBun\nDeno\nBack")
+  case "$choice" in
+  "Node.js") present_terminal "z-install-dev-env node" ;;
+  "Bun") present_terminal "z-install-dev-env bun" ;;
+  "Deno") present_terminal "z-install-dev-env deno" ;;
+  "Back"|*) show_install_development_menu ;;
+  esac
+}
+
+show_install_php_menu() {
+  choice=$(menu "Install PHP" "PHP\nLaravel\nSymfony\nBack")
+  case "$choice" in
+  "PHP") present_terminal "z-install-dev-env php" ;;
+  "Laravel") present_terminal "z-install-dev-env laravel" ;;
+  "Symfony") present_terminal "z-install-dev-env symfony" ;;
+  "Back"|*) show_install_development_menu ;;
+  esac
+}
+
+show_install_elixir_menu() {
+  choice=$(menu "Install Elixir" "Elixir\nPhoenix\nBack")
+  case "$choice" in
+  "Elixir") present_terminal "z-install-dev-env elixir" ;;
+  "Phoenix") present_terminal "z-install-dev-env phoenix" ;;
+  "Back"|*) show_install_development_menu ;;
+  esac
+}
+
+show_remove_menu() {
+  choice=$(menu "Remove" "Package\nWeb App\nTUI\nTheme\nWindows\nFingerprint\nFido2\nBack")
+  case "$choice" in
+  "Package") terminal z-pkg-remove ;;
+  "Web App") present_terminal z-webapp-remove ;;
+  "TUI") present_terminal z-tui-remove ;;
+  "Theme") present_terminal z-theme-remove ;;
+  "Windows") present_terminal "z-windows-vm remove" ;;
+  "Fingerprint") present_terminal "z-setup-fingerprint --remove" ;;
+  "Fido2") present_terminal "z-setup-fido2 --remove" ;;
+  "Back"|*) show_main_menu ;;
+  esac
+}
+
+show_update_menu() {
+  choice=$(menu "Update" "z\nConfig\nExtra Themes\nProcess\nHardware\nFirmware\nPassword\nTimezone\nTime\nBack")
+  case "$choice" in
+  "z") present_terminal z-update ;;
+  "Config") show_update_config_menu ;;
+  "Extra Themes") present_terminal z-theme-update ;;
+  "Process") show_update_process_menu ;;
+  "Hardware") show_update_hardware_menu ;;
+  "Firmware") present_terminal z-update-firmware ;;
+  "Timezone") present_terminal z-tz-select ;;
+  "Time") present_terminal z-update-time ;;
+  "Password") show_update_password_menu ;;
+  "Back"|*) show_main_menu ;;
+  esac
+}
+
+show_update_process_menu() {
+  choice=$(menu "Restart Process" "Hypridle\nHyprsunset\nSwayosd\nWalker\nWaybar\nBack")
+  case "$choice" in
+  "Hypridle") z-restart-hypridle ;;
+  "Hyprsunset") z-restart-hyprsunset ;;
+  "Swayosd") z-restart-swayosd ;;
+  "Walker") z-restart-walker ;;
+  "Waybar") z-restart-waybar ;;
+  "Back"|*) show_update_menu ;;
+  esac
+}
+
+show_update_config_menu() {
+  choice=$(menu "Reset Config" "Hyprland\nHypridle\nHyprlock\nHyprsunset\nPlymouth\nSwayosd\nWalker\nWaybar\nBack")
+  case "$choice" in
+  "Hyprland") present_terminal z-refresh-hyprland ;;
+  "Hypridle") present_terminal z-refresh-hypridle ;;
+  "Hyprlock") present_terminal z-refresh-hyprlock ;;
+  "Hyprsunset") present_terminal z-refresh-hyprsunset ;;
+  "Plymouth") present_terminal z-refresh-plymouth ;;
+  "Swayosd") present_terminal z-refresh-swayosd ;;
+  "Walker") present_terminal z-refresh-walker ;;
+  "Waybar") present_terminal z-refresh-waybar ;;
+  "Back"|*) show_update_menu ;;
+  esac
+}
+
+show_update_hardware_menu() {
+  choice=$(menu "Restart Hardware" "Audio\nWi-Fi\nBluetooth\nBack")
+  case "$choice" in
+  "Audio") present_terminal z-restart-pipewire ;;
+  "Wi-Fi") present_terminal z-restart-wifi ;;
+  "Bluetooth") present_terminal z-restart-bluetooth ;;
+  "Back"|*) show_update_menu ;;
+  esac
+}
+
+show_update_password_menu() {
+  choice=$(menu "Update Password" "Drive Encryption\nUser\nBack")
+  case "$choice" in
+  "Drive Encryption") present_terminal z-drive-set-password ;;
+  "User") present_terminal passwd ;;
+  "Back"|*) show_update_menu ;;
+  esac
+}
+
+show_system_menu() {
+  choice=$(menu "System" "Lock\nScreensaver\nSuspend\nRestart\nShutdown\nBack")
+  case "$choice" in
+  "Lock") z-lock-screen ;;
+  "Screensaver") z-launch-screensaver force ;;
+  "Suspend") systemctl suspend ;;
+  "Restart") z-state clear re*-required && systemctl reboot --no-wall ;;
+  "Shutdown") z-state clear re*-required && systemctl poweroff --no-wall ;;
+  "Back"|*) back_to show_main_menu ;;
+  esac
+}
+
+show_main_menu() {
+  choice=$(menu "Zorro Menu" "Apps\nLearn\nTrigger\nStyle\nSetup\nInstall\nRemove\nUpdate\nAbout\nSystem\nExit")
+  go_to_menu "$choice"
+}
+
+go_to_menu() {
+  case "${1,,}" in
+  "apps") z-launcher ;;
+  "learn") show_learn_menu ;;
+  "trigger") show_trigger_menu ;;
+  "style") show_style_menu ;;
+  "setup") show_setup_menu ;;
+  "install") show_install_menu ;;
+  "remove") show_remove_menu ;;
+  "update") show_update_menu ;;
+  "about") 
+    if command -v z-launch-about &>/dev/null; then
+      z-launch-about
+    else
+      echo "About: Zorro Configuration Manager"
+      sleep 2
+      show_main_menu
+    fi
+    ;;
+  "system") show_system_menu ;;
+  "exit"|*) 
+    exit 0 
+    ;;
+  esac
+}
+
+# Check for fzf dependency
+if ! command -v fzf &>/dev/null; then
+    echo "Error: fzf is required but not installed."
+    echo "Install it with: sudo pacman -S fzf  (Arch) or sudo dnf install fzf (Fedora)"
+    exit 1
+fi
+
+# Main execution
+if [[ -n "$1" ]]; then
+  BACK_TO_EXIT=true
+  go_to_menu "$1"
+else
+  # Clear screen for cleaner TTY experience
+  clear
+  echo "========================================="
+  echo "       Zorro Menu (TTY/FZF Version)      "
+  echo "========================================="
+  echo ""
+  show_main_menu
+fi

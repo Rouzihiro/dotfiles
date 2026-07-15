@@ -1,0 +1,212 @@
+#!/usr/bin/env bash
+# dmount - fzf TUI for mounting/unmounting/ejecting block devices
+#
+# Actions: Mount, Unmount, Force Unmount, Remove (safe power-off/eject)
+# Uses udisksctl (no root needed for normal mount/unmount on most setups).
+# Force unmount and removal fall back to sudo where required.
+
+set -uo pipefail
+
+SCRIPT_PATH="$(realpath "$0")"
+
+need() { command -v "$1" >/dev/null 2>&1 || { echo "Missing dependency: $1" >&2; exit 1; }; }
+need fzf
+need lsblk
+need udisksctl
+
+GREEN=$'\033[32m'
+YELLOW=$'\033[33m'
+RED=$'\033[31m'
+GREY=$'\033[90m'
+BOLD=$'\033[1m'
+RESET=$'\033[0m'
+
+ICON_MOUNTED="●"
+ICON_UNMOUNTED="○"
+
+SHOW_ALL="${DMOUNT_SHOW_ALL:-0}"   # set DMOUNT_SHOW_ALL=1 to show non-removable disks too
+
+# ---------------------------------------------------------------------------
+# Device listing
+# ---------------------------------------------------------------------------
+
+list_devices() {
+    local name size fstype label mountpoint rm type model pkname
+    while IFS= read -r line; do
+        eval "$line" 2>/dev/null || continue
+
+        [[ "$TYPE" == "part" || ( "$TYPE" == "disk" && -n "$FSTYPE" ) ]] || continue
+
+        if [[ "$SHOW_ALL" != "1" ]]; then
+            local is_removable="$RM"
+            local is_ext_mount=0
+            [[ "$MOUNTPOINT" =~ ^/(media|run/media|mnt)(/|$) ]] && is_ext_mount=1
+            [[ "$is_removable" == "1" || "$is_ext_mount" == "1" ]] || continue
+        fi
+
+        local status_icon status_color status_text avail_display mp_display
+        if [[ -n "$MOUNTPOINT" ]]; then
+            status_icon="$ICON_MOUNTED"; status_color="$GREEN"; status_text="mounted"
+            avail_display="$(df -h --output=avail "$MOUNTPOINT" 2>/dev/null | tail -1 | xargs)"
+            avail_display="${avail_display:--}"
+            mp_display="$MOUNTPOINT"
+        else
+            status_icon="$ICON_UNMOUNTED"; status_color="$GREY"; status_text="unmounted"
+            avail_display="-"
+            mp_display="-"
+        fi
+
+        local label_display="${LABEL:--}"
+        local model_display="${MODEL:--}"
+
+        local display
+        display=$(printf "%b%s%b %-14s %-8s %-8s %-14s %b%-10s%b %-18s %-8s %s" \
+            "$status_color" "$status_icon" "$RESET" \
+            "$NAME" "$SIZE" "$FSTYPE" "$label_display" \
+            "$status_color" "$status_text" "$RESET" \
+            "$mp_display" "$avail_display" "$model_display")
+
+        printf '%s\t%s\n' "$display" "$NAME"
+    done < <(lsblk -Ppno NAME,SIZE,FSTYPE,LABEL,MOUNTPOINT,RM,TYPE,MODEL,PKNAME)
+}
+
+# ---------------------------------------------------------------------------
+# Preview pane: shows the parent disk tree + df info if mounted
+# ---------------------------------------------------------------------------
+
+preview_device() {
+    local dev="$1"
+    local pkname parent mp
+
+    pkname=$(lsblk -no PKNAME "$dev" 2>/dev/null | head -1)
+    if [[ -n "$pkname" ]]; then
+        parent="/dev/$pkname"
+    else
+        parent="$dev"
+    fi
+
+    echo "${BOLD}Device tree:${RESET}"
+    lsblk "$parent" -o NAME,SIZE,FSTYPE,LABEL,MOUNTPOINT,TYPE 2>/dev/null
+
+    mp=$(lsblk -no MOUNTPOINT "$dev" 2>/dev/null | head -1)
+    if [[ -n "$mp" ]]; then
+        echo
+        echo "${BOLD}Usage:${RESET}"
+        df -h "$mp" 2>/dev/null
+    fi
+
+    echo
+    echo "${BOLD}Details:${RESET}"
+    udisksctl info -b "$dev" 2>/dev/null | grep -E 'IdLabel|IdType|IdUsage|ReadOnly|Removable|Size' | sed 's/^[[:space:]]*/  /'
+}
+
+# ---------------------------------------------------------------------------
+# Actions
+# ---------------------------------------------------------------------------
+
+do_mount() {
+    local dev="$1"
+    echo "Mounting $dev ..."
+    if udisksctl mount -b "$dev"; then
+        echo "${GREEN}Mounted.${RESET}"
+    else
+        echo "${RED}Mount failed.${RESET}"
+    fi
+}
+
+do_unmount() {
+    local dev="$1"
+    echo "Unmounting $dev ..."
+    if udisksctl unmount -b "$dev"; then
+        echo "${GREEN}Unmounted.${RESET}"
+    else
+        echo "${YELLOW}udisksctl unmount failed, you may need Force Unmount.${RESET}"
+    fi
+}
+
+do_force_unmount() {
+    local dev="$1"
+    local mp
+    mp=$(lsblk -no MOUNTPOINT "$dev" 2>/dev/null | head -1)
+    if [[ -z "$mp" ]]; then
+        echo "${YELLOW}Device is not mounted.${RESET}"
+        return
+    fi
+    echo "Force (lazy) unmounting $mp ..."
+    if sudo umount -lf "$mp"; then
+        echo "${GREEN}Force-unmounted.${RESET}"
+    else
+        echo "${RED}Force unmount failed.${RESET}"
+    fi
+}
+
+do_remove() {
+    local dev="$1"
+    local pkname parent
+    pkname=$(lsblk -no PKNAME "$dev" 2>/dev/null | head -1)
+    parent="/dev/${pkname:-$(basename "$dev")}"
+
+    echo "Unmounting all partitions on $parent and powering off ..."
+    for part in $(lsblk -lnpo NAME "$parent" | tail -n +2); do
+        udisksctl unmount -b "$part" >/dev/null 2>&1
+    done
+    if udisksctl power-off -b "$parent"; then
+        echo "${GREEN}Safe to unplug $parent.${RESET}"
+    else
+        echo "${RED}Power-off failed - device may still be in use.${RESET}"
+    fi
+}
+
+# ---------------------------------------------------------------------------
+# Internal entrypoints (self-invoked by fzf --preview / --bind)
+# ---------------------------------------------------------------------------
+
+pause() { read -n 1 -s -r -p "-- press any key --"; echo; }
+
+if [[ "${1:-}" == "--preview" ]]; then
+    preview_device "$2"
+    exit 0
+fi
+
+if [[ "${1:-}" == "--list" ]]; then
+    list_devices
+    exit 0
+fi
+
+if [[ "${1:-}" == "--do" ]]; then
+    action="$2"
+    dev="$3"
+    mp=$(lsblk -no MOUNTPOINT "$dev" 2>/dev/null | head -1)
+
+    case "$action" in
+        smart)
+            if [[ -n "$mp" ]]; then do_unmount "$dev"; else do_mount "$dev"; fi
+            ;;
+        force-unmount) do_force_unmount "$dev" ;;
+        remove) do_remove "$dev" ;;
+    esac
+    pause
+    exit 0
+fi
+
+# ---------------------------------------------------------------------------
+# Main: single fzf session, all actions bound as keys
+# ---------------------------------------------------------------------------
+
+header=$(printf "%-2s %-14s %-8s %-8s %-14s %-10s %-18s %-8s %s" \
+    " " "NAME" "SIZE" "FS" "LABEL" "STATUS" "MOUNTPOINT" "AVAIL" "MODEL")
+header+=$'\n'"enter: mount/unmount   ctrl-f: force unmount   ctrl-x: remove/eject   ctrl-r: refresh   esc: quit"
+
+list_devices | fzf --ansi \
+    --header="$header" \
+    --delimiter='\t' \
+    --with-nth=1 \
+    --preview="\"$SCRIPT_PATH\" --preview {2}" \
+    --preview-window=right:50%:wrap \
+    --bind="enter:execute(\"$SCRIPT_PATH\" --do smart {2})+reload(\"$SCRIPT_PATH\" --list)" \
+    --bind="ctrl-f:execute(\"$SCRIPT_PATH\" --do force-unmount {2})+reload(\"$SCRIPT_PATH\" --list)" \
+    --bind="ctrl-x:execute(\"$SCRIPT_PATH\" --do remove {2})+reload(\"$SCRIPT_PATH\" --list)" \
+    --bind="ctrl-r:reload(\"$SCRIPT_PATH\" --list)" \
+    --prompt="device> " > /dev/null
+
+echo "Bye."

@@ -1,0 +1,75 @@
+#!/bin/bash
+
+# Fancy select screen.
+fancy-select () {
+    prompt_desc="$1"
+
+    fzf --color=16 --border=none --margin=0,0,0,0 --style=full:rounded --tac --ghost="$prompt_desc" || return 1
+}
+
+# Check checksums recursively and as the parent directory of the file.
+recurse-check-checksums () {
+    local checksum_type="$1"
+
+    # If no checksum type provided, use fancy-select to choose one
+    if [[ "$checksum_type" == "" ]]; then
+        echo "Select checksum type:" >&2
+        checksum_type=$(echo -e "sha512sum\nsha256sum\nmd5sum\nsha1sum" | fancy-select "Choose checksum type")
+        
+        if [[ "$checksum_type" == "" ]]; then
+            echo "No checksum type selected." >&2
+            return 1
+        fi
+    fi
+
+    local success_count=0
+    local failure_count=0
+    local total_count=0
+    
+    while IFS= read -r line; do
+        total_count=$(( total_count + 1 ))
+
+        local file_name="$(basename "$line")"
+        local parent_dir="$(echo "$line" | sed "s/\/${file_name}\$//")"
+        local file_path="$(echo "$line" | sed "s/\.\//$(pwd | sed 's/\//\\\//g')\//g")"
+
+        pushd "$parent_dir" > /dev/null 2>&1
+        local check_result="$("$checksum_type" -c "$file_name" 2>/dev/null)"
+        local error_found=0
+        
+        if [[ "$check_result" == *"OK"* ]]; then
+            echo -e "\033[92m${file_path} - OK\033[0m"
+            success_count=$(( success_count + 1 ))
+        else
+            echo -e "\033[91m${file_path} - ERROR\033[0m"
+            error_found=1
+        fi
+        
+        popd > /dev/null 2>&1
+        
+        if [[ $error_found == 1 ]]; then
+            failure_count=$(( failure_count + 1 ))
+        fi
+    done < <(find . -name "*.${checksum_type}" -type f)
+
+    echo -e "\n\033[96mResult:\033[0m"
+    echo -e "    \033[92mSuccess: ${success_count}/${total_count}\033[0m"
+    echo -e "    \033[91mFailure: ${failure_count}/${total_count}\033[0m"
+
+    local exit_status=0
+    [[ $failure_count != 0 ]] && exit_status=1
+
+    local final_verdict="\033[92mSUCCESS"
+    [[ $exit_status != 0 ]] && final_verdict="\033[91mFAILURE"
+
+    echo -e "\n\033[96mFinal Verdict: ${final_verdict}\033[0m"
+
+    return $exit_status
+}
+
+alias sshfs-ro-fast='sshfs -o ro -o cache=yes -o kernel_cache -o attr_timeout=3600 -o entry_timeout=3600 -o negative_timeout=3600'
+
+# Main execution - if script is executed directly, run the checksum verification
+if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
+    recurse-check-checksums "$@"
+fi

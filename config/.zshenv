@@ -14,7 +14,7 @@ export SUCKLESS_DIR="$HOME/suckless"
 # ─────────────────────────────
 # PATH (set here so subshells inherit it without re-running loops)
 # ─────────────────────────────
-export PATH="$HOME/.local/bin:/usr/local/bin:$HOME/.dotnet/tools:$HOME/.cargo/bin:$PATH"
+export PATH="$HOME/bin:$HOME/.local/bin:/usr/local/bin:$HOME/.dotnet/tools:$HOME/.cargo/bin:$PATH"
 
 # Add subfolders inside ~/.local/bin (done once here, not on every shell)
 for dir in "$HOME/.local/bin/"*/; do
