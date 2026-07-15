@@ -1,7 +1,7 @@
 #!/bin/bash
 # Display custom Sway keybinds in YAD with keys and commands in separate columns
 
-CONFIG="$HOME/.config/sway/config.d/custom"
+CONFIG="$HOME/.config/sway/config.d/_keybinds"
 TITLE="🎩 Custom Sway Keybinds"
 MSG="💡 Press ESC or click to close. Entries are non-interactive."
 

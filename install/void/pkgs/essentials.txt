@@ -8,6 +8,7 @@ broot
 blueman
 cargo
 clang
+cmake
 curl
 curlftpfs
 delta
@@ -40,6 +41,7 @@ ncdu
 ncurses-term
 neovim
 NetworkManager
+ninja
 nodejs
 ntfs-3g
 pamixer

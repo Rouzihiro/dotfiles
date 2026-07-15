@@ -7,7 +7,7 @@ BLUE='\033[0;34m'
 CYAN='\033[0;36m'
 NC='\033[0m'
 
-SCRIPT_DIR="$HOME/dotfiles/scripts"
+SCRIPT_DIR="$HOME/dotfiles/install/scripts/"
 
 show_menu() {
     echo -e "\n${CYAN}📦 Rey Utilities Menu${NC}"
