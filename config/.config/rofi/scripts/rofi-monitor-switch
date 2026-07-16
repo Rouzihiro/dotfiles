@@ -5,10 +5,13 @@ if hyprctl monitors >/dev/null 2>&1; then
     COMPOSITOR="hyprland"
 elif swaymsg -t get_outputs >/dev/null 2>&1; then
     COMPOSITOR="sway"
+elif wlr-randr >/dev/null 2>&1; then
+    COMPOSITOR="wlroots"
 else
-    echo "Neither Hyprland nor Sway detected" >&2
+    echo "No supported Wayland compositor detected" >&2
     exit 1
 fi
+
 
 CHOICE=$(printf "1. HDMI Only\n2. Laptop Only\n3. Both Displays" | rofi -dmenu -p "Select:")
 
@@ -16,18 +19,19 @@ apply_sway() {
     case $CHOICE in
         "1. HDMI Only")
             swaymsg output eDP-1 disable
-            swaymsg output HDMI-A-1 enable mode 1920x1080@60.000Hz
+            swaymsg output HDMI-A-1 enable mode 1920x1080@60Hz
             ;;
         "2. Laptop Only")
             swaymsg output HDMI-A-1 disable
-            swaymsg output eDP-1 enable mode 1920x1080@120.019Hz
+            swaymsg output eDP-1 enable mode 1920x1080@120Hz
             ;;
         "3. Both Displays")
-            swaymsg output eDP-1 enable mode 1920x1080@120.019Hz
-            swaymsg output HDMI-A-1 enable mode 1920x1080@60.000Hz position 1920,0
+            swaymsg output eDP-1 enable mode 1920x1080@120Hz
+            swaymsg output HDMI-A-1 enable mode 1920x1080@60Hz position 1920,0
             ;;
     esac
 }
+
 
 apply_hyprland() {
     case $CHOICE in
@@ -37,19 +41,47 @@ apply_hyprland() {
             ;;
         "2. Laptop Only")
             hyprctl keyword monitor "HDMI-A-1,disable"
-            hyprctl keyword monitor "eDP-1,1920x1080@120.019,0x0,1"
+            hyprctl keyword monitor "eDP-1,1920x1080@120,0x0,1"
             ;;
         "3. Both Displays")
-            hyprctl keyword monitor "eDP-1,1920x1080@120.019,0x0,1"
+            hyprctl keyword monitor "eDP-1,1920x1080@120,0x0,1"
             hyprctl keyword monitor "HDMI-A-1,1920x1080@60,1920x0,1"
             ;;
     esac
 }
 
+
+apply_wlroots() {
+    case $CHOICE in
+        "1. HDMI Only")
+            wlr-randr --output eDP-1 --off
+            wlr-randr --output HDMI-A-1 --on --mode 1920x1080@60
+            ;;
+
+        "2. Laptop Only")
+            wlr-randr --output HDMI-A-1 --off
+            wlr-randr --output eDP-1 --on --mode 1920x1080@120
+            ;;
+
+        "3. Both Displays")
+            wlr-randr --output eDP-1 --on --mode 1920x1080@120 --pos 0,0
+            wlr-randr --output HDMI-A-1 --on --mode 1920x1080@60 --pos 1920,0
+            ;;
+    esac
+}
+
+
 [ -z "$CHOICE" ] && exit 0
 
-if [ "$COMPOSITOR" = "sway" ]; then
-    apply_sway
-else
-    apply_hyprland
-fi
+
+case "$COMPOSITOR" in
+    sway)
+        apply_sway
+        ;;
+    hyprland)
+        apply_hyprland
+        ;;
+    wlroots)
+        apply_wlroots
+        ;;
+esac

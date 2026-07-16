@@ -26,6 +26,7 @@ GITCONFIG_SRC="$HOME/.gitconfig"
 GITCONFIG_TGT="$HOME/dotfiles/config/.gitconfig"
 
 EXCLUDE_DIRS=(
+"qtile/__pycache__"
 "bat"
 "BraveSoftware"
 "coc"
