@@ -1,17 +1,3 @@
-"""
-keys.py — direct translation of your sway keybinds.
-
-Notes on translation:
-- sway "fullscreen"       -> lazy.window.toggle_fullscreen()
-- sway "floating toggle"  -> lazy.window.toggle_floating()
-- sway "kill"             -> lazy.window.kill()
-- sway "reload"           -> lazy.reload_config()
-- sway "exit"             -> lazy.shutdown()
-- sway scratchpad show / move-to-scratchpad has no 1:1 Qtile equivalent
-  (see groups.py — ScratchPad toggles a *predefined* dropdown app, not the
-  currently focused window). Approximated below; see comments at $mod+p.
-"""
-
 from libqtile.config import Key
 from libqtile.lazy import lazy
 

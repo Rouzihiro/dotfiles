@@ -5,7 +5,6 @@
 # - Hyprland
 # - Qtile Wayland
 
-
 # Detect compositor
 if hyprctl monitors >/dev/null 2>&1; then
 
@@ -26,8 +25,12 @@ fi
 
 
 CHOICE=$(printf \
-"1. HDMI Only\n2. Laptop Only\n3. Both Displays" \
-| rofi -dmenu -p "Select:")
+"HDMI Only\nLaptop Only\nBoth Displays" \
+| fzf \
+    --prompt="Monitor > " \
+    --height=40% \
+    --layout=reverse \
+    --border)
 
 
 [ -z "$CHOICE" ] && exit 0
@@ -37,21 +40,25 @@ CHOICE=$(printf \
 qtile_refresh() {
 
     if [ "$COMPOSITOR" = "qtile" ]; then
-        sleep 3
+
+        sleep 2
 
         qtile cmd-obj \
             -o cmd \
             -f reconfigure_screens \
             >/dev/null 2>&1
+
     fi
 
 }
+
+
 
 apply_sway() {
 
     case "$CHOICE" in
 
-        "1. HDMI Only")
+        "HDMI Only")
 
             swaymsg output eDP-1 disable
             swaymsg output HDMI-A-1 enable mode 1920x1080@60Hz
@@ -59,7 +66,7 @@ apply_sway() {
             ;;
 
 
-        "2. Laptop Only")
+        "Laptop Only")
 
             swaymsg output HDMI-A-1 disable
             swaymsg output eDP-1 enable mode 1920x1080@120Hz
@@ -67,7 +74,7 @@ apply_sway() {
             ;;
 
 
-        "3. Both Displays")
+        "Both Displays")
 
             swaymsg output eDP-1 enable mode 1920x1080@120Hz
             swaymsg output HDMI-A-1 enable \
@@ -86,7 +93,7 @@ apply_hyprland() {
 
     case "$CHOICE" in
 
-        "1. HDMI Only")
+        "HDMI Only")
 
             hyprctl keyword monitor "eDP-1,disable"
             hyprctl keyword monitor \
@@ -95,7 +102,7 @@ apply_hyprland() {
             ;;
 
 
-        "2. Laptop Only")
+        "Laptop Only")
 
             hyprctl keyword monitor "HDMI-A-1,disable"
             hyprctl keyword monitor \
@@ -104,7 +111,7 @@ apply_hyprland() {
             ;;
 
 
-        "3. Both Displays")
+        "Both Displays")
 
             hyprctl keyword monitor \
                 "eDP-1,1920x1080@120,0x0,1"
@@ -125,12 +132,13 @@ apply_qtile() {
     case "$CHOICE" in
 
 
-        "1. HDMI Only")
+        "HDMI Only")
 
             wlr-randr \
                 --output eDP-1 \
                 --off
 
+            sleep 1
 
             wlr-randr \
                 --output HDMI-A-1 \
@@ -141,16 +149,13 @@ apply_qtile() {
             ;;
 
 
-
-        "2. Laptop Only")
+        "Laptop Only")
 
             wlr-randr \
                 --output HDMI-A-1 \
                 --off
 
-
             sleep 1
-
 
             wlr-randr \
                 --output eDP-1 \
@@ -161,10 +166,7 @@ apply_qtile() {
             ;;
 
 
-
-        "3. Both Displays")
-
-            # Wake laptop first
+        "Both Displays")
 
             wlr-randr \
                 --output eDP-1 \
@@ -172,9 +174,7 @@ apply_qtile() {
                 --mode 1920x1080@120.018997 \
                 --pos 0,0
 
-
             sleep 1
-
 
             wlr-randr \
                 --output HDMI-A-1 \
@@ -195,26 +195,16 @@ apply_qtile() {
 
 case "$COMPOSITOR" in
 
-
     sway)
-
         apply_sway
-
         ;;
-
 
     hyprland)
-
         apply_hyprland
-
         ;;
-
 
     qtile)
-
         apply_qtile
-
         ;;
-
 
 esac

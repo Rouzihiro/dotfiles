@@ -15,6 +15,10 @@ from autostart import autostart
 from theme import border_focus, border_normal, border_width
 from bar import build_bar
 
+@hook.subscribe.screen_change
+def screen_change(qtile):
+    qtile.cmd_reconfigure_screens()
+
 mod = "mod4"
 
 layouts = [
@@ -28,9 +32,8 @@ layouts = [
 ]
 
 screens = [
-    Screen(
-        top=build_bar(),
-    )
+    Screen(top=build_bar()),
+    Screen(top=build_bar()),
 ]
 
 mouse = []  # add drag/resize mouse bindings here if you want them
