@@ -1,23 +1,36 @@
 """
-groups.py — workspaces + the ScratchPad group used by $mod+p / $mod+alt+p.
-Add your real groups below; only the scratchpad is wired up to match your
-sway keybinds.
+groups.py — workspaces + scratchpad + dashboard workspace.
+
+1-5 are normal workspaces.
+D is a dedicated dashboard workspace.
+ScratchPad keeps the terminal dropdown.
 """
 
 from libqtile.config import Group, ScratchPad, DropDown
 
 from settings import terminal
 
+
 groups = [
-    Group(str(i)) for i in range(1, 10)
+    Group(str(i)) for i in range(1, 6)
 ] + [
-    ScratchPad("scratchpad", [
-        DropDown(
-            "term",
-            terminal,
-            width=0.5, height=0.6,
-            x=0.25, y=0.1,
-            opacity=1.0,
-        ),
-    ]),
+    Group(
+        "D",
+        label="󰕮",
+    ),
+
+    ScratchPad(
+        "scratchpad",
+        [
+            DropDown(
+                "term",
+                terminal,
+                width=0.5,
+                height=0.6,
+                x=0.25,
+                y=0.1,
+                opacity=1.0,
+            ),
+        ],
+    ),
 ]

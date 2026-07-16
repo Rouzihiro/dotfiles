@@ -23,13 +23,27 @@ keys = [
     Key([mod, alt], "b", lazy.spawn("xdg-open https://")),
     Key([mod, "shift"], "b", lazy.spawn(f"{terminal2} --title floaty-big -e sh -c bt")),
 
-    Key([mod], "d", lazy.spawn(
-        "sh -c '~/Projects/dashboard/start-dashboard.sh && notify-send Dashboard Started'"
-    )),
-    Key([mod, alt], "d", lazy.spawn(
-        "sh -c '~/Projects/dashboard/stop-dashboard.sh && notify-send Dashboard Stopped'"
-    )),
-    Key([mod, "shift"], "d", lazy.spawn("run-tui download-manager.sh")),
+Key(
+    [mod],
+    "d",
+    lazy.group["D"].toscreen(),
+    desc="Switch to dashboard",
+),
+
+Key(
+    [mod, alt],
+    "d",
+    lazy.spawn("~/Projects/dashboard/start-dashboard-2.sh"),
+    desc="Launch dashboard",
+),
+
+
+Key(
+    [mod, "shift"],
+    "d",
+    lazy.window.togroup("D", switch_group=True),
+    desc="Move window to dashboard",
+),
 
     Key([mod], "e", lazy.spawn(fm)),
     Key([mod, alt], "e", lazy.spawn(tfm)),

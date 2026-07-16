@@ -15,9 +15,11 @@ from autostart import autostart
 from theme import border_focus, border_normal, border_width
 from bar import build_bar
 
-@hook.subscribe.screen_change
-def screen_change(qtile):
-    qtile.cmd_reconfigure_screens()
+# @hook.subscribe.screen_change
+# def fix_groups(qtile):
+#     for group in qtile.groups:
+#         if group.screen and group.screen.index >= len(qtile.screens):
+#             group.toscreen(0)
 
 mod = "mod4"
 

@@ -5,7 +5,9 @@
 # - Hyprland
 # - Qtile Wayland
 
+
 # Detect compositor
+
 if hyprctl monitors >/dev/null 2>&1; then
 
     COMPOSITOR="hyprland"
@@ -24,6 +26,7 @@ else
 fi
 
 
+
 CHOICE=$(printf \
 "HDMI Only\nLaptop Only\nBoth Displays" \
 | fzf \
@@ -37,23 +40,6 @@ CHOICE=$(printf \
 
 
 
-qtile_refresh() {
-
-    if [ "$COMPOSITOR" = "qtile" ]; then
-
-        sleep 2
-
-        qtile cmd-obj \
-            -o cmd \
-            -f reconfigure_screens \
-            >/dev/null 2>&1
-
-    fi
-
-}
-
-
-
 apply_sway() {
 
     case "$CHOICE" in
@@ -61,7 +47,8 @@ apply_sway() {
         "HDMI Only")
 
             swaymsg output eDP-1 disable
-            swaymsg output HDMI-A-1 enable mode 1920x1080@60Hz
+            swaymsg output HDMI-A-1 enable \
+                mode 1920x1080@60Hz
 
             ;;
 
@@ -69,14 +56,17 @@ apply_sway() {
         "Laptop Only")
 
             swaymsg output HDMI-A-1 disable
-            swaymsg output eDP-1 enable mode 1920x1080@120Hz
+            swaymsg output eDP-1 enable \
+                mode 1920x1080@120Hz
 
             ;;
 
 
         "Both Displays")
 
-            swaymsg output eDP-1 enable mode 1920x1080@120Hz
+            swaymsg output eDP-1 enable \
+                mode 1920x1080@120Hz
+
             swaymsg output HDMI-A-1 enable \
                 mode 1920x1080@60Hz \
                 position 1920,0
@@ -95,7 +85,9 @@ apply_hyprland() {
 
         "HDMI Only")
 
-            hyprctl keyword monitor "eDP-1,disable"
+            hyprctl keyword monitor \
+                "eDP-1,disable"
+
             hyprctl keyword monitor \
                 "HDMI-A-1,1920x1080@60,0x0,1"
 
@@ -104,7 +96,9 @@ apply_hyprland() {
 
         "Laptop Only")
 
-            hyprctl keyword monitor "HDMI-A-1,disable"
+            hyprctl keyword monitor \
+                "HDMI-A-1,disable"
+
             hyprctl keyword monitor \
                 "eDP-1,1920x1080@120,0x0,1"
 
@@ -137,8 +131,6 @@ apply_qtile() {
             wlr-randr \
                 --output eDP-1 \
                 --off
-
-            sleep 1
 
             wlr-randr \
                 --output HDMI-A-1 \
@@ -185,9 +177,6 @@ apply_qtile() {
             ;;
 
     esac
-
-
-    qtile_refresh
 
 }
 
