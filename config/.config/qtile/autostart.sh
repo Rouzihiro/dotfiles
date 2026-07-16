@@ -1,13 +1,18 @@
 #!/usr/bin/env bash
 
-# Give Wayland/Qtile time to settle
 sleep 3
 
-# Notification daemon
 mako &
-
-# Network tray
-# nm-applet &
-
-# Wallpaper
 swww-daemon &
+wl-paste -t text --watch clipman store --no-persist &
+
+swayidle -w \
+  before-sleep "swaylock -fF -i ~/Pictures/lockscreen/VIM.png" \
+  timeout 300 'if ! pgrep -x "motrix"; then brightnessctl -s set 0; fi' \
+  resume 'brightnessctl -r' &
+
+/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
+
+pipewire &
+pipewire-pulse &
+wireplumber &

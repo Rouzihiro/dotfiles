@@ -33,7 +33,7 @@ Key(
 Key(
     [mod, alt],
     "d",
-    lazy.spawn("~/Projects/dashboard/start-dashboard-2.sh"),
+    lazy.spawn("$HOME/Projects/dashboard/start-dashboard-2.sh"),
     desc="Launch dashboard",
 ),
 

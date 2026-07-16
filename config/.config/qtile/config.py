@@ -8,18 +8,12 @@ from libqtile.backend.wayland import InputConfig
 from libqtile.config import Screen
 from libqtile.layout import Columns, Max
 
-from keys import keys          # noqa: F401  (Qtile reads module-level `keys`)
-from groups import groups      # noqa: F401  (Qtile reads module-level `groups`)
-from rules import floating_layout  # noqa: F401
+from keys import keys
+from groups import groups
+from rules import floating_layout
 from autostart import autostart
 from theme import border_focus, border_normal, border_width
 from bar import build_bar
-
-# @hook.subscribe.screen_change
-# def fix_groups(qtile):
-#     for group in qtile.groups:
-#         if group.screen and group.screen.index >= len(qtile.screens):
-#             group.toscreen(0)
 
 mod = "mod4"
 
@@ -50,11 +44,6 @@ focus_on_window_activation = "smart"
 reconfigure_screens = True
 auto_minimize = True
 
-# Wayland-only: per-device input config (keyboard layout, touchpad behavior,
-# etc). This had no X11 equivalent — under X11 you'd have configured this
-# via xorg.conf.d or `xinput` instead. "type:*" matches by device type;
-# use a specific identifier (see `qtile cmd-obj -o core -f get_inputs`
-# once running) if you need per-device rather than per-type rules.
 wl_input_rules = {
     "type:keyboard": InputConfig(kb_layout="us"),
     "type:touchpad": InputConfig(tap=True, natural_scroll=True),
@@ -64,3 +53,21 @@ wl_input_rules = {
 @hook.subscribe.startup_once
 def _autostart():
     autostart()
+
+
+
+@hook.subscribe.screen_change
+def _on_screen_change(event):
+    """
+    Runs whenever outputs change (e.g. your monitor-switcher script calling
+    `wlr-randr`). reconfigure_screens=True handles rebuilding the screen
+    list itself, but any group that was pinned to a screen that just got
+    removed can be left pointing at nothing — this walks every group and
+    pushes orphaned ones back onto screen 0 so they're reachable again.
+    """
+    qtile.reconfigure_screens()
+    for group in qtile.groups:
+        if group.screen is None:
+            continue
+        if group.screen not in qtile.screens:
+            group.toscreen(0, toggle=False)

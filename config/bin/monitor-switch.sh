@@ -178,6 +178,14 @@ apply_qtile() {
 
     esac
 
+    # Give wlroots a moment to settle after the output change, then tell
+    # Qtile to recompute its screen list. wlr-randr has no idea Qtile
+    # exists, so without this Qtile keeps whatever screen/group mapping it
+    # had before the switch — which is why groups get "stuck" pointing at
+    # a screen that no longer exists, and rofi can land on a dead monitor.
+    sleep 0.5
+    qtile cmd-obj -o cmd -f reconfigure_screens
+
 }
 
 
