@@ -90,9 +90,6 @@ vo() {
     nvim-theme -c "lua require('fzf-lua').oldfiles()" "$@"
 }
 
-# alias v='nvim-theme'
-# alias vo="nvim -c \"lua require('fzf-lua').oldfiles()\""
-# alias vi='nvim -c "lua require('\''fzf-lua'\'').files()"'
 alias vdiff="nvim -d"
 alias svim="sudo -E nvim"
 
