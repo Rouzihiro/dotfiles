@@ -19,8 +19,8 @@ keys = [
     Key([mod], "a", lazy.spawn(f"{terminal2} -e btop")),
     Key([mod, alt], "a", lazy.spawn(f"{terminal2} --title floaty-big -e sh -c ncdu")),
 
-    Key([mod], "b", lazy.spawn(f"{ROFI_SCRIPTS}/rofi-bookmarks")),
-    Key([mod, alt], "b", lazy.spawn("xdg-open https://")),
+    Key([mod], "b", lazy.group["B"].toscreen(), lazy.spawn(f"{ROFI_SCRIPTS}/rofi-bookmarks")),
+    Key([mod, alt], "b", lazy.group["B"].toscreen(), lazy.spawn("xdg-open https://")),
     Key([mod, "shift"], "b", lazy.spawn(f"{terminal2} --title floaty-big -e sh -c bt")),
 
 Key(
@@ -65,10 +65,6 @@ Key(
 
     Key([mod], "m", lazy.spawn(f"{ROFI_SCRIPTS}/rofi-mount-usb")),
     Key([mod, alt], "m", lazy.spawn(f"{ROFI_SCRIPTS}/rofi-monitor-switch")),
-    Key([mod, "shift"], "m", lazy.spawn(
-        f"{terminal2} -T floaty-big -e bash -c 'sudo ps_mem; echo \"\"; "
-        "read -rp \"Press Enter to close...\"'"
-    )),
 
     Key([mod], "n", lazy.spawn(f"{terminal2} --title floaty-small -e sh -c fzf-notes")),
     Key([mod, alt], "n", lazy.spawn(editor)),
@@ -110,7 +106,7 @@ Key(
     Key([mod, "shift"], "v", lazy.spawn(f"{ROFI_SCRIPTS}/rofi-video-tool")),
 
     Key([mod], "w", lazy.spawn(f"{ROFI_SCRIPTS}/rofi-wall")),
-    Key([mod, alt], "w", lazy.spawn("~/scripts/wallwaper-random.sh")),
+    Key([mod, alt], "w", lazy.spawn("/home/rey/scripts/wallwaper-random.sh")),
 
     Key([mod], "x", lazy.spawn("asryx")),
 
@@ -135,11 +131,18 @@ Key(
     Key([mod, "shift"], "Tab", lazy.layout.previous()),
 
     # --- Media / brightness (XF86 keys need no modifier, same as sway) ---
-    Key([], "XF86MonBrightnessDown", lazy.spawn("~/.config/qtile/scripts/brightness.sh down")),
-    Key([], "XF86MonBrightnessUp", lazy.spawn("~/.config/qtile/scripts/brightness.sh up")),
-    Key([], "XF86AudioLowerVolume", lazy.spawn("~/.config/qtile/scripts/volume.sh down")),
-    Key([], "XF86AudioRaiseVolume", lazy.spawn("~/.config/qtile/scripts/volume.sh up")),
-    Key([], "XF86AudioMute", lazy.spawn("~/.config/qtile/scripts/volume.sh mute")),
+    Key([], "XF86MonBrightnessDown", lazy.spawn("/home/rey/.config/qtile/scripts/brightness.sh down")),
+    Key([], "XF86MonBrightnessUp", lazy.spawn("/home/rey/.config/qtile/scripts/brightness.sh up")),
+
+Key([], "XF86AudioLowerVolume",
+    lazy.spawn("/home/rey/.config/qtile/scripts/volume.sh down")),
+
+Key([], "XF86AudioRaiseVolume",
+    lazy.spawn("/home/rey/.config/qtile/scripts/volume.sh up")),
+
+Key([], "XF86AudioMute",
+    lazy.spawn("/home/rey/.config/qtile/scripts/volume.sh mute")),
+
     Key([], "XF86AudioPlay", lazy.spawn("playerctl play-pause")),
     Key([], "XF86AudioPrev", lazy.spawn("playerctl previous")),
     Key([], "XF86AudioNext", lazy.spawn("playerctl next")),

@@ -1,19 +1,14 @@
-"""
-groups.py — workspaces + scratchpad + dashboard workspace.
-
-1-5 are normal workspaces.
-D is a dedicated dashboard workspace.
-ScratchPad keeps the terminal dropdown.
-"""
-
 from libqtile.config import Group, ScratchPad, DropDown
-
 from settings import terminal
-
 
 groups = [
     Group(str(i)) for i in range(1, 6)
 ] + [
+    Group(
+        "B",
+        label="󰖟",  # Browser icon
+    ),
+
     Group(
         "D",
         label="󰕮",

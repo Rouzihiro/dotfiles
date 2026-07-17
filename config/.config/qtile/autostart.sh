@@ -11,8 +11,6 @@ swayidle -w \
   timeout 300 'if ! pgrep -x "motrix"; then brightnessctl -s set 0; fi' \
   resume 'brightnessctl -r' &
 
-/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
-
 pipewire &
 pipewire-pulse &
 wireplumber &

@@ -35,6 +35,7 @@ imv
 jq
 lazygit
 libxcb
+mako
 mediainfo
 mpv
 ncdu
@@ -52,6 +53,7 @@ power-profiles-daemon
 pre-commit
 python3-Jinja2
 rsync
+rtkit
 slurp
 starship
 swappy
