@@ -137,14 +137,18 @@ _osyx_reload_nvim() {
     _osyx_log "nvim not found, skipping"
     return 0
   fi
-  local sock
-  for sock in \
-    /run/user/$(id -u)/nvim.*.0 \
-    /tmp/nvim.${USER}/**/nvim.*.0(N); do
-    [[ -S "$sock" ]] || continue
-    nvim --server "$sock" --remote-expr 'execute("OsyxFlip")' >/dev/null 2>&1 \
-      || _osyx_log "nvim socket $sock unreachable, skipping"
-  done
+
+  local sock="/tmp/nvim-theme.sock"
+
+  if [[ ! -S "$sock" ]]; then
+    _osyx_log "nvim theme socket not found, skipping"
+    return 0
+  fi
+
+  nvim --server "$sock" \
+    --remote-expr 'luaeval("reload_theme()")' \
+    >/dev/null 2>&1 \
+    || _osyx_log "nvim theme reload failed"
 }
 
 # _osyx_reload_waybar() {

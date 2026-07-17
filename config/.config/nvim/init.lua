@@ -149,3 +149,21 @@ vim.opt.wildignore = {
 		"*.swp",
 		"*.log",
 }
+
+_G.reload_theme = function()
+    package.loaded["theme"] = nil
+
+    local theme = require("theme")
+
+    if theme.pre_setup then
+        theme.pre_setup()
+    end
+
+    vim.cmd("colorscheme " .. theme.default_color)
+
+    if theme.set_terminal_colors then
+        theme.set_terminal_colors()
+    end
+
+    print("Theme reloaded: " .. theme.default_color)
+end
