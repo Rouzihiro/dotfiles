@@ -27,14 +27,15 @@ Key(
     [mod],
     "d",
     lazy.group["D"].toscreen(),
-    desc="Switch to dashboard",
+    lazy.spawn("bash -c '$HOME/Projects/dashboard/start-dashboard-2.sh'"),
+    desc="switch to dashboard and launch it",
 ),
 
 Key(
     [mod, alt],
     "d",
-    lazy.spawn("$HOME/Projects/dashboard/start-dashboard-2.sh"),
-    desc="Launch dashboard",
+    lazy.spawn("bash -c '$HOME/Projects/dashboard/stop-dashboard.sh'"),
+    desc="stop dashboard",
 ),
 
 
