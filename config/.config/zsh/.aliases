@@ -78,9 +78,21 @@ alias .5='cd ../../../../..'
 alias fex='muvm bash'
 
 # Editors
-alias v='nvim'
-alias vo="nvim -c \"lua require('fzf-lua').oldfiles()\""
-alias vi='nvim -c "lua require('\''fzf-lua'\'').files()"'
+v() {
+    nvim-theme "$@"
+}
+
+vi() {
+    nvim-theme -c "lua require('fzf-lua').files()" "$@"
+}
+
+vo() {
+    nvim-theme -c "lua require('fzf-lua').oldfiles()" "$@"
+}
+
+# alias v='nvim-theme'
+# alias vo="nvim -c \"lua require('fzf-lua').oldfiles()\""
+# alias vi='nvim -c "lua require('\''fzf-lua'\'').files()"'
 alias vdiff="nvim -d"
 alias svim="sudo -E nvim"
 

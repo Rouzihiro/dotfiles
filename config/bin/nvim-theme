@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+SOCKET="/tmp/nvim-theme.sock"
+
+exec nvim --listen "$SOCKET" "$@"

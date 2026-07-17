@@ -312,16 +312,6 @@ fi
 source "$HOME/dotfiles/flavors/themes.zsh"
 export EZA_CONFIG_DIR="$HOME/.config/eza"
 
-
-# ─────────────────────────────
-# Editors / Apps
-# ─────────────────────────────
-
-export BROWSER="zen-browser"
-export EDITOR="nvim"
-export SUDO_EDITOR="$EDITOR"
-export VISUAL="$EDITOR"
-
 # ============================================
 # Load Aliases
 # ============================================
@@ -333,11 +323,6 @@ done
 # Sway Autostart
 # ============================================
 # [[ "$(tty)" == "/dev/tty1" ]] && exec sway
-
-
-if [[ -f "$HOME/.config/broot/launcher/bash/br" ]]; then
-    source "$HOME/.config/broot/launcher/bash/br"
-fi
 
 # `time` format
 TIMEFMT=$'\nreal\t%E\nuser\t%U\nsys\t%S\ncpu\t%P'
@@ -352,3 +337,9 @@ zinit light-mode for \
     zdharma-continuum/zinit-annex-rust
 
 ### End of Zinit's installer chunk
+
+# source /home/rey/.config/broot/launcher/bash/br
+
+if [[ -f "$HOME/.config/broot/launcher/bash/br" ]]; then
+    source "$HOME/.config/broot/launcher/bash/br"
+fi

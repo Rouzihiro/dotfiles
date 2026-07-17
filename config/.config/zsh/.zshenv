@@ -22,10 +22,11 @@ unset dir
 # ─────────────────────────────
 # Editors / Apps
 # ─────────────────────────────
-export NVIM_LISTEN_ADDRESS="/tmp/nvim-theme.sock"
+# export NVIM_LISTEN_ADDRESS="/tmp/nvim-theme.sock"
 export EDITOR="nvim"
 export SUDO_EDITOR="$EDITOR"
 export VISUAL="$EDITOR"
+export BROWSER="zen-browser"
 
 # ─────────────────────────────
 # Manpages with bat
