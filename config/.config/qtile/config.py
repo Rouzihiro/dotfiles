@@ -1,16 +1,11 @@
-"""
-config.py — main entry point. Qtile only ever loads this file directly;
-everything else is imported here, same idea as sway's `include` lines.
-"""
-
-from libqtile import hook
+from libqtile import hook, qtile
 from libqtile.backend.wayland import InputConfig
 from libqtile.config import Screen
 from libqtile.layout import Columns, Max
 
-from keys import keys
-from groups import groups
-from rules import floating_layout
+from keys import keys          # noqa: F401  (Qtile reads module-level `keys`)
+from groups import groups      # noqa: F401  (Qtile reads module-level `groups`)
+from rules import floating_layout  # noqa: F401
 from autostart import autostart
 from theme import border_focus, border_normal, border_width
 from bar import build_bar
@@ -28,8 +23,12 @@ layouts = [
 ]
 
 screens = [
-    Screen(top=build_bar()),
-    Screen(top=build_bar()),
+    Screen(
+        top=build_bar(),
+    ),
+    Screen(
+        top=build_bar(),
+    ),
 ]
 
 mouse = []  # add drag/resize mouse bindings here if you want them
@@ -41,9 +40,14 @@ bring_front_click = False
 cursor_warp = False
 auto_fullscreen = True
 focus_on_window_activation = "smart"
-reconfigure_screens = True
+reconfigure_screens = False  # we call it ourselves below — see note on _on_screen_change
 auto_minimize = True
 
+# Wayland-only: per-device input config (keyboard layout, touchpad behavior,
+# etc). This had no X11 equivalent — under X11 you'd have configured this
+# via xorg.conf.d or `xinput` instead. "type:*" matches by device type;
+# use a specific identifier (see `qtile cmd-obj -o core -f get_inputs`
+# once running) if you need per-device rather than per-type rules.
 wl_input_rules = {
     "type:keyboard": InputConfig(kb_layout="us"),
     "type:touchpad": InputConfig(tap=True, natural_scroll=True),
@@ -55,19 +59,21 @@ def _autostart():
     autostart()
 
 
-
 @hook.subscribe.screen_change
 def _on_screen_change(event):
     """
     Runs whenever outputs change (e.g. your monitor-switcher script calling
-    `wlr-randr`). reconfigure_screens=True handles rebuilding the screen
-    list itself, but any group that was pinned to a screen that just got
-    removed can be left pointing at nothing — this walks every group and
-    pushes orphaned ones back onto screen 0 so they're reachable again.
+    `wlr-randr`).
+
+    reconfigure_screens is set to False above specifically so THIS is the
+    only handler — Qtile's own reconfigure_screens(), when a group's screen
+    disappears, calls group.hide(), which sets group.screen = None. A
+    previous version of this hook had `if group.screen is None: continue`,
+    which was backwards — it was skipping exactly the orphaned groups that
+    need reassigning. Fixed here: any group with screen is None (hidden) or
+    pointing at a screen that no longer exists gets pushed onto screen 0.
     """
     qtile.reconfigure_screens()
     for group in qtile.groups:
-        if group.screen is None:
-            continue
-        if group.screen not in qtile.screens:
+        if group.screen is None or group.screen not in qtile.screens:
             group.toscreen(0, toggle=False)
