@@ -1,7 +1,32 @@
 from libqtile.config import Key
 from libqtile.lazy import lazy
 
-from settings import mod, alt, terminal, terminal2, launcher, fm, tfm, files, editor, lockscreen, ROFI_SCRIPTS
+from settings import (
+    mod,
+    alt,
+    terminal,
+    terminal2,
+    launcher,
+    fm,
+    tfm,
+    files,
+    editor,
+    lockscreen,
+    ROFI_SCRIPTS,
+)
+
+def browser_hub(qtile):
+    browser_group = qtile.groups_map["B"]
+
+    if qtile.current_group != browser_group:
+        browser_group.toscreen()
+        return
+
+    if not browser_group.windows:
+        qtile.spawn("xdg-open https://")
+    else:
+        qtile.spawn(f"{ROFI_SCRIPTS}/rofi-bookmarks")
+
 
 keys = [
     Key([mod], "Escape", lazy.spawn(f"{ROFI_SCRIPTS}/rofi-power")),
@@ -19,32 +44,32 @@ keys = [
     Key([mod], "a", lazy.spawn(f"{terminal2} -e btop")),
     Key([mod, alt], "a", lazy.spawn(f"{terminal2} --title floaty-big -e sh -c ncdu")),
 
-    Key([mod], "b", lazy.group["B"].toscreen(), lazy.spawn(f"{ROFI_SCRIPTS}/rofi-bookmarks")),
-    Key([mod, alt], "b", lazy.group["B"].toscreen(), lazy.spawn("xdg-open https://")),
+    # Browser hub
+    Key([mod], "b", lazy.function(browser_hub)),
+    Key([mod, alt], "b", lazy.spawn("xdg-open https://")),
     Key([mod, "shift"], "b", lazy.spawn(f"{terminal2} --title floaty-big -e sh -c bt")),
 
-Key(
-    [mod],
-    "d",
-    lazy.group["D"].toscreen(),
-    lazy.spawn("bash -c '$HOME/Projects/dashboard/start-dashboard-2.sh'"),
-    desc="switch to dashboard and launch it",
-),
+    Key(
+        [mod],
+        "d",
+        lazy.group["D"].toscreen(),
+        lazy.spawn("bash -c '$HOME/Projects/dashboard/start-dashboard-2.sh'"),
+        desc="switch to dashboard and launch it",
+    ),
 
-Key(
-    [mod, alt],
-    "d",
-    lazy.spawn("bash -c '$HOME/Projects/dashboard/stop-dashboard.sh'"),
-    desc="stop dashboard",
-),
+    Key(
+        [mod, alt],
+        "d",
+        lazy.spawn("bash -c '$HOME/Projects/dashboard/stop-dashboard.sh'"),
+        desc="stop dashboard",
+    ),
 
-
-Key(
-    [mod, "shift"],
-    "d",
-    lazy.window.togroup("D", switch_group=True),
-    desc="Move window to dashboard",
-),
+    Key(
+        [mod, "shift"],
+        "d",
+        lazy.window.togroup("D", switch_group=True),
+        desc="Move window to dashboard",
+    ),
 
     Key([mod], "e", lazy.spawn(fm)),
     Key([mod, alt], "e", lazy.spawn(tfm)),
@@ -54,9 +79,13 @@ Key(
     Key([mod, "shift"], "f", lazy.window.toggle_floating()),
 
     Key([mod], "g", lazy.spawn("~/.config/qtile/scripts/dashboard-git.sh")),
-    Key([mod, alt], "g", lazy.spawn(
-        f'{terminal2} --title floaty-big -e zsh -ic "fzf-aliases; exec zsh"'
-    )),
+    Key(
+        [mod, alt],
+        "g",
+        lazy.spawn(
+            f'{terminal2} --title floaty-big -e zsh -ic "fzf-aliases; exec zsh"'
+        ),
+    ),
 
     Key([mod], "i", lazy.spawn(f"{terminal2} --title floaty-medium -e sh -c fzf-wifi")),
     Key([mod, alt], "i", lazy.spawn(f"{ROFI_SCRIPTS}/rofi-wifi")),
@@ -73,16 +102,15 @@ Key(
     Key([mod], "o", lazy.spawn("ocr")),
     Key([mod, alt], "o", lazy.spawn("sh -c text-picker")),
 
-    # --- scratchpad (see groups.py) ---
-    # $mod+p in sway just shows the scratchpad; closest Qtile equivalent is
-    # toggling a predefined dropdown terminal.
+    # Scratchpad
     Key([mod], "p", lazy.group["scratchpad"].dropdown_toggle("term")),
-    # $mod+alt+p in sway floats + resizes + sends the CURRENT window to
-    # scratchpad. Qtile has no "send arbitrary window to scratchpad" concept,
-    # so this instead floats/centers/resizes the focused window in place.
-    Key([mod, alt], "p", lazy.window.toggle_floating(),
+    Key(
+        [mod, alt],
+        "p",
+        lazy.window.toggle_floating(),
         lazy.window.set_size_floating(1200, 1000),
-        lazy.window.center()),
+        lazy.window.center(),
+    ),
     Key([mod, "shift"], "p", lazy.spawn(f"{ROFI_SCRIPTS}/rofi-power-profile")),
 
     Key([mod], "q", lazy.window.kill()),
@@ -95,11 +123,15 @@ Key(
     Key([mod], "s", lazy.spawn(f"{ROFI_SCRIPTS}/rofi-screenshot")),
     Key([mod, alt], "s", lazy.spawn(f"{ROFI_SCRIPTS}/rofi-screenshot-fs")),
 
-    Key([mod], "t", lazy.spawn(
-        "zsh -ic 'source ~/dotfiles/flavors/themes.zsh; _osyx_rofi_theme_picker'"
-    )),
+    Key(
+        [mod],
+        "t",
+        lazy.spawn(
+            "zsh -ic 'source ~/dotfiles/flavors/themes.zsh; _osyx_rofi_theme_picker'"
+        ),
+    ),
     Key([mod, alt], "t", lazy.spawn(f"{ROFI_SCRIPTS}/rofi-timewarrior")),
-    Key([mod, "shift"], "t", lazy.spawn(f"{terminal2} -e runner")),  # see rules.py for floating match
+    Key([mod, "shift"], "t", lazy.spawn(f"{terminal2} -e runner")),
 
     Key([mod], "v", lazy.spawn(f"{terminal2} --title floaty-small -e sh fzf-video-play")),
     Key([mod, alt], "v", lazy.spawn(f"{terminal2} --title floaty-tiny -e sh fzf-video-tool")),
@@ -114,44 +146,42 @@ Key(
 
     Key([mod], "grave", lazy.spawn("~/.config/qtile/scripts/list-qtile-windows")),
 
-    # --- Focus navigation between windows (Columns layout) ---
+    # Focus
     Key([mod], "Left", lazy.layout.left()),
     Key([mod], "Right", lazy.layout.right()),
     Key([mod], "Up", lazy.layout.up()),
     Key([mod], "Down", lazy.layout.down()),
 
-    # --- Move windows within the layout ---
+    # Move windows
     Key([mod, "shift"], "Left", lazy.layout.shuffle_left()),
     Key([mod, "shift"], "Right", lazy.layout.shuffle_right()),
     Key([mod, "shift"], "Up", lazy.layout.shuffle_up()),
     Key([mod, "shift"], "Down", lazy.layout.shuffle_down()),
 
-    # --- Cycle focus through windows on the current workspace ---
+    # Cycle windows
     Key([mod], "Tab", lazy.layout.next()),
     Key([mod, "shift"], "Tab", lazy.layout.previous()),
 
-    # --- Media / brightness (XF86 keys need no modifier, same as sway) ---
-    Key([], "XF86MonBrightnessDown", lazy.spawn("/home/rey/.config/qtile/scripts/brightness.sh down")),
-    Key([], "XF86MonBrightnessUp", lazy.spawn("/home/rey/.config/qtile/scripts/brightness.sh up")),
+    # Brightness
+    Key([], "XF86MonBrightnessDown",
+        lazy.spawn("/home/rey/.config/qtile/scripts/brightness.sh down")),
+    Key([], "XF86MonBrightnessUp",
+        lazy.spawn("/home/rey/.config/qtile/scripts/brightness.sh up")),
 
-Key([], "XF86AudioLowerVolume",
-    lazy.spawn("/home/rey/.config/qtile/scripts/volume.sh down")),
+    # Volume
+    Key([], "XF86AudioLowerVolume",
+        lazy.spawn("/home/rey/.config/qtile/scripts/volume.sh down")),
+    Key([], "XF86AudioRaiseVolume",
+        lazy.spawn("/home/rey/.config/qtile/scripts/volume.sh up")),
+    Key([], "XF86AudioMute",
+        lazy.spawn("/home/rey/.config/qtile/scripts/volume.sh mute")),
 
-Key([], "XF86AudioRaiseVolume",
-    lazy.spawn("/home/rey/.config/qtile/scripts/volume.sh up")),
-
-Key([], "XF86AudioMute",
-    lazy.spawn("/home/rey/.config/qtile/scripts/volume.sh mute")),
-
+    # Media
     Key([], "XF86AudioPlay", lazy.spawn("playerctl play-pause")),
     Key([], "XF86AudioPrev", lazy.spawn("playerctl previous")),
     Key([], "XF86AudioNext", lazy.spawn("playerctl next")),
 ]
 
-# --- Workspace switch / move-window-to-workspace ---
-# Matches the group names defined in groups.py ("1".."9").
-# switch_group=False mirrors sway's default: moving a window to another
-# workspace does NOT follow it there. Set to True if you'd rather it did.
 for vt in "123456789":
     keys.extend([
         Key([mod], vt, lazy.group[vt].toscreen()),
