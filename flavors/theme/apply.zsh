@@ -138,7 +138,7 @@ _osyx_reload_nvim() {
     return 0
   fi
 
-  local sock="/tmp/nvim-theme.sock"
+  local sock="${NVIM_LISTEN_ADDRESS:-/tmp/nvim-theme.sock}"
 
   if [[ ! -S "$sock" ]]; then
     _osyx_log "nvim theme socket not found, skipping"
