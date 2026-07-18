@@ -86,13 +86,17 @@ def build_bar():
             # Active window title
             #
 
-widget.WindowName(
-    name="bar_refresh",
-    **_defaults(
-        foreground=theme.bar_fg,
-    ),
-    max_chars=60,
+
+widget.GenPollText(
+    name="theme_refresh",
+    func=lambda: "",
+    update_interval=3600,
+    foreground=theme.bar_bg,
+    background=theme.bar_bg,
+    padding=0,
 ),
+
+spacer(15),
 
             widget.WindowName(
                 **_defaults(
