@@ -85,6 +85,15 @@ def build_bar():
             #
             # Active window title
             #
+
+widget.WindowName(
+    name="bar_refresh",
+    **_defaults(
+        foreground=theme.bar_fg,
+    ),
+    max_chars=60,
+),
+
             widget.WindowName(
                 **_defaults(
                     foreground=theme.bar_fg,
@@ -259,7 +268,7 @@ def build_bar():
 
         ],
 
-        theme.bar_size + 20,
+        theme.bar_size,
 
         background=theme.bar_bg,
     )
