@@ -1,0 +1,49 @@
+bg = "{{ palette_bg }}"
+fg = "{{ palette_fg }}"
+
+black   = "{{ palette_color0 }}"
+red     = "{{ palette_color1 }}"
+green   = "{{ palette_color2 }}"
+yellow  = "{{ palette_color3 }}"
+blue    = "{{ palette_color4 }}"
+magenta = "{{ palette_color5 }}"
+cyan    = "{{ palette_color6 }}"
+white   = "{{ palette_color7 }}"
+
+bright_black   = "{{ palette_color8 }}"
+bright_red     = "{{ palette_color9 }}"
+bright_green   = "{{ palette_color10 }}"
+bright_yellow  = "{{ palette_color11 }}"
+bright_blue    = "{{ palette_color12 }}"
+bright_magenta = "{{ palette_color13 }}"
+bright_cyan    = "{{ palette_color14 }}"
+bright_white   = "{{ palette_color15 }}"
+
+
+accent       = "{{ palette_accent }}"
+fg_on_accent = "{{ palette_fg_on_accent }}"
+success      = "{{ palette_success }}"
+warning      = "{{ palette_warning }}"
+error        = "{{ palette_error }}"
+
+
+
+
+border_focus  = accent
+border_normal = black
+border_width  = 2
+
+float_border_focus  = accent
+float_border_normal = black
+float_border_width  = 2
+
+bar_bg        = bg
+bar_fg        = fg
+bar_active    = accent
+bar_inactive  = bright_black
+bar_urgent    = error
+bar_highlight = accent
+
+font      = "{{ font_family | default('JetBrainsMono Nerd Font') }}"
+font_size = {{ font_size | default(13) }}
+bar_size  = {{ bar_size | default(28) }}

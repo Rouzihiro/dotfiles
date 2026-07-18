@@ -28,6 +28,19 @@ def browser_hub(qtile):
         qtile.spawn(f"{ROFI_SCRIPTS}/rofi-bookmarks")
 
 
+def dashboard_toggle(qtile):
+    dashboard_group = qtile.groups_map["D"]
+
+    if qtile.current_group != dashboard_group:
+        dashboard_group.toscreen()
+        return
+
+    if dashboard_group.windows:
+        qtile.spawn("bash -c '$HOME/Projects/dashboard/stop-dashboard.sh'")
+    else:
+        qtile.spawn("bash -c '$HOME/Projects/dashboard/start-dashboard-2.sh'")
+
+
 keys = [
     Key([mod], "Escape", lazy.spawn(f"{ROFI_SCRIPTS}/rofi-power")),
 
@@ -49,13 +62,12 @@ keys = [
     Key([mod, alt], "b", lazy.spawn("xdg-open https://")),
     Key([mod, "shift"], "b", lazy.spawn(f"{terminal2} --title floaty-big -e sh -c bt")),
 
-    Key(
-        [mod],
-        "d",
-        lazy.group["D"].toscreen(),
-        lazy.spawn("bash -c '$HOME/Projects/dashboard/start-dashboard-2.sh'"),
-        desc="switch to dashboard and launch it",
-    ),
+Key(
+    [mod],
+    "d",
+    lazy.function(dashboard_toggle),
+    desc="Dashboard toggle",
+),
 
     Key(
         [mod, alt],

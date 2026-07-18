@@ -31,6 +31,7 @@ OUTPUTS = {
     "tmux-bar.conf.j2":  str(Path.home() / ".config/tmux/tmux-bar.conf"),
     "waybar.css.j2":     str(Path.home() / ".config/waybar/colors.css"),
     "yazi.toml.j2":      str(Path.home() / ".config/yazi/theme.toml"),
+    "qtile.py.j2":       str(Path.home() / ".config/qtile/theme.py"),
     "bemenu.j2":         str(Path.home() / ".local/bin/bemenu/bm-run"),
     # "dircolors.j2":    str(Path.home() / ".dircolors"),
 }

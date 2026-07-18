@@ -1,28 +1,8 @@
-"""
-bar.py — Minimal Qtile Wayland bar.
-
-Uses existing scripts from:
-~/scripts/bar
-~/scripts/statusbar
-
-No qtile-extras required.
-"""
-
 import subprocess
 
 from libqtile import bar, widget
 
-from theme import (
-    bar_bg,
-    bar_fg,
-    bar_active,
-    bar_inactive,
-    bar_urgent,
-    bar_highlight,
-    font,
-    font_size,
-    bar_size,
-)
+import theme
 
 
 SCRIPT_DIR = "/home/rey/scripts/bar"
@@ -31,18 +11,21 @@ STATUS_DIR = "/home/rey/scripts/statusbar"
 
 def _defaults(**kwargs):
     base = {
-        "font": font,
-        "fontsize": font_size,
+        "font": theme.font,
+        "fontsize": theme.font_size,
         "padding": 8,
-        "background": bar_bg,
-        "foreground": bar_fg,
+        "background": theme.bar_bg,
+        "foreground": theme.bar_fg,
     }
 
     base.update(kwargs)
     return base
 
 
-def script_widget(path, interval, color=bar_fg):
+def script_widget(path, interval, color=None):
+    if color is None:
+        color = theme.bar_fg
+
     return widget.GenPollText(
         func=lambda: subprocess.check_output(
             [path],
@@ -60,7 +43,7 @@ def spacer(width=8):
         size=width,
         linewidth=0,
         padding=0,
-        background=bar_bg,
+        background=theme.bar_bg,
     )
 
 
@@ -77,13 +60,13 @@ def build_bar():
 
                 borderwidth=0,
 
-                active=bar_fg,
-                inactive=bar_inactive,
+                active=theme.bar_fg,
+                inactive=theme.bar_inactive,
 
-                this_current_screen_border=bar_active,
-                this_screen_border=bar_highlight,
+                this_current_screen_border=theme.bar_active,
+                this_screen_border=theme.bar_highlight,
 
-                urgent_border=bar_urgent,
+                urgent_border=theme.bar_urgent,
 
                 highlight_method="line",
 
@@ -104,7 +87,7 @@ def build_bar():
             #
             widget.WindowName(
                 **_defaults(
-                    foreground=bar_fg,
+                    foreground=theme.bar_fg,
                 ),
                 max_chars=60,
             ),
@@ -119,7 +102,7 @@ def build_bar():
             script_widget(
                 f"{SCRIPT_DIR}/weather-short",
                 60,
-                bar_fg,
+                theme.bar_fg,
             ),
 
 
@@ -132,7 +115,7 @@ def build_bar():
             script_widget(
                 f"{SCRIPT_DIR}/bandwidth",
                 1,
-                bar_highlight,
+                theme.bar_highlight,
             ),
 
 
@@ -153,7 +136,7 @@ def build_bar():
                 ).strip(),
                 update_interval=30,
                 **_defaults(
-                    foreground=bar_active,
+                    foreground=theme.bar_active,
                 ),
             ),
 
@@ -167,7 +150,7 @@ def build_bar():
             script_widget(
                 f"{SCRIPT_DIR}/memory",
                 2,
-                bar_active,
+                theme.bar_active,
             ),
 
 
@@ -180,7 +163,7 @@ def build_bar():
             script_widget(
                 f"{SCRIPT_DIR}/cpu-usage",
                 2,
-                bar_highlight,
+                theme.bar_highlight,
             ),
 
 
@@ -193,7 +176,7 @@ def build_bar():
             script_widget(
                 f"{SCRIPT_DIR}/wifi-status",
                 30,
-                bar_fg,
+                theme.bar_fg,
             ),
 
 
@@ -206,7 +189,7 @@ def build_bar():
             script_widget(
                 f"{STATUS_DIR}/sb-volume",
                 1,
-                bar_active,
+                theme.bar_active,
             ),
 
 
@@ -219,7 +202,7 @@ def build_bar():
             script_widget(
                 f"{SCRIPT_DIR}/power-wrapper",
                 5,
-                bar_fg,
+                theme.bar_fg,
             ),
 
 
@@ -232,7 +215,7 @@ def build_bar():
             script_widget(
                 f"{STATUS_DIR}/sb-brightness",
                 5,
-                bar_fg,
+                theme.bar_fg,
             ),
 
 
@@ -245,7 +228,7 @@ def build_bar():
             script_widget(
                 f"{SCRIPT_DIR}/timer",
                 1,
-                bar_active,
+                theme.bar_active,
             ),
 
 
@@ -258,7 +241,7 @@ def build_bar():
             script_widget(
                 f"{SCRIPT_DIR}/kb-layout",
                 2,
-                bar_highlight,
+                theme.bar_highlight,
             ),
 
 
@@ -271,12 +254,12 @@ def build_bar():
             script_widget(
                 f"{SCRIPT_DIR}/battery",
                 30,
-                bar_highlight,
+                theme.bar_highlight,
             ),
 
         ],
 
-        bar_size,
+        theme.bar_size + 20,
 
-        background=bar_bg,
+        background=theme.bar_bg,
     )
