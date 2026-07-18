@@ -1,13 +1,173 @@
-#!/bin/sh
-[ -z "$1" ] && { echo "Usage: scale <value>"; exit 1; }
+#!/usr/bin/env bash
 
-if hyprctl monitors -j >/dev/null 2>&1; then
-    monitor=$(hyprctl monitors -j | jq -r '.[] | select(.focused) | .name')
-    hyprctl keyword monitor "$monitor,preferred,auto,$1"
-    gsettings set org.gnome.desktop.interface text-scaling-factor 1.5
-elif swaymsg -t get_outputs >/dev/null 2>&1; then
-    monitor=$(swaymsg -t get_outputs | jq -r '.[] | select(.focused) | .name')
-    swaymsg output "$monitor" scale "$1"
+set -euo pipefail
+
+die() {
+    echo "$1"
+    exit 1
+}
+
+command -v fzf >/dev/null || die "fzf missing"
+command -v jq >/dev/null || die "jq missing"
+
+
+# ----------------------------------------
+# Detect backend + monitors
+# ----------------------------------------
+
+if command -v hyprctl >/dev/null && hyprctl monitors -j >/dev/null 2>&1; then
+
+    BACKEND="hypr"
+
+    MONITOR_DATA=$(hyprctl monitors -j)
+
+    MONITOR=$(
+        echo "$MONITOR_DATA" |
+        jq -r '.[] |
+        "\(.name)\tCurrent:\(.width)x\(.height) Scale:\(.scale)"' |
+        column -t |
+        fzf --prompt="Monitor > " |
+        awk '{print $1}'
+    )
+
 else
-    echo "Error: Neither Hyprland nor Sway detected"; exit 1
+
+    command -v wlr-randr >/dev/null || die "wlr-randr missing"
+
+    BACKEND="wlroots"
+
+    MONITOR=$(
+        wlr-randr --json |
+        jq -r '.[] |
+        "\(.name)\tCurrent:\(.current_mode.width)x\(.current_mode.height) Scale:\(.scale)"' |
+        column -t |
+        fzf --prompt="Monitor > " |
+        awk '{print $1}'
+    )
+
 fi
+
+
+[ -z "$MONITOR" ] && exit 0
+
+
+# ----------------------------------------
+# Choose resolution
+# ----------------------------------------
+
+if [ "$BACKEND" = "wlroots" ]; then
+
+    RESOLUTION=$(
+        wlr-randr --json |
+        jq -r --arg MON "$MONITOR" '
+        .[] |
+        select(.name==$MON) |
+        .modes[] |
+        "\(.width)x\(.height) @ \(.refresh)Hz"' |
+        sort -u |
+        fzf --prompt="Resolution > " |
+        awk '{print $1}'
+    )
+
+else
+
+    RESOLUTION=$(
+        hyprctl monitors -j |
+        jq -r --arg MON "$MONITOR" '
+        .[] |
+        select(.name==$MON) |
+        .availableModes[]' |
+        fzf --prompt="Resolution > "
+    )
+
+fi
+
+
+[ -z "$RESOLUTION" ] && exit 0
+
+
+# ----------------------------------------
+# Choose scale
+# ----------------------------------------
+
+choose_scale() {
+
+    TITLE="$1"
+
+    VALUE=$(
+        printf "%s\n" \
+        0.5 \
+        0.8 \
+        1 \
+        1.25 \
+        1.5 \
+        1.75 \
+        2 \
+        2.25 \
+        2.5 \
+        "Custom value" |
+        fzf --prompt="$TITLE > "
+    )
+
+    if [ "$VALUE" = "Custom value" ]; then
+        read -rp "Enter value: " VALUE
+    fi
+
+    echo "$VALUE"
+}
+
+
+SCALE=$(choose_scale "Monitor scale")
+
+
+# ----------------------------------------
+# GTK scale
+# ----------------------------------------
+
+GTK_SCALE=$(choose_scale "GTK text scale")
+
+
+# ----------------------------------------
+# Confirmation
+# ----------------------------------------
+
+echo
+echo "Apply:"
+echo
+echo "Monitor : $MONITOR"
+echo "Mode    : $RESOLUTION"
+echo "Scale   : $SCALE"
+echo "GTK     : $GTK_SCALE"
+echo
+
+read -rp "Continue? [y/N] " ANSWER
+
+[[ "$ANSWER" =~ ^[Yy]$ ]] || exit 0
+
+
+
+# ----------------------------------------
+# Apply changes
+# ----------------------------------------
+
+if [ "$BACKEND" = "hypr" ]; then
+
+    hyprctl keyword monitor \
+        "$MONITOR,$RESOLUTION,auto,$SCALE"
+
+else
+
+    wlr-randr \
+        --output "$MONITOR" \
+        --mode "$RESOLUTION" \
+        --scale "$SCALE"
+
+fi
+
+
+gsettings set \
+    org.gnome.desktop.interface \
+    text-scaling-factor "$GTK_SCALE" 2>/dev/null || true
+
+
+echo "Display settings applied."
