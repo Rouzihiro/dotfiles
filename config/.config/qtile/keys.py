@@ -41,13 +41,27 @@ def dashboard_toggle(qtile):
     else:
         qtile.spawn("bash -c '$HOME/Projects/dashboard/start-dashboard-2.sh'")
 
+def terminal_hub(qtile):
+    terminal_group = qtile.groups_map["1"]
+
+    if qtile.current_group != terminal_group:
+        terminal_group.toscreen()
+        return
+
+    if not terminal_group.windows:
+        qtile.spawn(terminal)
+    else:
+       qtile.spawn(
+    f"{terminal} -e /home/rey/.config/qtile/scripts/new-tmux.sh"
+)
+
 
 keys = [
     Key([mod], "Escape", lazy.spawn(f"{ROFI_SCRIPTS}/rofi-power")),
-
-    Key([mod], "Return", lazy.spawn(terminal)),
-    Key([mod, alt], "Return", lazy.spawn(f"{terminal} -T floaty-big")),
-    Key([mod, "shift"], "Return", lazy.spawn(terminal2)),
+    Key([mod], "Return", lazy.function(terminal_hub)),
+    Key([mod, alt], "Return", lazy.spawn(terminal)),
+    Key([mod, "shift"], "Return", lazy.spawn(f"{terminal} -T floaty-big")),
+    Key([mod], "k", lazy.spawn(terminal2)),
 
     Key([alt], "r", lazy.spawn("zsh -ic 'themes rotate'")),
 
@@ -152,7 +166,6 @@ Key([mod, "shift"], "l", lazy.function(lambda qtile: refresh_theme(qtile))),
         ),
     ),
     Key([mod, alt], "t", lazy.spawn(f"{ROFI_SCRIPTS}/rofi-timewarrior")),
-    Key([mod, "shift"], "t", lazy.spawn(f"{terminal2} -e runner")),
 
     Key([mod], "v", lazy.spawn(f"{terminal2} --title floaty-small -e sh fzf-video-play")),
     Key([mod, alt], "v", lazy.spawn(f"{terminal2} --title floaty-tiny -e sh fzf-video-tool")),
@@ -203,8 +216,8 @@ Key([mod, "shift"], "l", lazy.function(lambda qtile: refresh_theme(qtile))),
     Key([], "XF86AudioNext", lazy.spawn("playerctl next")),
 ]
 
-for vt in "123456789":
+for group in ["1", "2", "3", "4", "5"]:
     keys.extend([
-        Key([mod], vt, lazy.group[vt].toscreen()),
-        Key([mod, "shift"], vt, lazy.window.togroup(vt, switch_group=False)),
+        Key([mod], group, lazy.group[group].toscreen()),
+        Key([mod, "shift"], group, lazy.window.togroup(group, switch_group=False)),
     ])

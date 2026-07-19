@@ -2,11 +2,15 @@ from libqtile.config import Group, ScratchPad, DropDown
 from settings import terminal
 
 groups = [
-    Group(str(i)) for i in range(1, 6)
-] + [
+    Group("1", label=""),
+    Group("2"),
+    Group("3"),
+    Group("4"),
+    Group("5"),
+
     Group(
         "B",
-        label="󰖟",  # Browser icon
+        label="󰖟",
     ),
 
     Group(
