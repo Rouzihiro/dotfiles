@@ -22,9 +22,10 @@ def browser_hub(qtile):
     if qtile.current_group != browser_group:
         browser_group.toscreen()
         return
-
+    
     if not browser_group.windows:
-        qtile.spawn("xdg-open https://")
+    qtile.spawn("firefox")
+
     else:
         qtile.spawn(f"{ROFI_SCRIPTS}/rofi-bookmarks")
 
@@ -74,7 +75,7 @@ keys = [
 
     # Browser hub
     Key([mod], "b", lazy.function(browser_hub)),
-    Key([mod, alt], "b", lazy.spawn("xdg-open https://")),
+    Key([mod, alt], "b", lazy.spawn("firefox")),
     Key([mod, "shift"], "b", lazy.spawn(f"{terminal2} --title floaty-big -e sh -c bt")),
 
 Key(
