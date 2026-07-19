@@ -54,6 +54,7 @@ pre-commit
 python3-Jinja2
 rsync
 rtkit
+ruff
 slurp
 starship
 swappy

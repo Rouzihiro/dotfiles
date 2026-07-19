@@ -5,41 +5,54 @@ if pgrep -x "Hyprland" > /dev/null; then
     COMPOSITOR="hyprland"
 elif pgrep -x "sway" > /dev/null; then
     COMPOSITOR="sway"
+elif pgrep -x "qtile" > /dev/null; then
+    COMPOSITOR="qtile"
 else
-    echo "Neither Hyprland nor Sway is running"
-    exit 1
+    exit 0
 fi
+
+
+# Hide layout indicator on Qtile Wayland
+if [ "$COMPOSITOR" = "qtile" ]; then
+    exit 0
+fi
+
 
 get_layout_sway() {
     # Auto-detect first keyboard device identifier
     ID=$(swaymsg -t get_inputs | jq -r '.[] | select(.type=="keyboard") | .identifier' | head -n1)
-    
+
     if [ -z "$ID" ]; then
-        echo "No keyboard found"
-        exit 1
+        exit 0
     fi
-    
+
     swaymsg -t get_inputs | jq -r \
         --arg id "$ID" \
         '.[] | select(.identifier == $id) | .xkb_active_layout_name'
 }
+
 
 get_layout_hyprland() {
     # Get active keyboard layout from Hyprland
     hyprctl devices -j | jq -r '.keyboards[] | select(.main == true) | .active_keymap'
 }
 
+
 # Get layout based on compositor
-if [ "$COMPOSITOR" = "sway" ]; then
-    layout=$(get_layout_sway)
-else
-    layout=$(get_layout_hyprland)
-fi
+case "$COMPOSITOR" in
+    sway)
+        layout=$(get_layout_sway)
+        ;;
+    hyprland)
+        layout=$(get_layout_hyprland)
+        ;;
+esac
+
 
 # Normalize to short codes
-if [[ "$layout" == *"English"* ]] || [[ "$layout" == *"US"* ]]; then
+if [[ "$layout" == *"English"* ]] || [[ "$layout" == *"US"* ]] || [[ "$layout" == "us" ]]; then
     echo "US"
-elif [[ "$layout" == *"German"* ]] || [[ "$layout" == *"DE"* ]]; then
+elif [[ "$layout" == *"German"* ]] || [[ "$layout" == *"DE"* ]] || [[ "$layout" == "de" ]]; then
     echo "DE"
 else
     echo "$layout"
