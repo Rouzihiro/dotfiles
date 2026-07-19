@@ -17,17 +17,13 @@ floating_layout = Floating(
     border_focus=float_border_focus,
     border_normal=float_border_normal,
     border_width=float_border_width,
-
     float_rules=[
         *Floating.default_float_rules,
-
         Match(title="floaty-big"),
         Match(title="floaty-medium"),
         Match(title="floaty-small"),
         Match(title="floaty-tiny"),
-
         Match(wm_class="runner_floating"),
-
         # Dashboard
         Match(wm_class="dashboard.py"),
     ],
@@ -41,7 +37,10 @@ def dashboard_to_workspace(window):
     """
 
     try:
-        if "dashboard.py" in window.get_wm_class():
-            window.togroup("D")
+        wm_class = window.get_wm_class()
+
+        if wm_class and "dashboard.py" in wm_class:
+            window.togroup("5")
+
     except Exception:
         pass

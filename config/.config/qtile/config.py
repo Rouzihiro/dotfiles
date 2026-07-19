@@ -1,19 +1,48 @@
+import os
+
 from libqtile import hook, qtile
 from libqtile.backend.wayland.inputs import InputConfig
-from libqtile.config import Screen
+from libqtile.config import (
+    # Animation,
+    Screen,
+    # WaylandAnimations,
+)
 from libqtile.layout import Columns, Max
 
 from keys import get_keys
-from groups import groups
-from rules import floating_layout
+from groups import get_groups
 from autostart import autostart
 
 import theme
 from bar_lite import build_bar
 
 
-keys = get_keys()
+#
+# Backend
+#
 
+IS_WAYLAND = qtile.core.name == "wayland"
+
+if IS_WAYLAND:
+    os.environ.update(
+        {
+            "XDG_SESSION_DESKTOP": "qtile:wlroots",
+            "XDG_CURRENT_DESKTOP": "qtile:wlroots",
+        }
+    )
+
+
+#
+# Core objects
+#
+
+keys = get_keys()
+groups = get_groups()
+
+
+#
+# Layouts
+#
 
 layouts = [
     Columns(
@@ -26,6 +55,10 @@ layouts = [
 ]
 
 
+#
+# Screens
+#
+
 screens = [
     Screen(
         top=build_bar(),
@@ -36,22 +69,11 @@ screens = [
 ]
 
 
+#
+# Input
+#
+
 mouse = []
-
-
-dgroups_key_binder = None
-dgroups_app_rules = []
-
-follow_mouse_focus = True
-bring_front_click = False
-cursor_warp = False
-
-auto_fullscreen = True
-focus_on_window_activation = "smart"
-auto_minimize = True
-
-reconfigure_screens = True
-
 
 wl_input_rules = {
     "type:pointer": InputConfig(
@@ -71,9 +93,75 @@ wl_input_rules = {
 }
 
 
+#
+# Wayland animations
+#
+
+# wl_animation = WaylandAnimations(
+#     slide=Animation(
+#         duration=200,
+#         ease="out_quint",
+#     ),
+#     spawn=Animation(
+#         duration=200,
+#         ease="out_quint",
+#     ),
+#     kill=Animation(
+#         duration=200,
+#         ease="out_quint",
+#     ),
+#     dropdown=Animation(
+#         duration=200,
+#         ease="out_quint",
+#     ),
+#     default=Animation(
+#         duration=200,
+#         ease="out_quint",
+#     ),
+# )
+#
+
+#
+# General Qtile settings
+#
+
+dgroups_key_binder = None
+dgroups_app_rules = []
+
+follow_mouse_focus = True
+bring_front_click = False
+floats_kept_above = True
+
+cursor_warp = False
+
+auto_fullscreen = True
+focus_on_window_activation = "smart"
+auto_minimize = True
+
+reconfigure_screens = True
+
+
+#
+# Cursor
+#
+
+wl_xcursor_theme = "Nordzy-cursors"
+wl_xcursor_size = 24
+
+
+#
+# Startup
+#
+
+
 @hook.subscribe.startup_once
 def _autostart():
     autostart()
+
+
+#
+# Monitor hotplugging
+#
 
 
 @hook.subscribe.screen_change
@@ -83,3 +171,10 @@ def _on_screen_change(event):
     for group in qtile.groups:
         if group.screen is None:
             group.toscreen(0)
+
+
+#
+# Compatibility
+#
+
+wmname = "QTILE"

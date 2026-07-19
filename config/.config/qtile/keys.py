@@ -2,17 +2,22 @@ from libqtile.config import Key
 from libqtile.lazy import lazy
 
 from settings import (
+    HOME,
     mod,
     alt,
     terminal,
     terminal2,
+    browser,
     launcher,
     fm,
     tfm,
     files,
     editor,
     lockscreen,
+    QTILE_SCRIPTS,
     ROFI_SCRIPTS,
+    DASHBOARD_DIR,
+    PROJECTS,
 )
 
 
@@ -24,7 +29,7 @@ def browser_hub(qtile):
         return
 
     if not browser_group.windows:
-        qtile.spawn("firefox")
+        qtile.spawn(browser)
     else:
         qtile.spawn(f"{ROFI_SCRIPTS}/rofi-bookmarks")
 
@@ -37,9 +42,9 @@ def dashboard_toggle(qtile):
         return
 
     if dashboard_group.windows:
-        qtile.spawn("bash -c '$HOME/Projects/dashboard/stop-dashboard.sh'")
+        qtile.spawn(f"{DASHBOARD_DIR}/stop-dashboard.sh")
     else:
-        qtile.spawn("bash -c '$HOME/Projects/dashboard/start-dashboard-2.sh'")
+        qtile.spawn(f"{DASHBOARD_DIR}/start-dashboard-2.sh")
 
 
 def terminal_hub(qtile):
@@ -52,7 +57,7 @@ def terminal_hub(qtile):
     if not terminal_group.windows:
         qtile.spawn(terminal)
     else:
-        qtile.spawn(f"{terminal} -e /home/rey/.config/qtile/scripts/new-tmux.sh")
+        qtile.spawn(f"{terminal} -e {QTILE_SCRIPTS}/new-tmux.sh")
 
 
 def get_keys():
@@ -122,7 +127,7 @@ def get_keys():
         Key(
             [mod, alt],
             "b",
-            lazy.spawn("firefox"),
+            lazy.spawn(browser),
         ),
         Key(
             [mod, "shift"],
@@ -139,14 +144,13 @@ def get_keys():
         Key(
             [mod, alt],
             "d",
-            lazy.spawn("bash -c '$HOME/Projects/dashboard/stop-dashboard.sh'"),
-            desc="stop dashboard",
+            lazy.spawn(f"{DASHBOARD_DIR}/stop-dashboard.sh"),
         ),
         Key(
             [mod, "shift"],
             "d",
             lazy.window.togroup(
-                "D",
+                "5",
                 switch_group=True,
             ),
             desc="Move window to dashboard",
@@ -326,7 +330,7 @@ def get_keys():
         Key(
             [mod, alt],
             "w",
-            lazy.spawn("/home/rey/scripts/wallwaper-random.sh"),
+            lazy.spawn(f"{HOME}/scripts/wallwaper-random.sh"),
         ),
         Key(
             [mod],
@@ -336,12 +340,12 @@ def get_keys():
         Key(
             [mod],
             "z",
-            lazy.spawn("~/.config/qtile/scripts/keybindings-qtile"),
+            lazy.spawn(f"{QTILE_SCRIPTS}/keybindings-qtile"),
         ),
         Key(
             [mod],
             "grave",
-            lazy.spawn("~/.config/qtile/scripts/list-qtile-windows"),
+            lazy.spawn(f"{QTILE_SCRIPTS}/list-qtile-windows"),
         ),
         # Focus
         Key([mod], "Left", lazy.layout.left()),
@@ -384,28 +388,28 @@ def get_keys():
         Key(
             [],
             "XF86MonBrightnessDown",
-            lazy.spawn("/home/rey/.config/qtile/scripts/brightness.sh down"),
+            lazy.spawn(f"{QTILE_SCRIPTS}/brightness.sh down"),
         ),
         Key(
             [],
             "XF86MonBrightnessUp",
-            lazy.spawn("/home/rey/.config/qtile/scripts/brightness.sh up"),
+            lazy.spawn(f"{QTILE_SCRIPTS}/brightness.sh up"),
         ),
         # Volume
         Key(
             [],
             "XF86AudioLowerVolume",
-            lazy.spawn("/home/rey/.config/qtile/scripts/volume.sh down"),
+            lazy.spawn(f"{QTILE_SCRIPTS}/volume.sh down"),
         ),
         Key(
             [],
             "XF86AudioRaiseVolume",
-            lazy.spawn("/home/rey/.config/qtile/scripts/volume.sh up"),
+            lazy.spawn(f"{QTILE_SCRIPTS}/volume.sh up"),
         ),
         Key(
             [],
             "XF86AudioMute",
-            lazy.spawn("/home/rey/.config/qtile/scripts/volume.sh mute"),
+            lazy.spawn(f"{QTILE_SCRIPTS}/volume.sh mute"),
         ),
         # Media
         Key(

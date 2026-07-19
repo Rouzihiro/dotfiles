@@ -2,22 +2,25 @@ import os
 
 HOME = os.path.expanduser("~")
 
-# Mod key: sway used Mod4, matches directly.
 mod = "mod4"
 alt = "mod1"
 
 opacity = 0.9
 
-# --- Core apps ---
+CONFIG = f"{HOME}/.config"
+SCRIPTS = f"{HOME}/scripts"
+QTILE_SCRIPTS = f"{CONFIG}/qtile/scripts"
+ROFI_SCRIPTS = f"{CONFIG}/rofi/scripts"
+PROJECTS = f"{HOME}/Projects"
+DASHBOARD_DIR = f"{PROJECTS}/dashboard"
+
 terminal = "foot"
 terminal2 = "kitty"
-launcher = f"rofi -show drun -m -1 -theme {HOME}/.config/rofi/launcher.rasi"
-
 browser = "firefox"
 files = "thunar"
 fm = f"{terminal} -e superb"
 tfm = f"{terminal} -e yazi"
 editor = f"{terminal} -e nvim"
 
+launcher = f"rofi -show drun -m -1 -theme {HOME}/.config/rofi/launcher.rasi"
 lockscreen = f"swaylock -i {HOME}/Pictures/lockscreen/VIM.png"
-ROFI_SCRIPTS = f"{HOME}/.config/rofi/scripts"
