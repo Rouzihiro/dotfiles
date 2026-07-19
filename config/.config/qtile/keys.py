@@ -139,7 +139,6 @@ def get_keys():
             [mod],
             "d",
             lazy.function(dashboard_toggle),
-            desc="Dashboard toggle",
         ),
         Key(
             [mod, alt],
@@ -153,7 +152,6 @@ def get_keys():
                 "5",
                 switch_group=True,
             ),
-            desc="Move window to dashboard",
         ),
         Key(
             [mod],
@@ -183,7 +181,7 @@ def get_keys():
         Key(
             [mod],
             "g",
-            lazy.spawn("~/.config/qtile/scripts/dashboard-git.sh"),
+            lazy.spawn(f"{QTILE_SCRIPTS}/dashboard-git.sh"),
         ),
         Key(
             [mod, alt],
@@ -330,7 +328,7 @@ def get_keys():
         Key(
             [mod, alt],
             "w",
-            lazy.spawn(f"{HOME}/scripts/wallwaper-random.sh"),
+            lazy.spawn(f"{QTILE_SCRIPTS}/wallpaper-random.sh"),
         ),
         Key(
             [mod],
