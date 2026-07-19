@@ -82,7 +82,8 @@ reconfigure_screens = True
 
 wl_input_rules = {
     "type:keyboard": InputConfig(
-        kb_layout="us",
+        kb_layout="us,de",
+        kb_options="grp:alt_shift_toggle,caps:escape",
     ),
 
     "type:touchpad": InputConfig(
