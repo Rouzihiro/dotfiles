@@ -3,21 +3,10 @@ from settings import terminal
 
 groups = [
     Group("1", label=""),
-    Group("2"),
+    Group("2", label="󰖟"),
     Group("3"),
     Group("4"),
-    Group("5"),
-
-    Group(
-        "B",
-        label="󰖟",
-    ),
-
-    Group(
-        "D",
-        label="󰕮",
-    ),
-
+    Group("5", label="󰕮"),
     ScratchPad(
         "scratchpad",
         [
