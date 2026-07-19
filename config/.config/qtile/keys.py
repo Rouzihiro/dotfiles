@@ -1,6 +1,5 @@
 from libqtile.config import Key
 from libqtile.lazy import lazy
-from refresh_theme import refresh_theme
 
 from settings import (
     mod,
@@ -24,7 +23,7 @@ def browser_hub(qtile):
         return
     
     if not browser_group.windows:
-    qtile.spawn("firefox")
+        qtile.spawn("firefox")
 
     else:
         qtile.spawn(f"{ROFI_SCRIPTS}/rofi-bookmarks")
@@ -53,7 +52,7 @@ def terminal_hub(qtile):
         qtile.spawn(terminal)
     else:
        qtile.spawn(
-    f"{terminal} -e /home/rey/.config/qtile/scripts/new-tmux.sh"
+            f"{terminal} -e /home/rey/.config/qtile/scripts/new-tmux.sh"
 )
 
 
@@ -118,14 +117,6 @@ Key(
     Key([mod], "i", lazy.spawn(f"{terminal2} --title floaty-medium -e sh -c fzf-wifi")),
     Key([mod, alt], "i", lazy.spawn(f"{ROFI_SCRIPTS}/rofi-wifi")),
 
-
-Key(
-    [mod],
-    "l",
-    lazy.function(refresh_theme),
-),
-
-Key([mod, "shift"], "l", lazy.function(lambda qtile: refresh_theme(qtile))),
     Key([mod, alt], "l", lazy.spawn(lockscreen)),
 
     Key([mod], "m", lazy.spawn(f"{ROFI_SCRIPTS}/rofi-mount-usb")),
