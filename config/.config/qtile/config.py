@@ -11,7 +11,7 @@ from libqtile.layout import Columns, Max
 
 from keys import get_keys
 from groups import get_groups
-from autostart import autostart
+# from autostart import autostart
 
 import theme
 from bar_lite import build_bar
@@ -155,8 +155,24 @@ wl_xcursor_size = 24
 
 
 @hook.subscribe.startup_once
-def _autostart():
-    autostart()
+def autostart():
+    home = os.path.expanduser("~")
+
+    commands = [
+        "mako",
+        "sh -c 'pgrep swww-daemon || swww-daemon'",
+        "wl-paste -t text --watch clipman store --no-persist",
+        (
+            "swayidle -w "
+            f'before-sleep "swaylock -fF -i {home}/Pictures/lockscreen/VIM.png" '
+            'timeout 300 "brightnessctl -s set 0" '
+            'resume "brightnessctl -r"'
+        ),
+        f"{home}/.config/qtile/scripts/void-audio-start.sh",
+    ]
+
+    for cmd in commands:
+        qtile.spawn(cmd)
 
 
 #

@@ -38,6 +38,7 @@ vim.pack.add({
     { src = "https://github.com/nvim-mini/mini.clue" },
 		{ src = "https://github.com/aohoyd/broot.nvim" },
 		{ src = "https://github.com/NvChad/nvim-colorizer.lua" },
+		{ src = "https://github.com/stevearc/conform.nvim" },
     -- Themes
     { src = "https://github.com/ellisonleao/gruvbox.nvim" },
 		{ src = "https://github.com/sainnhe/gruvbox-material" },
@@ -88,6 +89,17 @@ require("luasnip.loaders.from_lua").load({ paths = "~/.config/nvim/snippets/" })
 -- }
 
 require("broot").setup({})
+
+require("conform").setup({
+    formatters_by_ft = {
+        python = { "ruff_format" },
+        lua = { "stylua" }, -- optional, if you want lua formatted too
+    },
+    format_on_save = {
+        timeout_ms = 500,
+        lsp_format = "fallback",
+    },
+})
 
 -- =====================
 -- Colorizer (toml files)
