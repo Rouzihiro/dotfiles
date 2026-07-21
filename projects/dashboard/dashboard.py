@@ -2,6 +2,7 @@
 
 import os
 import subprocess
+import sys
 import threading
 import time
 
@@ -11,10 +12,44 @@ gi.require_version("Gtk", "3.0")
 gi.require_version("WebKit2", "4.1")
 
 from gi.repository import Gtk, WebKit2
+from libqtile.command.client import InteractiveCommandClient
 
 
 DASHBOARD_DIR = os.path.dirname(os.path.abspath(__file__))
 URL = "http://localhost:8080"
+
+QTILE_CONFIG_DIR = os.path.expanduser("~/.config/qtile")
+sys.path.insert(0, QTILE_CONFIG_DIR)
+from settings import browser  # e.g. "firefox"
+
+
+def find_browser_group():
+    """
+    Look through currently open windows for one matching `browser`'s
+    wm_class, and return the name of the group it's on (or None if
+    the browser isn't open anywhere).
+    """
+    try:
+        client = InteractiveCommandClient()
+        for win in client.windows():
+            wm_class = win.get("wm_class") or []
+            if any(browser.lower() in c.lower() for c in wm_class):
+                return win.get("group")
+    except Exception:
+        pass
+    return None
+
+
+def open_in_browser(uri):
+    group = find_browser_group()
+
+    subprocess.Popen([browser, uri])
+
+    if group:
+        try:
+            InteractiveCommandClient().group[group].toscreen()
+        except Exception:
+            pass
 
 
 class Dashboard(Gtk.Window):
@@ -37,8 +72,7 @@ class Dashboard(Gtk.Window):
         if decision_type == WebKit2.PolicyDecisionType.NEW_WINDOW_ACTION:
             uri = decision.get_navigation_action().get_request().get_uri()
             decision.ignore()
-            subprocess.Popen(["firefox", uri])
-            subprocess.Popen(["qtile", "cmd-obj", "-o", "group", "2", "-f", "toscreen"])
+            open_in_browser(uri)
             return True
         return False
 
