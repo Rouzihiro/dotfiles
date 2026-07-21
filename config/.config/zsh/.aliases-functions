@@ -241,3 +241,23 @@ keytest() {
 brg() {
     broot --conf ~/.config/broot/git-diff-conf.toml --git-status
 }
+
+op() { 	
+			local user_dir="$HOME"
+			local dir 
+			dir=$(find "$user_dir" -mindepth 1 -maxdepth 1 -type d ! -name '.*' | fzf) && cd "$dir" 
+}
+
+opc() {
+    local config_dir="$HOME/.config"
+    local dir
+
+    dir=$(find "$config_dir" -mindepth 1 -maxdepth 1 -type d ! -name '.*' | fzf) && cd "$dir"
+}
+
+gsw() {
+    git fetch
+    local branch
+    branch=$(git branch -a | sed 's#remotes/origin/##' | grep -v HEAD | fzf | sed 's/^..//')
+    git switch "$branch"
+}

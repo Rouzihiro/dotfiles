@@ -130,6 +130,24 @@ vim.cmd('colorscheme ' .. theme.default_color)
 if theme.set_terminal_colors then
     theme.set_terminal_colors()
 end
+
+-- =====================
+-- Transparent background
+-- =====================
+vim.cmd([[
+  hi Normal guibg=NONE
+  hi NormalNC guibg=NONE
+  hi SignColumn guibg=NONE
+  hi LineNr guibg=NONE
+  hi EndOfBuffer guibg=NONE
+  hi FoldColumn guibg=NONE
+  hi Folded guibg=NONE
+  hi VertSplit guibg=NONE
+  hi StatusLine guibg=NONE
+  hi StatusLineNC guibg=NONE
+]])
+
+
 -- =====================
 -- Mason + LSP
 -- =====================

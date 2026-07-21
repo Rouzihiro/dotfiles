@@ -27,6 +27,7 @@ export EDITOR="nvim"
 export SUDO_EDITOR="$EDITOR"
 export VISUAL="$EDITOR"
 export BROWSER="zen-browser"
+export MOZ_ENABLE_WAYLAND=1
 
 # ─────────────────────────────
 # Manpages with bat

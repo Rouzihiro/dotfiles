@@ -22,14 +22,16 @@ set -g status-left "#[fg=#{{ starship_os_bg }}]#[bg=#{{ starship_os_bg }}]#[f
 set -g @bar "$HOME/scripts/bar"
 
 # Status bar
-set -g status-right "#[align=right]\
-#[fg=#{{ palette_accent }}]#(#{@bar}/bandwidth)#[default] | \
-#[fg=#{{ palette_fg }}]#(df -h / | awk 'NR==2 {print \$3 \"/\" \$2}')#[default] | \
-#[fg=cyan]#(#{@bar}/cpu-usage)#[default] | \
-#[fg=#{{ palette_accent }}]#(#{@bar}/memory)#[default] | \
-#[fg=blue]#(#{@bar}/wifi-status)#[default] | \
-#[fg=white]#(#{@bar}/kb-layout)#[default] | \
-#[fg=#{{ palette_fg }}]%H:%M"
+set -g status-right "\
+#[bg=#{{ starship_os_bg }},fg=#{{ starship_os_fg }}]#[reverse]█#[noreverse]󰍹 \
+#[bg=#{{ palette_bg_muted }},fg=#{{ palette_fg }}] #(#{@bar}/bandwidth) \
+#[bg=#{{ starship_os_bg }},fg=#{{ starship_os_fg }}]#[reverse]█#[noreverse] \
+#[bg=#{{ palette_bg_muted }},fg=#{{ palette_fg }}] #(#{@bar}/cpu-usage) \
+#[bg=#{{ starship_os_bg }},fg=#{{ starship_os_fg }}]#[reverse]█#[noreverse] \
+#[bg=#{{ palette_bg_muted }},fg=#{{ palette_fg }}] #(#{@bar}/memory) \
+#[bg=#{{ starship_os_bg }},fg=#{{ starship_os_fg }}]#[reverse]█#[noreverse] \
+#[bg=#{{ palette_bg_muted }},fg=#{{ palette_fg }}] #(df -h / | awk 'NR==2 {print \$3 \"/\" \$2}') \
+#[bg=#{{ starship_os_bg }},fg=#{{ starship_os_fg }}]█"
 
 # window tabs
 set -g window-status-separator ""

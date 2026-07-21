@@ -44,7 +44,7 @@ def dashboard_toggle(qtile):
     if dashboard_group.windows:
         qtile.spawn(f"{DASHBOARD_DIR}/stop-dashboard.sh")
     else:
-        qtile.spawn(f"{DASHBOARD_DIR}/start-dashboard-2.sh")
+        qtile.spawn(f"{DASHBOARD_DIR}/start-dashboard-qtile.sh")
 
 
 def terminal_hub(qtile):
