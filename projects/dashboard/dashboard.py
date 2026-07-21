@@ -18,29 +18,29 @@ URL = "http://localhost:8080"
 
 
 class Dashboard(Gtk.Window):
-
     def __init__(self):
         super().__init__()
 
         self.set_title("dashboard")
-
-        # Default dashboard size
         self.set_default_size(1200, 800)
-
-        # Center window
         self.set_position(Gtk.WindowPosition.CENTER)
 
-        # Web view
         self.webview = WebKit2.WebView()
-
+        self.webview.connect("decide-policy", self.on_decide_policy)
         self.webview.load_uri(URL)
 
         self.add(self.webview)
 
-        self.connect(
-            "destroy",
-            Gtk.main_quit,
-        )
+        self.connect("destroy", Gtk.main_quit)
+
+    def on_decide_policy(self, webview, decision, decision_type):
+        if decision_type == WebKit2.PolicyDecisionType.NEW_WINDOW_ACTION:
+            uri = decision.get_navigation_action().get_request().get_uri()
+            decision.ignore()
+            subprocess.Popen(["firefox", uri])
+            subprocess.Popen(["qtile", "cmd-obj", "-o", "group", "2", "-f", "toscreen"])
+            return True
+        return False
 
 
 def start_server():
@@ -73,7 +73,6 @@ def start_updates():
     )
 
     if os.path.exists(update_script):
-
         subprocess.Popen(
             [update_script],
             cwd=DASHBOARD_DIR,
