@@ -1,5 +1,11 @@
 command -v nvim > /dev/null 2>&1 && export MANPAGER="nvim +Man!"
 
+chpwd() {
+    eza -al --group-directories-first --sort=modified --reverse \
+        --no-permissions --no-user --no-filesize \
+        --time-style=long-iso --icons
+}
+
 d() {
   # List stack, skip current dir, and fuzzy search unique paths
   local dir=$(dirs -p -v | tail -n +2 | fzf --height 40% --reverse --header="Jump to Previous Directory" | awk '{print $2}')
@@ -31,7 +37,7 @@ ren() {
     local ext="${file##*.}"
     local new="$1"
     [[ "$new" != *.* ]] && new="$new.$ext"
-    mv "$file" "$dir/$new"
+    mv -i "$file" "$dir/$new"
 }
 
 # Restart a program.
@@ -63,11 +69,18 @@ alias bios-or-uefi='[[ -d /sys/firmware/efi ]] && echo "UEFI" || echo "BIOS"'
 
 alias ko-steam='while [[ 1 == 1 ]]; do killall steam; pkill steam; done'
 
-# Fancy select screen.
-fancy-select () {
-    prompt_desc="$1"
+fancy-select() {
+    local prompt_desc="$1"
+    shift
 
-    fzf --color=16 --border=none --margin=0,0,0,0 --style=full:rounded --tac --ghost="$prompt_desc" || return 1
+    fzf \
+        --color=16 \
+        --border=none \
+        --margin=0,0,0,0 \
+        --style=full:rounded \
+        --tac \
+        --ghost="$prompt_desc" \
+        "$@"
 }
 
 # File selection
@@ -214,11 +227,27 @@ fs() {
 }
 
 fzv() {
-    while file=$(fzf --preview 'bat --color=always --style=numbers --line-range=:500 {}'); do
-        [[ -n $file ]] || break
-        nvim "$file"
-    done
+    fancy-select "Open file" \
+        -m \
+        --preview='
+        if file {} | grep -q text; then
+            bat --color=always --style=numbers --line-range=:500 {}
+        else
+            file {}
+        fi' \
+        --bind='enter:execute(xdg-open {+})'
 }
+
+fz() {
+    local files
+
+    files=$(find . -type f | fancy-select "Edit file" \
+        -m \
+        --preview='bat --color=always --style=numbers --line-range=:500 {}') || return
+
+    nvim ${(f)files}
+}
+
 
 if [[ $- == *i* ]]; then
     if [[ -n $BASH_VERSION ]]; then
@@ -242,22 +271,44 @@ brg() {
     broot --conf ~/.config/broot/git-diff-conf.toml --git-status
 }
 
-op() { 	
-			local user_dir="$HOME"
-			local dir 
-			dir=$(find "$user_dir" -mindepth 1 -maxdepth 1 -type d ! -name '.*' | fzf) && cd "$dir" 
+op() {
+    local dir
+    dir=$(find "$HOME" -mindepth 1 -maxdepth 1 -type d ! -name '.*' |
+        fancy-select "󰉋 Select home directory" \
+        --preview='ls -la --color=always {}') || return
+    cd "$dir"
+}
+
+opl() {
+    local dir
+    dir=$(find . -mindepth 1 -maxdepth 1 -type d ! -name '.*' |
+        fancy-select "󰉋 Select local directory" \
+        --preview='ls -la --color=always {}') || return
+    cd "$dir"
 }
 
 opc() {
-    local config_dir="$HOME/.config"
     local dir
-
-    dir=$(find "$config_dir" -mindepth 1 -maxdepth 1 -type d ! -name '.*' | fzf) && cd "$dir"
+    dir=$(find ~/.config -mindepth 1 -maxdepth 1 -type d ! -name '.*' |
+        fancy-select "󰒓 Select config" \
+        --preview='ls -la --color=always {}') || return
+    cd "$dir"
 }
 
+opw() {
+    local dir
+    dir=$(find ~/Documents -mindepth 1 -maxdepth 1 -type d |
+        fancy-select "󰊢 Select document" \
+        --preview='ls -la --color=always {}') || return
+    cd "$dir"
+}
+
+
 gsw() {
-    git fetch
     local branch
-    branch=$(git branch -a | sed 's#remotes/origin/##' | grep -v HEAD | fzf | sed 's/^..//')
+    git fetch
+    branch=$(git branch |
+        sed 's/^..//' |
+        fancy-select "󰘬 Select branch") || return
     git switch "$branch"
 }

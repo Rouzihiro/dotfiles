@@ -34,10 +34,8 @@ alias se="sudoedit"
 
 # File and directory management
 alias :q="exit"
-alias ls="eza -G --icons --color=always --group-directories-first"
-alias lsd="eza -G --icons --color=always --group-directories-first --sort=modified"
-alias lsh="eza -G --long --icons --color=always --no-permissions --no-user --no-time --group-directories-first 2>/dev/null"
-alias lsa="eza -G --long --icons --color=always --no-permissions --no-user --group-directories-first 2>/dev/null"
+alias ls="eza -al --group-directories-first --sort=modified --reverse --no-permissions --no-user --no-filesize --time-style=long-iso --icons"
+alias lss='eza --long --oneline --icons --color=always --no-permissions --no-user --no-time --group-directories-first 2>/dev/null'
 alias lsp="eza -l --color=always --git --no-filesize --icons=always --no-time --no-user --group-directories-first"
 alias lt="eza --tree --level=2 --long --icons --git"
 alias tree="eza --tree --level=3 --icons --git"
@@ -110,7 +108,6 @@ alias lgf='cd ~/dotfiles && lazygit'
 alias ko='pkill'
 alias h='history | fzf'
 alias jour='journalctl -xe'
-alias fz='fzf --preview '\''bat --color=always --style=numbers --line-range=:500 {}'\'' --bind '\''enter:execute(xdg-open {})'\'''
 alias openports='netstat -nape --inet'
 alias ports='ss -tuln'
 alias myip='curl https://ipinfo.io/ip && echo'
