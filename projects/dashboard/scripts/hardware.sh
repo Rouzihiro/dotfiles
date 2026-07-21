@@ -1,6 +1,12 @@
 #!/bin/sh
 
-DATA="$HOME/dashboard/data/hardware.json"
+SCRIPT_DIR="$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)"
+DASHBOARD_DIR="$(dirname "$SCRIPT_DIR")"
+DATA_DIR="$DASHBOARD_DIR/data"
+
+mkdir -p "$DATA_DIR"
+
+DATA="$DATA_DIR/hardware.json"
 
 
 # Battery
@@ -8,7 +14,6 @@ DATA="$HOME/dashboard/data/hardware.json"
 if [ -d /sys/class/power_supply/BAT0 ]; then
 
     BATTERY=$(cat /sys/class/power_supply/BAT0/capacity)
-
     STATUS=$(cat /sys/class/power_supply/BAT0/status)
 
 else
@@ -17,7 +22,6 @@ else
     STATUS="N/A"
 
 fi
-
 
 
 # CPU temperature
@@ -38,7 +42,6 @@ for zone in /sys/class/thermal/thermal_zone*/temp; do
     fi
 
 done
-
 
 
 cat > "$DATA" <<EOF

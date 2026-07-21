@@ -1,6 +1,10 @@
 #!/usr/bin/env bash
 
-DATA_DIR="$HOME/dashboard/data"
+SCRIPT_DIR="$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)"
+DASHBOARD_DIR="$(dirname "$SCRIPT_DIR")"
+DATA_DIR="$DASHBOARD_DIR/data"
+
+cd "$DASHBOARD_DIR" || exit 1
 
 mkdir -p "$DATA_DIR"
 
