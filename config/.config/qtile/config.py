@@ -16,10 +16,6 @@ from rules import floating_layout
 import theme
 from bar_lite import build_bar
 
-#
-# Backend
-#
-
 IS_WAYLAND = qtile.core.name == "wayland"
 
 if IS_WAYLAND:
@@ -31,17 +27,9 @@ if IS_WAYLAND:
     )
 
 
-#
-# Core objects
-#
-
 keys = get_keys()
 groups = get_groups()
 
-
-#
-# Layouts
-#
 
 layouts = [
     Columns(
@@ -53,9 +41,6 @@ layouts = [
     Max(),
 ]
 
-# Screens
-#
-
 screens = [
     Screen(
         top=build_bar(),
@@ -65,10 +50,6 @@ screens = [
     ),
 ]
 
-
-#
-# Input
-#
 
 mouse = []
 
@@ -137,18 +118,8 @@ auto_minimize = True
 
 reconfigure_screens = True
 
-
-#
-# Cursor
-#
-
 wl_xcursor_theme = "Nordzy-cursors"
 wl_xcursor_size = 24
-
-
-#
-# Startup
-#
 
 
 @hook.subscribe.startup_once
@@ -172,11 +143,6 @@ def autostart():
         qtile.spawn(cmd)
 
 
-#
-# Monitor hotplugging
-#
-
-
 @hook.subscribe.screen_change
 def _on_screen_change(event):
     qtile.reconfigure_screens()
@@ -185,9 +151,5 @@ def _on_screen_change(event):
         if group.screen is None:
             group.toscreen(0)
 
-
-#
-# Compatibility
-#
 
 wmname = "QTILE"
