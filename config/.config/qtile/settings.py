@@ -16,7 +16,7 @@ DASHBOARD_DIR = f"{PROJECTS}/dashboard"
 
 terminal = "foot"
 terminal2 = "kitty"
-browser = "firefox"
+browser = f"{HOME}/.local/bin/zen"
 files = "thunar"
 fm = f"{terminal} -e superb"
 tfm = f"{terminal} -e yazi"
