@@ -35,87 +35,42 @@ color14
 color15
 )
 
-# Create palette file
+# Create file if missing
 if [[ ! -f "$PALETTE" ]]; then
-    mkdir -p "$(dirname "$PALETTE")"
     printf "[palette]\n" > "$PALETTE"
 fi
 
+field=$(printf "%s\n" "${FIELDS[@]}" | fzf --prompt="Palette key > ")
+[[ -z "$field" ]] && exit 0
 
-# Build fzf menu with current values
-menu=""
+if command -v hyprpicker >/dev/null; then
+    color=$(hyprpicker -a 2>/dev/null | tail -n1)
 
-for key in "${FIELDS[@]}"; do
-    value=$(grep -E "^$key[[:space:]]*=" "$PALETTE" \
-        | sed -E 's/.*"(#[A-Fa-f0-9]+)".*/\1/' \
-        | head -n1)
-
-    if [[ -n "$value" ]]; then
-        menu+=$(printf "%-15s %s\n" "$key" "$value")
-    else
-        menu+=$(printf "%-15s %s\n" "$key" "")
-    fi
-done
-
-
-selection=$(printf "%s" "$menu" | fzf \
-    --prompt="Palette color > " \
-    --height=20 \
-    --layout=reverse \
-    --border)
-
-[[ -z "$selection" ]] && exit 0
-
-key=$(awk '{print $1}' <<< "$selection")
-
-
-# Pick color
-if command -v hyprpicker >/dev/null 2>&1; then
-
-    color=$(
-        hyprpicker -a 2>&1 |
-        grep -m1 -oE '#[[:xdigit:]]{6}'
-    )
-
-elif command -v wl-color-picker >/dev/null 2>&1; then
-
-    color=$(
-        wl-color-picker |
-        grep -m1 -oE '#[[:xdigit:]]{6}'
-    )
+elif command -v wl-color-picker >/dev/null; then
+    color=$(wl-color-picker | tail -n1)
 
 else
-    echo "No Wayland color picker found."
-    echo "Install hyprpicker."
+    echo "Install hyprpicker or wl-color-picker."
     exit 1
 fi
 
+[[ -z "$color" ]] && exit 0
 
-if [[ -z "$color" ]]; then
-    echo "No color selected."
-    exit 1
-fi
-
-
-# Update or append key
 tmp=$(mktemp)
 
-awk \
--v key="$key" \
--v color="$color" '
-
-BEGIN {
-    updated=0
+awk -v key="$field" -v val="$color" '
+BEGIN{
+    found=0
 }
 
-/^\[palette\]/ {
+/^\[palette\]/{
     print
     next
 }
 
-$1 == key {
-    print key " = \"" color "\""
-    updated=1
+$1==key{
+    print key " = \"" val "\""
+    found=1
     next
 }
 
@@ -123,15 +78,12 @@ $1 == key {
     print
 }
 
-END {
-    if (!updated)
-        print key " = \"" color "\""
+END{
+    if(!found)
+        print key " = \"" val "\""
 }
-
 ' "$PALETTE" > "$tmp"
-
 
 mv "$tmp" "$PALETTE"
 
-
-echo "✔ $key → $color"
+echo "$field -> $color"
