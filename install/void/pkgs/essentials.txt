@@ -52,6 +52,7 @@ poppler-utils
 power-profiles-daemon
 pre-commit
 python3-Jinja2
+ripgrep
 rsync
 rtkit
 ruff
