@@ -33,3 +33,8 @@ unset rc
 
 # Optional: disable systemctl pager
 # export SYSTEMD_PAGER=
+#
+# broot shell launcher
+if command -v broot >/dev/null 2>&1 && [ -f "$HOME/.config/broot/launcher/bash/br" ]; then
+    source "$HOME/.config/broot/launcher/bash/br"
+fi

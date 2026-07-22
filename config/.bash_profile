@@ -1,8 +1,14 @@
-# .bash_profile
+# ~/.bash_profile
+# ─────────────────────────────
 
-# Get the aliases and functions
-if [ -f ~/.config/zsh/.bashrc ]; then
-    . ~/.config/zsh/.bashrc
+# XDG cache fallback
+export XDG_CACHE_HOME="${XDG_CACHE_HOME:-$HOME/.cache}"
+
+# zsh cache
+export ZSH_CACHE_DIR="$XDG_CACHE_HOME/zsh"
+
+
+# Broot launcher
+if [ -f ~/.config/broot/launcher/bash/br ]; then
+    source ~/.config/broot/launcher/bash/br
 fi
-
-# User specific environment and startup programs

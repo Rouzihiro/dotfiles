@@ -16,6 +16,16 @@
 SOURCE_ROOT="$HOME/.config"
 TARGET_ROOT="$HOME/dotfiles/config/.config"
 
+SHELL_SRC="$HOME/zsh"
+SHELL_TGT="$HOME/dotfiles/config/zsh"
+
+HOME_FILES=(
+  ".profile"
+  ".bash_profile"
+	".bashrc"
+  ".zshenv"
+)
+
 BIN_SOURCE="$HOME/.local/bin"
 BIN_TARGET="$HOME/dotfiles/config/.local/bin"
 
@@ -93,7 +103,6 @@ EXCLUDE_FILES=(
   "mako/config"
   "nvim/lua/theme.lua"
   "rofi/colors.rasi"
-  "rofi/launcher.rasi"
   "starship.toml"
   "sway/config.d/bar"
   "sway/config.d/theme"
@@ -324,6 +333,101 @@ else
   else
     print -r -- "Bin sync aborted."
   fi
+fi
+
+
+# ─────────────────────────────────────────────
+# HOME FILE SYNC
+# ─────────────────────────────────────────────
+
+print -r -- ""
+print -r -- "━━━ Syncing home files ━━━"
+
+typeset -a home_changed=()
+
+for file in "${HOME_FILES[@]}"; do
+    src="$HOME/$file"
+    tgt="$HOME/dotfiles/config/$file"
+
+    [[ -f "$src" ]] || continue
+
+    if [[ ! -f "$tgt" ]] || ! cmp -s "$src" "$tgt"; then
+        home_changed+=("$file")
+    fi
+done
+
+if (( ${#home_changed[@]} == 0 )); then
+    print -r -- "Home files already in sync."
+else
+    print -r -- ""
+    print -r -- "Files to copy:"
+    print -r -- ""
+
+    for f in "${home_changed[@]}"; do
+        print -r -- "  $f"
+    done
+
+    print -r -- ""
+    print -rn -- "Proceed? [y/N] "
+    read -r confirm
+
+    if [[ "$confirm" =~ ^[Yy]$ ]]; then
+        for f in "${home_changed[@]}"; do
+            cp -- "$HOME/$f" "$HOME/dotfiles/config/$f"
+            print -r -- "copied: $f"
+        done
+        print -r -- "Home sync done."
+    else
+        print -r -- "Home sync aborted."
+    fi
+fi
+
+# ─────────────────────────────────────────────
+# ZSH SYNC
+# ─────────────────────────────────────────────
+
+print -r -- ""
+print -r -- "━━━ Syncing zsh config ━━━"
+
+mkdir -p "$SHELL_TGT"
+
+typeset -a zsh_changed=()
+
+while IFS= read -r f; do
+    rel="${f#$SHELL_SRC/}"
+    tgt="$SHELL_TGT/$rel"
+
+    if [[ ! -f "$tgt" ]] || ! cmp -s "$f" "$tgt"; then
+        zsh_changed+=("$rel")
+    fi
+done < <(find "$SHELL_SRC" -type f)
+
+
+if (( ${#zsh_changed[@]} == 0 )); then
+    print -r -- "Zsh config already in sync."
+else
+    print -r -- ""
+    print -r -- "Files to copy:"
+    print -r -- ""
+
+    for f in "${zsh_changed[@]}"; do
+        print -r -- "  $f"
+    done
+
+    print -r -- ""
+    print -rn -- "Proceed? [y/N] "
+    read -r zsh_confirm
+
+    if [[ "$zsh_confirm" =~ ^[Yy]$ ]]; then
+        for f in "${zsh_changed[@]}"; do
+            mkdir -p "$SHELL_TGT/${f:h}"
+            cp -- "$SHELL_SRC/$f" "$SHELL_TGT/$f"
+            print -r -- "copied: $f"
+        done
+        print -r -- "Zsh sync done."
+    else
+        print -r -- "Zsh sync aborted."
+    fi
 fi
 
 # ─────────────────────────────────────────────

@@ -1,18 +1,7 @@
 #!/usr/bin/env zsh
 # sync-dot2cfg.zsh
-#
-# Reverse of sync-config-to-dotfiles.zsh.
-# Syncs selected changed files FROM ~/dotfiles/config/.config INTO ~/.config.
-# Uses fzf multi-select with live delta diff preview.
-#
-# Also syncs ~/dotfiles/config/.local/bin subdirectories into:
-# ~/.local/bin
-#
-# Root-level files in ~/dotfiles/config/.local/bin are ignored intentionally.
-# This mirrors the forward sync's behavior of only handling subdirectories.
-#
-# Also syncs ~/dotfiles/config/git/ and ~/dotfiles/config/.gitconfig into:
-# ~/git/ and ~/.gitconfig
+
+set -euo pipefail
 
 SOURCE_ROOT="$HOME/dotfiles/config/.config"
 TARGET_ROOT="$HOME/.config"
@@ -20,11 +9,27 @@ TARGET_ROOT="$HOME/.config"
 BIN_SOURCE="$HOME/dotfiles/config/.local/bin"
 BIN_TARGET="$HOME/.local/bin"
 
+SHELL_SRC="$HOME/dotfiles/config/zsh"
+SHELL_TGT="$HOME/zsh"
+
+HOME_FILES=(
+  ".profile"
+  ".bash_profile"
+	".bashrc"
+  ".zshenv"
+)
+
 GIT_SRC="$HOME/dotfiles/config/git"
 GIT_TGT="$HOME/git"
 
 GITCONFIG_SRC="$HOME/dotfiles/config/.gitconfig"
 GITCONFIG_TGT="$HOME/.gitconfig"
+
+[[ -d "$SHELL_SRC" ]] || {
+  print -ru2 -- "Missing zsh source: $SHELL_SRC"
+  exit 1
+}
+
 
 EXCLUDE_DIRS=(
 "bat"
@@ -90,7 +95,6 @@ EXCLUDE_FILES=(
   "mako/config"
   "nvim/lua/theme.lua"
   "rofi/colors.rasi"
-  "rofi/launcher.rasi"
   "starship.toml"
   "sway/config.d/bar"
   "sway/config.d/theme"
@@ -328,6 +332,108 @@ else
   fi
 fi
 
+# ─────────────────────────────────────────────
+# HOME FILE SYNC
+# ─────────────────────────────────────────────
+
+print -r -- ""
+print -r -- "━━━ Restoring home files ━━━"
+
+typeset -a home_changed=()
+
+for file in "${HOME_FILES[@]}"; do
+    src="$HOME/dotfiles/config/$file"
+    tgt="$HOME/$file"
+
+    [[ -f "$src" ]] || continue
+
+    if [[ ! -f "$tgt" ]] || ! cmp -s "$src" "$tgt"; then
+        home_changed+=("$file")
+    fi
+done
+
+
+if (( ${#home_changed[@]} == 0 )); then
+    print -r -- "Home files already in sync."
+else
+    print -r -- ""
+    print -r -- "Files to restore:"
+    print -r -- ""
+
+    for f in "${home_changed[@]}"; do
+        print -r -- "  $f"
+    done
+
+    print -r -- ""
+    print -rn -- "Proceed? [y/N] "
+    read -r confirm
+
+    if [[ "$confirm" =~ ^[Yy]$ ]]; then
+        for f in "${home_changed[@]}"; do
+            cp -- "$HOME/dotfiles/config/$f" "$HOME/$f"
+            print -r -- "restored: $f"
+        done
+        print -r -- "Home restore done."
+    else
+        print -r -- "Home restore aborted."
+    fi
+fi
+
+# ─────────────────────────────────────────────
+# ZSH SYNC
+# ─────────────────────────────────────────────
+
+print -r -- ""
+print -r -- "━━━ Restoring zsh config ━━━"
+
+[[ -d "$SHELL_SRC" ]] || {
+    print -r -- "Missing source: $SHELL_SRC"
+    exit 0
+}
+
+typeset -a zsh_changed=()
+
+while IFS= read -r f; do
+    rel="${f#$SHELL_SRC/}"
+    tgt="$SHELL_TGT/$rel"
+
+    if [[ ! -f "$tgt" ]] || ! cmp -s "$f" "$tgt"; then
+        zsh_changed+=("$rel")
+    fi
+
+done < <(find "$SHELL_SRC" -type f)
+
+
+if (( ${#zsh_changed[@]} == 0 )); then
+    print -r -- "Zsh config already in sync."
+else
+
+    print -r -- ""
+    print -r -- "Files to restore:"
+    print -r -- ""
+
+    for f in "${zsh_changed[@]}"; do
+        print -r -- "  $f"
+    done
+
+    print -r -- ""
+    print -rn -- "Proceed? [y/N] "
+    read -r zsh_confirm
+
+    if [[ "$zsh_confirm" =~ ^[Yy]$ ]]; then
+
+        for f in "${zsh_changed[@]}"; do
+            mkdir -p "$SHELL_TGT/${f:h}"
+            cp -- "$SHELL_SRC/$f" "$SHELL_TGT/$f"
+            print -r -- "restored: $f"
+        done
+
+        print -r -- "Zsh restore done."
+
+    else
+        print -r -- "Zsh restore aborted."
+    fi
+fi
 # ─────────────────────────────────────────────
 # GIT CONFIG SYNC
 # ─────────────────────────────────────────────
