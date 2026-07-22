@@ -218,7 +218,7 @@ def get_keys():
         Key(
             [mod],
             "n",
-            lazy.spawn(f"{terminal2} --title floaty-small -e sh -c fzf-notes"),
+            lazy.spawn(f"{terminal} --app-id floaty-medium -e fzf-notes"),
         ),
         Key(
             [mod, alt],

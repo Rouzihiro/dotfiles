@@ -11,11 +11,10 @@ from libqtile.layout import Columns, Max
 
 from keys import get_keys
 from groups import get_groups
-# from autostart import autostart
+from rules import floating_layout
 
 import theme
 from bar_lite import build_bar
-
 
 #
 # Backend
@@ -54,8 +53,6 @@ layouts = [
     Max(),
 ]
 
-
-#
 # Screens
 #
 

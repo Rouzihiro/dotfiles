@@ -27,6 +27,10 @@ vim.pack.add({
     { src = "https://github.com/aznhe21/actions-preview.nvim" },
     { src = "https://github.com/nvim-treesitter/nvim-treesitter", version = "main" },
     { src = "https://github.com/nvim-lua/plenary.nvim" },
+		{ src = "https://github.com/yetone/avante.nvim" },
+{ src = "https://github.com/MunifTanjim/nui.nvim" },
+{ src = "https://github.com/MeanderingProgrammer/render-markdown.nvim" },
+{ src = "https://github.com/hrsh7th/nvim-cmp" },
     { src = "https://github.com/chomosuke/typst-preview.nvim" },
     { src = "https://github.com/neovim/nvim-lspconfig" },
     { src = "https://github.com/mason-org/mason.nvim" },
@@ -79,6 +83,7 @@ require("keymaps")
 require("plugins.cmp")
 -- require("plugins.oil")
 require("plugins.mini-clue")
+require("plugins.avante")
 require("luasnip").setup({ enable_autosnippets = true })
 require("luasnip.loaders.from_lua").load({ paths = "~/.config/nvim/snippets/" })
 

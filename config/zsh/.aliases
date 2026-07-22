@@ -1,3 +1,4 @@
+alias ai="ollama serve"
 alias p="python3 -m"
 alias pc="pre-commit run --all-files"
 alias x="chmod +x"

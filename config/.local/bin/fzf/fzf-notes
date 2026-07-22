@@ -2,20 +2,21 @@
 DIR="$HOME/Documents/Notes"
 mkdir -p "$DIR"
 
-# Choose terminal dynamically
-term="${TERMINAL:-foot}"
-if ! command -v "$term" >/dev/null 2>&1; then
-    term=$(command -v kitty || command -v alacritty || command -v wezterm || command -v xterm)
-fi
-
 open_in_term() {
     local file="$1"
+    local cmd="foot --app-id floaty-medium -e nvim '$file'"
+
     if command -v hyprctl >/dev/null 2>&1; then
-        hyprctl dispatch exec "kitty --title floaty-medium -e nvim '$file'"
+        hyprctl dispatch exec "$cmd"
+
     elif command -v swaymsg >/dev/null 2>&1; then
-        swaymsg exec "kitty --title floaty-medium -e nvim '$file'"
+        swaymsg exec "$cmd"
+
+    elif command -v qtile >/dev/null 2>&1; then
+        qtile cmd-obj -o cmd -f spawn "$cmd"
+
     else
-        kitty --title floaty-medium -e nvim "$file" &
+        eval "$cmd" &
     fi
 }
 # Get list of .md files

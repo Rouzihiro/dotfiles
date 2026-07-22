@@ -19,12 +19,11 @@ floating_layout = Floating(
     border_width=float_border_width,
     float_rules=[
         *Floating.default_float_rules,
-        Match(title="floaty-big"),
-        Match(title="floaty-medium"),
-        Match(title="floaty-small"),
-        Match(title="floaty-tiny"),
+        Match(wm_class="floaty-medium"),
+        Match(wm_class="floaty-small"),
+        Match(wm_class="floaty-big"),
+        Match(wm_class="floaty-tiny"),
         Match(wm_class="runner_floating"),
-        # Dashboard
         Match(wm_class="dashboard.py"),
     ],
 )

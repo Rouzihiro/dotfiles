@@ -76,6 +76,13 @@ map("n", "<leader>cd", function()
     end
 end, { desc = "Interactive cd" })
 
+map("n", "<leader>fz", function()
+    local dir = vim.fn.expand("%:p:h")
+    vim.cmd("lcd " .. dir)
+    require("fzf-lua").files({ cwd = dir })
+end, { desc = "cd to buffer's dir and fzf files" })
+
+
 map("n", "<leader>gr", function()
     local root = vim.fn.systemlist("git rev-parse --show-toplevel")[1]
     if root and root ~= "" then vim.cmd("cd " .. root) end
@@ -216,3 +223,25 @@ local ls = require("luasnip")
 map({ "i", "s" }, "<C-e>", function() ls.expand_or_jump(1) end, { silent = true, desc = "Expand or jump in snippet" })
 map({ "i", "s" }, "<C-J>", function() ls.jump(1) end, { silent = true, desc = "Jump forward in snippet" })
 map({ "i", "s" }, "<C-K>", function() ls.jump(-1) end, { silent = true, desc = "Jump backward in snippet" })
+
+
+-- Avante AI
+map({ "n", "v", "x" }, "<leader>aa", "<cmd>AvanteAsk<CR>", {
+    desc = "Avante: Ask AI",
+})
+
+map({ "n", "v", "x" }, "<leader>ae", "<cmd>AvanteEdit<CR>", {
+    desc = "Avante: Edit",
+})
+
+map("n", "<leader>ar", "<cmd>AvanteRefresh<CR>", {
+    desc = "Avante: Refresh",
+})
+
+map("n", "<leader>ax", "<cmd>AvanteStop<CR>", {
+    desc = "Avante: Stop request",
+})
+
+map("n", "<leader>af", "<cmd>AvanteFocus<CR>", {
+    desc = "Avante: Focus sidebar",
+})
