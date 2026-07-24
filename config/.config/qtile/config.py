@@ -1,4 +1,5 @@
 import os
+import subprocess
 
 from libqtile import hook, qtile
 from libqtile.backend.wayland.inputs import InputConfig
@@ -127,20 +128,34 @@ def autostart():
     home = os.path.expanduser("~")
 
     commands = [
-        "mako",
-        "sh -c 'pgrep swww-daemon || swww-daemon'",
-        "wl-paste -t text --watch clipman store --no-persist",
-        (
-            "swayidle -w "
-            f'before-sleep "swaylock -fF -i {home}/Pictures/lockscreen/VIM.png" '
-            'timeout 300 "brightnessctl -s set 0" '
-            'resume "brightnessctl -r"'
-        ),
-        f"{home}/.config/qtile/scripts/void-audio-start.sh",
+        ["mako"],
+        ["swww-daemon"],
+        ["pipewire"],
+        [
+            "wl-paste",
+            "-t",
+            "text",
+            "--watch",
+            "clipman",
+            "store",
+            "--no-persist",
+        ],
+        [
+            "swayidle",
+            "-w",
+            "before-sleep",
+            f"swaylock -fF -i {home}/Pictures/lockscreen/VIM.png",
+            "timeout",
+            "300",
+            "brightnessctl -s set 0",
+            "resume",
+            "brightnessctl -r",
+        ],
+        # [f"{home}/.config/qtile/scripts/void-audio-start.sh"],
     ]
 
     for cmd in commands:
-        qtile.spawn(cmd)
+        subprocess.Popen(cmd)
 
 
 @hook.subscribe.screen_change
