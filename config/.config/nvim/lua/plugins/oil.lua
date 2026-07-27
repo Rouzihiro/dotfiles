@@ -56,7 +56,7 @@ require("oil").setup({
 ["gv"] = { mode = "n", callback = function() vim.cmd("Oil " .. vim.fn.expand("~/Videos/")) end, },
 ["gf"] = { mode = "n", callback = function() vim.cmd("Oil " .. vim.fn.expand("~/dotfiles/")) end, },
 ["g."] = { mode = "n", callback = function() vim.cmd("Oil " .. vim.fn.expand("~/.config/")) end, },
-["gl"] = { mode = "n", callback = function() vim.cmd("Oil " .. vim.fn.expand("~/.local/bin/")) end, },
+["gb"] = { mode = "n", callback = function() vim.cmd("Oil " .. vim.fn.expand("~/bin/")) end, },
 ["gh"] = { mode = "n", callback = function() vim.cmd("Oil " .. vim.fn.expand("~")) end }
   },
   use_default_keymaps = true,

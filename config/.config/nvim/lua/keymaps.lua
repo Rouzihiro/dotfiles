@@ -88,7 +88,15 @@ map("n", "<leader>gr", function()
     if root and root ~= "" then vim.cmd("cd " .. root) end
 end, { desc = "cd to git root" })
 
+-- Current working directory
+vim.keymap.set("n", "-", function()
+    require("oil").open(vim.loop.cwd())
+end, { desc = "Oil (cwd)" })
 
+-- Buffer's directory
+vim.keymap.set("n", "<leader>-", "<CMD>Oil<CR>", {
+    desc = "Oil (buffer dir)"
+})
 
 -- =====================
 -- Quickfix
@@ -112,10 +120,10 @@ map({ "v", "x", "n" }, "<C-y>", '"+y', { desc = "Yank to system clipboard" })
 map({ "n", "v" }, "d", "\"_d", { desc = "Delete without cutting" })
 map({ "n", "v" }, "D", "\"_D", { desc = "Delete to end of line without cutting" })
 map("n", "x", "\"_x", { desc = "Delete character without cutting" })
-map("n", "X", "d$", { desc = "Cut to end of line" }) 
+map("n", "X", "d$", { desc = "Cut to end of line" })
 map("n", "<leader>y", "yt#", { noremap = true, silent = true, desc = "Yank until #" })
 
-map("n", "<leader>cw", ":%s/\\s\\+$//e<CR>", { desc = "Clean trailing whitespace" })
+map("n", "<leader>rs", ":%s/\\s\\+$//e<CR>", { desc = "Clean trailing whitespace" })
 
 map({ "n" }, "P", "mzA<space><esc>p`z", { desc = "Paste to end of line" })
 map({"n"}, "A", "mzI<space><esc>P`z", { desc = "Paste at start of line" })
@@ -160,7 +168,7 @@ map('n', '[[', function() vim.diagnostic.jump({ count = -1, on_jump = function()
 map('i', '<c-Space>', function() vim.lsp.completion.get() end, { desc = "Trigger LSP completion" })
 map('n', '<leader>tt', '<Cmd>Open .<CR>', { desc = "Open current folder in terminal" })
 map('n', '<leader>vc', '<Cmd>e $MYVIMRC<CR>', { desc = "Edit init.lua" })
-map('n', '<leader>vv', '<Cmd>e ~/.config/nvim/lua/keymaps.lua<CR>', { desc = "Edit keymaps.lua" })
+map('n', '<leader>vk', '<Cmd>e ~/.config/nvim/lua/keymaps.lua<CR>', { desc = "Edit keymaps.lua" })
 map('n', '<leader>zc', '<Cmd>e ~/.config/zsh/.aliases<CR>', { desc = "Edit zsh aliases" })
 map('n', '<leader>zz', '<Cmd>e ~/.config/zsh/.zshrc<CR>', { desc = "Edit zshrc" })
 map('n', '<leader>zf', '<Cmd>e ~/.config/zsh/.aliases-functions<CR>', { desc = "Edit zsh functions" })

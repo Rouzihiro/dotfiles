@@ -22,15 +22,15 @@ vim.g.mapleader = " "
 vim.pack.add({
 		{ src = "https://github.com/ibhagwan/fzf-lua" },
     -- { src = "https://github.com/chentoast/marks.nvim" },
-    -- { src = "https://github.com/stevearc/oil.nvim" },
+    { src = "https://github.com/stevearc/oil.nvim" },
     -- { src = "https://github.com/nvim-tree/nvim-web-devicons" },
     { src = "https://github.com/aznhe21/actions-preview.nvim" },
     { src = "https://github.com/nvim-treesitter/nvim-treesitter", version = "main" },
     { src = "https://github.com/nvim-lua/plenary.nvim" },
-		{ src = "https://github.com/yetone/avante.nvim" },
-{ src = "https://github.com/MunifTanjim/nui.nvim" },
-{ src = "https://github.com/MeanderingProgrammer/render-markdown.nvim" },
-{ src = "https://github.com/hrsh7th/nvim-cmp" },
+--		{ src = "https://github.com/yetone/avante.nvim" },
+-- { src = "https://github.com/MunifTanjim/nui.nvim" },
+-- { src = "https://github.com/MeanderingProgrammer/render-markdown.nvim" },
+-- { src = "https://github.com/hrsh7th/nvim-cmp" },
     { src = "https://github.com/chomosuke/typst-preview.nvim" },
     { src = "https://github.com/neovim/nvim-lspconfig" },
     { src = "https://github.com/mason-org/mason.nvim" },
@@ -43,37 +43,7 @@ vim.pack.add({
 		{ src = "https://github.com/aohoyd/broot.nvim" },
 		{ src = "https://github.com/NvChad/nvim-colorizer.lua" },
 		{ src = "https://github.com/stevearc/conform.nvim" },
-    -- Themes
-    { src = "https://github.com/ellisonleao/gruvbox.nvim" },
-		{ src = "https://github.com/sainnhe/gruvbox-material" },
-    { src = "https://github.com/catppuccin/nvim" },
-    { src = "https://github.com/rebelot/kanagawa.nvim" },
-    { src = "https://github.com/EdenEast/nightfox.nvim" },
-    { src = "https://github.com/folke/tokyonight.nvim" },
-  	{ src = "https://github.com/vague2k/vague.nvim" },
-		{ src = "https://github.com/neanias/everforest-nvim" },
-		{ src = "https://github.com/kepano/flexoki-neovim" 	}, 
-		{ src = "https://github.com/tahayvr/matteblack.nvim" 	}, 
-		{ src = "https://github.com/shaunsingh/nord.nvim" 	}, 
-		{ src = "https://github.com/ribru17/bamboo.nvim" 	}, 
-		{ src = "https://github.com/gthelding/monokai-pro.nvim" 	}, 
-		{ src = "https://github.com/rose-pine/neovim" 	}, 
-		{ src = "https://github.com/bjarneo/pixel.nvim" },
-		{ src = "https://github.com/bjarneo/ethereal.nvim" },
-		{ src = "https://github.com/bjarneo/aether.nvim" },
-		{ src = "https://github.com/bjarneo/vantablack.nvim" },
-		{ src = "https://github.com/omacom-io/lumon.nvim" },
-		{ src = "https://github.com/szammyboi/dune.nvim" },
-		{ src = "https://github.com/OldJobobo/miasma.nvim" },
-		{ src = "https://github.com/OldJobobo/retro-82.nvim" },
-		{ src = "https://github.com/ficcdaf/ashen.nvim" },
-		{ src = "https://github.com/NTBBloodbath/doom-one.nvim" },
-		{ src = "https://github.com/mofiqul/dracula.nvim" },
-		{ src = "https://github.com/tanvirtin/monokai.nvim" },
-		{ src = "https://github.com/nyoom-engineering/oxocarbon.nvim" },
-		{ src = "https://github.com/uhs-robert/oasis.nvim" },
-		{ src = "https://github.com/maxmx03/solarized.nvim" },
-
+    { src = "https://github.com/GooseRooster/osc-colors.nvim" },
 })
 
 require("typst").setup()
@@ -81,9 +51,9 @@ require("typst-cheatsheet")
 require("fzf_config")
 require("keymaps")
 require("plugins.cmp")
--- require("plugins.oil")
+require("plugins.oil")
 require("plugins.mini-clue")
-require("plugins.avante")
+-- require("plugins.avante")
 require("luasnip").setup({ enable_autosnippets = true })
 require("luasnip.loaders.from_lua").load({ paths = "~/.config/nvim/snippets/" })
 
@@ -98,7 +68,7 @@ require("broot").setup({})
 require("conform").setup({
     formatters_by_ft = {
         python = { "ruff_format" },
-        lua = { "stylua" }, -- optional, if you want lua formatted too
+        lua = { "stylua" },
     },
     format_on_save = {
         timeout_ms = 500,
@@ -120,38 +90,47 @@ require("colorizer").setup({
     },
 })
 
-
 -- =====================
 -- Theme and color
 -- =====================
-local theme = require("theme")
+-- Reads the live 16-color palette straight from the terminal (OSC 4/10/11),
+-- so it just follows whatever kitty is currently rendering via osyx.
+-- No named scheme, no reload-on-flip logic needed here anymore.
+require("osc-colors").setup({
+    capabilities = {
+        truecolor = true,
+        undercurl = false,
+        terminal_colors = true,
+    },
 
-if theme.pre_setup then
-    theme.pre_setup()
-end
+    ui = {
+        transparent = true,
+        dim_inactive = false,
+    },
 
-vim.cmd('colorscheme ' .. theme.default_color)
+    styles = {
+        comments  = { italic = true },
+        keywords  = {},
+        functions = {},
+        variables = {},
+        types     = {},
+    },
 
-if theme.set_terminal_colors then
-    theme.set_terminal_colors()
-end
+    highlights = {
+        integrations = {
+            telescope = true,
+            notify    = true,
+            cmp       = true,
+            blink     = true,
+            dapui     = true,
+            lualine   = true,
+            snacks    = true,
+        },
+        use_lazy_specs = true,
+    },
 
--- =====================
--- Transparent background
--- =====================
-vim.cmd([[
-  hi Normal guibg=NONE
-  hi NormalNC guibg=NONE
-  hi SignColumn guibg=NONE
-  hi LineNr guibg=NONE
-  hi EndOfBuffer guibg=NONE
-  hi FoldColumn guibg=NONE
-  hi Folded guibg=NONE
-  hi VertSplit guibg=NONE
-  hi StatusLine guibg=NONE
-  hi StatusLineNC guibg=NONE
-]])
-
+    refresh_on = { "UIEnter", "FocusGained" },
+})
 
 -- =====================
 -- Mason + LSP
@@ -185,20 +164,8 @@ vim.opt.wildignore = {
 		"*.log",
 }
 
+map("n", "<leader>tr", "<cmd>OscColorsRefresh<cr>", { desc = "Refresh terminal colors" })
+
 _G.reload_theme = function()
-    package.loaded["theme"] = nil
-
-    local theme = require("theme")
-
-    if theme.pre_setup then
-        theme.pre_setup()
-    end
-
-    vim.cmd("colorscheme " .. theme.default_color)
-
-    if theme.set_terminal_colors then
-        theme.set_terminal_colors()
-    end
-
-    print("Theme reloaded: " .. theme.default_color)
+    vim.cmd("OscColorsRefresh")
 end

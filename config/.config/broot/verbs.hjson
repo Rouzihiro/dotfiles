@@ -24,14 +24,14 @@ verbs: [
     # Examples depending on your favourite editor:
     #    external: "nvim +{line} {file:space-separated}"
     #    external: "helix {file}:{line}"
-    {
-        invocation: edit
-        shortcut: e
-        key: ctrl-e
-        apply_to: text_file
-        external: "$EDITOR {file:space-separated}"
-        leave_broot: false
-    }
+{
+    invocation: edit
+    shortcut: e
+    key: ctrl-e
+    apply_to: text_file
+    external: ["env", "-u", "NVIM_LISTEN_ADDRESS", "/usr/bin/nvim", "{file:space-separated}"]
+    leave_broot: false
+}
 
     # Example 1: launching `tail -n` on the selected file (leaving broot)
     # {
@@ -232,7 +232,7 @@ verbs: [
     invocation: nvim
     shortcut: n
     key: ctrl-n
-    external: "nvim {file}"
+    external: ["env", "-u", "NVIM_LISTEN_ADDRESS", "/usr/bin/nvim", "{file}"]
     leave_broot: true
 }
 
@@ -271,7 +271,7 @@ verbs: [
 {
     invocation: scripts
     key: ctrl-s
-    execution: ":focus ~/.local/bin/"
+    execution: ":focus ~/bin/"
 }
 {
     invocation: extract

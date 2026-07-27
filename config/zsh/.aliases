@@ -77,6 +77,10 @@ alias .5='cd ../../../../..'
 
 alias fex='muvm bash'
 
+vn() {
+    env -u NVIM_LISTEN_ADDRESS /usr/bin/nvim "$@"
+}
+
 # Editors
 v() {
     nvim-theme "$@"
