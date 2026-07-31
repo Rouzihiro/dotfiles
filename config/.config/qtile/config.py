@@ -151,7 +151,7 @@ def autostart():
             "resume",
             "brightnessctl -r",
         ],
-        # [f"{home}/.config/qtile/scripts/void-audio-start.sh"],
+        [f"{home}/bin/battery-notify.sh"],
     ]
 
     for cmd in commands:
