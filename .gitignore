@@ -167,3 +167,4 @@ calcurse.ical
 events.tsv
 projects/dashboard/data
 projects/dashboard/color.css
+config/bin/battery-notify

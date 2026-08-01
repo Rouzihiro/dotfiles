@@ -34,6 +34,7 @@ ImageMagick
 imv
 jq
 lazygit
+libnotify-devel
 libxcb
 mako
 mediainfo
