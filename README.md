@@ -1,6 +1,6 @@
 <h1 align="center">
 <br>
-ArchLinux & Fedora Universal Installer for a Lightweight & Beautiful Setup
+Void Linux, Arch Linux & Fedora Universal Installer for a Lightweight & Beautiful Setup
 <br>
 </h1>
 
