@@ -1,0 +1,68 @@
+onboarding = false
+# herdr configuration
+[theme]
+name = "terminal"
+new_cwd = "follow"
+
+[keys]
+prefix = "ctrl+a"
+
+focus_pane_left  = ["prefix+h", "alt+h"]
+focus_pane_down  = ["prefix+j", "alt+j"]
+focus_pane_up    = ["prefix+k", "alt+k"]
+focus_pane_right = ["prefix+l", "alt+l"]
+
+split_vertical   = "prefix+%"
+split_horizontal = "prefix+\""
+
+new_tab = "prefix+c"
+
+next_tab     = ["prefix+n", "alt+right"]
+previous_tab = ["prefix+p", "alt+left"]
+
+switch_tab = ["prefix+1..9", "alt+1..9"]
+
+[[keys.command]]
+key = "prefix+shift+g"
+type = "popup"
+command = "cd ~/dotfiles && lazygit"
+description = "dotfiles lazygit"
+width = "90%"
+height = "80%"
+
+[[keys.command]]
+key = "prefix+g"
+type = "popup"
+command = "lazygit"
+description = "lazygit"
+width = "90%"
+height = "80%"
+
+[[keys.command]]
+key = "prefix+r"
+type = "shell"
+command = "herdr server reload-config"
+description = "Reload config"
+
+[[keys.command]]
+key = "prefix+o"
+type = "shell"
+command = "~/dotfiles/.local/bin/open_github.sh"
+description = "Open GitHub"
+
+[[keys.command]]
+key = "prefix+s"
+type = "popup"
+command = "bash ~/bin/script-picker.sh \"$HERDR_ACTIVE_PANE_CWD\""
+description = "scripts"
+width = "90%"
+height = "80%"
+
+[ui.toast]
+delivery = "system"
+
+[ui]
+show_agent_labels_on_pane_borders = true
+
+[experimental]
+pane_history = false

@@ -151,7 +151,11 @@ def autostart():
             "resume",
             "brightnessctl -r",
         ],
-        [f"{home}/bin/battery-notify.sh"],
+        [
+            "sh",
+            "-c",
+            "pgrep -x battery-notify >/dev/null || $HOME/bin/battery-notify",
+        ],
     ]
 
     for cmd in commands:

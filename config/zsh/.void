@@ -1,7 +1,15 @@
 # ===== Void Linux =====
 
-# System update
-alias update="sudo xbps-install -Su && notify-send 'Void Linux' 'System updated successfully ✨' -a System -u low"
+# System & cargo update
+update() {
+    echo "Updating Void packages..."
+    sudo xbps-install -Su || return 1
+
+    echo "Updating Cargo tools..."
+    cargo install-update -a || return 1
+
+    notify-send "Void Linux" "System and Cargo tools updated successfully ✨" -a System -u low
+}
 
 # Full system upgrade (same as above)
 alias upgrade="sudo xbps-install -Su"
