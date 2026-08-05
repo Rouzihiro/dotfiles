@@ -1,5 +1,5 @@
 ### Startup programs
-exec autotiling-rs
+exec autotiling
 exec wl-paste -t text --watch clipman store --no-persist
 
 exec swayidle -w \
@@ -7,14 +7,17 @@ exec swayidle -w \
     timeout 300 'if ! pgrep -x "motrix"; then brightnessctl -s set 0; fi' \
     resume 'brightnessctl -r'
 
-exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 
-exec --no-startup-id dbus-update-activation-environment --systemd --all
-exec --no-startup-id dbus-update-activation-environment --systemd XDG_CURRENT_DESKTOP=sway
+exec /usr/libexec/polkit-gnome-authentication-agent-1
 
+#exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
+
+# exec dbus-update-activation-environment --all
+# exec dbus-update-activation-environment XDG_CURRENT_DESKTOP=sway
+#
 exec pipewire
-exec pipewire-pulse
-exec wireplumber
+#exec pipewire-pulse
+#exec wireplumber
 
 exec swww-daemon
-exec_always scale 1.0
+#exec_always scale 1.0

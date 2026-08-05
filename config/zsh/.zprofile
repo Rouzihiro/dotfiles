@@ -29,7 +29,7 @@ wm-select() {
 
         " Sway")
             : > "$log_dir/sway.log"
-            exec sway \
+            exec dbus-run-session sway \
                 > "$log_dir/sway.log" 2>&1
             ;;
 
