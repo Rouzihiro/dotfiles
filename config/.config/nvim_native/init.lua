@@ -18,3 +18,6 @@ require("my_keymaps")
 require("keymap_gen").generate()
 
 require("keymap_popup").start()
+
+require("typst").setup()
+require("typst-cheatsheet")
