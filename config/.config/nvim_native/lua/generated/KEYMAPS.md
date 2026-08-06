@@ -20,6 +20,8 @@
 | n | `<leader>q` | Close buffer | Buffers |
 | n | `<leader>Q` | Write and quit all | Buffers |
 | n | `<C-q>` | Force close buffer |  |
+| n | `-` | Open parent directory (netrw) |  |
+| n | `<leader>e` | Toggle file explorer sidebar |  |
 | n | `<leader>fa` | Show absolute path | Files |
 | n | `<leader>ft` | Show filename | Files |
 | n | `<leader>fr` | Show relative path | Files |

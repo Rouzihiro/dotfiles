@@ -16,9 +16,3 @@ vim.g.netrw_altv = 1
 
 -- Keep the current working directory in sync with wherever you browse to
 vim.g.netrw_keepdir = 0
-
--- oil's signature move: "-" opens the parent directory of the current file
-vim.keymap.set("n", "-", "<cmd>Explore<CR>", { desc = "Open parent directory (netrw)" })
-
--- Optional: a persistent sidebar toggle, closer to nvim-tree/neo-tree muscle memory
-vim.keymap.set("n", "<leader>e", "<cmd>Lexplore<CR>", { desc = "Toggle file explorer sidebar" })

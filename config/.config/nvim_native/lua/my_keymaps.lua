@@ -99,6 +99,10 @@ map.set("n", "<C-q>", "<Cmd>bd!<CR>", {
 -- =====================
 -- Files
 -- =====================
+map.set("n", "-", "<cmd>Explore<CR>", { desc = "Open parent directory (netrw)" })
+
+-- Optional: a persistent sidebar toggle, closer to nvim-tree/neo-tree muscle memory
+map.set("n", "<leader>e", "<cmd>Lexplore<CR>", { desc = "Toggle file explorer sidebar" })
 
 map.set("n", "<leader>fa", function()
     print(vim.fn.expand("%:p"))

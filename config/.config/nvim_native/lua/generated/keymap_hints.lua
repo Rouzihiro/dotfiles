@@ -1,4 +1,7 @@
 return {
+  ["-"] = {
+    _desc = "Open parent directory (netrw)"
+  },
   [":"] = {
     _desc = "Swap : and ;"
   },
@@ -118,6 +121,9 @@ return {
         _desc = "Interactive cd",
         _group = "Files"
       }
+    },
+    e = {
+      _desc = "Toggle file explorer sidebar"
     },
     f = {
       _group = "Files",

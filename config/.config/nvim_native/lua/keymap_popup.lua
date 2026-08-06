@@ -194,26 +194,26 @@ function M.start()
 
   vim.on_key(function(char)
 
-    -- Ignore insert mode
     if vim.api.nvim_get_mode().mode:match("^i") then
       reset()
       return
     end
 
-    -- leader pressed
+    if char == "<Esc>" then
+      reset()
+      return
+    end
+
     if char == " " then
 
       active = true
-
       path = {
         "<leader>"
       }
 
-
       render()
 
       return
-
     end
 
 
