@@ -59,6 +59,7 @@ rtkit
 ruff
 slurp
 starship
+StyLua
 swappy
 tesseract
 tesseract-ocr
