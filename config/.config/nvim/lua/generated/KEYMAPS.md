@@ -14,6 +14,7 @@
 | n | `<leader>sx` | Close current split | Windows |
 | n | `<leader>sh` | Horizontal split alternate file | Windows |
 | n | `<leader>sv` | Vertical split alternate file | Windows |
+| n | `<leader><Tab>` | Cycle windows |  |
 | n | `<Tab>` | Next buffer |  |
 | n | `<S-Tab>` | Cycle splits |  |
 | n | `<leader>w` | Save buffer | Buffers |

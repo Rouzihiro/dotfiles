@@ -65,6 +65,9 @@ map.set("n", "<leader>sv", "<Cmd>vert belowright sf #<CR>", {
 -- =====================
 -- Buffers
 -- =====================
+map.set("n", "<leader><Tab>", "<C-w>w", {
+	desc = "Cycle windows",
+})
 
 map.set("n", "<Tab>", "<cmd>bnext<CR>", {
 	desc = "Next buffer",

@@ -31,6 +31,9 @@ return {
     _desc = "Clear search highlight"
   },
   ["<leader>"] = {
+    ["<Tab>"] = {
+      _desc = "Cycle windows"
+    },
     P = {
       ["1"] = {
         _desc = "Paste register 1 before cursor",
