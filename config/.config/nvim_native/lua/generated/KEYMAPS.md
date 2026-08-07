@@ -22,6 +22,9 @@
 | n | `<C-q>` | Force close buffer |  |
 | n | `-` | Open parent directory (netrw) |  |
 | n | `<leader>e` | Toggle file explorer sidebar |  |
+| n | `<leader>o` | Recent files | Files |
+| n | `<leader>ff` | Find files | Files |
+| n | `<leader>fg` | Search text | Files |
 | n | `<leader>fa` | Show absolute path | Files |
 | n | `<leader>ft` | Show filename | Files |
 | n | `<leader>fr` | Show relative path | Files |

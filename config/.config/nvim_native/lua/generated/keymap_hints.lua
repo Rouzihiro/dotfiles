@@ -131,6 +131,14 @@ return {
         _desc = "Show absolute path",
         _group = "Files"
       },
+      f = {
+        _desc = "Find files",
+        _group = "Files"
+      },
+      g = {
+        _desc = "Search text",
+        _group = "Files"
+      },
       r = {
         _desc = "Show relative path",
         _group = "Files"
@@ -169,6 +177,10 @@ return {
         _desc = "Format buffer",
         _group = "LSP"
       }
+    },
+    o = {
+      _desc = "Recent files",
+      _group = "Files"
     },
     p = {
       ["1"] = {

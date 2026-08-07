@@ -2,7 +2,7 @@ local M = {}
 
 function M.setup()
 	local function setup_tinymist_lsp()
-		local cmd = nil
+		local cmd
 
 		local mason = vim.fn.expand("~/.local/share/nvim/mason/bin/tinymist")
 
@@ -162,6 +162,7 @@ function M.setup()
 		})
 
 		vim.api.nvim_create_autocmd("FileType", {
+
 			group = group,
 
 			pattern = "typst",
@@ -178,6 +179,7 @@ function M.setup()
 		"BufRead",
 		"BufNewFile",
 	}, {
+
 		group = vim.api.nvim_create_augroup("TypstFiletype", {
 			clear = true,
 		}),
@@ -186,18 +188,31 @@ function M.setup()
 
 		callback = function()
 			vim.bo.filetype = "typst"
+		end,
+	})
 
-			if not vim.g.typst_loaded then
-				vim.g.typst_loaded = true
+	vim.api.nvim_create_autocmd("FileType", {
 
-				setup_tinymist_lsp()
+		group = vim.api.nvim_create_augroup("TypstLoader", {
+			clear = true,
+		}),
 
-				setup_keymaps()
+		pattern = "typst",
 
-				setup_autocmds()
-
-				vim.notify("Typst configuration loaded", vim.log.levels.INFO)
+		callback = function()
+			if vim.g.typst_loaded then
+				return
 			end
+
+			vim.g.typst_loaded = true
+
+			setup_tinymist_lsp()
+
+			setup_keymaps()
+
+			setup_autocmds()
+
+			vim.notify("Typst configuration loaded", vim.log.levels.INFO)
 		end,
 	})
 end
