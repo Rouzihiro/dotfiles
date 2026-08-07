@@ -1,6 +1,7 @@
 vim.g.mapleader = " "
 
 require("options")
+require("snippets").load()
 require("completion")
 require("lsp")
 require("colorscheme")

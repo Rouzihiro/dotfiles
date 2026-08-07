@@ -1,33 +1,134 @@
----@diagnostic disable: undefined-global
-
 return {
-    -- Global / all filetypes
-    s("date", t(os.date("%Y/%m/%d"))),
-    s("time", t(os.date("%H:%M:%S"))),
 
-    -- Emails / handles / links
-    s("mail", t("ryossj@gmail.com")),
-    s("email", t("ryossj@gmail.com")),
-    s("uvm", t("@uvm.edu")),
-    s("gh", t("github.com/Rouzihiro")),
-		s("regards", t("Kind regards, [Rey Z.](https://github.com/Rouzihiro/dotfiles)")),
-		s("ciao", t("Kind regards, [Rey Z.](https://github.com/Rouzihiro/dotfiles)")),
+	{
+		trigger = "date",
+		body = {
+			os.date("%Y/%m/%d"),
+		},
+	},
 
-    -- Brackets / delimiters with placeholders
-    s("(", { t("("), i(1), t(")") }),
-    s("[", { t("["), i(1), t("]") }),
-    s("{", { t("{"), i(1), t("}") }),
-    s("$", { t("$"), i(1), t("$") }),
+	{
+		trigger = "time",
+		body = {
+			os.date("%H:%M:%S"),
+		},
+	},
 
-    -- Scripts / shell headers
-    s("script", { t({"#!/bin/bash", "source fzf_selector.sh"}), i(1) }),
-    s("bash",   { t({"#!/usr/bin/env bash"}), i(1) }),
-    s("sh",     { t({"#!/usr/bin/env sh"}), i(1) }),
+	{
+		trigger = "mail",
+		body = {
+			"ryossj@gmail.com",
+		},
+	},
 
-    -- Markdown snippets
-    s("link", { t("["), i(1), t("]("), i(2), t(")") }),
-    s("img",  { t("!["), i(1, "alt text"), t("]("), i(2, "path/to/image.png"), t(")") }),
+	{
+		trigger = "email",
+		body = {
+			"ryossj@gmail.com",
+		},
+	},
 
-    -- Typst snippet
-    s("par", { t({"#par(first-line-indent: 3em)[", "    "}), i(1), t({"", "]"}) }),
+	{
+		trigger = "uvm",
+		body = {
+			"@uvm.edu",
+		},
+	},
+
+	{
+		trigger = "gh",
+		body = {
+			"github.com/Rouzihiro",
+		},
+	},
+
+	{
+		trigger = "regards",
+		body = {
+			"Kind regards, [Rey Z.](https://github.com/Rouzihiro/dotfiles)",
+		},
+	},
+
+	{
+		trigger = "ciao",
+		body = {
+			"Kind regards, [Rey Z.](https://github.com/Rouzihiro/dotfiles)",
+		},
+	},
+
+	{
+		trigger = "(",
+		body = {
+			"($1)",
+		},
+	},
+
+	{
+		trigger = "[",
+		body = {
+			"[$1]",
+		},
+	},
+
+	{
+		trigger = "{",
+		body = {
+			"{$1}",
+		},
+	},
+
+	{
+		trigger = "$",
+		body = {
+			"$1$",
+		},
+	},
+
+	{
+		trigger = "script",
+		body = {
+			"#!/bin/bash",
+			"source fzf_selector.sh",
+			"$1",
+		},
+	},
+
+	{
+		trigger = "bash",
+		body = {
+			"#!/usr/bin/env bash",
+			"$1",
+		},
+	},
+
+	{
+		trigger = "sh",
+		body = {
+			"#!/usr/bin/env sh",
+			"$1",
+		},
+	},
+
+	{
+		trigger = "link",
+		body = {
+			"[$1]($2)",
+		},
+	},
+
+	{
+		trigger = "img",
+		body = {
+			"![$1]($2)",
+		},
+	},
+
+	{
+		trigger = "par",
+		body = {
+			"#par(first-line-indent: 3em)[",
+			"    $1",
+			"]",
+		},
+	},
 }
