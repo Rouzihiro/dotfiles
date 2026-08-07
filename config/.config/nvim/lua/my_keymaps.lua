@@ -467,3 +467,170 @@ map.set("n", "<leader>af", "<cmd>AvanteFocus<CR>", {
 	desc = "Focus sidebar",
 	group = "Avante",
 })
+
+
+-- =====================
+-- Run current file
+-- =====================
+
+local function run_current_file()
+	local file = vim.fn.expand("%:p")
+
+	if file == "" then
+		vim.notify("No file to run", vim.log.levels.ERROR)
+		return
+	end
+
+	local filename = vim.fn.expand("%:t")
+	local extension = vim.fn.expand("%:e")
+	local filetype = vim.bo.filetype
+	local dir = vim.fn.expand("%:p:h")
+
+	local commands = {
+		python = "python3 " .. vim.fn.shellescape(filename),
+		lua = "lua " .. vim.fn.shellescape(filename),
+		sh = "bash " .. vim.fn.shellescape(filename),
+		zsh = "zsh " .. vim.fn.shellescape(filename),
+
+		javascript = "node " .. vim.fn.shellescape(filename),
+		typescript = "tsx " .. vim.fn.shellescape(filename),
+
+		c = "gcc "
+			.. vim.fn.shellescape(filename)
+			.. " -o /tmp/nvim_run && /tmp/nvim_run",
+
+		cpp = "g++ "
+			.. vim.fn.shellescape(filename)
+			.. " -o /tmp/nvim_run && /tmp/nvim_run",
+
+		rust = "cargo run",
+
+		go = "go run " .. vim.fn.shellescape(filename),
+
+		java = "javac "
+			.. vim.fn.shellescape(filename)
+			.. " && java "
+			.. vim.fn.fnamemodify(filename, ":r"),
+
+		typst = "tinymist compile "
+			.. vim.fn.shellescape(filename)
+			.. " --format pdf",
+	}
+
+	local cmd = commands[filetype]
+
+	if not cmd then
+		vim.notify(
+			"No run command for: "
+				.. filetype
+				.. " (."
+				.. extension
+				.. ")",
+			vim.log.levels.WARN
+		)
+		return
+	end
+
+
+	-- floating terminal size
+	local width = math.floor(vim.o.columns * 0.8)
+	local height = math.floor(vim.o.lines * 0.7)
+
+	local row = math.floor((vim.o.lines - height) / 2)
+	local col = math.floor((vim.o.columns - width) / 2)
+
+
+	local buf = vim.api.nvim_create_buf(false, true)
+
+	local win = vim.api.nvim_open_win(buf, true, {
+		relative = "editor",
+		width = width,
+		height = height,
+		row = row,
+		col = col,
+
+		border = "rounded",
+
+		title = " Run: " .. filename .. " ",
+		title_pos = "center",
+	})
+
+
+	vim.fn.termopen(
+		"cd "
+			.. vim.fn.shellescape(dir)
+			.. " && "
+			.. cmd,
+		{
+			on_exit = function(_, code)
+				if code == 0 then
+					vim.notify("Finished successfully")
+				else
+					vim.notify(
+						"Exited with code "
+							.. code,
+						vim.log.levels.ERROR
+					)
+				end
+			end,
+		}
+	)
+
+	vim.cmd("startinsert")
+
+
+	-- q closes terminal
+	vim.keymap.set(
+		"n",
+		"q",
+		"<cmd>close<CR>",
+		{
+			buffer = buf,
+			silent = true,
+			desc = "Close runner",
+		}
+	)
+end
+
+
+vim.keymap.set(
+	"n",
+	"<leader>S",
+	run_current_file,
+	{
+		desc = "Run current file in floating terminal",
+	}
+)
+
+map.set("n", "<leader>tt", function()
+	local width = math.floor(vim.o.columns * 0.8)
+	local height = math.floor(vim.o.lines * 0.7)
+
+	local row = math.floor((vim.o.lines - height) / 2)
+	local col = math.floor((vim.o.columns - width) / 2)
+
+	local buf = vim.api.nvim_create_buf(false, true)
+
+	vim.api.nvim_open_win(buf, true, {
+		relative = "editor",
+		width = width,
+		height = height,
+		row = row,
+		col = col,
+		border = "rounded",
+		title = " Terminal ",
+		title_pos = "center",
+	})
+
+	vim.fn.termopen(vim.o.shell)
+
+	vim.cmd("startinsert")
+
+	vim.keymap.set("n", "q", "<cmd>close<CR>", {
+		buffer = buf,
+		silent = true,
+		desc = "Close terminal",
+	})
+end, {
+	desc = "Open floating terminal",
+})

@@ -23,3 +23,52 @@ vim.api.nvim_create_autocmd("BufReadPost", {
 	end,
 })
 
+
+
+-- =====================
+-- Filetypes
+-- =====================
+
+local group = vim.api.nvim_create_augroup("FiletypeSettings", { clear = true })
+
+vim.api.nvim_create_autocmd("FileType", {
+    group = group,
+    pattern = { "lua", "typst", "json", "yaml", "html", "css" },
+    callback = function()
+        local o = vim.opt_local
+        o.tabstop = 2
+        o.shiftwidth = 2
+        o.expandtab = true
+    end,
+})
+
+vim.api.nvim_create_autocmd("FileType", {
+    group = group,
+    pattern = { "python", "c", "cpp", "zig" },
+    callback = function()
+        local o = vim.opt_local
+        o.tabstop = 4
+        o.shiftwidth = 4
+        o.expandtab = true
+    end,
+})
+
+vim.api.nvim_create_autocmd("FileType", {
+    group = group,
+    pattern = { "go" },
+    callback = function()
+        local o = vim.opt_local
+        o.tabstop = 4
+        o.shiftwidth = 4
+        o.expandtab = false
+    end,
+})
+
+vim.api.nvim_create_autocmd("FileType", {
+    group = group,
+    pattern = { "make" },
+    callback = function()
+        local o = vim.opt_local
+        o.expandtab = false
+    end,
+})

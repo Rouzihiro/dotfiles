@@ -25,3 +25,14 @@ vim.o.cursorcolumn = false
 
 vim.o.ignorecase = true
 vim.o.smartcase = true
+vim.o.incsearch = true
+
+vim.o.scrolloff = 8
+vim.o.sidescrolloff = 8
+
+vim.o.timeoutlen = 300
+vim.o.updatetime = 250
+
+if vim.loader then
+    vim.loader.enable()
+end

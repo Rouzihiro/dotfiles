@@ -21,6 +21,9 @@ return {
   ["<C-y>"] = {
     _desc = "Yank system clipboard"
   },
+  ["<Esc>"] = {
+    _desc = "Terminal normal mode"
+  },
   ["<S-Tab>"] = {
     _desc = "Cycle splits"
   },

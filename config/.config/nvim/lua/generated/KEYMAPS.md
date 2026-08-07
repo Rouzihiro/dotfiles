@@ -32,6 +32,7 @@
 | n | `<leader>fy` | Yank relative path | Files |
 | n | `<leader>cc` | Change cwd to file directory | Files |
 | n | `<leader>cd` | Interactive cd | Files |
+| t | `<Esc>` | Terminal normal mode |  |
 | n | `<leader>ho` | Open quickfix | Quickfix |
 | n | `<leader>hc` | Close quickfix | Quickfix |
 | n | `]h` | Next quickfix item |  |
