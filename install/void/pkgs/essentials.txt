@@ -62,6 +62,7 @@ ruff
 slurp
 starship
 StyLua
+swayfx
 swappy
 tesseract
 tesseract-ocr
