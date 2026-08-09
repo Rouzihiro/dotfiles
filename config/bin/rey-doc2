@@ -9,7 +9,7 @@ tmux has-session -t $SESSION_NAME 2>/dev/null || {
   # -------------------------
   tmux new-session -d -s $SESSION_NAME -n "work"
 
-  tmux send-keys -t $SESSION_NAME:1.1 'cd ~/dotfiles && br' C-m
+  tmux send-keys -t $SESSION_NAME:1.1 'cd ~/dotfiles && broot' C-m
 
   tmux split-window -v -t $SESSION_NAME:1 -p 20
 
@@ -22,7 +22,7 @@ tmux has-session -t $SESSION_NAME 2>/dev/null || {
 	tmux new-window -t $SESSION_NAME:2 -n "recent" -c "$HOME/dotfiles"
 
   tmux send-keys -t $SESSION_NAME:2.1 \
-    "nvim -c \"lua require('fzf-lua').oldfiles()\"" C-m
+		"nvim -c \"lua require('finder').oldfiles()\"" C-m
 
   tmux select-pane -t $SESSION_NAME:2.1
 

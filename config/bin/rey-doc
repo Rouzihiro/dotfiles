@@ -22,7 +22,7 @@ tmux has-session -t $SESSION_NAME 2>/dev/null || {
 	tmux new-window -t $SESSION_NAME:2 -n "recent" -c "$HOME/dotfiles"
 
   tmux send-keys -t $SESSION_NAME:2.1 \
-    "nvim -c \"lua require('fzf-lua').oldfiles()\"" C-m
+		"nvim -c \"lua require('finder').oldfiles()\"" C-m
 
   tmux select-pane -t $SESSION_NAME:2.1
 

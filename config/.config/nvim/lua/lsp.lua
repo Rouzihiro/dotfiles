@@ -3,6 +3,7 @@
 vim.lsp.enable({
 	"lua_ls",
 	"tsgo",
+	"pyright",
 })
 
 vim.diagnostic.config({

@@ -1,0 +1,11 @@
+# ─────────────────────────────
+# SwayFX decorations
+# ─────────────────────────────
+
+corner_radius 12
+
+blur enable
+blur_radius 6
+blur_passes 2
+
+default_dim_inactive 0.10

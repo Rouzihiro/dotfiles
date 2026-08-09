@@ -36,6 +36,7 @@ jq
 lazygit
 libnotify-devel
 libxcb
+lua-language-server  
 mako
 mediainfo
 mpv
@@ -53,6 +54,7 @@ poppler-utils
 power-profiles-daemon
 pre-commit
 python3-Jinja2
+pyright 
 ripgrep
 rsync
 rtkit
