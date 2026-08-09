@@ -71,7 +71,14 @@ function M.oldfiles()
 end
 
 function M.files()
-	local files = vim.fn.systemlist("find . -type f")
+	local files = vim.fn.systemlist({
+		"fd",
+		"--type",
+		"f",
+		"--hidden",
+		"--exclude",
+		".git",
+	})
 
 	picker(files, "Files", function(file)
 		vim.cmd("edit " .. vim.fn.fnameescape(file))

@@ -21,9 +21,6 @@ return {
   ["<C-y>"] = {
     _desc = "Yank system clipboard"
   },
-  ["<Esc>"] = {
-    _desc = "Terminal normal mode"
-  },
   ["<S-Tab>"] = {
     _desc = "Cycle splits"
   },
@@ -276,7 +273,7 @@ return {
     t = {
       _group = "Tools",
       t = {
-        _desc = "Open current directory",
+        _desc = "Open floating terminal",
         _group = "Tools"
       },
       v = {

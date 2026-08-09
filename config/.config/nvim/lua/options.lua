@@ -30,9 +30,9 @@ vim.o.incsearch = true
 vim.o.scrolloff = 8
 vim.o.sidescrolloff = 8
 
-vim.o.timeoutlen = 300
-vim.o.updatetime = 250
+-- vim.o.timeoutlen = 300
+-- vim.o.updatetime = 250
 
 if vim.loader then
-    vim.loader.enable()
+	vim.loader.enable()
 end
