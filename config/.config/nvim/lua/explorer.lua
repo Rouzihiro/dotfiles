@@ -197,6 +197,24 @@ local function init_mappings(buf)
 	map("n", "D", map_delete)
 	map("n", "C", map_copy)
 	map("n", "M", map_move)
+	map("n", "R", map_move)
+	map("n", "Y", function()
+		local path = get_current_path()
+		if path then
+			vim.fn.setreg("+", path)
+			vim.notify("Yanked: " .. path)
+		end
+	end)
+	map("n", "cd", function()
+		vim.cmd("cd " .. vim.b.cwd)
+		vim.notify("cwd: " .. vim.b.cwd)
+	end)
+	map("n", "gx", function()
+		local path = get_current_path()
+		if path then
+			vim.system({ "xdg-open", path }, { detach = true })
+		end
+	end)
 end
 
 ---@param path string
