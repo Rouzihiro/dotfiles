@@ -23,8 +23,6 @@ vim.api.nvim_create_autocmd("BufReadPost", {
 	end,
 })
 
-
-
 -- =====================
 -- Filetypes
 -- =====================
@@ -32,43 +30,56 @@ vim.api.nvim_create_autocmd("BufReadPost", {
 local group = vim.api.nvim_create_augroup("FiletypeSettings", { clear = true })
 
 vim.api.nvim_create_autocmd("FileType", {
-    group = group,
-    pattern = { "lua", "typst", "json", "yaml", "html", "css" },
-    callback = function()
-        local o = vim.opt_local
-        o.tabstop = 2
-        o.shiftwidth = 2
-        o.expandtab = true
-    end,
+	group = group,
+	pattern = { "lua", "typst", "json", "yaml", "html", "css" },
+	callback = function()
+		local o = vim.opt_local
+		o.tabstop = 2
+		o.shiftwidth = 2
+		o.expandtab = true
+	end,
 })
 
 vim.api.nvim_create_autocmd("FileType", {
-    group = group,
-    pattern = { "python", "c", "cpp", "zig" },
-    callback = function()
-        local o = vim.opt_local
-        o.tabstop = 4
-        o.shiftwidth = 4
-        o.expandtab = true
-    end,
+	group = group,
+	pattern = { "python", "c", "cpp", "zig" },
+	callback = function()
+		local o = vim.opt_local
+		o.tabstop = 4
+		o.shiftwidth = 4
+		o.expandtab = true
+	end,
 })
 
 vim.api.nvim_create_autocmd("FileType", {
-    group = group,
-    pattern = { "go" },
-    callback = function()
-        local o = vim.opt_local
-        o.tabstop = 4
-        o.shiftwidth = 4
-        o.expandtab = false
-    end,
+	group = group,
+	pattern = { "go" },
+	callback = function()
+		local o = vim.opt_local
+		o.tabstop = 4
+		o.shiftwidth = 4
+		o.expandtab = false
+	end,
 })
 
 vim.api.nvim_create_autocmd("FileType", {
-    group = group,
-    pattern = { "make" },
-    callback = function()
-        local o = vim.opt_local
-        o.expandtab = false
-    end,
+	group = group,
+	pattern = { "make" },
+	callback = function()
+		local o = vim.opt_local
+		o.expandtab = false
+	end,
+})
+
+vim.api.nvim_create_autocmd("BufWinEnter", {
+	callback = function()
+		if vim.bo.filetype ~= "directory" then
+			return
+		end
+		vim.wo.cursorline = true
+		vim.wo.number = false
+		vim.wo.relativenumber = false
+		vim.wo.signcolumn = "no"
+		vim.wo.winbar = "%#Directory# %{expand('%:p')}"
+	end,
 })

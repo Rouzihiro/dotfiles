@@ -99,6 +99,7 @@ map.set("n", "<C-q>", "<Cmd>bd!<CR>", {
 -- =====================
 -- Files
 -- =====================
+
 map.set("n", "<leader>e", function()
 	require("explorer").open(vim.fn.expand("%:p:h"))
 end, { desc = "Open file explorer" })
