@@ -1,4 +1,5 @@
 ### Startup programs
+exec mako
 exec autotiling
 exec wl-paste -t text --watch clipman store --no-persist
 
