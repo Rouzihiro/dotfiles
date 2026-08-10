@@ -15,9 +15,6 @@ return {
   ["<C-s>"] = {
     _desc = "Enter substitute mode"
   },
-  ["<C-y>"] = {
-    _desc = "Yank system clipboard"
-  },
   ["<S-Tab>"] = {
     _desc = "Cycle splits"
   },
@@ -270,8 +267,7 @@ return {
     t = {
       _group = "Tools",
       t = {
-        _desc = "Open floating terminal",
-        _group = "Tools"
+        _desc = "Open floating terminal"
       },
       v = {
         _desc = "Typst preview",

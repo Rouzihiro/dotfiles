@@ -220,10 +220,6 @@ map.set({ "n", "v", "x" }, "<C-s>", [[:s/\V]], {
 	desc = "Enter substitute mode",
 })
 
-map.set({ "n", "v", "x" }, "<C-y>", '"+y', {
-	desc = "Yank system clipboard",
-})
-
 map.set({ "n", "v" }, "d", '"_d', {
 	desc = "Delete without cutting",
 })
@@ -353,11 +349,6 @@ end, {
 	group = "Tools",
 })
 
-map.set("n", "<leader>tt", "<Cmd>edit .<CR>", {
-	desc = "Open current directory",
-	group = "Tools",
-})
-
 map.set("n", "<leader>X", function()
 	local file = vim.fn.expand("%")
 
@@ -398,22 +389,22 @@ map.set("n", "<leader>vc", "<Cmd>e $MYVIMRC<CR>", {
 	group = "Config",
 })
 
-map.set("n", "<leader>vk", "<Cmd>e ~/.config/nvim_native/lua/keymaps.lua<CR>", {
+map.set("n", "<leader>vk", "<Cmd>e ~/.config/nvim/lua/my_keymaps.lua<CR>", {
 	desc = "Edit keymaps.lua",
 	group = "Config",
 })
 
-map.set("n", "<leader>zc", "<Cmd>e ~/.config/zsh/.aliases<CR>", {
+map.set("n", "<leader>zc", "<Cmd>e ~/zsh/.aliases<CR>", {
 	desc = "Edit zsh aliases",
 	group = "Config",
 })
 
-map.set("n", "<leader>zz", "<Cmd>e ~/.config/zsh/.zshrc<CR>", {
+map.set("n", "<leader>zz", "<Cmd>e ~/zsh/.zshrc<CR>", {
 	desc = "Edit zshrc",
 	group = "Config",
 })
 
-map.set("n", "<leader>zf", "<Cmd>e ~/.config/zsh/.aliases-functions<CR>", {
+map.set("n", "<leader>zf", "<Cmd>e ~/zsh/.aliases-functions<CR>", {
 	desc = "Edit zsh functions",
 	group = "Config",
 })
@@ -523,7 +514,7 @@ local function run_current_file()
 
 	local buf = vim.api.nvim_create_buf(false, true)
 
-	local win = vim.api.nvim_open_win(buf, true, {
+	vim.api.nvim_open_win(buf, true, {
 		relative = "editor",
 		width = width,
 		height = height,
@@ -536,7 +527,8 @@ local function run_current_file()
 		title_pos = "center",
 	})
 
-	vim.fn.termopen("cd " .. vim.fn.shellescape(dir) .. " && " .. cmd, {
+	vim.fn.jobstart("cd " .. vim.fn.shellescape(dir) .. " && " .. cmd, {
+		term = true,
 		on_exit = function(_, code)
 			if code == 0 then
 				vim.notify("Finished successfully")
@@ -580,7 +572,9 @@ map.set("n", "<leader>tt", function()
 		title_pos = "center",
 	})
 
-	vim.fn.termopen(vim.o.shell)
+	vim.fn.jobstart(vim.o.shell, {
+		term = true,
+	})
 
 	vim.cmd("startinsert")
 

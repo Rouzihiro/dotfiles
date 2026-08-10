@@ -38,7 +38,6 @@
 | n,v,x | `<leader>u` | Source current file | Config |
 | n | `<leader>U` | Reload config | Config |
 | n,v,x | `<C-s>` | Enter substitute mode |  |
-| n,v,x | `<C-y>` | Yank system clipboard |  |
 | n,v | `d` | Delete without cutting |  |
 | n,v | `D` | Delete line without cutting |  |
 | n | `x` | Delete character without cutting |  |
@@ -77,7 +76,6 @@
 | n | `]]` | Next diagnostic |  |
 | n | `[[` | Previous diagnostic |  |
 | i | `<C-Space>` | Trigger LSP completion | Tools |
-| n | `<leader>tt` | Open current directory | Tools |
 | n | `<leader>X` | Make current file executable | Tools |
 | n | `<leader>vc` | Edit init.lua | Config |
 | n | `<leader>vk` | Edit keymaps.lua | Config |
