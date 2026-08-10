@@ -35,6 +35,11 @@ GIT_TGT="$HOME/dotfiles/config/git"
 GITCONFIG_SRC="$HOME/.gitconfig"
 GITCONFIG_TGT="$HOME/dotfiles/config/.gitconfig"
 
+GIT_EXCLUDE_FILES=(
+  ".gitconfig.d/theme"
+)
+
+
 EXCLUDE_DIRS=(
 "qtile/__pycache__"
 "bat"
@@ -51,6 +56,7 @@ EXCLUDE_DIRS=(
 "glow"
 "go"
 "golazo"
+"herdr"
 "ibus"
 "kritadisplayrc"
 "kritarc"
@@ -61,6 +67,7 @@ EXCLUDE_DIRS=(
 "micro"
 "menus"
 "mozilla"
+"news-flash"
 "noctalia"
 "pavucontrol.ini"
 "procps"
@@ -71,8 +78,10 @@ EXCLUDE_DIRS=(
 "qBittorrent"
 "QtProject.conf"
 "ripgrep"
+"rustdesk"
 "swappy"
 "systemd"
+"termcal"
 "Thunar"
 "tinymist"
 "transmission"
@@ -90,7 +99,7 @@ EXCLUDE_DIRS=(
 )
 
 EXCLUDE_FILES=(
-	"bm-run"
+	"bemenu/bm-run"
   "alacritty/theme.toml"
   "broot/skins/current.toml"
   "btop/themes/current.theme"
@@ -102,6 +111,11 @@ EXCLUDE_FILES=(
   "lazygit/config.yml"
   "mako/config"
   "nvim/lua/theme.lua"
+	"nvim/lua/keymaps-2.lua"
+	"nvim/nvim-pack-lock.json"
+	"nvim_old/nvim-pack-lock.json"
+	"nvim_old/lua/theme.lua"
+	"qtile/theme.py"
   "rofi/colors.rasi"
   "starship.toml"
   "sway/config.d/bar"
@@ -284,7 +298,8 @@ for dir in "$BIN_SOURCE"/*(/N); do
   name="${dir:t}"
   bin_dirs+=("$name")
 
-  if [[ ! -d "$BIN_TARGET/$name" ]] || ! diff -rq "$BIN_TARGET/$name" "$dir" >/dev/null 2>&1; then
+  if [[ ! -d "$BIN_TARGET/$name" ]] ||
+     ! diff -rq --exclude='bm-run' "$BIN_TARGET/$name" "$dir" >/dev/null 2>&1; then
     bin_changed+=("$name")
   fi
 done
@@ -326,7 +341,7 @@ else
   if [[ "$bin_confirm" =~ ^[Yy]$ ]]; then
     for name in "${bin_changed[@]}"; do
       mkdir -p "$BIN_TARGET/$name"
-      rsync -a "$BIN_SOURCE/$name/" "$BIN_TARGET/$name/"
+			rsync -a --exclude='bm-run' "$BIN_SOURCE/$name/" "$BIN_TARGET/$name/"
       print -r -- "synced: $name/"
     done
     print -r -- "Bin sync done."
@@ -452,9 +467,14 @@ if [[ -d "$GIT_SRC" ]]; then
     rel="${f#$GIT_SRC/}"
     tgt="$GIT_TGT/$rel"
 
-    if [[ ! -f "$tgt" ]] || ! cmp -s "$f" "$tgt"; then
-      git_diff_files+=("$rel")
-    fi
+if [[ " ${GIT_EXCLUDE_FILES[*]} " == *" $rel "* ]]; then
+  continue
+fi
+
+if [[ ! -f "$tgt" ]] || ! cmp -s "$f" "$tgt"; then
+  git_diff_files+=("$rel")
+fi
+
   done < <(find "$GIT_SRC" -type f -print0)
 fi
 
