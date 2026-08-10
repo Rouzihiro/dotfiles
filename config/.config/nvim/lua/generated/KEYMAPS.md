@@ -21,8 +21,7 @@
 | n | `<leader>q` | Close buffer | Buffers |
 | n | `<leader>Q` | Write and quit all | Buffers |
 | n | `<C-q>` | Force close buffer |  |
-| n | `-` | Open parent directory (netrw) |  |
-| n | `<leader>e` | Toggle file explorer sidebar |  |
+| n | `<leader>e` | Open file explorer |  |
 | n | `<leader>o` | Recent files | Files |
 | n | `<leader>ff` | Find files | Files |
 | n | `<leader>fg` | Search text | Files |

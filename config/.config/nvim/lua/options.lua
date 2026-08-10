@@ -1,3 +1,6 @@
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
+
 vim.o.swapfile = false
 vim.o.undofile = true
 vim.o.autoread = true

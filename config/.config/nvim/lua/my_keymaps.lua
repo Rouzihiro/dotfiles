@@ -99,10 +99,9 @@ map.set("n", "<C-q>", "<Cmd>bd!<CR>", {
 -- =====================
 -- Files
 -- =====================
-map.set("n", "-", "<cmd>Explore<CR>", { desc = "Open parent directory (netrw)" })
-
--- Optional: a persistent sidebar toggle, closer to nvim-tree/neo-tree muscle memory
-map.set("n", "<leader>e", "<cmd>Lexplore<CR>", { desc = "Toggle file explorer sidebar" })
+map.set("n", "<leader>e", function()
+	require("explorer").open(vim.fn.expand("%:p:h"))
+end, { desc = "Open file explorer" })
 
 map.set("n", "<leader>o", function()
 	require("finder").oldfiles()
@@ -468,7 +467,6 @@ map.set("n", "<leader>af", "<cmd>AvanteFocus<CR>", {
 	group = "Avante",
 })
 
-
 -- =====================
 -- Run current file
 -- =====================
@@ -495,42 +493,25 @@ local function run_current_file()
 		javascript = "node " .. vim.fn.shellescape(filename),
 		typescript = "tsx " .. vim.fn.shellescape(filename),
 
-		c = "gcc "
-			.. vim.fn.shellescape(filename)
-			.. " -o /tmp/nvim_run && /tmp/nvim_run",
+		c = "gcc " .. vim.fn.shellescape(filename) .. " -o /tmp/nvim_run && /tmp/nvim_run",
 
-		cpp = "g++ "
-			.. vim.fn.shellescape(filename)
-			.. " -o /tmp/nvim_run && /tmp/nvim_run",
+		cpp = "g++ " .. vim.fn.shellescape(filename) .. " -o /tmp/nvim_run && /tmp/nvim_run",
 
 		rust = "cargo run",
 
 		go = "go run " .. vim.fn.shellescape(filename),
 
-		java = "javac "
-			.. vim.fn.shellescape(filename)
-			.. " && java "
-			.. vim.fn.fnamemodify(filename, ":r"),
+		java = "javac " .. vim.fn.shellescape(filename) .. " && java " .. vim.fn.fnamemodify(filename, ":r"),
 
-		typst = "tinymist compile "
-			.. vim.fn.shellescape(filename)
-			.. " --format pdf",
+		typst = "tinymist compile " .. vim.fn.shellescape(filename) .. " --format pdf",
 	}
 
 	local cmd = commands[filetype]
 
 	if not cmd then
-		vim.notify(
-			"No run command for: "
-				.. filetype
-				.. " (."
-				.. extension
-				.. ")",
-			vim.log.levels.WARN
-		)
+		vim.notify("No run command for: " .. filetype .. " (." .. extension .. ")", vim.log.levels.WARN)
 		return
 	end
-
 
 	-- floating terminal size
 	local width = math.floor(vim.o.columns * 0.8)
@@ -538,7 +519,6 @@ local function run_current_file()
 
 	local row = math.floor((vim.o.lines - height) / 2)
 	local col = math.floor((vim.o.columns - width) / 2)
-
 
 	local buf = vim.api.nvim_create_buf(false, true)
 
@@ -555,52 +535,29 @@ local function run_current_file()
 		title_pos = "center",
 	})
 
-
-	vim.fn.termopen(
-		"cd "
-			.. vim.fn.shellescape(dir)
-			.. " && "
-			.. cmd,
-		{
-			on_exit = function(_, code)
-				if code == 0 then
-					vim.notify("Finished successfully")
-				else
-					vim.notify(
-						"Exited with code "
-							.. code,
-						vim.log.levels.ERROR
-					)
-				end
-			end,
-		}
-	)
+	vim.fn.termopen("cd " .. vim.fn.shellescape(dir) .. " && " .. cmd, {
+		on_exit = function(_, code)
+			if code == 0 then
+				vim.notify("Finished successfully")
+			else
+				vim.notify("Exited with code " .. code, vim.log.levels.ERROR)
+			end
+		end,
+	})
 
 	vim.cmd("startinsert")
 
-
 	-- q closes terminal
-	vim.keymap.set(
-		"n",
-		"q",
-		"<cmd>close<CR>",
-		{
-			buffer = buf,
-			silent = true,
-			desc = "Close runner",
-		}
-	)
+	vim.keymap.set("n", "q", "<cmd>close<CR>", {
+		buffer = buf,
+		silent = true,
+		desc = "Close runner",
+	})
 end
 
-
-vim.keymap.set(
-	"n",
-	"<leader>S",
-	run_current_file,
-	{
-		desc = "Run current file in floating terminal",
-	}
-)
+vim.keymap.set("n", "<leader>S", run_current_file, {
+	desc = "Run current file in floating terminal",
+})
 
 map.set("n", "<leader>tt", function()
 	local width = math.floor(vim.o.columns * 0.8)
