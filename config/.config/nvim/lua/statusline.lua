@@ -21,10 +21,42 @@ local modes = {
 	c = "COMMAND",
 	t = "TERMINAL",
 	R = "REPLACE",
+	r = "REPLACE",
 	s = "SELECT",
 	S = "S-LINE",
 	["\19"] = "S-BLOCK",
 }
+
+local diagnostic_labels = {
+	" ",
+	" ",
+	" ",
+	" ",
+}
+
+local diagnostic_highlights = {
+	"DiagnosticError",
+	"DiagnosticWarn",
+	"DiagnosticInfo",
+	"DiagnosticHint",
+}
+
+local function get_diagnostics()
+	local counts = vim.diagnostic.count(0) or {}
+	local result = {}
+
+	for i = 1, 4 do
+		if counts[i] and counts[i] > 0 then
+			result[#result + 1] = "%#" .. diagnostic_highlights[i] .. "#" .. diagnostic_labels[i] .. counts[i] .. "%*"
+		end
+	end
+
+	if #result == 0 then
+		return ""
+	end
+
+	return table.concat(result, " ") .. " "
+end
 
 local function get_lsp()
 	local clients = vim.lsp.get_clients({
@@ -77,38 +109,38 @@ local function get_recording()
 	return ""
 end
 
-function _G._statusline()
+local function update_git_info()
+	local root = vim.fn.system("git rev-parse --show-toplevel 2>/dev/null"):gsub("%s+$", "")
+
+	if root ~= "" then
+		vim.b.git_branch = vim.fn.system("git branch --show-current 2>/dev/null"):gsub("%s+$", "")
+
+		local full_path = vim.fn.expand("%:p")
+
+		if full_path ~= "" then
+			vim.b.rel_path = full_path:sub(#root + 2)
+		else
+			vim.b.rel_path = ""
+		end
+	else
+		vim.b.git_branch = nil
+		vim.b.rel_path = vim.fn.expand("%:p:~")
+	end
+end
+
+local function active_statusline()
 	local mode = modes[vim.fn.mode()] or vim.fn.mode():upper()
 
-	local branch = vim.b.git_branch and "%#StlGit# " .. vim.b.git_branch .. " %*" or ""
+	local branch = ""
+
+	if vim.b.git_branch and vim.b.git_branch ~= "" then
+		branch = "%#StlGit# " .. vim.b.git_branch .. " %*"
+	end
 
 	local path = vim.b.rel_path or "%f"
 
-	local diag = ""
-
-	local counts = vim.diagnostic.count(0) or {}
-
-	local labels = {
-		" ",
-		" ",
-		" ",
-		" ",
-	}
-
-	local hls = {
-		"DiagnosticError",
-		"DiagnosticWarn",
-		"DiagnosticInfo",
-		"DiagnosticHint",
-	}
-
-	for i = 1, 4 do
-		if counts[i] and counts[i] > 0 then
-			diag = diag .. "%#" .. hls[i] .. "#" .. labels[i] .. counts[i] .. "%* "
-		end
-	end
-
 	local right = table.concat({
+		get_diagnostics(),
 		get_modified(),
 		get_readonly(),
 		get_recording(),
@@ -118,22 +150,62 @@ function _G._statusline()
 		"%l:%c",
 	}, " ")
 
-	return "%#StlMode# " .. mode .. " %*" .. branch .. " " .. path .. "%=" .. diag .. right
+	return table.concat({
+		"%#StlMode# ",
+		mode,
+		" %*",
+		branch,
+		" ",
+		path,
+		"%=",
+		right,
+	})
 end
 
-vim.api.nvim_create_autocmd("BufEnter", {
+local function inactive_statusline()
+	local path = vim.b.rel_path or "%f"
+
+	local right = table.concat({
+		get_modified(),
+		get_readonly(),
+		vim.bo.filetype,
+		"%l:%c",
+	}, " ")
+
+	return table.concat({
+		" ",
+		path,
+		"%=",
+		right,
+	})
+end
+
+_G._statusline_active = active_statusline
+_G._statusline_inactive = inactive_statusline
+
+vim.api.nvim_create_autocmd({
+	"BufEnter",
+	"FocusGained",
+	"DirChanged",
+}, {
 	callback = function()
-		local root = vim.fn.system("git rev-parse --show-toplevel 2>/dev/null"):gsub("%s+$", "")
+		update_git_info()
+		vim.cmd("redrawstatus!")
+	end,
+})
 
-		if root ~= "" then
-			vim.b.git_branch = vim.fn.system("git branch --show-current 2>/dev/null"):gsub("%s+$", "")
+vim.api.nvim_create_autocmd({
+	"WinEnter",
+	"BufEnter",
+}, {
+	callback = function()
+		vim.opt_local.statusline = "%!v:lua._statusline_active()"
+	end,
+})
 
-			vim.b.rel_path = vim.fn.expand("%:p"):sub(#root + 2)
-		else
-			vim.b.git_branch = nil
-
-			vim.b.rel_path = vim.fn.expand("%:p:~")
-		end
+vim.api.nvim_create_autocmd("WinLeave", {
+	callback = function()
+		vim.opt_local.statusline = "%!v:lua._statusline_inactive()"
 	end,
 })
 
@@ -154,4 +226,4 @@ vim.api.nvim_create_autocmd({
 	end,
 })
 
-vim.o.statusline = "%!v:lua._statusline()"
+vim.o.statusline = "%!v:lua._statusline_active()"
