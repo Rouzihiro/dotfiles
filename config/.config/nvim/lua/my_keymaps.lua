@@ -28,6 +28,14 @@ map.set("n", "c", '"_c', {
 	desc = "Change without yanking",
 })
 
+map.set("c", "<C-Up>", "<C-p>", {
+	desc = "Previous completion",
+})
+
+map.set("c", "<C-Down>", "<C-n>", {
+	desc = "Next completion",
+})
+
 -- =====================
 -- Windows
 -- =====================
@@ -92,8 +100,9 @@ map.set("n", "<leader>Q", "<Cmd>wqa<CR>", {
 	group = "Buffers",
 })
 
-map.set("n", "<C-q>", "<Cmd>bd!<CR>", {
-	desc = "Force close buffer",
+map.set("n", "<C-q>", "<Cmd>bwipeout!<CR>", {
+	desc = "Discard changes and close buffer",
+	group = "Buffers",
 })
 
 -- =====================

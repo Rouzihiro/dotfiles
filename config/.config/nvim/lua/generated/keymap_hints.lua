@@ -5,12 +5,19 @@ return {
   [";"] = {
     _desc = "Swap ; and :"
   },
+  ["<C-Down>"] = {
+    _desc = "Next completion"
+  },
   ["<C-Space>"] = {
     _desc = "Trigger LSP completion",
     _group = "Tools"
   },
+  ["<C-Up>"] = {
+    _desc = "Previous completion"
+  },
   ["<C-q>"] = {
-    _desc = "Force close buffer"
+    _desc = "Discard changes and close buffer",
+    _group = "Buffers"
   },
   ["<C-s>"] = {
     _desc = "Enter substitute mode"

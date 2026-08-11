@@ -8,6 +8,8 @@
 | n | `n` | Next search result centered |  |
 | n | `N` | Previous search result centered |  |
 | n | `c` | Change without yanking |  |
+| c | `<C-Up>` | Previous completion |  |
+| c | `<C-Down>` | Next completion |  |
 | n | `<leader>s|` | Split window vertically | Windows |
 | n | `<leader>s-` | Split window horizontally | Windows |
 | n | `<leader>se` | Make splits equal size | Windows |
@@ -20,7 +22,7 @@
 | n | `<leader>w` | Save buffer | Buffers |
 | n | `<leader>q` | Close buffer | Buffers |
 | n | `<leader>Q` | Write and quit all | Buffers |
-| n | `<C-q>` | Force close buffer |  |
+| n | `<C-q>` | Discard changes and close buffer | Buffers |
 | n | `<leader>e` | Open file explorer |  |
 | n | `<leader>o` | Recent files | Files |
 | n | `<leader>ff` | Find files | Files |
