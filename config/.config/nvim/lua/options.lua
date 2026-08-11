@@ -28,13 +28,31 @@ vim.o.cursorcolumn = false
 
 vim.o.ignorecase = true
 vim.o.smartcase = true
+vim.o.hlsearch = true
 vim.o.incsearch = true
+
+vim.o.completeopt = "menuone,noinsert,noselect,popup"
+
+-- vim.o.updatetime = 300
+-- vim.o.timeoutlen = 500
+-- vim.o.ttimeoutlen = 50
+vim.o.autoread = true
 
 vim.o.scrolloff = 8
 vim.o.sidescrolloff = 8
 
--- vim.o.timeoutlen = 300
--- vim.o.updatetime = 250
+vim.o.autochdir = false
+vim.o.backspace = "indent,eol,start"
+
+vim.opt.iskeyword:append("-")
+vim.opt.path:append("**")
+vim.opt.diffopt:append("linematch:60")
+
+vim.o.splitbelow = true
+vim.o.splitright = true
+
+vim.o.wildmenu = true
+vim.o.wildmode = "longest:full,full"
 
 if vim.loader then
 	vim.loader.enable()

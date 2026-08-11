@@ -1,0 +1,33 @@
+sudo nvim /etc/acpi/handler.sh
+
+Change:
+
+close)
+    # suspend-to-ram
+    logger "LID closed, suspending..."
+    zzz
+    ;;
+
+to:
+
+close)
+    logger "LID closed, ignoring."
+    ;;
+
+So the whole section becomes:
+
+button/lid)
+    case "$3" in
+        close)
+            logger "LID closed, ignoring."
+            ;;
+        open)
+            logger "LID opened"
+            ;;
+        *)  logger "ACPI action undefined (LID): $2";;
+    esac
+    ;;
+Then restart acpid
+sudo sv restart acpid
+
+That's all you should need.

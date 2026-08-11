@@ -1,3 +1,16 @@
+local home = vim.env.HOME
+
+local search_roots = {
+	".",
+	"..",
+	home .. "/Downloads",
+	home .. "/.config",
+	home .. "/bin",
+	home .. "/Documents",
+	home .. "/scripts",
+	home .. "/dotfiles",
+}
+
 local ignore_patterns = {
 	"node_modules",
 	"%.git",
@@ -6,27 +19,98 @@ local ignore_patterns = {
 	"build",
 	"%.tmp",
 	"%.log",
+	"BraveSoftware",
+	"mozilla",
 }
 
-function _G.native_find(text, _)
-	local files = vim.fn.glob("**/*", true, true)
-	local result = {}
-	for _, f in ipairs(files) do
-		if vim.fn.isdirectory(f) == 0 then
-			local skip = false
-			for _, pat in ipairs(ignore_patterns) do
-				if f:match(pat) then
-					skip = true
-					break
-				end
-			end
-			if not skip then
-				result[#result + 1] = f
+local function should_ignore(path)
+	for _, pattern in ipairs(ignore_patterns) do
+		if path:match(pattern) then
+			return true
+		end
+	end
+
+	return false
+end
+
+local function add_file(files, seen, path)
+	if vim.fn.isdirectory(path) == 1 then
+		return
+	end
+
+	if should_ignore(path) then
+		return
+	end
+
+	local absolute = vim.fn.fnamemodify(path, ":p")
+
+	if seen[absolute] then
+		return
+	end
+
+	seen[absolute] = true
+	files[#files + 1] = path
+end
+
+function _G.native_find_global(text, _)
+	local files = {}
+	local seen = {}
+
+	for _, root in ipairs(search_roots) do
+		root = vim.fn.expand(root)
+
+		if vim.fn.isdirectory(root) == 1 then
+			local matches = vim.fn.glob(root .. "/**/*", true, true)
+
+			for _, path in ipairs(matches) do
+				add_file(files, seen, path)
 			end
 		end
 	end
-	return vim.fn.matchfuzzy(result, text)
-end
-vim.opt.findfunc = "v:lua.native_find"
 
-vim.keymap.set("n", "<leader>f", ":find ", { silent = false })
+	return vim.fn.matchfuzzy(files, text)
+end
+
+function _G.native_find_local(text, _)
+	local cwd = vim.fn.getcwd()
+	local files = {}
+	local seen = {}
+
+	local matches = vim.fn.glob(cwd .. "/*", true, true)
+
+	for _, path in ipairs(matches) do
+		add_file(files, seen, path)
+
+		if vim.fn.isdirectory(path) == 1 then
+			local level_one = vim.fn.glob(path .. "/*", true, true)
+
+			for _, child in ipairs(level_one) do
+				add_file(files, seen, child)
+
+				if vim.fn.isdirectory(child) == 1 then
+					local level_two = vim.fn.glob(child .. "/*", true, true)
+
+					for _, grandchild in ipairs(level_two) do
+						add_file(files, seen, grandchild)
+					end
+				end
+			end
+		end
+	end
+
+	return vim.fn.matchfuzzy(files, text)
+end
+
+vim.keymap.set("n", "<leader>f", function()
+	vim.opt.findfunc = "v:lua.native_find_local"
+	vim.fn.feedkeys(":find ", "n")
+end, {
+	desc = "Find file locally",
+})
+
+vim.keymap.set("n", "<leader>F", function()
+	vim.opt.findfunc = "v:lua.native_find_global"
+	vim.fn.feedkeys(":find ", "n")
+end, {
+	desc = "Find file globally",
+})
