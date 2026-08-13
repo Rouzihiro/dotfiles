@@ -330,6 +330,9 @@ return {
   D = {
     _desc = "Delete line without cutting"
   },
+  J = {
+    _desc = "moves lines down in visual selection"
+  },
   K = {
     _desc = "LSP hover"
   },

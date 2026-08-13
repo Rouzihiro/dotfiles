@@ -35,7 +35,6 @@ ripgrep
 satty
 slurp
 #sushi
-swaybg
 tar
 tldr
 unzip

@@ -1,3 +1,4 @@
+swayfx/swayfx
 che/nerd-fonts
 agriffis/neovim-nightly
 alternateved/eza

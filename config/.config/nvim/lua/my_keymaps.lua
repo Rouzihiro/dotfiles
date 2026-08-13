@@ -283,6 +283,10 @@ map.set({ "n", "v" }, "<leader>c", "1z=", {
 	group = "Editing",
 })
 
+map.set("v", "J", ":m '>+1<CR>gv=gv", { desc = "moves lines down in visual selection" })
+map.set("v", "K", ":m '<-2<CR>gv=gv", { desc = "moves lines up in visual selection" })
+
+
 -- =====================
 -- Registers
 -- =====================

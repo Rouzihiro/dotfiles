@@ -1,5 +1,5 @@
 vim.g.mapleader = " "
-
+require("vim._core.ui2").enable({})
 require("options")
 require("snippets").load()
 require("completion")
@@ -11,7 +11,7 @@ require("colorscheme")
 require("statusline")
 require("find")
 require("grep")
-require("autocommands")
+require("autocmd")
 require("diagnostics")
 require("formatting")
 
@@ -24,3 +24,5 @@ require("keymap_popup").start()
 
 require("typst").setup()
 require("typst-cheatsheet")
+
+require("splash")

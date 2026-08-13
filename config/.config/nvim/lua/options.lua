@@ -1,5 +1,5 @@
-vim.g.loaded_netrw = 1
-vim.g.loaded_netrwPlugin = 1
+-- vim.g.loaded_netrw = 1
+-- vim.g.loaded_netrwPlugin = 1
 
 vim.o.swapfile = false
 vim.o.undofile = true
@@ -14,7 +14,7 @@ vim.o.clipboard = "unnamedplus"
 
 vim.o.winborder = "rounded"
 vim.o.laststatus = 3
-vim.o.cmdheight = 1
+vim.o.cmdheight = 0
 vim.o.showtabline = 2
 vim.o.showmode = false
 vim.o.signcolumn = "yes"

@@ -52,6 +52,8 @@
 | n,v | `<leader>rw` | Replace word | Editing |
 | n,v | `<leader>rW` | Replace word confirm | Editing |
 | n,v | `<leader>c` | Correct spelling | Editing |
+| v | `J` | moves lines down in visual selection |  |
+| v | `K` | moves lines up in visual selection |  |
 | n | `<leader>R` | Show registers | Registers |
 | n | `<leader>p1` | Paste register 1 | Registers |
 | n | `<leader>P1` | Paste register 1 before cursor | Registers |

@@ -193,7 +193,7 @@ local function init_mappings(buf)
 
 	map("n", "<CR>", map_open)
 	map("n", "q", map_quit)
-	map("n", "A", map_add)
+	map("n", "%", map_add)
 	map("n", "D", map_delete)
 	map("n", "C", map_copy)
 	map("n", "M", map_move)
