@@ -111,33 +111,38 @@ map.set("n", "<C-q>", "<Cmd>bwipeout!<CR>", {
 
 map.set("n", "<leader>e", function()
 	require("explorer").open(vim.fn.expand("%:p:h"))
-end, { desc = "Open file explorer" })
+end, {
+	desc = "Open file explorer",
+})
+
+local picker = require("finder")
 
 map.set("n", "<leader>o", function()
-	require("finder").oldfiles()
+	picker.oldfiles()
 end, {
 	desc = "Recent files",
 	group = "Files",
 })
 
-local picker = require("finder")
-
 map.set("n", "<leader>ff", function()
-        picker.files(true)
+	picker.files(true)
 end, {
-        desc = "Find files locally",
+	desc = "Find files locally",
+	group = "Files",
 })
 
 map.set("n", "<leader>F", function()
-        picker.files(false)
+	picker.files(false)
 end, {
-        desc = "Find files globally",
+	desc = "Find files globally",
+	group = "Files",
 })
 
 map.set("n", "<leader>fb", function()
-        picker.buffers()
+	picker.buffers()
 end, {
-        desc = "Find buffers",
+	desc = "Find buffers",
+	group = "Files",
 })
 
 map.set("n", "<leader>fg", function()

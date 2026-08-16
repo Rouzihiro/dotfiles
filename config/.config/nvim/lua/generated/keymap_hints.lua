@@ -36,7 +36,8 @@ return {
       _desc = "Cycle windows"
     },
     F = {
-      _desc = "Find files globally"
+      _desc = "Find files globally",
+      _group = "Files"
     },
     P = {
       ["1"] = {
@@ -139,10 +140,12 @@ return {
         _group = "Files"
       },
       b = {
-        _desc = "Find buffers"
+        _desc = "Find buffers",
+        _group = "Files"
       },
       f = {
-        _desc = "Find files locally"
+        _desc = "Find files locally",
+        _group = "Files"
       },
       g = {
         _desc = "Search text",
