@@ -11,9 +11,29 @@ local function display_path(path)
 end
 
 local function get_filetype(path)
-        return vim.filetype.match({
+        local filetype = vim.filetype.match({
                 filename = path,
-        }) or ""
+        })
+
+        if filetype then
+                return filetype
+        end
+
+        local ok, lines = pcall(vim.fn.readfile, path, "", 2)
+
+        if ok and lines then
+                for _, line in ipairs(lines) do
+                        if line:match("^#!.*[ /]bash") then
+                                return "sh"
+                        end
+
+                        if line:match("^#!.*[ /]sh") then
+                                return "sh"
+                        end
+                end
+        end
+
+        return ""
 end
 
 local function is_binary(path)
