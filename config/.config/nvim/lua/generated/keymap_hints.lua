@@ -35,6 +35,9 @@ return {
     ["<Tab>"] = {
       _desc = "Cycle windows"
     },
+    F = {
+      _desc = "Find files globally"
+    },
     P = {
       ["1"] = {
         _desc = "Paste register 1 before cursor",
@@ -135,9 +138,11 @@ return {
         _desc = "Show absolute path",
         _group = "Files"
       },
+      b = {
+        _desc = "Find buffers"
+      },
       f = {
-        _desc = "Find files",
-        _group = "Files"
+        _desc = "Find files locally"
       },
       g = {
         _desc = "Search text",

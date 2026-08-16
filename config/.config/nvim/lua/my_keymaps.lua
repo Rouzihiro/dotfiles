@@ -120,11 +120,24 @@ end, {
 	group = "Files",
 })
 
+local picker = require("finder")
+
 map.set("n", "<leader>ff", function()
-	require("finder").files()
+        picker.files(true)
 end, {
-	desc = "Find files",
-	group = "Files",
+        desc = "Find files locally",
+})
+
+map.set("n", "<leader>F", function()
+        picker.files(false)
+end, {
+        desc = "Find files globally",
+})
+
+map.set("n", "<leader>fb", function()
+        picker.buffers()
+end, {
+        desc = "Find buffers",
 })
 
 map.set("n", "<leader>fg", function()

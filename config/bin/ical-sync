@@ -27,9 +27,9 @@ case $choice in
         echo -e "${YELLOW}Creating new OAuth token...${NC}"
         echo -e "${YELLOW}This will open a browser for Google authentication.${NC}"
         vdirsyncer discover
-        
+
         # Check if token was created successfully
-        if [ -f ~/.vdirsyncer/google_token ]; then
+        if [ -f ~/.ssh/vdirsyncer-google-token ]; then
             echo -e "${GREEN}✓ New token created successfully!${NC}"
         else
             echo -e "${RED}✗ Failed to create token. Please check your configuration.${NC}"
@@ -86,7 +86,7 @@ fi
 if zsh ~/.config/termcal/ical2tsv.zsh ~/.config/termcal/calcurse.ical \
    | awk -F'\t' -v cutoff="$(date +%Y-%m)" '$1 >= cutoff' \
    | sort -u > ~/.config/termcal/events.tsv; then
-    
+
     if [ -f ~/.config/termcal/events.tsv ] && [ -s ~/.config/termcal/events.tsv ]; then
         EVENT_COUNT=$(wc -l < ~/.config/termcal/events.tsv)
         echo -e "${GREEN}✓ events.tsv created successfully with $EVENT_COUNT events${NC}"
