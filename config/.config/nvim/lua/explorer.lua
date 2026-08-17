@@ -10,6 +10,15 @@
 -- * case sensitive sorting
 -- * delete same name buffers when creating new explorer buffer
 -- * open dir on file from which navigated using `-`
+--
+-- Additional changes in this copy:
+-- * fixed vim.validate usage
+-- * canonicalize buffer names for duplicate detection (handles ~ vs absolute)
+-- * stronger buffer-local options (bufhidden, buftype, swapfile, buflisted)
+-- * safer watcher creation/start/cleanup (pcall and notifications)
+-- * normalize paths used as keys in explorers table
+--
+-- NOTE: intentionally left out cross-platform copy/move fallbacks. Assumes a Unix-like system.
 
 local M = {}
 
@@ -18,7 +27,7 @@ local M = {}
 ---@field watcher userdata uv_fs_event_t
 ---@field refresh function
 
--- Costants
+-- Constants
 local uv = vim.uv
 local ns_id = vim.api.nvim_create_namespace("tree")
 local ns_id_symlinks = vim.api.nvim_create_namespace("tree:symlinks")
@@ -167,6 +176,7 @@ local function map_copy()
 	end
 
 	vim.fn.mkdir(vim.fs.dirname(target_path), "p")
+	-- using system cp (Unix-only; per request)
 	vim.system({ "cp", "-r", current_path, target_path }):wait()
 end
 
@@ -218,28 +228,42 @@ local function init_mappings(buf)
 end
 
 ---@param path string
+---@return string
+local function canonical_buf_name_for(path)
+	local npath = vim.fs.normalize(path)
+	local home = uv.os_homedir() or vim.env.HOME or ""
+	if home ~= "" and npath:sub(1, #home) == home then
+		npath = "~" .. npath:sub(#home + 1)
+	end
+	return npath
+end
+
+---@param path string
 ---@return integer
 local function create_buffer(path)
+	-- normalize path for buffer name checks and storage
+	local wanted_name = canonical_buf_name_for(path)
+
 	-- remove buffer with the same name if exists
 	-- otherwise it will error out when trying to create buffer with the same name
 	-- happens when opening nvim outside of home directory
 	for _, buf in ipairs(vim.api.nvim_list_bufs()) do
-		if vim.api.nvim_buf_get_name(buf) == path then
+		if vim.api.nvim_buf_get_name(buf) == wanted_name then
 			vim.api.nvim_buf_delete(buf, { force = true })
 		end
 	end
 
 	local buf = vim.api.nvim_create_buf(false, true)
 	init_mappings(buf)
-	local npath = vim.fs.normalize(path)
-	local home = uv.os_homedir() or vim.env.HOME
-	if npath:sub(1, #home) == home then
-		npath = "~" .. npath:sub(#home + 1)
-	end
-	vim.api.nvim_buf_set_name(buf, npath)
+
+	vim.api.nvim_buf_set_name(buf, wanted_name)
 	vim.bo[buf].modifiable = false
 	vim.bo[buf].filetype = "directory"
-	vim.b[buf].cwd = path
+	vim.bo[buf].bufhidden = "wipe"
+	vim.bo[buf].buftype = "nofile"
+	vim.bo[buf].swapfile = false
+	vim.bo[buf].buflisted = false
+	vim.b[buf].cwd = vim.fs.normalize(path)
 	return buf
 end
 
@@ -319,7 +343,7 @@ end
 local on_fs_event = vim.schedule_wrap(function(explorer, events)
 	if events.rename then
 		---@type string
-		local path = explorer.watcher:getpath()
+		local path = explorer.watcher and explorer.watcher:getpath() or vim.b[explorer.buf].cwd
 		local entries = fs_read_dir(path)
 		explorer:refresh(entries)
 	end
@@ -328,31 +352,48 @@ end)
 ---@param path string
 ---@return vim._tree.Explorer
 local function create_explorer(path)
-	local watcher = uv.new_fs_event()
+	local npath = vim.fs.normalize(path)
+
+	-- safe creation of watcher (pcall to avoid hard errors)
+	local ok, watcher = pcall(function() return uv.new_fs_event() end)
+	if not ok then
+		watcher = nil
+	end
+
 	local explorer = {
-		buf = create_buffer(path),
+		buf = create_buffer(npath),
 		watcher = watcher,
 		refresh = explorer_refresh,
 	}
 
-	if not watcher then
-		error("Failed to watch directory", 0)
+	if not explorer.watcher then
+		-- not fatal; still return explorer without watcher
+		vim.notify("tree: failed to create fs watcher; live refresh disabled", vim.log.levels.WARN)
+	else
+		-- try to start watcher safely
+		local started, start_err = pcall(function()
+			explorer.watcher:start(npath, { watch_entry = true }, function(_, _, events)
+				on_fs_event(explorer, events or {})
+			end)
+		end)
+		if not started then
+			vim.notify("tree: failed to start fs watcher: " .. tostring(start_err), vim.log.levels.WARN)
+			pcall(function() explorer.watcher:close() end)
+			explorer.watcher = nil
+		end
 	end
 
-	watcher:start(path, { watch_entry = true }, function(_, _, events)
-		on_fs_event(explorer, events or {})
-	end)
-
-	explorers[path] = explorer
+	explorers[npath] = explorer
 
 	vim.api.nvim_create_autocmd("BufWipeout", {
 		buffer = explorer.buf,
 		callback = function()
-			if watcher then
-				watcher:stop()
-				watcher:close()
+			-- ensure watcher is stopped/closed safely if present
+			if explorer.watcher then
+				pcall(function() explorer.watcher:stop() end)
+				pcall(function() explorer.watcher:close() end)
 			end
-			explorers[path] = nil
+			explorers[npath] = nil
 		end,
 	})
 
@@ -362,11 +403,12 @@ end
 ---@param path string
 ---@return vim._tree.Explorer
 local function get_explorer(path)
-	local explorer = explorers[path]
+	local npath = vim.fs.normalize(path)
+	local explorer = explorers[npath]
 	if not explorer then
-		explorer = create_explorer(path)
+		explorer = create_explorer(npath)
 	elseif explorer and not vim.api.nvim_buf_is_valid(explorer.buf) then
-		explorer.buf = create_buffer(path)
+		explorer.buf = create_buffer(npath)
 	end
 	return explorer
 end
@@ -394,10 +436,11 @@ end
 
 ---@param path string
 function M.open(path)
-	vim.validate("path", path, { "string", "nil" })
+	vim.validate({ path = { path, "string", true } })
 
 	local current_buf = vim.api.nvim_get_current_buf()
-	local current_file = vim.api.nvim_buf_get_name(current_buf)
+	local current_name = vim.api.nvim_buf_get_name(current_buf)
+	local current_file = current_name == "" and "" or vim.fs.abspath(current_name)
 
 	if not fs_is_dir(current_file) then
 		last_filebuf = current_buf
@@ -411,6 +454,8 @@ function M.open(path)
 		path = current_file == "" and uv.cwd() or vim.fs.dirname(current_file)
 	end
 
+	path = vim.fs.normalize(path)
+
 	local entries = fs_read_dir(path)
 	local explorer = get_explorer(path)
 
@@ -418,7 +463,10 @@ function M.open(path)
 	edit(explorer.buf)
 end
 
-function M.setup()
+function M.setup(opts)
+	opts = opts or {}
+	local explorer_key = opts.key or "-"
+
 	vim.api.nvim_create_autocmd("BufWinEnter", {
 		pattern = "*",
 		group = vim.api.nvim_create_augroup("FileExplorer", {}),
@@ -428,7 +476,7 @@ function M.setup()
 			end
 		end,
 	})
-	vim.keymap.set("n", "-", map_goto_parent, { desc = "Open file explorer" })
+	vim.keymap.set("n", explorer_key, map_goto_parent, { desc = "Open file explorer" })
 end
 
 return M
