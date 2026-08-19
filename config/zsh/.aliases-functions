@@ -1,5 +1,23 @@
 command -v nvim > /dev/null 2>&1 && export MANPAGER="nvim +Man!"
 
+cfs() {
+    while true; do
+        local selection=$(find ~ -type f -size +200M -exec du -h {} \; 2>/dev/null | sort -hr | fancy-select "Select files to trash (Tab: multi-select):" -m --with-nth=1,2..)
+
+        [ -z "$selection" ] && break
+
+        # Extract paths
+        echo "$selection" | cut -f2- | while IFS= read -r file; do
+            echo "🗑️  Trashing: $file"
+            trash-put "$file"
+        done
+
+        echo -e "\n✅ Done! Press ENTER to refresh, Ctrl+C to exit"
+        read -r
+        clear
+    done
+}
+
 chpwd() {
     eza -al --group-directories-first --sort=modified --reverse \
         --no-permissions --no-user --no-filesize \
@@ -9,7 +27,7 @@ chpwd() {
 d() {
   # List stack, skip current dir, and fuzzy search unique paths
   local dir=$(dirs -p -v | tail -n +2 | fzf --height 40% --reverse --header="Jump to Previous Directory" | awk '{print $2}')
-  
+
   # Jump if a selection was made
   if [[ -n "$dir" ]]; then
     cd "${dir/#\~/$HOME}"
@@ -87,7 +105,7 @@ fancy-select() {
 alias zcat='bat "$(find . -type f | fancy-select "Open file:" | sed "s/\x1b\[[0-9;]*m//g")"'
 alias zbat='bat "$(find . -type f | fancy-select "Open file:" | sed "s/\x1b\[[0-9;]*m//g")"'
 
-# Directory navigation  
+# Directory navigation
 alias zz='cd "$(find . -type d | fancy-select "Go to directory:")"'
 
 # Process management
@@ -192,7 +210,7 @@ noter() {
     echo "Deleted line $lineno."
 }
 
-# Search history more efficiently  
+# Search history more efficiently
 hg() {
     history | grep "$1"
 }
@@ -217,7 +235,7 @@ ff() {
     find . -type f -iname "*$1*" 2>/dev/null
 }
 
-# Quick directory search  
+# Quick directory search
 fd() {
     find . -type d -iname "*$1*" 2>/dev/null
 }

@@ -218,11 +218,3 @@ alias tl='trash_list'
 alias tr='trash_restore'
 alias te='trash_empty'
 alias ti='trash_info'
-
-# ============================================
-# Auto-run if script is executed directly
-# ============================================
-
-if [[ "${(%):-%x}" == "$0" ]]; then
-    trash_manager
-fi

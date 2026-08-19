@@ -1,3 +1,4 @@
+alias inv="nvim --cmd 'set eventignore=FileType scrollback=1000000' --cmd 'autocmd! *' +'nnoremap q ZQ<CR>' +'call nvim_open_term(0, {})' +'set nolist' +'autocmd! *' +'$' -c 'normal gg'"
 alias ai="ollama serve"
 alias p="python3 -m"
 alias pc="pre-commit run --all-files"
@@ -54,11 +55,10 @@ alias rm='rm -rf'
 alias ls-fonts='fc-list :spacing=100 -f "%{family[0]}\n" | grep -v -iE "emoji|signwriting" | sort -u'
 alias ls-fontsf='fc-list :spacing=100 -f "%{family}: %{style}\n" | grep -v -iE "emoji|signwriting" | sort'
 
-# Safer delete with trash-cli
 alias tp='trash-put'
-alias tl='trash-list | fzf | xargs -r trash-info'
-alias tr='trash-restore'
-alias te='trash-empty -v && echo "Trash emptied"'
+#alias tl='trash-list | fzf | xargs -r trash-info'
+#alias tr='trash-restore'
+#alias te='trash-empty -v && echo "Trash emptied"'
 
 # Navigation
 alias cdc="cd && cd .config"
@@ -76,10 +76,6 @@ alias .4='cd ../../../..'
 alias .5='cd ../../../../..'
 
 alias fex='muvm bash'
-
-vn() {
-    env -u NVIM_LISTEN_ADDRESS /usr/bin/nvim "$@"
-}
 
 # Editors
 v() {
