@@ -633,6 +633,13 @@ local function open_picker(source, prompt, callback)
 		silent = true,
 	})
 
+vim.keymap.set("n", "d", function()
+	open_with("diff")
+end, {
+	buffer = picker_buf,
+	silent = true,
+})
+
 	vim.keymap.set("n", "<C-d>", function()
 		if vim.api.nvim_win_is_valid(preview_win) then
 			vim.api.nvim_win_call(
@@ -702,8 +709,9 @@ end
 -- ============================================================================
 -- Files
 -- ============================================================================
-
 function M.files(local_search)
+	local current_file = vim.api.nvim_buf_get_name(0)
+
 	local native_find = require("find")
 
 	local finder
@@ -718,17 +726,40 @@ function M.files(local_search)
 		finder,
 		local_search and "Find files" or "Find files globally",
 		function(file, open_mode)
-			if open_mode == "split" then
+			if open_mode == "diff" then
+				if current_file == "" then
+					vim.notify(
+						"Current buffer has no file",
+						vim.log.levels.WARN
+					)
+					return
+				end
+
+				if vim.fn.filereadable(current_file) ~= 1 then
+					vim.notify(
+						"Current buffer is not a readable file",
+						vim.log.levels.WARN
+					)
+					return
+				end
+
+				require("difftool").open(
+					current_file,
+					file
+				)
+
+			elseif open_mode == "split" then
 				vim.cmd("split " .. vim.fn.fnameescape(file))
+
 			elseif open_mode == "vsplit" then
 				vim.cmd("vsplit " .. vim.fn.fnameescape(file))
+
 			else
 				vim.cmd("edit " .. vim.fn.fnameescape(file))
 			end
 		end
 	)
 end
-
 -- ============================================================================
 -- Recent files
 -- ============================================================================

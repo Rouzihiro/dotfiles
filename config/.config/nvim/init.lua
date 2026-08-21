@@ -1,4 +1,7 @@
 vim.g.mapleader = " "
+vim.cmd.packadd("nvim.undotree")
+vim.cmd.packadd("nvim.difftool")
+vim.cmd.packadd("nvim.tohtml")
 require("vim._core.ui2").enable({})
 require("options")
 require("snippets").load()

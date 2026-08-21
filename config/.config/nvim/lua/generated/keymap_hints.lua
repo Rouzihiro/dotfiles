@@ -143,6 +143,9 @@ return {
         _desc = "Find buffers",
         _group = "Files"
       },
+      d = {
+        _desc = "diff tool"
+      },
       f = {
         _desc = "Find files locally",
         _group = "Files"
@@ -158,6 +161,9 @@ return {
       t = {
         _desc = "Show filename",
         _group = "Files"
+      },
+      u = {
+        _desc = "undo tree"
       },
       y = {
         _desc = "Yank relative path",

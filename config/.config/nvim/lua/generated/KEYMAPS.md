@@ -97,3 +97,5 @@
 | n | `<leader>ax` | Stop request | Avante |
 | n | `<leader>af` | Focus sidebar | Avante |
 | n | `<leader>tt` | Open floating terminal |  |
+| n | `<leader>fu` | undo tree |  |
+| n | `<leader>fd` | diff tool |  |

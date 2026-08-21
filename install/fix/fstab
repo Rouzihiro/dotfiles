@@ -1,0 +1,5 @@
+#add these to /etc/fstab
+
+UUID=df666d91-c1e0-4709-9fd5-026cadc549e9 /home/rey/mount/usb btrfs defaults,compress=zstd:6,nofail 0 0
+UUID=024f85bc-159a-44e2-9641-5c02661cdd73 /home/rey/mount/usb btrfs defaults,compress=zstd:6,nofail 0 0
+UUID=3b5a192d-df0c-4b30-b276-a53f26dcf402 /home/rey/mount/usb btrfs defaults,compress=zstd:6,nofail 0 0

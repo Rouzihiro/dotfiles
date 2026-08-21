@@ -617,3 +617,27 @@ map.set("n", "<leader>tt", function()
 end, {
 	desc = "Open floating terminal",
 })
+
+map.set("n", "<leader>fu", function()
+	require("undotree").open({
+		command = "leftabove 35vnew",
+	})
+end, {
+	desc = "undo tree",
+})
+
+map.set("n", "<leader>fd", function()
+	local left = vim.fn.input("Left file: ", vim.fn.expand("%:p:h") .. "/")
+	if left == "" then
+		return
+	end
+
+	local right = vim.fn.input("Right file: ", vim.fn.expand("%:p:h") .. "/")
+	if right == "" then
+		return
+	end
+
+	require("difftool").open(left, right)
+end, {
+	desc = "diff tool",
+})
