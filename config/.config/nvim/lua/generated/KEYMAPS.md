@@ -99,3 +99,4 @@
 | n | `<leader>tt` | Open floating terminal |  |
 | n | `<leader>fu` | undo tree |  |
 | n | `<leader>fd` | diff tool |  |
+| n | `<leader>fh` | buffer to html | Tools |

@@ -1,5 +1,9 @@
-#add these to /etc/fstab
-
+UUID=72bd8b6f-0e7f-46f2-a181-6560211eabe7 / btrfs x-systemd.growfs,compress=zstd:1,defaults,subvol=root 0 1
+UUID=2cd4968a-3953-4afe-9818-d9c10317e4a5 /boot ext4 defaults 0 0
+UUID=72bd8b6f-0e7f-46f2-a181-6560211eabe7 /home btrfs x-systemd.growfs,compress=zstd:1,subvol=home 0 0
+UUID=5CDF-1DF4 /boot/efi vfat defaults,umask=0077,shortname=winnt 0 0
+/var/swap/swapfile swap swap sw 0 0
 UUID=df666d91-c1e0-4709-9fd5-026cadc549e9 /home/rey/mount/usb btrfs defaults,compress=zstd:6,nofail 0 0
 UUID=024f85bc-159a-44e2-9641-5c02661cdd73 /home/rey/mount/usb btrfs defaults,compress=zstd:6,nofail 0 0
 UUID=3b5a192d-df0c-4b30-b276-a53f26dcf402 /home/rey/mount/usb btrfs defaults,compress=zstd:6,nofail 0 0
+//192.168.178.1/FRITZ.NAS  /home/rey/mount/nas  cifs  credentials=/home/rey/.ssh/.smbcreds,uid=1000,gid=1000,vers=2.1,sec=ntlmssp,noserverino,noauto,x-systemd.automount,x-systemd.idle-timeout=60  0  0

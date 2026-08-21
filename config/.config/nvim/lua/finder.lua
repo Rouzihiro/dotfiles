@@ -765,6 +765,8 @@ end
 -- ============================================================================
 
 function M.oldfiles()
+	local current_file = vim.api.nvim_buf_get_name(0)
+
 	local files = {}
 
 	for _, file in ipairs(vim.v.oldfiles) do
@@ -777,17 +779,49 @@ function M.oldfiles()
 		files,
 		"Recent files",
 		function(file, open_mode)
-			if open_mode == "split" then
-				vim.cmd("split " .. vim.fn.fnameescape(file))
+			if open_mode == "diff" then
+				if current_file == "" then
+					vim.notify(
+						"Current buffer has no file",
+						vim.log.levels.WARN
+					)
+					return
+				end
+
+				if vim.fn.filereadable(current_file) ~= 1 then
+					vim.notify(
+						"Current buffer is not a readable file",
+						vim.log.levels.WARN
+					)
+					return
+				end
+
+				require("difftool").open(
+					current_file,
+					file
+				)
+
+			elseif open_mode == "split" then
+				vim.cmd(
+					"split "
+						.. vim.fn.fnameescape(file)
+				)
+
 			elseif open_mode == "vsplit" then
-				vim.cmd("vsplit " .. vim.fn.fnameescape(file))
+				vim.cmd(
+					"vsplit "
+						.. vim.fn.fnameescape(file)
+				)
+
 			else
-				vim.cmd("edit " .. vim.fn.fnameescape(file))
+				vim.cmd(
+					"edit "
+						.. vim.fn.fnameescape(file)
+				)
 			end
 		end
 	)
 end
-
 -- ============================================================================
 -- Buffers
 -- ============================================================================

@@ -154,6 +154,10 @@ return {
         _desc = "Search text",
         _group = "Files"
       },
+      h = {
+        _desc = "buffer to html",
+        _group = "Tools"
+      },
       r = {
         _desc = "Show relative path",
         _group = "Files"

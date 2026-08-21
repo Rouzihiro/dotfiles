@@ -641,3 +641,8 @@ map.set("n", "<leader>fd", function()
 end, {
 	desc = "diff tool",
 })
+
+map.set("n", "<leader>fh", "<cmd>TOhtml<cr>", {
+	desc = "buffer to html",
+	group = "Tools",
+})
