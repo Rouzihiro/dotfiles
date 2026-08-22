@@ -1,0 +1,8 @@
+{
+  "plugins": {
+    "osc-colors.nvim": {
+      "rev": "6539d790354b280e039915ffee9f96c2bf950a81",
+      "src": "https://github.com/GooseRooster/osc-colors.nvim"
+    }
+  }
+}
