@@ -1,5 +1,12 @@
 #!/usr/bin/env zsh
 
+
+# Guard against double sourcing
+if [[ -n "$_TRASH_MANAGER_LOADED" ]]; then
+    return
+fi
+readonly _TRASH_MANAGER_LOADED=1
+
 # ============================================
 # Trash Manager - Interactive trash management
 # ============================================
