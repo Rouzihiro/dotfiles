@@ -39,8 +39,7 @@
 | n | `<leader>hc` | Close quickfix | Quickfix |
 | n | `]h` | Next quickfix item |  |
 | n | `[h` | Previous quickfix item |  |
-| n,v,x | `<leader>u` | Source current file | Config |
-| n | `<leader>U` | Reload config | Config |
+| n | `<leader>u` | Hard restart Nvim (no session) | Config |
 | n,v,x | `<C-s>` | Enter substitute mode |  |
 | n,v | `d` | Delete without cutting |  |
 | n,v | `D` | Delete line without cutting |  |

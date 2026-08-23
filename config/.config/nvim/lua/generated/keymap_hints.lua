@@ -86,10 +86,6 @@ return {
       _desc = "Show registers",
       _group = "Registers"
     },
-    U = {
-      _desc = "Reload config",
-      _group = "Config"
-    },
     X = {
       _desc = "Make current file executable",
       _group = "Tools"
@@ -300,7 +296,7 @@ return {
       }
     },
     u = {
-      _desc = "Source current file",
+      _desc = "Hard restart Nvim (no session)",
       _group = "Config"
     },
     v = {

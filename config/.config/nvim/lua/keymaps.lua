@@ -12,6 +12,7 @@ function M.set(mode, lhs, rhs, opts)
     table.insert(M.registry, {
         mode = mode,
         lhs = lhs,
+        rhs = rhs,
         desc = opts.desc or "",
         group = opts.group or "",
     })

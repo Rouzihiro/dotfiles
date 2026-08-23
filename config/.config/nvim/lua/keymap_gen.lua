@@ -11,6 +11,7 @@ local md =
 
 local function ensure_dir()
 
+
   vim.fn.mkdir(
     config .. "/lua/generated",
     "p"

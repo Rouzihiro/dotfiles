@@ -226,17 +226,11 @@ map.set("n", "[h", "<cmd>cprev<CR>", {
 -- Config
 -- =====================
 
-map.set({ "n", "v", "x" }, "<leader>u", "<Cmd>source %<CR>", {
-	desc = "Source current file",
-	group = "Config",
-})
-
-map.set("n", "<leader>U", function()
-	vim.cmd("source $MYVIMRC")
-	vim.notify("Config reloaded")
+map.set("n", "<leader>u", function()
+  vim.cmd("restart!")
 end, {
-	desc = "Reload config",
-	group = "Config",
+  desc = "Hard restart Nvim (no session)",
+  group = "Config",
 })
 
 -- =====================
