@@ -2,7 +2,7 @@
 
 configuration {
     modi: "drun";
-  	font: "FantasqueSansM Nerd Font Mono 10";
+  	font: "Maple Mono NF 10";
     display-drun: "";
     drun-display-format: "{name}";
     sidebar-mode: false;

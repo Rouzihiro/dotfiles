@@ -1,6 +1,6 @@
 /* Keybinds Viewer - Custom Config */
 
-@import "~/.config/rofi/config.rasi"  
+@import "~/.config/rofi/config.rasi"
 
 /* ---- Window ---- */
 window {
@@ -44,5 +44,5 @@ element-text {
   vertical-align: 0.5;
   margin: 0px;
   padding: 0px;
-  font: "FantasqueSansM Nerd Font Mono 16";
+  font: "Maple Mono NF 16";
 }

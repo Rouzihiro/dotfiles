@@ -5,65 +5,84 @@ SHARE="FRITZ.NAS"
 MOUNTPOINT="$HOME/mount/nas"
 CREDENTIALS="$HOME/.ssh/fritznas.credentials"
 
-# Colors (only if terminal supports it)
+# Colors
 if [ -t 1 ]; then
     GREEN="\033[0;32m"
     RED="\033[0;31m"
+    YELLOW="\033[0;33m"
     RESET="\033[0m"
 else
-    GREEN=""
-    RED=""
-    RESET=""
+    GREEN=""; RED=""; YELLOW=""; RESET=""
 fi
 
 # Check for cifs support
 if ! command -v mount.cifs >/dev/null 2>&1; then
     echo -e "${RED}✗ mount.cifs not found${RESET}"
-    echo
-    echo "Install cifs-utils:"
-    echo "  Arch / Asahi Fedora:"
-    echo "    sudo pacman -S cifs-utils"
-    echo
-    echo "  Fedora:"
-    echo "    sudo dnf install cifs-utils"
-    echo
-    echo "  Void:"
-    echo "    sudo xbps-install -S cifs-utils"
+    echo -e "\nInstall cifs-utils:"
+    echo "  sudo pacman -S cifs-utils  # Arch"
+    echo "  sudo dnf install cifs-utils # Fedora"
     exit 1
 fi
 
-# Create mount point
 mkdir -p "$MOUNTPOINT"
 
-# Check credentials
 if [ ! -f "$CREDENTIALS" ]; then
-    echo -e "${RED}✗ Credentials file missing:${RESET}"
-    echo "$CREDENTIALS"
+    echo -e "${RED}✗ Credentials file missing:${RESET} $CREDENTIALS"
     exit 1
 fi
 
-# Secure permissions
 chmod 600 "$CREDENTIALS"
 
-# Already mounted?
+# Check if mounted and working
 if mountpoint -q "$MOUNTPOINT"; then
-    echo -e "${GREEN}✓ FRITZ.NAS already mounted:${RESET}"
-    echo "$MOUNTPOINT"
-    exit 0
+    # Test if mount is actually working
+    if touch "$MOUNTPOINT/.test_write" 2>/dev/null; then
+        rm -f "$MOUNTPOINT/.test_write"
+        echo -e "${GREEN}✓ FRITZ.NAS already mounted and working${RESET}"
+        echo "$MOUNTPOINT"
+        exit 0
+    else
+        echo -e "${YELLOW}⚠ Mount exists but is stale - remounting...${RESET}"
+        # Force unmount the stale mount
+        sudo umount -l "$MOUNTPOINT" 2>/dev/null || sudo umount "$MOUNTPOINT" 2>/dev/null
+        sleep 2
+    fi
 fi
 
 echo "Mounting FRITZ.NAS..."
 
-sudo mount -t cifs \
-    "//$SERVER/$SHARE" \
-    "$MOUNTPOINT" \
-    -o credentials="$CREDENTIALS",uid="$(id -u)",gid="$(id -g)",iocharset=utf8,vers=3.0
+# Try mounting with retry
+MAX_RETRIES=3
+RETRY_COUNT=0
+MOUNT_SUCCESS=false
 
-# Verify
-if mountpoint -q "$MOUNTPOINT"; then
-    echo -e "${GREEN}✓ FRITZ.NAS mounted:${RESET}"
-    echo "$MOUNTPOINT"
-else
-    echo -e "${RED}✗ Mount failed${RESET}"
-    exit 1
-fi
+while [ $RETRY_COUNT -lt $MAX_RETRIES ] && [ "$MOUNT_SUCCESS" = false ]; do
+    sudo mount -t cifs \
+        "//$SERVER/$SHARE" \
+        "$MOUNTPOINT" \
+        -o credentials="$CREDENTIALS",uid="$(id -u)",gid="$(id -g)",iocharset=utf8,vers=3.0,forceuid,forcegid,nounix,actimeo=0,noperm,echo_interval=60
+
+    if mountpoint -q "$MOUNTPOINT"; then
+        # Verify mount is working
+        if touch "$MOUNTPOINT/.test_write" 2>/dev/null; then
+            rm -f "$MOUNTPOINT/.test_write"
+            echo -e "${GREEN}✓ FRITZ.NAS mounted successfully${RESET}"
+            echo "$MOUNTPOINT"
+            MOUNT_SUCCESS=true
+            exit 0
+        else
+            # Mount looks successful but can't write - remount
+            echo -e "${YELLOW}⚠ Mounted but write test failed - remounting...${RESET}"
+            sudo umount -l "$MOUNTPOINT"
+            RETRY_COUNT=$((RETRY_COUNT + 1))
+            sleep 2
+        fi
+    else
+        echo -e "${YELLOW}⚠ Mount attempt $((RETRY_COUNT + 1)) failed${RESET}"
+        RETRY_COUNT=$((RETRY_COUNT + 1))
+        sleep 2
+    fi
+done
+
+echo -e "${RED}✗ Mount failed after $MAX_RETRIES attempts${RESET}"
+exit 1

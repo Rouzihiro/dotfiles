@@ -3,6 +3,7 @@ bindsym $mod+Escape exec $HOME/.config/rofi/scripts/rofi-power
 bindsym $mod+Return exec $term
 bindsym $mod+mod1+Return exec $term -T 'floaty-big'
 bindsym $mod+Shift+Return exec $term2
+bindsym $mod+ctrl+Return exec $term2 -T 'floaty-big'
 
 bindsym ALT+r exec zsh -ic 'themes rotate'
 
@@ -14,7 +15,7 @@ bindsym $mod+a exec $term2 -e btop
 bindsym $mod+Mod1+a exec $term2 --title floaty-big -e sh -c ncdu
 
 # bindsym $mod+b exec $term2 --title floaty-tiny -e sh -c bookmarks
-bindsym $mod+b exec  $HOME/.config/rofi/scripts/rofi-bookmarks 
+bindsym $mod+b exec  $HOME/.config/rofi/scripts/rofi-bookmarks
 bindsym $mod+Mod1+b exec xdg-open https://
 bindsym $mod+Shift+b exec $term2 --title floaty-big -e sh -c bt
 
@@ -55,7 +56,7 @@ bindsym $mod+Shift+p exec $HOME/.config/rofi/scripts/rofi-power-profile
 bindsym $mod+q kill
 bindsym $mod+Ctrl+q exec swaymsg exit
 
-bindsym $mod+r exec screenrecord 
+bindsym $mod+r exec screenrecord
 bindsym $mod+mod1+r exec $HOME/.config/rofi/scripts/rofi-screenrecord
 bindsym $mod+Shift+r reload
 

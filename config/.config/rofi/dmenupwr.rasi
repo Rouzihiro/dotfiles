@@ -7,7 +7,7 @@
     background-color:      Black;
     border-color:          White;
     text-color:           White;
-    font:            "FantasqueSansM Nerd Font Mono 16";
+    font:            "Maple Mono NF 16";
 }
 window {
     anchor:     north;

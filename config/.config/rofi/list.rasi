@@ -7,14 +7,14 @@
   border-radius: 0.5em;
   background-color: transparent;
   text-color: @fg;
-  font: "FantasqueSansM Nerd Font Mono 18";
+  font: "Maple Mono NF 18";
 }
 
 window {
   width: 50%;
   orientation: vertical;
-  location: center; 
-  anchor: center;  
+  location: center;
+  anchor: center;
   x-offset: 0px;
   y-offset: 0px;
   margin: 0px;
@@ -48,7 +48,7 @@ textbox-prompt-colon {
 entry {
   text-color: @fg;
   background-color: transparent;
-  font: "FantasqueSansM Nerd Font Mono 18";
+  font: "Maple Mono NF 18";
 }
 mode-switcher {
   spacing: 0.1em;
@@ -63,7 +63,7 @@ button {
   border-radius: 0.5em;
   background-color: transparent;
   text-color: @fg;
-  font: "FantasqueSansM Nerd Font Mono 18"; 
+  font: "Maple Mono NF 18";
 }
 
 button selected {
@@ -90,12 +90,12 @@ element {
   border: 0px;
   border-radius: 0px;
   padding: 4px 12px;
-  spacing: 8px;    
+  spacing: 8px;
   orientation: horizontal;
   vertical-align: 0.5;
   background-color: transparent;
   text-color: @fg;
-  font: "FantasqueSansM Nerd Font Mono 18";
+  font: "Maple Mono NF 18";
 }
 
 element normal.normal {
@@ -133,12 +133,12 @@ element-text {
   text-color: inherit;
   vertical-align: 0.5;
   horizontal-align: 0.0;
-  font: "FantasqueSansM Nerd Font Mono 18";
+  font: "Maple Mono NF 18";
 }
 
 element-icon {
   background-color: transparent;
-  size: 14px; 
+  size: 14px;
   padding: 0px 3px 0px 0px;
 }
 

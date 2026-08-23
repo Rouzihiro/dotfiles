@@ -2,7 +2,7 @@
 
 configuration {
     show-icons: false;
-    font: "FantasqueSansM Nerd Font Mono  16";
+    font: "Maple Mono NF 16";
 }
 
 * {
