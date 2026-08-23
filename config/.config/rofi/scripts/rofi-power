@@ -5,7 +5,23 @@ rofi_command() {
   rofi -dmenu -i -p "Power" -config "$HOME/.config/rofi/topbox.rasi"
 }
 
+# Detect init system
+get_init_system() {
+  if [ -d /run/systemd/system ]; then
+    echo "systemd"
+  elif [ -f /sbin/openrc ]; then
+    echo "openrc"
+  elif [ -f /sbin/runit ]; then
+    echo "runit"
+  else
+    echo "unknown"
+  fi
+}
+
+INIT_SYSTEM=$(get_init_system)
+
 handle_logout() {
+  # Try desktop session first
   case "$DESKTOP_SESSION" in
   hyprland)
     hyprctl dispatch exit
@@ -31,11 +47,42 @@ handle_logout() {
   xfce)
     killall xfce4-session
     ;;
+  gnome|gnome-xorg)
+    gnome-session-quit --logout --no-prompt
+    ;;
+  kde|plasma)
+    qdbus org.kde.ksmserver /KSMServer logout 0 0 0
+    ;;
   *)
-    notify-send -t 1500 "Logout for '$DESKTOP_SESSION' not implemented."
-    exit 1
+    # Fallback: try common logout methods
+    if command -v loginctl &>/dev/null; then
+      loginctl terminate-user "$USER"
+    elif command -v gnome-session-quit &>/dev/null; then
+      gnome-session-quit --logout --no-prompt
+    elif command -v qdbus &>/dev/null; then
+      qdbus org.kde.ksmserver /KSMServer logout 0 0 0
+    else
+      notify-send -t 1500 "Logout for '$DESKTOP_SESSION' not implemented."
+      exit 1
+    fi
     ;;
   esac
+}
+
+handle_lock() {
+  if command -v gtklock &>/dev/null; then
+    gtklock
+  elif command -v swaylock &>/dev/null; then
+    swaylock -fF -i "$HOME/Pictures/lockscreen/VIM.png"
+  elif command -v hyprlock &>/dev/null; then
+    hyprlock
+  elif command -v gnome-screensaver-command &>/dev/null; then
+    gnome-screensaver-command -l
+  elif command -v xscreensaver-command &>/dev/null; then
+    xscreensaver-command -lock
+  else
+    notify-send -t 1500 "Error: No lock utility found."
+  fi
 }
 
 shutdown=" 󰐥 | Shutdown"
@@ -48,29 +95,75 @@ chosen=$(echo -e "$shutdown\n$reboot\n$logout\n$suspend\n$lock" | rofi_command)
 
 case "$chosen" in
 "$shutdown")
-  loginctl poweroff
+  case "$INIT_SYSTEM" in
+    systemd)
+      systemctl poweroff
+      ;;
+    openrc)
+      openrc-shutdown -p 0
+      ;;
+    runit)
+      poweroff
+      ;;
+    *)
+      loginctl poweroff 2>/dev/null || poweroff
+      ;;
+  esac
   ;;
 
 "$reboot")
-  loginctl reboot
+  case "$INIT_SYSTEM" in
+    systemd)
+      systemctl reboot
+      ;;
+    openrc)
+      openrc-shutdown -r 0
+      ;;
+    runit)
+      reboot
+      ;;
+    *)
+      loginctl reboot 2>/dev/null || reboot
+      ;;
+  esac
   ;;
 
 "$lock")
-  if command -v gtklock &>/dev/null; then
-    gtklock
-  elif command -v swaylock &>/dev/null; then
-    swaylock -fF -i "$HOME/Pictures/lockscreen/VIM.png"
-  elif command -v hyprlock &>/dev/null; then
-    hyprlock
-  else
-    notify-send -t 1500 "Error: No lock utility found."
-  fi
+  handle_lock
   ;;
 
 "$suspend")
-  mpc -q pause
-  amixer set Master mute
-  loginctl suspend
+  # Pause music if mpc exists
+  if command -v mpc &>/dev/null; then
+    mpc -q pause 2>/dev/null || true
+  fi
+
+  # Mute audio if amixer exists
+  if command -v amixer &>/dev/null; then
+    amixer set Master mute 2>/dev/null || true
+  fi
+
+  # Try various suspend methods
+  case "$INIT_SYSTEM" in
+    systemd)
+      systemctl suspend
+      ;;
+    openrc)
+      # OpenRC typically uses pm-utils or directly writing to /sys
+      if command -v pm-suspend &>/dev/null; then
+        pm-suspend
+      else
+        echo mem > /sys/power/state 2>/dev/null
+      fi
+      ;;
+    runit)
+      # Runit systems often use loginctl or elogind
+      loginctl suspend 2>/dev/null || echo mem > /sys/power/state 2>/dev/null
+      ;;
+    *)
+      loginctl suspend 2>/dev/null || systemctl suspend 2>/dev/null || echo mem > /sys/power/state 2>/dev/null
+      ;;
+  esac
   ;;
 
 "$logout")
