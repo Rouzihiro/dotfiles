@@ -1,0 +1,8 @@
+UUID=d0927535-7686-455f-9aea-4199b80ec2cb / btrfs defaults 0 0
+UUID=714176c0-9dbe-41d8-a938-7935364bbb2e none swap defaults 0 0
+UUID=C042-FC94 /boot/efi vfat defaults 0 2
+tmpfs /tmp tmpfs defaults,nosuid,nodev 0 0
+UUID=df666d91-c1e0-4709-9fd5-026cadc549e9 /home/rey/mount/usb btrfs defaults,compress=zstd:6,nofail 0 0
+UUID=024f85bc-159a-44e2-9641-5c02661cdd73 /home/rey/mount/usb btrfs defaults,compress=zstd:6,nofail 0 0
+UUID=3b5a192d-df0c-4b30-b276-a53f26dcf402 /home/rey/mount/usb btrfs defaults,compress=zstd:6,nofail 0 0
+//192.168.178.1/FRITZ.NAS /home/rey/mount/nas cifs credentials=/home/rey/.ssh/.smbcreds,uid=1000,gid=1000,vers=2.1,sec=ntlmssp,noserverino,noauto,_netdev 0 0
