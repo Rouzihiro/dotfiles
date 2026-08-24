@@ -76,7 +76,7 @@ local function get_search()
 		maxcount = 999,
 	})
 
-	if not ok or result.total == 0 then
+	if not ok or type(result) ~= "table" or not result.total or result.total == 0 then
 		return ""
 	end
 
