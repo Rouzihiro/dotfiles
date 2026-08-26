@@ -1,5 +1,10 @@
 command -v nvim > /dev/null 2>&1 && export MANPAGER="nvim +Man!"
 
+rmex() {
+    local pattern="$*"
+    find . -maxdepth 1 -type f ! -name "*$pattern*" -exec trash {} \;
+}
+
 cfs() {
     while true; do
         local selection=$(find ~ -type f -size +200M -exec du -h {} \; 2>/dev/null | sort -hr | fancy-select "Select files to trash (Tab: multi-select):" -m --with-nth=1,2..)
