@@ -97,5 +97,6 @@
 | n | `<leader>af` | Focus sidebar | Avante |
 | n | `<leader>tt` | Open floating terminal |  |
 | n | `<leader>fu` | undo tree |  |
+| n | `<leader>G` | git diff against HEAD |  |
 | n | `<leader>fd` | diff tool |  |
 | n | `<leader>fh` | buffer to html | Tools |

@@ -39,6 +39,9 @@ return {
       _desc = "Find files globally",
       _group = "Files"
     },
+    G = {
+      _desc = "git diff against HEAD"
+    },
     P = {
       ["1"] = {
         _desc = "Paste register 1 before cursor",

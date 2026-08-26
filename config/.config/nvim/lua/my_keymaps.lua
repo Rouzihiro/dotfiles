@@ -620,6 +620,10 @@ end, {
 	desc = "undo tree",
 })
 
+map.set("n", "<leader>G", function()
+  require('gitdiff').diff_head()
+end, { desc = "git diff against HEAD" })
+
 map.set("n", "<leader>fd", function()
 	local left = vim.fn.input("Left file: ", vim.fn.expand("%:p:h") .. "/")
 	if left == "" then
