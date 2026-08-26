@@ -18,8 +18,8 @@ fi
 
 
 #╔═╗┌─┐┌┐┌  ┌─┐┬ ┬┌┬┐┌─┐  ┌─┐┬─┐┌─┐┌┬┐┌─┐┌┬┐
-#╔═╝├┤ │││  └─┐│ │ │││ │  ├─┘├┬┘│ ││││├─┘ │ 
-#╚═╝└─┘┘└┘  └─┘└─┘─┴┘└─┘  ┴  ┴└─└─┘┴ ┴┴   ┴ 
+#╔═╝├┤ │││  └─┐│ │ │││ │  ├─┘├┬┘│ ││││├─┘ │
+#╚═╝└─┘┘└┘  └─┘└─┘─┴┘└─┘  ┴  ┴└─└─┘┴ ┴┴   ┴
 export SUDO_PROMPT="$fg[red][sudo] $fg[yellow]password for $USER  :$fg[white]"
 
 #  ╔═╗┬  ┬ ┬┌─┐┬┌┐┌┌─┐
@@ -84,7 +84,7 @@ zinit ice wait lucid
 zinit light zsh-users/zsh-syntax-highlighting
 
 #  ╔═╗┌─┐┌┬┐┌─┐┬  ┌─┐┌┬┐┬┌─┐┌┐┌   ┬   ╦  ┌─┐┌─┐┌┬┐┬┌┐┌┌─┐  ╔═╗┌┐┌┌─┐┬┌┐┌┌─┐
-#  ║  │ ││││├─┘│  ├┤  │ ││ ││││  ┌┼─  ║  │ │├─┤ │││││││ ┬  ║╣ ││││ ┬││││├┤ 
+#  ║  │ ││││├─┘│  ├┤  │ ││ ││││  ┌┼─  ║  │ │├─┤ │││││││ ┬  ║╣ ││││ ┬││││├┤
 #  ╚═╝└─┘┴ ┴┴  ┴─┘└─┘ ┴ ┴└─┘┘└┘  └┘   ╩═╝└─┘┴ ┴─┴┘┴┘└┘└─┘  ╚═╝┘└┘└─┘┴┘└┘└─┘
 autoload -Uz compinit
 local zcd="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/zcompdump"
@@ -111,7 +111,7 @@ fi
 # _comp_options+=(globdots)
 
 #  ╔═╗┌─┐┌┬┐┌─┐┬  ┌─┐┌┬┐┬┌─┐┌┐┌┌─┐  ╔═╗┌┬┐┬ ┬┬  ┌─┐
-#  ║  │ ││││├─┘│  ├┤  │ ││ ││││└─┐  ╚═╗ │ └┬┘│  ├┤ 
+#  ║  │ ││││├─┘│  ├┤  │ ││ ││││└─┐  ╚═╗ │ └┬┘│  ├┤
 #  ╚═╝└─┘┴ ┴┴  ┴─┘└─┘ ┴ ┴└─┘┘└┘└─┘  ╚═╝ ┴  ┴ ┴─┘└─┘
 zstyle ':completion:*' verbose true
 zstyle ':completion:*:*:*:*:*' menu select
@@ -142,7 +142,7 @@ bindkey "^I" expand-or-complete-with-dots
 
 #  ╦ ╦┬┌─┐┌┬┐┌─┐┬─┐┬ ┬
 #  ╠═╣│└─┐ │ │ │├┬┘└┬┘
-#  ╩ ╩┴└─┘ ┴ └─┘┴└─ ┴ 
+#  ╩ ╩┴└─┘ ┴ └─┘┴└─ ┴
 HISTSIZE=20000
 SAVEHIST=20000
 HISTFILE="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/history"
@@ -173,8 +173,8 @@ setopt PUSHD_IGNORE_DUPS
 setopt PUSHD_SILENT
 
 #  ╔═╗┌─┐┌┐┌  ╔═╗┬─┐┌─┐┌┬┐┌─┐┌┬┐
-#  ╔═╝├┤ │││  ╠═╝├┬┘│ ││││├─┘ │ 
-#  ╚═╝└─┘┘└┘  ╩  ┴└─└─┘┴ ┴┴   ┴ 
+#  ╔═╝├┤ │││  ╠═╝├┬┘│ ││││├─┘ │
+#  ╚═╝└─┘┘└┘  ╩  ┴└─└─┘┴ ┴┴   ┴
 # function dir_icon {
 #   if [[ "$PWD" == "$HOME" ]]; then
 #     echo "%B%F{cyan}%f%b"
@@ -310,6 +310,7 @@ else
 fi
 
 source "$HOME/dotfiles/flavors/themes.zsh"
+source "$HOME/bin/trash-manager.zsh"
 export EZA_CONFIG_DIR="$HOME/.config/eza"
 
 # ============================================
