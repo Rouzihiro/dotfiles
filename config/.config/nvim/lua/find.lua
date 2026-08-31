@@ -3,7 +3,8 @@ local M = {}
 local home = vim.env.HOME
 
 local search_roots = {
-        home,
+        ".",
+        "..",
         home .. "/Downloads",
         home .. "/.config",
         home .. "/bin",
@@ -50,7 +51,7 @@ local function add_file(files, seen, path)
         end
 
         seen[absolute] = true
-        files[#files + 1] = absolute
+        files[#files + 1] = path
 end
 
 function M.global(text)
