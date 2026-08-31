@@ -35,10 +35,6 @@ return {
     ["<Tab>"] = {
       _desc = "Cycle windows"
     },
-    F = {
-      _desc = "Find files globally",
-      _group = "Files"
-    },
     G = {
       _desc = "git diff against HEAD"
     },

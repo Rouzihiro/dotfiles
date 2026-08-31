@@ -131,13 +131,6 @@ end, {
 	group = "Files",
 })
 
-map.set("n", "<leader>F", function()
-	picker.files(false)
-end, {
-	desc = "Find files globally",
-	group = "Files",
-})
-
 map.set("n", "<leader>fb", function()
 	picker.buffers()
 end, {

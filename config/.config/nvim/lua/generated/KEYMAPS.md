@@ -26,7 +26,6 @@
 | n | `<leader>e` | Open file explorer |  |
 | n | `<leader>o` | Recent files | Files |
 | n | `<leader>ff` | Find files locally | Files |
-| n | `<leader>F` | Find files globally | Files |
 | n | `<leader>fb` | Find buffers | Files |
 | n | `<leader>fg` | Search text | Files |
 | n | `<leader>fa` | Show absolute path | Files |
