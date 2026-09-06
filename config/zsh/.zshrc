@@ -50,8 +50,12 @@ load_distro_config() {
     fi
 }
 
-
-if [[ -f /etc/os-release ]]; then
+# Detect OS
+if [[ "$(uname)" == "Darwin" ]]; then
+    # macOS
+    load_distro_config "macos"
+elif [[ -f /etc/os-release ]]; then
+    # Linux distributions
     source /etc/os-release
 
     case "${ID}" in
@@ -76,8 +80,9 @@ if [[ -f /etc/os-release ]]; then
             ;;
     esac
 else
-    echo "⚠️ Cannot detect distribution: /etc/os-release not found"
+    echo "⚠️ Cannot detect operating system"
 fi
+
 # Load syntax highlighting last so it doesn't interfere with completions
 ZSH_HIGHLIGHT_HIGHLIGHTERS=(main)
 zinit ice wait lucid

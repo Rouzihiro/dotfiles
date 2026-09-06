@@ -1,0 +1,2 @@
+# ===== MacOS =====
+export PATH="$HOME/.local/bin:/opt/homebrew/bin:$PATH"
