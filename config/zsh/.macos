@@ -1,2 +1,121 @@
 # ===== MacOS =====
-export PATH="$HOME/.local/bin:/opt/homebrew/bin:$PATH"
+
+# Use GNU grep for -P support
+alias grep='ggrep'
+export GREP_OPTIONS="--color=auto"
+
+# ─────────────────────────────
+# PATH (clean, no duplicates)
+# ─────────────────────────────
+# Core paths
+export PATH="$HOME/bin:$HOME/.local/bin:/opt/homebrew/bin:$PATH"
+
+# GNU Tools (must come before system tools)
+export PATH="/opt/homebrew/opt/coreutils/libexec/gnubin:$PATH"
+export PATH="/opt/homebrew/opt/findutils/libexec/gnubin:$PATH"
+export PATH="/opt/homebrew/opt/gnu-sed/libexec/gnubin:$PATH"
+export PATH="/opt/homebrew/opt/gawk/libexec/gnubin:$PATH"
+export PATH="/opt/homebrew/opt/trash-cli/bin:$PATH"
+
+# ─────────────────────────────
+# macOS Functions
+# ─────────────────────────────
+
+# Show/hide hidden files in Finder
+showhidden() {
+    defaults write com.apple.finder AppleShowAllFiles -bool true
+    killall Finder
+}
+
+hidehidden() {
+    defaults write com.apple.finder AppleShowAllFiles -bool false
+    killall Finder
+}
+
+# Flush DNS cache
+flushdns() {
+    sudo dscacheutil -flushcache
+    sudo killall -HUP mDNSResponder
+    echo "DNS cache flushed"
+}
+
+# Open current directory in Finder
+finder() {
+    open .
+}
+
+# Quick screenshot to clipboard
+screenshot() {
+    screencapture -c "$@"
+    echo "Screenshot saved to clipboard"
+}
+
+# Show/hide desktop icons
+hidedesktop() {
+    defaults write com.apple.finder CreateDesktop -bool false
+    killall Finder
+}
+showdesktop() {
+    defaults write com.apple.finder CreateDesktop -bool true
+    killall Finder
+}
+
+# ─────────────────────────────
+# macOS Specific Aliases
+# ─────────────────────────────
+
+# List with colors
+alias ls='ls -G'
+alias ll='ls -lahG'
+alias la='ls -laG'
+alias l='ls -CFG'
+
+# Quick access
+alias code='open -a "Visual Studio Code"'
+alias safari='open -a Safari'
+alias chrome='open -a "Google Chrome"'
+alias firefox='open -a Firefox'
+
+# Brew management
+alias brewup='brew update && brew upgrade && brew cleanup'
+alias brewupd='brew update && brew outdated'
+
+# Show IP
+alias myip='curl ifconfig.me'
+
+# ─────────────────────────────
+# Git for macOS
+# ─────────────────────────────
+alias gk='gitk --all &'
+alias gs='git status'
+
+# ─────────────────────────────
+# macOS Security
+# ─────────────────────────────
+# Remove quarantine from a file
+unquarantine() {
+    xattr -d com.apple.quarantine "$@"
+}
+
+# ─────────────────────────────
+# Battery Info
+# ─────────────────────────────
+battery() {
+    pmset -g batt | grep -Eo "\d+%" | cut -d% -f1
+}
+
+battime() {
+    pmset -g batt | grep -Eo '\d+:\d+' | head -1
+}
+
+# ─────────────────────────────
+# System Info
+# ─────────────────────────────
+sysinfo() {
+    echo "macOS: $(sw_vers -productName) $(sw_vers -productVersion)"
+    echo "Chip: $(sysctl -n machdep.cpu.brand_string)"
+    echo "Memory: $(sysctl -n hw.memsize | awk '{print $1/1073741824 " GB"}')"
+    echo "Disk: $(df -h / | awk 'NR==2 {print $4 " free of " $2}')"
+}
+
+echo "✅ macOS config loaded"

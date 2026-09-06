@@ -46,9 +46,15 @@ export LF_ICONS="di=📁:fi=📄:ln=🔗:ex=⚡:*.pdf=📄:*.jpg=🖼️:*.png=�
 
 export BEMENU_OPTS="--fn 'JetBrainsMono Nerd Font 12' --center --line-height 22 --margin 8 --width-factor 0.5 --nb '#2e3440' --nf '#cdcecf' --hb '#81b29a' --hf '#192330' --tb '#2e3440' --tf '#f6c177' --fb '#2e3440' --ff '#cdcecf' --list 20 --prompt '>'"
 
-
+# XDG Runtime Directory - macOS compatible
 if [ -z "$XDG_RUNTIME_DIR" ]; then
-  export XDG_RUNTIME_DIR=/run/user/$(id -u)
+  if [[ "$(uname)" == "Darwin" ]]; then
+    # macOS: use a directory in home
+    export XDG_RUNTIME_DIR="$HOME/.runtime"
+  else
+    # Linux: use /run/user
+    export XDG_RUNTIME_DIR=/run/user/$(id -u)
+  fi
   mkdir -p "$XDG_RUNTIME_DIR"
   chmod 0700 "$XDG_RUNTIME_DIR"
 fi
