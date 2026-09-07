@@ -1,0 +1,152 @@
+#!/bin/bash
+export CONFIG_DIR="${CONFIG_DIR:-$HOME/.config/sketchybar}"
+source "$CONFIG_DIR/colors.sh"
+source "$CONFIG_DIR/icons.sh"
+
+export PLUGIN_DIR="$CONFIG_DIR/plugins"
+
+##### Bar Appearance #####
+sketchybar --bar position=top \
+                 height=36 \
+                 color=$BAR_COLOR \
+                 border_width=0 \
+                 corner_radius=0 \
+                 margin=0 \
+                 blur_radius=0 \
+                 padding_left=16 \
+                 padding_right=16 \
+                 shadow=off \
+                 sticky=on \
+                 topmost=window \
+                 display=main
+
+##### Defaults #####
+default=(
+  updates=when_shown
+  icon.font="Hack Nerd Font Mono:Bold:15.0"
+  icon.color=$ICON_COLOR
+  icon.padding_left=6
+  icon.padding_right=6
+  label.font="Hack Nerd Font Mono:Regular:13.0"
+  label.color=$LABEL_COLOR
+  label.padding_left=6
+  label.padding_right=6
+  padding_left=8
+  padding_right=8
+  background.height=26
+  background.corner_radius=6
+  background.border_width=1
+  background.border_color=$PILL_BORDER
+  popup.background.border_width=1
+  popup.background.corner_radius=6
+  popup.background.border_color=$POPUP_BORDER
+  popup.background.color=$POPUP_BG
+)
+sketchybar --default "${default[@]}"
+
+##### Left Side #####
+
+# Apple logo
+sketchybar --add item apple.logo left \
+           --set apple.logo \
+                 icon=$APPLE \
+                 icon.font="SF Pro:Black:16.0" \
+                 icon.color=$ACCENT \
+                 icon.padding_left=12 \
+                 icon.padding_right=8 \
+                 padding_left=0 \
+                 padding_right=0 \
+                 label.drawing=off \
+                 background.drawing=off \
+                 click_script="$PLUGIN_DIR/apple.sh"
+
+# Workspaces
+source "$CONFIG_DIR/items/spaces.sh"
+
+# Divider
+sketchybar --add item divider left \
+           --set divider \
+                 icon="󰇙" \
+                 icon.font="Hack Nerd Font Mono:Regular:16.0" \
+                 icon.color=$DIVIDER_COLOR \
+                 icon.padding_left=8 \
+                 icon.padding_right=8 \
+                 label.drawing=off \
+                 background.drawing=off
+
+# Front app
+sketchybar --add item front_app left \
+           --set front_app \
+                 icon.drawing=off \
+                 label.font="SF Pro:Medium:12.0" \
+                 label.color=$FG_DIM \
+                 label.padding_left=4 \
+                 label.padding_right=8 \
+                 background.drawing=off \
+                 label.y_offset=-1.1 \
+                 padding_left=2 \
+                 padding_right=8 \
+                 script="$PLUGIN_DIR/front_app.sh" \
+           --subscribe front_app front_app_switched
+
+##### Right Side #####
+
+# Clock
+sketchybar --add item clock right \
+           --set clock \
+                 icon="󰅐" \
+                 icon.font="SF Pro:Semibold:14.0" \
+                 icon.color=$FG \
+                 icon.padding_left=12 \
+                 icon.padding_right=4 \
+                 label.font="SF Pro:Medium:12.0" \
+                 label.color=$FG \
+                 label.padding_left=0 \
+                 label.padding_right=12 \
+                 update_freq=10 \
+                 script="$PLUGIN_DIR/clock.sh" \
+                 background.drawing=off \
+                 padding_left=0 \
+                 padding_right=0 \
+                 click_script="$PLUGIN_DIR/clock_click.sh"
+
+# Battery
+sketchybar --add item battery right \
+           --set battery \
+                 icon.font="SF Pro:Semibold:14.0" \
+                 icon.color=$FG \
+                 icon.padding_left=8 \
+                 icon.padding_right=4 \
+                 label.font="SF Pro:Medium:12.0" \
+                 label.color=$FG \
+                 label.padding_left=0 \
+                 label.padding_right=8 \
+                 update_freq=120 \
+                 script="$PLUGIN_DIR/battery.sh" \
+                 background.drawing=off \
+                 padding_left=0 \
+                 padding_right=0 \
+           --subscribe battery system_woke power_source_change
+
+# Network speed
+sketchybar --add item network_speed right \
+           --set network_speed \
+                 icon="󰤨" \
+                 icon.color=$FG \
+                 icon.padding_right=0 \
+                 label.color=$FG_DIM \
+                 update_freq=5 \
+                 script="$PLUGIN_DIR/network_speed.sh"
+
+# Status bracket — groups network, battery, clock into one pill
+sketchybar --add bracket status_bracket network_speed battery clock \
+           --set status_bracket \
+                 background.color=$PILL_BG \
+                 background.border_color=$PILL_BORDER \
+                 background.border_width=1 \
+                 background.corner_radius=14 \
+                 background.height=28 \
+                 background.drawing=on
+
+##### Finalize #####
+sketchybar --update
