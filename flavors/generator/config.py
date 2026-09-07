@@ -33,5 +33,6 @@ OUTPUTS = {
     "yazi.toml.j2":      str(Path.home() / ".config/yazi/theme.toml"),
     "qtile.py.j2":       str(Path.home() / ".config/qtile/theme.py"),
     "bemenu.j2":         str(Path.home() / ".local/bin/bemenu/bm-run"),
+    "sketchybar.j2":     str(Path.home() / ".config/sketchybar/colors.sh"),
     # "dircolors.j2":    str(Path.home() / ".dircolors"),
 }
