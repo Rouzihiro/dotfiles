@@ -15,23 +15,54 @@ _osyx_write_theme_state() {
   print -r -- "$1" >| "$_OSYX_STATE_FILE" 2>/dev/null || true
 }
 
-_osyx_wallpaper_file() {
+_osyx_wallpaper_file_macos() {
   local theme="$1"
-  local ext
+  local dir="$HOME/Pictures/wallpapers"
+  local theme_dir="$dir/$theme"
+  local -a candidates
+  local raw match
 
-  for ext in jpg png webp; do
-    if [[ -f "$_OSYX_BACKGROUNDS_DIR/$theme.$ext" ]]; then
-      print -r -- "$_OSYX_BACKGROUNDS_DIR/$theme.$ext"
-      return 0
-    fi
-  done
+  [[ -d "$dir" ]] || return 1
 
-  return 1
+  if [[ -d "$theme_dir" ]]; then
+    raw="$(find -L "$theme_dir" -type f \
+      \( -iname '*.jpg' -o -iname '*.jpeg' -o -iname '*.png' -o -iname '*.webp' \) \
+      2>/dev/null)"
+
+    [[ -n "$raw" ]] || return 1
+
+    candidates=("${(@f)raw}")
+
+    print -r -- "${candidates[$((RANDOM % ${#candidates[@]} + 1))]}"
+    return 0
+  fi
+
+  match="$(find -L "$dir" -type f -iname "$theme.*" -print -quit 2>/dev/null)"
+
+  [[ -n "$match" ]] || return 1
+
+  print -r -- "$match"
 }
 
 _osyx_apply_wallpaper() {
   local theme="$1"
   local wallpaper_file
+
+  if [[ "$(uname)" == "Darwin" ]]; then
+    wallpaper_file="$(_osyx_wallpaper_file_macos "$theme")" || {
+      _osyx_log "no wallpaper found for $theme in $HOME/assets/wallpapers, skipping"
+      return 0
+    }
+
+    command -v wallpaper >/dev/null 2>&1 || {
+      _osyx_log "wallpaper CLI not found, skipping"
+      return 1
+    }
+
+    wallpaper set "$wallpaper_file" \
+      || _osyx_log "wallpaper set failed for $wallpaper_file"
+    return 0
+  fi
 
   wallpaper_file="$(_osyx_wallpaper_file "$theme")" || {
     _osyx_log "no wallpaper found for $theme, skipping"
