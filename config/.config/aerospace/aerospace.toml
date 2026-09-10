@@ -43,6 +43,8 @@ automatically-unhide-macos-hidden-apps = true
     # Open terminal with Cmd+Enter
     cmd-enter = 'exec-and-forget kitty'
 
+cmd-alt-s = '''exec-and-forget bash -c 'f="$HOME/Pictures/Screenshots/screenshot-$(date +%Y%m%d-%H%M%S).png"; screencapture -i -c "$f" \''''
+
     # Toggle floating for current window (when you need it)
     cmd-shift-space = ['layout floating tiling', 'mode main']
 
