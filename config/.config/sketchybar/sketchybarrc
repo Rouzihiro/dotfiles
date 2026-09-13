@@ -128,6 +128,26 @@ sketchybar --add item battery right \
                  padding_right=0 \
            --subscribe battery system_woke power_source_change
 
+# WiFi
+sketchybar --add item wifi right \
+           --set wifi \
+                 icon="󰤨" \
+                 icon.font="SF Pro:Semibold:14.0" \
+                 icon.color=$FG \
+                 icon.padding_left=8 \
+                 icon.padding_right=4 \
+                 label.font="SF Pro:Medium:12.0" \
+                 label.color=$FG \
+                 label.padding_left=0 \
+                 label.padding_right=8 \
+                 update_freq=10 \
+                 script="$PLUGIN_DIR/wifi.sh" \
+                 background.drawing=off \
+                 padding_left=0 \
+                 padding_right=0 \
+           --subscribe wifi wifi_change
+
+
 # Network speed
 sketchybar --add item network_speed right \
            --set network_speed \
@@ -139,7 +159,7 @@ sketchybar --add item network_speed right \
                  script="$PLUGIN_DIR/network_speed.sh"
 
 # Status bracket — groups network, battery, clock into one pill
-sketchybar --add bracket status_bracket network_speed battery clock \
+sketchybar --add bracket status_bracket network_speed wifi battery clock \
            --set status_bracket \
                  background.color=$PILL_BG \
                  background.border_color=$PILL_BORDER \

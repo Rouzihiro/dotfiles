@@ -31,9 +31,9 @@ color14 = "#7dcfff"
 color15 = "#c0caf5"
 
 [starship]
-os_bg = "7aa2f7"      # accent - Blue for OS icon background
-os_fg = "1a1b26"      # bg - Dark background for contrast
-dir_bg = "9ece6a"     # success - Green for directory background
+os_bg = "7aa2f7"
+os_fg = "1a1b26"
+dir_bg = "9ece6a"
 
 [nvim]
 colorscheme = "tokyonight"
