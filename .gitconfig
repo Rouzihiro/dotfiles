@@ -1,22 +1,30 @@
 [user]
     email = ryossj@gmail.com
     name = Rouzihiro
-
+		signingkey = ~/.ssh/id_github.pub
+[gpg]
+	format = ssh
+[commit]
+	gpgsign = true
+	verbose = true
 [core]
     pager = delta
-
+		editor = nvim
+[tag]
+	gpgsign = true
 [color]
     ui = auto
-
 [delta]
     syntax-theme = none
     light = false
     dark = true
     line-numbers = true
     navigate = true
-
 [interactive]
     diffFilter = delta --color-only
-
 [include]
     path = ~/git/.gitconfig.d/config
+[rerere]
+	enabled = true
+[merge]
+	conflictStyle = zdiff3
