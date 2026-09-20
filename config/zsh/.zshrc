@@ -277,26 +277,21 @@ git_commit_with_message() {
 zle -N git_commit_with_message
 bindkey "^G" git_commit_with_message
 
-# ============================================
-# SSH Agent Setup
-# ============================================
-# export SSH_AUTH_SOCK="${XDG_RUNTIME_DIR}/ssh-agent.socket"
-# if ! pgrep -u "$USER" ssh-agent >/dev/null 2>&1; then
-#     eval "$(ssh-agent -a "$SSH_AUTH_SOCK")" >/dev/null
-# fi
-# if ! ssh-add -l >/dev/null 2>&1; then
-#     ssh-add ~/.ssh/id_github 2>/dev/null
-#     ssh-add ~/.ssh/id_ftp 2>/dev/null
-#     ssh-add ~/.ssh/id_openweather 2>/dev/null
-# fi
-#
-export SSH_AUTH_SOCK="${XDG_RUNTIME_DIR}/ssh-agent.socket"
 
-if [[ ! -S "$SSH_AUTH_SOCK" ]]; then
-    eval "$(ssh-agent -a "$SSH_AUTH_SOCK")" >/dev/null
-    ssh-add ~/.ssh/id_github ~/.ssh/id_ftp ~/.ssh/id_openweather 2>/dev/null
-fi
 
+ssh_agent_setup() {
+    if [[ "$OSTYPE" == darwin* ]]; then
+        export SSH_AUTH_SOCK="${SSH_AUTH_SOCK:-$HOME/Library/Containers/com.apple.keychainaccess/Data/Library/Keychains/ssh-agent.sock}"
+    elif [[ "$OSTYPE" == linux* ]]; then
+        export SSH_AUTH_SOCK="${XDG_RUNTIME_DIR}/ssh-agent.socket"
+
+        if [[ ! -S "$SSH_AUTH_SOCK" ]]; then
+            eval "$(ssh-agent -a "$SSH_AUTH_SOCK")" >/dev/null
+        fi
+    fi
+}
+
+ssh_agent_setup
 
 
 # ============================================
@@ -349,3 +344,15 @@ zinit light-mode for \
 if [[ -f "$HOME/.config/broot/launcher/bash/br" ]]; then
     source "$HOME/.config/broot/launcher/bash/br"
 fi
+
+# Load a few important annexes, without Turbo
+# (this is currently required for annexes)
+zinit light-mode for \
+    zdharma-continuum/zinit-annex-as-monitor \
+    zdharma-continuum/zinit-annex-bin-gem-node \
+    zdharma-continuum/zinit-annex-patch-dl \
+    zdharma-continuum/zinit-annex-rust
+
+### End of Zinit's installer chunk
+
+source /Users/rey/.config/broot/launcher/bash/br
